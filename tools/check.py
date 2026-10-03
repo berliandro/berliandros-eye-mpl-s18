@@ -121,5 +121,32 @@ if '--live' in sys.argv:
 else:
     print(f"(skip live link fetch; {len(urls)} links format-checked — rerun with --live)")
 
+# lane coverage (normalized: lowercase alnum + known IGN aliases; source: data/lanes.json)
+def ultra(s):
+    return re.sub(r'[^a-z0-9]', '', str(s or '').lower())
+lanes_doc = json.loads((ROOT / 'data' / 'lanes.json').read_text(encoding='utf-8'))
+lanes = {ultra(k): v for k, v in (lanes_doc.get('lanes') or {}).items()}
+alias = {'shanee': 'shane', 'kevinn': 'kevin', 'lutpi': 'lutpiii', 'yazukee': 'affan',
+         'kennzyskie': 'kennzyyskie', 'maykidss': 'maykids', 'arfy': 'dingarai',
+         'sanz': 'sanz', 'rendyyy': 'rendyy', 'aboyy': 'aboy', 'alekk': 'alexander',
+         'morenooo': 'morenoo', 'itoshikesu': 'itoshikesu', 'ssamuel': 'samuel',
+         'joshuaa': 'joshua', 'hijumee': 'dalvin', 'affan': 'yazukee', 'dalvin': 'hijumee',
+         'dingarai': 'arfy', 'alexander': 'alekk', 'kevin': 'kevinn', 'maykids': 'maykidss',
+         'shane': 'shanee'}
+alias = {ultra(k): ultra(v) for k, v in alias.items()}
+ok(lanes_doc.get('source', '').startswith('Liquipedia'), "lanes.json has Liquipedia provenance")
+all_players = {r['player'] for r in praw} | {r['player'] for r in season}
+uncovered = [p for p in sorted(all_players)
+             if ultra(p) not in lanes and alias.get(ultra(p), ultra(p)) not in lanes]
+ok(not uncovered, f"lane coverage normalized ({len(all_players)} names)" + ("" if not uncovered else f" missing {uncovered[:6]}"))
+
+# image gaps are warnings (initials fallback renders instead)
+man_players_ci = {ultra(k): k for k in man.get('players', {})}
+gap = sorted(p for p in all_players if ultra(p) not in man_players_ci and alias.get(ultra(p), ultra(p)) not in man_players_ci)
+if gap:
+    warn(f"player images missing ({len(gap)}): {', '.join(gap[:6])} — initials fallback used")
+else:
+    print("PASS player images cover all players")
+
 print(f"\n{len(fails)} failures, {len(warns)} warnings")
 sys.exit(1 if fails else 0)
