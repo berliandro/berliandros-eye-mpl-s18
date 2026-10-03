@@ -1,0 +1,17 @@
+# python
+__pycache__/
+*.pyc
+*.pyo
+
+# backups (kept next to repo, not inside)
+*.zip
+backups/
+
+# local opencode state
+.opencode/
+
+# OS / editor
+.DS_Store
+Thumbs.db
+.vscode/
+*.log

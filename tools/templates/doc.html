@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>MPL ID S18 — Dark Board</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;700&family=Manrope:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+__CSS__</style>
+</head>
+<body>
+<a class="skip" href="#board">Skip to board</a>
+<header><div class="wrap"><div class="hrow">
+<div class="brand">Berliandro's Eye <b>MPL ID Season 18</b></div>
+<div class="search"><input id="q" type="search" placeholder="Search players, heroes, teams…" aria-label="Search"><kbd>/</kbd></div>
+<nav class="tabs" role="tablist" aria-label="Views">
+<button role="tab" aria-selected="true" data-view="overview">Overview</button>
+<button role="tab" aria-selected="false" data-view="players">Players</button>
+<button role="tab" aria-selected="false" data-view="matches">Matches</button>
+<button role="tab" aria-selected="false" data-view="stats">Stats</button>
+</nav>
+</div><div class="filters"><div class="chips" id="chips" aria-label="Filter by team"></div>
+<label>Sort <select id="sort"><option value="kda">KDA</option><option value="kills">Kills</option><option value="goldmin">Gold/min</option><option value="games">Games</option></select></label>
+<label>Lane <select id="lane"><option value="">All</option><option>MID</option><option>GOLD</option><option>JUNGLE</option><option>EXP</option><option>ROAM</option></select></label>
+<span class="seg" role="group" aria-label="Layout"><button id="layGrid" aria-pressed="true">Grid</button><button id="layList" aria-pressed="false">List</button></span>
+<button class="ghost" id="density" style="border:1px solid var(--line);background:transparent;color:var(--muted);border-radius:6px;padding:5px 10px;cursor:pointer">Compact</button>
+<button class="ghost" id="refresh" title="Re-fetch schedule, standings and player stats from the live API" style="border:1px solid var(--line);background:transparent;color:var(--muted);border-radius:6px;padding:5px 10px;cursor:pointer">Refresh</button>
+<span id="upd" style="font-size:11px"></span>
+<span id="count" role="status"></span></div></div></header>
+<main class="wrap"><div class="masonry" id="board"></div><div class="empty" id="empty" hidden>No pins match. Clear search or filters.</div></main>
+<dialog id="dlg" aria-labelledby="dt"><div class="dhead"><strong id="dt"></strong><span id="ds" style="color:var(--muted)"></span><button id="dx" aria-label="Close dialog" style="margin-left:auto;background:#f2f1ec;border:0;border-radius:6px;padding:8px 12px;cursor:pointer">Close</button></div><div class="dbody" id="db"></div></dialog>
+<dialog id="dlg2" aria-labelledby="dt2"><div class="dhead"><strong id="dt2">Select player</strong><button id="dx2" aria-label="Close dialog" style="margin-left:auto;background:#f2f1ec;border:0;border-radius:6px;padding:8px 12px;cursor:pointer">Close</button></div><div class="dbody"><div class="selrow"><input id="selQ" type="search" placeholder="Search players…" aria-label="Search players"><select id="selT" aria-label="Filter by team"></select><select id="selL" aria-label="Filter by lane"></select></div><div class="sellist" id="selList"></div></div></dialog>
+<script>window.ASSETS=__ASSETS__</script>
+<script>
+__JS__</script>
+</body>
+</html>
