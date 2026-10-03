@@ -258,7 +258,9 @@ const pa=rows(id,g.game_no).filter(r=>r.team===g.team_a),pb=rows(id,g.game_no).f
 return gameSection(g,pa,pb,[],[],false,i===0);}).join(''));
 wireTabs();
 try{
-const r=await fetch('https://mpl.mlbbhub.com/api/v1/id/match/'+encodeURIComponent(id));
+const ctl=new AbortController();const tmr=setTimeout(()=>ctl.abort(),15000);
+const r=await fetch('https://mpl.mlbbhub.com/api/v1/id/match/'+encodeURIComponent(id),{signal:ctl.signal});
+clearTimeout(tmr);
 if(!r.ok)return;const d=await r.json();if(!d.games||!d.games.length)return;
 const t2=d.games.map((g,i)=>`<button data-gtab="${g.game}" aria-pressed="${i===0?'true':'false'}">Game ${g.game}</button>`).join('');
 document.getElementById('db').innerHTML=`<div class="sb-tabs" role="group" aria-label="Games">${t2}</div>`+d.games.map((g,i)=>{
@@ -306,13 +308,22 @@ const pool=[...list];
 const ix=pool.findIndex(l=>{const a=canonT(l.t1),b=canonT(l.t2);return (a===ha&&b===hb)||(a===hb&&b===ha);});
 if(ix>-1){const found=pool.splice(ix,1)[0];if(found.mvp){m.liq_mvp=found.mvp;n++;}}});
 return n;}
+function setNet(){const el=document.getElementById('net');if(!el)return;const on=navigator.onLine!==false;el.textContent=on?'online':'offline';el.style.color=on?'var(--muted)':'#f2b8c1';el.style.borderColor=on?'var(--line)':'#7f2b36';}
+window.addEventListener('online',()=>{setNet();render();});
+window.addEventListener('offline',setNet);
+setNet();
+async function fetchJSON(url,ms){ms=ms||15000;let last=null;
+for(let a=0;a<2;a++){try{const ctl=new AbortController();const t=setTimeout(()=>ctl.abort(),ms);
+const r=await fetch(url,{signal:ctl.signal});clearTimeout(t);if(!r.ok)throw new Error('http '+r.status);return await r.json();}
+catch(e){last=e;await new Promise(r=>setTimeout(r,600));}}
+throw last||new Error('fetch failed');}
 async function refreshDB(){const btn=document.getElementById('refresh'),upd=document.getElementById('upd');
 btn.disabled=true;const old=btn.textContent;btn.textContent='…';
 try{
 const [ms,st,ps,mvpList]=await Promise.all([
-fetch(HUB+'/matches').then(r=>{if(!r.ok)throw new Error('matches');return r.json();}),
-fetch(HUB+'/standings').then(r=>{if(!r.ok)throw new Error('standings');return r.json();}),
-fetch(HUB+'/stats/players').then(r=>{if(!r.ok)throw new Error('players');return r.json();}),
+fetchJSON(HUB+'/matches'),
+fetchJSON(HUB+'/standings'),
+fetchJSON(HUB+'/stats/players'),
 fetchMvps().catch(()=>[])]);
 DATA.schedule=ms;DATA.standings=st;DATA.season=ps;
 const mvpMap=Object.fromEntries((DATA.matches||[]).map(m=>[String(m.match_detail_id),m.liq_mvp]));
@@ -327,8 +338,8 @@ const n=normLive(d);allGames.push(...n.games);allPros.push(...n.pros);}catch(e){
 done++;upd.textContent='games '+done+'/'+ids.length+'…';}})()));
 DATA.games=allGames;DATA.players=allPros;DATA.hero_pool=buildPool(allPros);
 try{localStorage.setItem('s18db',JSON.stringify({t:Date.now(),schedule:ms,standings:st,season:ps,players:allPros,games:allGames,heroPool:DATA.hero_pool,matches:DATA.matches}));}catch(e){upd.textContent='updated '+new Date().toLocaleTimeString()+' (not cached: storage full)';render();btn.disabled=false;btn.textContent=old;return;}
-upd.textContent='updated '+new Date().toLocaleTimeString()+' · '+allGames.length+' games · '+mvpN+' MVPs'+(fails?' · '+fails+' failed':'');render();
-}catch(e){upd.textContent='refresh failed — offline?';}
+upd.textContent='updated '+new Date().toLocaleTimeString()+' · '+allGames.length+' games · '+mvpN+' MVPs'+(fails?' · '+fails+' failed':'');setNet();render();
+}catch(e){upd.textContent='refresh failed — offline? showing last snapshot';setNet();}
 btn.disabled=false;btn.textContent=old;}
 document.getElementById('refresh').onclick=refreshDB;
 try{const c=JSON.parse(localStorage.getItem('s18db')||'null');
