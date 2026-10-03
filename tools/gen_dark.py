@@ -15,6 +15,7 @@ sched = load('schedule_all')
 games = load('games')
 season = load('player_season_stats')
 stand = load('standings')
+matches = load('matches')
 praw = load('game_players')
 players = [{k: r[k] for k in ('match_detail_id','game_no','team','player','lane','hero','kills','deaths','assists','kda','gold','gold_per_min','hero_damage','damage_taken','tower_damage')} for r in praw]
 for r in players:
@@ -38,8 +39,8 @@ for _r in players:
         _r['t'] = [mm.group(1) for _u in json.loads(_row[1] or '[]') for mm in [re.search(r'rune/(\d+)\.png', _u)] if mm]
         _r['i'] = [mm.group(1) for _u in json.loads(_row[2] or '[]') for mm in [re.search(r'equipment/(\d+)\.png', _u)] if mm]
 _con.close()
-DATA = {"schedule": sched, "games": games, "players": players, "hero_pool": hero_pool, "season": season, "standings": stand}
-data_js = json.dumps(DATA, ensure_ascii=False).replace('</scr'+'ipt>', '<\\/scr'+'ipt>')
+DATA = {"schedule": sched, "games": games, "players": players, "hero_pool": hero_pool, "season": season, "standings": stand, "matches": matches}
+data_js = json.dumps(DATA, ensure_ascii=False, separators=(',', ':')).replace('</scr'+'ipt>', '<\\/scr'+'ipt>')
 TEAMS = ["AE","BTR","DEWA","EVOS","GEEK","NAVI","ONIC","RRQ","TLID"]
 
 css = (TPL / 'style.css').read_text(encoding='utf-8')

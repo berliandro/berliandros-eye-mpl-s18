@@ -5,7 +5,7 @@ const logoOf = t => TEAM_LOGOS[String(t||'').toLowerCase()] || '';
 const IMG_HIDE = 'onerror="this.style.visibility=\'hidden\'"';
 function eqId(u){const m=/equipment\/(\d+)\.png/.exec(u||'');return m?m[1]:'';}
 function imgSlot(el){const s=document.createElement('span');s.className='slot-miss';s.title=el.alt||'item';s.textContent=el.dataset.eq||'?';el.replaceWith(s);}
-const S = {view:'overview',q:'',team:'',sort:'kda',lane:'',compact:false,layout:'grid',ov:null};
+const S = {view:'overview',q:'',team:'',sort:'kda',lane:'',compact:false,layout:'grid',ov:null,mlimit:24};
 const PICON_RAW = ((window.ASSETS||{}).players||{});
 const PICON_CI = Object.fromEntries(Object.entries(PICON_RAW).map(([k,v])=>[k.toLowerCase(),v]));
 const PICON_ALIAS = {arfy:'dingarai',yazukee:'affan',hijumee:'dalvin',alekk:'alexander',joshuaa:'joshuaa',kevinn:'kevin',maykidss:'maykids',shanee:'shanee',sanz:'s a n z'};
@@ -21,6 +21,7 @@ const esc=s=>String(s??'').replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&g
 TEAMS.forEach(t=>{const b=document.createElement('button');b.textContent=t;b.setAttribute('aria-pressed','false');
 b.onclick=()=>{S.team=S.team===t?'':t;[...chips.children].forEach(x=>x.setAttribute('aria-pressed',x.textContent===S.team?'true':'false'));render();};chips.appendChild(b);});
 document.querySelectorAll('.tabs button').forEach(b=>b.onclick=()=>{S.view=b.dataset.view;
+if(b.dataset.view==='matches')S.mlimit=24;
 document.querySelectorAll('.tabs button').forEach(x=>x.setAttribute('aria-selected',x===b?'true':'false'));render();});
 q.oninput=()=>{S.q=q.value.trim().toLowerCase();render();};
 sortEl.onchange=()=>{S.sort=sortEl.value;render();};laneEl.onchange=()=>{S.lane=laneEl.value;render();};
@@ -74,8 +75,10 @@ out.push(`<div class="pin" style="--index:${i}"><div class="body"><div class="ph
 if(S.view==='matches'){let ms=DATA.schedule.slice().sort((a,b)=>(a.iso_datetime||'').localeCompare(b.iso_datetime||''));
 if(S.team)ms=ms.filter(m=>m.team_a===S.team||m.team_b===S.team);
 if(S.q)ms=ms.filter(m=>(m.team_a+' '+m.team_b+' '+m.date).toLowerCase().includes(S.q));
+const total=ms.length;ms=ms.slice(0,S.mlimit);
 (ms).forEach(m=>{const done=m.match_detail_id&&m.status==='completed';
-out.push(`<div class="pin mpin"><div class="body"><div class="kicker">${esc(m.date||'')} · ${esc(m.status||'')}</div><div class="mteams"><div class="mt"><img src="${TICON(m.team_a)}" alt="" loading="lazy" ${IMG_HIDE}><span>${esc(m.team_a)}</span></div><div class="score">${m.score_a??'–'} : ${m.score_b??'–'}</div><div class="mt"><img src="${TICON(m.team_b)}" alt="" loading="lazy" ${IMG_HIDE}><span>${esc(m.team_b)}</span></div></div><div class="mmeta"><span class="tag">${done?('Detail #'+esc(m.match_detail_id)):esc(m.status||'upcoming')}</span></div></div><div class="actions">${done?`<button class="primary" data-m="${esc(m.match_detail_id)}">Scoreboard</button>`:`<button class="ghost" disabled>Soon</button>`}</div></div>`);});}
+out.push(`<div class="pin mpin"><div class="body"><div class="kicker">${esc(m.date||'')} · ${esc(m.status||'')}</div><div class="mteams"><div class="mt"><img src="${TICON(m.team_a)}" alt="" loading="lazy" ${IMG_HIDE}><span>${esc(m.team_a)}</span></div><div class="score">${m.score_a??'–'} : ${m.score_b??'–'}</div><div class="mt"><img src="${TICON(m.team_b)}" alt="" loading="lazy" ${IMG_HIDE}><span>${esc(m.team_b)}</span></div></div><div class="mmeta"><span class="tag">${done?('Detail #'+esc(m.match_detail_id)):esc(m.status||'upcoming')}</span></div></div><div class="actions">${done?`<button class="primary" data-m="${esc(m.match_detail_id)}">Scoreboard</button>`:`<button class="ghost" disabled>Soon</button>`}</div></div>`);});
+if(total>S.mlimit)out.push(`<div class="pin"><div class="body" style="text-align:center"><p>Showing ${S.mlimit} of ${total} matches</p><div class="actions"><button class="primary" data-more="24">Show more</button></div></div></div>`);}
 if(S.view==='stats'){const st=[...DATA.standings].sort((a,b)=>a.rank-b.rank);
 out.push(`<div class="pin"><div class="body"><div class="kicker">Board</div><h3>Standings</h3><table><tr><th>#</th><th>Team</th><th>Pts</th><th>W-L</th></tr>${st.map(s=>{const slug=(s.team_slug||s.team_name||'').toLowerCase();return `<tr><td>${s.rank}</td><td><img src="${TICON(slug)}" alt="" loading="lazy" style="width:20px;height:20px;object-fit:contain;vertical-align:-5px" ${IMG_HIDE}> ${esc(s.team_name)}</td><td>${s.match_point}</td><td>${s.match_win}-${s.match_lose}</td></tr>`;}).join('')}</table></div></div>`);
 const top=[...DATA.season].filter(s=>+s.total_games>=5).sort((a,b)=>+b.avg_kda-+a.avg_kda).slice(0,10);
@@ -87,6 +90,7 @@ board.querySelectorAll('[data-p]').forEach(b=>b.onclick=()=>showP(b.dataset.p));
 const ovb=document.getElementById('ovPick');if(ovb)ovb.onclick=openOvSel;
 board.querySelectorAll('.lrow').forEach(r=>{r.style.cursor='pointer';r.onclick=()=>showP(r.querySelector('b').textContent);});
 board.querySelectorAll('[data-m]').forEach(b=>b.onclick=()=>showM(b.dataset.m));
+board.querySelectorAll('[data-more]').forEach(b=>b.onclick=()=>{S.mlimit+=+b.dataset.more||24;render();});
 wireCharts();}
 function normId(s){return String(s||'').toLowerCase().replace(/[^a-z0-9]/g,'');}
 function offOf(n){const m={};DATA.season.forEach(s=>{m[String(s.player||'').toLowerCase()]=s;});
