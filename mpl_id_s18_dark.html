@@ -3,6 +3,12 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="MPL ID Season 18 dark board: player overview, matches, scoreboards, stats and MVP history.">
+<meta name="theme-color" content="#131311">
+<meta property="og:title" content="MPL ID S18 — Dark Board">
+<meta property="og:description" content="Player overview, KDA trends, hero pools, scoreboards and MVP history.">
+<meta property="og:type" content="website">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Ccircle cx='16' cy='16' r='13' fill='%23131311' stroke='%23f2f1ec' stroke-width='2'/%3E%3Ccircle cx='16' cy='16' r='5' fill='%23e60023'/%3E%3C/svg%3E">
 <title>MPL ID S18 — Dark Board</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -87,6 +93,8 @@ dialog{border:1px solid var(--line);border-radius:12px;max-width:min(880px,94vw)
 .sellist{display:flex;flex-direction:column;gap:6px;max-height:50vh;overflow:auto}
 .selrow2{display:flex;gap:10px;align-items:center;padding:8px 10px;border:1px solid var(--line);border-radius:10px}.selrow2 img{width:34px;height:34px;border-radius:9px;object-fit:cover}
 @media(max-width:560px){.selrow{grid-template-columns:1fr 1fr}.selrow input{grid-column:1/-1}}
+.ovsec{overflow-x:auto}.ovsec table{min-width:430px}
+@media(max-width:560px){.tiles{grid-template-columns:repeat(2,1fr)}.sb-p{grid-template-columns:36px 1fr}.sb-side{grid-column:2;text-align:left}.dbody{padding:14px}dialog{max-width:96vw}}
 </style>
 </head>
 <body>
@@ -322,7 +330,7 @@ r.sort((a,b)=>b.avgkda-a.avgkda);
 document.getElementById('selList').innerHTML=r.map(o=>{const u=PICON(o.player);
 return `<div class="selrow2">${u?`<img src="${esc(u)}" alt="" loading="lazy" onerror="this.remove()">`:`<span class="ppic-fb" style="width:34px;height:34px;font-size:13px">${esc(o.player.slice(0,2))}</span>`}<span style="flex:1"><b>${esc(o.player)}</b><br><span class="mono" style="font-family:var(--font-mono);font-size:11px;color:var(--muted)">${esc(o.team)} · ${esc(o.lane||'—')} · ${o.gp} GP</span></span><button class="primary" data-sel="${esc(o.player)}" style="border:0;border-radius:6px;padding:8px 14px;cursor:pointer;font-weight:700;background:#f2f1ec;color:#131311">Select</button></div>`;}).join('')||'<div class="empty">No players match.</div>';
 document.querySelectorAll('#selList [data-sel]').forEach(b=>b.onclick=()=>{S.ov=b.dataset.sel;document.getElementById('dlg2').close();render();});}
-function openOvSel(){const d=document.getElementById('dlg2');
+function openOvSel(){const d=document.getElementById('dlg2');lastFocus=document.activeElement;
 const ts=[...new Set(agg().map(o=>o.team))].sort(),ls=[...new Set(agg().map(o=>o.lane).filter(Boolean))].sort();
 const st=document.getElementById('selT'),sl=document.getElementById('selL');
 st.innerHTML='<option value="">All teams</option>'+ts.map(t=>`<option>${esc(t)}</option>`).join('');
@@ -387,7 +395,13 @@ wireTabs();
 }catch(e){}}
 function openD(t,s,h){lastFocus=document.activeElement;document.getElementById('dt').textContent=t;
 document.getElementById('ds').textContent=s;document.getElementById('db').innerHTML=h;dlg.showModal();}
-document.addEventListener('keydown',e=>{if(e.key==='Escape'&&dlg.open)dlg.close();});
+document.addEventListener('keydown',e=>{if(e.key==='Escape'){const d2=document.getElementById('dlg2');if(d2&&d2.open)d2.close();else if(dlg.open)dlg.close();}});
+document.addEventListener('keydown',e=>{if(e.key!=='Tab')return;const d=[dlg,document.getElementById('dlg2')].find(x=>x&&x.open);if(!d)return;
+const f=[...d.querySelectorAll('button,input,select,[tabindex]')].filter(el=>!el.disabled&&el.offsetParent!==null);if(!f.length)return;
+const first=f[0],last=f[f.length-1];
+if(e.shiftKey&&document.activeElement===first){e.preventDefault();last.focus();}
+else if(!e.shiftKey&&document.activeElement===last){e.preventDefault();first.focus();}});
+document.getElementById('dlg2').addEventListener('close',()=>{if(lastFocus)lastFocus.focus();});
 const HUB='https://mpl.mlbbhub.com/api/v1/id';
 function normLive(d){const games=[],pros=[];
 (d.games||[]).forEach(g=>{const sec=durSec(g.duration);

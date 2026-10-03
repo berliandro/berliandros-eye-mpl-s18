@@ -77,3 +77,5 @@ dialog{border:1px solid var(--line);border-radius:12px;max-width:min(880px,94vw)
 .sellist{display:flex;flex-direction:column;gap:6px;max-height:50vh;overflow:auto}
 .selrow2{display:flex;gap:10px;align-items:center;padding:8px 10px;border:1px solid var(--line);border-radius:10px}.selrow2 img{width:34px;height:34px;border-radius:9px;object-fit:cover}
 @media(max-width:560px){.selrow{grid-template-columns:1fr 1fr}.selrow input{grid-column:1/-1}}
+.ovsec{overflow-x:auto}.ovsec table{min-width:430px}
+@media(max-width:560px){.tiles{grid-template-columns:repeat(2,1fr)}.sb-p{grid-template-columns:36px 1fr}.sb-side{grid-column:2;text-align:left}.dbody{padding:14px}dialog{max-width:96vw}}

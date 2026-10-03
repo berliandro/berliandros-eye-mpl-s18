@@ -28,6 +28,9 @@ for token in ('__DATA__', '__CSS__', '__JS__', '__ASSETS__'):
     ok(token not in html, f"no leftover {token}")
 for needle in ('data-view="overview"', 'trendChart', 'wireCharts', 'id="net"', 'data-more'):
     ok(needle in html, f"contains {needle}")
+for needle in ('name="description"', 'name="theme-color"', 'rel="icon"', 'property="og:title"'):
+    ok(needle in html, f"contains meta {needle}")
+ok('.ovsec{overflow-x:auto}' in html or '.ovsec{overflow-x: auto}' in html, "ovsec scrolls on mobile")
 
 
 def load(name):

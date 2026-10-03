@@ -206,7 +206,7 @@ r.sort((a,b)=>b.avgkda-a.avgkda);
 document.getElementById('selList').innerHTML=r.map(o=>{const u=PICON(o.player);
 return `<div class="selrow2">${u?`<img src="${esc(u)}" alt="" loading="lazy" onerror="this.remove()">`:`<span class="ppic-fb" style="width:34px;height:34px;font-size:13px">${esc(o.player.slice(0,2))}</span>`}<span style="flex:1"><b>${esc(o.player)}</b><br><span class="mono" style="font-family:var(--font-mono);font-size:11px;color:var(--muted)">${esc(o.team)} · ${esc(o.lane||'—')} · ${o.gp} GP</span></span><button class="primary" data-sel="${esc(o.player)}" style="border:0;border-radius:6px;padding:8px 14px;cursor:pointer;font-weight:700;background:#f2f1ec;color:#131311">Select</button></div>`;}).join('')||'<div class="empty">No players match.</div>';
 document.querySelectorAll('#selList [data-sel]').forEach(b=>b.onclick=()=>{S.ov=b.dataset.sel;document.getElementById('dlg2').close();render();});}
-function openOvSel(){const d=document.getElementById('dlg2');
+function openOvSel(){const d=document.getElementById('dlg2');lastFocus=document.activeElement;
 const ts=[...new Set(agg().map(o=>o.team))].sort(),ls=[...new Set(agg().map(o=>o.lane).filter(Boolean))].sort();
 const st=document.getElementById('selT'),sl=document.getElementById('selL');
 st.innerHTML='<option value="">All teams</option>'+ts.map(t=>`<option>${esc(t)}</option>`).join('');
@@ -271,7 +271,13 @@ wireTabs();
 }catch(e){}}
 function openD(t,s,h){lastFocus=document.activeElement;document.getElementById('dt').textContent=t;
 document.getElementById('ds').textContent=s;document.getElementById('db').innerHTML=h;dlg.showModal();}
-document.addEventListener('keydown',e=>{if(e.key==='Escape'&&dlg.open)dlg.close();});
+document.addEventListener('keydown',e=>{if(e.key==='Escape'){const d2=document.getElementById('dlg2');if(d2&&d2.open)d2.close();else if(dlg.open)dlg.close();}});
+document.addEventListener('keydown',e=>{if(e.key!=='Tab')return;const d=[dlg,document.getElementById('dlg2')].find(x=>x&&x.open);if(!d)return;
+const f=[...d.querySelectorAll('button,input,select,[tabindex]')].filter(el=>!el.disabled&&el.offsetParent!==null);if(!f.length)return;
+const first=f[0],last=f[f.length-1];
+if(e.shiftKey&&document.activeElement===first){e.preventDefault();last.focus();}
+else if(!e.shiftKey&&document.activeElement===last){e.preventDefault();first.focus();}});
+document.getElementById('dlg2').addEventListener('close',()=>{if(lastFocus)lastFocus.focus();});
 const HUB='https://mpl.mlbbhub.com/api/v1/id';
 function normLive(d){const games=[],pros=[];
 (d.games||[]).forEach(g=>{const sec=durSec(g.duration);
