@@ -110,9 +110,9 @@ mh+=`</div></div>`;
 out.push(mh);}
 else{out.push(phaseSeg);
 if(S.phase==='po'){out.push(sec('Playoffs — TBD',po));
-if(poAll.length>S.plimit)out.push(`<div class="pin"><div class="body" style="text-align:center"><p>Showing ${S.plimit} of ${poAll.length} playoff matches</p><div class="actions"><button class="primary" data-more="24" data-sec="po">Show more</button></div></div></div>`);}
+if(poAll.length>S.plimit)out.push(`<div class="pin" style="grid-column:1/-1"><div class="body" style="text-align:center"><p>Showing ${S.plimit} of ${poAll.length} playoff matches</p><div class="actions"><button class="primary" data-more="24" data-sec="po">Show more</button></div></div></div>`);}
 else{out.push(sec('Regular Season',reg));
-if(regAll.length>S.mlimit)out.push(`<div class="pin"><div class="body" style="text-align:center"><p>Showing ${S.mlimit} of ${regAll.length} regular-season matches</p><div class="actions"><button class="primary" data-more="24">Show more</button></div></div></div>`);}}}
+if(regAll.length>S.mlimit)out.push(`<div class="pin" style="grid-column:1/-1"><div class="body" style="text-align:center"><p>Showing ${S.mlimit} of ${regAll.length} regular-season matches</p><div class="actions"><button class="primary" data-more="24">Show more</button></div></div></div>`);}}}
 if(S.view==='stats'){const st=[...DATA.standings].sort((a,b)=>a.rank-b.rank);
 out.push(`<div class="pin"><div class="body"><div class="kicker">Board</div><h3>Standings</h3><table><tr><th>#</th><th>Team</th><th>Pts</th><th>W-L</th></tr>${st.map(s=>{const slug=(s.team_slug||s.team_name||'').toLowerCase();return `<tr><td>${s.rank}</td><td><img src="${TICON(slug)}" alt="" loading="lazy" style="width:20px;height:20px;object-fit:contain;vertical-align:-5px" ${IMG_HIDE}> ${esc(s.team_name)}</td><td>${s.match_point}</td><td>${s.match_win}-${s.match_lose}</td></tr>`;}).join('')}</table></div></div>`);
 const top=[...DATA.season].filter(s=>+s.total_games>=5).sort((a,b)=>+b.avg_kda-+a.avg_kda).slice(0,10);
