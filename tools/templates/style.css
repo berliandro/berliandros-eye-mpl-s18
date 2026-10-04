@@ -83,6 +83,7 @@ dialog{border:1px solid var(--line);border-radius:12px;max-width:min(880px,94vw)
 .mhead{font-family:var(--font-mono);font-size:10.5px;letter-spacing:.07em;text-transform:uppercase;color:var(--muted);border-bottom:1px solid var(--line);background:rgba(26,26,24,.85);padding:10px 14px;display:grid;grid-template-columns:92px minmax(180px,1fr) 96px 110px 96px;gap:10px;align-items:center}
 .mrow{border-bottom:1px solid var(--line);font-size:12.5px;font-variant-numeric:tabular-nums;display:grid;grid-template-columns:92px minmax(180px,1fr) 96px 110px 96px;gap:10px;align-items:center;padding:9px 14px}.mrow:last-child{border-bottom:0}.mrow[data-m]{cursor:pointer}.mrow[data-m]:hover{background:rgba(255,255,255,.03)}
 .lscroll>.mhead,.lscroll>.mrow{min-width:640px}
+.mfoot{display:flex;justify-content:space-between;align-items:center;gap:10px;width:100%;padding:12px 14px;background:rgba(255,255,255,.025);border:0;border-top:1px solid var(--line);color:var(--ink);font-family:var(--font-display);font-weight:700;font-size:13px;cursor:pointer;min-width:640px}.mfoot:hover{background:rgba(255,255,255,.05)}.mfoot .mono{font-family:var(--font-mono);font-size:11px;font-weight:400;color:var(--muted)}
 .sb-ghead{justify-content:center;text-align:center}
 .sb-bans{justify-content:center;text-align:center}
 .sb-duo{display:grid;grid-template-columns:1fr 1fr;gap:12px;align-items:start}

@@ -6,7 +6,7 @@ const IMG_HIDE = 'onerror="this.style.visibility=\'hidden\'"';
 function eqId(u){const m=/(?:equipment|equip)\/(\d+)\.png/.exec(u||'');return m?m[1]:'';}
 function itemRef(u){const id=eqId(u);if(id)return id;if(u&&u.indexOf('scoregg.com')>-1)return String(u).split('?')[0];return null;}
 function imgSlot(el){const s=document.createElement('span');s.className='slot-miss';s.title=el.alt||'item';s.textContent=el.dataset.eq||'?';el.replaceWith(s);}
-const S = {view:'overview',q:'',team:'',sort:'kda',lane:'',compact:false,layout:'grid',ov:null,mlimit:24};
+const S = {view:'overview',q:'',team:'',sort:'kda',lane:'',compact:false,layout:'grid',ov:null,mlimit:24,plimit:24};
 const PICON_RAW = ((window.ASSETS||{}).players||{});
 const PICON_CI = Object.fromEntries(Object.entries(PICON_RAW).map(([k,v])=>[k.toLowerCase(),v]));
 const PICON_ALIAS = {arfy:'dingarai',yazukee:'affan',hijumee:'dalvin',alekk:'alexander',joshuaa:'joshuaa',kevinn:'kevin',maykidss:'maykids',shanee:'shanee',sanz:'s a n z'};
@@ -22,7 +22,7 @@ const esc=s=>String(s??'').replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&g
 TEAMS.forEach(t=>{const b=document.createElement('button');b.textContent=t;b.setAttribute('aria-pressed','false');
 b.onclick=()=>{S.team=S.team===t?'':t;[...chips.children].forEach(x=>x.setAttribute('aria-pressed',x.textContent===S.team?'true':'false'));render();};chips.appendChild(b);});
 document.querySelectorAll('.tabs button').forEach(b=>b.onclick=()=>{S.view=b.dataset.view;
-if(b.dataset.view==='matches')S.mlimit=24;
+if(b.dataset.view==='matches'){S.mlimit=24;S.plimit=24;}
 document.querySelectorAll('.tabs button').forEach(x=>x.setAttribute('aria-selected',x===b?'true':'false'));render();});
 q.oninput=()=>{S.q=q.value.trim().toLowerCase();render();};
 sortEl.onchange=()=>{S.sort=sortEl.value;render();};laneEl.onchange=()=>{S.lane=laneEl.value;render();};
@@ -89,7 +89,8 @@ const isPO=m=>String(m.schedule_id||m.match_id||'').indexOf('playoffs')>-1||(m.t
 const sec=(title,list)=>{if(!list.length)return '';return `<div class="pin" style="grid-column:1/-1"><div class="body"><div class="kicker">Bracket</div><h3 style="margin:.25em 0">${title} (${list.length})</h3></div></div>`+list.map(m=>{const done=m.match_detail_id&&m.status==='completed';
 const gmvp=mvpById[String(m.match_detail_id)]||'';
 return `<div class="pin mpin"><div class="body"><div class="kicker">${esc(m.date||'')} · ${esc(m.status||'')}</div><div class="mteams"><div class="mt"><img src="${TICON(m.team_a)}" alt="" loading="lazy" ${IMG_HIDE}><span>${esc(m.team_a)}</span></div><div class="score">${m.score_a??'–'} : ${m.score_b??'–'}</div><div class="mt"><img src="${TICON(m.team_b)}" alt="" loading="lazy" ${IMG_HIDE}><span>${esc(m.team_b)}</span></div></div>${gmvp?`<div class="mmvp-grid">MVP · <b>${esc(gmvp)}</b></div>`:''}<div class="mmeta"><span class="tag">${done?('Detail #'+esc(m.match_detail_id)):esc(m.status||'upcoming')}</span></div></div><div class="actions">${done?`<button class="primary" data-m="${esc(m.match_detail_id)}">Scoreboard</button>`:`<button class="ghost" disabled>Soon</button>`}</div></div>`;}).join('');};
-const reg=ms.filter(m=>!isPO(m)).slice(0,S.mlimit),po=ms.filter(isPO);
+const regAll=ms.filter(m=>!isPO(m)),poAll=ms.filter(isPO);
+const reg=regAll.slice(0,S.mlimit),po=poAll.slice(0,S.plimit);
 const mvpById=Object.fromEntries((DATA.matches||[]).map(m=>[String(m.match_detail_id),m.liq_mvp||'']));
 const mrow=m=>{const done=m.match_detail_id&&m.status==='completed';
 const aWins=(+m.score_a)>(+m.score_b),bWins=(+m.score_b)>(+m.score_a);
@@ -98,11 +99,11 @@ return `<div class="mrow"${done?' data-m="'+esc(m.match_detail_id)+'"':''}><span
 +`<span class="hide-m"><span class="tag">${esc(m.status||'')}</span></span>`
 +`<span class="mmvp hide-m">${esc(mvpById[String(m.match_detail_id)]||'—')}</span>`
 +`<span class="mgo">${done?'›':''}</span></div>`;};
-if(S.layout==='list'){const moreN=ms.filter(m=>!isPO(m)).length;
+if(S.layout==='list'){
+const mfoot=(secKey,shown,total)=>shown<total?`<button class="mfoot" data-more="24" data-sec="${secKey}"><span>Show more</span><span class="mono">showing ${shown} of ${total}</span></button>`:'';
 let mh=`<div class="pin"><div class="lscroll"><div class="mhead"><span>Date</span><span>Match</span><span>Status</span><span>MVP</span><span></span></div>`;
-if(reg.length)mh+=`<div class="msec">Regular Season · ${reg.length}</div>`+reg.map(mrow).join('');
-if(po.length)mh+=`<div class="msec">Playoffs · ${po.length}</div>`+po.map(mrow).join('');
-if(moreN>S.mlimit)mh+=`<div style="padding:12px;text-align:center"><button class="primary" data-more="24">Show more (${S.mlimit} of ${moreN})</button></div>`;
+if(regAll.length)mh+=`<div class="msec">A · Regular Season · ${reg.length}/${regAll.length}</div>`+reg.map(mrow).join('')+mfoot('reg',reg.length,regAll.length);
+if(poAll.length)mh+=`<div class="msec">B · Playoffs · ${po.length}/${poAll.length}</div>`+po.map(mrow).join('')+mfoot('po',po.length,poAll.length);
 mh+=`</div></div>`;
 out.push(mh);}
 else{out.push(sec('Regular Season',reg)+sec('Playoffs — TBD',po));
@@ -118,7 +119,7 @@ board.querySelectorAll('[data-p]').forEach(b=>b.onclick=()=>showP(b.dataset.p));
 const ovb=document.getElementById('ovPick');if(ovb)ovb.onclick=openOvSel;
 board.querySelectorAll('.lrow').forEach(r=>{r.style.cursor='pointer';r.onclick=()=>showP(r.querySelector('b').textContent);});
 board.querySelectorAll('[data-m]').forEach(b=>b.onclick=()=>showM(b.dataset.m));
-board.querySelectorAll('[data-more]').forEach(b=>b.onclick=()=>{S.mlimit+=+b.dataset.more||24;render();});
+board.querySelectorAll('[data-more]').forEach(b=>b.onclick=()=>{const n=+b.dataset.more||24;if(b.dataset.sec==='po')S.plimit+=n;else S.mlimit+=n;render();});
 wireCharts();}
 function normId(s){return String(s||'').toLowerCase().replace(/[^a-z0-9]/g,'');}
 function offOf(n){const m={};DATA.season.forEach(s=>{m[String(s.player||'').toLowerCase()]=s;});

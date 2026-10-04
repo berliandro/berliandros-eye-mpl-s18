@@ -39,6 +39,8 @@ ok('under development' in html, "maniac/savage marked under development")
 ok('AVG KDA</th>' in html, "player card has AVG KDA column")
 ok('sb-live' not in html, "sb-live badge removed from match card")
 ok("toggle('full'" in html, "matches list can go full width")
+ok('mfoot' in html, "matches list has horizontal section footers")
+ok('data-sec' in html, "load-more footers are per-section")
 for needle in ('id="searchBox"', 'id="sortBox"', 'id="laneBox"', 'id="layoutSeg"'):
     ok(needle in html, f"contains {needle}")
 
