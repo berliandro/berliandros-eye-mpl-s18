@@ -54,8 +54,10 @@ dialog{border:1px solid var(--line);border-radius:12px;max-width:min(880px,94vw)
 .sb-gear{grid-column:2/-1;display:flex;gap:12px;align-items:center;flex-wrap:wrap}
 .sb-tal{display:flex;gap:4px;align-items:center}.sb-tal img{width:20px;height:20px;border-radius:50%;border:1px solid var(--line)}
 .sb-items{display:flex;gap:4px;flex-wrap:wrap}.sb-items img{width:32px;height:32px;border-radius:6px;border:1px solid var(--line);object-fit:cover;background:var(--bg)}
+.wrap.full{max-width:none}
 .slot-miss{width:32px;height:32px;border:1px dashed var(--line);border-radius:6px;font:9px var(--font-mono);font-family:var(--font-mono);color:var(--muted);display:inline-flex;align-items:center;justify-content:center}
-.sb-live{font-size:11px;color:var(--muted);font-family:var(--font-mono)}
+.sb-ghead .gmvp{border:1px solid var(--line);border-radius:9999px;padding:1px 8px;font-size:11px;font-family:var(--font-mono);white-space:nowrap}
+.mpin .mmvp-grid{margin:6px 0 2px;font-family:var(--font-mono);font-size:11px;color:var(--muted)}.mpin .mmvp-grid b{color:var(--ink)}
 .lscroll{overflow-x:auto}.lscroll>.lhead,.lscroll>.lrow{min-width:720px}
 .tiles{display:grid;grid-template-columns:repeat(auto-fit,minmax(120px,1fr));gap:8px;margin:12px 0}
 .tile{border:1px solid var(--line);border-radius:10px;padding:10px 12px;background:rgba(255,255,255,.02);min-width:0;overflow:hidden}

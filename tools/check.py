@@ -32,6 +32,12 @@ for needle in ('name="description"', 'name="theme-color"', 'rel="icon"', 'proper
     ok(needle in html, f"contains meta {needle}")
 ok('.ovsec{overflow-x:auto}' in html or '.ovsec{overflow-x: auto}' in html, "ovsec scrolls on mobile")
 ok('function syncControls' in html, "controls sync per tab")
+ok('gameMvp' in html, "game MVP computed for scoreboard header")
+ok('mmvp-grid' in html, "grid match cards show series MVP")
+ok('MANIAC' in html and 'SAVAGE' in html, "player card has MANIAC/SAVAGE columns")
+ok('AVG KDA</th>' in html, "player card has AVG KDA column")
+ok('sb-live' not in html, "sb-live badge removed from match card")
+ok("toggle('full'" in html, "matches list can go full width")
 for needle in ('id="searchBox"', 'id="sortBox"', 'id="laneBox"', 'id="layoutSeg"'):
     ok(needle in html, f"contains {needle}")
 
