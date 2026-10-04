@@ -200,5 +200,20 @@ if gap:
 else:
     print("PASS player images cover all players")
 
+# MVP leaderboard names (Liquipedia spellings) must open a non-empty player
+# card: exact, normalized, or via the documented alias map. Coolfire is the
+# one known exception — no roster, live API, or Liquipedia identity resolves it.
+MVP_ALIAS = {'sutsujin': 'arthur', 'jooooo': 'kevinn', 'aboy': 'aboyy',
+             'maykids': 'maykidss', 'moreno': 'morenooo', 'rendyy': 'rendyyy',
+             'jizeezeze': 'jiizee'}
+mvp_names = sorted({(m.get('liq_mvp') or '').strip() for m in matches
+                    if (m.get('liq_mvp') or '').strip()})
+players_u = {ultra(p) for p in all_players}
+unresolved = [m for m in mvp_names
+              if ultra(m) not in players_u
+              and MVP_ALIAS.get(ultra(m), ultra(m)) not in players_u]
+ok(unresolved == ['Coolfire'],
+   f"MVP names resolve to player cards (unresolved: {unresolved})")
+
 print(f"\n{len(fails)} failures, {len(warns)} warnings")
 sys.exit(1 if fails else 0)
