@@ -43,6 +43,10 @@ ok('mfoot' in html, "matches list has horizontal section footers")
 ok('data-sec' in html, "load-more footers are per-section")
 ok('data-phase' in html, "matches has Regular/Playoffs sub-tab")
 ok('phasebar' in html, "phase switcher folded into header bar")
+ok('data-stat' in html, "stats has Series MVP / Heroes sub-tabs")
+ok('bracketHTML' in html, "playoff bracket preview exists")
+ok('standBoard' in html, "standings board moved to matches")
+ok('data-ts' in html, "statistic tables have sort controls")
 for needle in ('id="searchBox"', 'id="sortBox"', 'id="laneBox"', 'id="layoutSeg"'):
     ok(needle in html, f"contains {needle}")
 

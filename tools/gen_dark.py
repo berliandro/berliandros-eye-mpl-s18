@@ -21,6 +21,9 @@ season = load('player_season_stats')
 stand = load('standings')
 matches = load('matches')
 praw = load('game_players')
+hero_stats = load('hero_stats')
+playoffs = json.loads((ROOT / 'data' / 'playoffs.json').read_text(encoding='utf-8'))
+praw = load('game_players')
 players = [{k: r[k] for k in ('match_detail_id','game_no','team','player','lane','hero','kills','deaths','assists','kda','gold','gold_per_min','hero_damage','damage_taken','tower_damage')} for r in praw]
 for r in players:
     for k in ('game_no','kills','deaths','assists','gold','hero_damage','damage_taken','tower_damage'):
@@ -52,7 +55,7 @@ for _r in players:
             return None
         _r['i'] = [_f for _u in json.loads(_row[2] or '[]') for _f in [_iref(_u)] if _f]
 _con.close()
-DATA = {"schedule": sched, "games": games, "players": players, "hero_pool": hero_pool, "season": season, "standings": stand, "matches": matches}
+DATA = {"schedule": sched, "games": games, "players": players, "hero_pool": hero_pool, "season": season, "standings": stand, "matches": matches, "heroes": hero_stats, "playoffs": playoffs}
 data_js = json.dumps(DATA, ensure_ascii=False, separators=(',', ':')).replace('</scr'+'ipt>', '<\\/scr'+'ipt>')
 TEAMS = ["AE","BTR","DEWA","EVOS","GEEK","NAVI","ONIC","RRQ","TLID"]
 

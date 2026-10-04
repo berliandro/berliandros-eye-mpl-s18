@@ -79,6 +79,19 @@ with sync_playwright() as pw:
         prow.click()
         pg.wait_for_timeout(1200)
         shot(pg, '06-player.png')
+        pg.keyboard.press('Escape')
+        pg.wait_for_timeout(500)
+
+    # stats revamp: MVP race + heroes table
+    pg.click('[data-view="stats"]')
+    pg.wait_for_timeout(1000)
+    shot(pg, '07-stats-mvp.png')
+    try:
+        pg.click('[data-stat="heroes"]')
+        pg.wait_for_timeout(1000)
+    except Exception as e:
+        print('heroes subtab:', str(e)[:80])
+    shot(pg, '08-stats-heroes.png')
 
     b.close()
 print('done:', SHOTS)

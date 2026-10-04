@@ -26,6 +26,12 @@ live from the mlbbhub API when online.
 ### Player card — per-hero AVG KDA / K / D / A, MANIAC, SAVAGE (🚧 under development)
 ![Player card](github/assets/06-player.png)
 
+### Stats — Series MVP race leaderboard + history
+![Stats MVP](github/assets/07-stats-mvp.png)
+
+### Stats — Heroes dashboard (highlights + sortable pick/ban/win table)
+![Stats heroes](github/assets/08-stats-heroes.png)
+
 ## Features
 
 - **Overview** — pick any player: tiles (games, avg KDA, game/match W-L + WR, avg game
@@ -34,13 +40,18 @@ live from the mlbbhub API when online.
 - **Players** — grid/list cards with photos, KDA, GPM, hero pools; filter by team,
   lane, search text; sort by KDA / games / kills.
 - **Matches** — full-width frosted list (date, logos, score, status, series MVP) and
-  grid cards (also showing series MVP). Completed cards open the scoreboard.
+  grid cards (also showing series MVP). A Regular/Playoffs sub-tab switches phases.
+  Regular phase shows the **standings board** on top; Playoffs shows **final
+  positions** plus a **bracket preview** (Round 1 → Grand Final) under the history.
+  Completed cards open the scoreboard.
 - **Scoreboard dialog** — symmetrical 50/50 team split with first-pick blue/red glow,
   centered header (score, duration, date), full-width bans bridge, mirrored player
   rows, and a **per-game MVP pill** next to “TEAM won”.
 - **Player dialog** — per-hero table: GP, AVG KDA (`00.00`), AVG K, AVG D, AVG A,
   MANIAC, SAVAGE, GPM.
-- **Stats** — standings, Top-KDA leaders, series MVP history.
+- **Stats** — sub-tabbed dashboard: **Series MVP** (race leaderboard + history) and
+  **Heroes** (highlight tiles + sortable pick/ban/win table with share bars).
+  Every statistic column sorts ascending/descending with a minimalist ▲▼ indicator.
 - **Offline-first** — embedded snapshot renders instantly; Refresh re-fetches live
   data with retry/timeout, caches to `localStorage`, and reports how many brand-new
   heroes/items were served from the live CDN.

@@ -43,6 +43,11 @@ def main():
     matches = get_json(f"{HUB}/matches")
     standings = get_json(f"{HUB}/standings")
     player_stats = get_json(f"{HUB}/stats/players")
+    hero_stats = get_json(f"{HUB}/stats/heroes")
+    try:
+        playoffs = get_json(f"{HUB}/playoffs")
+    except Exception as e:
+        print("playoffs fetch failed", e); playoffs = {}
     try:
         drafts = get_json(f"{HUB}/drafts")
     except Exception as e:
@@ -115,6 +120,10 @@ def main():
       match_point INTEGER, match_win INTEGER, match_lose INTEGER,
       game_win INTEGER, game_lose INTEGER, net_game_win INTEGER
     );
+    CREATE TABLE hero_stats(
+      hero TEXT PRIMARY KEY, hero_image TEXT,
+      pick INTEGER, ban INTEGER, win INTEGER, win_rate TEXT
+    );
     CREATE TABLE schedule_all(
       schedule_id TEXT PRIMARY KEY, team_a TEXT, team_b TEXT,
       score_a INTEGER, score_b INTEGER,
@@ -138,6 +147,12 @@ def main():
             (p.get("player"), p.get("team"), p.get("team_slug"), p.get("lane"), p.get("total_games"),
              p.get("total_kills"), p.get("avg_kills"), p.get("total_deaths"), p.get("avg_deaths"),
              p.get("total_assists"), p.get("avg_assists"), p.get("avg_kda"), p.get("kill_participation")))
+    for h in (hero_stats or []):
+        cur.execute("INSERT OR REPLACE INTO hero_stats VALUES(?,?,?,?,?,?)",
+            (h.get("hero"), h.get("hero_image"), h.get("pick"), h.get("ban"),
+             h.get("win"), h.get("win_rate")))
+    with open(ROOT / "data" / "playoffs.json", "w", encoding="utf-8") as f:
+        json.dump(playoffs, f, ensure_ascii=False)
 
     # MVP merge: liq list is 72 long in chronological order; numeric hub matches are first 50ish completed in same order.
     # Align by matching team pair (normalized) where possible.
@@ -212,7 +227,7 @@ def main():
     import csv
     CSVDIR.mkdir(exist_ok=True)
     con = sqlite3.connect(DB)
-    for tbl in ["matches","schedule_all","games","game_players","game_bans","player_season_stats","standings"]:
+    for tbl in ["matches","schedule_all","games","game_players","game_bans","player_season_stats","hero_stats","standings"]:
         rows = con.execute(f"SELECT * FROM {tbl}").fetchall()
         cols = [d[0] for d in con.execute(f"SELECT * FROM {tbl} LIMIT 0").description]
         with open(CSVDIR/f"{tbl}.csv","w",newline="",encoding="utf-8") as f:
