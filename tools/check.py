@@ -124,6 +124,16 @@ if '--live' in sys.argv:
 else:
     print(f"(skip live link fetch; {len(urls)} links format-checked — rerun with --live)")
 
+# embedded JS must parse (catches template-literal/brace breakage)
+import shutil
+import subprocess
+if shutil.which('node'):
+    r = subprocess.run(['node', '--check', str(BASE / 'templates' / 'app.js')],
+                       capture_output=True, text=True)
+    ok(r.returncode == 0, "app.js parses (node --check)" + ("" if r.returncode == 0 else f": {r.stderr.strip()[:200]}"))
+else:
+    warn("node not found; skipped JS syntax check")
+
 # lane coverage (normalized: lowercase alnum + known IGN aliases; source: data/lanes.json)
 def ultra(s):
     return re.sub(r'[^a-z0-9]', '', str(s or '').lower())

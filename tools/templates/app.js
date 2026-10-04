@@ -64,7 +64,7 @@ show('searchBox',v==='players'||v==='matches');
 show('chips',v==='players'||v==='matches');
 show('sortBox',v==='players');
 show('laneBox',v==='players');
-show('layoutSeg',v==='players');}
+show('layoutSeg',v==='players'||v==='matches');}
 function render(){const out=[];
 syncControls();
 board.classList.toggle('list',S.layout==='list'&&S.view==='players');
@@ -87,8 +87,23 @@ const isPO=m=>String(m.schedule_id||m.match_id||'').indexOf('playoffs')>-1||(m.t
 const sec=(title,list)=>{if(!list.length)return '';return `<div class="pin" style="grid-column:1/-1"><div class="body"><div class="kicker">Bracket</div><h3 style="margin:.25em 0">${title} (${list.length})</h3></div></div>`+list.map(m=>{const done=m.match_detail_id&&m.status==='completed';
 return `<div class="pin mpin"><div class="body"><div class="kicker">${esc(m.date||'')} · ${esc(m.status||'')}</div><div class="mteams"><div class="mt"><img src="${TICON(m.team_a)}" alt="" loading="lazy" ${IMG_HIDE}><span>${esc(m.team_a)}</span></div><div class="score">${m.score_a??'–'} : ${m.score_b??'–'}</div><div class="mt"><img src="${TICON(m.team_b)}" alt="" loading="lazy" ${IMG_HIDE}><span>${esc(m.team_b)}</span></div></div><div class="mmeta"><span class="tag">${done?('Detail #'+esc(m.match_detail_id)):esc(m.status||'upcoming')}</span></div></div><div class="actions">${done?`<button class="primary" data-m="${esc(m.match_detail_id)}">Scoreboard</button>`:`<button class="ghost" disabled>Soon</button>`}</div></div>`;}).join('');};
 const reg=ms.filter(m=>!isPO(m)).slice(0,S.mlimit),po=ms.filter(isPO);
-out.push(sec('Regular Season',reg)+sec('Playoffs — TBD',po));
-if(ms.filter(m=>!isPO(m)).length>S.mlimit)out.push(`<div class="pin"><div class="body" style="text-align:center"><p>Showing ${S.mlimit} of ${ms.filter(m=>!isPO(m)).length} regular-season matches</p><div class="actions"><button class="primary" data-more="24">Show more</button></div></div></div>`);}
+const mvpById=Object.fromEntries((DATA.matches||[]).map(m=>[String(m.match_detail_id),m.liq_mvp||'']));
+const mrow=m=>{const done=m.match_detail_id&&m.status==='completed';
+const aWins=(+m.score_a)>(+m.score_b),bWins=(+m.score_b)>(+m.score_a);
+return `<div class="mrow"${done?' data-m="'+esc(m.match_detail_id)+'"':''}><span class="mdate hide-m">${esc(m.iso_date||m.date||'')}</span>`
++`<span class="mfix"><img src="${TICON(m.team_a)}" alt="" loading="lazy" ${IMG_HIDE}><span class="mt ${done?(aWins?'mwin':'mlose'):''}">${esc(m.team_a)}</span><span class="msc">${m.score_a??'–'} : ${m.score_b??'–'}</span><span class="mt ${done?(bWins?'mwin':'mlose'):''}">${esc(m.team_b)}</span><img src="${TICON(m.team_b)}" alt="" loading="lazy" ${IMG_HIDE}></span>`
++`<span class="hide-m"><span class="tag">${esc(m.status||'')}</span></span>`
++`<span class="mmvp hide-m">${esc(mvpById[String(m.match_detail_id)]||'—')}</span>`
++`<span class="mgo">${done?'›':''}</span></div>`;};
+if(S.layout==='list'){const moreN=ms.filter(m=>!isPO(m)).length;
+let mh=`<div class="pin"><div class="lscroll"><div class="mhead"><span>Date</span><span>Match</span><span>Status</span><span>MVP</span><span></span></div>`;
+if(reg.length)mh+=`<div class="msec">Regular Season · ${reg.length}</div>`+reg.map(mrow).join('');
+if(po.length)mh+=`<div class="msec">Playoffs · ${po.length}</div>`+po.map(mrow).join('');
+if(moreN>S.mlimit)mh+=`<div style="padding:12px;text-align:center"><button class="primary" data-more="24">Show more (${S.mlimit} of ${moreN})</button></div>`;
+mh+=`</div></div>`;
+out.push(mh);}
+else{out.push(sec('Regular Season',reg)+sec('Playoffs — TBD',po));
+if(ms.filter(m=>!isPO(m)).length>S.mlimit)out.push(`<div class="pin"><div class="body" style="text-align:center"><p>Showing ${S.mlimit} of ${ms.filter(m=>!isPO(m)).length} regular-season matches</p><div class="actions"><button class="primary" data-more="24">Show more</button></div></div></div>`);}}
 if(S.view==='stats'){const st=[...DATA.standings].sort((a,b)=>a.rank-b.rank);
 out.push(`<div class="pin"><div class="body"><div class="kicker">Board</div><h3>Standings</h3><table><tr><th>#</th><th>Team</th><th>Pts</th><th>W-L</th></tr>${st.map(s=>{const slug=(s.team_slug||s.team_name||'').toLowerCase();return `<tr><td>${s.rank}</td><td><img src="${TICON(slug)}" alt="" loading="lazy" style="width:20px;height:20px;object-fit:contain;vertical-align:-5px" ${IMG_HIDE}> ${esc(s.team_name)}</td><td>${s.match_point}</td><td>${s.match_win}-${s.match_lose}</td></tr>`;}).join('')}</table></div></div>`);
 const top=[...DATA.season].filter(s=>+s.total_games>=5).sort((a,b)=>+b.avg_kda-+a.avg_kda).slice(0,10);
@@ -233,8 +248,9 @@ function durSec(s){const m=/(\d+):(\d+)/.exec(s||'');return m?(+m[1])*60+(+m[2])
 function normPl(r,sec){const kills=r.kill??r.kills??0,deaths=r.death??r.deaths??0,assists=r.assist??r.assists??0;
 const gpm=r.gold_per_min??((sec&&r.gold!=null)?Math.round(r.gold/(sec/60)):null);return Object.assign({},r,{kills,deaths,assists,gpm});}
 function aid(u,re){const m=re.exec(u||'');return m?m[1]:'';}
-function teamBlock(code,kills,plist,sec){
+function teamBlock(code,kills,plist,sec,side,flip){
 const A=window.ASSETS||{items:{},heroes:{},emblems:{},runes:{}};
+const pk=String(side||'').toLowerCase()==='blue'?'pk-b':(String(side||'').toLowerCase()==='red'?'pk-r':'');
 const prow=plist.map(r0=>{const r=normPl(r0,sec);
 const heroLocal=(r.hero&&A.heroes&&Object.prototype.hasOwnProperty.call(A.heroes,r.hero))?A.heroes[r.hero]:null;
 const heroImg=heroLocal?`<img class="sb-hero" src="${esc(heroLocal)}" alt="${esc(r.hero||'')}" loading="lazy" onerror="this.style.visibility='hidden'">`:`<span class="sb-hero" style="display:inline-flex;align-items:center;justify-content:center;font:10px var(--font-mono);font-family:var(--font-mono);color:var(--muted)">${esc((r.hero||'?').slice(0,2))}</span>`;
@@ -248,14 +264,14 @@ const items=itemObjs.map(o=>{const src=(o.eq&&A.items&&A.items[o.eq])||o.url;if(
 return `<div class="sb-p">${heroImg}<div class="sb-id"><b>${esc(r.player)}</b><span>${esc(r.hero||'')} · ${r.kills}/${r.deaths}/${r.assists} · KDA ${r.kda}</span></div>`
 +`<div class="sb-side">G ${r.gold}${r.gpm!=null?' ('+r.gpm+'/m)':''}<br>DMG ${r.hero_damage??'–'} · TAKEN ${r.damage_taken??'–'}</div>`
 +`<div class="sb-gear"><span class="sb-tal">${embSm}${tals}</span>${items?`<span class="sb-items">${items}</span>`:''}</div></div>`;}).join('');
-return `<div class="sb-team"><div class="sb-thead"><img src="${logoOf(code)}" alt="" ${IMG_HIDE}><b>${esc(code)}</b><span class="k">${kills} kills</span></div>${prow}</div>`;}
+return `<div class="sb-team${flip?' flip':''}${pk?' '+pk:''}"><div class="sb-thead"><img src="${logoOf(code)}" alt="" ${IMG_HIDE}><b>${esc(code)}</b><span class="k">${kills} kills</span></div>${prow}</div>`;}
 function winName(g){return g.winner==='team_a'?g.team_a:(g.winner==='team_b'?g.team_b:(g.winner||''));}
 function gameSection(g,plistA,plistB,bansA,bansB,live,active){
 const sec=durSec(g.duration_str||g.duration);const dur=g.duration_str||g.duration||'';
 const bans=(bansA.length||bansB.length)?`<div class="sb-bans"><span>BAN ${esc(g.team_a)}: ${bansA.map(esc).join(', ')||'–'}</span><span>BAN ${esc(g.team_b)}: ${bansB.map(esc).join(', ')||'–'}</span></div>`:'';
 return `<div class="sb-game" data-g="${g.game_no}"${active?'':' hidden'}>`
 +`<div class="sb-ghead"><h4>Game ${g.game_no}</h4><span>${esc(g.team_a)} ${g.team_a_kills} : ${g.team_b_kills} ${esc(g.team_b)} · ${esc(dur)} · ${esc(winName(g))} won</span><span class="sb-live">${live?'live':'cached'}</span></div>`
-+bans+teamBlock(g.team_a,g.team_a_kills,plistA,sec)+teamBlock(g.team_b,g.team_b_kills,plistB,sec)+`</div>`;}
++bans+`<div class="sb-duo">`+teamBlock(g.team_a,g.team_a_kills,plistA,sec,g.team_a_side,'')+teamBlock(g.team_b,g.team_b_kills,plistB,sec,g.team_b_side,'flip')+`</div></div>`;}
 function wireTabs(){const db=document.getElementById('db');
 db.querySelectorAll('[data-gtab]').forEach(b=>b.onclick=()=>{
 db.querySelectorAll('[data-gtab]').forEach(x=>x.setAttribute('aria-pressed',x===b?'true':'false'));
@@ -274,7 +290,7 @@ clearTimeout(tmr);
 if(!r.ok)return;const d=await r.json();if(!d.games||!d.games.length)return;
 const t2=d.games.map((g,i)=>`<button data-gtab="${g.game}" aria-pressed="${i===0?'true':'false'}">Game ${g.game}</button>`).join('');
 document.getElementById('db').innerHTML=`<div class="sb-tabs" role="group" aria-label="Games">${t2}</div>`+d.games.map((g,i)=>{
-const gg={game_no:g.game,team_a:g.team_a,team_b:g.team_b,team_a_kills:g.team_a_kills,team_b_kills:g.team_b_kills,winner:g.winner,duration:g.duration};
+const gg={game_no:g.game,team_a:g.team_a,team_b:g.team_b,team_a_kills:g.team_a_kills,team_b_kills:g.team_b_kills,winner:g.winner,duration:g.duration,team_a_side:g.team_a_side,team_b_side:g.team_b_side};
 const pa=(g.players||[]).filter(p=>p.team===g.team_a),pb=(g.players||[]).filter(p=>p.team===g.team_b);
 return gameSection(gg,pa,pb,g.bans_a||[],g.bans_b||[],true,i===0);}).join('');
 wireTabs();
