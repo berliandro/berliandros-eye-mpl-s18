@@ -95,7 +95,7 @@ ok(mw + ml == len([d for d in mids if (skey.get(d) or {}).get('status') == 'comp
 print(f"INFO {name} snapshot Match {mw}-{ml}, live app showed 6-0/12-1 after refresh (season progresses)")
 
 man = json.loads((ROOT / 'assets' / 'manifest.json').read_text(encoding='utf-8'))
-for key, exp in (('items', 88), ('heroes', 86), ('players', 59)):
+for key, exp in (('items', 110), ('heroes', 88), ('players', 59)):
     got = len(man.get(key, {}))
     ok(got >= exp, f"manifest {key}: {got} (expect >= {exp})")
 missing = []
@@ -153,7 +153,31 @@ uncovered = [p for p in sorted(all_players)
              if ultra(p) not in lanes and alias.get(ultra(p), ultra(p)) not in lanes]
 ok(not uncovered, f"lane coverage normalized ({len(all_players)} names)" + ("" if not uncovered else f" missing {uncovered[:6]}"))
 
-# image gaps are warnings (initials fallback renders instead)
+# STRICT: every hero + item ref in the data must resolve to a downloaded file.
+# (players keep initials-fallback warnings: no remote photo source exists for them)
+heroes_used = sorted({r['hero'] for r in praw if r.get('hero')}
+                      | {r['hero'] for r in load('game_bans') if r.get('hero')})
+gap_h = [h for h in heroes_used
+         if h not in (man.get('heroes') or {})
+         or not (ROOT / man['heroes'][h]).exists()]
+ok(not gap_h, f"STRICT heroes all downloaded ({len(heroes_used)})"
+   + ("" if not gap_h else f" missing {gap_h[:6]}"))
+item_refs = set()
+for r in praw:
+    try:
+        urls = json.loads(r.get('items_json') or '[]')
+    except Exception:
+        urls = []
+    for u in urls:
+        if not u:
+            continue
+        m = re.search(r'(?:equipment|equip)/(\d+)\.png', u)
+        item_refs.add(m.group(1) if m else u.split('?')[0])
+gap_i = [x for x in sorted(item_refs)
+         if x not in (man.get('items') or {})
+         or not (ROOT / man['items'][x]).exists()]
+ok(not gap_i, f"STRICT items all downloaded ({len(item_refs)})"
+   + ("" if not gap_i else f" missing {[x[:50] for x in gap_i[:6]]}"))
 man_players_ci = {ultra(k): k for k in man.get('players', {})}
 gap = sorted(p for p in all_players if ultra(p) not in man_players_ci and alias.get(ultra(p), ultra(p)) not in man_players_ci)
 if gap:

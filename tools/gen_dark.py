@@ -41,7 +41,16 @@ for _r in players:
         _me = re.search(r'emblem/(\d+)\.png', _row[0] or '')
         _r['e'] = _me.group(1) if _me else None
         _r['t'] = [mm.group(1) for _u in json.loads(_row[1] or '[]') for mm in [re.search(r'rune/(\d+)\.png', _u)] if mm]
-        _r['i'] = [mm.group(1) for _u in json.loads(_row[2] or '[]') for mm in [re.search(r'equipment/(\d+)\.png', _u)] if mm]
+        def _iref(_u):
+            _m = re.search(r'(?:equipment|equip)/(\d+)\.png', _u or '')
+            if _m:
+                return _m.group(1)
+            # opaque scoregg item urls have no numeric id: keep the stable url
+            # (manifest keys them by full url)
+            if _u and 'scoregg.com' in _u:
+                return _u.split('?')[0]
+            return None
+        _r['i'] = [_f for _u in json.loads(_row[2] or '[]') for _f in [_iref(_u)] if _f]
 _con.close()
 DATA = {"schedule": sched, "games": games, "players": players, "hero_pool": hero_pool, "season": season, "standings": stand, "matches": matches}
 data_js = json.dumps(DATA, ensure_ascii=False, separators=(',', ':')).replace('</scr'+'ipt>', '<\\/scr'+'ipt>')

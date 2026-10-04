@@ -3,7 +3,8 @@ const TEAMS = ["AE", "BTR", "DEWA", "EVOS", "GEEK", "NAVI", "ONIC", "RRQ", "TLID
 const TEAM_LOGOS = {ae:"assets/teams/ae.png",btr:"assets/teams/btr.png",dewa:"assets/teams/dewa.png",evos:"assets/teams/evos.png",geek:"assets/teams/geek.png",navi:"assets/teams/navi.png",onic:"assets/teams/onic.png",rrq:"assets/teams/rrq.png",tlid:"assets/teams/tlid.png"};
 const logoOf = t => TEAM_LOGOS[String(t||'').toLowerCase()] || '';
 const IMG_HIDE = 'onerror="this.style.visibility=\'hidden\'"';
-function eqId(u){const m=/equipment\/(\d+)\.png/.exec(u||'');return m?m[1]:'';}
+function eqId(u){const m=/(?:equipment|equip)\/(\d+)\.png/.exec(u||'');return m?m[1]:'';}
+function itemRef(u){const id=eqId(u);if(id)return id;if(u&&u.indexOf('scoregg.com')>-1)return String(u).split('?')[0];return null;}
 function imgSlot(el){const s=document.createElement('span');s.className='slot-miss';s.title=el.alt||'item';s.textContent=el.dataset.eq||'?';el.replaceWith(s);}
 const S = {view:'overview',q:'',team:'',sort:'kda',lane:'',compact:false,layout:'grid',ov:null,mlimit:24};
 const PICON_RAW = ((window.ASSETS||{}).players||{});
@@ -253,14 +254,16 @@ const A=window.ASSETS||{items:{},heroes:{},emblems:{},runes:{}};
 const pk=String(side||'').toLowerCase()==='blue'?'pk-b':(String(side||'').toLowerCase()==='red'?'pk-r':'');
 const prow=plist.map(r0=>{const r=normPl(r0,sec);
 const heroLocal=(r.hero&&A.heroes&&Object.prototype.hasOwnProperty.call(A.heroes,r.hero))?A.heroes[r.hero]:null;
-const heroImg=heroLocal?`<img class="sb-hero" src="${esc(heroLocal)}" alt="${esc(r.hero||'')}" loading="lazy" onerror="this.style.visibility='hidden'">`:`<span class="sb-hero" style="display:inline-flex;align-items:center;justify-content:center;font:10px var(--font-mono);font-family:var(--font-mono);color:var(--muted)">${esc((r.hero||'?').slice(0,2))}</span>`;
+const heroRemote=(!heroLocal&&(r.hero_image||r.heroImage))||'';
+const heroSrc=heroLocal||heroRemote;
+const heroImg=heroSrc?`<img class="sb-hero" src="${esc(heroSrc)}" alt="${esc(r.hero||'')}" loading="lazy" onerror="this.style.visibility='hidden'">`:`<span class="sb-hero" style="display:inline-flex;align-items:center;justify-content:center;font:10px var(--font-mono);font-family:var(--font-mono);color:var(--muted)">${esc((r.hero||'?').slice(0,2))}</span>`;
 const embId=r.e||aid(r.emblem,/emblem\/(\d+)\.png/);
 const embSrc=(embId&&A.emblems&&A.emblems[embId])||r.emblem||'';
 const embSm=embSrc?`<img src="${esc(embSrc)}" alt="emblem" loading="lazy" style="width:20px;height:20px;border-radius:50%;border:1px solid var(--line)" onerror="this.remove()">`:'';
 const talObjs=(r.t&&r.t.length)?r.t.map(id=>({id:id,url:null})):(r.talents||[]).map(u=>({id:aid(u,/rune\/(\d+)\.png/),url:u}));
 const tals=talObjs.map(o=>{const src=(o.id&&A.runes&&A.runes[o.id])||(o.url&&A.runes&&A.runes[o.url])||o.url;return src?`<img src="${esc(src)}" alt="" loading="lazy" onerror="this.remove()">`:'';}).join('');
-const itemObjs=(r.i&&r.i.length)?r.i.map(eq=>({eq:eq,url:null})):(r.items||[]).map(u=>({eq:eqId(u),url:u}));
-const items=itemObjs.map(o=>{const src=(o.eq&&A.items&&A.items[o.eq])||o.url;if(!src)return '';return `<img src="${esc(src)}" alt="item ${o.eq}" data-eq="${o.eq}" loading="lazy" onerror="imgSlot(this)">`;}).join('');
+const itemObjs=(r.i&&r.i.length)?r.i.map(ref=>String(ref).indexOf('http')===0?{eq:null,url:ref}:{eq:ref,url:null}):(r.items||[]).map(u=>({eq:eqId(u)||null,url:u}));
+const items=itemObjs.map(o=>{const src=(o.eq&&A.items&&A.items[o.eq])||(o.url&&A.items&&A.items[o.url])||o.url;if(!src)return '';return `<img src="${esc(src)}" alt="item ${o.eq||''}" data-eq="${o.eq||''}" loading="lazy" onerror="imgSlot(this)">`;}).join('');
 return `<div class="sb-p">${heroImg}<div class="sb-id"><b>${esc(r.player)}</b><span>${esc(r.hero||'')} · ${r.kills}/${r.deaths}/${r.assists} · KDA ${r.kda}</span></div>`
 +`<div class="sb-side">G ${r.gold}${r.gpm!=null?' ('+r.gpm+'/m)':''}<br>DMG ${r.hero_damage??'–'} · TAKEN ${r.damage_taken??'–'}</div>`
 +`<div class="sb-gear"><span class="sb-tal">${embSm}${tals}</span>${items?`<span class="sb-items">${items}</span>`:''}</div></div>`;}).join('');
@@ -308,8 +311,8 @@ const HUB='https://mpl.mlbbhub.com/api/v1/id';
 function normLive(d){const games=[],pros=[];
 (d.games||[]).forEach(g=>{const sec=durSec(g.duration);
 games.push({match_detail_id:String(d.match_id),game_no:g.game,team_a:g.team_a,team_b:g.team_b,team_a_kills:g.team_a_kills,team_b_kills:g.team_b_kills,winner:g.winner,duration_str:g.duration,duration_sec:sec,team_a_side:g.team_a_side,team_b_side:g.team_b_side,vod_url:g.vod_url});
-(g.players||[]).forEach(p=>{const eq=u=>{const m=/equipment\/(\d+)\.png/.exec(u||'');return m?m[1]:null;};
-pros.push({match_detail_id:String(d.match_id),game_no:g.game,team:p.team,player:p.player,lane:p.lane||null,hero:p.hero,
+(g.players||[]).forEach(p=>{const eq=u=>itemRef(u);
+pros.push({match_detail_id:String(d.match_id),game_no:g.game,team:p.team,player:p.player,lane:p.lane||null,hero:p.hero,hero_image:p.hero_image||null,
 kills:p.kill??0,deaths:p.death??0,assists:p.assist??0,kda:p.kda??0,gold:p.gold??0,
 gold_per_min:(sec&&p.gold!=null)?Math.round(p.gold/(sec/60)):0,
 hero_damage:p.hero_damage??0,damage_taken:p.damage_taken??0,tower_damage:p.tower_damage??0,
@@ -369,8 +372,12 @@ try{const d=await fetch(HUB+'/match/'+encodeURIComponent(id)).then(r=>{if(!r.ok)
 const n=normLive(d);allGames.push(...n.games);allPros.push(...n.pros);}catch(e){fails++;}
 done++;upd.textContent='games '+done+'/'+ids.length+'…';}})()));
 DATA.games=allGames;DATA.players=allPros;DATA.hero_pool=buildPool(allPros);
+const AH2=(window.ASSETS||{}).heroes||{},AI2=(window.ASSETS||{}).items||{};
+const newH=[...new Set(allPros.map(p=>p.hero).filter(h=>h&&!Object.prototype.hasOwnProperty.call(AH2,h)))];
+const newI=[...new Set(allPros.flatMap(p=>p.i||[]).filter(x=>x&&!Object.prototype.hasOwnProperty.call(AI2,x)))];
+const newMsg=(newH.length||newI.length)?` · ${newH.length+newI.length} new art via live CDN (persist: python tools/fetch_assets.py)`:'';
 try{localStorage.setItem('s18db',JSON.stringify({t:Date.now(),schedule:ms,standings:st,season:ps,players:allPros,games:allGames,heroPool:DATA.hero_pool,matches:DATA.matches}));}catch(e){upd.textContent='updated '+new Date().toLocaleTimeString()+' (not cached: storage full)';render();btn.disabled=false;btn.textContent=old;return;}
-upd.textContent='updated '+new Date().toLocaleTimeString()+' · '+allGames.length+' games · '+mvpN+' MVPs'+(fails?' · '+fails+' failed':'');setNet();render();
+upd.textContent='updated '+new Date().toLocaleTimeString()+' · '+allGames.length+' games · '+mvpN+' MVPs'+(fails?' · '+fails+' failed':'')+newMsg;setNet();render();
 }catch(e){upd.textContent='refresh failed — offline? showing last snapshot';setNet();}
 btn.disabled=false;btn.textContent=old;}
 document.getElementById('refresh').onclick=refreshDB;
