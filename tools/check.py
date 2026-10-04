@@ -41,6 +41,7 @@ ok('sb-live' not in html, "sb-live badge removed from match card")
 ok("toggle('full'" in html, "matches list can go full width")
 ok('mfoot' in html, "matches list has horizontal section footers")
 ok('data-sec' in html, "load-more footers are per-section")
+ok('data-phase' in html, "matches has Regular/Playoffs sub-tab")
 for needle in ('id="searchBox"', 'id="sortBox"', 'id="laneBox"', 'id="layoutSeg"'):
     ok(needle in html, f"contains {needle}")
 

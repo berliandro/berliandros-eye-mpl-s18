@@ -6,7 +6,7 @@ const IMG_HIDE = 'onerror="this.style.visibility=\'hidden\'"';
 function eqId(u){const m=/(?:equipment|equip)\/(\d+)\.png/.exec(u||'');return m?m[1]:'';}
 function itemRef(u){const id=eqId(u);if(id)return id;if(u&&u.indexOf('scoregg.com')>-1)return String(u).split('?')[0];return null;}
 function imgSlot(el){const s=document.createElement('span');s.className='slot-miss';s.title=el.alt||'item';s.textContent=el.dataset.eq||'?';el.replaceWith(s);}
-const S = {view:'overview',q:'',team:'',sort:'kda',lane:'',compact:false,layout:'grid',ov:null,mlimit:24,plimit:24};
+const S = {view:'overview',q:'',team:'',sort:'kda',lane:'',compact:false,layout:'grid',ov:null,mlimit:24,plimit:24,phase:'reg'};
 const PICON_RAW = ((window.ASSETS||{}).players||{});
 const PICON_CI = Object.fromEntries(Object.entries(PICON_RAW).map(([k,v])=>[k.toLowerCase(),v]));
 const PICON_ALIAS = {arfy:'dingarai',yazukee:'affan',hijumee:'dalvin',alekk:'alexander',joshuaa:'joshuaa',kevinn:'kevin',maykidss:'maykids',shanee:'shanee',sanz:'s a n z'};
@@ -99,15 +99,20 @@ return `<div class="mrow"${done?' data-m="'+esc(m.match_detail_id)+'"':''}><span
 +`<span class="hide-m"><span class="tag">${esc(m.status||'')}</span></span>`
 +`<span class="mmvp hide-m">${esc(mvpById[String(m.match_detail_id)]||'—')}</span>`
 +`<span class="mgo">${done?'›':''}</span></div>`;};
+const pbtn=(k,label,n)=>`<button data-phase="${k}" aria-pressed="${S.phase===k?'true':'false'}">${label} (${n})</button>`;
+const phaseSeg=`<div class="pin" style="grid-column:1/-1"><div class="body"><div class="kicker">Phase</div><div class="seg" role="group" aria-label="Phase">${pbtn('reg','Regular Season',regAll.length)}${pbtn('po','Playoffs',poAll.length)}</div></div></div>`;
 if(S.layout==='list'){
 const mfoot=(secKey,shown,total)=>shown<total?`<button class="mfoot" data-more="24" data-sec="${secKey}"><span>Show more</span><span class="mono">showing ${shown} of ${total}</span></button>`:'';
-let mh=`<div class="pin"><div class="lscroll"><div class="mhead"><span>Date</span><span>Match</span><span>Status</span><span>MVP</span><span></span></div>`;
-if(regAll.length)mh+=`<div class="msec">A · Regular Season · ${reg.length}/${regAll.length}</div>`+reg.map(mrow).join('')+mfoot('reg',reg.length,regAll.length);
-if(poAll.length)mh+=`<div class="msec">B · Playoffs · ${po.length}/${poAll.length}</div>`+po.map(mrow).join('')+mfoot('po',po.length,poAll.length);
+let mh=phaseSeg+`<div class="pin"><div class="lscroll"><div class="mhead"><span>Date</span><span>Match</span><span>Status</span><span>MVP</span><span></span></div>`;
+if(S.phase==='po'){if(poAll.length)mh+=`<div class="msec">B · Playoffs · ${po.length}/${poAll.length}</div>`+po.map(mrow).join('')+mfoot('po',po.length,poAll.length);}
+else{if(regAll.length)mh+=`<div class="msec">A · Regular Season · ${reg.length}/${regAll.length}</div>`+reg.map(mrow).join('')+mfoot('reg',reg.length,regAll.length);}
 mh+=`</div></div>`;
 out.push(mh);}
-else{out.push(sec('Regular Season',reg)+sec('Playoffs — TBD',po));
-if(ms.filter(m=>!isPO(m)).length>S.mlimit)out.push(`<div class="pin"><div class="body" style="text-align:center"><p>Showing ${S.mlimit} of ${ms.filter(m=>!isPO(m)).length} regular-season matches</p><div class="actions"><button class="primary" data-more="24">Show more</button></div></div></div>`);}}
+else{out.push(phaseSeg);
+if(S.phase==='po'){out.push(sec('Playoffs — TBD',po));
+if(poAll.length>S.plimit)out.push(`<div class="pin"><div class="body" style="text-align:center"><p>Showing ${S.plimit} of ${poAll.length} playoff matches</p><div class="actions"><button class="primary" data-more="24" data-sec="po">Show more</button></div></div></div>`);}
+else{out.push(sec('Regular Season',reg));
+if(regAll.length>S.mlimit)out.push(`<div class="pin"><div class="body" style="text-align:center"><p>Showing ${S.mlimit} of ${regAll.length} regular-season matches</p><div class="actions"><button class="primary" data-more="24">Show more</button></div></div></div>`);}}}
 if(S.view==='stats'){const st=[...DATA.standings].sort((a,b)=>a.rank-b.rank);
 out.push(`<div class="pin"><div class="body"><div class="kicker">Board</div><h3>Standings</h3><table><tr><th>#</th><th>Team</th><th>Pts</th><th>W-L</th></tr>${st.map(s=>{const slug=(s.team_slug||s.team_name||'').toLowerCase();return `<tr><td>${s.rank}</td><td><img src="${TICON(slug)}" alt="" loading="lazy" style="width:20px;height:20px;object-fit:contain;vertical-align:-5px" ${IMG_HIDE}> ${esc(s.team_name)}</td><td>${s.match_point}</td><td>${s.match_win}-${s.match_lose}</td></tr>`;}).join('')}</table></div></div>`);
 const top=[...DATA.season].filter(s=>+s.total_games>=5).sort((a,b)=>+b.avg_kda-+a.avg_kda).slice(0,10);
@@ -120,6 +125,7 @@ const ovb=document.getElementById('ovPick');if(ovb)ovb.onclick=openOvSel;
 board.querySelectorAll('.lrow').forEach(r=>{r.style.cursor='pointer';r.onclick=()=>showP(r.querySelector('b').textContent);});
 board.querySelectorAll('[data-m]').forEach(b=>b.onclick=()=>showM(b.dataset.m));
 board.querySelectorAll('[data-more]').forEach(b=>b.onclick=()=>{const n=+b.dataset.more||24;if(b.dataset.sec==='po')S.plimit+=n;else S.mlimit+=n;render();});
+board.querySelectorAll('[data-phase]').forEach(b=>b.onclick=()=>{S.phase=b.dataset.phase;render();});
 wireCharts();}
 function normId(s){return String(s||'').toLowerCase().replace(/[^a-z0-9]/g,'');}
 function offOf(n){const m={};DATA.season.forEach(s=>{m[String(s.player||'').toLowerCase()]=s;});
