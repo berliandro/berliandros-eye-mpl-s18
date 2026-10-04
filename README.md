@@ -23,7 +23,7 @@ live from the mlbbhub API when online.
 ### Scoreboard — symmetrical 50/50 split, per-game MVP, first-pick glow
 ![Scoreboard](github/assets/05-scoreboard.png)
 
-### Player card — per-hero AVG KDA / K / D / A, MANIAC, SAVAGE
+### Player card — per-hero AVG KDA / K / D / A, MANIAC, SAVAGE (🚧 under development)
 ![Player card](github/assets/06-player.png)
 
 ## Features
@@ -50,9 +50,10 @@ live from the mlbbhub API when online.
 - **Game MVP**: the mlbbhub API exposes no per-game MVP (game `summary` is empty), so
   the app awards it to the **highest-KDA player on the winning team**
   (tiebreaks: kills, then gold). Series MVP comes from Liquipedia.
-- **MANIAC / SAVAGE**: no API endpoint (`/match`, `/stats/players`, `/stats/heroes`)
-  exposes kill-streak data, so these columns render `–` until a source exists. They
-  are never fabricated.
+- **MANIAC / SAVAGE**: 🚧 **Under development** — no API endpoint (`/match`,
+  `/stats/players`, `/stats/heroes`) or official MPL ID page publishes kill-streak
+  data (the official leaderboard exists for MPL MY only), so these columns render
+  `–` until a source exists. They are never fabricated.
 
 ## Project layout
 
