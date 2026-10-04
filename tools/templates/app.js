@@ -146,7 +146,7 @@ svg.querySelector('.hoverzone').addEventListener('mouseleave',hide);
 dots.forEach((c,i)=>{c.setAttribute('tabindex','0');c.setAttribute('role','img');
 c.addEventListener('focus',()=>show(i));c.addEventListener('blur',hide);});});}
 
-function fmtDur(s){s=Math.round(s||0);return Math.floor(s/60)+':'+String(s%60).padStart(2,'0');}
+function fmtDur(s){s=Math.round(+s||0);if(!isFinite(s)||s<0)s=0;if(s>3*3600)return '—';const t=Math.floor(s/60)+':'+String(s%60).padStart(2,'0');return t.length>6?'—':t;}
 function ovHTML(){const all=agg();if(!S.ov||!all.find(o=>o.player===S.ov))S.ov=defaultOv();
 const name=S.ov,g=all.find(o=>o.player===name)||{},s=offOf(name)||{};
 const A=window.ASSETS||{heroes:{},items:{},emblems:{},runes:{}};
@@ -156,7 +156,7 @@ const rows=DATA.players.filter(r=>r.player===name).map(r=>({r:r,info:gameInfo(r)
 const scored=rows.filter(x=>x.info.won!==null);
 const wins=scored.filter(x=>x.info.won).length;
 const wr=scored.length?Math.round(wins/scored.length*100):0;
-const durS=rows.map(x=>x.info.gm.duration_sec||0).filter(Boolean);
+const durS=rows.map(x=>+x.info.gm.duration_sec||0).filter(v=>v>0&&v<=3*3600);
 const avgD=durS.length?durS.reduce((a,b)=>a+b,0)/durS.length:0;
 const mids=[...new Set(rows.map(x=>String(x.r.match_detail_id)))];let mw=0,ml=0;
 mids.forEach(id=>{const sc=(DATA.schedule||[]).find(s=>String(s.match_detail_id)===id);

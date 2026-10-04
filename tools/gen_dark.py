@@ -13,6 +13,10 @@ def load(name):
 
 sched = load('schedule_all')
 games = load('games')
+for g in games:
+    for k in ('game_no', 'team_a_kills', 'team_b_kills', 'duration_sec'):
+        try: g[k] = int(float(g[k])) if g[k] not in ('', None) else 0
+        except: g[k] = 0
 season = load('player_season_stats')
 stand = load('standings')
 matches = load('matches')

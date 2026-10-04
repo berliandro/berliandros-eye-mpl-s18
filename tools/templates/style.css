@@ -57,8 +57,8 @@ dialog{border:1px solid var(--line);border-radius:12px;max-width:min(880px,94vw)
 .sb-live{font-size:11px;color:var(--muted);font-family:var(--font-mono)}
 .lscroll{overflow-x:auto}.lscroll>.lhead,.lscroll>.lrow{min-width:720px}
 .tiles{display:grid;grid-template-columns:repeat(auto-fit,minmax(120px,1fr));gap:8px;margin:12px 0}
-.tile{border:1px solid var(--line);border-radius:10px;padding:10px 12px;background:rgba(255,255,255,.02)}
-.tile b{display:block;font-family:var(--font-display);font-size:19px;letter-spacing:-.01em}
+.tile{border:1px solid var(--line);border-radius:10px;padding:10px 12px;background:rgba(255,255,255,.02);min-width:0;overflow:hidden}
+.tile b{display:block;font-family:var(--font-display);font-size:19px;letter-spacing:-.01em;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:100%;font-variant-numeric:tabular-nums}
 .tile span{font-family:var(--font-mono);font-size:10.5px;letter-spacing:.07em;text-transform:uppercase;color:var(--muted)}
 .pdhead{display:flex;gap:14px;align-items:center}
 .pdhead img{width:64px;height:64px;border-radius:16px;border:1px solid var(--line);object-fit:cover;background:var(--bg2)}
