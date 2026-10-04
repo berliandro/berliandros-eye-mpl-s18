@@ -86,11 +86,13 @@ if(S.view==='matches'){let ms=DATA.schedule.slice().sort((a,b)=>(a.iso_datetime|
 if(S.team)ms=ms.filter(m=>m.team_a===S.team||m.team_b===S.team);
 if(S.q)ms=ms.filter(m=>(m.team_a+' '+m.team_b+' '+m.date).toLowerCase().includes(S.q));
 const isPO=m=>String(m.schedule_id||m.match_id||'').indexOf('playoffs')>-1||(m.team_a==='TBD'&&m.team_b==='TBD');
-const sec=(title,list)=>{if(!list.length)return '';return `<div class="pin" style="grid-column:1/-1"><div class="body"><div class="kicker">Bracket</div><h3 style="margin:.25em 0">${title} (${list.length})</h3></div></div>`+list.map(m=>{const done=m.match_detail_id&&m.status==='completed';
+const sec=(title,list)=>{if(!list.length)return '';return `<div class="pin" style="grid-column:1/-1"><div class="body"><div class="phasebar"><div><div class="kicker">Bracket</div><h3 style="margin:.25em 0">${title} (${list.length})</h3></div>${phaseCtl}</div></div></div>`+list.map(m=>{const done=m.match_detail_id&&m.status==='completed';
 const gmvp=mvpById[String(m.match_detail_id)]||'';
 return `<div class="pin mpin"><div class="body"><div class="kicker">${esc(m.date||'')} · ${esc(m.status||'')}</div><div class="mteams"><div class="mt"><img src="${TICON(m.team_a)}" alt="" loading="lazy" ${IMG_HIDE}><span>${esc(m.team_a)}</span></div><div class="score">${m.score_a??'–'} : ${m.score_b??'–'}</div><div class="mt"><img src="${TICON(m.team_b)}" alt="" loading="lazy" ${IMG_HIDE}><span>${esc(m.team_b)}</span></div></div>${gmvp?`<div class="mmvp-grid">MVP · <b>${esc(gmvp)}</b></div>`:''}<div class="mmeta"><span class="tag">${done?('Detail #'+esc(m.match_detail_id)):esc(m.status||'upcoming')}</span></div></div><div class="actions">${done?`<button class="primary" data-m="${esc(m.match_detail_id)}">Scoreboard</button>`:`<button class="ghost" disabled>Soon</button>`}</div></div>`;}).join('');};
 const regAll=ms.filter(m=>!isPO(m)),poAll=ms.filter(isPO);
 const reg=regAll.slice(0,S.mlimit),po=poAll.slice(0,S.plimit);
+const pbtn=(k,label,n)=>`<button data-phase="${k}" aria-pressed="${S.phase===k?'true':'false'}">${label} (${n})</button>`;
+const phaseCtl=`<div class="seg" role="group" aria-label="Phase">${pbtn('reg','Regular Season',regAll.length)}${pbtn('po','Playoffs',poAll.length)}</div>`;
 const mvpById=Object.fromEntries((DATA.matches||[]).map(m=>[String(m.match_detail_id),m.liq_mvp||'']));
 const mrow=m=>{const done=m.match_detail_id&&m.status==='completed';
 const aWins=(+m.score_a)>(+m.score_b),bWins=(+m.score_b)>(+m.score_a);
@@ -99,16 +101,15 @@ return `<div class="mrow"${done?' data-m="'+esc(m.match_detail_id)+'"':''}><span
 +`<span class="hide-m"><span class="tag">${esc(m.status||'')}</span></span>`
 +`<span class="mmvp hide-m">${esc(mvpById[String(m.match_detail_id)]||'—')}</span>`
 +`<span class="mgo">${done?'›':''}</span></div>`;};
-const pbtn=(k,label,n)=>`<button data-phase="${k}" aria-pressed="${S.phase===k?'true':'false'}">${label} (${n})</button>`;
-const phaseSeg=`<div class="pin" style="grid-column:1/-1"><div class="body"><div class="kicker">Phase</div><div class="seg" role="group" aria-label="Phase">${pbtn('reg','Regular Season',regAll.length)}${pbtn('po','Playoffs',poAll.length)}</div></div></div>`;
 if(S.layout==='list'){
 const mfoot=(secKey,shown,total)=>shown<total?`<button class="mfoot" data-more="24" data-sec="${secKey}"><span>Show more</span><span class="mono">showing ${shown} of ${total}</span></button>`:'';
-let mh=phaseSeg+`<div class="pin"><div class="lscroll"><div class="mhead"><span>Date</span><span>Match</span><span>Status</span><span>MVP</span><span></span></div>`;
-if(S.phase==='po'){if(poAll.length)mh+=`<div class="msec">B · Playoffs · ${po.length}/${poAll.length}</div>`+po.map(mrow).join('')+mfoot('po',po.length,poAll.length);}
-else{if(regAll.length)mh+=`<div class="msec">A · Regular Season · ${reg.length}/${regAll.length}</div>`+reg.map(mrow).join('')+mfoot('reg',reg.length,regAll.length);}
+const ptitle=S.phase==='po'?'Playoffs':'Regular Season';
+let mh=`<div class="pin"><div class="body phasebar"><div><div class="kicker">Matches</div><h3 style="margin:.25em 0">${ptitle}</h3></div>${phaseCtl}</div><div class="lscroll"><div class="mhead"><span>Date</span><span>Match</span><span>Status</span><span>MVP</span><span></span></div>`;
+if(S.phase==='po'){if(poAll.length)mh+=po.map(mrow).join('')+mfoot('po',po.length,poAll.length);}
+else{if(regAll.length)mh+=reg.map(mrow).join('')+mfoot('reg',reg.length,regAll.length);}
 mh+=`</div></div>`;
 out.push(mh);}
-else{out.push(phaseSeg);
+else{
 if(S.phase==='po'){out.push(sec('Playoffs — TBD',po));
 if(poAll.length>S.plimit)out.push(`<div class="pin" style="grid-column:1/-1"><div class="body" style="text-align:center"><p>Showing ${S.plimit} of ${poAll.length} playoff matches</p><div class="actions"><button class="primary" data-more="24" data-sec="po">Show more</button></div></div></div>`);}
 else{out.push(sec('Regular Season',reg));
