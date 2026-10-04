@@ -1,7 +1,11 @@
 """README screenshots at 2880x1800 using system Chrome (headless).
-Usage: python tools/shots.py
+Usage: python tools/shots.py [--zoom]
+  default: 2880x1800 CSS @ dsf 1 (native)
+  --zoom:  1920x1200 CSS @ dsf 1.5 (=150% system) + 125% page zoom,
+           still 2880x1800 PNG, content effectively 1.875x (zoomed look)
 Output: github/assets/*.png
 """
+import sys
 from pathlib import Path
 from playwright.sync_api import sync_playwright
 
@@ -10,6 +14,10 @@ OUT = ROOT / 'github' / 'assets'
 OUT.mkdir(parents=True, exist_ok=True)
 URL = (ROOT / 'mpl_id_s18_dark.html').as_uri()
 CHROME = r'C:\Program Files\Google\Chrome\Application\chrome.exe'
+ZOOM = '--zoom' in sys.argv
+
+VP = {'width': 1920, 'height': 1200} if ZOOM else {'width': 2880, 'height': 1800}
+DSF = 1.5 if ZOOM else 1.0
 
 SHOTS = []
 
@@ -24,9 +32,13 @@ def shot(page, name):
 with sync_playwright() as pw:
     b = pw.chromium.launch(executable_path=CHROME,
                            args=['--no-sandbox', '--force-device-scale-factor=1'])
-    pg = b.new_page(viewport={'width': 2880, 'height': 1800})
+    ctx = b.new_context(viewport=VP, device_scale_factor=DSF)
+    pg = ctx.new_page()
     pg.goto(URL, wait_until='networkidle')
     pg.wait_for_timeout(2500)
+    if ZOOM:
+        pg.evaluate('document.body.style.zoom = "125%"')
+        pg.wait_for_timeout(800)
 
     shot(pg, '01-overview.png')
 
