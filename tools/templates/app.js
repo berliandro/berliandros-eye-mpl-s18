@@ -58,7 +58,15 @@ const avgkda=(s&&s.avg_kda!=null&&s.avg_kda!=='')?+s.avg_kda:(k+a)/Math.max(1,d)
 return {...o,gp,k,d,a,avgkda,nh:o.hs.size,avgg,lane:((s||{}).lane||liqLane(o.player)||'')}});}
 function rows(id,gn){return DATA.players.filter(r=>r.match_detail_id===id&&String(r.game_no)===String(gn));}
 const io=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target);}}),{rootMargin:'80px'});
+function syncControls(){const v=S.view;
+const show=(id,on)=>{const el=document.getElementById(id);if(el)el.hidden=!on;};
+show('searchBox',v==='players'||v==='matches');
+show('chips',v==='players'||v==='matches');
+show('sortBox',v==='players');
+show('laneBox',v==='players');
+show('layoutSeg',v==='players');}
 function render(){const out=[];
+syncControls();
 board.classList.toggle('list',S.layout==='list'&&S.view==='players');
 board.classList.toggle('wide',S.view==='stats');
 if(S.view==='overview'){out.push(ovHTML());}

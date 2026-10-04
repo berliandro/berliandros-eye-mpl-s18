@@ -101,7 +101,7 @@ dialog{border:1px solid var(--line);border-radius:12px;max-width:min(880px,94vw)
 <a class="skip" href="#board">Skip to board</a>
 <header><div class="wrap"><div class="hrow">
 <div class="brand">Berliandro's Eye <b>MPL ID Season 18</b></div>
-<div class="search"><input id="q" type="search" placeholder="Search players, heroes, teams…" aria-label="Search"><kbd>/</kbd></div>
+<div class="search" id="searchBox"><input id="q" type="search" placeholder="Search players, heroes, teams…" aria-label="Search"><kbd>/</kbd></div>
 <nav class="tabs" role="tablist" aria-label="Views">
 <button role="tab" aria-selected="true" data-view="overview">Overview</button>
 <button role="tab" aria-selected="false" data-view="players">Players</button>
@@ -109,9 +109,9 @@ dialog{border:1px solid var(--line);border-radius:12px;max-width:min(880px,94vw)
 <button role="tab" aria-selected="false" data-view="stats">Stats</button>
 </nav>
 </div><div class="filters"><div class="chips" id="chips" aria-label="Filter by team"></div>
-<label>Sort <select id="sort"><option value="kda">KDA</option><option value="kills">Kills</option><option value="goldmin">Gold/min</option><option value="games">Games</option></select></label>
-<label>Lane <select id="lane"><option value="">All</option><option>MID</option><option>GOLD</option><option>JUNGLE</option><option>EXP</option><option>ROAM</option></select></label>
-<span class="seg" role="group" aria-label="Layout"><button id="layGrid" aria-pressed="true">Grid</button><button id="layList" aria-pressed="false">List</button></span>
+<label id="sortBox">Sort <select id="sort"><option value="kda">KDA</option><option value="kills">Kills</option><option value="goldmin">Gold/min</option><option value="games">Games</option></select></label>
+<label id="laneBox">Lane <select id="lane"><option value="">All</option><option>MID</option><option>GOLD</option><option>JUNGLE</option><option>EXP</option><option>ROAM</option></select></label>
+<span class="seg" id="layoutSeg" role="group" aria-label="Layout"><button id="layGrid" aria-pressed="true">Grid</button><button id="layList" aria-pressed="false">List</button></span>
 <button class="ghost" id="density" style="border:1px solid var(--line);background:transparent;color:var(--muted);border-radius:6px;padding:5px 10px;cursor:pointer">Compact</button>
 <button class="ghost" id="refresh" title="Re-fetch schedule, standings and player stats from the live API" style="border:1px solid var(--line);background:transparent;color:var(--muted);border-radius:6px;padding:5px 10px;cursor:pointer">Refresh</button>
 <span id="net" role="status" title="Network status" style="font-size:11px;border:1px solid var(--line);border-radius:9999px;padding:2px 9px;color:var(--muted)">online</span>
@@ -182,7 +182,15 @@ const avgkda=(s&&s.avg_kda!=null&&s.avg_kda!=='')?+s.avg_kda:(k+a)/Math.max(1,d)
 return {...o,gp,k,d,a,avgkda,nh:o.hs.size,avgg,lane:((s||{}).lane||liqLane(o.player)||'')}});}
 function rows(id,gn){return DATA.players.filter(r=>r.match_detail_id===id&&String(r.game_no)===String(gn));}
 const io=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target);}}),{rootMargin:'80px'});
+function syncControls(){const v=S.view;
+const show=(id,on)=>{const el=document.getElementById(id);if(el)el.hidden=!on;};
+show('searchBox',v==='players'||v==='matches');
+show('chips',v==='players'||v==='matches');
+show('sortBox',v==='players');
+show('laneBox',v==='players');
+show('layoutSeg',v==='players');}
 function render(){const out=[];
+syncControls();
 board.classList.toggle('list',S.layout==='list'&&S.view==='players');
 board.classList.toggle('wide',S.view==='stats');
 if(S.view==='overview'){out.push(ovHTML());}

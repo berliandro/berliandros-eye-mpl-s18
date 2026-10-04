@@ -31,6 +31,9 @@ for needle in ('data-view="overview"', 'trendChart', 'wireCharts', 'id="net"', '
 for needle in ('name="description"', 'name="theme-color"', 'rel="icon"', 'property="og:title"'):
     ok(needle in html, f"contains meta {needle}")
 ok('.ovsec{overflow-x:auto}' in html or '.ovsec{overflow-x: auto}' in html, "ovsec scrolls on mobile")
+ok('function syncControls' in html, "controls sync per tab")
+for needle in ('id="searchBox"', 'id="sortBox"', 'id="laneBox"', 'id="layoutSeg"'):
+    ok(needle in html, f"contains {needle}")
 
 
 def load(name):
