@@ -138,7 +138,7 @@ th[data-ts]{cursor:pointer;user-select:none;white-space:nowrap}th[data-ts]:hover
 @media(max-width:680px){.sb-duo{grid-template-columns:1fr}}
 .mrow .mdate{font-family:var(--font-mono);font-size:11px;color:var(--muted)}
 .mrow .mfix{display:flex;align-items:center;gap:8px;min-width:0;overflow:hidden}.mrow .mfix img{width:24px;height:24px;object-fit:contain;flex:none}.mrow .mfix .mt{font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.mrow .msc{font-family:var(--font-display);font-weight:700;font-size:15px;white-space:nowrap}
-.mrow .mwin{color:var(--ink)}.mrow .mlose{color:var(--muted)}
+.mrow .mwin{color:var(--ink);font-weight:700}.mrow .mlose{color:var(--muted);font-weight:400}
 .mrow .mmvp{font-size:11.5px;color:var(--muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .mrow .mgo{font-family:var(--font-display);color:var(--muted);font-size:16px;text-align:right}
 .msec{padding:10px 14px 4px;font-family:var(--font-mono);font-size:10.5px;letter-spacing:.07em;text-transform:uppercase;color:var(--muted)}
@@ -150,10 +150,20 @@ th[data-ts]{cursor:pointer;user-select:none;white-space:nowrap}th[data-ts]:hover
 .embtn:hover{background:rgba(255,255,255,.06);border-color:var(--ink);transform:translateY(-1px)}.embtn:active{transform:scale(.97)}.embtn:focus-visible{outline:2px solid var(--ink);outline-offset:2px}
 .embtn img.sq{border-radius:6px}
 .itemgrid .embtn{margin:0}
-.tag.pick{color:#b9e9c9;border-color:rgba(52,211,153,.35);background:rgba(52,211,153,.07)}
-.tag.ban{color:#f0b4bc;border-color:rgba(230,0,35,.4);background:rgba(230,0,35,.08)}
+.tag.pick{background:var(--ink);border-color:var(--ink);color:#131311;font-weight:700;border-radius:9999px}
+.tag.ban{background:transparent;border:1px dashed var(--muted);border-radius:5px;color:var(--muted);font-weight:400}
+.tag .tk{font-weight:700;margin-right:2px}
 .sdot{display:inline-block;width:8px;height:8px;border-radius:50%;flex:none}
 .sdot.b{background:rgba(56,189,248,.85)}.sdot.r{background:rgba(248,113,113,.85)}
+.mfix .tw{font-weight:700;color:var(--ink)}
+.mfix .tl{font-weight:400;color:var(--muted)}
+.sb-thead b.tw{font-weight:700;color:var(--ink);font-size:15px}
+.sb-thead b.tl{font-weight:400;color:var(--muted);font-size:13px}
+.sb-ghead .sb-win{color:var(--ink);font-weight:700}
+dialog{position:relative;overflow:hidden}
+.dmark{position:absolute;top:50%;height:110%;width:auto;max-width:82%;object-fit:contain;transform:translateY(-50%);opacity:.2;filter:grayscale(1) brightness(.75);pointer-events:none;z-index:0;-webkit-mask-image:radial-gradient(closest-side,#000 55%,transparent 85%);mask-image:radial-gradient(closest-side,#000 55%,transparent 85%)}
+.dmark.l{left:-4%}.dmark.r{right:-4%}
+.dhead,.dbody{position:relative;z-index:1}
 [data-p]{cursor:pointer;border-radius:4px}[data-p]:hover{text-decoration:underline}[data-p]:focus-visible{outline:2px solid var(--ink);outline-offset:1px}
 .et-div{border-top:1px solid var(--line);margin:10px -16px}
 .et-label{font-family:var(--font-mono);font-size:10.5px;letter-spacing:.07em;text-transform:uppercase;color:var(--muted);margin:0 0 8px}
@@ -184,7 +194,7 @@ th[data-ts]{cursor:pointer;user-select:none;white-space:nowrap}th[data-ts]:hover
 <span id="upd" style="font-size:11px"></span>
 <span id="count" role="status"></span></div></div></header>
 <main class="wrap"><div class="masonry" id="board"></div><div class="empty" id="empty" hidden>No pins match. Clear search or filters.</div></main>
-<dialog id="dlg" aria-labelledby="dt"><div class="dhead"><strong id="dt"></strong><span id="ds" style="color:var(--muted)"></span><button id="dback" aria-label="Back to previous view" hidden style="margin-left:auto;background:transparent;border:1px solid var(--line);color:var(--ink);border-radius:6px;padding:8px 12px;cursor:pointer">← Back</button><button id="dx" aria-label="Close dialog" style="background:#f2f1ec;border:0;border-radius:6px;padding:8px 12px;cursor:pointer">Close</button></div><div class="dbody" id="db"></div></dialog>
+<dialog id="dlg" aria-labelledby="dt"><img id="dmark" class="dmark" alt="" aria-hidden="true" hidden><div class="dhead"><strong id="dt"></strong><span id="ds" style="color:var(--muted)"></span><button id="dback" aria-label="Back to previous view" hidden style="margin-left:auto;background:transparent;border:1px solid var(--line);color:var(--ink);border-radius:6px;padding:8px 12px;cursor:pointer">← Back</button><button id="dx" aria-label="Close dialog" style="background:#f2f1ec;border:0;border-radius:6px;padding:8px 12px;cursor:pointer">Close</button></div><div class="dbody" id="db"></div></dialog>
 <dialog id="dlg2" aria-labelledby="dt2"><div class="dhead"><strong id="dt2">Select player</strong><button id="dx2" aria-label="Close dialog" style="margin-left:auto;background:#f2f1ec;border:0;border-radius:6px;padding:8px 12px;cursor:pointer">Close</button></div><div class="dbody"><div class="selrow"><input id="selQ" type="search" placeholder="Search players…" aria-label="Search players"><select id="selT" aria-label="Filter by team"></select><select id="selL" aria-label="Filter by lane"></select></div><div class="sellist" id="selList"></div></div></dialog>
 <script>window.ASSETS={"items": {"1001": "assets/items/1001.png", "1002": "assets/items/1002.png", "1003": "assets/items/1003.png", "1004": "assets/items/1004.png", "1005": "assets/items/1005.png", "1006": "assets/items/1006.png", "1007": "assets/items/1007.png", "1101": "assets/items/1101.png", "1102": "assets/items/1102.png", "1103": "assets/items/1103.png", "1104": "assets/items/1104.png", "1105": "assets/items/1105.png", "1201": "assets/items/1201.png", "1202": "assets/items/1202.png", "1203": "assets/items/1203.png", "1204": "assets/items/1204.png", "1205": "assets/items/1205.png", "1301": "assets/items/1301.png", "2001": "assets/items/2001.png", "2002": "assets/items/2002.png", "2003": "assets/items/2003.png", "2004": "assets/items/2004.png", "2005": "assets/items/2005.png", "2006": "assets/items/2006.png", "2008": "assets/items/2008.png", "2009": "assets/items/2009.png", "2011": "assets/items/2011.png", "2013": "assets/items/2013.png", "2101": "assets/items/2101.png", "2102": "assets/items/2102.png", "2103": "assets/items/2103.png", "2104": "assets/items/2104.png", "2105": "assets/items/2105.png", "2106": "assets/items/2106.png", "2107": "assets/items/2107.png", "2108": "assets/items/2108.png", "2112": "assets/items/2112.png", "2201": "assets/items/2201.png", "2202": "assets/items/2202.png", "2203": "assets/items/2203.png", "2204": "assets/items/2204.png", "2205": "assets/items/2205.png", "2206": "assets/items/2206.png", "2207": "assets/items/2207.png", "2208": "assets/items/2208.png", "2301": "assets/items/2301.png", "2302": "assets/items/2302.png", "2303": "assets/items/2303.png", "2304": "assets/items/2304.png", "2306": "assets/items/2306.png", "2308": "assets/items/2308.png", "3001": "assets/items/3001.png", "3002": "assets/items/3002.png", "3003": "assets/items/3003.png", "3004": "assets/items/3004.png", "3005": "assets/items/3005.png", "3007": "assets/items/3007.png", "3008": "assets/items/3008.png", "3009": "assets/items/3009.png", "3012": "assets/items/3012.png", "3013": "assets/items/3013.png", "3014": "assets/items/3014.png", "3015": "assets/items/3015.png", "3101": "assets/items/3101.png", "3102": "assets/items/3102.png", "3103": "assets/items/3103.png", "3104": "assets/items/3104.png", "3105": "assets/items/3105.png", "3106": "assets/items/3106.png", "3108": "assets/items/3108.png", "3109": "assets/items/3109.png", "3110": "assets/items/3110.png", "3111": "assets/items/3111.png", "3112": "assets/items/3112.png", "3201": "assets/items/3201.png", "3202": "assets/items/3202.png", "3203": "assets/items/3203.png", "3204": "assets/items/3204.png", "3205": "assets/items/3205.png", "3206": "assets/items/3206.png", "3207": "assets/items/3207.png", "3208": "assets/items/3208.png", "3210": "assets/items/3210.png", "3212": "assets/items/3212.png", "3411": "assets/items/3411.png", "3421": "assets/items/3421.png", "3433": "assets/items/3433.png", "3521": "assets/items/3521.png", "3107": "assets/items/3107.png", "3431": "assets/items/3431.png", "3432": "assets/items/3432.png", "3522": "assets/items/3522.png", "3523": "assets/items/3523.png", "3524": "assets/items/3524.png", "3531": "assets/items/3531.png", "3543": "assets/items/3543.png", "3544": "assets/items/3544.png", "3561": "assets/items/3561.png", "3562": "assets/items/3562.png", "3563": "assets/items/3563.png", "3564": "assets/items/3564.png", "3573": "assets/items/3573.png", "https://mlbb-image.scoregg.com/m/26/p/246/2914355635270.png": "assets/items/m_72a39f7e39.png", "https://mlbb-image.scoregg.com/m/27/p/248/1620330467641.png": "assets/items/m_887e690ea8.png", "https://mlbb-image.scoregg.com/m/33/p/248/1615180828774.png": "assets/items/m_f91fe4ffc3.png", "https://mlbb-image.scoregg.com/m/33/p/248/1620350626880.png": "assets/items/m_8a8e8cab0c.png", "https://mlbb-image.scoregg.com/m/33/p/248/1620354227288.png": "assets/items/m_bf4cb06470.png", "https://mlbb-image.scoregg.com/m/33/p/2511/0617014872193.png": "assets/items/m_b551ad5a0c.png", "2209": "assets/items/2209.png", "3412": "assets/items/3412.png", "3422": "assets/items/3422.png", "3442": "assets/items/3442.png", "3513": "assets/items/3513.png", "3533": "assets/items/3533.png"}, "heroes": {"Alice": "assets/heroes/Alice.jpg", "Alpha": "assets/heroes/Alpha.jpg", "Angela": "assets/heroes/Angela.jpg", "Arlott": "assets/heroes/Arlott.png", "Atlas": "assets/heroes/Atlas.jpg", "Aulus": "assets/heroes/Aulus.jpg", "Badang": "assets/heroes/Badang.png", "Barats": "assets/heroes/Barats.png", "Belerick": "assets/heroes/Belerick.png", "Brody": "assets/heroes/Brody.jpg", "Bruno": "assets/heroes/Bruno.jpg", "Carmilla": "assets/heroes/Carmilla.jpg", "Chip": "assets/heroes/Chip.jpg", "Chou": "assets/heroes/Chou.png", "Claude": "assets/heroes/Claude.jpg", "Clint": "assets/heroes/Clint.png", "Dyrroth": "assets/heroes/Dyrroth.png", "Edith": "assets/heroes/Edith.jpg", "Esmeralda": "assets/heroes/Esmeralda.jpg", "Eudora": "assets/heroes/Eudora.jpg", "Fanny": "assets/heroes/Fanny.png", "Faramis": "assets/heroes/Faramis.jpg", "Fredrinn": "assets/heroes/Fredrinn.png", "Freya": "assets/heroes/Freya.jpg", "Gatotkaca": "assets/heroes/Gatotkaca.jpg", "Gloo": "assets/heroes/Gloo.jpg", "Granger": "assets/heroes/Granger.png", "Guinevere": "assets/heroes/Guinevere.jpg", "Hanabi": "assets/heroes/Hanabi.jpg", "Hanzo": "assets/heroes/Hanzo.png", "Harley": "assets/heroes/Harley.jpg", "Hayabusa": "assets/heroes/Hayabusa.jpg", "Hilda": "assets/heroes/Hilda.png", "Hirara": "assets/heroes/Hirara.jpg", "Hylos": "assets/heroes/Hylos.jpg", "Ixia": "assets/heroes/Ixia.jpg", "Kadita": "assets/heroes/Kadita.jpg", "Kagura": "assets/heroes/Kagura.jpg", "Kaja": "assets/heroes/Kaja.png", "Kalea": "assets/heroes/Kalea.jpg", "Karrie": "assets/heroes/Karrie.jpg", "Khaleed": "assets/heroes/Khaleed.jpg", "Khufra": "assets/heroes/Khufra.jpg", "Kimmy": "assets/heroes/Kimmy.png", "Lapu-Lapu": "assets/heroes/Lapu-Lapu.jpg", "Lesley": "assets/heroes/Lesley.jpg", "Ling": "assets/heroes/Ling.jpg", "Lukas": "assets/heroes/Lukas.jpg", "Lunox": "assets/heroes/Lunox.jpg", "Luo Yi": "assets/heroes/Luo_Yi.jpg", "Lylia": "assets/heroes/Lylia.jpg", "Marcel": "assets/heroes/Marcel.jpg", "Masha": "assets/heroes/Masha.png", "Mathilda": "assets/heroes/Mathilda.jpg", "Melissa": "assets/heroes/Melissa.jpg", "Minotaur": "assets/heroes/Minotaur.jpg", "Minsitthar": "assets/heroes/Minsitthar.png", "Miya": "assets/heroes/Miya.jpg", "Moskov": "assets/heroes/Moskov.png", "Nolan": "assets/heroes/Nolan.png", "Novaria": "assets/heroes/Novaria.jpg", "Obsidia": "assets/heroes/Obsidia.jpg", "Odette": "assets/heroes/Odette.jpg", "Paquito": "assets/heroes/Paquito.png", "Pharsa": "assets/heroes/Pharsa.jpg", "Phoveus": "assets/heroes/Phoveus.png", "Rafaela": "assets/heroes/Rafaela.png", "Ruby": "assets/heroes/Ruby.png", "Saber": "assets/heroes/Saber.png", "Selena": "assets/heroes/Selena.jpg", "Sora": "assets/heroes/Sora.png", "Suyou": "assets/heroes/Suyou.jpg", "Terizla": "assets/heroes/Terizla.jpg", "Tigreal": "assets/heroes/Tigreal.png", "Uranus": "assets/heroes/Uranus.jpg", "Valentina": "assets/heroes/Valentina.jpg", "Vexana": "assets/heroes/Vexana.png", "Yi Sun-shin": "assets/heroes/Yi_Sun-shin.jpg", "Yu Zhong": "assets/heroes/Yu_Zhong.jpg", "Yve": "assets/heroes/Yve.jpg", "Zhuxin": "assets/heroes/Zhuxin.png", "cici": "assets/heroes/cici.png", "Cecilion": "assets/heroes/Cecilion.jpg", "Wu/Zetian": "assets/heroes/Wu_Zetian.jpg", "Yi_Sun-shin": "assets/heroes/Yi_Sun-shin.png", "Yu_Zhong": "assets/heroes/Yu_Zhong.png", "Cici": "assets/heroes/Cici.jpg", "Estes": "assets/heroes/Estes.png", "Gord": "assets/heroes/Gord.jpg", "Zetian": "assets/heroes/Zetian.png", "Harith": "assets/heroes/Harith.png", "Leomord": "assets/heroes/Leomord.png"}, "emblems": {"20001": "assets/emblems/20001.png", "20003": "assets/emblems/20003.png", "20005": "assets/emblems/20005.png", "20006": "assets/emblems/20006.png", "20007": "assets/emblems/20007.png", "20008": "assets/emblems/20008.png", "20012": "assets/emblems/20012.png"}, "runes": {"111": "assets/runes/111.png", "112": "assets/runes/112.png", "121": "assets/runes/121.png", "1211": "assets/runes/1211.png", "122": "assets/runes/122.png", "1221": "assets/runes/1221.png", "1231": "assets/runes/1231.png", "131": "assets/runes/131.png", "132": "assets/runes/132.png", "311": "assets/runes/311.png", "321": "assets/runes/321.png", "331": "assets/runes/331.png", "511": "assets/runes/511.png", "521": "assets/runes/521.png", "531": "assets/runes/531.png", "611": "assets/runes/611.png", "621": "assets/runes/621.png", "631": "assets/runes/631.png", "711": "assets/runes/711.png", "721": "assets/runes/721.png", "731": "assets/runes/731.png", "811": "assets/runes/811.png", "821": "assets/runes/821.png", "831": "assets/runes/831.png", "x_01ad4aa3265f": "assets/runes/x_01ad4aa3265f.png", "x_99b0da7bc82f": "assets/runes/x_99b0da7bc82f.png", "https://mlbb-image.scoregg.com/m/27/p/246/2818520555980.png": "assets/runes/x_99b0da7bc82f.png", "https://mlbb-image.scoregg.com/m/27/p/246/2817515670849.png": "assets/runes/x_01ad4aa3265f.png"}, "teams": {"AE": "assets/teams/ae.png", "BTR": "assets/teams/btr.png", "DEWA": "assets/teams/dewa.png", "EVOS": "assets/teams/evos.png", "GEEK": "assets/teams/geek.png", "NAVI": "assets/teams/navi.png", "ONIC": "assets/teams/onic.png", "RRQ": "assets/teams/rrq.png", "TLID": "assets/teams/tlid.png"}, "players": {"Aboyy": "assets/players/Aboyy.png", "Alberttt": "assets/players/Alberttt.png", "Andoryuuu": "assets/players/Andoryuuu.png", "Aprho": "assets/players/Aprho.png", "Aran": "assets/players/Aran.png", "Arfy": "assets/players/Arfy.png", "Arthur": "assets/players/Arthur.png", "AudyTzy": "assets/players/AudyTzy.png", "Clayyy": "assets/players/Clayyy.png", "Demonkite": "assets/players/Demonkite.png", "DrianW": "assets/players/DrianW.png", "Drichel": "assets/players/Drichel.png", "EMANN": "assets/players/EMANN.png", "Erlan": "assets/players/Erlan.png", "Excellent99": "assets/players/Excellent99.png", "Febriii": "assets/players/Febriii.png", "Finn": "assets/players/Finn.png", "Frenzyy": "assets/players/Frenzyy.png", "Habil": "assets/players/Habil.png", "Hajirin": "assets/players/Hajirin.png", "Hazle": "assets/players/Hazle.png", "Hijumee": "assets/players/Hijumee.png", "Itoshi Kesu": "assets/players/Itoshi_Kesu.png", "Jiizee": "assets/players/Jiizee.png", "Joshua": "assets/players/Joshua.png", "Joshuaa": "assets/players/Joshuaa.png", "Kairi": "assets/players/Kairi.png", "Karss": "assets/players/Karss.png", "Kayn": "assets/players/Kayn.png", "Kelra": "assets/players/Kelra.png", "KennzySkie": "assets/players/KennzySkie.png", "Keven": "assets/players/Keven.png", "Kevinn": "assets/players/Kevinn.png", "Kiboy": "assets/players/Kiboy.png", "Killuaa": "assets/players/Killuaa.png", "Lutpi": "assets/players/Lutpi.png", "Lyoni": "assets/players/Lyoni.png", "MAYKIDSS": "assets/players/MAYKIDSS.png", "MarceL": "assets/players/MarceL.png", "Maybeee": "assets/players/Maybeee.png", "Maykidss": "assets/players/Maykidss.png", "Morenooo": "assets/players/Morenooo.png", "Muezza": "assets/players/Muezza.png", "Nazara": "assets/players/Nazara.png", "Nino": "assets/players/Nino.png", "Nnael": "assets/players/Nnael.png", "Octa": "assets/players/Octa.png", "QINN": "assets/players/QINN.png", "Rendyyy": "assets/players/Rendyyy.png", "Ryzaa": "assets/players/Ryzaa.png", "S A N Z": "assets/players/S_A_N_Z.png", "SSAMUEL": "assets/players/SSAMUEL.png", "Said": "assets/players/Said.png", "Shanee": "assets/players/Shanee.png", "Shogun": "assets/players/Shogun.png", "Vell": "assets/players/Vell.png", "Yazukee": "assets/players/Yazukee.png", "Zeonn": "assets/players/Zeonn.png", "alekk": "assets/players/alekk.png"}}</script>
 <script>
@@ -570,11 +580,12 @@ function stGameMeta(mid,gno){const gm=(DATA.games||[]).find(g=>String(g.match_de
 const sc=(DATA.schedule||[]).find(s=>String(s.match_detail_id)===String(mid))||{};return {gm:gm,sc:sc};}
 function sideCls(s){s=String(s||'').toLowerCase();return s==='blue'?'b':(s==='red'?'r':'');}
 function stGameRowHTML(e){const dt=(e.iso||'').slice(0,10)||e.date||'';
-const tag=e.kind==='ban'?'<span class="tag ban">BAN</span>':'<span class="tag pick">PICK</span>';
+const tag=e.kind==='ban'?'<span class="tag ban"><span class="tk" aria-hidden="true">✕</span>BAN</span>':'<span class="tag pick"><span class="tk" aria-hidden="true">✓</span>PICK</span>';
+const clsA=e.win?(e.win===e.teamA?'tw':'tl'):'',clsB=e.win?(e.win===e.teamB?'tw':'tl'):'';
 return `<div class="mrow" data-ovg="${esc(String(e.mid))}:${esc(String(e.gno))}" tabindex="0" role="button" aria-label="Open game ${esc(String(e.gno))} ${esc(e.teamA||'')} vs ${esc(e.teamB||'')}"><span class="mdate">${esc(dt)}</span>`
-+`<span class="mfix">${e.clsA?`<span class="sdot ${e.clsA}"></span>`:''}<span class="mt">${esc(e.teamA||'?')}</span><span class="msc">G${esc(String(e.gno))}</span><span class="mt">${esc(e.teamB||'?')}</span>${e.clsB?`<span class="sdot ${e.clsB}"></span>`:''}</span>`
++`<span class="mfix">${e.clsA?`<span class="sdot ${e.clsA}"></span>`:''}<span class="mt ${clsA}">${esc(e.teamA||'?')}</span><span class="msc">G${esc(String(e.gno))}</span><span class="mt ${clsB}">${esc(e.teamB||'?')}</span>${e.clsB?`<span class="sdot ${e.clsB}"></span>`:''}</span>`
 +`<span>${tag}</span>`
-+`<span class="mmvp hide-m">${esc(e.detail||'')}</span>`
++`<span class="mmvp hide-m" title="${esc(e.detail||'')}">${esc(e.detail||'')}</span>`
 +`<span class="mgo">›</span></div>`;}
 function stHeroDrill(hero){const A=window.ASSETS||{heroes:{}};
 const picks=DATA.players.filter(r=>(r.hero||'')===hero).map(r=>({r:r,info:gameInfo(r)}))
@@ -592,15 +603,15 @@ const sumHtml=`<div class="msec">Hero statistics · ${picks.length} pick${picks.
 +`<div class="msec">Players · ${nPlayers}</div><div class="lscroll"><table style="min-width:320px"><tr><th>Player</th><th>Uses</th></tr>${playersHtml||'<tr><td colspan="2">No picks recorded.</td></tr>'}</table></div>`;
 const entries=[];
 picks.forEach(x=>{const gm=x.info.gm||{};const w=winName(gm);
-entries.push({kind:'pick',mid:x.r.match_detail_id,gno:x.r.game_no,iso:x.info.iso,date:x.info.date,
+entries.push({kind:'pick',mid:x.r.match_detail_id,gno:x.r.game_no,iso:x.info.iso,date:x.info.date,win:w||'',
 teamA:gm.team_a||x.r.team,teamB:gm.team_b||x.info.opp,clsA:sideCls(gm.team_a_side),clsB:sideCls(gm.team_b_side),
 detail:canonicalPlayer(x.r.player)+(w?' · '+w+' won':'')});});
 bans.forEach(b=>{const m=stGameMeta(b.match_detail_id,b.game_no),gm=m.gm;const w=winName(gm);
 const teamA=gm.team_a||m.sc.team_a,teamB=gm.team_b||m.sc.team_b;
 const banTeam=String(b.side)==='B'?(teamB||'side B'):(teamA||'side A');
-entries.push({kind:'ban',mid:b.match_detail_id,gno:b.game_no,iso:m.sc.iso_datetime||'',date:m.sc.date||m.sc.iso_date||'',
+entries.push({kind:'ban',mid:b.match_detail_id,gno:b.game_no,iso:m.sc.iso_datetime||'',date:m.sc.date||m.sc.iso_date||'',win:w||'',
 teamA:teamA,teamB:teamB,clsA:sideCls(gm.team_a_side),clsB:sideCls(gm.team_b_side),
-detail:'banned by '+banTeam+(w?' · '+w+' won':'')});});
+detail:banTeam+' ban'+(w?' · '+w+' won':'')});});
 entries.sort((a,b)=>String(a.iso).localeCompare(String(b.iso))||(+a.gno-+b.gno)||(a.kind==='pick'?-1:1));
 const gamesHtml=`<div class="msec">Games · ${picks.length} pick${picks.length===1?'':'s'} · ${bans.length} ban${bans.length===1?'':'s'}</div><div class="mhead"><span>Date</span><span>Match</span><span>Type</span><span>Detail</span><span></span></div>`
 +(entries.map(stGameRowHTML).join('')||'<div class="empty">No games found.</div>');
@@ -641,7 +652,7 @@ function durSec(s){const m=/(\d+):(\d+)/.exec(s||'');return m?(+m[1])*60+(+m[2])
 function normPl(r,sec){const kills=r.kill??r.kills??0,deaths=r.death??r.deaths??0,assists=r.assist??r.assists??0;
 const gpm=r.gold_per_min??((sec&&r.gold!=null)?Math.round(r.gold/(sec/60)):null);return Object.assign({},r,{kills,deaths,assists,gpm});}
 function aid(u,re){const m=re.exec(u||'');return m?m[1]:'';}
-function teamBlock(code,kills,plist,sec,side,flip){
+function teamBlock(code,kills,plist,sec,side,flip,won){
 const A=window.ASSETS||{items:{},heroes:{},emblems:{},runes:{}};
 const pk=String(side||'').toLowerCase()==='blue'?'pk-b':(String(side||'').toLowerCase()==='red'?'pk-r':'');
 const prow=plist.map(r0=>{const r=normPl(r0,sec);
@@ -659,7 +670,7 @@ const items=itemObjs.map(o=>{const src=(o.eq&&A.items&&A.items[o.eq])||(o.url&&A
 return `<div class="sb-p">${heroImg}<div class="sb-id"><b>${esc(r.player)}</b><span>${esc(r.hero||'')} · ${r.kills}/${r.deaths}/${r.assists} · KDA ${r.kda}</span></div>`
 +`<div class="sb-side">G ${r.gold}${r.gpm!=null?' ('+r.gpm+'/m)':''}<br>DMG ${r.hero_damage??'–'} · TAKEN ${r.damage_taken??'–'}</div>`
 +`<div class="sb-gear"><span class="sb-tal">${embSm}${tals}</span>${items?`<span class="sb-items">${items}</span>`:''}</div></div>`;}).join('');
-return `<div class="sb-team${flip?' flip':''}${pk?' '+pk:''}"><div class="sb-thead"><img src="${logoOf(code)}" alt="" ${IMG_HIDE}><b>${esc(code)}</b><span class="k">${kills} kills</span></div>${prow}</div>`;}
+return `<div class="sb-team${flip?' flip':''}${pk?' '+pk:''}"><div class="sb-thead"><img src="${logoOf(code)}" alt="" ${IMG_HIDE}><b class="${won===true?'tw':won===false?'tl':''}">${esc(code)}</b><span class="k">${kills} kills</span></div>${prow}</div>`;}
 function winName(g){return g.winner==='team_a'?g.team_a:(g.winner==='team_b'?g.team_b:(g.winner||''));}
 function standBoard(){
 const stBase=[...DATA.standings].sort((a,b)=>a.rank-b.rank);
@@ -684,31 +695,38 @@ if(!best||key[0]>bk[0]||(key[0]===bk[0]&&(key[1]>bk[1]||(key[1]===bk[1]&&key[2]>
 function gameSection(g,plistA,plistB,bansA,bansB,live,active){
 const sec=durSec(g.duration_str||g.duration);const dur=g.duration_str||g.duration||'';
 const wn=winName(g);const gm=gameMvp(plistA,plistB,wn);
+const wonA=wn?wn===g.team_a:null,wonB=wn?wn===g.team_b:null;
 const bans=(bansA.length||bansB.length)?`<div class="sb-bans"><span>BAN ${esc(g.team_a)}: ${bansA.map(esc).join(', ')||'–'}</span><span>BAN ${esc(g.team_b)}: ${bansB.map(esc).join(', ')||'–'}</span></div>`:'';
 return `<div class="sb-game" data-g="${g.game_no}"${active?'':' hidden'}>`
-+`<div class="sb-ghead"><h4>Game ${g.game_no}</h4><span>${esc(g.team_a)} ${g.team_a_kills} : ${g.team_b_kills} ${esc(g.team_b)} · ${esc(dur)} · ${esc(wn)} won${gm?` · <span class="gmvp">MVP ${esc(gm.player)}</span>`:''}</span></div>`
-+bans+`<div class="sb-duo">`+teamBlock(g.team_a,g.team_a_kills,plistA,sec,g.team_a_side,'')+teamBlock(g.team_b,g.team_b_kills,plistB,sec,g.team_b_side,'flip')+`</div></div>`;}
++`<div class="sb-ghead"><h4>Game ${g.game_no}</h4><span>${esc(g.team_a)} ${g.team_a_kills} : ${g.team_b_kills} ${esc(g.team_b)} · ${esc(dur)}${wn?` · <b class="sb-win">${esc(wn)} won</b>`:''}${gm?` · <span class="gmvp">MVP ${esc(gm.player)}</span>`:''}</span></div>`
++bans+`<div class="sb-duo">`+teamBlock(g.team_a,g.team_a_kills,plistA,sec,g.team_a_side,'',wonA)+teamBlock(g.team_b,g.team_b_kills,plistB,sec,g.team_b_side,'flip',wonB)+`</div></div>`;}
 function wireTabs(){const db=document.getElementById('db');
 db.querySelectorAll('[data-gtab]').forEach(b=>b.onclick=()=>selGame(b.dataset.gtab));}
 function selGame(gno){const db=document.getElementById('db');if(!db||gno==null||gno==='')return;
 db.querySelectorAll('[data-gtab]').forEach(x=>x.setAttribute('aria-pressed',x.dataset.gtab===String(gno)?'true':'false'));
-db.querySelectorAll('.sb-game').forEach(s=>{s.hidden=s.dataset.g!==String(gno);});}
+db.querySelectorAll('.sb-game').forEach(s=>{s.hidden=s.dataset.g!==String(gno);});
+const tab=[...db.querySelectorAll('[data-gtab]')].find(x=>x.dataset.gtab===String(gno));
+const w=tab?tab.dataset.wtab:'';setMark(w&&markSrc(w)?{src:markSrc(w),side:tab.dataset.wside||'l'}:null);}
 async function showM(id,opts){opts=opts||{};const wantGame=opts.game!=null?String(opts.game):null;
 const m=DATA.schedule.find(x=>String(x.match_detail_id)===String(id))||{};
 const gs=DATA.games.filter(g=>g.match_detail_id===id);
 const isActive=(g,i)=>wantGame!=null?String(g.game_no)===wantGame:i===0;
-const tabs=gs.map((g,i)=>`<button data-gtab="${g.game_no}" aria-pressed="${isActive(g,i)?'true':'false'}">Game ${g.game_no}</button>`).join('');
+const wtab=g=>{const w=winName(g)||'';return ` data-wtab="${esc(w)}" data-wside="${w?(w===g.team_a?'l':'r'):'l'}"`;};
+const tabs=gs.map((g,i)=>`<button data-gtab="${g.game_no}"${wtab(g)} aria-pressed="${isActive(g,i)?'true':'false'}">Game ${g.game_no}</button>`).join('');
 const body=`<div class="sb-tabs" role="group" aria-label="Games">${tabs}</div>`+gs.map((g,i)=>{
 const pa=rows(id,g.game_no).filter(r=>r.team===g.team_a),pb=rows(id,g.game_no).filter(r=>r.team===g.team_b);
 return gameSection(g,pa,pb,[],[],false,isActive(g,i));}).join('');
-dSet(m.team_a+' vs '+m.team_b,'#'+id+' · '+(m.date||''),body);
+const initG=wantGame!=null?(gs.find(g=>String(g.game_no)===wantGame)||{}):(gs[0]||{});
+const initW=winName(initG)||'';
+dSet(m.team_a+' vs '+m.team_b,'#'+id+' · '+(m.date||''),body,
+initW&&markSrc(initW)?{src:markSrc(initW),side:initW===m.team_a?'l':(initW===m.team_b?'r':'l')}:null);
 try{
 const ctl=new AbortController();const tmr=setTimeout(()=>ctl.abort(),15000);
 const r=await fetch('https://mpl.mlbbhub.com/api/v1/id/match/'+encodeURIComponent(id),{signal:ctl.signal});
 clearTimeout(tmr);
 if(!r.ok)return;const d=await r.json();if(!d.games||!d.games.length)return;
 const firstGame=wantGame!=null?wantGame:String(d.games[0].game);
-const t2=d.games.map((g,i)=>`<button data-gtab="${g.game}" aria-pressed="${String(g.game)===String(firstGame)?'true':'false'}">Game ${g.game}</button>`).join('');
+const t2=d.games.map((g,i)=>`<button data-gtab="${g.game}" data-wtab="${esc(winName(g)||'')}" data-wside="${(winName(g)||'')===g.team_a?'l':'r'}" aria-pressed="${String(g.game)===String(firstGame)?'true':'false'}">Game ${g.game}</button>`).join('');
 const live=`<div class="sb-tabs" role="group" aria-label="Games">${t2}</div>`+d.games.map((g,i)=>{
 const gg={game_no:g.game,team_a:g.team_a,team_b:g.team_b,team_a_kills:g.team_a_kills,team_b_kills:g.team_b_kills,winner:g.winner,duration:g.duration,team_a_side:g.team_a_side,team_b_side:g.team_b_side};
 const pa=(g.players||[]).filter(p=>p.team===g.team_a),pb=(g.players||[]).filter(p=>p.team===g.team_b);
@@ -718,14 +736,19 @@ if(dnav.length)dnav[dnav.length-1].h=live;
 wireTabs();
 }catch(e){}}
 let dnav=[];
+function markSrc(t){return TICON(t)||logoOf(t)||'';}
+function setMark(mark){const el=document.getElementById('dmark');if(!el)return;
+if(mark&&mark.src){if(el.getAttribute('src')!==mark.src)el.setAttribute('src',mark.src);el.className='dmark '+mark.side;el.hidden=false;}
+else{el.hidden=true;el.removeAttribute('src');}}
 function dShow(){const top=dnav[dnav.length-1];if(!top)return;
 document.getElementById('dt').textContent=top.t;
 document.getElementById('ds').textContent=top.s||'';
 document.getElementById('db').innerHTML=top.h;
 document.getElementById('dback').hidden=dnav.length<2;
+setMark(top.mark||null);
 wireTabs();}
-function dSet(t,s,h){if(!dlg.open){dnav=[];lastFocus=document.activeElement;}
-dnav.push({t:t,s:s,h:h});dShow();if(!dlg.open)dlg.showModal();}
+function dSet(t,s,h,mark){if(!dlg.open){dnav=[];lastFocus=document.activeElement;}
+dnav.push({t:t,s:s,h:h,mark:mark||null});dShow();if(!dlg.open)dlg.showModal();}
 function dBack(){if(dnav.length>1){dnav.pop();dShow();}}
 function openD(t,s,h){dSet(t,s,h);}
 document.getElementById('dback').onclick=()=>dBack();

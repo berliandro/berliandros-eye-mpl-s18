@@ -253,7 +253,7 @@ ok(not bad,
    f"MVP canonical identity played in its series ({bad[:3] if bad else 'all ok'})")
 for needle in ('canonicalPlayer', 'PLAYER_ALIAS', 'stHeroDrill', 'stEmbDrill',
                'stTalDrill', 'stItemDrill', 'data-scope', 'data-ovitem',
-               'tag pick', 'tag ban', 'sdot'):
+               'tag pick', 'tag ban', 'sdot', 'dmark', 'data-wtab', 'sb-win'):
     ok(needle in html, f"stats drill-down contains {needle}")
 
 print(f"\n{len(fails)} failures, {len(warns)} warnings")

@@ -380,11 +380,12 @@ function stGameMeta(mid,gno){const gm=(DATA.games||[]).find(g=>String(g.match_de
 const sc=(DATA.schedule||[]).find(s=>String(s.match_detail_id)===String(mid))||{};return {gm:gm,sc:sc};}
 function sideCls(s){s=String(s||'').toLowerCase();return s==='blue'?'b':(s==='red'?'r':'');}
 function stGameRowHTML(e){const dt=(e.iso||'').slice(0,10)||e.date||'';
-const tag=e.kind==='ban'?'<span class="tag ban">BAN</span>':'<span class="tag pick">PICK</span>';
+const tag=e.kind==='ban'?'<span class="tag ban"><span class="tk" aria-hidden="true">✕</span>BAN</span>':'<span class="tag pick"><span class="tk" aria-hidden="true">✓</span>PICK</span>';
+const clsA=e.win?(e.win===e.teamA?'tw':'tl'):'',clsB=e.win?(e.win===e.teamB?'tw':'tl'):'';
 return `<div class="mrow" data-ovg="${esc(String(e.mid))}:${esc(String(e.gno))}" tabindex="0" role="button" aria-label="Open game ${esc(String(e.gno))} ${esc(e.teamA||'')} vs ${esc(e.teamB||'')}"><span class="mdate">${esc(dt)}</span>`
-+`<span class="mfix">${e.clsA?`<span class="sdot ${e.clsA}"></span>`:''}<span class="mt">${esc(e.teamA||'?')}</span><span class="msc">G${esc(String(e.gno))}</span><span class="mt">${esc(e.teamB||'?')}</span>${e.clsB?`<span class="sdot ${e.clsB}"></span>`:''}</span>`
++`<span class="mfix">${e.clsA?`<span class="sdot ${e.clsA}"></span>`:''}<span class="mt ${clsA}">${esc(e.teamA||'?')}</span><span class="msc">G${esc(String(e.gno))}</span><span class="mt ${clsB}">${esc(e.teamB||'?')}</span>${e.clsB?`<span class="sdot ${e.clsB}"></span>`:''}</span>`
 +`<span>${tag}</span>`
-+`<span class="mmvp hide-m">${esc(e.detail||'')}</span>`
++`<span class="mmvp hide-m" title="${esc(e.detail||'')}">${esc(e.detail||'')}</span>`
 +`<span class="mgo">›</span></div>`;}
 function stHeroDrill(hero){const A=window.ASSETS||{heroes:{}};
 const picks=DATA.players.filter(r=>(r.hero||'')===hero).map(r=>({r:r,info:gameInfo(r)}))
@@ -402,15 +403,15 @@ const sumHtml=`<div class="msec">Hero statistics · ${picks.length} pick${picks.
 +`<div class="msec">Players · ${nPlayers}</div><div class="lscroll"><table style="min-width:320px"><tr><th>Player</th><th>Uses</th></tr>${playersHtml||'<tr><td colspan="2">No picks recorded.</td></tr>'}</table></div>`;
 const entries=[];
 picks.forEach(x=>{const gm=x.info.gm||{};const w=winName(gm);
-entries.push({kind:'pick',mid:x.r.match_detail_id,gno:x.r.game_no,iso:x.info.iso,date:x.info.date,
+entries.push({kind:'pick',mid:x.r.match_detail_id,gno:x.r.game_no,iso:x.info.iso,date:x.info.date,win:w||'',
 teamA:gm.team_a||x.r.team,teamB:gm.team_b||x.info.opp,clsA:sideCls(gm.team_a_side),clsB:sideCls(gm.team_b_side),
 detail:canonicalPlayer(x.r.player)+(w?' · '+w+' won':'')});});
 bans.forEach(b=>{const m=stGameMeta(b.match_detail_id,b.game_no),gm=m.gm;const w=winName(gm);
 const teamA=gm.team_a||m.sc.team_a,teamB=gm.team_b||m.sc.team_b;
 const banTeam=String(b.side)==='B'?(teamB||'side B'):(teamA||'side A');
-entries.push({kind:'ban',mid:b.match_detail_id,gno:b.game_no,iso:m.sc.iso_datetime||'',date:m.sc.date||m.sc.iso_date||'',
+entries.push({kind:'ban',mid:b.match_detail_id,gno:b.game_no,iso:m.sc.iso_datetime||'',date:m.sc.date||m.sc.iso_date||'',win:w||'',
 teamA:teamA,teamB:teamB,clsA:sideCls(gm.team_a_side),clsB:sideCls(gm.team_b_side),
-detail:'banned by '+banTeam+(w?' · '+w+' won':'')});});
+detail:banTeam+' ban'+(w?' · '+w+' won':'')});});
 entries.sort((a,b)=>String(a.iso).localeCompare(String(b.iso))||(+a.gno-+b.gno)||(a.kind==='pick'?-1:1));
 const gamesHtml=`<div class="msec">Games · ${picks.length} pick${picks.length===1?'':'s'} · ${bans.length} ban${bans.length===1?'':'s'}</div><div class="mhead"><span>Date</span><span>Match</span><span>Type</span><span>Detail</span><span></span></div>`
 +(entries.map(stGameRowHTML).join('')||'<div class="empty">No games found.</div>');
@@ -451,7 +452,7 @@ function durSec(s){const m=/(\d+):(\d+)/.exec(s||'');return m?(+m[1])*60+(+m[2])
 function normPl(r,sec){const kills=r.kill??r.kills??0,deaths=r.death??r.deaths??0,assists=r.assist??r.assists??0;
 const gpm=r.gold_per_min??((sec&&r.gold!=null)?Math.round(r.gold/(sec/60)):null);return Object.assign({},r,{kills,deaths,assists,gpm});}
 function aid(u,re){const m=re.exec(u||'');return m?m[1]:'';}
-function teamBlock(code,kills,plist,sec,side,flip){
+function teamBlock(code,kills,plist,sec,side,flip,won){
 const A=window.ASSETS||{items:{},heroes:{},emblems:{},runes:{}};
 const pk=String(side||'').toLowerCase()==='blue'?'pk-b':(String(side||'').toLowerCase()==='red'?'pk-r':'');
 const prow=plist.map(r0=>{const r=normPl(r0,sec);
@@ -469,7 +470,7 @@ const items=itemObjs.map(o=>{const src=(o.eq&&A.items&&A.items[o.eq])||(o.url&&A
 return `<div class="sb-p">${heroImg}<div class="sb-id"><b>${esc(r.player)}</b><span>${esc(r.hero||'')} · ${r.kills}/${r.deaths}/${r.assists} · KDA ${r.kda}</span></div>`
 +`<div class="sb-side">G ${r.gold}${r.gpm!=null?' ('+r.gpm+'/m)':''}<br>DMG ${r.hero_damage??'–'} · TAKEN ${r.damage_taken??'–'}</div>`
 +`<div class="sb-gear"><span class="sb-tal">${embSm}${tals}</span>${items?`<span class="sb-items">${items}</span>`:''}</div></div>`;}).join('');
-return `<div class="sb-team${flip?' flip':''}${pk?' '+pk:''}"><div class="sb-thead"><img src="${logoOf(code)}" alt="" ${IMG_HIDE}><b>${esc(code)}</b><span class="k">${kills} kills</span></div>${prow}</div>`;}
+return `<div class="sb-team${flip?' flip':''}${pk?' '+pk:''}"><div class="sb-thead"><img src="${logoOf(code)}" alt="" ${IMG_HIDE}><b class="${won===true?'tw':won===false?'tl':''}">${esc(code)}</b><span class="k">${kills} kills</span></div>${prow}</div>`;}
 function winName(g){return g.winner==='team_a'?g.team_a:(g.winner==='team_b'?g.team_b:(g.winner||''));}
 function standBoard(){
 const stBase=[...DATA.standings].sort((a,b)=>a.rank-b.rank);
@@ -494,31 +495,38 @@ if(!best||key[0]>bk[0]||(key[0]===bk[0]&&(key[1]>bk[1]||(key[1]===bk[1]&&key[2]>
 function gameSection(g,plistA,plistB,bansA,bansB,live,active){
 const sec=durSec(g.duration_str||g.duration);const dur=g.duration_str||g.duration||'';
 const wn=winName(g);const gm=gameMvp(plistA,plistB,wn);
+const wonA=wn?wn===g.team_a:null,wonB=wn?wn===g.team_b:null;
 const bans=(bansA.length||bansB.length)?`<div class="sb-bans"><span>BAN ${esc(g.team_a)}: ${bansA.map(esc).join(', ')||'–'}</span><span>BAN ${esc(g.team_b)}: ${bansB.map(esc).join(', ')||'–'}</span></div>`:'';
 return `<div class="sb-game" data-g="${g.game_no}"${active?'':' hidden'}>`
-+`<div class="sb-ghead"><h4>Game ${g.game_no}</h4><span>${esc(g.team_a)} ${g.team_a_kills} : ${g.team_b_kills} ${esc(g.team_b)} · ${esc(dur)} · ${esc(wn)} won${gm?` · <span class="gmvp">MVP ${esc(gm.player)}</span>`:''}</span></div>`
-+bans+`<div class="sb-duo">`+teamBlock(g.team_a,g.team_a_kills,plistA,sec,g.team_a_side,'')+teamBlock(g.team_b,g.team_b_kills,plistB,sec,g.team_b_side,'flip')+`</div></div>`;}
++`<div class="sb-ghead"><h4>Game ${g.game_no}</h4><span>${esc(g.team_a)} ${g.team_a_kills} : ${g.team_b_kills} ${esc(g.team_b)} · ${esc(dur)}${wn?` · <b class="sb-win">${esc(wn)} won</b>`:''}${gm?` · <span class="gmvp">MVP ${esc(gm.player)}</span>`:''}</span></div>`
++bans+`<div class="sb-duo">`+teamBlock(g.team_a,g.team_a_kills,plistA,sec,g.team_a_side,'',wonA)+teamBlock(g.team_b,g.team_b_kills,plistB,sec,g.team_b_side,'flip',wonB)+`</div></div>`;}
 function wireTabs(){const db=document.getElementById('db');
 db.querySelectorAll('[data-gtab]').forEach(b=>b.onclick=()=>selGame(b.dataset.gtab));}
 function selGame(gno){const db=document.getElementById('db');if(!db||gno==null||gno==='')return;
 db.querySelectorAll('[data-gtab]').forEach(x=>x.setAttribute('aria-pressed',x.dataset.gtab===String(gno)?'true':'false'));
-db.querySelectorAll('.sb-game').forEach(s=>{s.hidden=s.dataset.g!==String(gno);});}
+db.querySelectorAll('.sb-game').forEach(s=>{s.hidden=s.dataset.g!==String(gno);});
+const tab=[...db.querySelectorAll('[data-gtab]')].find(x=>x.dataset.gtab===String(gno));
+const w=tab?tab.dataset.wtab:'';setMark(w&&markSrc(w)?{src:markSrc(w),side:tab.dataset.wside||'l'}:null);}
 async function showM(id,opts){opts=opts||{};const wantGame=opts.game!=null?String(opts.game):null;
 const m=DATA.schedule.find(x=>String(x.match_detail_id)===String(id))||{};
 const gs=DATA.games.filter(g=>g.match_detail_id===id);
 const isActive=(g,i)=>wantGame!=null?String(g.game_no)===wantGame:i===0;
-const tabs=gs.map((g,i)=>`<button data-gtab="${g.game_no}" aria-pressed="${isActive(g,i)?'true':'false'}">Game ${g.game_no}</button>`).join('');
+const wtab=g=>{const w=winName(g)||'';return ` data-wtab="${esc(w)}" data-wside="${w?(w===g.team_a?'l':'r'):'l'}"`;};
+const tabs=gs.map((g,i)=>`<button data-gtab="${g.game_no}"${wtab(g)} aria-pressed="${isActive(g,i)?'true':'false'}">Game ${g.game_no}</button>`).join('');
 const body=`<div class="sb-tabs" role="group" aria-label="Games">${tabs}</div>`+gs.map((g,i)=>{
 const pa=rows(id,g.game_no).filter(r=>r.team===g.team_a),pb=rows(id,g.game_no).filter(r=>r.team===g.team_b);
 return gameSection(g,pa,pb,[],[],false,isActive(g,i));}).join('');
-dSet(m.team_a+' vs '+m.team_b,'#'+id+' · '+(m.date||''),body);
+const initG=wantGame!=null?(gs.find(g=>String(g.game_no)===wantGame)||{}):(gs[0]||{});
+const initW=winName(initG)||'';
+dSet(m.team_a+' vs '+m.team_b,'#'+id+' · '+(m.date||''),body,
+initW&&markSrc(initW)?{src:markSrc(initW),side:initW===m.team_a?'l':(initW===m.team_b?'r':'l')}:null);
 try{
 const ctl=new AbortController();const tmr=setTimeout(()=>ctl.abort(),15000);
 const r=await fetch('https://mpl.mlbbhub.com/api/v1/id/match/'+encodeURIComponent(id),{signal:ctl.signal});
 clearTimeout(tmr);
 if(!r.ok)return;const d=await r.json();if(!d.games||!d.games.length)return;
 const firstGame=wantGame!=null?wantGame:String(d.games[0].game);
-const t2=d.games.map((g,i)=>`<button data-gtab="${g.game}" aria-pressed="${String(g.game)===String(firstGame)?'true':'false'}">Game ${g.game}</button>`).join('');
+const t2=d.games.map((g,i)=>`<button data-gtab="${g.game}" data-wtab="${esc(winName(g)||'')}" data-wside="${(winName(g)||'')===g.team_a?'l':'r'}" aria-pressed="${String(g.game)===String(firstGame)?'true':'false'}">Game ${g.game}</button>`).join('');
 const live=`<div class="sb-tabs" role="group" aria-label="Games">${t2}</div>`+d.games.map((g,i)=>{
 const gg={game_no:g.game,team_a:g.team_a,team_b:g.team_b,team_a_kills:g.team_a_kills,team_b_kills:g.team_b_kills,winner:g.winner,duration:g.duration,team_a_side:g.team_a_side,team_b_side:g.team_b_side};
 const pa=(g.players||[]).filter(p=>p.team===g.team_a),pb=(g.players||[]).filter(p=>p.team===g.team_b);
@@ -528,14 +536,19 @@ if(dnav.length)dnav[dnav.length-1].h=live;
 wireTabs();
 }catch(e){}}
 let dnav=[];
+function markSrc(t){return TICON(t)||logoOf(t)||'';}
+function setMark(mark){const el=document.getElementById('dmark');if(!el)return;
+if(mark&&mark.src){if(el.getAttribute('src')!==mark.src)el.setAttribute('src',mark.src);el.className='dmark '+mark.side;el.hidden=false;}
+else{el.hidden=true;el.removeAttribute('src');}}
 function dShow(){const top=dnav[dnav.length-1];if(!top)return;
 document.getElementById('dt').textContent=top.t;
 document.getElementById('ds').textContent=top.s||'';
 document.getElementById('db').innerHTML=top.h;
 document.getElementById('dback').hidden=dnav.length<2;
+setMark(top.mark||null);
 wireTabs();}
-function dSet(t,s,h){if(!dlg.open){dnav=[];lastFocus=document.activeElement;}
-dnav.push({t:t,s:s,h:h});dShow();if(!dlg.open)dlg.showModal();}
+function dSet(t,s,h,mark){if(!dlg.open){dnav=[];lastFocus=document.activeElement;}
+dnav.push({t:t,s:s,h:h,mark:mark||null});dShow();if(!dlg.open)dlg.showModal();}
 function dBack(){if(dnav.length>1){dnav.pop();dShow();}}
 function openD(t,s,h){dSet(t,s,h);}
 document.getElementById('dback').onclick=()=>dBack();
