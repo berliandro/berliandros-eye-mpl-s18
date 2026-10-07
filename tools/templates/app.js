@@ -379,13 +379,22 @@ dSet('Talent '+id,S.ov+' · '+list.length+' games',`${src?`<p><img src="${esc(sr
 function stGameMeta(mid,gno){const gm=(DATA.games||[]).find(g=>String(g.match_detail_id)===String(mid)&&String(g.game_no)===String(gno))||{};
 const sc=(DATA.schedule||[]).find(s=>String(s.match_detail_id)===String(mid))||{};return {gm:gm,sc:sc};}
 function sideCls(s){s=String(s||'').toLowerCase();return s==='blue'?'b':(s==='red'?'r':'');}
-function stGameRowHTML(e){const dt=(e.iso||'').slice(0,10)||e.date||'';
-const tag=e.kind==='ban'?'<span class="tag ban"><span class="tk" aria-hidden="true">✕</span>BAN</span>':'<span class="tag pick"><span class="tk" aria-hidden="true">✓</span>PICK</span>';
-const clsA=e.win?(e.win===e.teamA?'tw':'tl'):'',clsB=e.win?(e.win===e.teamB?'tw':'tl'):'';
-return `<div class="mrow" data-ovg="${esc(String(e.mid))}:${esc(String(e.gno))}" tabindex="0" role="button" aria-label="Open game ${esc(String(e.gno))} ${esc(e.teamA||'')} vs ${esc(e.teamB||'')}"><span class="mdate">${esc(dt)}</span>`
-+`<span class="mfix">${e.clsA?`<span class="sdot ${e.clsA}"></span>`:''}<span class="mt ${clsA}">${esc(e.teamA||'?')}</span><span class="msc">G${esc(String(e.gno))}</span><span class="mt ${clsB}">${esc(e.teamB||'?')}</span>${e.clsB?`<span class="sdot ${e.clsB}"></span>`:''}</span>`
-+`<span>${tag}</span>`
-+`<span class="mmvp hide-m" title="${esc(e.detail||'')}">${esc(e.detail||'')}</span>`
+const MON=['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+function fmtD(iso,date){const m=/(\d{4})-(\d{2})-(\d{2})/.exec(iso||'');
+if(m)return MON[+m[2]-1]+' '+(+m[3]);
+const m2=/(\d{1,2}) ([A-Za-z]+)/.exec(date||'');if(m2)return m2[2].slice(0,3)+' '+(+m2[1]);
+return '–';}
+function stGameRowHTML(e){
+const tag=e.kind==='ban'?'<span class="tag ban">BAN</span>':'<span class="tag pick">PICK</span>';
+const sA=e.clsA==='b'?'sa':(e.clsA==='r'?'sb':''),sB=e.clsB==='b'?'sa':(e.clsB==='r'?'sb':'');
+const wA=e.win?(e.win===e.teamA?'tw':'tl'):'',wB=e.win?(e.win===e.teamB?'tw':'tl'):'';
+const res=e.res==='win'?'<span class="res win">Win</span>':(e.res==='loss'?'<span class="res loss">Loss</span>':'<span class="res na">–</span>');
+return `<div class="mrow sg" data-ovg="${esc(String(e.mid))}:${esc(String(e.gno))}" tabindex="0" role="button" aria-label="Open game ${esc(String(e.gno))} ${esc(e.teamA||'')} vs ${esc(e.teamB||'')}"><span class="mdate">${esc(fmtD(e.iso,e.date))}</span>`
++`<span class="mfix"><span class="mt ${sA} ${wA}">${esc(e.teamA||'?')}</span><span class="msep" aria-hidden="true">·</span><span class="mt ${sB} ${wB}">${esc(e.teamB||'?')}</span></span>`
++`<span class="mgame">${esc(String(e.gno))}</span>`
++`<span class="sgtype">${tag}</span>`
++`<span class="sgres">${res}</span>`
++`<span class="sgmeta">${esc(fmtD(e.iso,e.date))} · Game ${esc(String(e.gno))}</span>`
 +`<span class="mgo">›</span></div>`;}
 function stHeroDrill(hero){const A=window.ASSETS||{heroes:{}};
 const picks=DATA.players.filter(r=>(r.hero||'')===hero).map(r=>({r:r,info:gameInfo(r)}))
@@ -404,16 +413,15 @@ const sumHtml=`<div class="msec">Hero statistics · ${picks.length} pick${picks.
 const entries=[];
 picks.forEach(x=>{const gm=x.info.gm||{};const w=winName(gm);
 entries.push({kind:'pick',mid:x.r.match_detail_id,gno:x.r.game_no,iso:x.info.iso,date:x.info.date,win:w||'',
-teamA:gm.team_a||x.r.team,teamB:gm.team_b||x.info.opp,clsA:sideCls(gm.team_a_side),clsB:sideCls(gm.team_b_side),
-detail:canonicalPlayer(x.r.player)+(w?' · '+w+' won':'')});});
+res:w?(w===x.r.team?'win':'loss'):null,
+teamA:gm.team_a||x.r.team,teamB:gm.team_b||x.info.opp,clsA:sideCls(gm.team_a_side),clsB:sideCls(gm.team_b_side)});});
 bans.forEach(b=>{const m=stGameMeta(b.match_detail_id,b.game_no),gm=m.gm;const w=winName(gm);
 const teamA=gm.team_a||m.sc.team_a,teamB=gm.team_b||m.sc.team_b;
-const banTeam=String(b.side)==='B'?(teamB||'side B'):(teamA||'side A');
 entries.push({kind:'ban',mid:b.match_detail_id,gno:b.game_no,iso:m.sc.iso_datetime||'',date:m.sc.date||m.sc.iso_date||'',win:w||'',
-teamA:teamA,teamB:teamB,clsA:sideCls(gm.team_a_side),clsB:sideCls(gm.team_b_side),
-detail:banTeam+' ban'+(w?' · '+w+' won':'')});});
+res:null,
+teamA:teamA,teamB:teamB,clsA:sideCls(gm.team_a_side),clsB:sideCls(gm.team_b_side)});});
 entries.sort((a,b)=>String(a.iso).localeCompare(String(b.iso))||(+a.gno-+b.gno)||(a.kind==='pick'?-1:1));
-const gamesHtml=`<div class="msec">Games · ${picks.length} pick${picks.length===1?'':'s'} · ${bans.length} ban${bans.length===1?'':'s'}</div><div class="mhead"><span>Date</span><span>Match</span><span>Type</span><span>Detail</span><span></span></div>`
+const gamesHtml=`<div class="msec">Games · ${picks.length} pick${picks.length===1?'':'s'} · ${bans.length} ban${bans.length===1?'':'s'}</div><div class="mhead sg"><span>Date</span><span>Match</span><span>GAME</span><span>Type</span><span>Result</span><span></span></div>`
 +(entries.map(stGameRowHTML).join('')||'<div class="empty">No games found.</div>');
 dSet(hero,'Stats · Heroes · '+picks.length+' picks · '+bans.length+' bans',
 `${hi?`<p><img src="${esc(hi)}" alt="${esc(hero)}" loading="lazy" style="width:40px;height:40px;border-radius:10px;border:1px solid var(--line);object-fit:cover" onerror="this.remove()"></p>`:''}`

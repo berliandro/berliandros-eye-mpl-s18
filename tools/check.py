@@ -253,8 +253,11 @@ ok(not bad,
    f"MVP canonical identity played in its series ({bad[:3] if bad else 'all ok'})")
 for needle in ('canonicalPlayer', 'PLAYER_ALIAS', 'stHeroDrill', 'stEmbDrill',
                'stTalDrill', 'stItemDrill', 'data-scope', 'data-ovitem',
-               'tag pick', 'tag ban', 'sdot', 'dmark', 'data-wtab', 'sb-win'):
+               'tag pick', 'tag ban', 'mrow sg', 'sgres', 'sgmeta', 'res win',
+               '>GAME<', 'dmark', 'data-wtab', 'sb-win'):
     ok(needle in html, f"stats drill-down contains {needle}")
+ok('sdot' not in html, "side dots fully removed from game list")
+ok('banned by' not in html, "verbose ban detail text removed")
 
 print(f"\n{len(fails)} failures, {len(warns)} warnings")
 sys.exit(1 if fails else 0)

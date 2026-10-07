@@ -57,8 +57,10 @@ live from the mlbbhub API when online.
   `PLAYER_ALIAS` in `tools/templates/app.js`), so aliases aggregate instead of
   splitting into phantom players; the source spelling is kept as an “as …” note.
   Every hero opens a drill-down modal (picks/bans/WR tiles, most-used
-  items/emblems/talents, players with counts, and a PICK/BAN-tagged game list
-  that opens the exact game); assets drill further into global usage.
+  items/emblems/talents, players with counts, and a game list with
+  `DATE | MATCH | GAME | TYPE | RESULT` columns that opens the exact game);
+  PICK rows show the hero's team result as Win/Loss while BAN rows stay neutral,
+  and assets drill further into global usage.
 - **Offline-first** — embedded snapshot renders instantly; Refresh re-fetches live
   data with retry/timeout, caches to `localStorage`, and reports how many brand-new
   heroes/items were served from the live CDN.
