@@ -52,6 +52,13 @@ live from the mlbbhub API when online.
 - **Stats** — sub-tabbed dashboard: **Series MVP** (race leaderboard + history) and
   **Heroes** (highlight tiles + sortable pick/ban/win table with share bars).
   Every statistic column sorts ascending/descending with a minimalist ▲▼ indicator.
+  MVP names from Liquipedia are normalized to one canonical player identity
+  (e.g. Coolfire → Joshuaa, JOOOOO → Kevinn, Sutsujin → Arthur — see
+  `PLAYER_ALIAS` in `tools/templates/app.js`), so aliases aggregate instead of
+  splitting into phantom players; the source spelling is kept as an “as …” note.
+  Every hero opens a drill-down modal (picks/bans/WR tiles, most-used
+  items/emblems/talents, players with counts, and a PICK/BAN-tagged game list
+  that opens the exact game); assets drill further into global usage.
 - **Offline-first** — embedded snapshot renders instantly; Refresh re-fetches live
   data with retry/timeout, caches to `localStorage`, and reports how many brand-new
   heroes/items were served from the live CDN.

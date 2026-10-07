@@ -202,20 +202,59 @@ if gap:
 else:
     print("PASS player images cover all players")
 
-# MVP leaderboard names (Liquipedia spellings) must open a non-empty player
-# card: exact, normalized, or via the documented alias map. Coolfire is the
-# one known exception — no roster, live API, or Liquipedia identity resolves it.
-MVP_ALIAS = {'sutsujin': 'arthur', 'jooooo': 'kevinn', 'aboy': 'aboyy',
-             'maykids': 'maykidss', 'moreno': 'morenooo', 'rendyy': 'rendyyy',
-             'jizeezeze': 'jiizee'}
+# MVP identity: Liquipedia MVP spellings must resolve to ONE canonical roster
+# identity (mirror of PLAYER_ALIAS in tools/templates/app.js — keep in sync).
+# Verified: Coolfire=Joshuaa (reddit r/mobilelegendsesports 2026-08-30),
+# JOOOOO=Kevinn = Yonathan Chin (bo3.gg player pages, teamliquid.com roster),
+# Sutsujin=Arthur Sunarkho (Liquipedia, MLDB). Mechanical (row teams intersect
+# roster team): A B O Y=Aboyy, Jizeezeze=Jiizee, Maykids=Maykidss,
+# Moreno=Morenooo, Rendyy=Rendyyy. Deliberately unmerged: Joshua (RRQ) vs
+# Joshuaa (NAVI) — different people.
+PLAYER_CANON = {'coolfire': 'Joshuaa', 'jooooo': 'Kevinn', 'sutsujin': 'Arthur',
+                'jizeezeze': 'Jiizee', 'maykids': 'Maykidss', 'moreno': 'Morenooo',
+                'rendyy': 'Rendyyy', 'aboy': 'Aboyy'}
+
+
+def canon(name):
+    u = ultra(name)
+    gp = sorted({r['player'] for r in praw if ultra(r['player']) == u})
+    if len(gp) == 1:
+        return gp[0]
+    if len(gp) > 1:
+        return 'Maykidss' if u == 'maykidss' else gp[0]
+    ss = sorted({r['player'] for r in season if ultra(r['player']) == u})
+    if ss:
+        return ss[0]
+    return PLAYER_CANON.get(u, name)
+
+
+ok(canon('Coolfire') == 'Joshuaa', "CoolFire resolves to Joshuaa (not a separate player)")
+ok(canon('JOOOOO') == 'Kevinn', "JOOOOO resolves to Kevinn (Yonathan Chin)")
+ok(canon('Sutsujin') == 'Arthur', "Sutsujin resolves to Arthur Sunarkho")
+ok(canon('Joshua') != canon('Joshuaa'), "Joshua (RRQ) and Joshuaa (NAVI) stay distinct")
 mvp_names = sorted({(m.get('liq_mvp') or '').strip() for m in matches
                     if (m.get('liq_mvp') or '').strip()})
 players_u = {ultra(p) for p in all_players}
-unresolved = [m for m in mvp_names
-              if ultra(m) not in players_u
-              and MVP_ALIAS.get(ultra(m), ultra(m)) not in players_u]
-ok(unresolved == ['Coolfire'],
-   f"MVP names resolve to player cards (unresolved: {unresolved})")
+unresolved = [m for m in mvp_names if ultra(canon(m)) not in players_u]
+ok(not unresolved,
+   f"all MVP names resolve to one canonical identity (unresolved: {unresolved})")
+team_of = {}
+for r in praw:
+    team_of.setdefault(r['player'], set()).add(r['team'])
+bad = []
+for m in matches:
+    v = (m.get('liq_mvp') or '').strip()
+    if not v:
+        continue
+    c = canon(v)
+    if not (team_of.get(c, set()) & {m.get('team_a'), m.get('team_b')}):
+        bad.append((v, c, m.get('team_a'), m.get('team_b')))
+ok(not bad,
+   f"MVP canonical identity played in its series ({bad[:3] if bad else 'all ok'})")
+for needle in ('canonicalPlayer', 'PLAYER_ALIAS', 'stHeroDrill', 'stEmbDrill',
+               'stTalDrill', 'stItemDrill', 'data-scope', 'data-ovitem',
+               'tag pick', 'tag ban', 'sdot'):
+    ok(needle in html, f"stats drill-down contains {needle}")
 
 print(f"\n{len(fails)} failures, {len(warns)} warnings")
 sys.exit(1 if fails else 0)

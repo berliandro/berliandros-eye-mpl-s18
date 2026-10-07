@@ -39,11 +39,13 @@ document.getElementById('dx').onclick=()=>dlg.close();
 document.getElementById('dx2').onclick=()=>document.getElementById('dlg2').close();
 document.getElementById('db').addEventListener('click',e=>{
 const g=e.target.closest('[data-ovg]');if(g){const parts=g.dataset.ovg.split(':');showM(parts[0],{game:parts[1]});return;}
-const h=e.target.closest('[data-ovhero]');if(h){ovHeroDrill(h.dataset.ovhero);return;}
-const m=e.target.closest('[data-ovemb]');if(m){ovEmbDrill(m.dataset.ovemb);return;}
-const t=e.target.closest('[data-ovtal]');if(t){ovTalDrill(t.dataset.ovtal);return;}
+const h=e.target.closest('[data-ovhero]');if(h){(h.dataset.scope==='global'?stHeroDrill:ovHeroDrill)(h.dataset.ovhero);return;}
+const m=e.target.closest('[data-ovemb]');if(m){(m.dataset.scope==='global'?stEmbDrill:ovEmbDrill)(m.dataset.ovemb);return;}
+const t=e.target.closest('[data-ovtal]');if(t){(t.dataset.scope==='global'?stTalDrill:ovTalDrill)(t.dataset.ovtal);return;}
+const it=e.target.closest('[data-ovitem]');if(it){stItemDrill(it.dataset.ovitem);return;}
+const p=e.target.closest('[data-p]');if(p){showP(p.dataset.p);return;}
 const o=e.target.closest('[data-ovopp]');if(o){ovOppDrill(o.dataset.ovopp);return;}});
-document.addEventListener('keydown',e=>{if(e.key!=='Enter'&&e.key!==' ')return;const t=e.target&&e.target.closest?e.target.closest('[data-ovg],[data-ovhero],[data-ovemb],[data-ovtal],[data-ovopp]'):null;if(!t)return;if(t.tagName==='BUTTON'&&e.key===' ')return;e.preventDefault();t.click();});
+document.addEventListener('keydown',e=>{if(e.key!=='Enter'&&e.key!==' ')return;const t=e.target&&e.target.closest?e.target.closest('[data-ovg],[data-ovhero],[data-ovemb],[data-ovtal],[data-ovitem],[data-ovopp],[data-p]'):null;if(!t)return;if(t.tagName==='BUTTON'&&e.key===' ')return;e.preventDefault();t.click();});
 document.getElementById('selQ').oninput=renderOvSel;
 document.getElementById('selT').onchange=renderOvSel;
 document.getElementById('selL').onchange=renderOvSel;
@@ -144,31 +146,34 @@ const mostP=played[0],mostB=[...played].sort((a,b)=>b.ban-a.ban)[0],mostC=[...pl
 const elig=played.filter(h=>h.pick>=5).sort((a,b)=>(b.win/Math.max(1,b.pick))-(a.win/Math.max(1,a.pick)));
 const bestWR=elig[0];
 out.push(`<div class="pin" style="grid-column:1/-1"><div class="body"><div class="kicker">Highlights · ${played.length} heroes contested</div><div class="tiles">`
-+`<div class="tile"><b>${esc(mostP.hero)}</b><span>Most picked · ${mostP.pick}</span></div>`
-+`<div class="tile"><b>${esc(mostB.hero)}</b><span>Most banned · ${mostB.ban}</span></div>`
-+(bestWR?`<div class="tile"><b>${esc(bestWR.hero)}</b><span>Best win rate (5+ picks) · ${esc(bestWR.wr)}</span></div>`:'')
-+`<div class="tile"><b>${esc(mostC.hero)}</b><span>Most contested · ${pb(mostC)} pick+ban</span></div>`
++`<div class="tile"><b data-ovhero="${esc(mostP.hero)}" data-scope="global" tabindex="0" title="Open ${esc(mostP.hero)} stats">${esc(mostP.hero)}</b><span>Most picked · ${mostP.pick}</span></div>`
++`<div class="tile"><b data-ovhero="${esc(mostB.hero)}" data-scope="global" tabindex="0" title="Open ${esc(mostB.hero)} stats">${esc(mostB.hero)}</b><span>Most banned · ${mostB.ban}</span></div>`
++(bestWR?`<div class="tile"><b data-ovhero="${esc(bestWR.hero)}" data-scope="global" tabindex="0" title="Open ${esc(bestWR.hero)} stats">${esc(bestWR.hero)}</b><span>Best win rate (5+ picks) · ${esc(bestWR.wr)}</span></div>`:'')
++`<div class="tile"><b data-ovhero="${esc(mostC.hero)}" data-scope="global" tabindex="0" title="Open ${esc(mostC.hero)} stats">${esc(mostC.hero)}</b><span>Most contested · ${pb(mostC)} pick+ban</span></div>`
 +`</div></div></div>`);
-out.push(`<div class="pin" style="grid-column:1/-1"><div class="body"><div class="kicker">Every contested hero · pick / ban / win</div><div class="lscroll"><table style="min-width:700px"><tr>${th('heroes','hero','Hero')}${th('heroes','pick','Pick')}${th('heroes','ban','Ban')}${th('heroes','pb','P+B')}${th('heroes','win','Win')}${th('heroes','wr','WR')}${th('heroes','share','Share')}</tr>${hrows.map(h=>`<tr><td><span class="hcell">${h.img?`<img src="${esc(h.img)}" alt="" loading="lazy" onerror="this.remove()">`:''}${esc(h.hero)}</span></td><td>${h.pick}</td><td>${h.ban}</td><td>${pb(h)}</td><td>${h.win}</td><td>${esc(h.wr)}</td><td style="min-width:110px"><span class="bar"><span style="width:${Math.round(pb(h)/maxPB*100)}%"></span></span></td></tr>`).join('')}</table></div></div></div>`);}
+out.push(`<div class="pin" style="grid-column:1/-1"><div class="body"><div class="kicker">Every contested hero · pick / ban / win</div><div class="lscroll"><table style="min-width:700px"><tr>${th('heroes','hero','Hero')}${th('heroes','pick','Pick')}${th('heroes','ban','Ban')}${th('heroes','pb','P+B')}${th('heroes','win','Win')}${th('heroes','wr','WR')}${th('heroes','share','Share')}</tr>${hrows.map(h=>`<tr><td data-ovhero="${esc(h.hero)}" data-scope="global" tabindex="0" title="Open ${esc(h.hero)} stats"><span class="hcell">${h.img?`<img src="${esc(h.img)}" alt="" loading="lazy" onerror="this.remove()">`:''}${esc(h.hero)}</span></td><td>${h.pick}</td><td>${h.ban}</td><td>${pb(h)}</td><td>${h.win}</td><td>${esc(h.wr)}</td><td style="min-width:110px"><span class="bar"><span style="width:${Math.round(pb(h)/maxPB*100)}%"></span></span></td></tr>`).join('')}</table></div></div></div>`);}
 }else{
 const mvps=(DATA.matches||[]).filter(m=>m.liq_mvp);
-const cnt={};mvps.forEach(m=>{cnt[m.liq_mvp]=(cnt[m.liq_mvp]||0)+1;});
+const srcByCanon=mvpSources();
+const cnt={};mvps.forEach(m=>{const c=canonicalPlayer(m.liq_mvp);cnt[c]=(cnt[c]||0)+1;});
 const race=Object.entries(cnt).sort((a,b)=>b[1]-a[1]);
 const mx=race.length?race[0][1]:1;
 const rrows=S.tsort.t==='race'?srt(race,r=>S.tsort.k==='player'?r[0]:r[1],S.tsort.k==='player'):race;
-out.push(`<div class="pin"><div class="body"><div class="kicker">MVP race · ${mvps.length} series decided</div><h3 style="margin:.25em 0">Leaderboard</h3><table><tr>${th('race','rank','#')}${th('race','player','Player')}${th('race','mvps','MVPs')}<th></th></tr>${rrows.map(([p,n],i)=>`<tr><td>#${i+1}</td><td><span data-p="${esc(p)}" style="cursor:pointer;font-weight:600">${esc(p)}</span></td><td>${n}</td><td style="min-width:90px"><span class="bar"><span style="width:${Math.round(n/mx*100)}%"></span></span></td></tr>`).join('')||'<tr><td colspan="4">No MVPs yet.</td></tr>'}</table></div></div>`);
+const srcNote=p=>[...(srcByCanon[p]||[])].filter(s=>s!==p);
+out.push(`<div class="pin"><div class="body"><div class="kicker">MVP race · ${mvps.length} series decided</div><h3 style="margin:.25em 0">Leaderboard</h3><table><tr>${th('race','rank','#')}${th('race','player','Player')}${th('race','mvps','MVPs')}<th></th></tr>${rrows.map(([p,n],i)=>{const alts=srcNote(p);return `<tr><td>#${i+1}</td><td><span data-p="${esc(p)}" tabindex="0" style="cursor:pointer;font-weight:600"${alts.length?` title="Source name${alts.length>1?'s':''}: ${esc(alts.join(', '))}"`:''}>${esc(p)}</span>${alts.length?` <span style="font-family:var(--font-mono);font-size:10.5px;color:var(--muted)">(as ${esc(alts.join(', '))})</span>`:''}</td><td>${n}</td><td style="min-width:90px"><span class="bar"><span style="width:${Math.round(n/mx*100)}%"></span></span></td></tr>`;}).join('')||'<tr><td colspan="4">No MVPs yet.</td></tr>'}</table></div></div>`);
 const histBase=[...mvps].sort((a,b)=>String(a.iso_datetime||'').localeCompare(String(b.iso_datetime||'')));
-const hist=S.tsort.t==='hist'?srt(histBase,m=>S.tsort.k==='match'?(m.team_a+' '+m.team_b):S.tsort.k==='mvp'?m.liq_mvp:(m.iso_datetime||''),true):histBase;
-out.push(`<div class="pin"><div class="body"><div class="kicker">History</div><h3 style="margin:.25em 0">Series MVPs</h3><div class="lscroll"><table style="min-width:520px"><tr>${th('hist','date','Date')}${th('hist','match','Match')}${th('hist','mvp','MVP')}</tr>${hist.map(m=>`<tr><td>${esc(m.iso_date||m.date||'')}</td><td>${esc(m.team_a)} ${m.score_a??''}:${m.score_b??''} ${esc(m.team_b)}</td><td>${esc(m.liq_mvp)}</td></tr>`).join('')}</table></div></div></div>`);}}
+const hist=S.tsort.t==='hist'?srt(histBase,m=>S.tsort.k==='match'?(m.team_a+' '+m.team_b):S.tsort.k==='mvp'?canonicalPlayer(m.liq_mvp):(m.iso_datetime||''),true):histBase;
+out.push(`<div class="pin"><div class="body"><div class="kicker">History</div><h3 style="margin:.25em 0">Series MVPs</h3><div class="lscroll"><table style="min-width:520px"><tr>${th('hist','date','Date')}${th('hist','match','Match')}${th('hist','mvp','MVP')}</tr>${hist.map(m=>{const c=canonicalPlayer(m.liq_mvp);return `<tr><td>${esc(m.iso_date||m.date||'')}</td><td>${esc(m.team_a)} ${m.score_a??''}:${m.score_b??''} ${esc(m.team_b)}</td><td>${esc(c)}${c!==m.liq_mvp?` <span style="font-family:var(--font-mono);font-size:10.5px;color:var(--muted)">(as ${esc(m.liq_mvp)})</span>`:''}</td></tr>`;}).join('')}</table></div></div></div>`);}}
 board.innerHTML=out.join('')||'';emptyEl.hidden=out.length>0;countEl.textContent=out.length+' pins';
 board.querySelectorAll('.pin').forEach(p=>io.observe(p));
 board.querySelectorAll('[data-p]').forEach(b=>b.onclick=()=>showP(b.dataset.p));
 const ovb=document.getElementById('ovPick');if(ovb)ovb.onclick=openOvSel;
 board.querySelectorAll('.lrow').forEach(r=>{r.style.cursor='pointer';r.onclick=()=>showP(r.querySelector('b').textContent);});
 board.querySelectorAll('[data-m]').forEach(b=>b.onclick=()=>showM(b.dataset.m));
-board.querySelectorAll('[data-ovhero]').forEach(b=>b.onclick=()=>ovHeroDrill(b.dataset.ovhero));
-board.querySelectorAll('[data-ovemb]').forEach(b=>b.onclick=()=>ovEmbDrill(b.dataset.ovemb));
-board.querySelectorAll('[data-ovtal]').forEach(b=>b.onclick=()=>ovTalDrill(b.dataset.ovtal));
+board.querySelectorAll('[data-ovhero]').forEach(b=>b.onclick=()=>(b.dataset.scope==='global'?stHeroDrill:ovHeroDrill)(b.dataset.ovhero));
+board.querySelectorAll('[data-ovemb]').forEach(b=>b.onclick=()=>(b.dataset.scope==='global'?stEmbDrill:ovEmbDrill)(b.dataset.ovemb));
+board.querySelectorAll('[data-ovtal]').forEach(b=>b.onclick=()=>(b.dataset.scope==='global'?stTalDrill:ovTalDrill)(b.dataset.ovtal));
+board.querySelectorAll('[data-ovitem]').forEach(b=>b.onclick=()=>stItemDrill(b.dataset.ovitem));
 board.querySelectorAll('[data-ovopp]').forEach(b=>b.onclick=()=>ovOppDrill(b.dataset.ovopp));
 board.querySelectorAll('[data-more]').forEach(b=>b.onclick=()=>{const n=+b.dataset.more||24;if(b.dataset.sec==='po')S.plimit+=n;else S.mlimit+=n;render();});
 board.querySelectorAll('[data-phase]').forEach(b=>b.onclick=()=>{S.phase=b.dataset.phase;render();});
@@ -179,7 +184,33 @@ function normId(s){return String(s||'').toLowerCase().replace(/[^a-z0-9]/g,'');}
 function offOf(n){const m={};DATA.season.forEach(s=>{m[String(s.player||'').toLowerCase()]=s;});
 const GALIAS={hijumee:'dalvin',arfy:'dingarai',yazukee:'affan',alekk:'alexander',kevinn:'kevin',maykids:'maykidss',kennzyskie:'kennzyyskie'};
 const l=String(n||'').toLowerCase();return m[l]||m[GALIAS[l]||'']||null;}
-const MVPALIAS={jooooo:'Kevin',sutsujin:'Arthur',coolfire:'Joshuaa',jizeezeze:'Jiizee',killuaa:'Killuaa',maykids:'Maykids',egatzy:'EgaTzy',qinn:'Qinn',nnael:'Nnael',moreno:'Morenooo',morenooo:'Morenooo',kelra:'Kelra',kairi:'Kairi',arfy:'Dingarai',hijumee:'Dalvin',hazle:'Hazle',nino:'Nino',shogun:'Shogun',rendyy:'Rendyy',alberttt:'Alberttt',karss:'Karss',sanz:'S A N Z',aboy:'A B O Y'};
+/* PLAYER IDENTITY — one real player = one canonical roster identity.
+   Series MVP names come from Liquipedia match pages while game rows use live-API
+   IGNs, so the same person can appear under different spellings. Verified (public):
+   Coolfire->Joshuaa (reddit r/mobilelegendsesports 2026-08-30 "joshua(coolfire)";
+   both MVP rows are NAVI matches; Joshuaa is the NAVI jungler per navi.gg + MLDB),
+   JOOOOO->Kevinn (bo3.gg lists both "JOOOOO (Yonathan Chin)" and
+   "Kevinn (Yonathan Chin)" for TLID; teamliquid.com TLID roster lists JOOOOO;
+   Keven Julio Keven is a different person — TLID gold laner),
+   Sutsujin->Arthur (Liquipedia "Arthur 'Sutsujin' Sunarkho", MLDB, RRQ Hoshi).
+   Mechanical (MVP-row teams intersect the roster team; re-verify if contested):
+   A B O Y->Aboyy, Jizeezeze->Jiizee, Maykids->Maykidss, Moreno->Morenooo,
+   Rendyy->Rendyyy. Roster spelling duplicate from the live API: MAYKIDSS->Maykidss.
+   Deliberately NOT merged: Joshua (RRQ) vs Joshuaa (NAVI) — different people.
+   To add a future alias: add one normalized->canonical entry to PLAYER_ALIAS.
+   Every aggregation/display path goes through canonicalPlayer(), so no second
+   identity can arise from a new spelling. */
+const PLAYER_ALIAS={coolfire:'Joshuaa',jooooo:'Kevinn',sutsujin:'Arthur',jizeezeze:'Jiizee',maykids:'Maykidss',maykidss:'Maykidss',moreno:'Morenooo',morenooo:'Morenooo',rendyy:'Rendyyy',rendyyy:'Rendyyy',aboy:'Aboyy',aboyy:'Aboyy'};
+const ROSTER_SPELLING={maykidss:'Maykidss'};
+function rosterCanon(n){const u=normId(n);
+const gp=[...new Set((DATA.players||[]).map(r=>r.player))].filter(p=>normId(p)===u);
+if(gp.length===1)return gp[0];
+if(gp.length>1){const pref=ROSTER_SPELLING[u];if(pref&&gp.includes(pref))return pref;return gp[0];}
+const ss=[...new Set((DATA.season||[]).map(s=>s.player))].filter(p=>normId(p)===u);
+if(ss.length)return ss[0];
+return null;}
+function canonicalPlayer(n){const hit=rosterCanon(n);if(hit)return hit;return PLAYER_ALIAS[normId(n)]||n;}
+function mvpSources(){const m={};(DATA.matches||[]).forEach(x=>{if(!x.liq_mvp)return;const c=canonicalPlayer(x.liq_mvp);(m[c]=m[c]||new Set()).add(x.liq_mvp);});return m;}
 function defaultOv(){const t=[...DATA.season].filter(s=>+s.total_games>0).sort((a,b)=>+b.avg_kda-+a.avg_kda)[0];
 if(!t)return 'Joshuaa';const l=String(t.player).toLowerCase();
 const hit=agg().find(o=>o.player.toLowerCase()===l||normId(o.player)===normId(t.player));return hit?hit.player:'Joshuaa';}
@@ -261,7 +292,7 @@ const useCounts=heroUseCounts(rows);
 const itemGrid=topEntries(useCounts.item,12).map(([id,c])=>itemCell(id,c)).join('')||'<p>No item data</p>';
 const embHtml=topEntries(useCounts.emb,7).map(([id,c])=>embBadge(id,c)).join('')||'<p>No emblem data</p>';
 const talHtml=topEntries(useCounts.tal,8).map(([id,c])=>talBadge(id,c)).join('')||'<p>No talent data</p>';
-const mvps=(DATA.matches||[]).filter(m=>{const v=String(m.liq_mvp||'').toLowerCase();return v&&(v===name.toLowerCase()||normId(v)===normId(name)||(MVPALIAS[v]||'')===name);});
+const mvps=(DATA.matches||[]).filter(m=>m.liq_mvp&&samePlayer(m.liq_mvp,name));
 const mvpHtml=mvps.length?mvps.map(m=>{const sc=(DATA.schedule||[]).find(s=>String(s.match_detail_id)===String(m.match_detail_id))||{};return `<tr><td>${esc(sc.date||sc.iso_date||'')}</td><td>${esc(m.team_a)} vs ${esc(m.team_b)}</td></tr>`;}).join(''):'<tr><td colspan="2">No recorded MVPs</td></tr>';
 const log=rows.map(x=>`<tr><td class="mono">${esc(x.info.date||'')}</td><td>G${x.r.game_no}</td><td>vs ${esc(x.info.opp||'')}</td><td>${esc(x.r.hero||'')}</td><td>${x.r.kills??x.r.kill}/${x.r.deaths??x.r.death}/${x.r.assists??x.r.assist}</td><td>${x.info.won===null?'–':(x.info.won?'W':'L')}</td></tr>`).join('');
 const kp=s.kill_participation||'—';
@@ -291,27 +322,28 @@ const st=document.getElementById('selT'),sl=document.getElementById('selL');
 st.innerHTML='<option value="">All teams</option>'+ts.map(t=>`<option>${esc(t)}</option>`).join('');
 sl.innerHTML='<option value="">All lanes</option>'+ls.map(t=>`<option>${esc(t)}</option>`).join('');
 document.getElementById('selQ').value='';renderOvSel();d.showModal();}
-const MVP_ALIAS={'sutsujin':'arthur','jooooo':'kevinn','aboy':'aboyy','maykids':'maykidss','moreno':'morenooo','rendyy':'rendyyy','jizeezeze':'jiizee'};
-function samePlayer(a,b){const u=s=>String(s||'').toLowerCase().replace(/[^a-z0-9]/g,'');const A=u(a),B=u(b);if(A===B)return true;const ma=MVP_ALIAS[A],mb=MVP_ALIAS[B];return (ma&&u(ma)===B)||(mb&&u(mb)===A);}
+function samePlayer(a,b){return normId(canonicalPlayer(a))===normId(canonicalPlayer(b));}
 function ovRows(name){return DATA.players.filter(r=>r.player===name).map(r=>({r:r,info:gameInfo(r)}))
 .sort((a,b)=>String(a.info.iso).localeCompare(String(b.info.iso)));}
 function embIdOf(x){return x.r.e||(/emblem\/(\d+)\.png/.exec(x.r.emblem||'')||[])[1]||null;}
 function talIdsOf(x){return (x.r.t&&x.r.t.length?x.r.t:(x.r.talents||[]).map(u=>/rune\/(\d+)\.png/.exec(u||'')?.[1])).filter(Boolean);}
 function itemIdsOf(x){return (x.r.i&&x.r.i.length?x.r.i:((x.r.items||[]).map(u=>eqId(u)).filter(Boolean)));}
-function embBadge(id,c){const A=window.ASSETS||{emblems:{}};const src=A.emblems&&A.emblems[id];return `<button class="embtn" data-ovemb="${esc(String(id))}" title="View heroes used with emblem ${esc(String(id))}">${src?`<img src="${esc(src)}" alt="Emblem ${esc(String(id))}" loading="lazy" onerror="this.remove()">`:`<span>E${esc(String(id))}</span>`}<span>×${c}</span></button>`;}
-function talBadge(id,c){const A=window.ASSETS||{runes:{}};const src=A.runes&&A.runes[id];return `<button class="embtn" data-ovtal="${esc(String(id))}" title="View heroes used with talent ${esc(String(id))}">${src?`<img src="${esc(src)}" alt="Talent ${esc(String(id))}" loading="lazy" onerror="this.remove()">`:`<span>T${esc(String(id))}</span>`}<span>×${c}</span></button>`;}
+function embBadge(id,c,scope){const A=window.ASSETS||{emblems:{}};const src=A.emblems&&A.emblems[id];return `<button class="embtn" data-ovemb="${esc(String(id))}"${scope==='global'?' data-scope="global"':''} title="View heroes used with emblem ${esc(String(id))}">${src?`<img src="${esc(src)}" alt="Emblem ${esc(String(id))}" loading="lazy" onerror="this.remove()">`:`<span>E${esc(String(id))}</span>`}<span>×${c}</span></button>`;}
+function talBadge(id,c,scope){const A=window.ASSETS||{runes:{}};const src=A.runes&&A.runes[id];return `<button class="embtn" data-ovtal="${esc(String(id))}"${scope==='global'?' data-scope="global"':''} title="View heroes used with talent ${esc(String(id))}">${src?`<img src="${esc(src)}" alt="Talent ${esc(String(id))}" loading="lazy" onerror="this.remove()">`:`<span>T${esc(String(id))}</span>`}<span>×${c}</span></button>`;}
 function itemCell(id,c){const A=window.ASSETS||{items:{}};const src=A.items&&A.items[id];return `<span class="itemcell">${src?`<img src="${esc(src)}" alt="" loading="lazy" onerror="this.remove()">`:`<span class="slot-miss">${esc(String(id)).slice(0,8)}</span>`}<span>×${c}</span></span>`;}
+function itemBtn(id,c,scope){const A=window.ASSETS||{items:{}};const src=A.items&&A.items[id];const label=String(id).length>14?String(id).slice(0,14)+'…':String(id);return `<button class="embtn" data-ovitem="${esc(String(id))}"${scope==='global'?' data-scope="global"':''} title="View heroes using item ${esc(label)}">${src?`<img class="sq" src="${esc(src)}" alt="Item ${esc(label)}" loading="lazy" onerror="this.remove()">`:`<span>${esc(label)}</span>`}<span>×${c}</span></button>`;}
 function heroUseCounts(list){const emb={},tal={},item={};list.forEach(x=>{const e=embIdOf(x);if(e)emb[e]=(emb[e]||0)+1;talIdsOf(x).forEach(id=>{tal[id]=(tal[id]||0)+1;});itemIdsOf(x).forEach(id=>{item[id]=(item[id]||0)+1;});});return {emb:emb,tal:tal,item:item};}
 function topEntries(obj,n){return Object.entries(obj).sort((a,b)=>b[1]-a[1]).slice(0,n);}
-function usageSummaryHTML(list){const u=heroUseCounts(list);const e=topEntries(u.emb,3),t=topEntries(u.tal,4),it=topEntries(u.item,6);
+function assetRowsHTML(u,scope){const e=topEntries(u.emb,3),t=topEntries(u.tal,4),it=topEntries(u.item,6);
 const row=(label,cells)=>`<div class="userow"><div class="ulabel">${label}</div><div class="ubadges">${cells}</div></div>`;
 const dash='<span style="color:var(--muted)">–</span>';
-return `<div class="msec">Usage summary · ${list.length} game${list.length===1?'':'s'}</div><div class="usegrid">`
-+row('Emblems',e.map(([id,c])=>embBadge(id,c)).join('')||dash)
-+row('Talents',t.map(([id,c])=>talBadge(id,c)).join('')||dash)
-+row('Items',it.map(([id,c])=>itemCell(id,c)).join('')||dash)+`</div>`;}
-function heroBreakdownRows(byH){const A=window.ASSETS||{heroes:{}};return Object.entries(byH).sort((a,b)=>b[1]-a[1]).map(([h,n])=>{const hi=A.heroes&&A.heroes[h];
-return `<tr><td data-ovhero="${esc(h)}" tabindex="0" title="View ${esc(h)} games"><span class="hcell">${hi?`<img src="${esc(hi)}" alt="" loading="lazy" onerror="this.remove()">`:''}${esc(h)}</span></td><td>×${n}</td></tr>`;}).join('');}
+return `<div class="usegrid">`
++row('Emblems',e.map(([id,c])=>embBadge(id,c,scope)).join('')||dash)
++row('Talents',t.map(([id,c])=>talBadge(id,c,scope)).join('')||dash)
++row('Items',it.map(([id,c])=>scope==='global'?itemBtn(id,c,scope):itemCell(id,c)).join('')||dash)+`</div>`;}
+function usageSummaryHTML(list,scope){return `<div class="msec">Usage summary · ${list.length} game${list.length===1?'':'s'}</div>`+assetRowsHTML(heroUseCounts(list),scope);}
+function heroBreakdownRows(byH,scope){const A=window.ASSETS||{heroes:{}};return Object.entries(byH).sort((a,b)=>b[1]-a[1]).map(([h,n])=>{const hi=A.heroes&&A.heroes[h];
+return `<tr><td data-ovhero="${esc(h)}"${scope==='global'?' data-scope="global"':''} tabindex="0" title="View ${esc(h)} games"><span class="hcell">${hi?`<img src="${esc(hi)}" alt="" loading="lazy" onerror="this.remove()">`:''}${esc(h)}</span></td><td>×${n}</td></tr>`;}).join('');}
 function gameRowHTML(x){const r=x.r,k=r.kills??r.kill??0,d=r.deaths??r.death??0,a=r.assists??r.assist??0;
 const kda=((k+a)/Math.max(1,d)).toFixed(1);
 const A=window.ASSETS||{};
@@ -339,6 +371,72 @@ const byH={};list.forEach(x=>{const h=x.r.hero||'?';byH[h]=(byH[h]||0)+1;});
 const src=(A.runes&&A.runes[id])||'';
 const rowsHtml=heroBreakdownRows(byH);
 dSet('Talent '+id,S.ov+' · '+list.length+' games',`${src?`<p><img src="${esc(src)}" alt="Talent ${esc(String(id))}" loading="lazy" style="width:34px;height:34px;border-radius:50%;border:1px solid var(--line)" onerror="this.remove()"></p>`:''}<table><tr><th>Hero</th><th>Used</th></tr>${rowsHtml||'<tr><td colspan="2">No games found.</td></tr>'}</table>`);}
+/* Stats hero drill-down (global scope): hero statistics across the whole dataset
+   plus every associated game. Ban rows come from game_bans (match, game, side,
+   hero) — that source carries NO order/phase columns, and game_players carries
+   NO pick-order column, so no order numbers are shown rather than invented.
+   Side A/B maps to team_a/team_b (see build_s18_db.py ingest: bans_a->A). */
+function stGameMeta(mid,gno){const gm=(DATA.games||[]).find(g=>String(g.match_detail_id)===String(mid)&&String(g.game_no)===String(gno))||{};
+const sc=(DATA.schedule||[]).find(s=>String(s.match_detail_id)===String(mid))||{};return {gm:gm,sc:sc};}
+function sideCls(s){s=String(s||'').toLowerCase();return s==='blue'?'b':(s==='red'?'r':'');}
+function stGameRowHTML(e){const dt=(e.iso||'').slice(0,10)||e.date||'';
+const tag=e.kind==='ban'?'<span class="tag ban">BAN</span>':'<span class="tag pick">PICK</span>';
+return `<div class="mrow" data-ovg="${esc(String(e.mid))}:${esc(String(e.gno))}" tabindex="0" role="button" aria-label="Open game ${esc(String(e.gno))} ${esc(e.teamA||'')} vs ${esc(e.teamB||'')}"><span class="mdate">${esc(dt)}</span>`
++`<span class="mfix">${e.clsA?`<span class="sdot ${e.clsA}"></span>`:''}<span class="mt">${esc(e.teamA||'?')}</span><span class="msc">G${esc(String(e.gno))}</span><span class="mt">${esc(e.teamB||'?')}</span>${e.clsB?`<span class="sdot ${e.clsB}"></span>`:''}</span>`
++`<span>${tag}</span>`
++`<span class="mmvp hide-m">${esc(e.detail||'')}</span>`
++`<span class="mgo">›</span></div>`;}
+function stHeroDrill(hero){const A=window.ASSETS||{heroes:{}};
+const picks=DATA.players.filter(r=>(r.hero||'')===hero).map(r=>({r:r,info:gameInfo(r)}))
+.sort((a,b)=>String(a.info.iso).localeCompare(String(b.info.iso)));
+const bans=(DATA.bans||[]).filter(b=>(b.hero||'')===hero);
+const hi=A.heroes&&A.heroes[hero];
+const scored=picks.filter(x=>x.info.won!==null),wins=scored.filter(x=>x.info.won).length;
+const wr=scored.length?Math.round(wins/scored.length*100):0;
+const byP={};picks.forEach(x=>{const p=canonicalPlayer(x.r.player);byP[p]=(byP[p]||0)+1;});
+const nPlayers=Object.keys(byP).length;
+const playersHtml=Object.entries(byP).sort((a,b)=>b[1]-a[1]).map(([p,n])=>`<tr><td><span data-p="${esc(p)}" tabindex="0" style="cursor:pointer;font-weight:600">${esc(p)}</span></td><td>×${n}</td></tr>`).join('');
+const sumHtml=`<div class="msec">Hero statistics · ${picks.length} pick${picks.length===1?'':'s'} · ${bans.length} ban${bans.length===1?'':'s'}</div>`
++`<div class="tiles"><div class="tile"><b>${picks.length}</b><span>Picks</span></div><div class="tile"><b>${bans.length}</b><span>Bans</span></div><div class="tile"><b>${wr}%</b><span>Pick WR</span></div><div class="tile"><b>${nPlayers}</b><span>Players</span></div></div>`
++assetRowsHTML(heroUseCounts(picks),'global')
++`<div class="msec">Players · ${nPlayers}</div><div class="lscroll"><table style="min-width:320px"><tr><th>Player</th><th>Uses</th></tr>${playersHtml||'<tr><td colspan="2">No picks recorded.</td></tr>'}</table></div>`;
+const entries=[];
+picks.forEach(x=>{const gm=x.info.gm||{};const w=winName(gm);
+entries.push({kind:'pick',mid:x.r.match_detail_id,gno:x.r.game_no,iso:x.info.iso,date:x.info.date,
+teamA:gm.team_a||x.r.team,teamB:gm.team_b||x.info.opp,clsA:sideCls(gm.team_a_side),clsB:sideCls(gm.team_b_side),
+detail:canonicalPlayer(x.r.player)+(w?' · '+w+' won':'')});});
+bans.forEach(b=>{const m=stGameMeta(b.match_detail_id,b.game_no),gm=m.gm;const w=winName(gm);
+const teamA=gm.team_a||m.sc.team_a,teamB=gm.team_b||m.sc.team_b;
+const banTeam=String(b.side)==='B'?(teamB||'side B'):(teamA||'side A');
+entries.push({kind:'ban',mid:b.match_detail_id,gno:b.game_no,iso:m.sc.iso_datetime||'',date:m.sc.date||m.sc.iso_date||'',
+teamA:teamA,teamB:teamB,clsA:sideCls(gm.team_a_side),clsB:sideCls(gm.team_b_side),
+detail:'banned by '+banTeam+(w?' · '+w+' won':'')});});
+entries.sort((a,b)=>String(a.iso).localeCompare(String(b.iso))||(+a.gno-+b.gno)||(a.kind==='pick'?-1:1));
+const gamesHtml=`<div class="msec">Games · ${picks.length} pick${picks.length===1?'':'s'} · ${bans.length} ban${bans.length===1?'':'s'}</div><div class="mhead"><span>Date</span><span>Match</span><span>Type</span><span>Detail</span><span></span></div>`
++(entries.map(stGameRowHTML).join('')||'<div class="empty">No games found.</div>');
+dSet(hero,'Stats · Heroes · '+picks.length+' picks · '+bans.length+' bans',
+`${hi?`<p><img src="${esc(hi)}" alt="${esc(hero)}" loading="lazy" style="width:40px;height:40px;border-radius:10px;border:1px solid var(--line);object-fit:cover" onerror="this.remove()"></p>`:''}`
++sumHtml+gamesHtml);}
+/* Global asset drill-downs: usage across ALL players (not one overview player).
+   Same table component as the overview asset views; hero clicks carry
+   data-scope="global" so they reopen global hero modals. */
+function stAssetView(kind,id,iconHtml,list){const A=window.ASSETS||{heroes:{}};
+const byH={};list.forEach(r=>{const h=r.hero||'?';byH[h]=(byH[h]||0)+1;});
+const rowsHtml=heroBreakdownRows(byH,'global');
+dSet(kind+' '+id+' · global','Across all players · '+list.length+' games',
+`${iconHtml||''}<table><tr><th>Hero</th><th>Used</th></tr>${rowsHtml||'<tr><td colspan="2">No games found.</td></tr>'}</table>`);}
+function stEmbDrill(id){const A=window.ASSETS||{emblems:{}};
+const list=(DATA.players||[]).filter(r=>String(embIdOf({r:r})||'')===String(id));
+const src=(A.emblems&&A.emblems[id])||'';
+stAssetView('Emblem',id,src?`<p><img src="${esc(src)}" alt="Emblem ${esc(String(id))}" loading="lazy" style="width:40px;height:40px;border-radius:50%;border:1px solid var(--line)" onerror="this.remove()"></p>`:'',list);}
+function stTalDrill(id){const A=window.ASSETS||{runes:{}};
+const list=(DATA.players||[]).filter(r=>talIdsOf({r:r}).map(String).includes(String(id)));
+const src=(A.runes&&A.runes[id])||'';
+stAssetView('Talent',id,src?`<p><img src="${esc(src)}" alt="Talent ${esc(String(id))}" loading="lazy" style="width:34px;height:34px;border-radius:50%;border:1px solid var(--line)" onerror="this.remove()"></p>`:'',list);}
+function stItemDrill(id){const A=window.ASSETS||{items:{}};
+const list=(DATA.players||[]).filter(r=>itemIdsOf({r:r}).map(String).includes(String(id)));
+const src=(A.items&&A.items[id])||'';
+stAssetView('Item usage',/^\d+$/.test(String(id))?'#'+id:'',src?`<p><img src="${esc(src)}" alt="" loading="lazy" style="width:40px;height:40px;border-radius:8px;border:1px solid var(--line);object-fit:cover" onerror="this.remove()"></p>`:'',list);}
 function showP(n){const r=DATA.players.filter(x=>samePlayer(x.player,n));const g=agg().find(o=>samePlayer(o.player,n))||{};
 const disp=r.length?r[0].player:(g.player||n);
 const A=window.ASSETS||{heroes:{}};
@@ -449,9 +547,11 @@ if(e.shiftKey&&document.activeElement===first){e.preventDefault();last.focus();}
 else if(!e.shiftKey&&document.activeElement===last){e.preventDefault();first.focus();}});
 document.getElementById('dlg2').addEventListener('close',()=>{if(lastFocus)lastFocus.focus();});
 const HUB='https://mpl.mlbbhub.com/api/v1/id';
-function normLive(d){const games=[],pros=[];
+function normLive(d){const games=[],pros=[],bans=[];
 (d.games||[]).forEach(g=>{const sec=durSec(g.duration);
 games.push({match_detail_id:String(d.match_id),game_no:g.game,team_a:g.team_a,team_b:g.team_b,team_a_kills:g.team_a_kills,team_b_kills:g.team_b_kills,winner:g.winner,duration_str:g.duration,duration_sec:sec,team_a_side:g.team_a_side,team_b_side:g.team_b_side,vod_url:g.vod_url});
+(g.bans_a||[]).forEach(h=>{if(h)bans.push({match_detail_id:String(d.match_id),game_no:g.game,side:'A',hero:h});});
+(g.bans_b||[]).forEach(h=>{if(h)bans.push({match_detail_id:String(d.match_id),game_no:g.game,side:'B',hero:h});});
 (g.players||[]).forEach(p=>{const eq=u=>itemRef(u);
 pros.push({match_detail_id:String(d.match_id),game_no:g.game,team:p.team,player:p.player,lane:p.lane||null,hero:p.hero,hero_image:p.hero_image||null,
 kills:p.kill??0,deaths:p.death??0,assists:p.assist??0,kda:p.kda??0,gold:p.gold??0,
@@ -460,7 +560,7 @@ hero_damage:p.hero_damage??0,damage_taken:p.damage_taken??0,tower_damage:p.tower
 e:((/emblem\/(\d+)\.png/.exec(p.emblem||''))||[])[1]||null,
 t:(p.talents||[]).map(u=>((/rune\/(\d+)\.png/.exec(u||''))||[])[1]).filter(Boolean),
 i:(p.items||[]).map(eq).filter(Boolean)});});});
-return {games,pros};}
+return {games,pros,bans};}
 function buildPool(pros){const m={};pros.forEach(r=>{(m[r.player]=m[r.player]||[]).push(r.hero);});
 const o={};Object.entries(m).forEach(([p,hs])=>{const c={};hs.forEach(h=>{c[h]=(c[h]||0)+1;});o[p]=Object.entries(c).sort((a,b)=>b[1]-a[1]).slice(0,6);});return o;}
 const TEAMCANON={'rrq hoshi':'rrq','geek fam id':'geek','geek fam':'geek','bigetron by vitality':'btr','team liquid id':'tlid','natus vincere':'navi','alter ego':'ae','dewa united esports':'dewa','onic':'onic','evos':'evos','rrq':'rrq','geek':'geek','btr':'btr','tlid':'tlid','navi':'navi','ae':'ae','dewa':'dewa'};
@@ -510,18 +610,19 @@ const mvpMap=Object.fromEntries((DATA.matches||[]).map(m=>[String(m.match_detail
 DATA.matches=ms.filter(m=>/^\d+$/.test(String(m.match_detail_id||''))).map(m=>({match_detail_id:String(m.match_detail_id),schedule_id:m.match_id,team_a:m.team_a,team_b:m.team_b,score_a:m.score_a,score_b:m.score_b,date:m.date,iso_date:m.iso_date,iso_datetime:m.iso_datetime,status:m.status,winner:m.winner,vod_url:m.vod_url,match_detail_url:m.match_detail_url,liq_mvp:mvpMap[String(m.match_detail_id)]||''}));
 const mvpN=applyMvps(mvpList||[]);
 const ids=[...new Set(DATA.matches.map(m=>m.match_detail_id))];
-const allGames=[],allPros=[];let done=0,fails=0;const q=[...ids];
+const allGames=[],allPros=[],allBans=[];let done=0,fails=0;const q=[...ids];const okIds=new Set();
 upd.textContent='games 0/'+ids.length+'…';
 await Promise.all(Array.from({length:6},()=> (async()=>{while(q.length){const id=q.pop();
 try{const d=await fetch(HUB+'/match/'+encodeURIComponent(id)).then(r=>{if(!r.ok)throw new Error(id);return r.json();});
-const n=normLive(d);allGames.push(...n.games);allPros.push(...n.pros);}catch(e){fails++;}
+const n=normLive(d);allGames.push(...n.games);allPros.push(...n.pros);allBans.push(...n.bans);okIds.add(String(id));}catch(e){fails++;}
 done++;upd.textContent='games '+done+'/'+ids.length+'…';}})()));
 DATA.games=allGames;DATA.players=allPros;DATA.hero_pool=buildPool(allPros);
+DATA.bans=[...allBans,...(DATA.bans||[]).filter(b=>!okIds.has(String(b.match_detail_id)+':'+String(b.game_no)))];
 const AH2=(window.ASSETS||{}).heroes||{},AI2=(window.ASSETS||{}).items||{};
 const newH=[...new Set(allPros.map(p=>p.hero).filter(h=>h&&!Object.prototype.hasOwnProperty.call(AH2,h)))];
 const newI=[...new Set(allPros.flatMap(p=>p.i||[]).filter(x=>x&&!Object.prototype.hasOwnProperty.call(AI2,x)))];
 const newMsg=(newH.length||newI.length)?` · ${newH.length+newI.length} new art via live CDN (persist: python tools/fetch_assets.py)`:'';
-try{localStorage.setItem('s18db',JSON.stringify({t:Date.now(),schedule:ms,standings:st,season:ps,players:allPros,games:allGames,heroPool:DATA.hero_pool,matches:DATA.matches,heroes:DATA.heroes,playoffs:DATA.playoffs}));}catch(e){upd.textContent='updated '+new Date().toLocaleTimeString()+' (not cached: storage full)';render();btn.disabled=false;btn.textContent=old;return;}
+try{localStorage.setItem('s18db',JSON.stringify({t:Date.now(),schedule:ms,standings:st,season:ps,players:allPros,games:allGames,bans:DATA.bans,heroPool:DATA.hero_pool,matches:DATA.matches,heroes:DATA.heroes,playoffs:DATA.playoffs}));}catch(e){upd.textContent='updated '+new Date().toLocaleTimeString()+' (not cached: storage full)';render();btn.disabled=false;btn.textContent=old;return;}
 upd.textContent='updated '+new Date().toLocaleTimeString()+' · '+allGames.length+' games · '+mvpN+' MVPs'+(fails?' · '+fails+' failed':'')+newMsg;setNet();render();
 }catch(e){upd.textContent='refresh failed — offline? showing last snapshot';setNet();}
 btn.disabled=false;btn.textContent=old;}
@@ -529,6 +630,7 @@ document.getElementById('refresh').onclick=refreshDB;
 try{const c=JSON.parse(localStorage.getItem('s18db')||'null');
 if(c&&c.schedule&&c.schedule.length){DATA.schedule=c.schedule;if(c.standings)DATA.standings=c.standings;if(c.season)DATA.season=c.season;
 if(c.players&&c.players.length){DATA.players=c.players;}if(c.games&&c.games.length){DATA.games=c.games;}
+if(c.bans&&c.bans.length){DATA.bans=c.bans;}
 if(c.heroPool)DATA.hero_pool=c.heroPool;if(c.matches&&c.matches.length){DATA.matches=c.matches;}
 if(c.heroes&&c.heroes.length){DATA.heroes=c.heroes;}if(c.playoffs){DATA.playoffs=c.playoffs;}
 document.getElementById('upd').textContent='snapshot '+new Date(c.t).toLocaleString();}}catch(e){}
