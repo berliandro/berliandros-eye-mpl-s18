@@ -41,7 +41,9 @@ document.getElementById('db').addEventListener('click',e=>{
 const g=e.target.closest('[data-ovg]');if(g){const parts=g.dataset.ovg.split(':');showM(parts[0],{game:parts[1]});return;}
 const h=e.target.closest('[data-ovhero]');if(h){ovHeroDrill(h.dataset.ovhero);return;}
 const m=e.target.closest('[data-ovemb]');if(m){ovEmbDrill(m.dataset.ovemb);return;}
+const t=e.target.closest('[data-ovtal]');if(t){ovTalDrill(t.dataset.ovtal);return;}
 const o=e.target.closest('[data-ovopp]');if(o){ovOppDrill(o.dataset.ovopp);return;}});
+document.addEventListener('keydown',e=>{if(e.key!=='Enter'&&e.key!==' ')return;const t=e.target&&e.target.closest?e.target.closest('[data-ovg],[data-ovhero],[data-ovemb],[data-ovtal],[data-ovopp]'):null;if(!t)return;if(t.tagName==='BUTTON'&&e.key===' ')return;e.preventDefault();t.click();});
 document.getElementById('selQ').oninput=renderOvSel;
 document.getElementById('selT').onchange=renderOvSel;
 document.getElementById('selL').onchange=renderOvSel;
@@ -166,6 +168,7 @@ board.querySelectorAll('.lrow').forEach(r=>{r.style.cursor='pointer';r.onclick=(
 board.querySelectorAll('[data-m]').forEach(b=>b.onclick=()=>showM(b.dataset.m));
 board.querySelectorAll('[data-ovhero]').forEach(b=>b.onclick=()=>ovHeroDrill(b.dataset.ovhero));
 board.querySelectorAll('[data-ovemb]').forEach(b=>b.onclick=()=>ovEmbDrill(b.dataset.ovemb));
+board.querySelectorAll('[data-ovtal]').forEach(b=>b.onclick=()=>ovTalDrill(b.dataset.ovtal));
 board.querySelectorAll('[data-ovopp]').forEach(b=>b.onclick=()=>ovOppDrill(b.dataset.ovopp));
 board.querySelectorAll('[data-more]').forEach(b=>b.onclick=()=>{const n=+b.dataset.more||24;if(b.dataset.sec==='po')S.plimit+=n;else S.mlimit+=n;render();});
 board.querySelectorAll('[data-phase]').forEach(b=>b.onclick=()=>{S.phase=b.dataset.phase;render();});
@@ -249,18 +252,15 @@ if(x.info.won===true)byHero[h].w++;byHero[h].k+=x.r.kills??x.r.kill??0;byHero[h]
 const heroRows=Object.entries(byHero).map(([h,o])=>({h:h,wr:o.n?Math.round(o.w/o.n*100):0}))
 .sort((a,b)=>b.wr-a.wr);
 const heroTbl=Object.entries(byHero).map(([h,o])=>{const hi=A.heroes&&A.heroes[h];
-return `<tr><td data-ovhero="${esc(h)}" title="View ${esc(h)} games"><span class="hcell">${hi?`<img src="${esc(hi)}" alt="" loading="lazy" onerror="this.remove()">`:''}${esc(h)}</span></td><td>${o.n}</td><td><div style="display:flex;gap:6px;align-items:center"><span class="wrbar"><i style="width:${o.n?Math.round(o.w/o.n*100):0}%"></i></span>${o.n?Math.round(o.w/o.n*100):0}%</div></td><td>${(o.k/Math.max(1,o.n)).toFixed(1)}/${(o.d/Math.max(1,o.n)).toFixed(1)}/${(o.a/Math.max(1,o.n)).toFixed(1)}</td><td>${Math.round(o.gpm/Math.max(1,o.n))}</td></tr>`;}).join('');
+return `<tr><td data-ovhero="${esc(h)}" tabindex="0" title="View ${esc(h)} games"><span class="hcell">${hi?`<img src="${esc(hi)}" alt="" loading="lazy" onerror="this.remove()">`:''}${esc(h)}</span></td><td>${o.n}</td><td><div style="display:flex;gap:6px;align-items:center"><span class="wrbar"><i style="width:${o.n?Math.round(o.w/o.n*100):0}%"></i></span>${o.n?Math.round(o.w/o.n*100):0}%</div></td><td>${(o.k/Math.max(1,o.n)).toFixed(1)}/${(o.d/Math.max(1,o.n)).toFixed(1)}/${(o.a/Math.max(1,o.n)).toFixed(1)}</td><td>${Math.round(o.gpm/Math.max(1,o.n))}</td></tr>`;}).join('');
 const sides={};rows.forEach(x=>{const sd=(x.info.side||'').toLowerCase()||'unknown';(sides[sd]=sides[sd]||{w:0,n:0}).n++;if(x.info.won===true)sides[sd].w++;});
 const sideTbl=Object.entries(sides).map(([sd,o])=>`<tr><td style="text-transform:capitalize">${esc(sd)} side</td><td>${o.n}</td><td>${o.n?Math.round(o.w/o.n*100):0}%</td></tr>`).join('');
 const opps={};rows.forEach(x=>{const o=x.info.opp||'?';(opps[o]=opps[o]||{w:0,n:0}).n++;if(x.info.won===true)opps[o].w++;});
-const oppTbl=Object.entries(opps).sort((a,b)=>b[1].n-a[1].n).map(([o,v])=>`<tr><td data-ovopp="${esc(o)}" title="View games vs ${esc(o)}"><img src="${TICON(o)}" alt="" loading="lazy" style="width:20px;height:20px;object-fit:contain;vertical-align:-5px" onerror="this.remove()"> ${esc(o)}</td><td>${v.n}</td><td>${v.w}-${v.n-v.w}</td></tr>`).join('');
-const itemC={};rows.forEach(x=>{const ids=x.r.i&&x.r.i.length?x.r.i:((x.r.items||[]).map(u=>eqId(u)).filter(Boolean));ids.forEach(id=>{itemC[id]=(itemC[id]||0)+1;});});
-const itemGrid=Object.entries(itemC).sort((a,b)=>b[1]-a[1]).slice(0,12).map(([id,c])=>{const src=A.items&&A.items[id];
-return `<span class="itemcell">${src?`<img src="${esc(src)}" alt="" loading="lazy" onerror="this.remove()">`:`<span class="slot-miss">${esc(id)}</span>`}<span>×${c}</span></span>`;}).join('')||'<p>No item data</p>';
-const embC={};rows.forEach(x=>{const id=x.r.e||(/emblem\/(\d+)\.png/.exec(x.r.emblem||'')||[])[1];if(id)embC[id]=(embC[id]||0)+1;});
-const talC={};rows.forEach(x=>{const ids=x.r.t&&x.r.t.length?x.r.t:(x.r.talents||[]).map(u=>/rune\/(\d+)\.png/.exec(u||'')?.[1]).filter(Boolean);ids.forEach(id=>{talC[id]=(talC[id]||0)+1;});});
-const embHtml=Object.entries(embC).sort((a,b)=>b[1]-a[1]).map(([id,c])=>{const src=A.emblems&&A.emblems[id];return `<button class="embtn" data-ovemb="${esc(String(id))}" title="View heroes used with emblem ${esc(String(id))}">${src?`<img src="${esc(src)}" alt="Emblem ${esc(String(id))}" loading="lazy" onerror="this.remove()">`:`<span>E${esc(String(id))}</span>`}<span>×${c}</span></button>`;}).join('')||'<p>No emblem data</p>';
-const talHtml=Object.entries(talC).sort((a,b)=>b[1]-a[1]).map(([id,c])=>{const src=A.runes&&A.runes[id];return src?`<img src="${esc(src)}" alt="" title="×${c}" loading="lazy" style="width:22px;height:22px;border-radius:50%;border:1px solid var(--line)" onerror="this.remove()">`:'';}).join('');
+const oppTbl=Object.entries(opps).sort((a,b)=>b[1].n-a[1].n).map(([o,v])=>`<tr><td data-ovopp="${esc(o)}" tabindex="0" title="View games vs ${esc(o)}"><img src="${TICON(o)}" alt="" loading="lazy" style="width:20px;height:20px;object-fit:contain;vertical-align:-5px" onerror="this.remove()"> ${esc(o)}</td><td>${v.n}</td><td>${v.w}-${v.n-v.w}</td></tr>`).join('');
+const useCounts=heroUseCounts(rows);
+const itemGrid=topEntries(useCounts.item,12).map(([id,c])=>itemCell(id,c)).join('')||'<p>No item data</p>';
+const embHtml=topEntries(useCounts.emb,7).map(([id,c])=>embBadge(id,c)).join('')||'<p>No emblem data</p>';
+const talHtml=topEntries(useCounts.tal,8).map(([id,c])=>talBadge(id,c)).join('')||'<p>No talent data</p>';
 const mvps=(DATA.matches||[]).filter(m=>{const v=String(m.liq_mvp||'').toLowerCase();return v&&(v===name.toLowerCase()||normId(v)===normId(name)||(MVPALIAS[v]||'')===name);});
 const mvpHtml=mvps.length?mvps.map(m=>{const sc=(DATA.schedule||[]).find(s=>String(s.match_detail_id)===String(m.match_detail_id))||{};return `<tr><td>${esc(sc.date||sc.iso_date||'')}</td><td>${esc(m.team_a)} vs ${esc(m.team_b)}</td></tr>`;}).join(''):'<tr><td colspan="2">No recorded MVPs</td></tr>';
 const log=rows.map(x=>`<tr><td class="mono">${esc(x.info.date||'')}</td><td>G${x.r.game_no}</td><td>vs ${esc(x.info.opp||'')}</td><td>${esc(x.r.hero||'')}</td><td>${x.r.kills??x.r.kill}/${x.r.deaths??x.r.death}/${x.r.assists??x.r.assist}</td><td>${x.info.won===null?'–':(x.info.won?'W':'L')}</td></tr>`).join('');
@@ -269,10 +269,10 @@ return `<div class="pin ov"><div class="body"><div class="phead">${u?`<img class
 +`<div class="tiles"><div class="tile"><b>${g.gp||0}</b><span>Games</span></div><div class="tile"><b>${(g.avgkda||0).toFixed(2)}</b><span>Avg KDA</span></div><div class="tile"><b>${wins}-${scored.length-wins}</b><span>Game W-L</span></div><div class="tile"><b>${wr}%</b><span>Game WR</span></div><div class="tile"><b>${mw}-${ml}</b><span>Match W-L</span></div><div class="tile"><b>${mwr}%</b><span>Match WR</span></div><div class="tile"><b>${fmtDur(avgD)}</b><span>Avg game</span></div><div class="tile"><b>${esc(String(kp))}</b><span>Kill part.</span></div></div>`
 +`<div class="ovgrid"><div class="ovsec"><h4>KDA trend per game</h4>${trendChart(rows.map(x=>{const k=x.r.kills??x.r.kill??0,d=x.r.deaths??x.r.death??0,a=x.r.assists??x.r.assist??0;return {v:(k+a)/Math.max(1,d),date:x.info.date||'',opp:x.info.opp||'',hero:x.r.hero||'',kda:((k+a)/Math.max(1,d)).toFixed(2),won:x.info.won};}))}<p>${rows.length} scored games · total gold ${(totG/1000).toFixed(0)}k · hero dmg ${(totD/1000).toFixed(0)}k · taken ${(totT/1000).toFixed(0)}k · tower ${(totTw/1000).toFixed(0)}k</p></div>`
 +`<div class="ovsec"><h4>Hero pool (${heroRows.length} heroes)</h4><table><tr><th>Hero</th><th>GP</th><th>Win%</th><th>Avg K/D/A</th><th>GPM</th></tr>${heroTbl}</table></div></div>`
-+`<div class="ovgrid"><div class="ovsec"><h4>Hero win rate</h4><table>${heroRows.map(o=>`<tr><td data-ovhero="${esc(o.h)}" title="View ${esc(o.h)} games">${esc(o.h)}</td><td><div style="display:flex;gap:6px;align-items:center"><span class="wrbar"><i style="width:${o.wr}%"></i></span>${o.wr}%</div></td></tr>`).join('')}</table></div>`
++`<div class="ovgrid"><div class="ovsec"><h4>Hero win rate</h4><table>${heroRows.map(o=>`<tr><td data-ovhero="${esc(o.h)}" tabindex="0" title="View ${esc(o.h)} games">${esc(o.h)}</td><td><div style="display:flex;gap:6px;align-items:center"><span class="wrbar"><i style="width:${o.wr}%"></i></span>${o.wr}%</div></td></tr>`).join('')}</table></div>`
 +`<div class="ovsec"><h4>Sides</h4><table><tr><th>Side</th><th>GP</th><th>Win%</th></tr>${sideTbl}</table></div></div>`
 +`<div class="ovgrid"><div class="ovsec"><h4>Top items</h4><div class="itemgrid">${itemGrid}</div></div>`
-+`<div class="ovsec"><h4>Emblems &amp; talents</h4><div class="itemgrid">${embHtml}${talHtml}</div></div></div>`
++`<div class="ovsec"><h4>Emblems &amp; talents</h4><div class="et-label">Emblems</div><div class="itemgrid">${embHtml}</div><div class="et-div"></div><div class="et-label">Talents</div><div class="itemgrid">${talHtml}</div></div></div>`
 +`<div class="ovgrid"><div class="ovsec"><h4>Record by opponent</h4><table><tr><th>Opponent</th><th>GP</th><th>W-L</th></tr>${oppTbl}</table></div>`
 +`<div class="ovsec"><h4>Series MVPs (${mvps.length})</h4><table><tr><th>Date</th><th>Match</th></tr>${mvpHtml}</table></div></div>`
 +`<div class="ovsec" style="margin-top:14px"><h4>Game log</h4><div class="lscroll"><table style="min-width:640px"><tr><th>Date</th><th>Game</th><th>Match</th><th>Hero</th><th>K/D/A</th><th>R</th></tr>${log}</table></div></div>`
@@ -295,28 +295,50 @@ const MVP_ALIAS={'sutsujin':'arthur','jooooo':'kevinn','aboy':'aboyy','maykids':
 function samePlayer(a,b){const u=s=>String(s||'').toLowerCase().replace(/[^a-z0-9]/g,'');const A=u(a),B=u(b);if(A===B)return true;const ma=MVP_ALIAS[A],mb=MVP_ALIAS[B];return (ma&&u(ma)===B)||(mb&&u(mb)===A);}
 function ovRows(name){return DATA.players.filter(r=>r.player===name).map(r=>({r:r,info:gameInfo(r)}))
 .sort((a,b)=>String(a.info.iso).localeCompare(String(b.info.iso)));}
+function embIdOf(x){return x.r.e||(/emblem\/(\d+)\.png/.exec(x.r.emblem||'')||[])[1]||null;}
+function talIdsOf(x){return (x.r.t&&x.r.t.length?x.r.t:(x.r.talents||[]).map(u=>/rune\/(\d+)\.png/.exec(u||'')?.[1])).filter(Boolean);}
+function itemIdsOf(x){return (x.r.i&&x.r.i.length?x.r.i:((x.r.items||[]).map(u=>eqId(u)).filter(Boolean)));}
+function embBadge(id,c){const A=window.ASSETS||{emblems:{}};const src=A.emblems&&A.emblems[id];return `<button class="embtn" data-ovemb="${esc(String(id))}" title="View heroes used with emblem ${esc(String(id))}">${src?`<img src="${esc(src)}" alt="Emblem ${esc(String(id))}" loading="lazy" onerror="this.remove()">`:`<span>E${esc(String(id))}</span>`}<span>×${c}</span></button>`;}
+function talBadge(id,c){const A=window.ASSETS||{runes:{}};const src=A.runes&&A.runes[id];return `<button class="embtn" data-ovtal="${esc(String(id))}" title="View heroes used with talent ${esc(String(id))}">${src?`<img src="${esc(src)}" alt="Talent ${esc(String(id))}" loading="lazy" onerror="this.remove()">`:`<span>T${esc(String(id))}</span>`}<span>×${c}</span></button>`;}
+function itemCell(id,c){const A=window.ASSETS||{items:{}};const src=A.items&&A.items[id];return `<span class="itemcell">${src?`<img src="${esc(src)}" alt="" loading="lazy" onerror="this.remove()">`:`<span class="slot-miss">${esc(String(id)).slice(0,8)}</span>`}<span>×${c}</span></span>`;}
+function heroUseCounts(list){const emb={},tal={},item={};list.forEach(x=>{const e=embIdOf(x);if(e)emb[e]=(emb[e]||0)+1;talIdsOf(x).forEach(id=>{tal[id]=(tal[id]||0)+1;});itemIdsOf(x).forEach(id=>{item[id]=(item[id]||0)+1;});});return {emb:emb,tal:tal,item:item};}
+function topEntries(obj,n){return Object.entries(obj).sort((a,b)=>b[1]-a[1]).slice(0,n);}
+function usageSummaryHTML(list){const u=heroUseCounts(list);const e=topEntries(u.emb,3),t=topEntries(u.tal,4),it=topEntries(u.item,6);
+const row=(label,cells)=>`<div class="userow"><div class="ulabel">${label}</div><div class="ubadges">${cells}</div></div>`;
+const dash='<span style="color:var(--muted)">–</span>';
+return `<div class="msec">Usage summary · ${list.length} game${list.length===1?'':'s'}</div><div class="usegrid">`
++row('Emblems',e.map(([id,c])=>embBadge(id,c)).join('')||dash)
++row('Talents',t.map(([id,c])=>talBadge(id,c)).join('')||dash)
++row('Items',it.map(([id,c])=>itemCell(id,c)).join('')||dash)+`</div>`;}
+function heroBreakdownRows(byH){const A=window.ASSETS||{heroes:{}};return Object.entries(byH).sort((a,b)=>b[1]-a[1]).map(([h,n])=>{const hi=A.heroes&&A.heroes[h];
+return `<tr><td data-ovhero="${esc(h)}" tabindex="0" title="View ${esc(h)} games"><span class="hcell">${hi?`<img src="${esc(hi)}" alt="" loading="lazy" onerror="this.remove()">`:''}${esc(h)}</span></td><td>×${n}</td></tr>`;}).join('');}
 function gameRowHTML(x){const r=x.r,k=r.kills??r.kill??0,d=r.deaths??r.death??0,a=r.assists??r.assist??0;
 const kda=((k+a)/Math.max(1,d)).toFixed(1);
 const A=window.ASSETS||{};
 const hi=r.hero&&A.heroes&&A.heroes[r.hero]?A.heroes[r.hero]:null;
 const dt=(x.info.iso||'').slice(0,10)||x.info.date||'';
-return `<div class="mrow" data-ovg="${esc(String(r.match_detail_id))}:${esc(String(r.game_no))}"><span class="mdate">${esc(dt)}</span>`
+return `<div class="mrow" data-ovg="${esc(String(r.match_detail_id))}:${esc(String(r.game_no))}" tabindex="0" role="button" aria-label="Open game ${esc(String(r.game_no))} vs ${esc(x.info.opp||'')}"><span class="mdate">${esc(dt)}</span>`
 +`<span class="mfix">${hi?`<img src="${esc(hi)}" alt="" loading="lazy" onerror="this.remove()">`:''}<span class="msc">G${esc(String(r.game_no))}</span><span class="mt">vs ${esc(x.info.opp||'?')} · ${esc(r.hero||'')} · ${k}/${d}/${a}</span></span>`
 +`<span><span class="tag">${x.info.won===null?'–':(x.info.won?'W':'L')}</span></span>`
 +`<span class="mmvp hide-m">KDA ${kda}</span>`
 +`<span class="mgo">›</span></div>`;}
-function gameListView(title,sub,list){dSet(title,sub,`<div class="mhead"><span>Date</span><span>Game</span><span>Result</span><span>KDA</span><span></span></div>`+(list.map(gameRowHTML).join('')||'<div class="empty">No games found.</div>'));}
+function gameListView(title,sub,list,extra){dSet(title,sub,(extra||'')+`<div class="msec">Games · ${list.length}</div><div class="mhead"><span>Date</span><span>Game</span><span>Result</span><span>KDA</span><span></span></div>`+(list.map(gameRowHTML).join('')||'<div class="empty">No games found.</div>'));}
 function ovHeroDrill(hero){const list=ovRows(S.ov).filter(x=>(x.r.hero||'')===hero);
-gameListView(hero+' — '+list.length+' game'+(list.length===1?'':'s'),S.ov+' · hero pool',list);}
+gameListView(hero+' — '+list.length+' game'+(list.length===1?'':'s'),S.ov+' · hero pool',list,usageSummaryHTML(list));}
 function ovOppDrill(opp){const list=ovRows(S.ov).filter(x=>(x.info.opp||'')===opp);
 gameListView('vs '+opp+' — '+list.length+' game'+(list.length===1?'':'s'),S.ov+' · record by opponent',list);}
-function ovEmbDrill(id){const A=window.ASSETS||{heroes:{},emblems:{}};
-const list=ovRows(S.ov).filter(x=>String(x.r.e||'')===String(id));
+function ovEmbDrill(id){const A=window.ASSETS||{emblems:{}};
+const list=ovRows(S.ov).filter(x=>String(embIdOf(x)||'')===String(id));
 const byH={};list.forEach(x=>{const h=x.r.hero||'?';byH[h]=(byH[h]||0)+1;});
 const src=(A.emblems&&A.emblems[id])||'';
-const rowsHtml=Object.entries(byH).sort((a,b)=>b[1]-a[1]).map(([h,n])=>{const hi=A.heroes&&A.heroes[h];
-return `<tr><td data-ovhero="${esc(h)}" title="View ${esc(h)} games"><span class="hcell">${hi?`<img src="${esc(hi)}" alt="" loading="lazy" onerror="this.remove()">`:''}${esc(h)}</span></td><td>×${n}</td></tr>`;}).join('');
+const rowsHtml=heroBreakdownRows(byH);
 dSet('Emblem '+id,S.ov+' · '+list.length+' games',`${src?`<p><img src="${esc(src)}" alt="Emblem ${esc(String(id))}" loading="lazy" style="width:40px;height:40px;border-radius:50%;border:1px solid var(--line)" onerror="this.remove()"></p>`:''}<table><tr><th>Hero</th><th>Used</th></tr>${rowsHtml||'<tr><td colspan="2">No games found.</td></tr>'}</table>`);}
+function ovTalDrill(id){const A=window.ASSETS||{runes:{}};
+const list=ovRows(S.ov).filter(x=>talIdsOf(x).map(String).includes(String(id)));
+const byH={};list.forEach(x=>{const h=x.r.hero||'?';byH[h]=(byH[h]||0)+1;});
+const src=(A.runes&&A.runes[id])||'';
+const rowsHtml=heroBreakdownRows(byH);
+dSet('Talent '+id,S.ov+' · '+list.length+' games',`${src?`<p><img src="${esc(src)}" alt="Talent ${esc(String(id))}" loading="lazy" style="width:34px;height:34px;border-radius:50%;border:1px solid var(--line)" onerror="this.remove()"></p>`:''}<table><tr><th>Hero</th><th>Used</th></tr>${rowsHtml||'<tr><td colspan="2">No games found.</td></tr>'}</table>`);}
 function showP(n){const r=DATA.players.filter(x=>samePlayer(x.player,n));const g=agg().find(o=>samePlayer(o.player,n))||{};
 const disp=r.length?r[0].player:(g.player||n);
 const A=window.ASSETS||{heroes:{}};
