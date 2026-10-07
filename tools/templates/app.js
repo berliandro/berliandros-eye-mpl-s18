@@ -37,6 +37,11 @@ document.getElementById('layGrid').onclick=()=>setLayout('grid');
 document.getElementById('layList').onclick=()=>setLayout('list');
 document.getElementById('dx').onclick=()=>dlg.close();
 document.getElementById('dx2').onclick=()=>document.getElementById('dlg2').close();
+document.getElementById('db').addEventListener('click',e=>{
+const g=e.target.closest('[data-ovg]');if(g){const parts=g.dataset.ovg.split(':');showM(parts[0],{game:parts[1]});return;}
+const h=e.target.closest('[data-ovhero]');if(h){ovHeroDrill(h.dataset.ovhero);return;}
+const m=e.target.closest('[data-ovemb]');if(m){ovEmbDrill(m.dataset.ovemb);return;}
+const o=e.target.closest('[data-ovopp]');if(o){ovOppDrill(o.dataset.ovopp);return;}});
 document.getElementById('selQ').oninput=renderOvSel;
 document.getElementById('selT').onchange=renderOvSel;
 document.getElementById('selL').onchange=renderOvSel;
@@ -46,7 +51,7 @@ const y=window.scrollY,hdr=document.querySelector('header');
 if(window.innerWidth>640||!hdr){if(hdr)hdr.classList.remove('navhide');}
 else if(y>lastY&&y>160){hdr.classList.add('navhide');}else if(y<lastY){hdr.classList.remove('navhide');}
 lastY=y;});},{passive:true});
-dlg.addEventListener('close',()=>{if(lastFocus)lastFocus.focus();});
+dlg.addEventListener('close',()=>{dnav=[];if(lastFocus)lastFocus.focus();});
 function agg(){const m={};DATA.players.forEach(r=>{(m[r.player]=m[r.player]||{player:r.player,team:r.team,gp:0,k:0,d:0,a:0,gpm:0,hs:new Set()});
 const o=m[r.player];o.gp++;o.k+=r.kills;o.d+=r.deaths;o.a+=r.assists;o.gpm+=r.gold_per_min;o.hs.add(r.hero);});
 const seas=Object.fromEntries(DATA.season.map(s=>[String(s.player||'').toLowerCase(),s]));
@@ -159,6 +164,9 @@ board.querySelectorAll('[data-p]').forEach(b=>b.onclick=()=>showP(b.dataset.p));
 const ovb=document.getElementById('ovPick');if(ovb)ovb.onclick=openOvSel;
 board.querySelectorAll('.lrow').forEach(r=>{r.style.cursor='pointer';r.onclick=()=>showP(r.querySelector('b').textContent);});
 board.querySelectorAll('[data-m]').forEach(b=>b.onclick=()=>showM(b.dataset.m));
+board.querySelectorAll('[data-ovhero]').forEach(b=>b.onclick=()=>ovHeroDrill(b.dataset.ovhero));
+board.querySelectorAll('[data-ovemb]').forEach(b=>b.onclick=()=>ovEmbDrill(b.dataset.ovemb));
+board.querySelectorAll('[data-ovopp]').forEach(b=>b.onclick=()=>ovOppDrill(b.dataset.ovopp));
 board.querySelectorAll('[data-more]').forEach(b=>b.onclick=()=>{const n=+b.dataset.more||24;if(b.dataset.sec==='po')S.plimit+=n;else S.mlimit+=n;render();});
 board.querySelectorAll('[data-phase]').forEach(b=>b.onclick=()=>{S.phase=b.dataset.phase;render();});
 board.querySelectorAll('[data-stat]').forEach(b=>b.onclick=()=>{S.stat=b.dataset.stat;render();});
@@ -221,8 +229,7 @@ function ovHTML(){const all=agg();if(!S.ov||!all.find(o=>o.player===S.ov))S.ov=d
 const name=S.ov,g=all.find(o=>o.player===name)||{},s=offOf(name)||{};
 const A=window.ASSETS||{heroes:{},items:{},emblems:{},runes:{}};
 const u=PICON(name);
-const rows=DATA.players.filter(r=>r.player===name).map(r=>({r:r,info:gameInfo(r)}))
-.sort((a,b)=>String(a.info.iso).localeCompare(String(b.info.iso)));
+const rows=ovRows(name);
 const scored=rows.filter(x=>x.info.won!==null);
 const wins=scored.filter(x=>x.info.won).length;
 const wr=scored.length?Math.round(wins/scored.length*100):0;
@@ -242,17 +249,17 @@ if(x.info.won===true)byHero[h].w++;byHero[h].k+=x.r.kills??x.r.kill??0;byHero[h]
 const heroRows=Object.entries(byHero).map(([h,o])=>({h:h,wr:o.n?Math.round(o.w/o.n*100):0}))
 .sort((a,b)=>b.wr-a.wr);
 const heroTbl=Object.entries(byHero).map(([h,o])=>{const hi=A.heroes&&A.heroes[h];
-return `<tr><td><span class="hcell">${hi?`<img src="${esc(hi)}" alt="" loading="lazy" onerror="this.remove()">`:''}${esc(h)}</span></td><td>${o.n}</td><td><div style="display:flex;gap:6px;align-items:center"><span class="wrbar"><i style="width:${o.n?Math.round(o.w/o.n*100):0}%"></i></span>${o.n?Math.round(o.w/o.n*100):0}%</div></td><td>${(o.k/Math.max(1,o.n)).toFixed(1)}/${(o.d/Math.max(1,o.n)).toFixed(1)}/${(o.a/Math.max(1,o.n)).toFixed(1)}</td><td>${Math.round(o.gpm/Math.max(1,o.n))}</td></tr>`;}).join('');
+return `<tr><td data-ovhero="${esc(h)}" title="View ${esc(h)} games"><span class="hcell">${hi?`<img src="${esc(hi)}" alt="" loading="lazy" onerror="this.remove()">`:''}${esc(h)}</span></td><td>${o.n}</td><td><div style="display:flex;gap:6px;align-items:center"><span class="wrbar"><i style="width:${o.n?Math.round(o.w/o.n*100):0}%"></i></span>${o.n?Math.round(o.w/o.n*100):0}%</div></td><td>${(o.k/Math.max(1,o.n)).toFixed(1)}/${(o.d/Math.max(1,o.n)).toFixed(1)}/${(o.a/Math.max(1,o.n)).toFixed(1)}</td><td>${Math.round(o.gpm/Math.max(1,o.n))}</td></tr>`;}).join('');
 const sides={};rows.forEach(x=>{const sd=(x.info.side||'').toLowerCase()||'unknown';(sides[sd]=sides[sd]||{w:0,n:0}).n++;if(x.info.won===true)sides[sd].w++;});
 const sideTbl=Object.entries(sides).map(([sd,o])=>`<tr><td style="text-transform:capitalize">${esc(sd)} side</td><td>${o.n}</td><td>${o.n?Math.round(o.w/o.n*100):0}%</td></tr>`).join('');
 const opps={};rows.forEach(x=>{const o=x.info.opp||'?';(opps[o]=opps[o]||{w:0,n:0}).n++;if(x.info.won===true)opps[o].w++;});
-const oppTbl=Object.entries(opps).sort((a,b)=>b[1].n-a[1].n).map(([o,v])=>`<tr><td><img src="${TICON(o)}" alt="" loading="lazy" style="width:20px;height:20px;object-fit:contain;vertical-align:-5px" onerror="this.remove()"> ${esc(o)}</td><td>${v.n}</td><td>${v.w}-${v.n-v.w}</td></tr>`).join('');
+const oppTbl=Object.entries(opps).sort((a,b)=>b[1].n-a[1].n).map(([o,v])=>`<tr><td data-ovopp="${esc(o)}" title="View games vs ${esc(o)}"><img src="${TICON(o)}" alt="" loading="lazy" style="width:20px;height:20px;object-fit:contain;vertical-align:-5px" onerror="this.remove()"> ${esc(o)}</td><td>${v.n}</td><td>${v.w}-${v.n-v.w}</td></tr>`).join('');
 const itemC={};rows.forEach(x=>{const ids=x.r.i&&x.r.i.length?x.r.i:((x.r.items||[]).map(u=>eqId(u)).filter(Boolean));ids.forEach(id=>{itemC[id]=(itemC[id]||0)+1;});});
 const itemGrid=Object.entries(itemC).sort((a,b)=>b[1]-a[1]).slice(0,12).map(([id,c])=>{const src=A.items&&A.items[id];
 return `<span class="itemcell">${src?`<img src="${esc(src)}" alt="" loading="lazy" onerror="this.remove()">`:`<span class="slot-miss">${esc(id)}</span>`}<span>×${c}</span></span>`;}).join('')||'<p>No item data</p>';
 const embC={};rows.forEach(x=>{const id=x.r.e||(/emblem\/(\d+)\.png/.exec(x.r.emblem||'')||[])[1];if(id)embC[id]=(embC[id]||0)+1;});
 const talC={};rows.forEach(x=>{const ids=x.r.t&&x.r.t.length?x.r.t:(x.r.talents||[]).map(u=>/rune\/(\d+)\.png/.exec(u||'')?.[1]).filter(Boolean);ids.forEach(id=>{talC[id]=(talC[id]||0)+1;});});
-const embHtml=Object.entries(embC).map(([id,c])=>{const src=A.emblems&&A.emblems[id];return src?`<img src="${esc(src)}" alt="" title="×${c}" loading="lazy" style="width:26px;height:26px;border-radius:50%;border:1px solid var(--line)" onerror="this.remove()">`:'';}).join('');
+const embHtml=Object.entries(embC).sort((a,b)=>b[1]-a[1]).map(([id,c])=>{const src=A.emblems&&A.emblems[id];return `<button class="embtn" data-ovemb="${esc(String(id))}" title="View heroes used with emblem ${esc(String(id))}">${src?`<img src="${esc(src)}" alt="Emblem ${esc(String(id))}" loading="lazy" onerror="this.remove()">`:`<span>E${esc(String(id))}</span>`}<span>×${c}</span></button>`;}).join('')||'<p>No emblem data</p>';
 const talHtml=Object.entries(talC).sort((a,b)=>b[1]-a[1]).map(([id,c])=>{const src=A.runes&&A.runes[id];return src?`<img src="${esc(src)}" alt="" title="×${c}" loading="lazy" style="width:22px;height:22px;border-radius:50%;border:1px solid var(--line)" onerror="this.remove()">`:'';}).join('');
 const mvps=(DATA.matches||[]).filter(m=>{const v=String(m.liq_mvp||'').toLowerCase();return v&&(v===name.toLowerCase()||normId(v)===normId(name)||(MVPALIAS[v]||'')===name);});
 const mvpHtml=mvps.length?mvps.map(m=>{const sc=(DATA.schedule||[]).find(s=>String(s.match_detail_id)===String(m.match_detail_id))||{};return `<tr><td>${esc(sc.date||sc.iso_date||'')}</td><td>${esc(m.team_a)} vs ${esc(m.team_b)}</td></tr>`;}).join(''):'<tr><td colspan="2">No recorded MVPs</td></tr>';
@@ -262,7 +269,7 @@ return `<div class="pin ov"><div class="body"><div class="phead">${u?`<img class
 +`<div class="tiles"><div class="tile"><b>${g.gp||0}</b><span>Games</span></div><div class="tile"><b>${(g.avgkda||0).toFixed(2)}</b><span>Avg KDA</span></div><div class="tile"><b>${wins}-${scored.length-wins}</b><span>Game W-L</span></div><div class="tile"><b>${wr}%</b><span>Game WR</span></div><div class="tile"><b>${mw}-${ml}</b><span>Match W-L</span></div><div class="tile"><b>${mwr}%</b><span>Match WR</span></div><div class="tile"><b>${fmtDur(avgD)}</b><span>Avg game</span></div><div class="tile"><b>${esc(String(kp))}</b><span>Kill part.</span></div></div>`
 +`<div class="ovgrid"><div class="ovsec"><h4>KDA trend per game</h4>${trendChart(rows.map(x=>{const k=x.r.kills??x.r.kill??0,d=x.r.deaths??x.r.death??0,a=x.r.assists??x.r.assist??0;return {v:(k+a)/Math.max(1,d),date:x.info.date||'',opp:x.info.opp||'',hero:x.r.hero||'',kda:((k+a)/Math.max(1,d)).toFixed(2),won:x.info.won};}))}<p>${rows.length} scored games · total gold ${(totG/1000).toFixed(0)}k · hero dmg ${(totD/1000).toFixed(0)}k · taken ${(totT/1000).toFixed(0)}k · tower ${(totTw/1000).toFixed(0)}k</p></div>`
 +`<div class="ovsec"><h4>Hero pool (${heroRows.length} heroes)</h4><table><tr><th>Hero</th><th>GP</th><th>Win%</th><th>Avg K/D/A</th><th>GPM</th></tr>${heroTbl}</table></div></div>`
-+`<div class="ovgrid"><div class="ovsec"><h4>Hero win rate</h4><table>${heroRows.map(o=>`<tr><td>${esc(o.h)}</td><td><div style="display:flex;gap:6px;align-items:center"><span class="wrbar"><i style="width:${o.wr}%"></i></span>${o.wr}%</div></td></tr>`).join('')}</table></div>`
++`<div class="ovgrid"><div class="ovsec"><h4>Hero win rate</h4><table>${heroRows.map(o=>`<tr><td data-ovhero="${esc(o.h)}" title="View ${esc(o.h)} games">${esc(o.h)}</td><td><div style="display:flex;gap:6px;align-items:center"><span class="wrbar"><i style="width:${o.wr}%"></i></span>${o.wr}%</div></td></tr>`).join('')}</table></div>`
 +`<div class="ovsec"><h4>Sides</h4><table><tr><th>Side</th><th>GP</th><th>Win%</th></tr>${sideTbl}</table></div></div>`
 +`<div class="ovgrid"><div class="ovsec"><h4>Top items</h4><div class="itemgrid">${itemGrid}</div></div>`
 +`<div class="ovsec"><h4>Emblems &amp; talents</h4><div class="itemgrid">${embHtml}${talHtml}</div></div></div>`
@@ -286,6 +293,30 @@ sl.innerHTML='<option value="">All lanes</option>'+ls.map(t=>`<option>${esc(t)}<
 document.getElementById('selQ').value='';renderOvSel();d.showModal();}
 const MVP_ALIAS={'sutsujin':'arthur','jooooo':'kevinn','aboy':'aboyy','maykids':'maykidss','moreno':'morenooo','rendyy':'rendyyy','jizeezeze':'jiizee'};
 function samePlayer(a,b){const u=s=>String(s||'').toLowerCase().replace(/[^a-z0-9]/g,'');const A=u(a),B=u(b);if(A===B)return true;const ma=MVP_ALIAS[A],mb=MVP_ALIAS[B];return (ma&&u(ma)===B)||(mb&&u(mb)===A);}
+function ovRows(name){return DATA.players.filter(r=>r.player===name).map(r=>({r:r,info:gameInfo(r)}))
+.sort((a,b)=>String(a.info.iso).localeCompare(String(b.info.iso)));}
+function gameRowHTML(x){const r=x.r,k=r.kills??r.kill??0,d=r.deaths??r.death??0,a=r.assists??r.assist??0;
+const kda=((k+a)/Math.max(1,d)).toFixed(1);
+const A=window.ASSETS||{};
+const hi=r.hero&&A.heroes&&A.heroes[r.hero]?A.heroes[r.hero]:null;
+const dt=(x.info.iso||'').slice(0,10)||x.info.date||'';
+return `<div class="mrow" data-ovg="${esc(String(r.match_detail_id))}:${esc(String(r.game_no))}"><span class="mdate">${esc(dt)}</span>`
++`<span class="mfix">${hi?`<img src="${esc(hi)}" alt="" loading="lazy" onerror="this.remove()">`:''}<span class="msc">G${esc(String(r.game_no))}</span><span class="mt">vs ${esc(x.info.opp||'?')} · ${esc(r.hero||'')} · ${k}/${d}/${a}</span></span>`
++`<span><span class="tag">${x.info.won===null?'–':(x.info.won?'W':'L')}</span></span>`
++`<span class="mmvp hide-m">KDA ${kda}</span>`
++`<span class="mgo">›</span></div>`;}
+function gameListView(title,sub,list){dSet(title,sub,`<div class="mhead"><span>Date</span><span>Game</span><span>Result</span><span>KDA</span><span></span></div>`+(list.map(gameRowHTML).join('')||'<div class="empty">No games found.</div>'));}
+function ovHeroDrill(hero){const list=ovRows(S.ov).filter(x=>(x.r.hero||'')===hero);
+gameListView(hero+' — '+list.length+' game'+(list.length===1?'':'s'),S.ov+' · hero pool',list);}
+function ovOppDrill(opp){const list=ovRows(S.ov).filter(x=>(x.info.opp||'')===opp);
+gameListView('vs '+opp+' — '+list.length+' game'+(list.length===1?'':'s'),S.ov+' · record by opponent',list);}
+function ovEmbDrill(id){const A=window.ASSETS||{heroes:{},emblems:{}};
+const list=ovRows(S.ov).filter(x=>String(x.r.e||'')===String(id));
+const byH={};list.forEach(x=>{const h=x.r.hero||'?';byH[h]=(byH[h]||0)+1;});
+const src=(A.emblems&&A.emblems[id])||'';
+const rowsHtml=Object.entries(byH).sort((a,b)=>b[1]-a[1]).map(([h,n])=>{const hi=A.heroes&&A.heroes[h];
+return `<tr><td data-ovhero="${esc(h)}" title="View ${esc(h)} games"><span class="hcell">${hi?`<img src="${esc(hi)}" alt="" loading="lazy" onerror="this.remove()">`:''}${esc(h)}</span></td><td>×${n}</td></tr>`;}).join('');
+dSet('Emblem '+id,S.ov+' · '+list.length+' games',`${src?`<p><img src="${esc(src)}" alt="Emblem ${esc(String(id))}" loading="lazy" style="width:40px;height:40px;border-radius:50%;border:1px solid var(--line)" onerror="this.remove()"></p>`:''}<table><tr><th>Hero</th><th>Used</th></tr>${rowsHtml||'<tr><td colspan="2">No games found.</td></tr>'}</table>`);}
 function showP(n){const r=DATA.players.filter(x=>samePlayer(x.player,n));const g=agg().find(o=>samePlayer(o.player,n))||{};
 const disp=r.length?r[0].player:(g.player||n);
 const A=window.ASSETS||{heroes:{}};
@@ -348,30 +379,46 @@ return `<div class="sb-game" data-g="${g.game_no}"${active?'':' hidden'}>`
 +`<div class="sb-ghead"><h4>Game ${g.game_no}</h4><span>${esc(g.team_a)} ${g.team_a_kills} : ${g.team_b_kills} ${esc(g.team_b)} · ${esc(dur)} · ${esc(wn)} won${gm?` · <span class="gmvp">MVP ${esc(gm.player)}</span>`:''}</span></div>`
 +bans+`<div class="sb-duo">`+teamBlock(g.team_a,g.team_a_kills,plistA,sec,g.team_a_side,'')+teamBlock(g.team_b,g.team_b_kills,plistB,sec,g.team_b_side,'flip')+`</div></div>`;}
 function wireTabs(){const db=document.getElementById('db');
-db.querySelectorAll('[data-gtab]').forEach(b=>b.onclick=()=>{
-db.querySelectorAll('[data-gtab]').forEach(x=>x.setAttribute('aria-pressed',x===b?'true':'false'));
-db.querySelectorAll('.sb-game').forEach(s=>{s.hidden=s.dataset.g!==b.dataset.gtab;});});}
-async function showM(id){const m=DATA.schedule.find(x=>String(x.match_detail_id)===String(id))||{};
+db.querySelectorAll('[data-gtab]').forEach(b=>b.onclick=()=>selGame(b.dataset.gtab));}
+function selGame(gno){const db=document.getElementById('db');if(!db||gno==null||gno==='')return;
+db.querySelectorAll('[data-gtab]').forEach(x=>x.setAttribute('aria-pressed',x.dataset.gtab===String(gno)?'true':'false'));
+db.querySelectorAll('.sb-game').forEach(s=>{s.hidden=s.dataset.g!==String(gno);});}
+async function showM(id,opts){opts=opts||{};const wantGame=opts.game!=null?String(opts.game):null;
+const m=DATA.schedule.find(x=>String(x.match_detail_id)===String(id))||{};
 const gs=DATA.games.filter(g=>g.match_detail_id===id);
-const tabs=gs.map((g,i)=>`<button data-gtab="${g.game_no}" aria-pressed="${i===0?'true':'false'}">Game ${g.game_no}</button>`).join('');
-openD(m.team_a+' vs '+m.team_b,'#'+id+' · '+(m.date||''),`<div class="sb-tabs" role="group" aria-label="Games">${tabs}</div>`+gs.map((g,i)=>{
+const isActive=(g,i)=>wantGame!=null?String(g.game_no)===wantGame:i===0;
+const tabs=gs.map((g,i)=>`<button data-gtab="${g.game_no}" aria-pressed="${isActive(g,i)?'true':'false'}">Game ${g.game_no}</button>`).join('');
+const body=`<div class="sb-tabs" role="group" aria-label="Games">${tabs}</div>`+gs.map((g,i)=>{
 const pa=rows(id,g.game_no).filter(r=>r.team===g.team_a),pb=rows(id,g.game_no).filter(r=>r.team===g.team_b);
-return gameSection(g,pa,pb,[],[],false,i===0);}).join(''));
-wireTabs();
+return gameSection(g,pa,pb,[],[],false,isActive(g,i));}).join('');
+dSet(m.team_a+' vs '+m.team_b,'#'+id+' · '+(m.date||''),body);
 try{
 const ctl=new AbortController();const tmr=setTimeout(()=>ctl.abort(),15000);
 const r=await fetch('https://mpl.mlbbhub.com/api/v1/id/match/'+encodeURIComponent(id),{signal:ctl.signal});
 clearTimeout(tmr);
 if(!r.ok)return;const d=await r.json();if(!d.games||!d.games.length)return;
-const t2=d.games.map((g,i)=>`<button data-gtab="${g.game}" aria-pressed="${i===0?'true':'false'}">Game ${g.game}</button>`).join('');
-document.getElementById('db').innerHTML=`<div class="sb-tabs" role="group" aria-label="Games">${t2}</div>`+d.games.map((g,i)=>{
+const firstGame=wantGame!=null?wantGame:String(d.games[0].game);
+const t2=d.games.map((g,i)=>`<button data-gtab="${g.game}" aria-pressed="${String(g.game)===String(firstGame)?'true':'false'}">Game ${g.game}</button>`).join('');
+const live=`<div class="sb-tabs" role="group" aria-label="Games">${t2}</div>`+d.games.map((g,i)=>{
 const gg={game_no:g.game,team_a:g.team_a,team_b:g.team_b,team_a_kills:g.team_a_kills,team_b_kills:g.team_b_kills,winner:g.winner,duration:g.duration,team_a_side:g.team_a_side,team_b_side:g.team_b_side};
 const pa=(g.players||[]).filter(p=>p.team===g.team_a),pb=(g.players||[]).filter(p=>p.team===g.team_b);
-return gameSection(gg,pa,pb,g.bans_a||[],g.bans_b||[],true,i===0);}).join('');
+return gameSection(gg,pa,pb,g.bans_a||[],g.bans_b||[],true,String(g.game)===String(firstGame));}).join('');
+document.getElementById('db').innerHTML=live;
+if(dnav.length)dnav[dnav.length-1].h=live;
 wireTabs();
 }catch(e){}}
-function openD(t,s,h){lastFocus=document.activeElement;document.getElementById('dt').textContent=t;
-document.getElementById('ds').textContent=s;document.getElementById('db').innerHTML=h;dlg.showModal();}
+let dnav=[];
+function dShow(){const top=dnav[dnav.length-1];if(!top)return;
+document.getElementById('dt').textContent=top.t;
+document.getElementById('ds').textContent=top.s||'';
+document.getElementById('db').innerHTML=top.h;
+document.getElementById('dback').hidden=dnav.length<2;
+wireTabs();}
+function dSet(t,s,h){if(!dlg.open){dnav=[];lastFocus=document.activeElement;}
+dnav.push({t:t,s:s,h:h});dShow();if(!dlg.open)dlg.showModal();}
+function dBack(){if(dnav.length>1){dnav.pop();dShow();}}
+function openD(t,s,h){dSet(t,s,h);}
+document.getElementById('dback').onclick=()=>dBack();
 document.addEventListener('keydown',e=>{if(e.key==='Escape'){const d2=document.getElementById('dlg2');if(d2&&d2.open)d2.close();else if(dlg.open)dlg.close();}});
 document.addEventListener('keydown',e=>{if(e.key!=='Tab')return;const d=[dlg,document.getElementById('dlg2')].find(x=>x&&x.open);if(!d)return;
 const f=[...d.querySelectorAll('button,input,select,[tabindex]')].filter(el=>!el.disabled&&el.offsetParent!==null);if(!f.length)return;

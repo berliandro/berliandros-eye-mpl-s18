@@ -47,6 +47,8 @@ ok('data-stat' in html, "stats has Series MVP / Heroes sub-tabs")
 ok('bracketHTML' in html, "playoff bracket preview exists")
 ok('standBoard' in html, "standings board moved to matches")
 ok('data-ts' in html, "statistic tables have sort controls")
+for needle in ('data-ovhero', 'data-ovemb', 'data-ovopp', 'data-ovg', 'id="dback"', 'selGame'):
+    ok(needle in html, f"overview drill-down contains {needle}")
 for needle in ('id="searchBox"', 'id="sortBox"', 'id="laneBox"', 'id="layoutSeg"'):
     ok(needle in html, f"contains {needle}")
 
