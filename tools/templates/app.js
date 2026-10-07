@@ -179,7 +179,7 @@ board.querySelectorAll('[data-more]').forEach(b=>b.onclick=()=>{const n=+b.datas
 board.querySelectorAll('[data-phase]').forEach(b=>b.onclick=()=>{S.phase=b.dataset.phase;render();});
 board.querySelectorAll('[data-stat]').forEach(b=>b.onclick=()=>{S.stat=b.dataset.stat;render();});
 board.querySelectorAll('[data-ts]').forEach(b=>b.onclick=()=>{const [t,k]=b.dataset.ts.split(':');const str=k==='hero'||k==='player'||k==='team'||k==='match'||k==='mvp'||k==='date';if(S.tsort.t===t&&S.tsort.k===k)S.tsort.d*=-1;else S.tsort={t,k,d:str?1:-1};render();});
-wireCharts();}
+wireCharts();wireBracket();}
 function normId(s){return String(s||'').toLowerCase().replace(/[^a-z0-9]/g,'');}
 function offOf(n){const m={};DATA.season.forEach(s=>{m[String(s.player||'').toLowerCase()]=s;});
 const GALIAS={hijumee:'dalvin',arfy:'dingarai',yazukee:'affan',alekk:'alexander',kevinn:'kevin',maykids:'maykidss',kennzyskie:'kennzyyskie'};
@@ -480,11 +480,57 @@ return `<div class="sb-p">${heroImg}<div class="sb-id"><b>${esc(r.player)}</b><s
 +`<div class="sb-gear"><span class="sb-tal">${embSm}${tals}</span>${items?`<span class="sb-items">${items}</span>`:''}</div></div>`;}).join('');
 return `<div class="sb-team${flip?' flip':''}${pk?' '+pk:''}"><div class="sb-thead"><img src="${logoOf(code)}" alt="" ${IMG_HIDE}><b class="${won===true?'tw':won===false?'tl':''}">${esc(code)}</b><span class="k">${kills} kills</span></div>${prow}</div>`;}
 function winName(g){return g.winner==='team_a'?g.team_a:(g.winner==='team_b'?g.team_b:(g.winner||''));}
+/* Playoff chances (1 series win = 1 point; every team plays exactly 16 series).
+   Top 6 → playoffs ("% Playoff Chance"), top 2 → upper bracket ("% Upper
+   Bracket"). Hard limits use max-possible = current + (16 - played):
+   PC 100 iff pts > max max-possible of 7th/8th/9th; PC 0 iff max-possible <
+   pts of 6th. UB 100 iff pts > max max-possible of 3rd..9th; UB 0 iff
+   max-possible < pts of 2nd. Undecided teams: seeded Monte-Carlo (500 trials)
+   over the actual remaining fixtures, each sampled with P(A wins) =
+   wra/(wra+wrb) from series win rates, cuts on (pts, net game diff).
+   Fixed seed → stable across renders. */
+const TOTAL_SERIES=16,TRIALS=500;
+function poRow(m){return String(m.schedule_id||m.match_id||'').indexOf('playoffs')>-1||(m.team_a==='TBD'&&m.team_b==='TBD');}
+function playoffChance(){
+const rows=[...DATA.standings].sort((a,b)=>a.rank-b.rank);
+const key=r=>String(r.team_slug||r.team_name||'').toLowerCase();
+const code=t=>String(t||'').toLowerCase();
+const pts=r=>+r.match_point||0;
+const played=r=>(+r.match_win||0)+(+r.match_lose||0);
+const maxP=r=>pts(r)+Math.max(0,TOTAL_SERIES-played(r));
+const wr=r=>{const p=played(r);return p?((+r.match_win||0)/p):0.5;};
+const rem=(DATA.schedule||[]).filter(m=>m.status!=='completed'&&!poRow(m));
+const p6=pts(rows[5]||{match_point:0}),max789=Math.max.apply(null,rows.slice(6).map(maxP).concat([-1]));
+const p2=pts(rows[1]||{match_point:0}),max39=Math.max.apply(null,rows.slice(2).map(maxP).concat([-1]));
+const out={};
+let seed=0x51ab;const rnd=()=>{seed|=0;seed=seed+0x6D2B79F5|0;
+let t=Math.imul(seed^seed>>>15,1|seed);t=t+Math.imul(t^t>>>7,61|t)^t;return((t^t>>>14)>>>0)/4294967296;};
+const cut6={},cut2={};
+rows.forEach(r=>{const k=key(r);
+const pc=pts(r)>max789?{v:100,why:'Clinched'}:(maxP(r)<p6?{v:0,why:'Eliminated'}:null);
+const ub=pts(r)>max39?{v:100,why:'Clinched'}:(maxP(r)<p2?{v:0,why:'Eliminated'}:null);
+if(pc&&ub){out[k]={pc:pc,ub:ub};return;}
+out[k]={pc:pc,ub:ub};if(!pc)cut6[k]=0;if(!ub)cut2[k]=0;});
+if(Object.keys(cut6).length||Object.keys(cut2).length){
+const rate={};rows.forEach(r=>{rate[key(r)]=wr(r);});
+for(let t=0;t<TRIALS;t++){const p={};rows.forEach(r=>{p[key(r)]=pts(r);});
+rem.forEach(m=>{const a=code(m.team_a),b=code(m.team_b);if(!(a in p)||!(b in p))return;
+const pa=rate[a],pb=rate[b],q=(pa+pb)?pa/(pa+pb):0.5;p[rnd()<q?a:b]++;});
+const rank=[...rows].sort((x,y)=>{const kx=key(x),ky=key(y);
+return (p[ky]-p[kx])||((+y.net_game_win||0)-(+x.net_game_win||0))||String(kx).localeCompare(String(ky));});
+rank.slice(0,6).forEach(r=>{const k=key(r);if(k in cut6)cut6[k]++;});
+rank.slice(0,2).forEach(r=>{const k=key(r);if(k in cut2)cut2[k]++;});}
+rows.forEach(r=>{const k=key(r);
+if(!out[k].pc)out[k].pc={v:Math.round(cut6[k]/TRIALS*100),why:'Simulated over '+rem.length+' remaining series'};
+if(!out[k].ub)out[k].ub={v:Math.round(cut2[k]/TRIALS*100),why:'Simulated over '+rem.length+' remaining series'};});}
+const res={};rows.forEach(r=>{res[key(r)]=out[key(r)]||{pc:{v:0,why:'Eliminated'},ub:{v:0,why:'Eliminated'}};});return res;}
 function standBoard(){
 const stBase=[...DATA.standings].sort((a,b)=>a.rank-b.rank);
-const sval=(s,k)=>k==='team'?s.team_name:k==='pts'?+s.match_point:k==='mw'?+s.match_win:k==='gw'?+s.game_win:k==='df'?+s.net_game_win:+s.rank;
+const pcMap=playoffChance();
+stBase.forEach(s=>{const k=String(s.team_slug||s.team_name||'').toLowerCase();const e=pcMap[k]||{pc:{v:0},ub:{v:0}};s._pc=e.pc.v;s._pcWhy=e.pc.why||'';s._ub=e.ub.v;s._ubWhy=e.ub.why||'';});
+const sval=(s,k)=>k==='team'?s.team_name:k==='pts'?+s.match_point:k==='pc'?+s._pc:k==='ub'?+s._ub:k==='mw'?+s.match_win:k==='gw'?+s.game_win:k==='df'?+s.net_game_win:+s.rank;
 const st=S.tsort.t==='stand'?srt(stBase,s=>sval(s,S.tsort.k),S.tsort.k==='team'):stBase;
-return `<div class="pin" style="grid-column:1/-1"><div class="body"><div class="phasebar"><div><div class="kicker">Regular season</div><h3 style="margin:.25em 0">Standings</h3></div></div><div class="lscroll"><table style="min-width:560px"><tr>${th('stand','rank','#')}${th('stand','team','Team')}${th('stand','pts','Pts')}${th('stand','mw','Match W-L')}${th('stand','gw','Game W-L')}${th('stand','df','+/-')}</tr>${st.map(s=>{const slug=(s.team_slug||s.team_name||'').toLowerCase();const ng=+s.net_game_win||0;return `<tr><td>${s.rank}</td><td><img src="${TICON(slug)}" alt="" loading="lazy" style="width:20px;height:20px;object-fit:contain;vertical-align:-5px" ${IMG_HIDE}> ${esc(s.team_name)}</td><td>${s.match_point}</td><td>${s.match_win}-${s.match_lose}</td><td>${s.game_win}-${s.game_lose}</td><td>${ng>0?'+'+ng:ng}</td></tr>`;}).join('')}</table></div></div></div>`;}
+return `<div class="pin" style="grid-column:1/-1"><div class="body"><div class="phasebar"><div><div class="kicker">Regular season</div><h3 style="margin:.25em 0">Standings</h3></div></div><div class="lscroll"><table style="min-width:700px"><tr>${th('stand','rank','#')}${th('stand','team','Team')}${th('stand','pts','Pts')}${th('stand','mw','Match W-L')}${th('stand','gw','Game W-L')}${th('stand','df','+/-')}${th('stand','pc','% Playoff Chance')}${th('stand','ub','% Upper Bracket')}</tr>${st.map(s=>{const slug=(s.team_slug||s.team_name||'').toLowerCase();const ng=+s.net_game_win||0;return `<tr><td>${s.rank}</td><td><img src="${TICON(slug)}" alt="" loading="lazy" style="width:20px;height:20px;object-fit:contain;vertical-align:-5px" ${IMG_HIDE}> ${esc(s.team_name)}</td><td>${s.match_point}</td><td>${s.match_win}-${s.match_lose}</td><td>${s.game_win}-${s.game_lose}</td><td>${ng>0?'+'+ng:ng}</td><td title="${esc(s._pcWhy||'Playoff chance')}"><b>${s._pc}%</b></td><td title="${esc(s._ubWhy||'Upper bracket chance')}"><b>${s._ub}%</b></td></tr>`;}).join('')}</table></div></div></div>`;}
 function finalBoard(){
 const places=['Champion','Runner-up','3rd place','4th place','5th place','6th place','7th place','8th place'];
 return `<div class="pin" style="grid-column:1/-1"><div class="body"><div class="phasebar"><div><div class="kicker">Playoffs · decided at finals</div><h3 style="margin:.25em 0">Final positions</h3></div></div><div class="lscroll"><table style="min-width:420px"><tr><th>Pos</th><th>Place</th><th>Team</th></tr>${places.map((p,i)=>`<tr><td>#${i+1}</td><td>${p}</td><td>TBD</td></tr>`).join('')}</table></div></div></div>`;}
@@ -493,10 +539,46 @@ const ms=((DATA.playoffs||{}).matches||[]);
 if(!ms.length)return '';
 const byRound={};ms.forEach(m=>{byRound[m.round]=m;});
 const cols=[['Round 1',['Round 1 Match 1','Round 1 Match 2']],['Round 2',['Round 2 Match 1','Round 2 Match 2']],['Bracket Finals',['Upper Bracket Finals','Lower Bracket Semi Finals']],['Lower Final',['Lower Bracket Finals']],['Grand Final',['Grand Finals']]];
-const card=m=>{if(!m)return `<div class="brk-match brk-tbd"><span>TBD</span></div>`;
 const side=(n,logo,sc,w)=>`<div class="brk-team${w?' w':''}">${logo?`<img src="${esc(logo)}" alt="" loading="lazy" onerror="this.remove()">`:''}<span>${esc(n||'TBD')}</span><b>${sc??''}</b></div>`;
-return `<div class="brk-match"><div class="brk-round">${esc(m.round||'')}</div>${side(m.team_a,m.team_a_logo,m.score_a,m.winner==='team_a')}${side(m.team_b,m.team_b_logo,m.score_b,m.winner==='team_b')}<div class="brk-date">${esc(m.date||'')}</div></div>`;};
-return `<div class="pin" style="grid-column:1/-1"><div class="body"><div class="phasebar"><div><div class="kicker">Playoffs</div><h3 style="margin:.25em 0">Bracket preview</h3></div></div><div class="brk">${cols.map(([t,rs])=>`<div class="brk-col"><div class="brk-title">${t}</div>${rs.map(r=>card(byRound[r])).join('')}</div>`).join('')}</div></div></div>`;}
+const card=(rk,m)=>{const inner=!m?`<div class="brk-match brk-tbd"><span>TBD</span></div>`:`<div class="brk-match"><div class="brk-round">${esc(m.round||'')}</div>${side(m.team_a,m.team_a_logo,m.score_a,m.winner==='team_a')}${side(m.team_b,m.team_b_logo,m.score_b,m.winner==='team_b')}<div class="brk-date">${esc(m.date||'')}</div></div>`;
+return inner.replace('brk-match','brk-match" data-brk="'+esc(rk));};
+return `<div class="pin" style="grid-column:1/-1"><div class="body"><div class="phasebar"><div><div class="kicker">Playoffs</div><h3 style="margin:.25em 0">Bracket preview</h3></div></div><div class="brk">${cols.map(([t,rs])=>`<div class="brk-col"><div class="brk-title">${t}</div>${rs.map(r=>card(r,byRound[r])).join('')}</div>`).join('')}</div></div></div>`;}
+/* Standard double-elim feeds: winners move right (solid), R2 losers drop to
+   the lower semi (dashed). R1 losers have no outgoing path in this format.
+   The UBF winner drops into the Grand Final from above ('top' entry) so its
+   line never crosses the Lower Final card. */
+const BRK_FEEDS=[['Round 1 Match 1','Round 2 Match 1',0],['Round 1 Match 2','Round 2 Match 2',0],['Round 2 Match 1','Upper Bracket Finals',0],['Round 2 Match 2','Upper Bracket Finals',0],['Round 2 Match 1','Lower Bracket Semi Finals',1],['Round 2 Match 2','Lower Bracket Semi Finals',1],['Upper Bracket Finals','Grand Finals',0,'top'],['Lower Bracket Semi Finals','Lower Bracket Finals',0],['Lower Bracket Finals','Grand Finals',0]];
+function drawBrk(el){el.querySelectorAll('svg.brk-lines').forEach(s=>s.remove());
+const q=rk=>el.querySelector('[data-brk="'+rk+'"]');
+const STROKE='rgba(255,255,255,.2)';
+const byT={};BRK_FEEDS.forEach(([a,b,drop,entry],i)=>{if(entry==='top')return;(byT[b]=byT[b]||[]).push({a:a,drop:drop,i:i});});
+let paths='';const gapX={};
+Object.keys(byT).forEach((b,gi)=>{const T=q(b);if(!T)return;
+const x2=T.offsetLeft,y2=T.offsetTop+T.offsetHeight/2;
+const srcs=byT[b].map(f=>({el:q(f.a),drop:f.drop,i:f.i})).filter(s=>s.el);
+if(!srcs.length)return;
+const xs=srcs.map(s=>s.el.offsetLeft+s.el.offsetWidth);
+const x1min=Math.min.apply(null,xs);
+let xv=gapX[b];if(xv==null){xv=x1min+(x2-x1min)*(0.35+0.12*(gi%3));gapX[b]=xv;}
+const allY=srcs.map(s=>s.el.offsetTop+s.el.offsetHeight/2).concat([y2]);
+const yTop=Math.min.apply(null,allY),yBot=Math.max.apply(null,allY);
+const dashed=srcs.every(s=>s.drop);
+paths+=`<path d="M${xv},${yTop} V${yBot}" fill="none" stroke="rgba(255,255,255,.2)" stroke-width="2"${dashed?' stroke-dasharray="5 4"':''}/>`;
+srcs.forEach(s=>{const y=s.el.offsetTop+s.el.offsetHeight/2;
+paths+=`<path d="M${s.el.offsetLeft+s.el.offsetWidth},${y} H${xv}" fill="none" stroke="rgba(255,255,255,.2)" stroke-width="2"${s.drop?' stroke-dasharray="5 4"':''}/>`;});
+paths+=`<path d="M${xv},${y2} H${x2}" fill="none" stroke="rgba(255,255,255,.2)" stroke-width="2"/>`;});
+BRK_FEEDS.forEach(([a,b,drop,entry])=>{if(entry!=='top')return;const A=q(a),T=q(b);if(!A||!T)return;
+const x1=A.offsetLeft+A.offsetWidth,y1=A.offsetTop+A.offsetHeight/2;
+const xe=Math.min(Math.max((x1+T.offsetLeft+T.offsetWidth)/2,T.offsetLeft+30),T.offsetLeft+T.offsetWidth-30);
+paths+=`<path d="M${x1},${y1} H${xe} V${T.offsetTop}" fill="none" stroke="rgba(255,255,255,.2)" stroke-width="2"/>`;});
+if(!paths)return;
+const svg=document.createElementNS('http://www.w3.org/2000/svg','svg');
+svg.setAttribute('class','brk-lines');svg.setAttribute('width',el.scrollWidth);svg.setAttribute('height',el.scrollHeight);
+svg.innerHTML=paths;el.appendChild(svg);}
+let brkResizeWired=false;
+function wireBracket(){document.querySelectorAll('.brk').forEach(drawBrk);
+if(!brkResizeWired){brkResizeWired=true;let t=null;
+window.addEventListener('resize',()=>{clearTimeout(t);t=setTimeout(()=>document.querySelectorAll('.brk').forEach(drawBrk),150);});}}
 function gameMvp(pa,pb,wcode){const pl=[...(pa||[]),...(pb||[])];const pool=wcode?pl.filter(r=>r.team===wcode):pl;const cands=pool.length?pool:pl;let best=null,bk=null;
 cands.forEach(r=>{const k=r.kda??(((r.kills??r.kill??0)+(r.assists??r.assist??0))/Math.max(1,(r.deaths??r.death??0)));const key=[k,(r.kills??r.kill??0),(r.gold??0)];
 if(!best||key[0]>bk[0]||(key[0]===bk[0]&&(key[1]>bk[1]||(key[1]===bk[1]&&key[2]>bk[2])))){best=r;bk=key;}});return best;}
