@@ -77,7 +77,7 @@ live from the mlbbhub API when online.
 | `tools/fetch_assets.py` | Download every referenced hero/item asset (`--check-only`, `--live`) |
 | `tools/check.py` | Regression suite (incl. STRICT asset coverage + JS syntax gate) |
 | `tools/check_parity.py` | Regen parity gate |
-| `tools/shots.py` | README screenshots at 2880×1800 (Playwright + system Chrome) |
+| `tools/shots.py` | README screenshots per the shooting spec below (Playwright + system Chrome) |
 | `assets/` | Downloaded artwork + `manifest.json` |
 | `data/` | SQLite DB, CSV exports, `lanes.json` |
 | `github/assets/` | README screenshots |
@@ -92,8 +92,16 @@ python tools/fetch_assets.py --check-only  # audit only
 python tools/gen_dark.py       # rebuild the HTML
 python tools/check_parity.py   # regen parity gate
 python tools/check.py          # regression suite (0 failures expected)
-python tools/shots.py          # re-capture README screenshots
+python tools/shots.py --zoom # re-capture README screenshots (see spec)
 ```
+
+## Screenshot spec (do not change without approval)
+
+- Canvas: **2880×1800 PNG** exact (asserted from the PNG header after capture)
+- System zoom **150%** (viewport 1920×1200 CSS @ device scale factor 1.5) +
+  website zoom **125%** (body CSS zoom) = zoomed-in, high-resolution look
+- Every shot waits for webfonts and all in-viewport images to finish loading —
+  no fixed sleeps — so photos and icons are never captured half-loaded
 
 Serve locally (or just double-click the HTML):
 
