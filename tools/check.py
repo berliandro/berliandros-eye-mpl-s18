@@ -256,6 +256,7 @@ for needle in ('canonicalPlayer', 'PLAYER_ALIAS', 'playoffChance', 'TOTAL_TEAMS'
                'pin+.pin', 'brk-lines', 'brk-hover', 'BRK_LOSS', 'BRK_COLS',
                'seedtip', 'data-seed', 'Quarterfinals', 'bracketGrid', 'matchCard',
                'svgOverlay', 'seedTooltip', 'BrkHover', 'activeSeedId',
+               'showSeedPaths', 'playBrk', 'path.prev', 'path.win', 'path.loss',
                'ResizeObserver', 'stHeroDrill', 'stEmbDrill',
                'stTalDrill', 'stItemDrill', 'data-scope', 'data-ovitem',
                'tag pick', 'tag ban', 'mrow sg', 'sgres', 'sgmeta', 'res win',

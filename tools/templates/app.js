@@ -612,6 +612,17 @@ function setBrkHover(el,row){BrkHover.el=el;BrkHover.row=row;
 BrkHover.activeTeamId=row&&row.dataset.brkt?row.dataset.brkt:null;
 BrkHover.activeSeedId=row&&row.dataset.seed?row.dataset.seed:null;}
 function clearBrkHover(){BrkHover.activeTeamId=null;BrkHover.activeSeedId=null;BrkHover.el=null;BrkHover.row=null;}
+/* Phased draw: previous-position line first, win/loss branches second. */
+function playBrk(svg){const prev=[...svg.querySelectorAll('path.prev')],next=[...svg.querySelectorAll('path.win,path.loss')];
+const reduced=window.matchMedia&&window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+requestAnimationFrame(()=>requestAnimationFrame(()=>{prev.forEach(p=>p.classList.add('go'));
+if(reduced||!next.length){next.forEach(p=>p.classList.add('go'));svg.classList.add('done');return;}
+setTimeout(()=>next.forEach(p=>p.classList.add('go')),350);
+setTimeout(()=>svg.classList.add('done'),850);}));}
+function gfSlotY(brk,q,fromRk){const t=q('Grand Finals');if(!t)return null;
+const rows=t.querySelectorAll('.brk-team');const i=BRK_GF_SLOT[fromRk];
+if(i==null||!rows.length||i>=rows.length)return null;
+return {x:brkRect(brk,t).left,y:brkRect(brk,rows[i]).cy};}
 function showTeamPaths(brk,row){clearTeamPaths(brk);
 const card=row.closest('[data-brk]');if(!card)return;
 const round=card.dataset.brk,name=row.dataset.brkt;
@@ -623,37 +634,65 @@ const P=brkRect(brk,row);
 const svg=document.createElementNS('http://www.w3.org/2000/svg','svg');
 svg.setAttribute('class','brk-hover');svg.setAttribute('width',brk.scrollWidth);svg.setAttribute('height',brk.scrollHeight);
 let paths='';
-const add=(d,stroke,w,dim)=>{paths+=`<path d="${d}" pathLength="1" stroke="${stroke}" stroke-width="${w}"${dim?' class="dim"':''}/>`;};
+const add=(d,stroke,w,cls)=>{paths+=`<path d="${d}" pathLength="1" stroke="${stroke}" stroke-width="${w}" class="${cls}"/>`;};
 const INK='rgba(242,241,236,.85)',MUT='rgba(166,163,155,.6)';
-const gfY=(fromRk)=>{const t=q('Grand Finals');if(!t)return null;
-const rows=t.querySelectorAll('.brk-team');const i=BRK_GF_SLOT[fromRk];
-if(i==null||!rows.length||i>=rows.length)return null;
-return {x:brkRect(brk,t).left,y:brkRect(brk,rows[i]).cy};};
+const gfY=(fromRk)=>gfSlotY(brk,q,fromRk);
 (BRK_PREV[round]||[]).forEach(rk=>{const c=q(rk);if(!c)return;
 const src=matchRow(rk),S=src?brkRect(brk,src):brkRect(brk,c);
-add(brkCurve(S.right,S.cy,P.left,P.cy),INK,2.5,false);});
+add(brkCurve(S.right,S.cy,P.left,P.cy),INK,2.5,'prev');});
 (BRK_NEXT[round]||[]).forEach(rk=>{const t=q(rk);if(!t)return;
 if(rk==='Grand Finals'){const G=gfY(round);if(!G)return;
-add(brkCurve(P.right,P.cy,brkRect(brk,t).left,G.y),INK,2.5,false);return;}
+add(brkCurve(P.right,P.cy,brkRect(brk,t).left,G.y),INK,2,'win');return;}
 const T=brkRect(brk,t);
-add(brkCurve(P.right,P.cy,T.left,T.cy),INK,2.5,false);});
+add(brkCurve(P.right,P.cy,T.left,T.cy),INK,2,'win');});
 const lossTo=BRK_LOSS[round];
 if(lossTo){const t=q(lossTo);if(t){const T=brkRect(brk,t);
-add(brkCurve(P.right,P.cy,T.left,T.cy),MUT,2,true);}}
+add(brkCurve(P.right,P.cy,T.left,T.cy),MUT,2,'loss');}}
 else if(round!=='Grand Finals'){const yB=brk.scrollHeight;
-const elim=`<path d="M${P.cx},${P.cy} C${P.cx},${P.cy+46} ${P.cx},${yB-70} ${P.cx},${yB}" pathLength="1" stroke="${MUT}" stroke-width="2" class="dim" mask="url(#brkfadem)"/>`;
+const elim=`<path d="M${P.cx},${P.cy} C${P.cx},${P.cy+46} ${P.cx},${yB-70} ${P.cx},${yB}" pathLength="1" stroke="${MUT}" stroke-width="2" class="loss" mask="url(#brkfadem)"/>`;
 svg.innerHTML=`<defs><linearGradient id="brkfade" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#fff" stop-opacity=".7"/><stop offset="1" stop-color="#fff" stop-opacity="0"/></linearGradient><mask id="brkfadem" maskUnits="userSpaceOnUse" x="0" y="0" width="${brk.scrollWidth}" height="${brk.scrollHeight}"><rect x="0" y="0" width="${brk.scrollWidth}" height="${brk.scrollHeight}" fill="url(#brkfade)"/></mask></defs>`+paths+elim;
 brk.appendChild(svg);
-requestAnimationFrame(()=>requestAnimationFrame(()=>svg.querySelectorAll('path').forEach(p=>p.classList.add('go'))));return;}
+playBrk(svg);return;}
 svg.innerHTML=paths;brk.appendChild(svg);
-requestAnimationFrame(()=>requestAnimationFrame(()=>svg.querySelectorAll('path').forEach(p=>p.classList.add('go'))));}
+playBrk(svg);}
+/* Seed hover pathing: a pending seed has no previous team, so the primary
+   glowing line traces the incoming feed (QF winners converging on its match)
+   into the hovered slot; win/loss branches follow the host match's routes. */
+const BRK_SEED_MATCH={1:'Round 2 Match 1',2:'Round 2 Match 2',3:'Round 1 Match 1',6:'Round 1 Match 1',4:'Round 1 Match 2',5:'Round 1 Match 2'};
+function showSeedPaths(brk,seedRow){clearTeamPaths(brk);
+const card=seedRow.closest('[data-brk]');if(!card)return;
+const round=card.dataset.brk,q=rk=>brk.querySelector('[data-brk="'+rk+'"]');
+const P=brkRect(brk,seedRow);
+const svg=document.createElementNS('http://www.w3.org/2000/svg','svg');
+svg.setAttribute('class','brk-hover');svg.setAttribute('width',brk.scrollWidth);svg.setAttribute('height',brk.scrollHeight);
+let paths='';
+const add=(d,stroke,w,cls)=>{paths+=`<path d="${d}" pathLength="1" stroke="${stroke}" stroke-width="${w}" class="${cls}"/>`;};
+const INK='rgba(242,241,236,.85)',MUT='rgba(166,163,155,.6)';
+(BRK_PREV[round]||[]).forEach(rk=>{const c=q(rk);if(!c)return;
+const S=brkRect(brk,c);
+add(brkCurve(S.right,S.cy,P.left,P.cy),INK,2.5,'prev');});
+(BRK_NEXT[round]||[]).forEach(rk=>{const t=q(rk);if(!t)return;
+if(rk==='Grand Finals'){const G=gfSlotY(brk,q,round);if(!G)return;
+add(brkCurve(P.right,P.cy,brkRect(brk,t).left,G.y),INK,2,'win');return;}
+const T=brkRect(brk,t);
+add(brkCurve(P.right,P.cy,T.left,T.cy),INK,2,'win');});
+const lossTo=BRK_LOSS[round];
+if(lossTo){const t=q(lossTo);if(t){const T=brkRect(brk,t);
+add(brkCurve(P.right,P.cy,T.left,T.cy),MUT,2,'loss');}}
+else if(round!=='Grand Finals'){const yB=brk.scrollHeight;
+const elim=`<path d="M${P.cx},${P.cy} C${P.cx},${P.cy+46} ${P.cx},${yB-70} ${P.cx},${yB}" pathLength="1" stroke="${MUT}" stroke-width="2" class="loss" mask="url(#brkfadem)"/>`;
+svg.innerHTML=`<defs><linearGradient id="brkfade" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#fff" stop-opacity=".7"/><stop offset="1" stop-color="#fff" stop-opacity="0"/></linearGradient><mask id="brkfadem" maskUnits="userSpaceOnUse" x="0" y="0" width="${brk.scrollWidth}" height="${brk.scrollHeight}"><rect x="0" y="0" width="${brk.scrollWidth}" height="${brk.scrollHeight}" fill="url(#brkfade)"/></mask></defs>`+paths+elim;
+brk.appendChild(svg);
+playBrk(svg);return;}
+svg.innerHTML=paths;brk.appendChild(svg);
+playBrk(svg);}
 function clearTeamPaths(scope){(scope||document).querySelectorAll('svg.brk-hover').forEach(s=>s.remove());}
 document.addEventListener('pointerover',e=>{
 const brk=e.target.closest?e.target.closest('.brk'):null;if(!brk)return;
 const row=e.target.closest?e.target.closest('.brk-team[data-brkt]'):null;
 const seed=e.target.closest?e.target.closest('.brk-team[data-seed]'):null;
 if(row){if(BrkHover.row===row&&BrkHover.el===brk)return;setBrkHover(brk,row);showTeamPaths(brk,row);}
-else if(seed){setBrkHover(brk,seed);}});
+else if(seed){if(BrkHover.row===seed&&BrkHover.el===brk)return;setBrkHover(brk,seed);showSeedPaths(brk,seed);}});
 document.addEventListener('pointerout',e=>{if(e.pointerType&&e.pointerType!=='mouse')return;
 const brk=e.target.closest?e.target.closest('.brk'):null;if(!brk)return;
 const to=e.relatedTarget&&e.relatedTarget.closest?e.relatedTarget.closest('.brk-team[data-brkt],.brk-team[data-seed]'):null;
