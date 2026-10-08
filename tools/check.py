@@ -251,8 +251,9 @@ for m in matches:
         bad.append((v, c, m.get('team_a'), m.get('team_b')))
 ok(not bad,
    f"MVP canonical identity played in its series ({bad[:3] if bad else 'all ok'})")
-for needle in ('canonicalPlayer', 'PLAYER_ALIAS', 'playoffChance', '% Playoff Chance',
-               '% Upper Bracket', 'pin+.pin', 'stHeroDrill', 'stEmbDrill',
+for needle in ('canonicalPlayer', 'PLAYER_ALIAS', 'playoffChance', 'TOTAL_TEAMS',
+               'UPPER_BRACKET_SLOTS', '% Playoff Chance', '% Upper Bracket',
+               'pin+.pin', 'brk-lines', 'brk-hover', 'BRK_LOSS', 'stHeroDrill', 'stEmbDrill',
                'stTalDrill', 'stItemDrill', 'data-scope', 'data-ovitem',
                'tag pick', 'tag ban', 'mrow sg', 'sgres', 'sgmeta', 'res win',
                '>GAME<', 'dmark', 'data-wtab', 'sb-win'):

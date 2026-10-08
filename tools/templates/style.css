@@ -87,7 +87,15 @@ dialog{border:1px solid var(--line);border-radius:12px;max-width:min(880px,94vw)
 .mfoot{display:flex;justify-content:space-between;align-items:center;gap:10px;width:100%;padding:12px 14px;background:rgba(255,255,255,.025);border:0;border-top:1px solid var(--line);color:var(--ink);font-family:var(--font-display);font-weight:700;font-size:13px;cursor:pointer;min-width:640px}.mfoot:hover{background:rgba(255,255,255,.05)}.mfoot .mono{font-family:var(--font-mono);font-size:11px;font-weight:400;color:var(--muted)}
 .bar{display:block;height:6px;background:rgba(255,255,255,.08);border-radius:9999px;overflow:hidden}.bar>span{display:block;height:100%;background:var(--ink);border-radius:9999px}
 .brk{display:grid;grid-auto-flow:column;grid-auto-columns:minmax(190px,1fr);gap:26px;overflow-x:auto;padding:8px 2px 12px;position:relative}
-.brk-lines{position:absolute;top:0;left:0;pointer-events:none;overflow:visible}
+.brk-lines{position:absolute;top:0;left:0;pointer-events:none;overflow:visible;z-index:0}
+.brk-match{z-index:1}
+.brk-team{border-radius:6px;transition:background .12s ease}
+.brk-team:hover{background:rgba(255,255,255,.06)}
+.brk-hover{position:absolute;top:0;left:0;pointer-events:none;overflow:visible;z-index:2}
+.brk-hover path{fill:none;stroke-linecap:round;filter:drop-shadow(0 0 5px rgba(255,255,255,.35));stroke-dasharray:1;stroke-dashoffset:1;animation:brkdraw .55s ease forwards}
+.brk-hover path.dim{opacity:.55}
+@keyframes brkdraw{to{stroke-dashoffset:0}}
+@media(prefers-reduced-motion:reduce){.brk-hover path{animation:none;stroke-dashoffset:0}}
 .brk-col{display:flex;flex-direction:column;gap:12px;justify-content:center;min-width:0}
 .brk-title{font-family:var(--font-mono);font-size:10.5px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);text-align:center;padding-bottom:6px;border-bottom:1px solid var(--line)}
 .brk-match{position:relative;background:rgba(20,20,25,.6);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);border:1px solid rgba(255,255,255,.1);border-radius:10px;padding:10px 12px}

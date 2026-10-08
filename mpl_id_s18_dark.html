@@ -103,7 +103,15 @@ dialog{border:1px solid var(--line);border-radius:12px;max-width:min(880px,94vw)
 .mfoot{display:flex;justify-content:space-between;align-items:center;gap:10px;width:100%;padding:12px 14px;background:rgba(255,255,255,.025);border:0;border-top:1px solid var(--line);color:var(--ink);font-family:var(--font-display);font-weight:700;font-size:13px;cursor:pointer;min-width:640px}.mfoot:hover{background:rgba(255,255,255,.05)}.mfoot .mono{font-family:var(--font-mono);font-size:11px;font-weight:400;color:var(--muted)}
 .bar{display:block;height:6px;background:rgba(255,255,255,.08);border-radius:9999px;overflow:hidden}.bar>span{display:block;height:100%;background:var(--ink);border-radius:9999px}
 .brk{display:grid;grid-auto-flow:column;grid-auto-columns:minmax(190px,1fr);gap:26px;overflow-x:auto;padding:8px 2px 12px;position:relative}
-.brk-lines{position:absolute;top:0;left:0;pointer-events:none;overflow:visible}
+.brk-lines{position:absolute;top:0;left:0;pointer-events:none;overflow:visible;z-index:0}
+.brk-match{z-index:1}
+.brk-team{border-radius:6px;transition:background .12s ease}
+.brk-team:hover{background:rgba(255,255,255,.06)}
+.brk-hover{position:absolute;top:0;left:0;pointer-events:none;overflow:visible;z-index:2}
+.brk-hover path{fill:none;stroke-linecap:round;filter:drop-shadow(0 0 5px rgba(255,255,255,.35));stroke-dasharray:1;stroke-dashoffset:1;animation:brkdraw .55s ease forwards}
+.brk-hover path.dim{opacity:.55}
+@keyframes brkdraw{to{stroke-dashoffset:0}}
+@media(prefers-reduced-motion:reduce){.brk-hover path{animation:none;stroke-dashoffset:0}}
 .brk-col{display:flex;flex-direction:column;gap:12px;justify-content:center;min-width:0}
 .brk-title{font-family:var(--font-mono);font-size:10.5px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);text-align:center;padding-bottom:6px;border-bottom:1px solid var(--line)}
 .brk-match{position:relative;background:rgba(20,20,25,.6);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);border:1px solid rgba(255,255,255,.1);border-radius:10px;padding:10px 12px}
@@ -710,7 +718,10 @@ function winName(g){return g.winner==='team_a'?g.team_a:(g.winner==='team_b'?g.t
    over the actual remaining fixtures, each sampled with P(A wins) =
    wra/(wra+wrb) from series win rates, cuts on (pts, net game diff).
    Fixed seed → stable across renders. */
-const TOTAL_SERIES=16,TRIALS=500;
+/* Dynamic season config (no hardcoded team/slot counts below). MPL ID regular
+   season: 9 teams, double round-robin → each team plays 16 series. */
+const TOTAL_TEAMS=9,ROUND_ROBIN_ROUNDS=2,PLAYOFF_SLOTS=6,UPPER_BRACKET_SLOTS=2;
+const TOTAL_SERIES=ROUND_ROBIN_ROUNDS*(TOTAL_TEAMS-1),TRIALS=500;
 function poRow(m){return String(m.schedule_id||m.match_id||'').indexOf('playoffs')>-1||(m.team_a==='TBD'&&m.team_b==='TBD');}
 function playoffChance(){
 const rows=[...DATA.standings].sort((a,b)=>a.rank-b.rank);
@@ -721,8 +732,8 @@ const played=r=>(+r.match_win||0)+(+r.match_lose||0);
 const maxP=r=>pts(r)+Math.max(0,TOTAL_SERIES-played(r));
 const wr=r=>{const p=played(r);return p?((+r.match_win||0)/p):0.5;};
 const rem=(DATA.schedule||[]).filter(m=>m.status!=='completed'&&!poRow(m));
-const p6=pts(rows[5]||{match_point:0}),max789=Math.max.apply(null,rows.slice(6).map(maxP).concat([-1]));
-const p2=pts(rows[1]||{match_point:0}),max39=Math.max.apply(null,rows.slice(2).map(maxP).concat([-1]));
+const p6=pts(rows[PLAYOFF_SLOTS-1]||{match_point:0}),max789=Math.max.apply(null,rows.slice(PLAYOFF_SLOTS).map(maxP).concat([-1]));
+const p2=pts(rows[UPPER_BRACKET_SLOTS-1]||{match_point:0}),max39=Math.max.apply(null,rows.slice(UPPER_BRACKET_SLOTS).map(maxP).concat([-1]));
 const out={};
 let seed=0x51ab;const rnd=()=>{seed|=0;seed=seed+0x6D2B79F5|0;
 let t=Math.imul(seed^seed>>>15,1|seed);t=t+Math.imul(t^t>>>7,61|t)^t;return((t^t>>>14)>>>0)/4294967296;};
@@ -739,8 +750,8 @@ rem.forEach(m=>{const a=code(m.team_a),b=code(m.team_b);if(!(a in p)||!(b in p))
 const pa=rate[a],pb=rate[b],q=(pa+pb)?pa/(pa+pb):0.5;p[rnd()<q?a:b]++;});
 const rank=[...rows].sort((x,y)=>{const kx=key(x),ky=key(y);
 return (p[ky]-p[kx])||((+y.net_game_win||0)-(+x.net_game_win||0))||String(kx).localeCompare(String(ky));});
-rank.slice(0,6).forEach(r=>{const k=key(r);if(k in cut6)cut6[k]++;});
-rank.slice(0,2).forEach(r=>{const k=key(r);if(k in cut2)cut2[k]++;});}
+rank.slice(0,PLAYOFF_SLOTS).forEach(r=>{const k=key(r);if(k in cut6)cut6[k]++;});
+rank.slice(0,UPPER_BRACKET_SLOTS).forEach(r=>{const k=key(r);if(k in cut2)cut2[k]++;});}
 rows.forEach(r=>{const k=key(r);
 if(!out[k].pc)out[k].pc={v:Math.round(cut6[k]/TRIALS*100),why:'Simulated over '+rem.length+' remaining series'};
 if(!out[k].ub)out[k].ub={v:Math.round(cut2[k]/TRIALS*100),why:'Simulated over '+rem.length+' remaining series'};});}
@@ -760,7 +771,7 @@ const ms=((DATA.playoffs||{}).matches||[]);
 if(!ms.length)return '';
 const byRound={};ms.forEach(m=>{byRound[m.round]=m;});
 const cols=[['Round 1',['Round 1 Match 1','Round 1 Match 2']],['Round 2',['Round 2 Match 1','Round 2 Match 2']],['Bracket Finals',['Upper Bracket Finals','Lower Bracket Semi Finals']],['Lower Final',['Lower Bracket Finals']],['Grand Final',['Grand Finals']]];
-const side=(n,logo,sc,w)=>`<div class="brk-team${w?' w':''}">${logo?`<img src="${esc(logo)}" alt="" loading="lazy" onerror="this.remove()">`:''}<span>${esc(n||'TBD')}</span><b>${sc??''}</b></div>`;
+const side=(n,logo,sc,w)=>`<div class="brk-team${w?' w':''}"${n?` data-brkt="${esc(n)}"`:''}>${logo?`<img src="${esc(logo)}" alt="" loading="lazy" onerror="this.remove()">`:''}<span>${esc(n||'TBD')}</span><b>${sc??''}</b></div>`;
 const card=(rk,m)=>{const inner=!m?`<div class="brk-match brk-tbd"><span>TBD</span></div>`:`<div class="brk-match"><div class="brk-round">${esc(m.round||'')}</div>${side(m.team_a,m.team_a_logo,m.score_a,m.winner==='team_a')}${side(m.team_b,m.team_b_logo,m.score_b,m.winner==='team_b')}<div class="brk-date">${esc(m.date||'')}</div></div>`;
 return inner.replace('brk-match','brk-match" data-brk="'+esc(rk));};
 return `<div class="pin" style="grid-column:1/-1"><div class="body"><div class="phasebar"><div><div class="kicker">Playoffs</div><h3 style="margin:.25em 0">Bracket preview</h3></div></div><div class="brk">${cols.map(([t,rs])=>`<div class="brk-col"><div class="brk-title">${t}</div>${rs.map(r=>card(r,byRound[r])).join('')}</div>`).join('')}</div></div></div>`;}
@@ -768,8 +779,8 @@ return `<div class="pin" style="grid-column:1/-1"><div class="body"><div class="
    the lower semi (dashed). R1 losers have no outgoing path in this format.
    The UBF winner drops into the Grand Final from above ('top' entry) so its
    line never crosses the Lower Final card. */
-const BRK_FEEDS=[['Round 1 Match 1','Round 2 Match 1',0],['Round 1 Match 2','Round 2 Match 2',0],['Round 2 Match 1','Upper Bracket Finals',0],['Round 2 Match 2','Upper Bracket Finals',0],['Round 2 Match 1','Lower Bracket Semi Finals',1],['Round 2 Match 2','Lower Bracket Semi Finals',1],['Upper Bracket Finals','Grand Finals',0,'top'],['Lower Bracket Semi Finals','Lower Bracket Finals',0],['Lower Bracket Finals','Grand Finals',0]];
-function drawBrk(el){el.querySelectorAll('svg.brk-lines').forEach(s=>s.remove());
+const BRK_FEEDS=[['Round 1 Match 1','Round 2 Match 1',0],['Round 1 Match 2','Round 2 Match 2',0],['Round 2 Match 1','Upper Bracket Finals',0],['Round 2 Match 2','Upper Bracket Finals',0],['Round 2 Match 1','Lower Bracket Semi Finals',1],['Round 2 Match 2','Lower Bracket Semi Finals',1],['Upper Bracket Finals','Grand Finals',0,'top'],['Upper Bracket Finals','Lower Bracket Finals',1],['Lower Bracket Semi Finals','Lower Bracket Finals',0],['Lower Bracket Finals','Grand Finals',0]];
+function drawBrk(el){el.querySelectorAll('svg.brk-lines,svg.brk-hover').forEach(s=>s.remove());
 const q=rk=>el.querySelector('[data-brk="'+rk+'"]');
 const STROKE='rgba(255,255,255,.2)';
 const byT={};BRK_FEEDS.forEach(([a,b,drop,entry],i)=>{if(entry==='top')return;(byT[b]=byT[b]||[]).push({a:a,drop:drop,i:i});});
@@ -796,6 +807,52 @@ if(!paths)return;
 const svg=document.createElementNS('http://www.w3.org/2000/svg','svg');
 svg.setAttribute('class','brk-lines');svg.setAttribute('width',el.scrollWidth);svg.setAttribute('height',el.scrollHeight);
 svg.innerHTML=paths;el.appendChild(svg);}
+/* Hover team pathing: hovering a team row draws glowing bezier inbound paths
+   from its previous match position(s) plus outbound branches (advance solid,
+   loss dashed; elimination fades down off the container). Exact team-row
+   matching by name; TBD/unknown names fall back to card centers. */
+const BRK_LOSS={'Round 1 Match 1':null,'Round 1 Match 2':null,'Round 2 Match 1':'Lower Bracket Semi Finals','Round 2 Match 2':'Lower Bracket Semi Finals','Upper Bracket Finals':'Lower Bracket Finals','Lower Bracket Semi Finals':null,'Lower Bracket Finals':null,'Grand Finals':null};
+const BRK_NEXT={};BRK_FEEDS.forEach(([a,b,drop])=>{if(!drop){(BRK_NEXT[a]=BRK_NEXT[a]||[]).push(b);}});
+const BRK_PREV={};BRK_FEEDS.forEach(([a,b,drop])=>{if(!drop){(BRK_PREV[b]=BRK_PREV[b]||[]).push(a);}});
+function brkBox(brk,node){let x=0,y=0,n=node;while(n&&n!==brk){x+=n.offsetLeft;y+=n.offsetTop;n=n.offsetParent;}
+return {left:x,top:y,right:x+node.offsetWidth,cy:y+node.offsetHeight/2,cx:x+node.offsetWidth/2};}
+function brkCurve(x1,y1,x2,y2){const mx=(x1+x2)/2;return `M${x1},${y1} C${mx},${y1} ${mx},${y2} ${x2},${y2}`;}
+function showTeamPaths(brk,row){clearTeamPaths(brk);
+const card=row.closest('[data-brk]');if(!card)return;
+const round=card.dataset.brk,name=row.dataset.brkt;
+const q=rk=>brk.querySelector('[data-brk="'+rk+'"]');
+const matchRow=(rk)=>{const c=q(rk);if(!c)return null;
+if(name&&name!=='TBD'){const hit=[...c.querySelectorAll('.brk-team')].find(r=>r.dataset.brkt===name);if(hit)return hit;}
+return null;};
+const P=brkBox(brk,row);
+const svg=document.createElementNS('http://www.w3.org/2000/svg','svg');
+svg.setAttribute('class','brk-hover');svg.setAttribute('width',brk.scrollWidth);svg.setAttribute('height',brk.scrollHeight);
+let paths='';
+const add=(d,stroke,w,dim)=>{paths+=`<path d="${d}" pathLength="1" stroke="${stroke}" stroke-width="${w}"${dim?' class="dim"':''}/>`;};
+const INK='rgba(242,241,236,.85)',MUT='rgba(166,163,155,.6)';
+(BRK_PREV[round]||[]).forEach(rk=>{const c=q(rk);if(!c)return;
+const src=matchRow(rk),S=src?brkBox(brk,src):brkBox(brk,c);
+add(brkCurve(S.right,S.cy,P.left,P.cy),INK,2.5,false);});
+(BRK_NEXT[round]||[]).forEach(rk=>{const t=q(rk);if(!t)return;const T=brkBox(brk,t);
+add(brkCurve(P.right,P.cy,T.left,T.cy),INK,2.5,false);});
+const lossTo=BRK_LOSS[round];
+if(lossTo){const t=q(lossTo);if(t){const T=brkBox(brk,t);
+add(brkCurve(P.right,P.cy,T.left,T.cy),MUT,2,true);}}
+else if(round!=='Grand Finals'){const yB=brk.scrollHeight;
+const elim=`<path d="M${P.cx},${P.cy} C${P.cx},${P.cy+46} ${P.cx},${yB-70} ${P.cx},${yB}" pathLength="1" stroke="${MUT}" stroke-width="2" class="dim" mask="url(#brkfadem)"/>`;
+svg.innerHTML=`<defs><linearGradient id="brkfade" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#fff" stop-opacity=".7"/><stop offset="1" stop-color="#fff" stop-opacity="0"/></linearGradient><mask id="brkfadem" maskUnits="userSpaceOnUse" x="0" y="0" width="${brk.scrollWidth}" height="${brk.scrollHeight}"><rect x="0" y="0" width="${brk.scrollWidth}" height="${brk.scrollHeight}" fill="url(#brkfade)"/></mask></defs>`+paths+elim;
+brk.appendChild(svg);return;}
+svg.innerHTML=paths;brk.appendChild(svg);}
+function clearTeamPaths(scope){(scope||document).querySelectorAll('svg.brk-hover').forEach(s=>s.remove());}
+document.addEventListener('pointerover',e=>{const row=e.target.closest?e.target.closest('.brk-team[data-brkt]'):null;
+const brk=e.target.closest?e.target.closest('.brk'):null;
+if(row&&brk){if(brk._hov===row)return;brk._hov=row;showTeamPaths(brk,row);}});
+document.addEventListener('pointerout',e=>{if(e.pointerType&&e.pointerType!=='mouse')return;
+const brk=e.target.closest?e.target.closest('.brk'):null;if(!brk)return;
+const to=e.relatedTarget&&e.relatedTarget.closest?e.relatedTarget.closest('.brk-team[data-brkt]'):null;
+if(to!==brk._hov){brk._hov=null;clearTeamPaths(brk);}});
+document.addEventListener('pointerdown',e=>{if(e.target.closest&&e.target.closest('.brk-team[data-brkt]'))return;
+document.querySelectorAll('.brk').forEach(b=>{b._hov=null;});clearTeamPaths(document);});
 let brkResizeWired=false;
 function wireBracket(){document.querySelectorAll('.brk').forEach(drawBrk);
 if(!brkResizeWired){brkResizeWired=true;let t=null;
