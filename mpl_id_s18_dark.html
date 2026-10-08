@@ -111,13 +111,24 @@ dialog{border:1px solid var(--line);border-radius:12px;max-width:min(880px,94vw)
 .brk-hover path{fill:none;stroke-linecap:round;filter:drop-shadow(0 0 5px rgba(255,255,255,.35));stroke-dasharray:1;stroke-dashoffset:1;animation:brkdraw .55s ease forwards}
 .brk-hover path.dim{opacity:.55}
 @keyframes brkdraw{to{stroke-dashoffset:0}}
-@media(prefers-reduced-motion:reduce){.brk-hover path{animation:none;stroke-dashoffset:0}}
+@media(prefers-reduced-motion:reduce){.brk-hover path{animation:none;stroke-dashoffset:0}.seedtip{transition:none}}
 .brk-col{display:flex;flex-direction:column;gap:12px;justify-content:center;min-width:0}
-.brk-title{font-family:var(--font-mono);font-size:10.5px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);text-align:center;padding-bottom:6px;border-bottom:1px solid var(--line)}
+.brk-col.split{justify-content:flex-start}
+.brk-gap{flex:1 0 24px}
+.brk-title{font-family:var(--font-display);font-size:12.5px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--ink);text-align:center;padding-bottom:6px;border-bottom:1px solid var(--line)}
+.brk-team.seed{position:relative;font-family:var(--font-mono);font-size:12px;color:var(--muted);cursor:pointer}
+.brk-team.tbd{color:var(--muted);font-weight:400}
+.brk-match:hover,.brk-match:focus-within{z-index:3}
+.seedtip{position:absolute;left:calc(100% + 10px);top:50%;transform:translate(-10px,-50%);opacity:0;pointer-events:none;display:flex;gap:10px;align-items:center;width:max-content;max-width:230px;background:rgba(20,20,24,.97);border:1px solid var(--line);border-radius:10px;padding:10px 14px 10px 10px;white-space:nowrap;z-index:5;transition:transform .18s ease,opacity .18s ease}
+.brk-team.seed:hover .seedtip,.brk-team.seed:focus-within .seedtip{transform:translate(0,-50%);opacity:1}
+.brk-col:last-child .seedtip{left:auto;right:calc(100% + 10px)}
+.sdisc{width:30px;height:30px;border-radius:50%;border:1px solid var(--ink);display:inline-flex;align-items:center;justify-content:center;font-family:var(--font-display);font-weight:700;font-size:14px;color:var(--ink);flex:none}
+.stext b{display:block;font-size:12.5px;color:var(--ink)}
+.stext i{display:block;font-style:normal;font-family:var(--font-mono);font-size:10.5px;color:var(--muted)}
 .brk-match{position:relative;background:rgba(20,20,25,.6);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);border:1px solid rgba(255,255,255,.1);border-radius:10px;padding:10px 12px}
 .brk-match.brk-tbd{display:flex;align-items:center;justify-content:center;color:var(--muted);font-family:var(--font-mono);font-size:11px;min-height:96px}
 .brk-round{font-family:var(--font-mono);font-size:10px;color:var(--muted);letter-spacing:.04em;text-align:center;margin-bottom:6px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-.brk-team{display:flex;align-items:center;gap:8px;padding:3px 0;font-size:13px}.brk-team img{width:24px;height:24px;object-fit:contain;flex:none}.brk-team span{flex:1;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.brk-team b{font-family:var(--font-display);font-variant-numeric:tabular-nums}.brk-team.w span{font-weight:700}
+.brk-team{display:flex;align-items:center;gap:8px;padding:3px 0;font-size:13px}.brk-team img{width:24px;height:24px;object-fit:contain;flex:none}.brk-team span{flex:1;white-space:nowrap}.brk-team>span{overflow:hidden;text-overflow:ellipsis}.brk-team b{font-family:var(--font-display);font-variant-numeric:tabular-nums}.brk-team.w span{font-weight:700}
 .brk-date{font-family:var(--font-mono);font-size:10px;color:var(--muted);text-align:center;margin-top:6px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 th[data-ts]{cursor:pointer;user-select:none;white-space:nowrap}th[data-ts]:hover{color:var(--ink)}.sarr{font-size:9px;color:var(--muted)}
 .phasebar{display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap}
@@ -770,11 +781,31 @@ function bracketHTML(){
 const ms=((DATA.playoffs||{}).matches||[]);
 if(!ms.length)return '';
 const byRound={};ms.forEach(m=>{byRound[m.round]=m;});
-const cols=[['Round 1',['Round 1 Match 1','Round 1 Match 2']],['Round 2',['Round 2 Match 1','Round 2 Match 2']],['Bracket Finals',['Upper Bracket Finals','Lower Bracket Semi Finals']],['Lower Final',['Lower Bracket Finals']],['Grand Final',['Grand Finals']]];
 const side=(n,logo,sc,w)=>`<div class="brk-team${w?' w':''}"${n?` data-brkt="${esc(n)}"`:''}>${logo?`<img src="${esc(logo)}" alt="" loading="lazy" onerror="this.remove()">`:''}<span>${esc(n||'TBD')}</span><b>${sc??''}</b></div>`;
-const card=(rk,m)=>{const inner=!m?`<div class="brk-match brk-tbd"><span>TBD</span></div>`:`<div class="brk-match"><div class="brk-round">${esc(m.round||'')}</div>${side(m.team_a,m.team_a_logo,m.score_a,m.winner==='team_a')}${side(m.team_b,m.team_b_logo,m.score_b,m.winner==='team_b')}<div class="brk-date">${esc(m.date||'')}</div></div>`;
-return inner.replace('brk-match','brk-match" data-brk="'+esc(rk));};
-return `<div class="pin" style="grid-column:1/-1"><div class="body"><div class="phasebar"><div><div class="kicker">Playoffs</div><h3 style="margin:.25em 0">Bracket preview</h3></div></div><div class="brk">${cols.map(([t,rs])=>`<div class="brk-col"><div class="brk-title">${t}</div>${rs.map(r=>card(r,byRound[r])).join('')}</div>`).join('')}</div></div></div>`;}
+const ORD=['1st','2nd','3rd','4th','5th','6th'];
+/* Strict 2-3-2-1 bracket: QF seeds 3v6/4v5, SF seeds 1/2 await QF winners,
+   lower slots stay TBD until results decide them. Seeds are pending (season
+   still live) — never presented as locked teams. */
+const BRK_COLS=[
+ {h:'Quarterfinals',top:[
+  {rk:'Round 1 Match 1',label:'Upper Bracket QF · Match 1',seeds:[3,6]},
+  {rk:'Round 1 Match 2',label:'Upper Bracket QF · Match 2',seeds:[4,5]}]},
+ {h:'Semifinals',top:[
+  {rk:'Round 2 Match 1',label:'Upper Bracket SF · Match 1',seeds:[1,null]},
+  {rk:'Round 2 Match 2',label:'Upper Bracket SF · Match 2',seeds:[2,null]}],
+  bottom:[{rk:'Lower Bracket Semi Finals',label:'Lower Bracket SF',seeds:[null,null]}]},
+ {h:'Finals',top:[{rk:'Upper Bracket Finals',label:'Upper Bracket Final',seeds:[null,null]}],
+  bottom:[{rk:'Lower Bracket Finals',label:'Lower Bracket Final',seeds:[null,null]}]},
+ {h:'Grand Final',mid:[{rk:'Grand Finals',label:'Grand Final',seeds:[null,null]}]}];
+const seedRow=n=>`<div class="brk-team seed" data-seed="${n}" tabindex="0"><span>Seed ${n}</span><span class="seedtip" role="tooltip"><span class="sdisc">${n}</span><span class="stext"><b>${ORD[n-1]} position</b><i>Regular season</i></span></span></div>`;
+const tbdRow=()=>`<div class="brk-team tbd"><span>TBD</span></div>`;
+const rowFor=(m,ab,seed)=>{const t=m?(ab==='a'?m.team_a:m.team_b):null;
+if(t&&t!=='TBD')return side(t,m?(ab==='a'?m.team_a_logo:m.team_b_logo):null,m?(ab==='a'?m.score_a:m.score_b):null,m?(ab==='a'?m.winner==='team_a':m.winner==='team_b'):false);
+if(seed)return seedRow(seed);return tbdRow();};
+const card=(slot,m)=>{const inner=!m?`<div class="brk-match brk-tbd"><span>TBD</span></div>`:`<div class="brk-match"><div class="brk-round">${esc(slot.label)}</div>${rowFor(m,'a',slot.seeds[0])}${rowFor(m,'b',slot.seeds[1])}<div class="brk-date">${esc(m.date||'')}</div></div>`;
+return inner.replace('brk-match','brk-match" data-brk="'+esc(slot.rk));};
+const colHTML=c=>`<div class="brk-col${c.bottom?' split':(c.mid?' center':'')}"><div class="brk-title">${c.h}</div>${(c.top||c.mid||[]).map(s=>card(s,byRound[s.rk])).join('')}${c.bottom?'<div class="brk-gap"></div>'+c.bottom.map(s=>card(s,byRound[s.rk])).join(''):''}</div>`;
+return `<div class="pin" style="grid-column:1/-1"><div class="body"><div class="phasebar"><div><div class="kicker">Playoffs</div><h3 style="margin:.25em 0">Bracket preview</h3></div></div><div class="brk">${BRK_COLS.map(colHTML).join('')}</div></div></div>`;}
 /* Standard double-elim feeds: winners move right (solid), R2 losers drop to
    the lower semi (dashed). R1 losers have no outgoing path in this format.
    The UBF winner drops into the Grand Final from above ('top' entry) so its

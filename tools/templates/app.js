@@ -541,11 +541,31 @@ function bracketHTML(){
 const ms=((DATA.playoffs||{}).matches||[]);
 if(!ms.length)return '';
 const byRound={};ms.forEach(m=>{byRound[m.round]=m;});
-const cols=[['Round 1',['Round 1 Match 1','Round 1 Match 2']],['Round 2',['Round 2 Match 1','Round 2 Match 2']],['Bracket Finals',['Upper Bracket Finals','Lower Bracket Semi Finals']],['Lower Final',['Lower Bracket Finals']],['Grand Final',['Grand Finals']]];
 const side=(n,logo,sc,w)=>`<div class="brk-team${w?' w':''}"${n?` data-brkt="${esc(n)}"`:''}>${logo?`<img src="${esc(logo)}" alt="" loading="lazy" onerror="this.remove()">`:''}<span>${esc(n||'TBD')}</span><b>${sc??''}</b></div>`;
-const card=(rk,m)=>{const inner=!m?`<div class="brk-match brk-tbd"><span>TBD</span></div>`:`<div class="brk-match"><div class="brk-round">${esc(m.round||'')}</div>${side(m.team_a,m.team_a_logo,m.score_a,m.winner==='team_a')}${side(m.team_b,m.team_b_logo,m.score_b,m.winner==='team_b')}<div class="brk-date">${esc(m.date||'')}</div></div>`;
-return inner.replace('brk-match','brk-match" data-brk="'+esc(rk));};
-return `<div class="pin" style="grid-column:1/-1"><div class="body"><div class="phasebar"><div><div class="kicker">Playoffs</div><h3 style="margin:.25em 0">Bracket preview</h3></div></div><div class="brk">${cols.map(([t,rs])=>`<div class="brk-col"><div class="brk-title">${t}</div>${rs.map(r=>card(r,byRound[r])).join('')}</div>`).join('')}</div></div></div>`;}
+const ORD=['1st','2nd','3rd','4th','5th','6th'];
+/* Strict 2-3-2-1 bracket: QF seeds 3v6/4v5, SF seeds 1/2 await QF winners,
+   lower slots stay TBD until results decide them. Seeds are pending (season
+   still live) — never presented as locked teams. */
+const BRK_COLS=[
+ {h:'Quarterfinals',top:[
+  {rk:'Round 1 Match 1',label:'Upper Bracket QF · Match 1',seeds:[3,6]},
+  {rk:'Round 1 Match 2',label:'Upper Bracket QF · Match 2',seeds:[4,5]}]},
+ {h:'Semifinals',top:[
+  {rk:'Round 2 Match 1',label:'Upper Bracket SF · Match 1',seeds:[1,null]},
+  {rk:'Round 2 Match 2',label:'Upper Bracket SF · Match 2',seeds:[2,null]}],
+  bottom:[{rk:'Lower Bracket Semi Finals',label:'Lower Bracket SF',seeds:[null,null]}]},
+ {h:'Finals',top:[{rk:'Upper Bracket Finals',label:'Upper Bracket Final',seeds:[null,null]}],
+  bottom:[{rk:'Lower Bracket Finals',label:'Lower Bracket Final',seeds:[null,null]}]},
+ {h:'Grand Final',mid:[{rk:'Grand Finals',label:'Grand Final',seeds:[null,null]}]}];
+const seedRow=n=>`<div class="brk-team seed" data-seed="${n}" tabindex="0"><span>Seed ${n}</span><span class="seedtip" role="tooltip"><span class="sdisc">${n}</span><span class="stext"><b>${ORD[n-1]} position</b><i>Regular season</i></span></span></div>`;
+const tbdRow=()=>`<div class="brk-team tbd"><span>TBD</span></div>`;
+const rowFor=(m,ab,seed)=>{const t=m?(ab==='a'?m.team_a:m.team_b):null;
+if(t&&t!=='TBD')return side(t,m?(ab==='a'?m.team_a_logo:m.team_b_logo):null,m?(ab==='a'?m.score_a:m.score_b):null,m?(ab==='a'?m.winner==='team_a':m.winner==='team_b'):false);
+if(seed)return seedRow(seed);return tbdRow();};
+const card=(slot,m)=>{const inner=!m?`<div class="brk-match brk-tbd"><span>TBD</span></div>`:`<div class="brk-match"><div class="brk-round">${esc(slot.label)}</div>${rowFor(m,'a',slot.seeds[0])}${rowFor(m,'b',slot.seeds[1])}<div class="brk-date">${esc(m.date||'')}</div></div>`;
+return inner.replace('brk-match','brk-match" data-brk="'+esc(slot.rk));};
+const colHTML=c=>`<div class="brk-col${c.bottom?' split':(c.mid?' center':'')}"><div class="brk-title">${c.h}</div>${(c.top||c.mid||[]).map(s=>card(s,byRound[s.rk])).join('')}${c.bottom?'<div class="brk-gap"></div>'+c.bottom.map(s=>card(s,byRound[s.rk])).join(''):''}</div>`;
+return `<div class="pin" style="grid-column:1/-1"><div class="body"><div class="phasebar"><div><div class="kicker">Playoffs</div><h3 style="margin:.25em 0">Bracket preview</h3></div></div><div class="brk">${BRK_COLS.map(colHTML).join('')}</div></div></div>`;}
 /* Standard double-elim feeds: winners move right (solid), R2 losers drop to
    the lower semi (dashed). R1 losers have no outgoing path in this format.
    The UBF winner drops into the Grand Final from above ('top' entry) so its
