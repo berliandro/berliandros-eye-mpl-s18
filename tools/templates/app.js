@@ -592,8 +592,9 @@ return d+` L${last[0]},${last[1]}`;}
 function brkDropD(A,T){const y0=A.bottom+12,lane=T.left-16;
 return brkRound([[A.cx,A.bottom],[A.cx,y0],[lane,y0],[lane,T.cy],[T.left,T.cy]],10);}
 /* Final elimination route: straight down from the card's bottom-center,
-   vertically aligned with its origin, fading to nothing. Fixed travel so it
-   is never shortened to the container — the wrapper clips the excess. */
+   vertically aligned with its origin. Fixed travel (never shortened to the
+   container — the wrapper clips the excess); the fade is calibrated so
+   opacity reaches 0% exactly at the wrapper's bottom boundary. */
 function brkElimLeft(C){const run=260,y2=C.bottom+run;
 return {d:`M${C.cx},${C.bottom} L${C.cx},${y2}`,
 x1:C.cx,y1:C.bottom,x2:C.cx,y2:y2};}
@@ -626,6 +627,8 @@ ctx+=`<path d="${brkDropD(A,T)}" fill="none" stroke="${BRK_LOSS_INK}" stroke-wid
 const rounds={};BRK_FEEDS.forEach(([a,b])=>{rounds[a]=1;rounds[b]=1;});
 Object.keys(rounds).forEach(rk=>{if(rk==='Grand Finals'||BRK_LOSS[rk])return;
 const C=full(rk);if(!C)return;const e=brkElimLeft(C);
+const yEdge=Math.max(el.scrollHeight,C.bottom+4);
+e.x2=e.x1;e.y2=yEdge;
 const id='brkfade'+rk.replace(/\s+/g,'');
 defs+=`<linearGradient id="${id}" gradientUnits="userSpaceOnUse" x1="${e.x1}" y1="${e.y1}" x2="${e.x2}" y2="${e.y2}"><stop offset="0" stop-color="#fff" stop-opacity=".9"/><stop offset=".55" stop-color="#fff" stop-opacity=".3"/><stop offset="1" stop-color="#fff" stop-opacity="0"/></linearGradient><mask id="${id}m" maskUnits="userSpaceOnUse" x="0" y="0" width="${el.scrollWidth}" height="${el.scrollHeight}"><rect x="0" y="0" width="${el.scrollWidth}" height="${el.scrollHeight}" fill="url(#${id})"/></mask>`;
 ctx+=`<path d="${e.d}" fill="none" stroke="${BRK_LOSS_INK}" stroke-width="2.5" pathLength="1" class="drop" data-from="${esc(rk)}" data-elim="1" mask="url(#${id}m)"/>`;});
