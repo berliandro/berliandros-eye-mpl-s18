@@ -104,17 +104,16 @@ dialog{border:1px solid var(--line);border-radius:12px;max-width:min(880px,94vw)
 .bar{display:block;height:6px;background:rgba(255,255,255,.08);border-radius:9999px;overflow:hidden}.bar>span{display:block;height:100%;background:var(--ink);border-radius:9999px}
 .brk{display:grid;grid-auto-flow:column;grid-auto-columns:minmax(170px,1fr);gap:28px;overflow-x:auto;padding:6px 2px 10px 180px;position:relative}
 .brk-lines{position:absolute;top:0;left:0;pointer-events:none;overflow:visible;z-index:0}
-.brk-lines path{transition:opacity .25s ease}
+.brk-lines path{transition:opacity .25s ease,stroke .25s ease,filter .25s ease,stroke-dashoffset .45s ease-in-out}
 .brk-lines path.faded{opacity:0}
+.brk-lines path.lit-win{stroke:#f5c542;filter:drop-shadow(0 0 6px rgba(245,197,66,.5))}
+.brk-lines path.drop{opacity:0;stroke-dasharray:1;stroke-dashoffset:1}
+.brk-lines path.drop.go{opacity:1;stroke-dashoffset:0;filter:drop-shadow(0 0 6px rgba(201,201,212,.45))}
 .brk-match{z-index:10}
 .brk-team{border-radius:6px;transition:background .12s ease}
 .brk-team:hover{background:rgba(255,255,255,.06)}
-.brk-hover{position:absolute;top:0;left:0;pointer-events:none;overflow:visible;z-index:2;transition:opacity .2s ease}
-.brk-hover.leaving{opacity:0}
-.brk-hover path{fill:none;stroke-linecap:round;stroke-linejoin:round;stroke-dasharray:1;stroke-dashoffset:1;transition:stroke-dashoffset .45s ease-in-out}
-.brk-hover path.go{stroke-dashoffset:0}
 @media(max-width:768px){.brk{grid-auto-columns:minmax(170px,1fr);overflow-x:auto}}
-@media(prefers-reduced-motion:reduce){.brk-hover path{transition:none;stroke-dashoffset:0}.seedtip{transition:none}}
+@media(prefers-reduced-motion:reduce){.brk-lines path{transition:none}.seedtip{transition:none}}
 .brk-col{display:flex;flex-direction:column;gap:12px;justify-content:center;min-width:0}
 .brk-col.split{justify-content:flex-start}
 .brk-gap{flex:1 0 24px}
@@ -126,13 +125,6 @@ dialog{border:1px solid var(--line);border-radius:12px;max-width:min(880px,94vw)
 .brk-match:hover,.brk-match:focus-within{z-index:20}
 .seedtip{position:absolute;right:calc(100% + 14px);top:50%;transform:translate(14px,calc(-50% - 32px));opacity:0;pointer-events:none;display:flex;gap:10px;align-items:center;width:max-content;max-width:230px;background:rgba(20,20,24,.8);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);border:1px solid var(--line);border-radius:10px;padding:10px 14px 10px 10px;white-space:nowrap;z-index:-1;transition:transform .18s ease,opacity .18s ease}
 .brk-team.seed:hover .seedtip,.brk-team.seed:focus-within .seedtip{transform:translate(0,calc(-50% - 32px));opacity:1}
-/* First column has no room outside the bracket pin (which clips overflow),
-   so its popup docks just inside the card's left edge — still emerging from
-   behind the left side, moving left → right, never toward the right. */
-.brk-hover path.prev{filter:drop-shadow(0 0 5px rgba(245,197,66,.45))}
-.brk-hover path.prev-drop{opacity:.5}
-.brk-hover path.win{filter:drop-shadow(0 0 6px rgba(245,197,66,.5))}
-.brk-hover path.loss{filter:drop-shadow(0 0 6px rgba(201,201,212,.45))}
 .sdisc{width:30px;height:30px;border-radius:50%;border:1px solid var(--ink);display:inline-flex;align-items:center;justify-content:center;font-family:var(--font-display);font-weight:700;font-size:14px;color:var(--ink);flex:none}
 .stext b{display:block;font-size:12.5px;color:var(--ink)}
 .stext i{display:block;font-style:normal;font-family:var(--font-mono);font-size:10.5px;color:var(--muted)}
@@ -837,18 +829,24 @@ const ax=x1-dx1/l1*rr,ay=y1-dy1/l1*rr,bx=x1+dx2/l2*rr,by=y1+dy2/l2*rr;
 d+=` L${ax},${ay} Q${x1},${y1} ${bx},${by}`;}
 const last=pts[pts.length-1];
 return d+` L${last[0]},${last[1]}`;}
-/* Restrained forward curve: leaves horizontally, arrives horizontally, bends
-   only in the middle third. Used for WIN and PREVIOUS hover paths. */
-function brkEase(x1,y1,x2,y2){const k=Math.max(18,Math.abs(x2-x1)*0.35);
-return `M${x1},${y1} C${x1+k},${y1} ${x2-k},${y2} ${x2},${y2}`;}
-function svgOverlay(el){el.querySelectorAll('svg.brk-lines,svg.brk-hover').forEach(s=>s.remove());
+/* Shared drop-route geometry: exits the source card's bottom-center edge,
+   travels down, routes LEFT into the destination's middle-left edge. Built
+   once — hover only ever reveals these paths, never rebuilds them. */
+function brkDropD(A,T){const y0=A.bottom+12,lane=T.left-16;
+return brkRound([[A.cx,A.bottom],[A.cx,y0],[lane,y0],[lane,T.cy],[T.left,T.cy]],10);}
+/* Full-length elimination route (down, then left). Never shortened to the
+   container — the wrapper clips whatever extends past it. */
+function brkElimLeft(C){const y0=C.bottom+12,lane=C.left-16;
+return {d:brkRound([[C.cx,C.bottom],[C.cx,y0],[lane,y0],[lane-16,y0]],10),
+x1:C.cx,y1:C.bottom,x2:lane-16,y2:y0};}
+function svgOverlay(el){el.querySelectorAll('svg.brk-lines').forEach(s=>s.remove());
 const q=rk=>el.querySelector('[data-brk="'+rk+'"]');
 const ST='rgba(255,255,255,.22)';
 const full=rk=>{const c=q(rk);return c?brkRect(el,c):null;};
 const rowY=(rk,slot)=>{const c=q(rk);if(!c||slot==null)return null;
 const rows=c.querySelectorAll('.brk-team');if(!rows.length||slot>=rows.length)return null;
 const g=brkRect(el,rows[slot]);return g.cy;};
-let paths='';
+let wins='';
 BRK_FEEDS.forEach(([a,b,drop])=>{if(drop)return;
 const A=full(a);if(!A)return;
 const st=ST,w=2;
@@ -860,99 +858,81 @@ if(A.right>x2-4){const lane=A.right+14;
 d=brkRound([[A.right,A.cy],[lane,A.cy],[lane,y2],[x2,y2]],8);}
 else{const mx=(A.right+x2)/2;
 d=brkRound([[A.right,A.cy],[mx,A.cy],[mx,y2],[x2,y2]],8);}
-paths+=`<path d="${d}" fill="none" stroke="${st}" stroke-width="${w}" data-a="${esc(a)}" data-b="${esc(b)}"/>`;});
-if(!paths)return;
+wins+=`<path d="${d}" fill="none" stroke="${st}" stroke-width="${w}" data-a="${esc(a)}" data-b="${esc(b)}"/>`;});
+/* Dormant contextual paths: full drop/elim geometry exists in the DOM from
+   the start, invisible, waiting to be revealed by hover. */
+let ctx='',defs='';
+BRK_FEEDS.forEach(([a,b,drop])=>{if(!drop)return;
+const A=full(a),T=full(b);if(!A||!T)return;
+ctx+=`<path d="${brkDropD(A,T)}" fill="none" stroke="${BRK_LOSS_INK}" stroke-width="2.5" pathLength="1" class="drop" data-from="${esc(a)}" data-to="${esc(b)}"/>`;});
+const rounds={};BRK_FEEDS.forEach(([a,b])=>{rounds[a]=1;rounds[b]=1;});
+Object.keys(rounds).forEach(rk=>{if(rk==='Grand Finals'||BRK_LOSS[rk])return;
+const C=full(rk);if(!C)return;const e=brkElimLeft(C);
+const id='brkfade'+rk.replace(/\s+/g,'');
+defs+=`<linearGradient id="${id}" gradientUnits="userSpaceOnUse" x1="${e.x1}" y1="${e.y1}" x2="${e.x2}" y2="${e.y2}"><stop offset="0" stop-color="#fff" stop-opacity=".9"/><stop offset="1" stop-color="#fff" stop-opacity="0"/></linearGradient><mask id="${id}m" maskUnits="userSpaceOnUse" x="0" y="0" width="${el.scrollWidth}" height="${el.scrollHeight}"><rect x="0" y="0" width="${el.scrollWidth}" height="${el.scrollHeight}" fill="url(#${id})"/></mask>`;
+ctx+=`<path d="${e.d}" fill="none" stroke="${BRK_LOSS_INK}" stroke-width="2.5" pathLength="1" class="drop" data-from="${esc(rk)}" data-elim="1" mask="url(#${id}m)"/>`;});
+if(!wins&&!ctx)return;
 const svg=document.createElementNS('http://www.w3.org/2000/svg','svg');
 svg.setAttribute('class','brk-lines');svg.setAttribute('width',el.scrollWidth);svg.setAttribute('height',el.scrollHeight);
-svg.innerHTML=paths;el.appendChild(svg);}
+svg.innerHTML=(defs?`<defs>${defs}</defs>`:'')+wins+ctx;el.appendChild(svg);}
 /* STATE B entry points (thin wrappers; all positions share showContextPaths). */
+/* Rounds with a loss destination (used at overlay build to place elims). */
 const BRK_LOSS={'Round 1 Match 1':null,'Round 1 Match 2':null,'Round 2 Match 1':'Lower Bracket Semi Finals','Round 2 Match 2':'Lower Bracket Semi Finals','Upper Bracket Finals':'Lower Bracket Finals','Lower Bracket Semi Finals':null,'Lower Bracket Finals':null,'Grand Finals':null};
-const BRK_NEXT={};BRK_FEEDS.forEach(([a,b,drop])=>{if(!drop){(BRK_NEXT[a]=BRK_NEXT[a]||[]).push(b);}});
-const BRK_PREV={};BRK_FEEDS.forEach(([a,b,drop])=>{if(!drop){(BRK_PREV[b]=BRK_PREV[b]||[]).push(a);}});
-/* Incoming drop feeds (losses arriving from other matches). Shown in grey as
-   arrival context for lower-bracket positions that have no previous WIN. */
-const BRK_DROP={};BRK_FEEDS.forEach(([a,b,drop])=>{if(drop){(BRK_DROP[b]=BRK_DROP[b]||[]).push(a);}});
 /* Viewport-anchored geometry: rects are viewport-relative so page scroll
    cancels out; the container's own scroll offset maps into content space. */
 function brkRect(brk,node){const b=brk.getBoundingClientRect(),r=node.getBoundingClientRect();
 const x=r.left-b.left+brk.scrollLeft,y=r.top-b.top+brk.scrollTop;
 return {left:x,top:y,right:x+r.width,cy:y+r.height/2,cx:x+r.width/2,bottom:y+r.height};}
 /* Parent hover state: one explicit store instead of scattered DOM flags. */
-const BrkHover={activeTeamId:null,activeSeedId:null,el:null,row:null};
+const BrkHover={activeTeamId:null,activeSeedId:null,el:null,row:null,round:null};
 function setBrkHover(el,row){BrkHover.el=el;BrkHover.row=row;
 BrkHover.activeTeamId=row&&row.dataset.brkt?row.dataset.brkt:null;
 BrkHover.activeSeedId=row&&row.dataset.seed?row.dataset.seed:null;}
-function clearBrkHover(){BrkHover.activeTeamId=null;BrkHover.activeSeedId=null;BrkHover.el=null;BrkHover.row=null;}
+function clearBrkHover(){BrkHover.activeTeamId=null;BrkHover.activeSeedId=null;BrkHover.el=null;BrkHover.row=null;BrkHover.round=null;}
 /* Hover path geometry (strict): every highlighted path starts/ends exactly
    at a CARD edge, so no glowing segment ever hides under the hovered card.
    WIN leaves the card's middle-right edge horizontally; LOSS leaves the
    card's bottom-center edge, travels down, then routes LEFT into the
    destination's middle-left edge. */
-const BRK_WIN='#f5c542',BRK_LOSS_INK='#c9c9d4',BRK_PREV_INK='#f5c542';
-function brkLossLeft(C,T){const lane=T.left-16,y0=C.bottom+12;
-return brkRound([[C.cx,C.bottom],[C.cx,y0],[lane,y0],[lane,T.cy],[T.left,T.cy]],10);}
-function brkElimD(C,yB){return `M${C.cx},${C.bottom} L${C.cx},${yB}`;}
-function brkFadeDefs(brk,y1,y2){return `<defs><linearGradient id="brkfade" gradientUnits="userSpaceOnUse" x1="0" y1="${y1}" x2="0" y2="${y2}"><stop offset="0" stop-color="#fff" stop-opacity=".9"/><stop offset="1" stop-color="#fff" stop-opacity="0"/></linearGradient><mask id="brkfadem" maskUnits="userSpaceOnUse" x="0" y="0" width="${brk.scrollWidth}" height="${brk.scrollHeight}"><rect x="0" y="0" width="${brk.scrollWidth}" height="${brk.scrollHeight}" fill="url(#brkfade)"/></mask></defs>`;}
-/* Phased draw: PREVIOUS first, brief pause, WIN, then LOSS. Timer ids are
-   stored on the svg so an early pointer-leave can cancel the sequence. */
-function playBrk(svg,delay){const prev=svg.querySelectorAll('path.prev,path.prev-drop'),win=svg.querySelector('path.win'),loss=svg.querySelector('path.loss');
+const BRK_LOSS_INK='#c9c9d4';
+/* Phased reveal: PREVIOUS (incoming wins yellow + arrivals grey), brief
+   pause, WIN (outgoing yellow), then LOSS (own drops/elims grey). Operates
+   on pre-existing overlay paths; timers cancel on early pointer-leave. */
+function playBrk(brk,ph1,ph2,ph3){
+if(brk._brkT)brk._brkT.forEach(clearTimeout);
+brk._brkT=[];
 const reduced=window.matchMedia&&window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-svg._t=[];const later=(fn,ms)=>svg._t.push(setTimeout(fn,ms));
-const go=()=>{requestAnimationFrame(()=>requestAnimationFrame(()=>{
-if(reduced){svg.querySelectorAll('path').forEach(p=>p.classList.add('go'));return;}
-prev.forEach(p=>p.classList.add('go'));
-later(()=>{if(win)win.classList.add('go');},400);
-later(()=>{if(loss)loss.classList.add('go');},700);}));};
-if(delay)later(go,delay);else go();}
-function gfSlotY(brk,q,fromRk){const t=q('Grand Finals');if(!t)return null;
-const rows=t.querySelectorAll('.brk-team');const i=BRK_GF_SLOT[fromRk];
-if(i==null||!rows.length||i>=rows.length)return null;
-return {x:brkRect(brk,t).left,y:brkRect(brk,rows[i]).cy};}
-/* STATE B — one data-driven contextual-path builder for EVERY playable
-   position (seed, team, or pending TBD row). Resolves previousPosition /
-   winDestination / lossDestination from the feed maps and draws only the
-   relationships that exist. Lower-bracket arrivals via loss render grey. */
-function showContextPaths(brk,row){clearTeamPaths(brk,true);
+const fire=els=>els.forEach(p=>{
+if(p.classList.contains('drop'))p.classList.add('go');
+else{p.classList.remove('faded');p.classList.add('lit-win');}});
+if(reduced){[ph1,ph2,ph3].forEach(fire);return;}
+brk._brkT.push(setTimeout(()=>fire(ph1),150));
+brk._brkT.push(setTimeout(()=>fire(ph2),500));
+brk._brkT.push(setTimeout(()=>fire(ph3),800));}
+/* STATE B — reveal, never generate. Every contextual path already exists in
+   the overlay (wins visible, drops/elims dormant); hover only changes
+   visual state: fade touching wins, then light the attached relationships
+   in sequence. Works for seed, team, and plain TBD rows alike. */
+function showContextPaths(brk,row){
 const card=row.closest('[data-brk]');if(!card)return;
 const round=card.dataset.brk;
-const q=rk=>brk.querySelector('[data-brk="'+rk+'"]');
-const C=brkRect(brk,card);
-brk.querySelectorAll(`svg.brk-lines path[data-a="${round}"],svg.brk-lines path[data-b="${round}"]`).forEach(p=>p.classList.add('faded'));
-const svg=document.createElementNS('http://www.w3.org/2000/svg','svg');
-svg.setAttribute('class','brk-hover');svg.setAttribute('width',brk.scrollWidth);svg.setAttribute('height',brk.scrollHeight);
-let paths='';
-const add=(d,stroke,w,cls)=>{paths+=`<path d="${d}" pathLength="1" stroke="${stroke}" stroke-width="${w}" class="${cls}"/>`;};
-(BRK_PREV[round]||[]).forEach(rk=>{const c=q(rk);if(!c)return;
-const S=brkRect(brk,c);
-add(brkEase(S.right,S.cy,C.left,C.cy),BRK_PREV_INK,2.5,'prev');});
-(BRK_DROP[round]||[]).forEach(rk=>{const c=q(rk);if(!c)return;
-const S=brkRect(brk,c);
-add(brkEase(S.right,S.cy,C.left,C.cy),BRK_LOSS_INK,2,'prev-drop');});
-(BRK_NEXT[round]||[]).forEach(rk=>{const t=q(rk);if(!t)return;
-const T=brkRect(brk,t);
-if(rk==='Grand Finals'){const G=gfSlotY(brk,q,round);if(!G)return;
-add(brkEase(C.right,C.cy,T.left,G.y),BRK_WIN,2.5,'win');return;}
-add(brkEase(C.right,C.cy,T.left,T.cy),BRK_WIN,2.5,'win');});
-const lossTo=BRK_LOSS[round];
-if(lossTo){const t=q(lossTo);if(t){const T=brkRect(brk,t);
-add(brkLossLeft(C,T),BRK_LOSS_INK,2.5,'loss');}}
-else if(round!=='Grand Finals'){
-svg.innerHTML=brkFadeDefs(brk,C.bottom,brk.scrollHeight)+paths+`<path d="${brkElimD(C,brk.scrollHeight)}" pathLength="1" stroke="${BRK_LOSS_INK}" stroke-width="2.5" class="loss" mask="url(#brkfadem)"/>`;
-brk.appendChild(svg);
-playBrk(svg,120);return;}
-svg.innerHTML=paths;brk.appendChild(svg);
-playBrk(svg,120);}
+if(BrkHover.round===round&&BrkHover.el===brk&&BrkHover.row){BrkHover.row=row;
+BrkHover.activeTeamId=row.dataset.brkt||null;BrkHover.activeSeedId=row.dataset.seed||null;return;}
+clearTeamPaths(brk);setBrkHover(brk,row);BrkHover.round=round;
+const L=brk.querySelector('svg.brk-lines');if(!L)return;
+const prevWin=[...L.querySelectorAll(`path[data-b="${round}"]`)];
+const ownWin=[...L.querySelectorAll(`path[data-a="${round}"]`)];
+const arr=[...L.querySelectorAll(`path.drop[data-to="${round}"]`)];
+const lost=[...L.querySelectorAll(`path.drop[data-from="${round}"]`)];
+[...prevWin,...ownWin].forEach(p=>p.classList.add('faded'));
+playBrk(brk,[...prevWin,...arr],ownWin,lost);}
 function showTeamPaths(brk,row){showContextPaths(brk,row);}
 function showSeedPaths(brk,row){showContextPaths(brk,row);}
-/* HOVER → DEFAULT: fade the contextual layer out (restrained, fast), restore
-   faded defaults immediately so they fade back in, then detach the svg. */
-function clearTeamPaths(scope,instant){(scope||document).querySelectorAll('svg.brk-hover').forEach(s=>{
-if(s._t)s._t.forEach(clearTimeout);
-if(s._leaveT)clearTimeout(s._leaveT);
-(scope||document).querySelectorAll('svg.brk-lines path.faded').forEach(p=>p.classList.remove('faded'));
-if(instant){s.remove();return;}
-s.classList.add('leaving');
-s._leaveT=setTimeout(()=>s.remove(),220);});}
+/* HOVER → DEFAULT: cancel pending phases, strip contextual classes; the
+   overlay's own transitions fade everything back smoothly. */
+function clearTeamPaths(scope){const roots=scope&&scope.classList&&scope.classList.contains('brk')?[scope]:[...(scope||document).querySelectorAll('.brk')];
+roots.forEach(b=>{if(b._brkT){b._brkT.forEach(clearTimeout);b._brkT=null;}
+b.querySelectorAll('svg.brk-lines path.faded,svg.brk-lines path.lit-win,svg.brk-lines path.drop.go').forEach(p=>p.classList.remove('faded','lit-win','go'));});}
 document.addEventListener('pointerover',e=>{
 const brk=e.target.closest?e.target.closest('.brk'):null;if(!brk)return;
 const row=e.target.closest?e.target.closest('.brk-team'):null;
@@ -964,13 +944,14 @@ const brk=e.target.closest?e.target.closest('.brk'):null;if(!brk)return;
 const to=e.relatedTarget&&e.relatedTarget.closest?e.relatedTarget.closest('.brk-team'):null;
 if(!to||to!==BrkHover.row){clearBrkHover();clearTeamPaths(brk);}});
 document.addEventListener('pointerdown',e=>{if(e.target.closest&&e.target.closest('.brk-team'))return;
-clearBrkHover();clearTeamPaths(document,true);});
+clearBrkHover();clearTeamPaths(document);});
 let brkResizeWired=false;
 function wireBracket(){document.querySelectorAll('.brk').forEach(svgOverlay);
+clearBrkHover();
 const board=document.getElementById('board');
-if(board&&window.ResizeObserver&&!wireBracket._ro){wireBracket._ro=new ResizeObserver(()=>{document.querySelectorAll('.brk').forEach(svgOverlay);});wireBracket._ro.observe(board);}
+if(board&&window.ResizeObserver&&!wireBracket._ro){wireBracket._ro=new ResizeObserver(()=>{wireBracket();});wireBracket._ro.observe(board);}
 if(!brkResizeWired){brkResizeWired=true;let t=null;
-window.addEventListener('resize',()=>{clearTimeout(t);t=setTimeout(()=>document.querySelectorAll('.brk').forEach(svgOverlay),150);});}}
+window.addEventListener('resize',()=>{clearTimeout(t);t=setTimeout(()=>wireBracket(),150);});}}
 function gameMvp(pa,pb,wcode){const pl=[...(pa||[]),...(pb||[])];const pool=wcode?pl.filter(r=>r.team===wcode):pl;const cands=pool.length?pool:pl;let best=null,bk=null;
 cands.forEach(r=>{const k=r.kda??(((r.kills??r.kill??0)+(r.assists??r.assist??0))/Math.max(1,(r.deaths??r.death??0)));const key=[k,(r.kills??r.kill??0),(r.gold??0)];
 if(!best||key[0]>bk[0]||(key[0]===bk[0]&&(key[1]>bk[1]||(key[1]===bk[1]&&key[2]>bk[2])))){best=r;bk=key;}});return best;}
