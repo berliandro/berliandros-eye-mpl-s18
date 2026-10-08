@@ -88,28 +88,29 @@ dialog{border:1px solid var(--line);border-radius:12px;max-width:min(880px,94vw)
 .bar{display:block;height:6px;background:rgba(255,255,255,.08);border-radius:9999px;overflow:hidden}.bar>span{display:block;height:100%;background:var(--ink);border-radius:9999px}
 .brk{display:grid;grid-auto-flow:column;grid-auto-columns:minmax(170px,1fr);gap:20px;overflow-x:auto;padding:6px 2px 10px;position:relative}
 .brk-lines{position:absolute;top:0;left:0;pointer-events:none;overflow:visible;z-index:0}
-.brk-match{z-index:1}
+.brk-match{z-index:10}
 .brk-team{border-radius:6px;transition:background .12s ease}
 .brk-team:hover{background:rgba(255,255,255,.06)}
 .brk-hover{position:absolute;top:0;left:0;pointer-events:none;overflow:visible;z-index:2}
-.brk-hover path{fill:none;stroke-linecap:round;filter:drop-shadow(0 0 5px rgba(255,255,255,.35));stroke-dasharray:1;stroke-dashoffset:1;animation:brkdraw .55s ease forwards}
+.brk-hover path{fill:none;stroke-linecap:round;filter:drop-shadow(0 0 5px rgba(255,255,255,.35));stroke-dasharray:1;stroke-dashoffset:1;transition:stroke-dashoffset .4s ease-in-out}
 .brk-hover path.dim{opacity:.55}
-@keyframes brkdraw{to{stroke-dashoffset:0}}
-@media(prefers-reduced-motion:reduce){.brk-hover path{animation:none;stroke-dashoffset:0}.seedtip{transition:none}}
+.brk-hover path.go{stroke-dashoffset:0}
+@media(max-width:768px){.brk{grid-auto-columns:minmax(170px,1fr);overflow-x:auto}}
+@media(prefers-reduced-motion:reduce){.brk-hover path{transition:none;stroke-dashoffset:0}.seedtip{transition:none}}
 .brk-col{display:flex;flex-direction:column;gap:12px;justify-content:center;min-width:0}
 .brk-col.split{justify-content:flex-start}
 .brk-gap{flex:1 0 24px}
 .brk-title{font-family:var(--font-display);font-size:11px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--ink);text-align:center;padding-bottom:5px;border-bottom:1px solid var(--line)}
 .brk-team.seed{position:relative;font-family:var(--font-mono);font-size:12px;color:var(--muted);cursor:pointer}
 .brk-team.tbd{color:var(--muted);font-weight:400}
-.brk-match:hover,.brk-match:focus-within{z-index:3}
-.seedtip{position:absolute;left:calc(100% + 10px);top:50%;transform:translate(-10px,-50%);opacity:0;pointer-events:none;display:flex;gap:10px;align-items:center;width:max-content;max-width:230px;background:rgba(20,20,24,.97);border:1px solid var(--line);border-radius:10px;padding:10px 14px 10px 10px;white-space:nowrap;z-index:5;transition:transform .18s ease,opacity .18s ease}
+.brk-match:hover,.brk-match:focus-within{z-index:20}
+.seedtip{position:absolute;left:calc(100% + 10px);top:50%;transform:translate(-10px,-50%);opacity:0;pointer-events:none;display:flex;gap:10px;align-items:center;width:max-content;max-width:230px;background:rgba(20,20,24,.97);border:1px solid var(--line);border-radius:10px;padding:10px 14px 10px 10px;white-space:nowrap;z-index:-1;transition:transform .18s ease,opacity .18s ease}
 .brk-team.seed:hover .seedtip,.brk-team.seed:focus-within .seedtip{transform:translate(0,-50%);opacity:1}
 .brk-col:last-child .seedtip{left:auto;right:calc(100% + 10px)}
 .sdisc{width:30px;height:30px;border-radius:50%;border:1px solid var(--ink);display:inline-flex;align-items:center;justify-content:center;font-family:var(--font-display);font-weight:700;font-size:14px;color:var(--ink);flex:none}
 .stext b{display:block;font-size:12.5px;color:var(--ink)}
 .stext i{display:block;font-style:normal;font-family:var(--font-mono);font-size:10.5px;color:var(--muted)}
-.brk-match{position:relative;background:rgba(20,20,25,.4);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);border:1px solid rgba(255,255,255,.1);border-radius:10px;padding:8px 10px}
+.brk-match{position:relative;background:rgba(20,20,25,.4);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);border:1px solid rgba(255,255,255,.1);border-radius:10px;padding:8px 10px}
 .brk-match.brk-tbd{display:flex;align-items:center;justify-content:center;color:var(--muted);font-family:var(--font-mono);font-size:11px;min-height:96px}
 .brk-round{font-family:var(--font-mono);font-size:9px;color:var(--muted);letter-spacing:.04em;text-align:center;margin-bottom:5px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .brk-team{display:flex;align-items:center;gap:7px;padding:2px 0;font-size:12px;font-weight:400}.brk-team img{width:20px;height:20px;object-fit:contain;flex:none}.brk-team span{flex:1;white-space:nowrap}.brk-team>span{overflow:hidden;text-overflow:ellipsis}.brk-team b{font-family:var(--font-display);font-variant-numeric:tabular-nums}.brk-team.w span{font-weight:700}
