@@ -573,27 +573,16 @@ return `<div class="pin" style="grid-column:1/-1"><div class="body"><div class="
 const BRK_FEEDS=[['Round 1 Match 1','Round 2 Match 1',0],['Round 1 Match 2','Round 2 Match 2',0],['Round 2 Match 1','Upper Bracket Finals',0],['Round 2 Match 2','Upper Bracket Finals',0],['Round 2 Match 1','Lower Bracket Semi Finals',1],['Round 2 Match 2','Lower Bracket Semi Finals',1],['Upper Bracket Finals','Grand Finals',0,'top'],['Upper Bracket Finals','Lower Bracket Finals',1],['Lower Bracket Semi Finals','Lower Bracket Finals',0],['Lower Bracket Finals','Grand Finals',0]];
 function drawBrk(el){el.querySelectorAll('svg.brk-lines,svg.brk-hover').forEach(s=>s.remove());
 const q=rk=>el.querySelector('[data-brk="'+rk+'"]');
-const STROKE='rgba(255,255,255,.2)';
-const byT={};BRK_FEEDS.forEach(([a,b,drop,entry],i)=>{if(entry==='top')return;(byT[b]=byT[b]||[]).push({a:a,drop:drop,i:i});});
-let paths='';const gapX={};
-Object.keys(byT).forEach((b,gi)=>{const T=q(b);if(!T)return;
-const x2=T.offsetLeft,y2=T.offsetTop+T.offsetHeight/2;
-const srcs=byT[b].map(f=>({el:q(f.a),drop:f.drop,i:f.i})).filter(s=>s.el);
-if(!srcs.length)return;
-const xs=srcs.map(s=>s.el.offsetLeft+s.el.offsetWidth);
-const x1min=Math.min.apply(null,xs);
-let xv=gapX[b];if(xv==null){xv=x1min+(x2-x1min)*(0.35+0.12*(gi%3));gapX[b]=xv;}
-const allY=srcs.map(s=>s.el.offsetTop+s.el.offsetHeight/2).concat([y2]);
-const yTop=Math.min.apply(null,allY),yBot=Math.max.apply(null,allY);
-const dashed=srcs.every(s=>s.drop);
-paths+=`<path d="M${xv},${yTop} V${yBot}" fill="none" stroke="rgba(255,255,255,.2)" stroke-width="2"${dashed?' stroke-dasharray="5 4"':''}/>`;
-srcs.forEach(s=>{const y=s.el.offsetTop+s.el.offsetHeight/2;
-paths+=`<path d="M${s.el.offsetLeft+s.el.offsetWidth},${y} H${xv}" fill="none" stroke="rgba(255,255,255,.2)" stroke-width="2"${s.drop?' stroke-dasharray="5 4"':''}/>`;});
-paths+=`<path d="M${xv},${y2} H${x2}" fill="none" stroke="rgba(255,255,255,.2)" stroke-width="2"/>`;});
-BRK_FEEDS.forEach(([a,b,drop,entry])=>{if(entry!=='top')return;const A=q(a),T=q(b);if(!A||!T)return;
-const x1=A.offsetLeft+A.offsetWidth,y1=A.offsetTop+A.offsetHeight/2;
-const xe=Math.min(Math.max((x1+T.offsetLeft+T.offsetWidth)/2,T.offsetLeft+30),T.offsetLeft+T.offsetWidth-30);
-paths+=`<path d="M${x1},${y1} H${xe} V${T.offsetTop}" fill="none" stroke="rgba(255,255,255,.2)" stroke-width="2"/>`;});
+const ST='rgba(255,255,255,.22)',DT='rgba(255,255,255,.16)';
+const bez=(x1,y1,x2,y2)=>{const mx=(x1+x2)/2;return `M${x1},${y1} C${mx},${y1} ${mx},${y2} ${x2},${y2}`;};
+const box=rk=>{const c=q(rk);if(!c)return null;
+return {l:c.offsetLeft,r:c.offsetLeft+c.offsetWidth,t:c.offsetTop,cy:c.offsetTop+c.offsetHeight/2};};
+let paths='';
+BRK_FEEDS.forEach(([a,b,drop,entry])=>{const A=box(a),T=box(b);if(!A||!T)return;
+const st=drop?DT:ST,w=drop?1.5:2;
+if(entry==='top'){const xe=Math.min(Math.max((A.r+T.l+T.r)/2,T.l+30),T.r-30);
+paths+=`<path d="M${A.r},${A.cy} C${xe},${A.cy} ${xe},${T.t-60} ${xe},${T.t}" fill="none" stroke="${st}" stroke-width="${w}"/>`;}
+else{paths+=`<path d="${bez(A.r,A.cy,T.l,T.cy)}" fill="none" stroke="${st}" stroke-width="${w}"/>`;}});
 if(!paths)return;
 const svg=document.createElementNS('http://www.w3.org/2000/svg','svg');
 svg.setAttribute('class','brk-lines');svg.setAttribute('width',el.scrollWidth);svg.setAttribute('height',el.scrollHeight);
