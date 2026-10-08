@@ -591,11 +591,12 @@ return d+` L${last[0]},${last[1]}`;}
    once — hover only ever reveals these paths, never rebuilds them. */
 function brkDropD(A,T){const y0=A.bottom+12,lane=T.left-16;
 return brkRound([[A.cx,A.bottom],[A.cx,y0],[lane,y0],[lane,T.cy],[T.left,T.cy]],10);}
-/* Full-length elimination route (down, then left). Never shortened to the
-   container — the wrapper clips whatever extends past it. */
-function brkElimLeft(C){const y0=C.bottom+12,lane=C.left-16;
-return {d:brkRound([[C.cx,C.bottom],[C.cx,y0],[lane,y0],[lane-16,y0]],10),
-x1:C.cx,y1:C.bottom,x2:lane-16,y2:y0};}
+/* Final elimination route: straight down from the card's bottom-center,
+   vertically aligned with its origin, fading to nothing. Fixed travel so it
+   is never shortened to the container — the wrapper clips the excess. */
+function brkElimLeft(C){const run=260,y2=C.bottom+run;
+return {d:`M${C.cx},${C.bottom} L${C.cx},${y2}`,
+x1:C.cx,y1:C.bottom,x2:C.cx,y2:y2};}
 function svgOverlay(el){el.querySelectorAll('svg.brk-lines').forEach(s=>s.remove());
 const q=rk=>el.querySelector('[data-brk="'+rk+'"]');
 const ST='rgba(255,255,255,.22)';
@@ -626,7 +627,7 @@ const rounds={};BRK_FEEDS.forEach(([a,b])=>{rounds[a]=1;rounds[b]=1;});
 Object.keys(rounds).forEach(rk=>{if(rk==='Grand Finals'||BRK_LOSS[rk])return;
 const C=full(rk);if(!C)return;const e=brkElimLeft(C);
 const id='brkfade'+rk.replace(/\s+/g,'');
-defs+=`<linearGradient id="${id}" gradientUnits="userSpaceOnUse" x1="${e.x1}" y1="${e.y1}" x2="${e.x2}" y2="${e.y2}"><stop offset="0" stop-color="#fff" stop-opacity=".9"/><stop offset="1" stop-color="#fff" stop-opacity="0"/></linearGradient><mask id="${id}m" maskUnits="userSpaceOnUse" x="0" y="0" width="${el.scrollWidth}" height="${el.scrollHeight}"><rect x="0" y="0" width="${el.scrollWidth}" height="${el.scrollHeight}" fill="url(#${id})"/></mask>`;
+defs+=`<linearGradient id="${id}" gradientUnits="userSpaceOnUse" x1="${e.x1}" y1="${e.y1}" x2="${e.x2}" y2="${e.y2}"><stop offset="0" stop-color="#fff" stop-opacity=".9"/><stop offset=".55" stop-color="#fff" stop-opacity=".3"/><stop offset="1" stop-color="#fff" stop-opacity="0"/></linearGradient><mask id="${id}m" maskUnits="userSpaceOnUse" x="0" y="0" width="${el.scrollWidth}" height="${el.scrollHeight}"><rect x="0" y="0" width="${el.scrollWidth}" height="${el.scrollHeight}" fill="url(#${id})"/></mask>`;
 ctx+=`<path d="${e.d}" fill="none" stroke="${BRK_LOSS_INK}" stroke-width="2.5" pathLength="1" class="drop" data-from="${esc(rk)}" data-elim="1" mask="url(#${id}m)"/>`;});
 if(!wins&&!ctx)return;
 const svg=document.createElementNS('http://www.w3.org/2000/svg','svg');
