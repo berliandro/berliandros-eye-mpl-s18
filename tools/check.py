@@ -258,6 +258,7 @@ for needle in ('canonicalPlayer', 'PLAYER_ALIAS', 'playoffChance', 'TOTAL_TEAMS'
                'svgOverlay', 'seedTooltip', 'BrkHover', 'activeSeedId',
                'showSeedPaths', 'playBrk', 'path.prev', 'path.win', 'path.loss',
                'TBD <span', 'sn-sub', 'brkRound', 'brkEase', 'BRK_WIN',
+               'showContextPaths', 'brkLossLeft', 'BRK_DROP', 'prev-drop',
                'ResizeObserver', 'stHeroDrill', 'stEmbDrill',
                'stTalDrill', 'stItemDrill', 'data-scope', 'data-ovitem',
                'tag pick', 'tag ban', 'mrow sg', 'sgres', 'sgmeta', 'res win',
