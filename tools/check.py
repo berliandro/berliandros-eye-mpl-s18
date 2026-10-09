@@ -267,7 +267,7 @@ for needle in ('canonicalPlayer', 'PLAYER_ALIAS', 'playoffChance', 'TOTAL_TEAMS'
 ok('sdot' not in html, "side dots fully removed from game list")
 ok('banned by' not in html, "verbose ban detail text removed")
 for needle in ('calcChances', 'normalizeFixtures', 'CHANCES-START', 'normTeam',
-                'isTerminalScore', 'decidedLive'):
+                'isTerminalScore', 'decidedLive', 'rankTeams', 'wilson'):
     ok(needle in html, f"playoff engine contains {needle}")
 
 # Playoff-chance data integrity: standings must reconcile with the decided

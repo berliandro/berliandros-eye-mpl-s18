@@ -11,8 +11,8 @@ const path = require('path');
 const src = fs.readFileSync(path.join(__dirname, 'templates', 'app.js'), 'utf8');
 const m = src.match(/\/\* CHANCES-START \*\/([\s\S]*?)\/\* CHANCES-END \*\//);
 if (!m) { console.error('FAIL CHANCES markers missing'); process.exit(1); }
-const NS = new Function(m[1] + '; return {calcChances, normalizeFixtures, normTeam, isPORow};')();
-const { calcChances, normalizeFixtures } = NS;
+const NS = new Function(m[1] + '; return {calcChances, normalizeFixtures, normTeam, isPORow, rankTeams, wilson};')();
+const { calcChances, normalizeFixtures, rankTeams, wilson } = NS;
 
 let fails = 0, count = 0;
 function ok(cond, msg) {
@@ -259,6 +259,77 @@ function snapshot9() {
   // every upcoming exactly once
   const ids = nf.fixtures.map(f => f.id);
   eq(new Set(ids).size, ids.length, 'R no duplicated fixtures');
+}
+
+// --- Rounding vs certainty: raw nonzero rounds to displayed 0% ---
+{
+  // A wins its only remaining fixture with q = 20/5000 = 0.4% (rigged but
+  // legal records: 20-4980 vs 4980-20). Exact mode gives raw 0.4 -> displays 0.
+  const st = [T('a', 5, 20, 4980, 0), T('b', 5, 4980, 20, 0), T('c', 9, 9, 0, 0)];
+  const fx = [FX('a', 'b')];
+  const o = { totalSeries: 5001, playoffSlots: 2, upperSlots: 1, sweepP: 0.5, exact: true };
+  const r = calcChances(st, fx, o);
+  const raw = pc(r, 'a');
+  ok(raw > 0 && raw < 0.5, 'D1 raw PC in (0, 0.5): ' + raw);
+  eq(Math.round(raw), 0, 'D1 displayed PC rounds to 0');
+  close(raw, 0.4, 1e-9, 'D1 raw PC equals hand-computed 0.4');
+}
+
+// --- Rounding vs certainty: raw below 100% rounds to displayed 100% ---
+{
+  // Mirror: A wins with q = 1 - 20/5000 = 99.6% -> displays 100, not guaranteed.
+  const st = [T('a', 5, 4980, 20, 0), T('b', 5, 20, 4980, 0), T('c', 9, 9, 0, 0)];
+  const fx = [FX('a', 'b')];
+  const o = { totalSeries: 5001, playoffSlots: 2, upperSlots: 1, sweepP: 0.5, exact: true };
+  const r = calcChances(st, fx, o);
+  const raw = pc(r, 'a');
+  ok(raw < 100 && raw > 99.5, 'D2 raw PC in (99.5, 100): ' + raw);
+  eq(Math.round(raw), 100, 'D2 displayed PC rounds to 100');
+  close(raw, 99.6, 1e-9, 'D2 raw PC equals hand-computed 99.6');
+}
+
+// --- H2H mini-league (3-way, non-cyclic): A beat B and C -> A top ---
+{
+  const st = [T('a', 5, 5, 1, 0), T('b', 5, 5, 1, 0), T('c', 5, 5, 1, 0)];
+  const fx = [DX('a', 'b', 'a', true), DX('a', 'c', 'a', false), DX('b', 'c', 'a', true)];
+  const o = { totalSeries: 6, playoffSlots: 1, upperSlots: 1, trials: 400, seed: 21 };
+  const r = calcChances(st, fx, o);
+  eq(pc(r, 'a'), 100, 'H A tops H2H mini-league (2-0 in group)');
+  eq(pc(r, 'b'), 0, 'H B out via mini-league');
+  eq(pc(r, 'c'), 0, 'H C out via mini-league');
+}
+
+// --- rankTeams direct: points, then diff, then H2H, then key fallback ---
+{
+  const keys = ['m', 'n'];
+  const P = { m: 5, n: 5 }, D = { m: 0, n: 0 };
+  eq(rankTeams(keys, P, D, null, {})[0], 'm', 'K key fallback deterministic');
+  eq(rankTeams(keys, P, D, [{ a: 'm', b: 'n', w: 'n' }], {})[0], 'n', 'K in-group sim H2H decides (n beat m)');
+}
+
+// --- Wilson 95% CI unit checks ---
+{
+  const [l0, h0] = wilson(0, 2000);
+  eq(l0, 0, 'W zero-event lower bound 0');
+  ok(h0 > 0 && h0 < 0.5, 'W zero-event upper bound small but nonzero (' + h0.toFixed(3) + ')');
+  const [l1, h1] = wilson(2000, 2000);
+  eq(h1, 100, 'W all-event upper bound 100');
+  ok(l1 > 99.5 && l1 < 100, 'W all-event lower bound below 100 (' + l1.toFixed(3) + ')');
+  const [lm, hm] = wilson(1000, 2000);
+  ok(lm > 47 && lm < 48 && hm > 52 && hm < 53, 'W coin-flip CI ~[47.8,52.2]');
+}
+
+// --- Tooltip honesty: simulated entries carry counts + CI; proven stay proven ---
+{
+  const st = [T('lock', 12, 10, 0, 20), T('mid', 5, 5, 5, 0), T('chaser', 4, 4, 6, 0), T('out', 0, 2, 8, -20)];
+  const fx = [FX('chaser', 'out')];
+  const o = { totalSeries: 12, playoffSlots: 2, upperSlots: 1, trials: 500, seed: 0x51ab };
+  const r = calcChances(st, fx, o);
+  eq(r.chances.lock.pc.why, 'Clinched on points', 'Y lock tooltip claims proven certainty');
+  eq(r.chances.out.pc.why, 'Eliminated on points', 'Y out tooltip claims proven impossibility');
+  ok(/trials/.test(r.chances.mid.pc.why) && /CI/.test(r.chances.mid.pc.why),
+    'Y mid tooltip shows counts + CI (' + r.chances.mid.pc.why + ')');
+  ok(r.chances.mid.pc.q >= 0 && r.chances.mid.pc.n === 500, 'Y counts exposed (q/n)');
 }
 
 console.log('\n' + (count - fails) + '/' + count + ' passed, ' + fails + ' failed');
