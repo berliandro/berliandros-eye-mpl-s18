@@ -266,6 +266,98 @@ for needle in ('canonicalPlayer', 'PLAYER_ALIAS', 'playoffChance', 'TOTAL_TEAMS'
     ok(needle in html, f"stats drill-down contains {needle}")
 ok('sdot' not in html, "side dots fully removed from game list")
 ok('banned by' not in html, "verbose ban detail text removed")
+for needle in ('calcChances', 'normalizeFixtures', 'CHANCES-START', 'normTeam',
+                'isTerminalScore', 'decidedLive'):
+    ok(needle in html, f"playoff engine contains {needle}")
+
+# Playoff-chance data integrity: standings must reconcile with the decided
+# fixture set (completed + any non-completed row showing a terminal BO3
+# scoreline, whose result the standings feed already includes — e.g. Oct 3
+# AE 1-2 NAVI still flagged live). The reconciled remainder must give every
+# team exactly 16 series (double round-robin), with no duplicated fixtures.
+stand_rows = load('standings')
+sched_rows = load('schedule_all')
+slug_of = {'NAVI': 'navi', 'TLID': 'tlid', 'AE': 'ae', 'BTR': 'btr',
+           'EVOS': 'evos', 'DEWA': 'dewa', 'ONIC': 'onic', 'RRQ': 'rrq', 'GEEK': 'geek'}
+
+
+def terminal(sa, sb):
+    try:
+        sa, sb = int(sa), int(sb)
+    except (ValueError, TypeError):
+        return False
+    return (sa == 2 and sb in (0, 1)) or (sb == 2 and sa in (0, 1))
+
+
+def is_po(m):
+    return 'playoffs' in (m.get('schedule_id') or '') or \
+        (m.get('team_a') == 'TBD' and m.get('team_b') == 'TBD')
+
+
+reg_rows = [m for m in sched_rows if not is_po(m)]
+ok(len(reg_rows) == 72, f"regular season has 72 fixtures (got {len(reg_rows)})")
+pairs = {}
+for m in reg_rows:
+    pairs[tuple(sorted([m.get('team_a') or '', m.get('team_b') or '']))] = \
+        pairs.get(tuple(sorted([m.get('team_a') or '', m.get('team_b') or ''])), 0) + 1
+ok(all(v == 2 for v in pairs.values()) and len(pairs) == 36,
+   f"double round-robin: 36 pairs x2 ({len(pairs)} pairs)")
+dec_w, dec_l, dec_gw, dec_gl = {}, {}, {}, {}
+decided_n = live_decided_n = 0
+bad_scores = []
+for m in reg_rows:
+    st, sa, sb = m.get('status'), m.get('score_a'), m.get('score_b')
+    fin = terminal(sa, sb)
+    if st == 'completed':
+        if not fin:
+            bad_scores.append(m.get('schedule_id'))
+            continue
+        w = m.get('team_a') if m.get('winner') == 'team_a' else (
+            m.get('team_b') if m.get('winner') == 'team_b' else (
+                m.get('team_a') if int(sa) > int(sb) else m.get('team_b')))
+    elif fin:
+        live_decided_n += 1
+        w = m.get('team_a') if int(sa) > int(sb) else m.get('team_b')
+    else:
+        continue
+    decided_n += 1
+    lo = m.get('team_b') if w == m.get('team_a') else m.get('team_a')
+    dec_w[w] = dec_w.get(w, 0) + 1
+    dec_l[lo] = dec_l.get(lo, 0) + 1
+    gw_w, gl_w = (int(sa), int(sb)) if w == m.get('team_a') else (int(sb), int(sa))
+    dec_gw[w] = dec_gw.get(w, 0) + gw_w
+    dec_gl[w] = dec_gl.get(w, 0) + gl_w
+    dec_gw[lo] = dec_gw.get(lo, 0) + gl_w
+    dec_gl[lo] = dec_gl.get(lo, 0) + gw_w
+ok(not bad_scores, f"all completed rows have terminal BO3 scores ({bad_scores[:3] if bad_scores else 'ok'})")
+ok(decided_n == 51 and live_decided_n == 1,
+   f"decided set is 50 completed + 1 live-decisive (got {decided_n}, live {live_decided_n})")
+rec_ok, game_ok = True, True
+for r in stand_rows:
+    code = {'navi': 'NAVI', 'tlid': 'TLID', 'ae': 'AE', 'btr': 'BTR',
+            'evos': 'EVOS', 'dewa': 'DEWA', 'onic': 'ONIC', 'rrq': 'RRQ',
+            'geek': 'GEEK'}[r['team_slug']]
+    if dec_w.get(code, 0) != int(r['match_win']) or dec_l.get(code, 0) != int(r['match_lose']):
+        rec_ok = False
+    if dec_gw.get(code, 0) != int(r['game_win']) or dec_gl.get(code, 0) != int(r['game_lose']):
+        game_ok = False
+ok(rec_ok, "standings Match W-L matches the decided fixture set (all 9 teams)")
+ok(game_ok, "standings Game W-L matches the decided fixture set (all 9 teams)")
+rem_n = {}
+for m in reg_rows:
+    if m.get('status') == 'completed' or terminal(m.get('score_a'), m.get('score_b')):
+        continue
+    rem_n[m.get('team_a')] = rem_n.get(m.get('team_a'), 0) + 1
+    rem_n[m.get('team_b')] = rem_n.get(m.get('team_b'), 0) + 1
+cap_ok = True
+for r in stand_rows:
+    code = {'navi': 'NAVI', 'tlid': 'TLID', 'ae': 'AE', 'btr': 'BTR',
+            'evos': 'EVOS', 'dewa': 'DEWA', 'onic': 'ONIC', 'rrq': 'RRQ',
+            'geek': 'GEEK'}[r['team_slug']]
+    if int(r['match_win']) + int(r['match_lose']) + rem_n.get(code, 0) != 16:
+        cap_ok = False
+ok(cap_ok, "played + reconciled-remaining == 16 for every team")
+ok(sum(rem_n.values()) // 2 == 21, f"21 reconciled remaining fixtures (got {sum(rem_n.values()) // 2})")
 
 print(f"\n{len(fails)} failures, {len(warns)} warnings")
 sys.exit(1 if fails else 0)

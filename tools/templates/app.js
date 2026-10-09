@@ -482,51 +482,272 @@ return `<div class="sb-team${flip?' flip':''}${pk?' '+pk:''}"><div class="sb-the
 function winName(g){return g.winner==='team_a'?g.team_a:(g.winner==='team_b'?g.team_b:(g.winner||''));}
 /* Playoff chances (1 series win = 1 point; every team plays exactly 16 series).
    Top 6 → playoffs ("% Playoff Chance"), top 2 → upper bracket ("% Upper
-   Bracket"). Hard limits use max-possible = current + (16 - played):
-   PC 100 iff pts > max max-possible of 7th/8th/9th; PC 0 iff max-possible <
-   pts of 6th. UB 100 iff pts > max max-possible of 3rd..9th; UB 0 iff
-   max-possible < pts of 2nd. Undecided teams: seeded Monte-Carlo (500 trials)
-   over the actual remaining fixtures, each sampled with P(A wins) =
-   wra/(wra+wrb) from series win rates, cuts on (pts, net game diff).
-   Fixed seed → stable across renders. */
+   Bracket"). Method (see calcChances): points-sufficient hard limits
+   (clinched/eliminated no matter the tiebreakers), otherwise a seeded
+   Monte-Carlo (2000 trials) over the reconciled remaining fixtures with
+   P(A wins) = wra/(wra+wrb) from current series win rates, per-series game
+   scores sampled from the observed BO3 sweep rate, and cuts on
+   (points, simulated game diff, head-to-head mini-league). Official
+   tiebreakers: 1. Matches Win, 2. Diff, 3. H2H
+   (docs/MPL_ID_S18_Regular_Season.md). Fixed seed → stable across renders. */
 /* Dynamic season config (no hardcoded team/slot counts below). MPL ID regular
    season: 9 teams, double round-robin → each team plays 16 series. */
 const TOTAL_TEAMS=9,ROUND_ROBIN_ROUNDS=2,PLAYOFF_SLOTS=6,UPPER_BRACKET_SLOTS=2;
-const TOTAL_SERIES=ROUND_ROBIN_ROUNDS*(TOTAL_TEAMS-1),TRIALS=500;
+const TOTAL_SERIES=ROUND_ROBIN_ROUNDS*(TOTAL_TEAMS-1),TRIALS=2000;
+/* CHANCES-START */
+/* Fixture normalization (pure, tested): schedule rows -> calcChances input.
+   Drops playoff rows and unknown/TBD sides; marks completed rows decided
+   (winner from the winner field, else inferred from a terminal BO3 score);
+   treats a NON-completed row with a terminal BO3 scoreline (2-0/2-1) as
+   decided — the result is already reflected in the standings feed (observed
+   Oct 3: AE 1-2 NAVI still flagged live while NAVI/AE played counts include
+   it); re-simulating it would award the point twice. Finally caps
+   played + remaining at totalSeries per team by dropping that team's live
+   rows first (upcoming rows are never dropped: each is simulated exactly
+   once; completed results are never re-simulated). */
+var TEAM_ALIAS={natusvincere:'navi',teamliquidid:'tlid',alterego:'ae',alteregoesports:'ae',bigetronbyvitality:'btr',bigetron:'btr',dewaunited:'dewa',dewaunitedesports:'dewa',dewa:'dewa',onic:'onic',evos:'evos',rrqhoshi:'rrq',rrq:'rrq',geekfam:'geek',geekfamid:'geek',geek:'geek',navi:'navi',tlid:'tlid',ae:'ae',btr:'btr'};
+function normTeam(t){var u=String(t||'').toLowerCase().replace(/[^a-z0-9]/g,'');return TEAM_ALIAS[u]||u;}
+function isPORow(m){return String(m.schedule_id||m.match_id||'').indexOf('playoffs')>-1||(m.team_a==='TBD'&&m.team_b==='TBD');}
+function isTerminalScore(sa,sb){return (sa===2&&(sb===0||sb===1))||(sb===2&&(sa===0||sa===1));}
+function normalizeFixtures(schedule,known,playedMap,totalSeries){
+var fixtures=[],decidedLive=0;
+(schedule||[]).forEach(function(m){
+if(isPORow(m))return;
+var a=normTeam(m.team_a),b=normTeam(m.team_b);
+if(!a||!b||a===b||!known[a]||!known[b])return;
+var sa=+m.score_a,sb=+m.score_b;
+var fin=isTerminalScore(sa,sb);
+var live=String(m.status||'')!=='completed'&&String(m.status||'')!=='upcoming';
+if(String(m.status)==='completed'){
+var w=m.winner==='team_a'?'a':(m.winner==='team_b'?'b':(fin?(sa>sb?'a':'b'):null));
+fixtures.push({a:a,b:b,decided:true,winner:w,sweep:fin?((sa===2&&sb===0)||(sb===2&&sa===0)):null,live:false,id:String(m.schedule_id||m.match_id||'')});
+}else if(fin){
+decidedLive++;
+fixtures.push({a:a,b:b,decided:true,winner:(sa>sb?'a':'b'),sweep:((sa===2&&sb===0)||(sb===2&&sa===0)),live:true,id:String(m.schedule_id||m.match_id||'')});
+}else{
+fixtures.push({a:a,b:b,decided:false,winner:null,sweep:null,live:live,id:String(m.schedule_id||m.match_id||'')});
+}});
+var dropped=[];
+var guard=99;
+while(guard-->0){
+var cnt={};fixtures.forEach(function(f){if(!f.decided){cnt[f.a]=(cnt[f.a]||0)+1;cnt[f.b]=(cnt[f.b]||0)+1;}});
+var cut=-1;
+for(var i=0;i<fixtures.length;i++){
+var f=fixtures[i];
+if(f.decided)continue;
+var badA=(playedMap[f.a]||0)+(cnt[f.a]||0)>totalSeries;
+var badB=(playedMap[f.b]||0)+(cnt[f.b]||0)>totalSeries;
+if((badA||badB)&&f.live){cut=i;break;}
+}
+if(cut<0)break;
+dropped.push(fixtures[cut].id);
+fixtures.splice(cut,1);
+}
+return {fixtures:fixtures,decidedLive:decidedLive,dropped:dropped};
+}
+/* Pure probability engine: P(final top-6) and P(final top-2) per team.
+   standings: [{key,pts,won,lost,diff}] in OFFICIAL rank order (ties keep the
+   official order; cut values only read points, which the official order
+   respects). fixtures: [{a,b,decided,winner,sweep}] with winner 'a'/'b'/null
+   and sweep true(2-0)/false(2-1)/null(unknown); decided fixtures are NOT
+   re-simulated (their points already sit in `pts`) — they only feed the H2H
+   base table and the sweep-rate calibration. opts: {totalSeries,
+   playoffSlots, upperSlots, trials, seed, winProb:'bradley-terry'|'even',
+   sweepP (override), exact (enumerate, fixtures<=12)}.
+   Team strength is never invented: 'bradley-terry' derives P(A wins) from the
+   two teams' current series win rates; 'even' is the documented neutral
+   baseline. Game-score sampling uses the observed sweep share among decided
+   BO3s (fallback 0.5 with no data). Ranking per outcome: points, then
+   simulated game diff, then head-to-head series record inside the tied group
+   (mini-league over decided + simulated results); leftover ties fall back to
+   key order — deterministic but arbitrary, documented here, never presented
+   as an official rule. Hard 100/0 limits are points-sufficient conditions
+   (below-cutoff teams cannot even tie the mark / above-cutoff teams cannot
+   be pushed out: at most 5 rivals can finish ahead), hence true guarantees.
+   Fractional (unrounded) shares sum to exactly playoffSlots*100 /
+   upperSlots*100 across teams; callers round only for display. */
+function calcChances(standings, fixtures, opts){
+opts=opts||{};
+var totalSeries=opts.totalSeries!=null?opts.totalSeries:16;
+var playoffSlots=opts.playoffSlots!=null?opts.playoffSlots:6;
+var upperSlots=opts.upperSlots!=null?opts.upperSlots:2;
+var trials=opts.trials!=null?opts.trials:2000;
+var seedInit=opts.seed!=null?opts.seed:0x51ab;
+var mode=opts.winProb==='even'?'even':'bradley-terry';
+var exact=!!opts.exact;
+var diag={teams:0,remaining:0,sweepP:0.5,dropped:[],invalid:[],maxSplitErr:0};
+var rows=[];
+(standings||[]).forEach(function(s,i){
+var k=s&&(s.key!=null?s.key:(s.team_slug||s.team_name));
+k=String(k!=null?k:'').toLowerCase();
+var rawP=s&&(s.pts!=null?s.pts:s.match_point);
+var rawW=s&&(s.won!=null?s.won:s.match_win);
+var rawL=s&&(s.lost!=null?s.lost:s.match_lose);
+var rawD=s&&(s.diff!=null?s.diff:s.net_game_win);
+var pts=+rawP||0,won=+rawW||0,lost=+rawL||0,diff=+rawD||0;
+if(!(won>=0))won=0;if(!(lost>=0))lost=0;
+if(!k){diag.invalid.push('standing#'+i);return;}
+rows.push({key:k,pts:pts,won:won,lost:lost,diff:diff});
+if(won+lost>totalSeries)diag.invalid.push(k+':played-over');
+});
+var byKey={};
+rows=rows.filter(function(r){if(byKey[r.key]){diag.invalid.push('dup:'+r.key);return false;}byKey[r.key]=r;return true;});
+diag.teams=rows.length;
+var remFx=[],baseH2H={},sweepN=0,sweepD=0;
+(fixtures||[]).forEach(function(f,i){
+var a=String(f&&(f.a!=null?f.a:'')).toLowerCase();
+var b=String(f&&(f.b!=null?f.b:'')).toLowerCase();
+if(!a||!b||a===b||!byKey[a]||!byKey[b]){diag.invalid.push('fixture#'+i);return;}
+if(f&&f.decided){
+var w=(f.winner==='a')?a:((f.winner==='b')?b:null);
+if(w){baseH2H[a]=baseH2H[a]||{};baseH2H[b]=baseH2H[b]||{};
+baseH2H[a][b]=(baseH2H[a][b]||0)+(w===a?1:0);
+baseH2H[b][a]=(baseH2H[b][a]||0)+(w===b?1:0);}
+if(f.sweep===true){sweepN++;sweepD++;}else if(f.sweep===false){sweepD++;}
+return;}
+remFx.push({a:a,b:b});
+});
+diag.remaining=remFx.length;
+var sweepP=opts.sweepP!=null?+opts.sweepP:(sweepD?sweepN/sweepD:0.5);
+if(!(sweepP>=0&&sweepP<=1))sweepP=0.5;
+diag.sweepP=sweepP;
+function winRate(r){var p=r.won+r.lost;return p>0?r.won/p:0.5;}
+function qWin(a,b){
+if(mode==='even')return 0.5;
+var pa=winRate(byKey[a]),pb=winRate(byKey[b]);
+return (pa+pb)>0?pa/(pa+pb):0.5;
+}
+function maxP(r){return r.pts+Math.max(0,totalSeries-(r.won+r.lost));}
+var p6=rows.length>=playoffSlots&&playoffSlots>0?rows[playoffSlots-1].pts:0;
+var p2=rows.length>=upperSlots&&upperSlots>0?rows[upperSlots-1].pts:0;
+function maxPoss(list){var m=-1;list.forEach(function(r){var v=maxP(r);if(v>m)m=v;});return m;}
+var maxBelow6=playoffSlots>0?maxPoss(rows.slice(playoffSlots)):Infinity;
+var maxBelow2=upperSlots>0?maxPoss(rows.slice(upperSlots)):Infinity;
+var out={},cut6={},cut2={};
+rows.forEach(function(r){
+var pc=playoffSlots>0?(r.pts>maxBelow6?{v:100,why:'Clinched on points'}:(maxP(r)<p6?{v:0,why:'Eliminated on points'}:null)):{v:0,why:'No playoff slots'};
+var ub=upperSlots>0?(r.pts>maxBelow2?{v:100,why:'Clinched on points'}:(maxP(r)<p2?{v:0,why:'Eliminated on points'}:null)):{v:0,why:'No upper slots'};
+out[r.key]={pc:pc,ub:ub};
+if(!pc)cut6[r.key]=0;
+if(!ub)cut2[r.key]=0;
+});
+function rankOrder(P,D,sim){
+var arr=rows.slice().sort(function(x,y){
+return (P[y.key]-P[x.key])||(D[y.key]-D[x.key])||(x.key<y.key?-1:(x.key>y.key?1:0));});
+var i=0;
+while(i<arr.length){
+var j=i+1;
+while(j<arr.length&&P[arr[j].key]===P[arr[i].key]&&D[arr[j].key]===D[arr[i].key])j++;
+if(j-i>1){
+var group=arr.slice(i,j),inG={};
+group.forEach(function(r){inG[r.key]=1;});
+var scored=group.map(function(r){
+var t=r.key,n=0;
+group.forEach(function(o){
+var k=o.key;if(k===t)return;
+if(baseH2H[t]&&baseH2H[t][k])n+=baseH2H[t][k];});
+if(sim)sim.forEach(function(f){
+if(f.w!==t)return;
+var o=(f.a===t)?f.b:f.a;
+if((f.a===t||f.b===t)&&inG[o])n++;});
+return {r:r,m:n};});
+scored.sort(function(x,y){return (y.m-x.m)||(x.r.key<y.r.key?-1:1);});
+for(var k=0;k<scored.length;k++)arr[i+k]=scored[k].r;
+}
+i=j;}
+return arr;
+}
+var simWhy='Seeded simulation over '+remFx.length+' remaining series ('+trials+' trials)';
+var exactWhy='Exact enumeration over '+remFx.length+' remaining series';
+if(exact){
+var n=remFx.length;
+if(n>12)throw new Error('exact enumeration over '+n+' fixtures infeasible');
+var P0={},D0={};
+rows.forEach(function(r){P0[r.key]=r.pts;D0[r.key]=r.diff;});
+var acc6={},acc2={};
+rows.forEach(function(r){acc6[r.key]=0;acc2[r.key]=0;});
+var sim=[];
+(function rec(i,prob){
+if(prob<=0)return;
+if(i===n){
+var ord=rankOrder(P0,D0,sim);
+var s,u;
+for(s=0;s<playoffSlots&&s<ord.length;s++)acc6[ord[s].key]+=prob;
+for(u=0;u<upperSlots&&u<ord.length;u++)acc2[ord[u].key]+=prob;
+return;}
+var f=remFx[i],q=qWin(f.a,f.b);
+var branches=[[f.a,q*sweepP,2],[f.a,q*(1-sweepP),1],[f.b,(1-q)*sweepP,2],[f.b,(1-q)*(1-sweepP),1]];
+for(var bi=0;bi<4;bi++){
+var w=branches[bi][0],bp=branches[bi][1],dg=branches[bi][2];
+if(bp<=0)continue;
+var l=(w===f.a)?f.b:f.a;
+P0[w]++;D0[w]+=dg;D0[l]-=dg;sim.push({a:f.a,b:f.b,w:w});
+rec(i+1,prob*bp);
+sim.pop();P0[w]--;D0[w]-=dg;D0[l]+=dg;}
+})(0,1);
+rows.forEach(function(r){
+var k=r.key;
+if(!out[k].pc)out[k].pc={v:acc6[k]*100,why:exactWhy};
+if(!out[k].ub)out[k].ub={v:acc2[k]*100,why:exactWhy};});
+}else if(Object.keys(cut6).length||Object.keys(cut2).length){
+var seed=seedInit|0;
+var rnd=function(){seed=seed+0x6D2B79F5|0;
+var t=Math.imul(seed^seed>>>15,1|seed);
+t=t+Math.imul(t^t>>>7,61|t)^t;
+return ((t^t>>>14)>>>0)/4294967296;};
+var B=4,per=Math.max(1,Math.round(trials/B)),done=0;
+var P={},D={},sim2=[];
+var bkeys6=Object.keys(cut6),bkeys2=Object.keys(cut2);
+for(var bIdx=0;bIdx<B;bIdx++){
+var l6={},l2={};
+bkeys6.forEach(function(k){l6[k]=0;});
+bkeys2.forEach(function(k){l2[k]=0;});
+for(var t=0;t<per;t++){
+rows.forEach(function(r){P[r.key]=r.pts;D[r.key]=r.diff;});
+sim2.length=0;
+for(var fi=0;fi<remFx.length;fi++){
+var f=remFx[fi],qq=qWin(f.a,f.b);
+var w=(rnd()<qq)?f.a:f.b;
+var dg=(rnd()<sweepP)?2:1;
+P[w]++;
+D[w]+=dg;
+var ll=(w===f.a)?f.b:f.a;
+D[ll]-=dg;
+sim2.push({a:f.a,b:f.b,w:w});}
+var ord=rankOrder(P,D,sim2);
+var s2,u2;
+for(s2=0;s2<playoffSlots&&s2<ord.length;s2++){var k6=ord[s2].key;if(k6 in cut6){cut6[k6]++;l6[k6]++;}}
+for(u2=0;u2<upperSlots&&u2<ord.length;u2++){var k2=ord[u2].key;if(k2 in cut2){cut2[k2]++;l2[k2]++;}}
+done++;}
+bkeys6.forEach(function(k){
+var e=Math.abs(l6[k]/per-cut6[k]/done);
+if(e>diag.maxSplitErr)diag.maxSplitErr=e;});
+bkeys2.forEach(function(k){
+var e2=Math.abs(l2[k]/per-cut2[k]/done);
+if(e2>diag.maxSplitErr)diag.maxSplitErr=e2;});}
+diag.maxSplitErr=diag.maxSplitErr*100;
+rows.forEach(function(r){
+var k=r.key;
+if(!out[k].pc)out[k].pc={v:cut6[k]/done*100,why:simWhy};
+if(!out[k].ub)out[k].ub={v:cut2[k]/done*100,why:simWhy};});
+}
+var res={};rows.forEach(function(r){res[r.key]=out[r.key];});
+return {chances:res,diag:diag};
+}
+/* CHANCES-END */
 function poRow(m){return String(m.schedule_id||m.match_id||'').indexOf('playoffs')>-1||(m.team_a==='TBD'&&m.team_b==='TBD');}
 function playoffChance(){
 const rows=[...DATA.standings].sort((a,b)=>a.rank-b.rank);
 const key=r=>String(r.team_slug||r.team_name||'').toLowerCase();
-const code=t=>String(t||'').toLowerCase();
-const pts=r=>+r.match_point||0;
-const played=r=>(+r.match_win||0)+(+r.match_lose||0);
-const maxP=r=>pts(r)+Math.max(0,TOTAL_SERIES-played(r));
-const wr=r=>{const p=played(r);return p?((+r.match_win||0)/p):0.5;};
-const rem=(DATA.schedule||[]).filter(m=>m.status!=='completed'&&!poRow(m));
-const p6=pts(rows[PLAYOFF_SLOTS-1]||{match_point:0}),max789=Math.max.apply(null,rows.slice(PLAYOFF_SLOTS).map(maxP).concat([-1]));
-const p2=pts(rows[UPPER_BRACKET_SLOTS-1]||{match_point:0}),max39=Math.max.apply(null,rows.slice(UPPER_BRACKET_SLOTS).map(maxP).concat([-1]));
+const known={};rows.forEach(r=>{known[key(r)]=1;});
+const playedMap={};rows.forEach(r=>{playedMap[key(r)]=(+r.match_win||0)+(+r.match_lose||0);});
+const nf=normalizeFixtures(DATA.schedule||[],known,playedMap,TOTAL_SERIES);
+const standingsN=rows.map(r=>({key:key(r),pts:+r.match_point||0,won:+r.match_win||0,lost:+r.match_lose||0,diff:+r.net_game_win||0}));
+const res=calcChances(standingsN,nf.fixtures,{totalSeries:TOTAL_SERIES,playoffSlots:PLAYOFF_SLOTS,upperSlots:UPPER_BRACKET_SLOTS,trials:TRIALS,seed:0x51ab});
 const out={};
-let seed=0x51ab;const rnd=()=>{seed|=0;seed=seed+0x6D2B79F5|0;
-let t=Math.imul(seed^seed>>>15,1|seed);t=t+Math.imul(t^t>>>7,61|t)^t;return((t^t>>>14)>>>0)/4294967296;};
-const cut6={},cut2={};
-rows.forEach(r=>{const k=key(r);
-const pc=pts(r)>max789?{v:100,why:'Clinched'}:(maxP(r)<p6?{v:0,why:'Eliminated'}:null);
-const ub=pts(r)>max39?{v:100,why:'Clinched'}:(maxP(r)<p2?{v:0,why:'Eliminated'}:null);
-if(pc&&ub){out[k]={pc:pc,ub:ub};return;}
-out[k]={pc:pc,ub:ub};if(!pc)cut6[k]=0;if(!ub)cut2[k]=0;});
-if(Object.keys(cut6).length||Object.keys(cut2).length){
-const rate={};rows.forEach(r=>{rate[key(r)]=wr(r);});
-for(let t=0;t<TRIALS;t++){const p={};rows.forEach(r=>{p[key(r)]=pts(r);});
-rem.forEach(m=>{const a=code(m.team_a),b=code(m.team_b);if(!(a in p)||!(b in p))return;
-const pa=rate[a],pb=rate[b],q=(pa+pb)?pa/(pa+pb):0.5;p[rnd()<q?a:b]++;});
-const rank=[...rows].sort((x,y)=>{const kx=key(x),ky=key(y);
-return (p[ky]-p[kx])||((+y.net_game_win||0)-(+x.net_game_win||0))||String(kx).localeCompare(String(ky));});
-rank.slice(0,PLAYOFF_SLOTS).forEach(r=>{const k=key(r);if(k in cut6)cut6[k]++;});
-rank.slice(0,UPPER_BRACKET_SLOTS).forEach(r=>{const k=key(r);if(k in cut2)cut2[k]++;});}
-rows.forEach(r=>{const k=key(r);
-if(!out[k].pc)out[k].pc={v:Math.round(cut6[k]/TRIALS*100),why:'Simulated over '+rem.length+' remaining series'};
-if(!out[k].ub)out[k].ub={v:Math.round(cut2[k]/TRIALS*100),why:'Simulated over '+rem.length+' remaining series'};});}
-const res={};rows.forEach(r=>{res[key(r)]=out[key(r)]||{pc:{v:0,why:'Eliminated'},ub:{v:0,why:'Eliminated'}};});return res;}
+rows.forEach(r=>{const k=key(r);const e=(res.chances||{})[k]||{pc:{v:0,why:'Eliminated'},ub:{v:0,why:'Eliminated'}};
+out[k]={pc:{v:Math.round(e.pc.v),why:e.pc.why||''},ub:{v:Math.round(e.ub.v),why:e.ub.why||''}};});
+return out;}
 function standBoard(){
 const stBase=[...DATA.standings].sort((a,b)=>a.rank-b.rank);
 const pcMap=playoffChance();
