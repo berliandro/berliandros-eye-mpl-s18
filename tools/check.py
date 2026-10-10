@@ -26,6 +26,8 @@ def warn(msg):
 html = (ROOT / 'mpl_id_s18_dark.html').read_text(encoding='utf-8')
 for token in ('__DATA__', '__CSS__', '__JS__', '__ASSETS__'):
     ok(token not in html, f"no leftover {token}")
+ok(b'\r' not in (ROOT / 'mpl_id_s18_dark.html').read_bytes(),
+   "generated HTML uses LF-only line endings (CI parity)")
 for needle in ('data-view="overview"', 'trendChart', 'wireCharts', 'id="net"', 'data-more'):
     ok(needle in html, f"contains {needle}")
 for needle in ('name="description"', 'name="theme-color"', 'rel="icon"', 'property="og:title"'):

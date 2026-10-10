@@ -165,7 +165,12 @@ def main():
     season_js = json.dumps(season, ensure_ascii=False, separators=(',', ':'))
     doc = doc.replace('__CSS__', css).replace('__JS__', js.replace('__DATA__', data_js).replace('__SEASON__', season_js).replace('__TEAMS__', json.dumps(TEAMS))).replace('__ASSETS__', json.dumps(manifest))
     out = ROOT / 'mpl_id_s18_dark.html'
-    out.write_text(doc, encoding='utf-8')
+    # Platform-independent output: inputs are read in universal-newline mode
+    # (already LF-only in memory), so write with newline='\n' to keep the
+    # committed file byte-identical on Windows and Linux. A CRLF build would
+    # break the parity gate on case-sensitive CI runners.
+    with open(out, 'w', encoding='utf-8', newline='\n') as f:
+        f.write(doc.replace('\r\n', '\n'))
     print('wrote', out, len(doc))
 
 
