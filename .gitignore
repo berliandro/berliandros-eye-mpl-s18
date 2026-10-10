@@ -10,6 +10,9 @@ backups/
 # local opencode state
 .opencode/
 
+# ETL staging output (removed after publish; never commit partial builds)
+data/.staging-s18/
+
 # OS / editor
 .DS_Store
 Thumbs.db

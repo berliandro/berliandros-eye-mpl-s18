@@ -28,7 +28,7 @@ errors = []
 if h_before != h_after:
     errors.append(f"byte mismatch: {h_before[:12]} -> {h_after[:12]} (regen changed output)")
 txt = after.decode('utf-8', errors='replace')
-for token in ('__DATA__', '__CSS__', '__JS__', '__ASSETS__', '__TEAMS__'):
+for token in ('__DATA__', '__CSS__', '__JS__', '__ASSETS__', '__TEAMS__', '__SEASON__'):
     if token in txt:
         errors.append(f"leftover placeholder {token}")
 for needle in ('id="board"', 'data-view="overview"', 'trendChart', 'wireCharts'):

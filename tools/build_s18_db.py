@@ -5,13 +5,62 @@ Sources:
   - /matches, /schedule, /standings, /stats/players, /drafts, /match/<detail_id>
 Output: mpl_id_s18.db (SQLite) + csv/ exports.
 """
-import json, re, sqlite3, urllib.request, urllib.parse, os, sys
+import json, re, sqlite3, urllib.request, urllib.parse, os, sys, shutil
 from pathlib import Path
+from gen_dark import validate_season
 
 BASE = Path(__file__).parent
 ROOT = BASE.parent
-DB = ROOT / "data" / "mpl_id_s18.db"
-CSVDIR = ROOT / "data" / "csv"
+CFG = json.loads((ROOT / "data" / "season.json").read_text(encoding="utf-8"))
+_CFG_PROBLEMS = validate_season(CFG)
+if _CFG_PROBLEMS:
+    print("SEASON CONFIG INVALID:")
+    for _p in _CFG_PROBLEMS:
+        print(" -", _p)
+    raise SystemExit(1)
+DB = ROOT / CFG["database"]
+CSVDIR = ROOT / CFG["csvDir"]
+PLAYOFFS_JSON = ROOT / CFG["playoffsJson"]
+LIQ_SEASON_PAGE = CFG["endpoints"]["liquipediaSeasonPage"]
+# Alias keys are lowercase alphanumeric (no spaces/punctuation); the same
+# normalization must be used for every lookup (cf. normTeamCode in app.js).
+TEAM_ALIAS = CFG["aliases"]
+
+
+def norm_team(t):
+    return re.sub(r"[^a-z0-9]", "", (t or "").lower())
+
+
+def canon_team(t):
+    # Alias values use display case; canonical codes are lowercase.
+    return TEAM_ALIAS.get(norm_team(t), norm_team(t)).lower()
+
+
+def attach_mvps(hub_numeric, liq):
+    """Map hub match_detail_id -> Liquipedia MVP by normalized team pair.
+
+    Both lists are chronological; duplicate pairs (double round-robin legs)
+    consume blocks in order. Unmatched rows keep a blank MVP — never attach
+    an unrelated block (that misattributes MVPs across series).
+    Returns {detail_id: mvp}."""
+    liq_remaining = list(liq)
+    out = {}
+    hub_sorted = sorted(hub_numeric,
+                        key=lambda m: (m.get("iso_datetime") or "", str(m.get("match_detail_id"))))
+    for h in hub_sorted:
+        ha, hb = canon_team(h.get("team_a")), canon_team(h.get("team_b"))
+        found = None
+        for i, l in enumerate(liq_remaining):
+            if {canon_team(l["t1"]), canon_team(l["t2"])} == {ha, hb}:
+                found = liq_remaining.pop(i)
+                break
+        out[str(h["match_detail_id"])] = (found or {}).get("mvp", "")
+    return out
+# Staging lives inside data/ so os.replace() publication stays on one
+# filesystem (atomic); it is removed after a successful publish.
+STAGING = ROOT / "data" / ".staging-s18"
+# Endpoint literals below are defaults only: main() replaces them from the
+# validated season config before any request, so the config is authoritative.
 LIQ_API = "https://liquipedia.net/mobilelegends/api.php"
 HUB = "https://mpl.mlbbhub.com/api/v1/id"
 UA = {"User-Agent": "Mozilla/5.0 (opencode MPL research)"}
@@ -38,7 +87,98 @@ def parse_duration(s):
     if not m: return None
     return int(m.group(1))*60 + int(m.group(2))
 
+def parse_liq_matches(wikitext):
+    """Split Liquipedia wikitext into per-series match dicts.
+
+    A block ends at the next match marker OR at end-of-input, so the final
+    block is captured even though no subsequent marker follows it.
+    Returns [{t1, t2, date, mvp, score}]; never raises on malformed input.
+    """
+    try:
+        blocks = [m.group(1) for m in re.finditer(
+            r"\|M\d+=\{\{Match([\s\S]*?)(?=\|M\d+=\{\{Match|\Z)", wikitext or "")]
+    except re.error:
+        return []
+    liq = []
+    for b in blocks:
+        try:
+            t1 = (re.search(r"opponent1=\{\{TeamOpponent\|([^\}\|\n]+)", b) or [None, ""])[1].strip()
+            t2 = (re.search(r"opponent2=\{\{TeamOpponent\|([^\}\|\n]+)", b) or [None, ""])[1].strip()
+            date = (re.search(r"\|date=([^\n]+)", b) or [None, ""])[1].strip()[:120]
+            mvp = (re.search(r"\|mvp=([^\n\|]*)", b) or [None, ""])[1].strip()
+            wins = re.findall(r"\|winner=(\d)", b)
+            w1 = wins.count("1"); w2 = wins.count("2")
+            score = f"{w1}-{w2}" if (w1 or w2) else "vs"
+        except (IndexError, TypeError):
+            continue
+        liq.append({"t1": t1, "t2": t2, "date": date, "mvp": mvp, "score": score})
+    return liq
+
+
+def validate_build(con, fails, playoff_payload, season=None):
+    """Integrity gate for a freshly built (staging) database.
+
+    Returns a list of human-readable problems (empty = publishable).
+    Never touches the network; operates on the given connection only.
+    Expected fixture totals derive from the season config when given,
+    else fall back to the Season 18 shape (72 regular + 8 playoffs).
+    """
+    exp_regular = (season or {}).get("totalRegularFixtures", 72)
+    exp_playoffs = (season or {}).get("playoffMatches", 8)
+    problems = []
+    try:
+        tables = {r[0] for r in con.execute(
+            "SELECT name FROM sqlite_master WHERE type='table'").fetchall()}
+    except Exception as e:
+        return [f"schema unreadable: {e}"]
+    for t in ("matches", "schedule_all", "games", "game_players",
+              "player_season_stats", "hero_stats", "standings"):
+        if t not in tables:
+            problems.append(f"missing table {t}")
+    if problems:
+        return problems
+    count = lambda q: con.execute(q).fetchone()[0]
+    n_stand = count("SELECT COUNT(*) FROM standings")
+    n_sched = count("SELECT COUNT(*) FROM schedule_all")
+    if n_stand <= 0:
+        problems.append("standings empty")
+    if n_sched != exp_regular + exp_playoffs:
+        problems.append(f"schedule_all has {n_sched} rows, expected {exp_regular + exp_playoffs}")
+    if count("SELECT COUNT(*) FROM games") <= 0:
+        problems.append("games empty")
+    if count("SELECT COUNT(*) FROM game_players") <= 0:
+        problems.append("game_players empty")
+    if fails:
+        problems.append(f"{len(fails)} match-detail fetches failed: "
+                        + ",".join(str(d) for d, _ in fails[:5]))
+    if not isinstance(playoff_payload, dict):
+        problems.append("playoffs payload malformed")
+    return problems
+
+
+TABLES = ["matches", "schedule_all", "games", "game_players", "game_bans",
+          "player_season_stats", "hero_stats", "standings"]
+
+
+def publish_build(staging, db_path, csv_dir, playoffs_path):
+    """Atomically publish a validated staging build.
+
+    staging holds <db name>, csv/<tbl>.csv and <playoffs name>. Every target
+    is replaced with os.replace (same filesystem) and staging is removed.
+    Raises on any failure without touching remaining targets.
+    """
+    staging = Path(staging)
+    os.replace(staging / Path(db_path).name, db_path)
+    for tbl in TABLES:
+        os.replace(staging / "csv" / f"{tbl}.csv", Path(csv_dir) / f"{tbl}.csv")
+    os.replace(staging / Path(playoffs_path).name, playoffs_path)
+    shutil.rmtree(staging, ignore_errors=True)
+
+
 def main():
+    global HUB, LIQ_API
+    HUB = CFG["endpoints"]["hub"]
+    LIQ_API = CFG["endpoints"]["liquipediaApi"]
     print("fetch mlbbhub lists...")
     matches = get_json(f"{HUB}/matches")
     standings = get_json(f"{HUB}/standings")
@@ -55,30 +195,23 @@ def main():
     print(f"matches entries={len(matches)} standings={len(standings)} players={len(player_stats)}")
 
     print("fetch liquipedia regular season wikitext for MVP merge...")
-    wt = get_liq_wikitext("MPL/Indonesia/Season 18/Regular Season")
-    blocks2 = [m.group(1) for m in re.finditer(r"\|M\d+=\{\{Match([\s\S]*?)(?=\|M\d+=\{\{Match)", wt)]
-    liq = []
-    for b in blocks2:
-        t1 = (re.search(r"opponent1=\{\{TeamOpponent\|([^\}\|\n]+)", b) or [None,""])[1].strip()
-        t2 = (re.search(r"opponent2=\{\{TeamOpponent\|([^\}\|\n]+)", b) or [None,""])[1].strip()
-        date = (re.search(r"\|date=([^\n]+)", b) or [None,""])[1].strip()[:120]
-        mvp = (re.search(r"\|mvp=([^\n\|]*)", b) or [None,""])[1].strip()
-        wins = re.findall(r"\|winner=(\d)", b)
-        w1 = wins.count("1"); w2 = wins.count("2")
-        score = f"{w1}-{w2}" if (w1 or w2) else "vs"
-        liq.append({"t1":t1,"t2":t2,"date":date,"mvp":mvp,"score":score})
+    wt = get_liq_wikitext(LIQ_SEASON_PAGE)
+    liq = parse_liq_matches(wt)
     print(f"liq series parsed={len(liq)}")
 
-    # map detail_id -> liq MVP by order (both lists are chronological for regular season; mlbbhub /matches order matches liq order for first 50)
-    # Build lookup by normalized team pair + score to be safe, fallback by index.
+    # map detail_id -> liq MVP via pair-matched chronological attach (see attach_mvps).
     numeric = [m for m in matches if re.match(r"^\d+$", str(m.get("match_detail_id") or ""))]
     print(f"numeric detail matches={len(numeric)}")
-    # mlbbhub match_detail_ids are 1036..1087 range for completed
     detail_ids = sorted(set(str(m["match_detail_id"]) for m in numeric), key=int)
     print("detail_ids:", detail_ids[:10], "...", detail_ids[-10:], f"total {len(detail_ids)}")
 
-    if os.path.exists(DB): os.remove(DB)
-    con = sqlite3.connect(DB)
+    # Build into staging: the live database, CSVs and playoffs.json are only
+    # replaced after the integrity gate passes, so a failed build can never
+    # destroy the last known-good dataset.
+    if STAGING.exists():
+        shutil.rmtree(STAGING)
+    (STAGING / "csv").mkdir(parents=True)
+    con = sqlite3.connect(STAGING / DB.name)
     cur = con.cursor()
     cur.executescript("""
     CREATE TABLE matches(
@@ -151,36 +284,11 @@ def main():
         cur.execute("INSERT OR REPLACE INTO hero_stats VALUES(?,?,?,?,?,?)",
             (h.get("hero"), h.get("hero_image"), h.get("pick"), h.get("ban"),
              h.get("win"), h.get("win_rate")))
-    with open(ROOT / "data" / "playoffs.json", "w", encoding="utf-8") as f:
+    with open(STAGING / PLAYOFFS_JSON.name, "w", encoding="utf-8") as f:
         json.dump(playoffs, f, ensure_ascii=False)
 
-    # MVP merge: liq list is 72 long in chronological order; numeric hub matches are first 50ish completed in same order.
-    # Align by matching team pair (normalized) where possible.
-    def norm(t): return re.sub(r"\s+", " ", (t or "").lower().replace("esports","").strip())
-    # NOTE: keys must be in post-norm() form (norm strips "esports", so the
-    # key is "dewa united", not "dewa united esports" — a pre-norm key here
-    # silently never matches and pushes rows into the unmatched path below.
-    TEAM_ALIAS = {"rrq hoshi":"rrq","geek fam id":"geek","geek fam":"geek","bigetron by vitality":"btr","team liquid id":"tlid",
-                  "natus vincere":"navi","alter ego":"ae","dewa united":"dewa","onic":"onic","evos":"evos"}
-    def canon(t):
-        n = norm(t)
-        return TEAM_ALIAS.get(n, n)
-    liq_idx = 0
-    mvp_map = {}
-    # simple chronological attach: for each hub numeric in iso_datetime order, attach next liq with same canon pair
-    hub_sorted = sorted(numeric, key=lambda m: (m.get("iso_datetime") or "", str(m.get("match_detail_id"))))
-    liq_remaining = liq[:]
-    for h in hub_sorted:
-        ha, hb = canon(h.get("team_a")), canon(h.get("team_b"))
-        found = None
-        for i, l in enumerate(liq_remaining):
-            if {canon(l["t1"]), canon(l["t2"])} == {ha, hb}:
-                found = liq_remaining.pop(i); break
-        # No chronological-fallback attach: if no Liquipedia block matches the
-        # team pair, the MVP stays blank. Attaching the next unmatched block
-        # misattributes MVPs across series (observed: JOOOOO attached to
-        # DEWA-NAVI Oct 9 whose Liquipedia MVP is Coolfire).
-        mvp_map[str(h["match_detail_id"])] = (found or {}).get("mvp","")
+    # MVP merge: pair-matched chronological attach (see attach_mvps).
+    mvp_map = attach_mvps(numeric, liq)
 
     n_games = n_rows = n_bans = 0
     fails = []
@@ -228,18 +336,37 @@ def main():
     print("sample:", cur.execute("SELECT match_detail_id,game_no,team,player,hero,kills,deaths,assists,kda,gold,gold_per_min FROM game_players LIMIT 3").fetchall())
     con.close()
 
-    # CSV exports
+    # CSV exports (into staging)
     import csv
-    CSVDIR.mkdir(exist_ok=True)
-    con = sqlite3.connect(DB)
-    for tbl in ["matches","schedule_all","games","game_players","game_bans","player_season_stats","hero_stats","standings"]:
+    staging_csv = STAGING / "csv"
+    con = sqlite3.connect(STAGING / DB.name)
+    for tbl in TABLES:
         rows = con.execute(f"SELECT * FROM {tbl}").fetchall()
         cols = [d[0] for d in con.execute(f"SELECT * FROM {tbl} LIMIT 0").description]
-        with open(CSVDIR/f"{tbl}.csv","w",newline="",encoding="utf-8") as f:
+        with open(staging_csv/f"{tbl}.csv","w",newline="",encoding="utf-8") as f:
             w = csv.writer(f); w.writerow(cols); w.writerows(rows)
         print(f"csv {tbl}: {len(rows)} rows")
     con.close()
+
+    # Integrity gate: publish only a complete, validated build.
+    gate = sqlite3.connect(STAGING / DB.name)
+    problems = validate_build(gate, fails, playoffs, CFG)
+    gate.close()
+    if problems:
+        print("BUILD VALIDATION FAILED — keeping last known-good dataset:")
+        for p in problems:
+            print(" -", p)
+        shutil.rmtree(STAGING, ignore_errors=True)
+        raise SystemExit(1)
+    CSVDIR.mkdir(exist_ok=True)
+    publish_build(STAGING, DB, CSVDIR, PLAYOFFS_JSON)
     print("done:", DB)
 
 if __name__ == "__main__":
-    main()
+    try:
+        main()
+    except SystemExit:
+        raise
+    except Exception as e:
+        print(f"BUILD FAILED ({e}) — last known-good dataset retained")
+        raise SystemExit(1)

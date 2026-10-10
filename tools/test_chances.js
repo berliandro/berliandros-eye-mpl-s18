@@ -9,9 +9,10 @@
 const fs = require('fs');
 const path = require('path');
 const src = fs.readFileSync(path.join(__dirname, 'templates', 'app.js'), 'utf8');
+const SEASON = JSON.parse(fs.readFileSync(path.join(__dirname, '..', 'data', 'season.json'), 'utf8'));
 const m = src.match(/\/\* CHANCES-START \*\/([\s\S]*?)\/\* CHANCES-END \*\//);
 if (!m) { console.error('FAIL CHANCES markers missing'); process.exit(1); }
-const NS = new Function(m[1] + '; return {calcChances, normalizeFixtures, normTeam, isPORow, rankTeams, wilson};')();
+const NS = new Function('SEASON', m[1] + '; return {calcChances, normalizeFixtures, normTeam, isPORow, rankTeams, wilson};')(SEASON);
 const { calcChances, normalizeFixtures, rankTeams, wilson } = NS;
 
 let fails = 0, count = 0;
@@ -220,7 +221,7 @@ function snapshot9() {
   const st = [T('a', 1, 1, 0, 0), T('b', 0, 0, 1, 0)];
   const fx = [DX('a', 'b', 'a', true), DX('a', 'b', 'a', true), DX('a', 'b', 'a', false)];
   const r = calcChances(st, fx, { totalSeries: 4, playoffSlots: 1, upperSlots: 1, exact: true });
-  eq(r.diag.sweepP, 2 / 3, 'W sweepP calibrated 2/3');
+  eq(r.diag.sweepP, 4 / 7, 'W sweepP Beta(2,2)-smoothed (2+2)/(3+4)');
   const r2 = calcChances(st, [], { totalSeries: 4, playoffSlots: 1, upperSlots: 1 });
   eq(r2.diag.sweepP, 0.5, 'W sweepP default 0.5 without data');
 }
@@ -272,7 +273,8 @@ function snapshot9() {
   const raw = pc(r, 'a');
   ok(raw > 0 && raw < 0.5, 'D1 raw PC in (0, 0.5): ' + raw);
   eq(Math.round(raw), 0, 'D1 displayed PC rounds to 0');
-  close(raw, 0.4, 1e-9, 'D1 raw PC equals hand-computed 0.4');
+  // smoothed q(A) = (22/5004)/((22+4982)/5004) = 22/5004
+  close(raw, 22 / 5004 * 100, 1e-9, 'D1 raw PC equals hand-computed Beta(2,2) value');
 }
 
 // --- Rounding vs certainty: raw below 100% rounds to displayed 100% ---
@@ -285,7 +287,8 @@ function snapshot9() {
   const raw = pc(r, 'a');
   ok(raw < 100 && raw > 99.5, 'D2 raw PC in (99.5, 100): ' + raw);
   eq(Math.round(raw), 100, 'D2 displayed PC rounds to 100');
-  close(raw, 99.6, 1e-9, 'D2 raw PC equals hand-computed 99.6');
+  // smoothed q(A) = 1 - 22/5004
+  close(raw, (1 - 22 / 5004) * 100, 1e-9, 'D2 raw PC equals hand-computed Beta(2,2) value');
 }
 
 // --- H2H mini-league (3-way, non-cyclic): A beat B and C -> A top ---
@@ -317,6 +320,90 @@ function snapshot9() {
   ok(l1 > 99.5 && l1 < 100, 'W all-event lower bound below 100 (' + l1.toFixed(3) + ')');
   const [lm, hm] = wilson(1000, 2000);
   ok(lm > 47 && lm < 48 && hm > 52 && hm < 53, 'W coin-flip CI ~[47.8,52.2]');
+}
+
+// --- Early-season smoothing: Beta(2,2) prior keeps estimates interior ---
+{
+  // S1: no completed series anywhere -> neutral 0.5 sweep baseline, even splits
+  const st = [T('a', 0, 0, 0, 0), T('b', 0, 0, 0, 0), T('c', 0, 0, 0, 0), T('d', 0, 0, 0, 0)];
+  const fx = [FX('a', 'b'), FX('c', 'd')];
+  const o = { totalSeries: 1, playoffSlots: 2, upperSlots: 1, exact: true };
+  const r = calcChances(st, fx, o);
+  eq(r.diag.sweepP, 0.5, 'S1 sweepP neutral 0.5 with no data');
+  eq(pc(r, 'a'), 50, 'S1 even split PC');
+  close(pc(r, 'a') + pc(r, 'b') + pc(r, 'c') + pc(r, 'd'), 200, 1e-9, 'S1 PC sum 200');
+  close(ub(r, 'a') + ub(r, 'b') + ub(r, 'c') + ub(r, 'd'), 100, 1e-9, 'S1 UB sum 100');
+  const r2 = calcChances(st, fx, o);
+  eq(pc(r2, 'a'), pc(r, 'a'), 'S1 deterministic');
+}
+{
+  // S2: single decided series must not fixate the sweep estimate
+  const st = [T('a', 1, 1, 0, 1), T('b', 0, 0, 1, -1)];
+  const sw = calcChances(st, [DX('a', 'b', 'a', true)],
+    { totalSeries: 2, playoffSlots: 1, upperSlots: 1, exact: true });
+  close(sw.diag.sweepP, 3 / 5, 1e-12, 'S2 one 2-0 -> (1+2)/(1+4)=0.6, not 1.0');
+  const dc = calcChances(st, [DX('a', 'b', 'a', false)],
+    { totalSeries: 2, playoffSlots: 1, upperSlots: 1, exact: true });
+  close(dc.diag.sweepP, 2 / 5, 1e-12, 'S2 one 2-1 -> (0+2)/(1+4)=0.4, not 0.0');
+  // sweep estimate moves toward the data as samples accumulate
+  const many = [];
+  for (let i = 0; i < 10; i++) many.push(DX('a', 'b', 'a', true));
+  const sw10 = calcChances(st, many, { totalSeries: 12, playoffSlots: 1, upperSlots: 1, exact: true });
+  close(sw10.diag.sweepP, 12 / 14, 1e-12, 'S2 ten 2-0s -> 12/14, closer to 1.0 than 0.6');
+}
+{
+  // S3: undefeated 5-0 vs winless 0-5 -> exact 7/9 vs 2/9 matchup, interior
+  // smoothed: pa=(5+2)/9=7/9, pb=(0+2)/9=2/9, q=7/9. B qualifies (PC and UB)
+  // iff B wins its fixture, so both are exactly 200/9 ~= 22.22%.
+  const st = [T('a', 5, 5, 0, 5), T('b', 5, 0, 5, -5), T('c', 5, 5, 0, 0)];
+  const r = calcChances(st, [FX('a', 'b')],
+    { totalSeries: 6, playoffSlots: 2, upperSlots: 1, exact: true });
+  close(pc(r, 'b'), 200 / 9, 1e-9, 'S3 winless team PC exactly 200/9, not 0');
+  close(ub(r, 'b'), 200 / 9, 1e-9, 'S3 winless team UB exactly 200/9, not 0');
+  ok(pc(r, 'b') > 0 && pc(r, 'b') < 100, 'S3 strictly interior');
+}
+{
+  // S4: 0-0 vs 0-0 single fixture -> exact 50/50
+  const st = [T('a', 0, 0, 0, 0), T('b', 0, 0, 0, 0)];
+  const r = calcChances(st, [FX('a', 'b')],
+    { totalSeries: 1, playoffSlots: 1, upperSlots: 1, exact: true });
+  eq(pc(r, 'a'), 50, 'S4 blank records split 50/50');
+  eq(pc(r, 'b'), 50, 'S4 blank records split 50/50');
+}
+{
+  // S5: 1-0 vs 0-1 with a third team on 1pt; hand-computed PC(A) = 80%.
+  // q(A) = (3/5)/((3/5)+(2/5)) = 0.6. A-wins branch: A (2pts) qualifies.
+  // B-wins branch: A, B, C tie at 1pt. On a 2-1 decider all three share
+  // diff 0 and the A-B sim H2H puts B first, A second (A qualifies); on a
+  // 2-0 sweep B (+1) and C (0) both sit above A (-1), so A misses. With
+  // sweepP 0.5 the branch splits 50/50. Total: 0.6 + 0.4*0.5 = 0.8.
+  const st = [T('a', 1, 1, 0, 1), T('b', 0, 0, 1, -1), T('c', 1, 1, 0, 0)];
+  const r = calcChances(st, [FX('a', 'b')],
+    { totalSeries: 2, playoffSlots: 2, upperSlots: 1, sweepP: 0.5, exact: true });
+  close(pc(r, 'a'), 80, 1e-9, 'S5 hand-computed PC(A)=80');
+}
+{
+  // S6: four identical 2-2 records, symmetric fixtures -> 50 each
+  const st = [T('a', 2, 2, 2, 0), T('b', 2, 2, 2, 0), T('c', 2, 2, 2, 0), T('d', 2, 2, 2, 0)];
+  const r = calcChances(st, [FX('a', 'b'), FX('c', 'd')],
+    { totalSeries: 5, playoffSlots: 2, upperSlots: 1, exact: true });
+  ['a', 'b', 'c', 'd'].forEach(k => eq(pc(r, k), 50, 'S6 identical records PC=50 (' + k + ')'));
+  close(ub(r, 'a') + ub(r, 'b') + ub(r, 'c') + ub(r, 'd'), 100, 1e-9, 'S6 UB sum 100');
+}
+{
+  // S7: same observed rate (75%) with more data -> stronger estimate.
+  // Synthetic leagues decouple table points (standings) from form records
+  // (predictive signal): A is the bubble team in both. L1: A 3-1 vs B 2-2
+  // gives q1 = (5/8)/(5/8+4/8) = 5/9. L2: A 6-2 vs B 4-4 gives
+  // q2 = (8/12)/(8/12+6/12) = 4/7. A wins -> A takes the last slot;
+  // B wins -> A misses, so PC(A) equals q exactly in both leagues.
+  const mk = (aw, al, bw, bl, ts) => calcChances(
+    [T('x', 9, 8, 0, 9), T('a', 2, aw, al, 0), T('b', 2, bw, bl, 0), T('d', 0, 0, 0, -9)],
+    [FX('a', 'b')], { totalSeries: ts, playoffSlots: 2, upperSlots: 1, exact: true });
+  const r1 = mk(3, 1, 2, 2, 5), r2 = mk(6, 2, 4, 4, 9);
+  close(pc(r1, 'a'), 500 / 9, 1e-9, 'S7 small-sample PC hand value');
+  close(pc(r2, 'a'), 400 / 7, 1e-9, 'S7 large-sample PC hand value');
+  ok(pc(r2, 'a') > pc(r1, 'a'), 'S7 more data at same rate -> stronger estimate');
 }
 
 // --- Tooltip honesty: simulated entries carry counts + CI; proven stay proven ---

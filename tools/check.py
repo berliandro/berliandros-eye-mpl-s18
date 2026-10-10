@@ -303,13 +303,20 @@ def is_po(m):
 
 
 reg_rows = [m for m in sched_rows if not is_po(m)]
-ok(len(reg_rows) == 72, f"regular season has 72 fixtures (got {len(reg_rows)})")
+season_cfg = json.loads((ROOT / 'data' / 'season.json').read_text(encoding='utf-8'))
+n_teams = len(season_cfg['teams'])
+exp_regular = season_cfg['roundRobinRounds'] * n_teams * (n_teams - 1) // 2
+exp_pairs = n_teams * (n_teams - 1) // 2
+ok(len(reg_rows) == exp_regular == season_cfg['totalRegularFixtures'],
+   f"regular season fixtures derive from config ({len(reg_rows)} vs {exp_regular})")
+ok(len(stand_rows) == season_cfg['totalTeams'] == n_teams,
+   f"standings cover all configured teams ({len(stand_rows)})")
 pairs = {}
 for m in reg_rows:
     pairs[tuple(sorted([m.get('team_a') or '', m.get('team_b') or '']))] = \
         pairs.get(tuple(sorted([m.get('team_a') or '', m.get('team_b') or ''])), 0) + 1
-ok(all(v == 2 for v in pairs.values()) and len(pairs) == 36,
-   f"double round-robin: 36 pairs x2 ({len(pairs)} pairs)")
+ok(all(v == season_cfg['roundRobinRounds'] for v in pairs.values()) and len(pairs) == exp_pairs,
+   f"double round-robin: {exp_pairs} pairs x{season_cfg['roundRobinRounds']} ({len(pairs)} pairs)")
 dec_w, dec_l, dec_gw, dec_gl = {}, {}, {}, {}
 decided_n = live_decided_n = 0
 bad_scores = []
@@ -364,9 +371,9 @@ for r in stand_rows:
     code = {'navi': 'NAVI', 'tlid': 'TLID', 'ae': 'AE', 'btr': 'BTR',
             'evos': 'EVOS', 'dewa': 'DEWA', 'onic': 'ONIC', 'rrq': 'RRQ',
             'geek': 'GEEK'}[r['team_slug']]
-    if int(r['match_win']) + int(r['match_lose']) + rem_n.get(code, 0) != 16:
+    if int(r['match_win']) + int(r['match_lose']) + rem_n.get(code, 0) != season_cfg['seriesPerTeam']:
         cap_ok = False
-ok(cap_ok, "played + reconciled-remaining == 16 for every team")
+ok(cap_ok, f"played + reconciled-remaining == {season_cfg['seriesPerTeam']} for every team")
 n_remaining = sum(rem_n.values()) // 2
 ok(decided_n + n_remaining == len(reg_rows),
    f"decided + remaining covers the season ({decided_n} + {n_remaining} vs {len(reg_rows)})")

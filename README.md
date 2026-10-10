@@ -85,6 +85,14 @@ live from the mlbbhub API when online.
 | `tools/gen_dark.py` | Build: CSV + assets → `mpl_id_s18_dark.html` |
 | `tools/fetch_assets.py` | Download every referenced hero/item asset (`--check-only`, `--live`) |
 | `tools/check.py` | Regression suite (incl. STRICT asset coverage + JS syntax gate) |
+| `tools/verify.py` | Standard verification: all unit suites + `check.py` + parity gate |
+| `tools/test_chances.js` | Probability-engine tests (node) |
+| `tools/test_refresh.js` | Live-refresh merge tests (node) |
+| `tools/test_cache.js` | Cache versioning tests (node) |
+| `tools/test_config.js` | Season-config tests (node) |
+| `tools/test_liqparse.py` | Liquipedia parser + ETL gate tests |
+| `tools/test_config.py` | Season-config schema tests |
+| `data/season.json` | Validated season rules (teams, slots, priors, endpoints, cache) |
 | `tools/check_parity.py` | Regen parity gate |
 | `tools/shots.py` | README screenshots per the shooting spec below (Playwright + system Chrome) |
 | `assets/` | Downloaded artwork + `manifest.json` |
@@ -99,10 +107,16 @@ python tools/fetch_assets.py   # download missing hero/item assets
 python tools/fetch_assets.py --live        # also cover season progress
 python tools/fetch_assets.py --check-only  # audit only
 python tools/gen_dark.py       # rebuild the HTML
-python tools/check_parity.py   # regen parity gate
-python tools/check.py          # regression suite (0 failures expected)
+python tools/verify.py         # standard regression: unit suites + check.py + parity
+python tools/check.py          # data-integrity + asset suite alone (0 failures expected)
+node tools/test_chances.js     # probability-engine tests alone
 python tools/shots.py --zoom # re-capture README screenshots (see spec)
 ```
+
+GitHub Actions (`.github/workflows/ci.yml`) runs the build plus
+`tools/verify.py` on pushes to `main` and pull requests targeting `main`.
+CI uses only committed data and templates — the network ETL and the
+Playwright screenshots are manual steps, not CI jobs.
 
 ## Screenshot spec (do not change without approval)
 

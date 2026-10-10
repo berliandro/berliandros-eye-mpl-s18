@@ -1,5 +1,25 @@
 const DATA = __DATA__;
-const TEAMS = ["AE", "BTR", "DEWA", "EVOS", "GEEK", "NAVI", "ONIC", "RRQ", "TLID"];
+const SEASON = __SEASON__;
+/* CFG-START */
+/* Season configuration guard: the build (tools/gen_dark.py) strictly
+   validates data/season.json and aborts on any problem, so an invalid
+   SEASON here means a hand-edited bundle. Log clearly and keep rendering
+   with the embedded values rather than inventing replacements. */
+function validSeasonCfg(c){
+if(!c||typeof c!=='object')return false;
+if(!Array.isArray(c.teams)||!c.teams.length||c.teams.length!==c.totalTeams)return false;
+if(!(c.roundRobinRounds>=1))return false;
+if(c.seriesPerTeam!==c.roundRobinRounds*(c.teams.length-1))return false;
+if(!(c.playoffSlots>=1&&c.playoffSlots<c.teams.length))return false;
+if(!(c.upperBracketSlots>=0&&c.upperBracketSlots<=c.playoffSlots))return false;
+if(!c.aliases||typeof c.aliases!=='object'||!Object.keys(c.aliases).length)return false;
+if(!c.endpoints||!c.endpoints.hub||!c.endpoints.liquipediaSeasonPage)return false;
+if(!c.seasonId||!(c.cacheSchema>=1)||!c.cacheNamespace)return false;
+if(!c.model||!(c.model.trials>=1))return false;
+return true;}
+/* CFG-END */
+if(!validSeasonCfg(SEASON))console.error('invalid season configuration in bundle');
+const TEAMS = SEASON.teams;
 const TEAM_LOGOS = {ae:"assets/teams/ae.png",btr:"assets/teams/btr.png",dewa:"assets/teams/dewa.png",evos:"assets/teams/evos.png",geek:"assets/teams/geek.png",navi:"assets/teams/navi.png",onic:"assets/teams/onic.png",rrq:"assets/teams/rrq.png",tlid:"assets/teams/tlid.png"};
 const logoOf = t => TEAM_LOGOS[String(t||'').toLowerCase()] || '';
 const IMG_HIDE = 'onerror="this.style.visibility=\'hidden\'"';
@@ -488,15 +508,17 @@ function winName(g){return g.winner==='team_a'?g.team_a:(g.winner==='team_b'?g.t
    Bracket"). Method (see calcChances): points-sufficient hard limits
    (clinched/eliminated no matter the tiebreakers), otherwise a seeded
    Monte-Carlo (2000 trials) over the reconciled remaining fixtures with
-   P(A wins) = wra/(wra+wrb) from current series win rates, per-series game
-   scores sampled from the observed BO3 sweep rate, and cuts on
+   P(A wins) = pa/(pa+pb) from Beta(2,2)-smoothed series win rates
+   ((won+2)/(played+4)), per-series game
+   scores sampled from the Beta(2,2)-smoothed BO3 sweep rate, and cuts on
    (points, simulated game diff, head-to-head mini-league). Official
    tiebreakers: 1. Matches Win, 2. Diff, 3. H2H
    (docs/MPL_ID_S18_Regular_Season.md). Fixed seed → stable across renders. */
-/* Dynamic season config (no hardcoded team/slot counts below). MPL ID regular
-   season: 9 teams, double round-robin → each team plays 16 series. */
-const TOTAL_TEAMS=9,ROUND_ROBIN_ROUNDS=2,PLAYOFF_SLOTS=6,UPPER_BRACKET_SLOTS=2;
-const TOTAL_SERIES=ROUND_ROBIN_ROUNDS*(TOTAL_TEAMS-1),TRIALS=2000;
+/* Season constants derived from the validated bundle configuration
+   (data/season.json); see also tools/test_config.js which pins the Season 18
+   values and tools/gen_dark.py which refuses to build invalid configs. */
+const TOTAL_TEAMS=SEASON.totalTeams,ROUND_ROBIN_ROUNDS=SEASON.roundRobinRounds,PLAYOFF_SLOTS=SEASON.playoffSlots,UPPER_BRACKET_SLOTS=SEASON.upperBracketSlots;
+const TOTAL_SERIES=SEASON.seriesPerTeam,TRIALS=SEASON.model.trials;
 /* CHANCES-START */
 /* Fixture normalization (pure, tested): schedule rows -> calcChances input.
    Drops playoff rows and unknown/TBD sides; marks completed rows decided
@@ -508,8 +530,13 @@ const TOTAL_SERIES=ROUND_ROBIN_ROUNDS*(TOTAL_TEAMS-1),TRIALS=2000;
    played + remaining at totalSeries per team by dropping that team's live
    rows first (upcoming rows are never dropped: each is simulated exactly
    once; completed results are never re-simulated). */
-var TEAM_ALIAS={natusvincere:'navi',teamliquidid:'tlid',alterego:'ae',alteregoesports:'ae',bigetronbyvitality:'btr',bigetron:'btr',dewaunited:'dewa',dewaunitedesports:'dewa',dewa:'dewa',onic:'onic',evos:'evos',rrqhoshi:'rrq',rrq:'rrq',geekfam:'geek',geekfamid:'geek',geek:'geek',navi:'navi',tlid:'tlid',ae:'ae',btr:'btr'};
-function normTeam(t){var u=String(t||'').toLowerCase().replace(/[^a-z0-9]/g,'');return TEAM_ALIAS[u]||u;}
+/* Canonical team codes from the season configuration. Keys are lowercase
+   alphanumeric (no spaces/punctuation); every spelling in tools/test_config.js
+   battery resolves through this single map. Unknown sides pass through so
+   fixture validation can report them instead of silently dropping them. */
+var TEAM_ALIAS=SEASON.aliases||{};
+function normTeamCode(t){return String(t||'').toLowerCase().replace(/[^a-z0-9]/g,'');}
+function normTeam(t){var u=normTeamCode(t);return String(TEAM_ALIAS[u]||u).toLowerCase();}
 function isPORow(m){return String(m.schedule_id||m.match_id||'').indexOf('playoffs')>-1||(m.team_a==='TBD'&&m.team_b==='TBD');}
 function isTerminalScore(sa,sb){return (sa===2&&(sb===0||sb===1))||(sb===2&&(sa===0||sa===1));}
 function normalizeFixtures(schedule,known,playedMap,totalSeries){
@@ -557,10 +584,14 @@ return {fixtures:fixtures,decidedLive:decidedLive,dropped:dropped};
    base table and the sweep-rate calibration. opts: {totalSeries,
    playoffSlots, upperSlots, trials, seed, winProb:'bradley-terry'|'even',
    sweepP (override), exact (enumerate, fixtures<=12)}.
-   Team strength is never invented: 'bradley-terry' derives P(A wins) from the
-   two teams' current series win rates; 'even' is the documented neutral
-   baseline. Game-score sampling uses the observed sweep share among decided
-   BO3s (fallback 0.5 with no data). Ranking per outcome: points, then
+   Team strength is never invented: 'bradley-terry' converts smoothed series
+   win rates into P(A wins) via the ratio pa/(pa+pb) — a Bradley-Terry-STYLE
+   heuristic, not a fitted model. Smoothing applies a symmetric Beta(2,2)
+   prior (4 pseudo-series at 2-2): (won+2)/(played+4), so 0-0 estimates sit
+   at 0.5 and no finite record yields exactly 0 or 1; 'even' is the
+   documented neutral baseline. Game-score sampling uses the sweep share
+   among decided BO3s with the same Beta(2,2) prior ((sweeps+2)/(decided+4),
+   0.5 with no data). Ranking per outcome: points, then
    simulated game diff, then head-to-head series record inside the tied group
    (mini-league over decided + simulated results); leftover ties fall back to
    key order — deterministic but arbitrary, documented here, never presented
@@ -649,10 +680,27 @@ return;}
 remFx.push({a:a,b:b});
 });
 diag.remaining=remFx.length;
-var sweepP=opts.sweepP!=null?+opts.sweepP:(sweepD?sweepN/sweepD:0.5);
+/* Statistical smoothing (Beta prior: priorW pseudo-wins in priorN
+   pseudo-series, S18: Beta(2,2) = 4 pseudo-series at 2-2 via opts/the season
+   config; invalid values clamp to 2/4): win-rate
+   estimates shrink toward the neutral 50% baseline when samples are small
+   and converge to the observed record as results accumulate. Strength 4 is
+   ~25% of a 16-series season: enough to prevent exact 0%/100% matchup
+   probabilities from finite-sample extremes (0-0 -> 0.5; an undefeated team
+   still meets a winless team strictly inside (0,1)), small enough that a
+   full season of data dominates the prior. Team strength is never invented:
+   the prior is symmetric and team-independent; only actual series wins and
+   losses move estimates. Upcoming fixtures are never counted as history.
+   Matchup conversion keeps the existing win-rate-ratio form pa/(pa+pb): a
+   Bradley-Terry-STYLE heuristic on smoothed rates, NOT a formally fitted
+   Bradley-Terry model (no iterative fitting is performed). 'even' mode is
+   the documented neutral baseline (0.5 for every fixture). */
+var PRIOR_W=opts.priorW!=null?+opts.priorW:2,PRIOR_N=opts.priorN!=null?+opts.priorN:4;
+if(!(PRIOR_N>0)||!(PRIOR_W>=0)||!(PRIOR_W<=PRIOR_N)){PRIOR_W=2;PRIOR_N=4;}
+var sweepP=opts.sweepP!=null?+opts.sweepP:(sweepN+PRIOR_W)/(sweepD+PRIOR_N);
 if(!(sweepP>=0&&sweepP<=1))sweepP=0.5;
 diag.sweepP=sweepP;
-function winRate(r){var p=r.won+r.lost;return p>0?r.won/p:0.5;}
+function winRate(r){return (r.won+PRIOR_W)/(r.won+r.lost+PRIOR_N);}
 function qWin(a,b){
 if(mode==='even')return 0.5;
 var pa=winRate(byKey[a]),pb=winRate(byKey[b]);
@@ -762,7 +810,7 @@ const known={};rows.forEach(r=>{known[key(r)]=1;});
 const playedMap={};rows.forEach(r=>{playedMap[key(r)]=(+r.match_win||0)+(+r.match_lose||0);});
 const nf=normalizeFixtures(DATA.schedule||[],known,playedMap,TOTAL_SERIES);
 const standingsN=rows.map(r=>({key:key(r),pts:+r.match_point||0,won:+r.match_win||0,lost:+r.match_lose||0,diff:+r.net_game_win||0}));
-const res=calcChances(standingsN,nf.fixtures,{totalSeries:TOTAL_SERIES,playoffSlots:PLAYOFF_SLOTS,upperSlots:UPPER_BRACKET_SLOTS,trials:TRIALS,seed:0x51ab});
+const res=calcChances(standingsN,nf.fixtures,{totalSeries:TOTAL_SERIES,playoffSlots:PLAYOFF_SLOTS,upperSlots:UPPER_BRACKET_SLOTS,trials:TRIALS,seed:SEASON.model.seed,priorW:SEASON.model.priorWins,priorN:SEASON.model.priorGames});
 const out={};
 rows.forEach(r=>{const k=key(r);const e=(res.chances||{})[k]||{pc:{v:0,why:'Eliminated'},ub:{v:0,why:'Eliminated'}};
 out[k]={pc:{v:Math.round(e.pc.v),why:e.pc.why||''},ub:{v:Math.round(e.ub.v),why:e.ub.why||''}};});
@@ -986,7 +1034,7 @@ dSet(m.team_a+' vs '+m.team_b,'#'+id+' · '+(m.date||''),body,
 initW&&markSrc(initW)?{src:markSrc(initW),side:initW===m.team_a?'l':(initW===m.team_b?'r':'l')}:null);
 try{
 const ctl=new AbortController();const tmr=setTimeout(()=>ctl.abort(),15000);
-const r=await fetch('https://mpl.mlbbhub.com/api/v1/id/match/'+encodeURIComponent(id),{signal:ctl.signal});
+const r=await fetch(HUB+'/match/'+encodeURIComponent(id),{signal:ctl.signal});
 clearTimeout(tmr);
 if(!r.ok)return;const d=await r.json();if(!d.games||!d.games.length)return;
 const firstGame=wantGame!=null?wantGame:String(d.games[0].game);
@@ -1023,7 +1071,7 @@ const first=f[0],last=f[f.length-1];
 if(e.shiftKey&&document.activeElement===first){e.preventDefault();last.focus();}
 else if(!e.shiftKey&&document.activeElement===last){e.preventDefault();first.focus();}});
 document.getElementById('dlg2').addEventListener('close',()=>{if(lastFocus)lastFocus.focus();});
-const HUB='https://mpl.mlbbhub.com/api/v1/id';
+const HUB=SEASON.endpoints.hub;
 function normLive(d){const games=[],pros=[],bans=[];
 (d.games||[]).forEach(g=>{const sec=durSec(g.duration);
 games.push({match_detail_id:String(d.match_id),game_no:g.game,team_a:g.team_a,team_b:g.team_b,team_a_kills:g.team_a_kills,team_b_kills:g.team_b_kills,winner:g.winner,duration_str:g.duration,duration_sec:sec,team_a_side:g.team_a_side,team_b_side:g.team_b_side,vod_url:g.vod_url});
@@ -1040,8 +1088,102 @@ i:(p.items||[]).map(eq).filter(Boolean)});});});
 return {games,pros,bans};}
 function buildPool(pros){const m={};pros.forEach(r=>{(m[r.player]=m[r.player]||[]).push(r.hero);});
 const o={};Object.entries(m).forEach(([p,hs])=>{const c={};hs.forEach(h=>{c[h]=(c[h]||0)+1;});o[p]=Object.entries(c).sort((a,b)=>b[1]-a[1]).slice(0,6);});return o;}
-const TEAMCANON={'rrq hoshi':'rrq','geek fam id':'geek','geek fam':'geek','bigetron by vitality':'btr','team liquid id':'tlid','natus vincere':'navi','alter ego':'ae','dewa united esports':'dewa','onic':'onic','evos':'evos','rrq':'rrq','geek':'geek','btr':'btr','tlid':'tlid','navi':'navi','ae':'ae','dewa':'dewa'};
-const canonT=t=>{const n=String(t||'').toLowerCase().replace(/\s+/g,' ').trim();return TEAMCANON[n]||TEAMCANON[n.replace(/esports/g,'').trim()]||n;};
+/* REFRESH-START */
+/* Pure live-refresh merge/validation helpers (tested, no DOM access).
+   Composite keys mirror the ETL primary keys: games (match, game),
+   player rows (match, game, team, player, hero), bans (match, game, side,
+   hero). mergeRefresh() replaces old rows ONLY for successfully refreshed
+   match IDs and keeps previous records for failed IDs; both sides dedupe,
+   so repeated refreshes never duplicate rows. validSnapshot() gates what
+   may become shared state or cache. refreshStatus() phrases complete vs
+   partial outcomes for the existing status element. */
+function keyGame(g){return g.match_detail_id+':'+g.game_no;}
+function keyPro(p){return p.match_detail_id+':'+p.game_no+':'+p.team+':'+p.player+':'+p.hero;}
+function keyBan(b){return b.match_detail_id+':'+b.game_no+':'+b.side+':'+b.hero;}
+function mergeRefresh(oldArr,freshById,pick,keyFn){
+var out=[],seen={};
+function good(f){return f&&f.ok&&Array.isArray(f[pick]);}
+Object.keys(freshById).forEach(function(id){var f=freshById[id];if(!good(f))return;
+f[pick].forEach(function(r){var k=keyFn(r);if(!seen[k]){seen[k]=1;out.push(r);}});});
+(oldArr||[]).forEach(function(r){var id=r&&r.match_detail_id;
+if(good(freshById[id]))return;
+var k=keyFn(r);if(!seen[k]){seen[k]=1;out.push(r);}});
+return out;
+}
+function validSnapshot(s){
+var errors=[];
+if(!s||!Array.isArray(s.schedule)||!s.schedule.length)errors.push('schedule');
+if(!s||!Array.isArray(s.standings)||!s.standings.length)errors.push('standings');
+if(!s||!Array.isArray(s.season))errors.push('season');
+if(s&&s.standings&&!s.standings.every(function(r){return r&&(r.team_slug||r.team_name)!=null&&(isFinite(+r.match_point)||r.match_point==null);}))errors.push('standings-shape');
+return {ok:!errors.length,errors:errors};
+}
+function refreshStatus(o){
+var t=new Date().toLocaleTimeString();
+var base=' · '+o.games+' games · '+o.mvpN+' MVPs'+(o.newMsg||'');
+if(o.complete)return 'updated '+t+base;
+return 'partially updated '+t+base+' · '+o.fails+' failed (kept previous records)';
+}
+/* REFRESH-END */
+/* CACHE-START */
+/* Pure versioned-cache helpers (tested, no DOM access). Entries carry
+   seasonId, schema version, a deterministic content fingerprint, decided
+   fixture count, completeness, and refresh timestamps under a namespaced
+   key `mpl-board:<seasonId>:v<schema>`. Freshness rule (documented):
+   higher decided-fixture count wins; equal progress with different content
+   resolves to the timestamped side, else the bundle. Completeness never
+   overrides progress, but a partial snapshot in use is always labelled.
+   Offline-first is preserved: a valid older cache remains usable when the
+   bundle is older, and partial snapshots are never presented as fresh. */
+function cacheKeyFor(seasonId,schema){return 'mpl-board:'+seasonId+':v'+schema;}
+function fingerprintSnapshot(s){
+var str=JSON.stringify([(s.standings||[]).map(function(r){return [r.team_slug||r.team_name,r.match_point,r.match_win,r.match_lose,r.game_win,r.game_lose,r.net_game_win];}),
+(s.schedule||[]).map(function(m){return [m.schedule_id||m.match_id,m.team_a,m.team_b,m.score_a,m.score_b,m.status,m.winner];})]);
+var h=0x811c9dc5;for(var i=0;i<str.length;i++){h^=str.charCodeAt(i);h=Math.imul(h,0x01000193)>>>0;}
+return ('0000000'+h.toString(16)).slice(-8);
+}
+function countDecidedSet(schedule,poRowFn,isTermFn){
+var n=0;(schedule||[]).forEach(function(m){
+if(poRowFn(m))return;
+var sa=+m.score_a,sb=+m.score_b;
+if(String(m.status)==='completed'||isTermFn(sa,sb))n++;});return n;}
+function makeCacheEntry(s,meta){
+return {v:1,seasonId:meta.seasonId,schema:meta.schema,fp:fingerprintSnapshot(s),
+decided:meta.decided!=null?meta.decided:0,complete:!!meta.complete,
+failedIds:meta.failedIds||[],refreshedAt:meta.refreshedAt||null,
+source:meta.source||'refresh',data:s};
+}
+function validateCacheEntry(e,opts){
+if(!e||typeof e!=='object')return {ok:false,reason:'not-an-entry'};
+if(e.seasonId!==opts.seasonId)return {ok:false,reason:'season'};
+if(e.schema!==opts.schema)return {ok:false,reason:'schema'};
+if(!e.data||typeof e.data!=='object')return {ok:false,reason:'shape'};
+if(!Array.isArray(e.data.schedule)||!e.data.schedule.length)return {ok:false,reason:'shape'};
+if(!Array.isArray(e.data.standings)||!e.data.standings.length)return {ok:false,reason:'shape'};
+if(fingerprintSnapshot(e.data)!==e.fp)return {ok:false,reason:'fingerprint'};
+return {ok:true,reason:'valid'};
+}
+/* emb/cache: {fp,decided[,complete,refreshedAt]} (cache null when absent or
+   invalid). Never throws; exact ties resolve to 'embedded'. Selection rule:
+   higher decided-fixture count wins ('newer'); equal progress with different
+   content resolves to whichever side carries a refresh timestamp, else the
+   bundle. Completeness never overrides progress (a newer partial snapshot
+   still carries newer standings/schedule; its gaps stay explicit in
+   failedIds), but a partial snapshot in use is always labelled as such. */
+function selectSnapshot(emb,cache){
+if(!cache)return {use:'embedded',why:'no-cache',partial:false};
+if(cache.fp===emb.fp)return {use:'embedded',why:'identical',partial:false};
+if(cache.decided!==emb.decided)
+return cache.decided>emb.decided?{use:'cache',why:'newer',partial:!cache.complete}
+:{use:'embedded',why:'newer',partial:false};
+if(cache.refreshedAt&&!emb.refreshedAt)return {use:'cache',why:'tiebreak',partial:!cache.complete};
+return {use:'embedded',why:'tie',partial:false};
+}
+/* CACHE-END */
+/* MVP team-name canonicalization reuses the single season alias map and the
+   same alphanumeric normalization (covered by the mapping battery in
+   tools/test_config.js); unknown spellings pass through. */
+const canonT=t=>normTeam(t);
 function parseMvps(wt){const out=[];const blocks=wt.split(/\|M\d+=\{\{Match/);
 for(let i=1;i<blocks.length;i++){const b=blocks[i];
 const t1=(/opponent1=\{\{TeamOpponent\|([^\}\|\n]+)/.exec(b)||[])[1]||'';
@@ -1050,9 +1192,9 @@ const date=((/\|date=([^\n]+)/.exec(b)||[])[1]||'').replace('{{abbr/ICT}}','ICT'
 const mvp=((/\|mvp=([^\n\|]*)/.exec(b)||[])[1]||'').trim();
 out.push({t1:t1.trim(),t2:t2.trim(),date:date,mvp:mvp});}
 return out;}
-async function fetchMvps(){const q='action=parse&page='+encodeURIComponent('MPL/Indonesia/Season_18/Regular_Season')+'&prop=wikitext&format=json&origin=*';
+async function fetchMvps(){const q='action=parse&page='+encodeURIComponent(SEASON.endpoints.liquipediaSeasonPage)+'&prop=wikitext&format=json&origin=*';
 const timeout=new Promise((_,rej)=>setTimeout(()=>rej(new Error('mvp-timeout')),25000));
-const req=fetch('https://liquipedia.net/mobilelegends/api.php?'+q).then(r=>{if(!r.ok)throw new Error('liquipedia');return r.json();});
+const req=fetch(SEASON.endpoints.liquipediaApi+'?'+q).then(r=>{if(!r.ok)throw new Error('liquipedia');return r.json();});
 const j=await Promise.race([req,timeout]);
 return parseMvps((j.parse&&j.parse.wikitext&&j.parse.wikitext['*'])||'');}
 function applyMvps(list){let n=0;
@@ -1086,29 +1228,59 @@ if(po)DATA.playoffs=po;
 const mvpMap=Object.fromEntries((DATA.matches||[]).map(m=>[String(m.match_detail_id),m.liq_mvp]));
 DATA.matches=ms.filter(m=>/^\d+$/.test(String(m.match_detail_id||''))).map(m=>({match_detail_id:String(m.match_detail_id),schedule_id:m.match_id,team_a:m.team_a,team_b:m.team_b,score_a:m.score_a,score_b:m.score_b,date:m.date,iso_date:m.iso_date,iso_datetime:m.iso_datetime,status:m.status,winner:m.winner,vod_url:m.vod_url,match_detail_url:m.match_detail_url,liq_mvp:mvpMap[String(m.match_detail_id)]||''}));
 const mvpN=applyMvps(mvpList||[]);
+const topChk=validSnapshot({schedule:ms,standings:st,season:ps});
+if(!topChk.ok)throw new Error('bad top-level response: '+topChk.errors.join(','));
 const ids=[...new Set(DATA.matches.map(m=>m.match_detail_id))];
-const allGames=[],allPros=[],allBans=[];let done=0,fails=0;const q=[...ids];const okIds=new Set();
+const fresh={};ids.forEach(id=>{fresh[id]={ok:false};});
+let done=0;const q=[...ids];
 upd.textContent='games 0/'+ids.length+'…';
 await Promise.all(Array.from({length:6},()=> (async()=>{while(q.length){const id=q.pop();
 try{const d=await fetch(HUB+'/match/'+encodeURIComponent(id)).then(r=>{if(!r.ok)throw new Error(id);return r.json();});
-const n=normLive(d);allGames.push(...n.games);allPros.push(...n.pros);allBans.push(...n.bans);okIds.add(String(id));}catch(e){fails++;}
+if(String(d.match_id)!==String(id))throw new Error('id-mismatch '+id);
+const n=normLive(d);fresh[id]={ok:true,games:n.games,pros:n.pros,bans:n.bans};}catch(e){fresh[id]={ok:false};}
 done++;upd.textContent='games '+done+'/'+ids.length+'…';}})()));
-DATA.games=allGames;DATA.players=allPros;DATA.hero_pool=buildPool(allPros);
-DATA.bans=[...allBans,...(DATA.bans||[]).filter(b=>!okIds.has(String(b.match_detail_id)+':'+String(b.game_no)))];
+const failedIds=ids.filter(id=>!fresh[id].ok);
+DATA.games=mergeRefresh(DATA.games,fresh,'games',keyGame);
+DATA.players=mergeRefresh(DATA.players,fresh,'pros',keyPro);
+DATA.hero_pool=buildPool(DATA.players);
+DATA.bans=mergeRefresh(DATA.bans,fresh,'bans',keyBan);
+const complete=!failedIds.length;
 const AH2=(window.ASSETS||{}).heroes||{},AI2=(window.ASSETS||{}).items||{};
-const newH=[...new Set(allPros.map(p=>p.hero).filter(h=>h&&!Object.prototype.hasOwnProperty.call(AH2,h)))];
-const newI=[...new Set(allPros.flatMap(p=>p.i||[]).filter(x=>x&&!Object.prototype.hasOwnProperty.call(AI2,x)))];
+const newH=[...new Set(DATA.players.map(p=>p.hero).filter(h=>h&&!Object.prototype.hasOwnProperty.call(AH2,h)))];
+const newI=[...new Set(DATA.players.flatMap(p=>p.i||[]).filter(x=>x&&!Object.prototype.hasOwnProperty.call(AI2,x)))];
 const newMsg=(newH.length||newI.length)?` · ${newH.length+newI.length} new art via live CDN (persist: python tools/fetch_assets.py)`:'';
-try{localStorage.setItem('s18db',JSON.stringify({t:Date.now(),schedule:ms,standings:st,season:ps,players:allPros,games:allGames,bans:DATA.bans,heroPool:DATA.hero_pool,matches:DATA.matches,heroes:DATA.heroes,playoffs:DATA.playoffs}));}catch(e){upd.textContent='updated '+new Date().toLocaleTimeString()+' (not cached: storage full)';render();btn.disabled=false;btn.textContent=old;return;}
-upd.textContent='updated '+new Date().toLocaleTimeString()+' · '+allGames.length+' games · '+mvpN+' MVPs'+(fails?' · '+fails+' failed':'')+newMsg;setNet();render();
+var cacheObj=makeCacheEntry({schedule:ms,standings:st,season:ps,players:DATA.players,games:DATA.games,bans:DATA.bans,heroPool:DATA.hero_pool,matches:DATA.matches,heroes:DATA.heroes,playoffs:DATA.playoffs},{seasonId:SEASON_ID,schema:CACHE_SCHEMA,decided:countDecidedSet(ms,isPORow,isTerminalScore),complete:complete,failedIds:failedIds,refreshedAt:Date.now(),source:'refresh'});
+try{localStorage.setItem(CK,JSON.stringify(cacheObj));}catch(e){upd.textContent='updated '+new Date().toLocaleTimeString()+' (not cached: storage full)';render();btn.disabled=false;btn.textContent=old;return;}
+upd.textContent=refreshStatus({complete:complete,fails:failedIds.length,games:DATA.games.length,mvpN:mvpN,newMsg:newMsg});setNet();render();
 }catch(e){upd.textContent='refresh failed — offline? showing last snapshot';setNet();}
 btn.disabled=false;btn.textContent=old;}
 document.getElementById('refresh').onclick=refreshDB;
-try{const c=JSON.parse(localStorage.getItem('s18db')||'null');
-if(c&&c.schedule&&c.schedule.length){DATA.schedule=c.schedule;if(c.standings)DATA.standings=c.standings;if(c.season)DATA.season=c.season;
-if(c.players&&c.players.length){DATA.players=c.players;}if(c.games&&c.games.length){DATA.games=c.games;}
-if(c.bans&&c.bans.length){DATA.bans=c.bans;}
-if(c.heroPool)DATA.hero_pool=c.heroPool;if(c.matches&&c.matches.length){DATA.matches=c.matches;}
-if(c.heroes&&c.heroes.length){DATA.heroes=c.heroes;}if(c.playoffs){DATA.playoffs=c.playoffs;}
-document.getElementById('upd').textContent='snapshot '+new Date(c.t).toLocaleString();}}catch(e){}
+const SEASON_ID=SEASON.seasonId,CACHE_SCHEMA=SEASON.cacheSchema;
+const CK=cacheKeyFor(SEASON_ID,CACHE_SCHEMA);
+function snapOf(){return {schedule:DATA.schedule,standings:DATA.standings,season:DATA.season,players:DATA.players,games:DATA.games,bans:DATA.bans,heroPool:DATA.hero_pool,matches:DATA.matches,heroes:DATA.heroes,playoffs:DATA.playoffs};}
+try{var embSnap=snapOf();
+var embMeta={fp:fingerprintSnapshot(embSnap),decided:countDecidedSet(DATA.schedule,isPORow,isTerminalScore),complete:true};
+var cacheEntry=null;
+try{
+var rawC=localStorage.getItem(CK);
+if(rawC){var ent=JSON.parse(rawC);
+if(validateCacheEntry(ent,{seasonId:SEASON_ID,schema:CACHE_SCHEMA}).ok)cacheEntry=ent;}
+else{var legRaw=localStorage.getItem('s18db');
+if(legRaw){var leg=null;try{leg=JSON.parse(legRaw);}catch(le){leg=null;}
+if(leg&&validSnapshot(leg).ok){
+// Legacy entries predate completeness metadata and may hold partial detail
+// collections from wholesale replaces: adopt only the always-complete
+// top-level collections and keep the embedded games/players/bans. Detail
+// rows for newer matches stay missing until the next successful refresh.
+var adopt={schedule:leg.schedule,standings:leg.standings,season:leg.season,matches:leg.matches||[],heroes:leg.heroes||[],playoffs:(leg.playoffs||null),heroPool:(leg.heroPool||null),players:DATA.players,games:DATA.games,bans:DATA.bans};
+cacheEntry=makeCacheEntry(adopt,{seasonId:SEASON_ID,schema:CACHE_SCHEMA,decided:countDecidedSet(leg.schedule,isPORow,isTerminalScore),complete:false,failedIds:[],refreshedAt:(typeof leg.t==='number'?leg.t:null),source:'legacy-migration'});
+try{localStorage.setItem(CK,JSON.stringify(cacheEntry));localStorage.removeItem('s18db');}catch(se){}}}}
+}catch(ce){cacheEntry=null;}
+var pick=cacheEntry?selectSnapshot(embMeta,{fp:cacheEntry.fp,decided:cacheEntry.decided,complete:cacheEntry.complete,refreshedAt:cacheEntry.refreshedAt}):selectSnapshot(embMeta,null);
+if(cacheEntry&&pick.use==='cache'){var dd=cacheEntry.data;
+DATA.schedule=dd.schedule;DATA.standings=dd.standings;DATA.season=dd.season;
+DATA.players=dd.players;DATA.games=dd.games;DATA.bans=dd.bans;
+if(dd.heroPool)DATA.hero_pool=dd.heroPool;if(dd.matches&&dd.matches.length)DATA.matches=dd.matches;
+if(dd.heroes&&dd.heroes.length)DATA.heroes=dd.heroes;if(dd.playoffs)DATA.playoffs=dd.playoffs;
+document.getElementById('upd').textContent='snapshot '+new Date(cacheEntry.refreshedAt||Date.now()).toLocaleString()+(pick.partial?' (partial)':'');}}catch(e){}
 render();
