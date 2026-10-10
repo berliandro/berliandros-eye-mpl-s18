@@ -101,7 +101,7 @@ python tools/fetch_assets.py --check-only  # audit only
 python tools/gen_dark.py       # rebuild the HTML
 python tools/check_parity.py   # regen parity gate
 python tools/check.py          # regression suite (0 failures expected)
-python tools/shots.py --zoom # re-capture README screenshots (see spec)
+python tools/shots.py --zoom # re-capture README screenshots (see spec) 
 ```
 
 ## Screenshot spec (do not change without approval)
