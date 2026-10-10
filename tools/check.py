@@ -4,6 +4,7 @@ Exit 0 = PASS, 1 = FAIL.
 """
 import csv
 import json
+import os
 import re
 import sys
 from pathlib import Path
@@ -117,17 +118,46 @@ ok(mw + ml == len([d for d in mids if (skey.get(d) or {}).get('status') == 'comp
 print(f"INFO {name} snapshot Match {mw}-{ml}, live app showed 6-0/12-1 after refresh (season progresses)")
 
 man = json.loads((ROOT / 'assets' / 'manifest.json').read_text(encoding='utf-8'))
-for key, exp in (('items', 110), ('heroes', 88), ('players', 59)):
+# players floor is the deduplicated photo count (a MAYKIDSS/Maykidss
+# double entry was removed; canonical roster spelling is Maykidss).
+for key, exp in (('items', 110), ('heroes', 88), ('players', 58)):
     got = len(man.get(key, {}))
     ok(got >= exp, f"manifest {key}: {got} (expect >= {exp})")
+
+
+def _exact_case(p):
+    """True iff every path component matches its parent directory entry
+    exactly (guards against case mismatches invisible on Windows/macOS)."""
+    try:
+        parts = list(p.parts)
+        cur = Path(parts[0])
+        if not cur.exists():
+            return False
+        for part in parts[1:]:
+            if part not in os.listdir(cur):
+                return False
+            cur = cur / part
+        return True
+    except OSError:
+        return False
+
+
 missing = []
+wrongcase = []
 for key in ('items', 'heroes', 'emblems', 'runes', 'teams', 'players'):
     for _k, rel in (man.get(key) or {}).items():
         if not (ROOT / rel).exists():
             missing.append(rel)
             if len(missing) > 5:
                 break
+        elif not _exact_case(ROOT / rel):
+            # Case-sensitive filesystems (Linux CI, static hosts) resolve
+            # manifest paths exactly; Windows/macOS checkouts hide mismatches.
+            wrongcase.append(rel)
+            if len(wrongcase) > 5:
+                break
 ok(not missing, f"manifest files exist ({'none missing' if not missing else missing[:3]})")
+ok(not wrongcase, f"manifest paths match on-disk case exactly ({'ok' if not wrongcase else wrongcase[:3]})")
 
 urls = sorted(set(re.findall(r'https://[^\s"\'<>]+', html)))
 ok(len(urls) > 0, f"found {len(urls)} https links")
