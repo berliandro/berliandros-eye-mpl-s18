@@ -1,4 +1,4 @@
-# Berliandro's Eye — MPL ID Season 18
+# Berliandro's Eye - MPL ID Season 18
 
 A dark, minimalist, frosted-glass web app for exploring **MPL Indonesia Season 18**
 (regular season + playoffs): player stats, match scoreboards, standings, and series MVPs.
