@@ -1,10 +1,10 @@
 rank,team_name,team_slug,match_point,match_win,match_lose,game_win,game_lose,net_game_win
-1,NAVI,navi,9,9,2,18,7,11
-2,TEAM LIQUID ID,tlid,9,9,3,20,9,11
-3,ALTER EGO ESPORTS,ae,8,8,4,18,9,9
-4,BIGETRON BY VIT,btr,7,7,5,15,15,0
-5,EVOS,evos,5,5,5,11,12,-1
-6,DEWA UNITED,dewa,5,5,6,11,15,-4
-7,ONIC,onic,4,4,7,12,14,-2
-8,RRQ HOSHI,rrq,2,2,9,8,19,-11
-9,GEEK FAM,geek,2,2,10,8,21,-13
+1,NAVI,navi,11,11,3,23,9,14
+2,TEAM LIQUID ID,tlid,11,11,4,24,11,13
+3,ALTER EGO ESPORTS,ae,9,9,5,20,11,9
+4,EVOS,evos,7,7,6,16,16,0
+5,BIGETRON BY VIT,btr,7,7,6,15,17,-2
+6,ONIC,onic,5,5,8,15,17,-2
+7,DEWA UNITED,dewa,5,5,9,13,21,-8
+8,RRQ HOSHI,rrq,3,3,10,10,22,-12
+9,GEEK FAM,geek,3,3,10,10,22,-12

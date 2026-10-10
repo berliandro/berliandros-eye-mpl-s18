@@ -31,6 +31,7 @@ match_detail_id,schedule_id,team_a,team_b,score_a,score_b,date,iso_date,iso_date
 1065,id-w4-5,RRQ,NAVI,0,2,"Sunday, 6 September 2026",2026-09-06,2026-09-06T14:00:00+07:00,completed,team_b,https://www.youtube.com/watch?v=nu3RfzQdsec,https://id-mpl.com/match-detail/1065,Coolfire
 1066,id-w4-6,ONIC,EVOS,2,0,"Sunday, 6 September 2026",2026-09-06,2026-09-06T17:00:00+07:00,completed,team_a,https://www.youtube.com/watch?v=nu3RfzQdsec,https://id-mpl.com/match-detail/1066,Kairi
 1067,id-w4-7,AE,BTR,2,0,"Sunday, 6 September 2026",2026-09-06,2026-09-06T20:00:00+07:00,completed,team_b,https://www.youtube.com/watch?v=nu3RfzQdsec,https://id-mpl.com/match-detail/1067,Nino
+1068,id-w8-0,EVOS,DEWA,2,1,"Thursday, 8 October 2026",2026-10-08,2026-10-08T14:00:00+07:00,completed,team_a,https://www.youtube.com/watch?v=7Fk2t0Kc9-Q,https://id-mpl.com/match-detail/1068,Alberttt
 1069,id-w5-0,GEEK,ONIC,2,1,"Friday, 11 September 2026",2026-09-11,2026-09-11T18:00:00+07:00,completed,team_a,https://www.youtube.com/watch?v=TeegcSSZJbI,https://id-mpl.com/match-detail/1069,Maykids
 1070,id-w5-1,TLID,BTR,2,0,"Saturday, 12 September 2026",2026-09-12,2026-09-12T14:00:00+07:00,completed,team_a,https://www.youtube.com/watch?v=ykgecDVRvlI,https://id-mpl.com/match-detail/1070,JOOOOO
 1071,id-w5-2,AE,RRQ,2,0,"Saturday, 12 September 2026",2026-09-12,2026-09-12T17:00:00+07:00,completed,team_a,https://www.youtube.com/watch?v=ykgecDVRvlI,https://id-mpl.com/match-detail/1071,Arfy
@@ -48,4 +49,13 @@ match_detail_id,schedule_id,team_a,team_b,score_a,score_b,date,iso_date,iso_date
 1083,id-w6-8,EVOS,TLID,2,1,"Sunday, 20 September 2026",2026-09-20,2026-09-20T20:00:00+07:00,completed,team_a,https://www.youtube.com/watch?v=K30JsmMhQ4Q,https://id-mpl.com/match-detail/1083,EgaTzy
 1084,id-w7-0,GEEK,BTR,1,2,"Friday, 2 October 2026",2026-10-02,2026-10-02T15:00:00+07:00,completed,team_b,https://www.youtube.com/watch?v=Nd_s3qCnRPY,https://id-mpl.com/match-detail/1084,Nnael
 1085,id-w7-1,DEWA,TLID,2,1,"Friday, 2 October 2026",2026-10-02,2026-10-02T18:00:00+07:00,completed,team_a,https://www.youtube.com/watch?v=Nd_s3qCnRPY,https://id-mpl.com/match-detail/1085,QINN
-1087,id-w7-3,,,,,"Saturday, 3 October 2026",2026-10-03,2026-10-03T17:00:00+07:00,completed,team_a,https://www.youtube.com/watch?v=px_HftyZBxo,https://id-mpl.com/match-detail/1087,
+1086,id-w7-2,AE,NAVI,1,2,"Saturday, 3 October 2026",2026-10-03,2026-10-03T14:00:00+07:00,completed,team_b,https://www.youtube.com/watch?v=px_HftyZBxo,https://id-mpl.com/match-detail/1086,Coolfire
+1087,id-w7-3,BTR,RRQ,2,1,"Saturday, 3 October 2026",2026-10-03,2026-10-03T17:00:00+07:00,completed,team_a,https://www.youtube.com/watch?v=px_HftyZBxo,https://id-mpl.com/match-detail/1087,EMANN
+1088,id-w7-4,DEWA,GEEK,1,2,"Saturday, 3 October 2026",2026-10-03,2026-10-03T20:00:00+07:00,completed,team_a,https://www.youtube.com/watch?v=px_HftyZBxo,https://id-mpl.com/match-detail/1088,Maykids
+1089,id-w7-5,TLID,AE,2,0,"Sunday, 4 October 2026",2026-10-04,2026-10-04T14:00:00+07:00,completed,team_b,https://www.youtube.com/watch?v=S7ugRA3UMjo,https://id-mpl.com/match-detail/1089,Aran
+1090,id-w7-6,RRQ,EVOS,2,1,"Sunday, 4 October 2026",2026-10-04,2026-10-04T17:00:00+07:00,completed,team_a,https://www.youtube.com/watch?v=S7ugRA3UMjo,https://id-mpl.com/match-detail/1090,Lynchh
+1091,id-w7-7,ONIC,NAVI,2,1,"Sunday, 4 October 2026",2026-10-04,2026-10-04T20:00:00+07:00,completed,team_a,https://www.youtube.com/watch?v=S7ugRA3UMjo,https://id-mpl.com/match-detail/1091,Kairi
+1092,id-w8-1,AE,BTR,2,0,"Thursday, 8 October 2026",2026-10-08,2026-10-08T17:00:00+07:00,completed,team_a,https://www.youtube.com/watch?v=7Fk2t0Kc9-Q,https://id-mpl.com/match-detail/1092,Hijumee
+1093,id-w8-2,NAVI,TLID,2,0,"Thursday, 8 October 2026",2026-10-08,2026-10-08T20:00:00+07:00,completed,team_a,https://www.youtube.com/watch?v=7Fk2t0Kc9-Q,https://id-mpl.com/match-detail/1093,Coolfire
+1094,id-w8-3,EVOS,ONIC,2,1,"Friday, 9 October 2026",2026-10-09,2026-10-09T14:00:00+07:00,completed,team_a,https://www.youtube.com/watch?v=VWScHYPW7Qc,https://id-mpl.com/match-detail/1094,Rendyy
+1096,id-w8-5,DEWA,NAVI,0,2,"Friday, 9 October 2026",2026-10-09,2026-10-09T20:00:00+07:00,completed,team_b,https://www.youtube.com/watch?v=VWScHYPW7Qc,https://id-mpl.com/match-detail/1096,Coolfire

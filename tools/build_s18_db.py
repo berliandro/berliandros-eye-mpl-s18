@@ -157,8 +157,11 @@ def main():
     # MVP merge: liq list is 72 long in chronological order; numeric hub matches are first 50ish completed in same order.
     # Align by matching team pair (normalized) where possible.
     def norm(t): return re.sub(r"\s+", " ", (t or "").lower().replace("esports","").strip())
+    # NOTE: keys must be in post-norm() form (norm strips "esports", so the
+    # key is "dewa united", not "dewa united esports" — a pre-norm key here
+    # silently never matches and pushes rows into the unmatched path below.
     TEAM_ALIAS = {"rrq hoshi":"rrq","geek fam id":"geek","geek fam":"geek","bigetron by vitality":"btr","team liquid id":"tlid",
-                  "natus vincere":"navi","alter ego":"ae","dewa united esports":"dewa","onic":"onic","evos":"evos"}
+                  "natus vincere":"navi","alter ego":"ae","dewa united":"dewa","onic":"onic","evos":"evos"}
     def canon(t):
         n = norm(t)
         return TEAM_ALIAS.get(n, n)
@@ -173,8 +176,10 @@ def main():
         for i, l in enumerate(liq_remaining):
             if {canon(l["t1"]), canon(l["t2"])} == {ha, hb}:
                 found = liq_remaining.pop(i); break
-        if found is None and liq_remaining:
-            found = liq_remaining.pop(0)
+        # No chronological-fallback attach: if no Liquipedia block matches the
+        # team pair, the MVP stays blank. Attaching the next unmatched block
+        # misattributes MVPs across series (observed: JOOOOO attached to
+        # DEWA-NAVI Oct 9 whose Liquipedia MVP is Coolfire).
         mvp_map[str(h["match_detail_id"])] = (found or {}).get("mvp","")
 
     n_games = n_rows = n_bans = 0

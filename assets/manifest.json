@@ -113,7 +113,10 @@
   "3422": "assets/items/3422.png",
   "3442": "assets/items/3442.png",
   "3513": "assets/items/3513.png",
-  "3533": "assets/items/3533.png"
+  "3533": "assets/items/3533.png",
+  "3423": "assets/items/3423.png",
+  "3463": "assets/items/3463.png",
+  "3572": "assets/items/3572.png"
  },
  "heroes": {
   "Alice": "assets/heroes/Alice.jpg",
@@ -207,7 +210,10 @@
   "Gord": "assets/heroes/Gord.jpg",
   "Zetian": "assets/heroes/Zetian.png",
   "Harith": "assets/heroes/Harith.png",
-  "Leomord": "assets/heroes/Leomord.png"
+  "Leomord": "assets/heroes/Leomord.png",
+  "Argus": "assets/heroes/Argus.png",
+  "Baxia": "assets/heroes/Baxia.jpg",
+  "Valir": "assets/heroes/Valir.jpg"
  },
  "emblems": {
   "20001": "assets/emblems/20001.png",

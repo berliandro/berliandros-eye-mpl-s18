@@ -68,8 +68,11 @@ except Exception as e:
     praw = matches = sched = games = season = []
 
 mvp_n = sum(1 for m in matches if (m.get('liq_mvp') or '').strip())
-ok(len(matches) == 50, f"matches.csv has 50 rows (got {len(matches)})")
-ok(mvp_n >= 49, f"MVP coverage {mvp_n}/50")
+n_completed_detail = sum(1 for s in sched if s.get('status') == 'completed'
+                       and re.match(r'^\d+$', str(s.get('match_detail_id') or '')))
+ok(len(matches) == n_completed_detail,
+   f"matches.csv tracks completed series with details ({len(matches)} vs {n_completed_detail})")
+ok(mvp_n >= len(matches) - 1, f"MVP coverage {mvp_n}/{len(matches)}")
 
 # WR calc consistency for Joshuaa (snapshot values drift as season progresses,
 # so verify the counting logic, not a frozen score).
@@ -206,12 +209,15 @@ else:
 # identity (mirror of PLAYER_ALIAS in tools/templates/app.js — keep in sync).
 # Verified: Coolfire=Joshuaa (reddit r/mobilelegendsesports 2026-08-30),
 # JOOOOO=Kevinn = Yonathan Chin (bo3.gg player pages, teamliquid.com roster),
-# Sutsujin=Arthur Sunarkho (Liquipedia, MLDB). Mechanical (row teams intersect
+# Sutsujin=Arthur Sunarkho (Liquipedia, MLDB). Lynchh=Joshua (Liquipedia
+# player page: Joshua "Lynchh" Nicholas, EXP Laner, RRQ Hoshi; id-mpl.com RRQ
+# roster lists JOSHUA as EXP Lane; live-API game rows for the MVP series use
+# IGN Joshua; single Joshua on RRQ). Mechanical (row teams intersect
 # roster team): A B O Y=Aboyy, Jizeezeze=Jiizee, Maykids=Maykidss,
 # Moreno=Morenooo, Rendyy=Rendyyy. Deliberately unmerged: Joshua (RRQ) vs
 # Joshuaa (NAVI) — different people.
 PLAYER_CANON = {'coolfire': 'Joshuaa', 'jooooo': 'Kevinn', 'sutsujin': 'Arthur',
-                'jizeezeze': 'Jiizee', 'maykids': 'Maykidss', 'moreno': 'Morenooo',
+                'lynchh': 'Joshua', 'jizeezeze': 'Jiizee', 'maykids': 'Maykidss', 'moreno': 'Morenooo',
                 'rendyy': 'Rendyyy', 'aboy': 'Aboyy'}
 
 
@@ -231,6 +237,7 @@ def canon(name):
 ok(canon('Coolfire') == 'Joshuaa', "CoolFire resolves to Joshuaa (not a separate player)")
 ok(canon('JOOOOO') == 'Kevinn', "JOOOOO resolves to Kevinn (Yonathan Chin)")
 ok(canon('Sutsujin') == 'Arthur', "Sutsujin resolves to Arthur Sunarkho")
+ok(canon('Lynchh') == 'Joshua', "Lynchh resolves to Joshua (RRQ EXP; not Joshuaa)")
 ok(canon('Joshua') != canon('Joshuaa'), "Joshua (RRQ) and Joshuaa (NAVI) stay distinct")
 mvp_names = sorted({(m.get('liq_mvp') or '').strip() for m in matches
                     if (m.get('liq_mvp') or '').strip()})
@@ -273,7 +280,8 @@ for needle in ('calcChances', 'normalizeFixtures', 'CHANCES-START', 'normTeam',
 # Playoff-chance data integrity: standings must reconcile with the decided
 # fixture set (completed + any non-completed row showing a terminal BO3
 # scoreline, whose result the standings feed already includes — e.g. Oct 3
-# AE 1-2 NAVI still flagged live). The reconciled remainder must give every
+# AE 1-2 NAVI still flagged live, Oct 10 RRQ 0-2 TLID still flagged live).
+# The reconciled remainder must give every
 # team exactly 16 series (double round-robin), with no duplicated fixtures.
 stand_rows = load('standings')
 sched_rows = load('schedule_all')
@@ -330,8 +338,10 @@ for m in reg_rows:
     dec_gw[lo] = dec_gw.get(lo, 0) + gl_w
     dec_gl[lo] = dec_gl.get(lo, 0) + gw_w
 ok(not bad_scores, f"all completed rows have terminal BO3 scores ({bad_scores[:3] if bad_scores else 'ok'})")
-ok(decided_n == 51 and live_decided_n == 1,
-   f"decided set is 50 completed + 1 live-decisive (got {decided_n}, live {live_decided_n})")
+n_completed = sum(1 for m in reg_rows if m.get('status') == 'completed')
+ok(decided_n == n_completed + live_decided_n,
+   f"decided set is completed + live-decisive (got {decided_n} = {n_completed} + {live_decided_n})")
+print(f"INFO season progress: {n_completed} completed + {live_decided_n} live-decisive decided")
 rec_ok, game_ok = True, True
 for r in stand_rows:
     code = {'navi': 'NAVI', 'tlid': 'TLID', 'ae': 'AE', 'btr': 'BTR',
@@ -357,7 +367,10 @@ for r in stand_rows:
     if int(r['match_win']) + int(r['match_lose']) + rem_n.get(code, 0) != 16:
         cap_ok = False
 ok(cap_ok, "played + reconciled-remaining == 16 for every team")
-ok(sum(rem_n.values()) // 2 == 21, f"21 reconciled remaining fixtures (got {sum(rem_n.values()) // 2})")
+n_remaining = sum(rem_n.values()) // 2
+ok(decided_n + n_remaining == len(reg_rows),
+   f"decided + remaining covers the season ({decided_n} + {n_remaining} vs {len(reg_rows)})")
+print(f"INFO reconciled remaining fixtures: {n_remaining}")
 
 print(f"\n{len(fails)} failures, {len(warns)} warnings")
 sys.exit(1 if fails else 0)

@@ -192,7 +192,10 @@ const l=String(n||'').toLowerCase();return m[l]||m[GALIAS[l]||'']||null;}
    JOOOOO->Kevinn (bo3.gg lists both "JOOOOO (Yonathan Chin)" and
    "Kevinn (Yonathan Chin)" for TLID; teamliquid.com TLID roster lists JOOOOO;
    Keven Julio Keven is a different person — TLID gold laner),
-   Sutsujin->Arthur (Liquipedia "Arthur 'Sutsujin' Sunarkho", MLDB, RRQ Hoshi).
+   Sutsujin->Arthur (Liquipedia "Arthur 'Sutsujin' Sunarkho", MLDB, RRQ Hoshi),
+    Lynchh->Joshua (Liquipedia: Joshua "Lynchh" Nicholas, EXP Laner, RRQ Hoshi
+    active roster; id-mpl.com RRQ roster lists JOSHUA as EXP Lane and live-API
+    game rows for the MVP series use IGN Joshua; single Joshua on RRQ).
    Mechanical (MVP-row teams intersect the roster team; re-verify if contested):
    A B O Y->Aboyy, Jizeezeze->Jiizee, Maykids->Maykidss, Moreno->Morenooo,
    Rendyy->Rendyyy. Roster spelling duplicate from the live API: MAYKIDSS->Maykidss.
@@ -200,7 +203,7 @@ const l=String(n||'').toLowerCase();return m[l]||m[GALIAS[l]||'']||null;}
    To add a future alias: add one normalized->canonical entry to PLAYER_ALIAS.
    Every aggregation/display path goes through canonicalPlayer(), so no second
    identity can arise from a new spelling. */
-const PLAYER_ALIAS={coolfire:'Joshuaa',jooooo:'Kevinn',sutsujin:'Arthur',jizeezeze:'Jiizee',maykids:'Maykidss',maykidss:'Maykidss',moreno:'Morenooo',morenooo:'Morenooo',rendyy:'Rendyyy',rendyyy:'Rendyyy',aboy:'Aboyy',aboyy:'Aboyy'};
+const PLAYER_ALIAS={coolfire:'Joshuaa',jooooo:'Kevinn',sutsujin:'Arthur',lynchh:'Joshua',jizeezeze:'Jiizee',maykids:'Maykidss',maykidss:'Maykidss',moreno:'Morenooo',morenooo:'Morenooo',rendyy:'Rendyyy',rendyyy:'Rendyyy',aboy:'Aboyy',aboyy:'Aboyy'};
 const ROSTER_SPELLING={maykidss:'Maykidss'};
 function rosterCanon(n){const u=normId(n);
 const gp=[...new Set((DATA.players||[]).map(r=>r.player))].filter(p=>normId(p)===u);
