@@ -6,7 +6,6 @@ use is confined to temporary directories. Usage:
     python tools/test_liqparse.py
 Exit 0 = pass.
 """
-import shutil
 import sqlite3
 import sys
 import tempfile

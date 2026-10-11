@@ -53,7 +53,8 @@ live from the mlbbhub API when online.
   **Heroes** (highlight tiles + sortable pick/ban/win table with share bars).
   Every statistic column sorts ascending/descending with a minimalist ▲▼ indicator.
   MVP names from Liquipedia are normalized to one canonical player identity
-  (e.g. Coolfire → Joshuaa, JOOOOO → Kevinn, Sutsujin → Arthur — see
+  (e.g. Coolfire → Joshuaa, JOOOOO → Kevinn, Sutsujin → Arthur,
+  Lynchh → Joshua — see
   `PLAYER_ALIAS` in `tools/templates/app.js`), so aliases aggregate instead of
   splitting into phantom players; the source spelling is kept as an “as …” note.
   Every hero opens a drill-down modal (picks/bans/WR tiles, most-used
@@ -62,8 +63,12 @@ live from the mlbbhub API when online.
   PICK rows show the hero's team result as Win/Loss while BAN rows stay neutral,
   and assets drill further into global usage.
 - **Offline-first** — embedded snapshot renders instantly; Refresh re-fetches live
-  data with retry/timeout, caches to `localStorage`, and reports how many brand-new
-  heroes/items were served from the live CDN.
+  data with retry/timeout, merges per-match results (failed match IDs keep
+  their previous records, never partial-overwritten), caches to a versioned
+  `localStorage` key, and reports `updated` vs `partially updated` status.
+  A failed ETL build keeps the last known-good database/CSVs (rerun to
+  retry); a failed refresh keeps showing the last snapshot. To reset cached
+  data, clear the site's `localStorage` and reload.
 
 ## Stat notes (how derived numbers work)
 
@@ -138,3 +143,12 @@ python -m http.server 8931
 - Matches, games, per-player stats, drafts: `https://mpl.mlbbhub.com/api/v1/id`
 - Series MVPs, schedule cross-check: Liquipedia (`MPL/Indonesia/Season 18`)
 - Hero artwork: scoregg CDN, Liquipedia infoboxes (see `tools/fetch_assets.py`)
+
+Data-access notes: the ETL and the in-app Refresh button call public JSON
+endpoints and the MediaWiki `api.php` interface with identifying user agents
+(`MPL-S18-research/1.0`, `MPL-S18-assets/1.0`), only on manual invocation
+(one ETL run ≈ 70 sequential requests; one Refresh ≈ 60 detail requests at
+6-way concurrency plus 6 list requests with one retry each). Note that
+`robots.txt` disallows crawling `/mobilelegends/api.php` for generic agents,
+and the sites' terms of service were not independently reviewed — usage here
+is minimal, manual, and non-commercial, but compliance is not claimed.

@@ -21,5 +21,7 @@ jobs:
           node-version: "24"
       - name: Build the application from committed templates and data
         run: python tools/gen_dark.py
+      - name: Install lint tooling
+        run: pip install "ruff==0.17.0"
       - name: Standard regression suite (unit, integrity, parity)
         run: python tools/verify.py

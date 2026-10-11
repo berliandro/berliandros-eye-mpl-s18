@@ -114,7 +114,7 @@ def main():
     for g in games:
         for k in ('game_no', 'team_a_kills', 'team_b_kills', 'duration_sec'):
             try: g[k] = int(float(g[k])) if g[k] not in ('', None) else 0
-            except: g[k] = 0
+            except Exception: g[k] = 0
     season_stats = load('player_season_stats')
     stand = load('standings')
     matches = load('matches')
@@ -127,10 +127,10 @@ def main():
     for r in players:
         for k in ('game_no','kills','deaths','assists','gold','hero_damage','damage_taken','tower_damage'):
             try: r[k] = int(float(r[k])) if r[k] not in ('',None) else 0
-            except: r[k] = 0
+            except Exception: r[k] = 0
         for k in ('kda','gold_per_min'):
             try: r[k] = float(r[k]) if r[k] not in ('',None) else 0
-            except: r[k] = 0
+            except Exception: r[k] = 0
     pool = defaultdict(Counter)
     for r in players:
         pool[r['player']][r['hero']] += 1

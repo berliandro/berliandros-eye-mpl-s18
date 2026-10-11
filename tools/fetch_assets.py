@@ -96,11 +96,13 @@ def live_refs():
     ids = sorted({str(m.get('match_detail_id')) for m in ms
                   if re.match(r'^\d+$', str(m.get('match_detail_id') or ''))})
     print(f'live scan: {len(ids)} matches')
+    skipped = []
     for did in ids:
         try:
             raw, _ = fetch_raw(f'{HUB}/match/{did}')
             d = json.loads(raw.decode('utf-8'))
         except Exception:
+            skipped.append(did)
             continue
         for g in d.get('games', []):
             for p in g.get('players', []) or []:
@@ -114,6 +116,8 @@ def live_refs():
                         eq_ids.add(m.group(1))
                     elif 'scoregg.com' in u:
                         opaque.add(u.split('?')[0])
+    if skipped:
+        print(f'live scan skipped {len(skipped)} failed matches: {",".join(skipped[:8])}')
     return heroes, eq_ids, opaque
 
 

@@ -15,11 +15,15 @@ ROOT = BASE.parent
 STEPS = [
     ("node --check app.js", ["node", "--check", str(BASE / "templates" / "app.js")], "node"),
     ("probability engine", ["node", str(BASE / "test_chances.js")], "node"),
+    ("xss sink units", ["node", str(BASE / "test_xss.js")], "node"),
+    ("transforms + fetch retry", ["node", str(BASE / "test_transforms.js")], "node"),
     ("refresh merge", ["node", str(BASE / "test_refresh.js")], "node"),
     ("cache versioning", ["node", str(BASE / "test_cache.js")], "node"),
     ("liquipedia parser + ETL gates", [sys.executable, str(BASE / "test_liqparse.py")], None),
     ("season config (python)", [sys.executable, str(BASE / "test_config.py")], None),
     ("season config (node)", ["node", str(BASE / "test_config.js")], "node"),
+    ("ruff lint (pip install ruff if missing)", [sys.executable, "-m", "ruff", "check", "tools/",
+     "--select", "F401,F841,E722,E9", "--line-length", "200"], None),
     ("data integrity + assets + JS syntax", [sys.executable, str(BASE / "check.py")], None),
     ("generated-output parity", [sys.executable, str(BASE / "check_parity.py")], None),
 ]

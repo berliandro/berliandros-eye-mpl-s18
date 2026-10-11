@@ -5,7 +5,7 @@ Sources:
   - /matches, /schedule, /standings, /stats/players, /drafts, /match/<detail_id>
 Output: mpl_id_s18.db (SQLite) + csv/ exports.
 """
-import json, re, sqlite3, urllib.request, urllib.parse, os, sys, shutil
+import json, re, sqlite3, urllib.request, urllib.parse, os, shutil
 from pathlib import Path
 from gen_dark import validate_season
 
@@ -63,7 +63,7 @@ STAGING = ROOT / "data" / ".staging-s18"
 # validated season config before any request, so the config is authoritative.
 LIQ_API = "https://liquipedia.net/mobilelegends/api.php"
 HUB = "https://mpl.mlbbhub.com/api/v1/id"
-UA = {"User-Agent": "Mozilla/5.0 (opencode MPL research)"}
+UA = {"User-Agent": "MPL-S18-research/1.0 (local ETL)"}
 
 def get_json(url):
     req = urllib.request.Request(url, headers=UA)
@@ -188,10 +188,6 @@ def main():
         playoffs = get_json(f"{HUB}/playoffs")
     except Exception as e:
         print("playoffs fetch failed", e); playoffs = {}
-    try:
-        drafts = get_json(f"{HUB}/drafts")
-    except Exception as e:
-        print("drafts fetch failed", e); drafts = {}
     print(f"matches entries={len(matches)} standings={len(standings)} players={len(player_stats)}")
 
     print("fetch liquipedia regular season wikitext for MVP merge...")
