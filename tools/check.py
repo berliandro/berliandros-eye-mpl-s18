@@ -250,7 +250,7 @@ else:
 # Joshuaa (NAVI) — different people.
 PLAYER_CANON = {'coolfire': 'Joshuaa', 'jooooo': 'Kevinn', 'sutsujin': 'Arthur',
                 'lynchh': 'Joshua', 'jizeezeze': 'Jiizee', 'maykids': 'Maykidss', 'moreno': 'Morenooo',
-                'rendyy': 'Rendyyy', 'aboy': 'Aboyy'}
+                'rendyy': 'Rendyyy', 'aboy': 'Aboyy', 'lutpiii': 'Lutpi'}
 
 
 def canon(name):

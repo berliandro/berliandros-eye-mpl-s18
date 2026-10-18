@@ -223,7 +223,7 @@ const l=String(n||'').toLowerCase();return m[l]||m[GALIAS[l]||'']||null;}
    To add a future alias: add one normalized->canonical entry to PLAYER_ALIAS.
    Every aggregation/display path goes through canonicalPlayer(), so no second
    identity can arise from a new spelling. */
-const PLAYER_ALIAS={coolfire:'Joshuaa',jooooo:'Kevinn',sutsujin:'Arthur',lynchh:'Joshua',jizeezeze:'Jiizee',maykids:'Maykidss',maykidss:'Maykidss',moreno:'Morenooo',morenooo:'Morenooo',rendyy:'Rendyyy',rendyyy:'Rendyyy',aboy:'Aboyy',aboyy:'Aboyy'};
+const PLAYER_ALIAS={coolfire:'Joshuaa',jooooo:'Kevinn',sutsujin:'Arthur',lynchh:'Joshua',jizeezeze:'Jiizee',maykids:'Maykidss',maykidss:'Maykidss',moreno:'Morenooo',morenooo:'Morenooo',rendyy:'Rendyyy',rendyyy:'Rendyyy',aboy:'Aboyy',aboyy:'Aboyy',lutpiii:'Lutpi'};
 const ROSTER_SPELLING={maykidss:'Maykidss'};
 function rosterCanon(n){const u=normId(n);
 const gp=[...new Set((DATA.players||[]).map(r=>r.player))].filter(p=>normId(p)===u);

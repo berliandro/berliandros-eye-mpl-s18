@@ -116,7 +116,8 @@
   "3533": "assets/items/3533.png",
   "3423": "assets/items/3423.png",
   "3463": "assets/items/3463.png",
-  "3572": "assets/items/3572.png"
+  "3572": "assets/items/3572.png",
+  "3462": "assets/items/3462.png"
  },
  "heroes": {
   "Alice": "assets/heroes/Alice.jpg",
@@ -213,7 +214,9 @@
   "Leomord": "assets/heroes/Leomord.png",
   "Argus": "assets/heroes/Argus.png",
   "Baxia": "assets/heroes/Baxia.jpg",
-  "Valir": "assets/heroes/Valir.jpg"
+  "Valir": "assets/heroes/Valir.jpg",
+  "Joy": "assets/heroes/Joy.png",
+  "Wanwan": "assets/heroes/Wanwan.png"
  },
  "emblems": {
   "20001": "assets/emblems/20001.png",
