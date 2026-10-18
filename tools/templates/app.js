@@ -357,7 +357,7 @@ function itemCell(id,c){const A=window.ASSETS||{items:{}};const src=A.items&&A.i
 function itemBtn(id,c,scope){const A=window.ASSETS||{items:{}};const src=A.items&&A.items[id];const label=String(id).length>14?String(id).slice(0,14)+'…':String(id);return `<button class="embtn" data-ovitem="${esc(String(id))}"${scope==='global'?' data-scope="global"':''} title="View heroes using item ${esc(label)}">${src?`<img class="sq" src="${esc(src)}" alt="Item ${esc(label)}" loading="lazy" onerror="this.remove()">`:`<span>${esc(label)}</span>`}<span>×${c}</span></button>`;}
 function heroUseCounts(list){const emb={},tal={},item={};list.forEach(x=>{const e=embIdOf(x);if(e)emb[e]=(emb[e]||0)+1;talIdsOf(x).forEach(id=>{tal[id]=(tal[id]||0)+1;});itemIdsOf(x).forEach(id=>{item[id]=(item[id]||0)+1;});});return {emb:emb,tal:tal,item:item};}
 function topEntries(obj,n){return Object.entries(obj).sort((a,b)=>b[1]-a[1]).slice(0,n);}
-function assetRowsHTML(u,scope){const e=topEntries(u.emb,3),t=topEntries(u.tal,4),it=topEntries(u.item,6);
+function assetRowsHTML(u,scope){const e=topEntries(u.emb,3),t=topEntries(u.tal,4),it=topEntries(u.item,12);
 const row=(label,cells)=>`<div class="userow"><div class="ulabel">${label}</div><div class="ubadges">${cells}</div></div>`;
 const dash='<span style="color:var(--muted)">–</span>';
 return `<div class="usegrid">`
