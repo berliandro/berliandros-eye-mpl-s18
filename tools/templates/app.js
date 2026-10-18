@@ -361,19 +361,19 @@ function topEntries(obj,n){return Object.entries(obj).sort((a,b)=>b[1]-a[1]).sli
    arbitrary top-N cap makes this view answer "what did they build on this
    hero?" incorrectly (a rarely-built item like Blade of Despair simply
    vanished). Each item cell is a drill-down, so there is no reason to hide
-   any of them. Emblems/talents stay capped — those are compact fixed sets. */
+   any of them. Emblems/talents stay capped — those are compact fixed sets.
+   A single hairline then splits the core build from the long tail of items
+   seen only once or twice, so the common shape reads at a glance. */
 function assetRowsHTML(u,scope){const e=topEntries(u.emb,3),t=topEntries(u.tal,4),it=topEntries(u.item,Infinity);
 const row=(label,cells)=>`<div class="userow"><div class="ulabel">${label}</div><div class="ubadges">${cells}</div></div>`;
 const dash='<span style="color:var(--muted)">–</span>';
+const cell=([id,c])=>scope==='global'?itemBtn(id,c,scope):itemCell(id,c);
+const core=[],rare=[];it.forEach(en=>{(en[1]>2?core:rare).push(en);});
+const items=core.map(cell).join('')+(core.length&&rare.length?'<div class="use-sep" role="separator"></div>':'')+rare.map(cell).join('');
 return `<div class="usegrid">`
 +row('Emblems',e.map(([id,c])=>embBadge(id,c,scope)).join('')||dash)
 +row('Talents',t.map(([id,c])=>talBadge(id,c,scope)).join('')||dash)
-+row('Items',it.map(([id,c])=>{
-const cell=scope==='global'?itemBtn(id,c,scope):itemCell(id,c);
-/* Rarely-built items are split into their own thin-bordered row so a long tail
-   of 1-2 use items reads as secondary to the core build, instead of blending
-   in as if equally common. */
-return c>2?cell:`<span class="rareitem">${cell}</span>`;}).join('')||dash)+`</div>`;}
++row('Items',items||dash)+`</div>`;}
 function usageSummaryHTML(list,scope){return `<div class="msec">Usage summary · ${list.length} game${list.length===1?'':'s'}</div>`+assetRowsHTML(heroUseCounts(list),scope);}
 function heroBreakdownRows(byH,scope){const A=window.ASSETS||{heroes:{}};return Object.entries(byH).sort((a,b)=>b[1]-a[1]).map(([h,n])=>{const hi=A.heroes&&A.heroes[h];
 return `<tr><td data-ovhero="${esc(h)}"${scope==='global'?' data-scope="global"':''} tabindex="0" title="View ${esc(h)} games"><span class="hcell">${hi?`<img src="${esc(hi)}" alt="" loading="lazy" onerror="this.remove()">`:''}${esc(h)}</span></td><td>×${n}</td></tr>`;}).join('');}

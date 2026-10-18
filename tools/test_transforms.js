@@ -152,6 +152,12 @@ const NS1 = NS(S1, { players: [], season: [] });
   // Source guard: assetRowsHTML must not reintroduce a finite item cap.
   ok(src.includes('topEntries(u.item,Infinity)'),
     'T5 assetRowsHTML renders items without a top-N cap');
+  // Core build and one-off tail are separated by ONE hairline, not by wrapping
+  // every rare item in its own box (the earlier, noisier treatment).
+  ok(src.includes('class="use-sep"'), 'T5 core/rare split uses a single divider element');
+  ok(!src.includes('rareitem'), 'T5 per-item rare box treatment removed');
+  // The split threshold must stay at count > 2 so x1/x2 items fall below it.
+  ok(src.includes('(en[1]>2?core:rare)'), 'T5 core/rare threshold is count > 2');
 }
 
 // --- fetchJSON: retry then success; persistent failure throws after 2 tries ---
