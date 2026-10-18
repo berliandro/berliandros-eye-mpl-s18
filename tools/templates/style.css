@@ -156,6 +156,12 @@ th[data-ts]{cursor:pointer;user-select:none;white-space:nowrap}th[data-ts]:hover
 .embtn:hover{background:rgba(255,255,255,.06);border-color:var(--ink);transform:translateY(-1px)}.embtn:active{transform:scale(.97)}.embtn:focus-visible{outline:2px solid var(--ink);outline-offset:2px}
 .embtn img.sq{border-radius:6px}
 .itemgrid .embtn{margin:0}
+/* Rarely-built items (1-2 uses) sit in their own thin-bordered block so the
+   core build stays readable when a long tail is shown. */
+.rareitem{display:inline-flex;padding:3px;border:1px dashed var(--line);border-radius:9999px;opacity:.72}
+.rareitem:hover{opacity:1;border-color:var(--muted)}
+.rareitem .embtn{border-color:transparent}
+.rareitem .itemcell{opacity:.9}
 .tag.pick{background:var(--ink);border-color:var(--ink);color:#131311;font-weight:700;border-radius:9999px}
 .tag.ban{background:transparent;border:1px dashed var(--muted);border-radius:5px;color:var(--muted);font-weight:400}
 .mhead.sg,.mrow.sg{grid-template-columns:62px minmax(150px,1fr) 46px 78px 64px 24px}

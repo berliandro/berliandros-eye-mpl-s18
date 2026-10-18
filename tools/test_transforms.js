@@ -43,11 +43,15 @@ const grabLine = (name) => {
   return m[0];
 };
 const prelude = grabLine('eqId') + '\n' + grabLine('itemRef') + '\n' + grabLine('durSec') + '\n' +
+  grabLine('embIdOf') + '\n' + grabLine('talIdsOf') + '\n' + grabLine('itemIdsOf') + '\n' +
   grabLine('srt') + '\n' +
+  grabFn('function heroUseCounts(list)') + '\n' +
+  grabFn('function topEntries(obj,n)') + '\n' +
   grabFn('function normLive(d)') + '\n' +
   grabFn('function agg()') + '\n' +
   grabFn('async function fetchJSON(url,ms)');
-const NS = new Function('S', 'DATA', prelude + '; return {srt, normLive, agg, fetchJSON};');
+const NS = new Function('S', 'DATA', prelude +
+  '; return {srt, normLive, agg, fetchJSON, heroUseCounts, topEntries};');
 
 let fails = 0, count = 0;
 function ok(cond, msg) {
@@ -116,6 +120,38 @@ const NS1 = NS(S1, { players: [], season: [] });
   const o2 = NS(S1, DATA2).agg().find(x => x.player === 'Y');
   eq([o2.gp, o2.k, o2.avgkda], [7, 70, 20], 'T3 season row overrides computed row');
   eq(NS(S1, { players: [], season: [] }).agg(), [], 'T3 empty players ok');
+}
+
+// --- heroUseCounts + topEntries: item usage must stay complete (regression) ---
+// Defect: assetRowsHTML capped items at a top-N slice, so a rarely-built item
+// (Blade of Despair, 1 use on Aulus) was silently dropped from the hero
+// view, making the view answer "what did they build?" incorrectly. Rare
+// items must survive aggregation AND survive the render path.
+{
+  const { heroUseCounts, topEntries } = NS1;
+  const mk = (items) => ({ r: { i: items, t: [], e: null } });
+  // 20 picks, one common item (x20) and one rare item (x1) buried far down.
+  const list = [];
+  for (let i = 0; i < 19; i++) list.push(mk(['2208']));
+  list.push(mk(['2208', '3462']));
+  const u = heroUseCounts(list);
+  eq(u.item['2208'], 20, 'T5 common item counted');
+  eq(u.item['3462'], 1, 'T5 rare item survives aggregation');
+  eq(topEntries(u.item, Infinity).length, 2, 'T5 topEntries(Infinity) keeps every item');
+  eq(topEntries(u.item, 1).map(e => e[0]), ['2208'], 'T5 topEntries(1) still trims on request');
+  // A cap large enough to include the rare item must not hide it.
+  eq(topEntries(u.item, 12).length, 2, 'T5 rare item visible under top-12');
+  // Realistic regression shape: 31 distinct items, rare one last.
+  const many = { item: {} };
+  for (let i = 0; i < 30; i++) many.item['2000' + i] = i + 1;
+  many.item['3462'] = 1;
+  const shown = topEntries(many.item, Infinity);
+  ok(shown.some(e => e[0] === '3462'),
+    'T5 rarest item present when rendering without a cap');
+  ok(shown.length === 31, 'T5 all 31 distinct items rendered (got ' + shown.length + ')');
+  // Source guard: assetRowsHTML must not reintroduce a finite item cap.
+  ok(src.includes('topEntries(u.item,Infinity)'),
+    'T5 assetRowsHTML renders items without a top-N cap');
 }
 
 // --- fetchJSON: retry then success; persistent failure throws after 2 tries ---
