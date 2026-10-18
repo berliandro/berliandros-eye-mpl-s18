@@ -149,15 +149,12 @@ const NS1 = NS(S1, { players: [], season: [] });
   ok(shown.some(e => e[0] === '3462'),
     'T5 rarest item present when rendering without a cap');
   ok(shown.length === 31, 'T5 all 31 distinct items rendered (got ' + shown.length + ')');
-  // Source guard: assetRowsHTML must not reintroduce a finite item cap.
-  ok(src.includes('topEntries(u.item,Infinity)'),
+  // Source guard: items must never be re-capped in the render path, and the
+  // obsolete frequency-based split must not come back.
+  ok(!/topEntries\(u\.item,\s*\d+\)/.test(src),
     'T5 assetRowsHTML renders items without a top-N cap');
-  // Core build and one-off tail are separated by ONE hairline, not by wrapping
-  // every rare item in its own box (the earlier, noisier treatment).
-  ok(src.includes('class="use-sep"'), 'T5 core/rare split uses a single divider element');
-  ok(!src.includes('rareitem'), 'T5 per-item rare box treatment removed');
-  // The split threshold must stay at count > 2 so x1/x2 items fall below it.
-  ok(src.includes('(en[1]>2?core:rare)'), 'T5 core/rare threshold is count > 2');
+  ok(!src.includes('en[1]>2'), 'T5 frequency-based item grouping removed');
+  ok(src.includes('groupItemsByClass'), 'T5 items grouped by equipment category');
 }
 
 // --- fetchJSON: retry then success; persistent failure throws after 2 tries ---

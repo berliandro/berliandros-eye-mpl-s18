@@ -162,8 +162,12 @@ def main():
     doc = (TPL / 'doc.html').read_text(encoding='utf-8')
 
     manifest = json.loads((ROOT / 'assets' / 'manifest.json').read_text(encoding='utf-8'))
+    # Equipment identity -> category map (major/shoes/small). Embedded so the
+    # item grouping is data-driven, not a UI heuristic; an id missing from the
+    # map is reported as unclassified rather than silently bucketed.
+    item_classes = json.loads((ROOT / 'data' / 'item_classes.json').read_text(encoding='utf-8'))
     season_js = json.dumps(season, ensure_ascii=False, separators=(',', ':'))
-    doc = doc.replace('__CSS__', css).replace('__JS__', js.replace('__DATA__', data_js).replace('__SEASON__', season_js).replace('__TEAMS__', json.dumps(TEAMS))).replace('__ASSETS__', json.dumps(manifest))
+    doc = doc.replace('__CSS__', css).replace('__JS__', js.replace('__DATA__', data_js).replace('__SEASON__', season_js).replace('__TEAMS__', json.dumps(TEAMS))).replace('__ASSETS__', json.dumps(manifest)).replace('__ITEM_CLASSES__', json.dumps(item_classes['items'], ensure_ascii=False, separators=(',', ':')).replace('</scr'+'ipt>', '<\\/scr'+'ipt>'))
     out = ROOT / 'mpl_id_s18_dark.html'
     # Platform-independent output: inputs are read in universal-newline mode
     # (already LF-only in memory), so write with newline='\n' to keep the

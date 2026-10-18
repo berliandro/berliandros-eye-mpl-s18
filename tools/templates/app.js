@@ -312,7 +312,7 @@ const sideTbl=Object.entries(sides).map(([sd,o])=>`<tr><td style="text-transform
 const opps={};rows.forEach(x=>{const o=x.info.opp||'?';(opps[o]=opps[o]||{w:0,n:0}).n++;if(x.info.won===true)opps[o].w++;});
 const oppTbl=Object.entries(opps).sort((a,b)=>b[1].n-a[1].n).map(([o,v])=>`<tr><td data-ovopp="${esc(o)}" tabindex="0" title="View games vs ${esc(o)}"><img src="${TICON(o)}" alt="" loading="lazy" style="width:20px;height:20px;object-fit:contain;vertical-align:-5px" onerror="this.remove()"> ${esc(o)}</td><td>${v.n}</td><td>${v.w}-${v.n-v.w}</td></tr>`).join('');
 const useCounts=heroUseCounts(rows);
-const itemGrid=topEntries(useCounts.item,12).map(([id,c])=>itemCell(id,c)).join('')||'<p>No item data</p>';
+const itemGrid=itemGroups(useCounts.item).map(gr=>`<div class="et-label">${esc(gr.label)}</div><div class="itemgrid">${gr.entries.map(([id,c])=>itemCell(id,c)).join('')}</div>`).join('')||'<p>No item data</p>';
 const embHtml=topEntries(useCounts.emb,7).map(([id,c])=>embBadge(id,c)).join('')||'<p>No emblem data</p>';
 const talHtml=topEntries(useCounts.tal,8).map(([id,c])=>talBadge(id,c)).join('')||'<p>No talent data</p>';
 const mvps=(DATA.matches||[]).filter(m=>m.liq_mvp&&samePlayer(m.liq_mvp,name));
@@ -325,7 +325,7 @@ return `<div class="pin ov"><div class="body"><div class="phead">${u?`<img class
 +`<div class="ovsec"><h4>Hero pool (${heroRows.length} heroes)</h4><table><tr><th>Hero</th><th>GP</th><th>Win%</th><th>Avg K/D/A</th><th>GPM</th></tr>${heroTbl}</table></div></div>`
 +`<div class="ovgrid"><div class="ovsec"><h4>Hero win rate</h4><table>${heroRows.map(o=>`<tr><td data-ovhero="${esc(o.h)}" tabindex="0" title="View ${esc(o.h)} games">${esc(o.h)}</td><td><div style="display:flex;gap:6px;align-items:center"><span class="wrbar"><i style="width:${o.wr}%"></i></span>${o.wr}%</div></td></tr>`).join('')}</table></div>`
 +`<div class="ovsec"><h4>Sides</h4><table><tr><th>Side</th><th>GP</th><th>Win%</th></tr>${sideTbl}</table></div></div>`
-+`<div class="ovgrid"><div class="ovsec"><h4>Top items</h4><div class="itemgrid">${itemGrid}</div></div>`
++`<div class="ovgrid"><div class="ovsec"><h4>Items</h4>${itemGrid}</div>`
 +`<div class="ovsec"><h4>Emblems &amp; talents</h4><div class="et-label">Emblems</div><div class="itemgrid">${embHtml}</div><div class="et-div"></div><div class="et-label">Talents</div><div class="itemgrid">${talHtml}</div></div></div>`
 +`<div class="ovgrid"><div class="ovsec"><h4>Record by opponent</h4><table><tr><th>Opponent</th><th>GP</th><th>W-L</th></tr>${oppTbl}</table></div>`
 +`<div class="ovsec"><h4>Series MVPs (${mvps.length})</h4><table><tr><th>Date</th><th>Match</th></tr>${mvpHtml}</table></div></div>`
@@ -357,23 +357,42 @@ function itemCell(id,c){const A=window.ASSETS||{items:{}};const src=A.items&&A.i
 function itemBtn(id,c,scope){const A=window.ASSETS||{items:{}};const src=A.items&&A.items[id];const label=String(id).length>14?String(id).slice(0,14)+'…':String(id);return `<button class="embtn" data-ovitem="${esc(String(id))}"${scope==='global'?' data-scope="global"':''} title="View heroes using item ${esc(label)}">${src?`<img class="sq" src="${esc(src)}" alt="Item ${esc(label)}" loading="lazy" onerror="this.remove()">`:`<span>${esc(label)}</span>`}<span>×${c}</span></button>`;}
 function heroUseCounts(list){const emb={},tal={},item={};list.forEach(x=>{const e=embIdOf(x);if(e)emb[e]=(emb[e]||0)+1;talIdsOf(x).forEach(id=>{tal[id]=(tal[id]||0)+1;});itemIdsOf(x).forEach(id=>{item[id]=(item[id]||0)+1;});});return {emb:emb,tal:tal,item:item};}
 function topEntries(obj,n){return Object.entries(obj).sort((a,b)=>b[1]-a[1]).slice(0,n);}
+/* Equipment identity -> category, from the committed data/item_classes.json map
+   (embedded as window.ITEM_CLASSES by tools/gen_dark.py). A category is a
+   property of what the item IS - a completed Tier-3 item, footwear, or a
+   component - never of how often it was built. An id the map does not know
+   returns null, so it can never be silently filed under Major or Small. */
+const ITEM_CLASSES=window.ITEM_CLASSES||{};
+const ITEM_CLS_ORDER=[['major','Major Items'],['shoes','Shoes'],['small','Small Items']];
+function itemClass(id){const e=ITEM_CLASSES[String(id)];return e?e.cls:null;}
+function itemName(id){const e=ITEM_CLASSES[String(id)];return e&&e.name?e.name:'';}
+/* Partition usage counts into the three categories. Count-descending with a
+   deterministic id tie-break so repeated renders cannot reorder. */
+function groupItemsByClass(counts){const g={major:[],shoes:[],small:[],unknown:[]};
+Object.entries(counts).forEach(en=>{const c=itemClass(en[0]);(c&&g[c]?g[c]:g.unknown).push(en);});
+[].concat(g.major,g.shoes,g.small,g.unknown).forEach(a=>a.sort((x,y)=>y[1]-x[1]||(x[0]<y[0]?-1:x[0]>y[0]?1:0)));
+return g;}
+/* Grouped item sections, shared by the hero stats drill-down and the player
+   overview so both classify identically. Empty categories are omitted. */
+function itemGroups(counts){const g=groupItemsByClass(counts||{}),out=[];
+ITEM_CLS_ORDER.forEach(([k,label])=>{if(g[k].length)out.push({key:k,label:label,entries:g[k]});});
+if(g.unknown.length)out.push({key:'unknown',label:'Unclassified',entries:g.unknown});
+return out;}
 /* Items are listed in full: usage counts are exact facts from the data, so an
    arbitrary top-N cap makes this view answer "what did they build on this
-   hero?" incorrectly (a rarely-built item like Blade of Despair simply
-   vanished). Each item cell is a drill-down, so there is no reason to hide
-   any of them. Emblems/talents stay capped — those are compact fixed sets.
-   A single hairline then splits the core build from the long tail of items
-   seen only once or twice, so the common shape reads at a glance. */
-function assetRowsHTML(u,scope){const e=topEntries(u.emb,3),t=topEntries(u.tal,4),it=topEntries(u.item,Infinity);
+   hero?" incorrectly. Each cell is a drill-down, so nothing is hidden. Items
+   are split into the three equipment categories; a category with no items is
+   omitted rather than rendered as an empty row. */
+function assetRowsHTML(u,scope){
 const row=(label,cells)=>`<div class="userow"><div class="ulabel">${label}</div><div class="ubadges">${cells}</div></div>`;
 const dash='<span style="color:var(--muted)">–</span>';
+const e=topEntries(u.emb,3),t=topEntries(u.tal,4);
 const cell=([id,c])=>scope==='global'?itemBtn(id,c,scope):itemCell(id,c);
-const core=[],rare=[];it.forEach(en=>{(en[1]>2?core:rare).push(en);});
-const items=core.map(cell).join('')+(core.length&&rare.length?'<div class="use-sep" role="separator"></div>':'')+rare.map(cell).join('');
+const sections=itemGroups(u.item).map(gr=>row(gr.label,gr.entries.map(cell).join('')));
 return `<div class="usegrid">`
 +row('Emblems',e.map(([id,c])=>embBadge(id,c,scope)).join('')||dash)
 +row('Talents',t.map(([id,c])=>talBadge(id,c,scope)).join('')||dash)
-+row('Items',items||dash)+`</div>`;}
++sections.join('')+`</div>`;}
 function usageSummaryHTML(list,scope){return `<div class="msec">Usage summary · ${list.length} game${list.length===1?'':'s'}</div>`+assetRowsHTML(heroUseCounts(list),scope);}
 function heroBreakdownRows(byH,scope){const A=window.ASSETS||{heroes:{}};return Object.entries(byH).sort((a,b)=>b[1]-a[1]).map(([h,n])=>{const hi=A.heroes&&A.heroes[h];
 return `<tr><td data-ovhero="${esc(h)}"${scope==='global'?' data-scope="global"':''} tabindex="0" title="View ${esc(h)} games"><span class="hcell">${hi?`<img src="${esc(hi)}" alt="" loading="lazy" onerror="this.remove()">`:''}${esc(h)}</span></td><td>×${n}</td></tr>`;}).join('');}

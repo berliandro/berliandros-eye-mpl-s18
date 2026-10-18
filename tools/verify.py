@@ -17,6 +17,7 @@ STEPS = [
     ("probability engine", ["node", str(BASE / "test_chances.js")], "node"),
     ("xss sink units", ["node", str(BASE / "test_xss.js")], "node"),
     ("transforms + fetch retry", ["node", str(BASE / "test_transforms.js")], "node"),
+    ("item category classifier", ["node", str(BASE / "test_item_classes.js")], "node"),
     ("refresh merge", ["node", str(BASE / "test_refresh.js")], "node"),
     ("cache versioning", ["node", str(BASE / "test_cache.js")], "node"),
     ("liquipedia parser + ETL gates", [sys.executable, str(BASE / "test_liqparse.py")], None),
