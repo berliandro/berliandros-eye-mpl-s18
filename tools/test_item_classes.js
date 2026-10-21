@@ -14,7 +14,7 @@ const path = require('path');
 
 const ROOT = path.join(__dirname, '..');
 const appSrc = fs.readFileSync(path.join(__dirname, 'templates', 'app.js'), 'utf8');
-const doc = JSON.parse(fs.readFileSync(path.join(ROOT, 'data', 'item_classes.json'), 'utf8'));
+const doc = JSON.parse(fs.readFileSync(path.join(ROOT, 'data', 'global', 'item_classes.json'), 'utf8'));
 const MAP = doc.items;
 
 let fails = 0, count = 0;

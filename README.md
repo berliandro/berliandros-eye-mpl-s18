@@ -98,6 +98,9 @@ live from the mlbbhub API when online.
 | `tools/test_liqparse.py` | Liquipedia parser + ETL gate tests |
 | `tools/test_config.py` | Season-config schema tests |
 | `data/season.json` | Validated season rules (teams, slots, priors, endpoints, cache) |
+| `data/registry.json` | Season registry — every season-aware tool resolves paths through it |
+| `data/global/` | Season-independent metadata: `aliases.json` (player/team/lane identity), `item_classes.json` |
+| `tools/season.py` | Registry resolver (`legacy` and `season-dir` layouts) |
 | `tools/check_parity.py` | Regen parity gate |
 | `tools/shots.py` | README screenshots per the shooting spec below (Playwright + system Chrome) |
 | `assets/` | Downloaded artwork + `manifest.json` |
@@ -107,6 +110,8 @@ live from the mlbbhub API when online.
 ## Commands
 
 ```bash
+python tools/etl.py --season s18      # season-aware ETL wrapper (network)
+python tools/build.py --season s18    # season-aware build wrapper
 python tools/build_s18_db.py   # full ETL rebuild (network)
 python tools/fetch_assets.py   # download missing hero/item assets
 python tools/fetch_assets.py --live        # also cover season progress
@@ -117,6 +122,20 @@ python tools/check.py          # data-integrity + asset suite alone (0 failures 
 node tools/test_chances.js     # probability-engine tests alone
 python tools/shots.py --zoom # re-capture README screenshots (see spec)
 ```
+
+## Season onboarding
+
+A new season is supported without application-code changes:
+
+1. Add `data/seasons/<id>/season.json` (teams, aliases, slots, priors, endpoints).
+2. Add roster / IGN / lane entries to `data/global/aliases.json`.
+3. Register the season in `data/registry.json` with `"layout": "season-dir"`.
+4. Run `python tools/etl.py --season <id>` (network).
+5. Run `python tools/build.py --season <id>` and `python tools/verify.py`.
+6. Review the diff, then commit the season data and generated build.
+
+Season 18 currently resolves through the `legacy` layout; moving it to
+`data/seasons/s18/` is the remaining Phase 0 work.
 
 GitHub Actions (`.github/workflows/ci.yml`) runs the build plus
 `tools/verify.py` on pushes to `main` and pull requests targeting `main`.

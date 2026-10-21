@@ -1,0 +1,23 @@
+{
+  "schema_version": 1,
+  "season_id": "s18",
+  "display_name": "MPL Indonesia Season 18",
+  "generated_at": "2026-10-21T11:58:32+00:00",
+  "layout": "legacy",
+  "sources": {
+    "hub": "https://mpl.mlbbhub.com/api/v1/id",
+    "liquipedia": "https://liquipedia.net/mobilelegends/api.php",
+    "liquipedia_page": "MPL/Indonesia/Season_18/Regular_Season"
+  },
+  "row_counts": {
+    "game_bans": 1670,
+    "game_players": 1670,
+    "games": 167,
+    "hero_stats": 133,
+    "matches": 69,
+    "player_season_stats": 66,
+    "schedule_all": 80,
+    "standings": 9
+  },
+  "build_commit": "af1ce94"
+}

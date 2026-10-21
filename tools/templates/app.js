@@ -79,10 +79,10 @@ dlg.addEventListener('close',()=>{dnav=[];if(lastFocus)lastFocus.focus();});
 function agg(){const m={};const num=v=>{const n=+v;return isFinite(n)?n:0;};DATA.players.forEach(r=>{(m[r.player]=m[r.player]||{player:r.player,team:r.team,gp:0,k:0,d:0,a:0,gpm:0,hs:new Set()});
 const o=m[r.player];o.gp++;o.k+=num(r.kills);o.d+=num(r.deaths);o.a+=num(r.assists);o.gpm+=num(r.gold_per_min);o.hs.add(r.hero);});
 const seas=Object.fromEntries(DATA.season.map(s=>[String(s.player||'').toLowerCase(),s]));
-const SALIAS={hijumee:'dalvin',arfy:'dingarai',yazukee:'affan',alekk:'alexander',kevinn:'kevin',maykids:'maykidss',kennzyskie:'kennzyyskie'};
+const SALIAS=(typeof window!=='undefined'&&window.ALIASES&&window.ALIASES.seasonAlias)||{};
 const seasOf=n=>{const l=String(n||'').toLowerCase();return seas[l]||seas[SALIAS[l]||'']||null;};
 const ultra=s=>String(s||'').toLowerCase().replace(/[^a-z0-9]/g,'');
-const LIQLANES={nino:'EXP',affan:'JUNGLE',dalvin:'MID',dingarai:'GOLD',alexander:'ROAM',reyy:'JUNGLE',halim:'MID',ivann:'ROAM',shogun:'EXP',nnael:'JUNGLE',morenoo:'MID',emann:'GOLD',finn:'ROAM',miguel:'FLEX',rendyy:'EXP',alberttt:'JUNGLE',ryzaa:'MID',erlan:'GOLD',muezza:'ROAM',vell:'EXP',egatzy:'ROAM',drianw:'MID',qinn:'EXP',hazle:'JUNGLE',octa:'MID',maybeee:'GOLD',shane:'ROAM',itoshikesu:'ROAM',rulgood:'FLEX',kayn:'JUNGLE',marcel:'EXP',maykids:'JUNGLE',aboy:'MID',kennzyyskie:'GOLD',frenzyy:'ROAM',febriii:'EXP',nazara:'JUNGLE',audytzy:'ROAM',karss:'EXP',joshua:'EXP',jiizee:'MID',zeonn:'GOLD',aprho:'ROAM',febbb:'EXP',andoryuuu:'JUNGLE',lutpiii:'EXP',kairi:'JUNGLE',sanz:'MID',kelra:'GOLD',kiboy:'ROAM',killuaa:'MID',samuel:'ROAM',demonkite:'JUNGLE',hajirin:'MID',arthur:'GOLD',said:'ROAM',habil:'GOLD',clayyy:'MID',excellent99:'ROAM',faviannn:'JUNGLE',aran:'EXP',kevin:'JUNGLE',drichel:'MID',keven:'GOLD',lyoni:'ROAM',anaver:'MID'};
+const LIQLANES=(typeof window!=='undefined'&&window.ALIASES&&window.ALIASES.lanes)||{};
 const liqLane=n=>LIQLANES[ultra(n)]||'';
 return Object.values(m).map(o=>{const s=seasOf(o.player);const avgg=o.gpm/Math.max(1,o.gp);
 const gp=s?+s.total_games||0:o.gp,k=s?+s.total_kills||0:o.k,d=s?+s.total_deaths||0:o.d,a=s?+s.total_assists||0:o.a;
@@ -202,7 +202,7 @@ board.querySelectorAll('[data-ts]').forEach(b=>b.onclick=()=>{const [t,k]=b.data
 wireCharts();wireBracket();}
 function normId(s){return String(s||'').toLowerCase().replace(/[^a-z0-9]/g,'');}
 function offOf(n){const m={};DATA.season.forEach(s=>{m[String(s.player||'').toLowerCase()]=s;});
-const GALIAS={hijumee:'dalvin',arfy:'dingarai',yazukee:'affan',alekk:'alexander',kevinn:'kevin',maykids:'maykidss',kennzyskie:'kennzyyskie'};
+const GALIAS=(typeof window!=='undefined'&&window.ALIASES&&window.ALIASES.globalAlias)||{};
 const l=String(n||'').toLowerCase();return m[l]||m[GALIAS[l]||'']||null;}
 /* PLAYER IDENTITY — one real player = one canonical roster identity.
    Series MVP names come from Liquipedia match pages while game rows use live-API
@@ -223,8 +223,8 @@ const l=String(n||'').toLowerCase();return m[l]||m[GALIAS[l]||'']||null;}
    To add a future alias: add one normalized->canonical entry to PLAYER_ALIAS.
    Every aggregation/display path goes through canonicalPlayer(), so no second
    identity can arise from a new spelling. */
-const PLAYER_ALIAS={coolfire:'Joshuaa',jooooo:'Kevinn',sutsujin:'Arthur',lynchh:'Joshua',jizeezeze:'Jiizee',maykids:'Maykidss',maykidss:'Maykidss',moreno:'Morenooo',morenooo:'Morenooo',rendyy:'Rendyyy',rendyyy:'Rendyyy',aboy:'Aboyy',aboyy:'Aboyy',lutpiii:'Lutpi'};
-const ROSTER_SPELLING={maykidss:'Maykidss'};
+const PLAYER_ALIAS=(typeof window!=='undefined'&&window.ALIASES&&window.ALIASES.playerAlias)||{};
+const ROSTER_SPELLING=(typeof window!=='undefined'&&window.ALIASES&&window.ALIASES.rosterSpelling)||{};
 function rosterCanon(n){const u=normId(n);
 const gp=[...new Set((DATA.players||[]).map(r=>r.player))].filter(p=>normId(p)===u);
 if(gp.length===1)return gp[0];
