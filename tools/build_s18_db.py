@@ -36,6 +36,16 @@ def canon_team(t):
     return TEAM_ALIAS.get(norm_team(t), norm_team(t)).lower()
 
 
+# One hero appears under two spellings in the API: hero_stats says "Zetian"
+# while per-player rows say "Wu/Zetian". They are the same hero (16 picks
+# each), so fold the variant at ingestion rather than losing the identity.
+HERO_RENAMES = {"wuzetian": "Zetian"}
+
+
+def canon_hero(h):
+    return HERO_RENAMES.get(norm_team(h), h)
+
+
 def attach_mvps(hub_numeric, liq):
     """Map hub match_detail_id -> Liquipedia MVP by normalized team pair.
 
@@ -157,7 +167,7 @@ def validate_build(con, fails, playoff_payload, season=None):
 
 
 TABLES = ["matches", "schedule_all", "games", "game_players", "game_bans",
-          "player_season_stats", "hero_stats", "standings"]
+          "game_picks", "player_season_stats", "hero_stats", "standings"]
 
 
 def publish_build(staging, db_path, csv_dir, playoffs_path):
@@ -224,6 +234,7 @@ def main():
       team_a_kills INTEGER, team_b_kills INTEGER,
       winner TEXT, duration_str TEXT, duration_sec INTEGER,
       team_a_side TEXT, team_b_side TEXT, vod_url TEXT,
+      map_mode TEXT,
       PRIMARY KEY(match_detail_id, game_no)
     );
     CREATE TABLE game_players(
@@ -233,10 +244,17 @@ def main():
       kda REAL, gold INTEGER, gold_per_min REAL,
       hero_damage INTEGER, damage_taken INTEGER, tower_damage INTEGER,
       emblem TEXT, items_json TEXT, talents_json TEXT,
+      lane_source TEXT,
       PRIMARY KEY(match_detail_id, game_no, team, player, hero)
     );
     CREATE TABLE game_bans(
-      match_detail_id TEXT, game_no INTEGER, side TEXT, hero TEXT
+      match_detail_id TEXT, game_no INTEGER, side TEXT, hero TEXT,
+      ban_order INTEGER
+    );
+    CREATE TABLE game_picks(
+      match_detail_id TEXT, game_no INTEGER, team TEXT, side TEXT,
+      slot INTEGER, lane TEXT, hero TEXT, player TEXT,
+      PRIMARY KEY(match_detail_id, game_no, team, slot)
     );
     CREATE TABLE player_season_stats(
       player TEXT PRIMARY KEY, team TEXT, team_slug TEXT, lane TEXT,
@@ -278,7 +296,7 @@ def main():
              p.get("total_assists"), p.get("avg_assists"), p.get("avg_kda"), p.get("kill_participation")))
     for h in (hero_stats or []):
         cur.execute("INSERT OR REPLACE INTO hero_stats VALUES(?,?,?,?,?,?)",
-            (h.get("hero"), h.get("hero_image"), h.get("pick"), h.get("ban"),
+            (canon_hero(h.get("hero")), h.get("hero_image"), h.get("pick"), h.get("ban"),
              h.get("win"), h.get("win_rate")))
     with open(STAGING / PLAYOFFS_JSON.name, "w", encoding="utf-8") as f:
         json.dump(playoffs, f, ensure_ascii=False)
@@ -302,23 +320,29 @@ def main():
              sched.get("vod_url"), sched.get("match_detail_url"), mvp_map.get(str(did),"")))
         for g in d.get("games", []):
             dur = g.get("duration"); sec = parse_duration(dur)
-            cur.execute("INSERT OR REPLACE INTO games VALUES(?,?,?,?,?,?,?,?,?,?,?,?)",
+            cur.execute("INSERT OR REPLACE INTO games VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?)",
                 (str(did), g.get("game"), g.get("team_a"), g.get("team_b"),
                  g.get("team_a_kills"), g.get("team_b_kills"), g.get("winner"),
-                 dur, sec, g.get("team_a_side"), g.get("team_b_side"), g.get("vod_url")))
+                 dur, sec, g.get("team_a_side"), g.get("team_b_side"), g.get("vod_url"),
+                 g.get("map_mode")))
             n_games += 1
-            for b in (g.get("bans_a") or []):
-                cur.execute("INSERT INTO game_bans VALUES(?,?,?,?)", (str(did), g.get("game"), "A", b)); n_bans+=1
-            for b in (g.get("bans_b") or []):
-                cur.execute("INSERT INTO game_bans VALUES(?,?,?,?)", (str(did), g.get("game"), "B", b)); n_bans+=1
+            for side, bans in (("A", g.get("bans_a")), ("B", g.get("bans_b"))):
+                # Exact duplicate bans are a known API defect (e.g. 1088 game 1
+                # lists Nolan twice); dedupe on ingest, never in the UI.
+                for b in dict.fromkeys(bans or []):
+                    cur.execute("INSERT INTO game_bans VALUES(?,?,?,?,?)",
+                                (str(did), g.get("game"), side, canon_hero(b), None))
+                    n_bans += 1
             for pl in (g.get("players") or []):
                 gold = pl.get("gold") or 0
                 gpm = round(gold/(sec/60), 1) if sec else None
-                cur.execute("INSERT OR REPLACE INTO game_players VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)",
-                    (str(did), g.get("game"), pl.get("team"), pl.get("player"), pl.get("lane"), pl.get("hero"),
+                cur.execute("INSERT OR REPLACE INTO game_players VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)",
+                    (str(did), g.get("game"), pl.get("team"), pl.get("player"), pl.get("lane"),
+                     canon_hero(pl.get("hero")),
                      pl.get("kill"), pl.get("death"), pl.get("assist"), pl.get("kda"), gold, gpm,
                      pl.get("hero_damage"), pl.get("damage_taken"), pl.get("tower_damage"),
-                     pl.get("emblem"), json.dumps(pl.get("items") or []), json.dumps(pl.get("talents") or [])))
+                     pl.get("emblem"), json.dumps(pl.get("items") or []), json.dumps(pl.get("talents") or []),
+                     pl.get("lane_source")))
                 n_rows += 1
     con.commit()
     print(f"stored games={n_games} player_rows={n_rows} bans={n_bans} fails={fails}")
@@ -357,6 +381,7 @@ def main():
     CSVDIR.mkdir(exist_ok=True)
     publish_build(STAGING, DB, CSVDIR, PLAYOFFS_JSON)
     print("done:", DB)
+    print("note: picks/lanes/map_mode come from Liquipedia; run tools/etl.py for a complete build")
 
 if __name__ == "__main__":
     try:

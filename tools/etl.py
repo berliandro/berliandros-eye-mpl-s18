@@ -20,7 +20,14 @@ def main():
     args = ap.parse_args()
     season = resolve(args.season)
     print(f"etl {season['id']} ({season['displayName']})")
-    return subprocess.call([sys.executable, str(ROOT / "tools" / "build_s18_db.py")])
+    rc = subprocess.call([sys.executable, str(ROOT / "tools" / "build_s18_db.py")])
+    if rc != 0:
+        return rc
+    # The API has no picks, per-game lanes or map mode; Liquipedia fills them.
+    # Keeping this in the pipeline means a rebuild is never half-enriched.
+    print(f"enrich drafts/lanes/maps for {season['id']}")
+    return subprocess.call([sys.executable, str(ROOT / "tools" / "enrich_drafts.py"),
+                            "--season", season["id"]])
 
 
 if __name__ == "__main__":

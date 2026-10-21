@@ -86,7 +86,8 @@ live from the mlbbhub API when online.
 |---|---|
 | `mpl_id_s18_dark.html` | Built app (generated — open this in a browser) |
 | `tools/templates/` | Single source: `doc.html`, `style.css`, `app.js` |
-| `tools/build_s18_db.py` | ETL: mlbbhub + Liquipedia → SQLite + `data/csv/` |
+| `tools/build_s18_db.py` | API ETL: mlbbhub + Liquipedia → SQLite + `data/csv/` |
+| `tools/enrich_drafts.py` | Liquipedia enrichment: picks, lane order, ban order, map mode (idempotent) |
 | `tools/gen_dark.py` | Build: CSV + assets → `mpl_id_s18_dark.html` |
 | `tools/fetch_assets.py` | Download every referenced hero/item asset (`--check-only`, `--live`) |
 | `tools/check.py` | Regression suite (incl. STRICT asset coverage + JS syntax gate) |
@@ -96,6 +97,7 @@ live from the mlbbhub API when online.
 | `tools/test_cache.js` | Cache versioning tests (node) |
 | `tools/test_config.js` | Season-config tests (node) |
 | `tools/test_liqparse.py` | Liquipedia parser + ETL gate tests |
+| `tools/test_enrich.py` | Offline draft/lane parser + data-quality gates |
 | `tools/test_config.py` | Season-config schema tests |
 | `data/season.json` | Validated season rules (teams, slots, priors, endpoints, cache) |
 | `data/registry.json` | Season registry — every season-aware tool resolves paths through it |
@@ -110,9 +112,10 @@ live from the mlbbhub API when online.
 ## Commands
 
 ```bash
-python tools/etl.py --season s18      # season-aware ETL wrapper (network)
+python tools/etl.py --season s18      # full pipeline: API ETL + Liquipedia enrichment (network)
 python tools/build.py --season s18    # season-aware build wrapper
-python tools/build_s18_db.py   # full ETL rebuild (network)
+python tools/build_s18_db.py   # API-only ETL (no picks/lanes/map mode)
+python tools/enrich_drafts.py --season s18  # Liquipedia enrichment alone (network)
 python tools/fetch_assets.py   # download missing hero/item assets
 python tools/fetch_assets.py --live        # also cover season progress
 python tools/fetch_assets.py --check-only  # audit only
@@ -130,9 +133,15 @@ A new season is supported without application-code changes:
 1. Add `data/seasons/<id>/season.json` (teams, aliases, slots, priors, endpoints).
 2. Add roster / IGN / lane entries to `data/global/aliases.json`.
 3. Register the season in `data/registry.json` with `"layout": "season-dir"`.
-4. Run `python tools/etl.py --season <id>` (network).
+4. Run `python tools/etl.py --season <id>` (network). This builds the database
+   and enriches picks, lanes, ban order and map mode from Liquipedia.
 5. Run `python tools/build.py --season <id>` and `python tools/verify.py`.
 6. Review the diff, then commit the season data and generated build.
+
+Enrichment fills `game_picks`, `game_players.lane`/`lane_source`,
+`game_bans.ban_order` and `games.map_mode`. It is idempotent: re-running
+replaces picks and re-checks every row; unmatched heroes or players are
+reported, never guessed.
 
 Season 18 currently resolves through the `legacy` layout; moving it to
 `data/seasons/s18/` is the remaining Phase 0 work.
