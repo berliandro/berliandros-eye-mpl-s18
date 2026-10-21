@@ -55,7 +55,7 @@ match_detail_id,game_no,team,side,slot,lane,hero,player
 1038,2,TLID,blue,4,GOLD,Claude,Keven
 1038,2,TLID,blue,5,ROAM,Carmilla,Lyoni
 1038,2,GEEK,red,1,EXP,Alice,MarceL
-1038,2,GEEK,red,2,JUNGLE,Yi Sun-shin,Nazara
+1038,2,GEEK,red,2,JUNGLE,Yi Sun-Shin,Nazara
 1038,2,GEEK,red,3,MID,Odette,Aboyy
 1038,2,GEEK,red,4,GOLD,Masha,KennzySkie
 1038,2,GEEK,red,5,ROAM,Chip,AudyTzy
@@ -65,7 +65,7 @@ match_detail_id,game_no,team,side,slot,lane,hero,player
 1038,3,TLID,blue,4,GOLD,Claude,Keven
 1038,3,TLID,blue,5,ROAM,Belerick,Lyoni
 1038,3,GEEK,red,1,EXP,Carmilla,MarceL
-1038,3,GEEK,red,2,JUNGLE,Yi Sun-shin,Nazara
+1038,3,GEEK,red,2,JUNGLE,Yi Sun-Shin,Nazara
 1038,3,GEEK,red,3,MID,Odette,Aboyy
 1038,3,GEEK,red,4,GOLD,Masha,KennzySkie
 1038,3,GEEK,red,5,ROAM,Chip,AudyTzy
@@ -195,12 +195,12 @@ match_detail_id,game_no,team,side,slot,lane,hero,player
 1043,2,AE,red,4,GOLD,Moskov,Arfy
 1043,2,AE,red,5,ROAM,Marcel,alekk
 1043,2,ONIC,blue,1,EXP,Ruby,Lutpi
-1043,2,ONIC,blue,2,JUNGLE,Yi Sun-shin,Kairi
+1043,2,ONIC,blue,2,JUNGLE,Yi Sun-Shin,Kairi
 1043,2,ONIC,blue,3,MID,Eudora,S A N Z
 1043,2,ONIC,blue,4,GOLD,Paquito,Kelra
 1043,2,ONIC,blue,5,ROAM,Badang,Kiboy
 1044,1,TLID,blue,1,EXP,Barats,Aran
-1044,1,TLID,blue,2,JUNGLE,Yi Sun-shin,Kevinn
+1044,1,TLID,blue,2,JUNGLE,Yi Sun-Shin,Kevinn
 1044,1,TLID,blue,3,MID,Selena,Drichel
 1044,1,TLID,blue,4,GOLD,Melissa,Keven
 1044,1,TLID,blue,5,ROAM,Minotaur,Lyoni
@@ -460,7 +460,7 @@ match_detail_id,game_no,team,side,slot,lane,hero,player
 1055,1,EVOS,red,4,GOLD,Moskov,Erlan
 1055,1,EVOS,red,5,ROAM,Marcel,Muezza
 1055,2,AE,red,1,EXP,Barats,Nino
-1055,2,AE,red,2,JUNGLE,Yi Sun-shin,Yazukee
+1055,2,AE,red,2,JUNGLE,Yi Sun-Shin,Yazukee
 1055,2,AE,red,3,MID,Eudora,Hijumee
 1055,2,AE,red,4,GOLD,Brody,Arfy
 1055,2,AE,red,5,ROAM,Minotaur,alekk
@@ -610,7 +610,7 @@ match_detail_id,game_no,team,side,slot,lane,hero,player
 1061,2,RRQ,blue,4,GOLD,Melissa,Arthur
 1061,2,RRQ,blue,5,ROAM,Chip,Said
 1062,1,DEWA,blue,1,EXP,Sora,QINN
-1062,1,DEWA,blue,2,JUNGLE,Yi Sun-shin,Hazle
+1062,1,DEWA,blue,2,JUNGLE,Yi Sun-Shin,Hazle
 1062,1,DEWA,blue,3,MID,Eudora,Octa
 1062,1,DEWA,blue,4,GOLD,Paquito,Maybeee
 1062,1,DEWA,blue,5,ROAM,Minotaur,Shanee
@@ -620,7 +620,7 @@ match_detail_id,game_no,team,side,slot,lane,hero,player
 1062,1,ONIC,red,4,GOLD,Clint,Kelra
 1062,1,ONIC,red,5,ROAM,Rafaela,Kiboy
 1062,2,DEWA,red,1,EXP,Sora,QINN
-1062,2,DEWA,red,2,JUNGLE,Yi Sun-shin,Hazle
+1062,2,DEWA,red,2,JUNGLE,Yi Sun-Shin,Hazle
 1062,2,DEWA,red,3,MID,Valentina,Octa
 1062,2,DEWA,red,4,GOLD,Miya,Maybeee
 1062,2,DEWA,red,5,ROAM,Belerick,Shanee
@@ -645,7 +645,7 @@ match_detail_id,game_no,team,side,slot,lane,hero,player
 1063,1,EVOS,red,4,GOLD,Brody,Erlan
 1063,1,EVOS,red,5,ROAM,Gloo,Muezza
 1063,1,BTR,blue,1,EXP,Uranus,Shogun
-1063,1,BTR,blue,2,JUNGLE,Yi Sun-shin,Nnael
+1063,1,BTR,blue,2,JUNGLE,Yi Sun-Shin,Nnael
 1063,1,BTR,blue,3,MID,Lylia,Morenooo
 1063,1,BTR,blue,4,GOLD,Moskov,EMANN
 1063,1,BTR,blue,5,ROAM,Belerick,Finn
@@ -685,7 +685,7 @@ match_detail_id,game_no,team,side,slot,lane,hero,player
 1064,2,AE,blue,4,GOLD,Obsidia,Arfy
 1064,2,AE,blue,5,ROAM,Hylos,alekk
 1064,2,GEEK,red,1,EXP,Sora,MarceL
-1064,2,GEEK,red,2,JUNGLE,Yi Sun-shin,MAYKIDSS
+1064,2,GEEK,red,2,JUNGLE,Yi Sun-Shin,MAYKIDSS
 1064,2,GEEK,red,3,MID,Kimmy,Aboyy
 1064,2,GEEK,red,4,GOLD,Masha,KennzySkie
 1064,2,GEEK,red,5,ROAM,Atlas,Frenzyy
@@ -760,7 +760,7 @@ match_detail_id,game_no,team,side,slot,lane,hero,player
 1069,1,ONIC,red,4,GOLD,Claude,Kelra
 1069,1,ONIC,red,5,ROAM,Atlas,Kiboy
 1069,2,GEEK,red,1,EXP,Phoveus,Febriii
-1069,2,GEEK,red,2,JUNGLE,Yi Sun-shin,Maykidss
+1069,2,GEEK,red,2,JUNGLE,Yi Sun-Shin,Maykidss
 1069,2,GEEK,red,3,MID,Kimmy,Aboyy
 1069,2,GEEK,red,4,GOLD,Minsitthar,KennzySkie
 1069,2,GEEK,red,5,ROAM,Belerick,Frenzyy
@@ -815,7 +815,7 @@ match_detail_id,game_no,team,side,slot,lane,hero,player
 1071,2,AE,blue,4,GOLD,Miya,Arfy
 1071,2,AE,blue,5,ROAM,Atlas,alekk
 1071,2,RRQ,red,1,EXP,Uranus,Joshua
-1071,2,RRQ,red,2,JUNGLE,Yi Sun-shin,Demonkite
+1071,2,RRQ,red,2,JUNGLE,Yi Sun-Shin,Demonkite
 1071,2,RRQ,red,3,MID,Rafaela,Clayyy
 1071,2,RRQ,red,4,GOLD,Paquito,Arthur
 1071,2,RRQ,red,5,ROAM,Gatotkaca,Excellent99
@@ -909,7 +909,7 @@ match_detail_id,game_no,team,side,slot,lane,hero,player
 1077,1,EVOS,red,3,MID,Eudora,Ryzaa
 1077,1,EVOS,red,4,GOLD,Bruno,Erlan
 1077,1,EVOS,red,5,ROAM,Gatotkaca,EgaTzy
-1077,2,DEWA,blue,1,EXP,cici,QINN
+1077,2,DEWA,blue,1,EXP,Cici,QINN
 1077,2,DEWA,blue,2,JUNGLE,Nolan,Hazle
 1077,2,DEWA,blue,3,MID,Kimmy,Octa
 1077,2,DEWA,blue,4,GOLD,Paquito,Maybeee
@@ -934,7 +934,7 @@ match_detail_id,game_no,team,side,slot,lane,hero,player
 1075,2,RRQ,blue,3,MID,Rafaela,Hajirin
 1075,2,RRQ,blue,4,GOLD,Miya,Habil
 1075,2,RRQ,blue,5,ROAM,Belerick,Said
-1075,2,DEWA,red,1,EXP,cici,QINN
+1075,2,DEWA,red,1,EXP,Cici,QINN
 1075,2,DEWA,red,2,JUNGLE,Paquito,Hazle
 1075,2,DEWA,red,3,MID,Eudora,Octa
 1075,2,DEWA,red,4,GOLD,Obsidia,Maybeee
@@ -959,7 +959,7 @@ match_detail_id,game_no,team,side,slot,lane,hero,player
 1078,1,NAVI,red,3,MID,Kagura,Jiizee
 1078,1,NAVI,red,4,GOLD,Miya,Zeonn
 1078,1,NAVI,red,5,ROAM,Gloo,Aprho
-1078,2,GEEK,blue,1,EXP,cici,MarceL
+1078,2,GEEK,blue,1,EXP,Cici,MarceL
 1078,2,GEEK,blue,2,JUNGLE,Hirara,Maykidss
 1078,2,GEEK,blue,3,MID,Zhuxin,Aboyy
 1078,2,GEEK,blue,4,GOLD,Miya,KennzySkie
@@ -1012,7 +1012,7 @@ match_detail_id,game_no,team,side,slot,lane,hero,player
 1080,2,BTR,red,1,EXP,Kalea,Shogun
 1080,2,BTR,red,2,JUNGLE,Paquito,Nnael
 1080,2,BTR,red,3,MID,Selena,Morenooo
-1080,2,BTR,red,4,GOLD,cici,EMANN
+1080,2,BTR,red,4,GOLD,Cici,EMANN
 1080,2,BTR,red,5,ROAM,Minotaur,Finn
 1080,2,TLID,blue,1,EXP,Belerick,Aran
 1080,2,TLID,blue,2,JUNGLE,Hirara,Kevinn
@@ -1055,7 +1055,7 @@ match_detail_id,game_no,team,side,slot,lane,hero,player
 1082,2,BTR,red,4,GOLD,Moskov,EMANN
 1082,2,BTR,red,5,ROAM,Minotaur,Finn
 1082,2,ONIC,blue,1,EXP,Sora,Lutpi
-1082,2,ONIC,blue,2,JUNGLE,Yi Sun-shin,Kairi
+1082,2,ONIC,blue,2,JUNGLE,Yi Sun-Shin,Kairi
 1082,2,ONIC,blue,3,MID,Cecilion,Killuaa
 1082,2,ONIC,blue,4,GOLD,Obsidia,Kelra
 1082,2,ONIC,blue,5,ROAM,Carmilla,Kiboy
@@ -1097,7 +1097,7 @@ match_detail_id,game_no,team,side,slot,lane,hero,player
 1084,1,BTR,red,1,EXP,Lukas,Shogun
 1084,1,BTR,red,2,JUNGLE,Aulus,Nnael
 1084,1,BTR,red,3,MID,Zhuxin,Morenooo
-1084,1,BTR,red,4,GOLD,cici,EMANN
+1084,1,BTR,red,4,GOLD,Cici,EMANN
 1084,1,BTR,red,5,ROAM,Gloo,Finn
 1084,2,GEEK,red,1,EXP,Arlott,MarceL
 1084,2,GEEK,red,2,JUNGLE,Aulus,Maykidss
@@ -1120,9 +1120,9 @@ match_detail_id,game_no,team,side,slot,lane,hero,player
 1084,3,BTR,red,4,GOLD,Claude,EMANN
 1084,3,BTR,red,5,ROAM,Mathilda,Finn
 1085,1,DEWA,blue,1,EXP,Alpha,QINN
-1085,1,DEWA,blue,2,JUNGLE,Yi Sun-shin,Hazle
+1085,1,DEWA,blue,2,JUNGLE,Yi Sun-Shin,Hazle
 1085,1,DEWA,blue,3,MID,Zhuxin,Octa
-1085,1,DEWA,blue,4,GOLD,cici,Maybeee
+1085,1,DEWA,blue,4,GOLD,Cici,Maybeee
 1085,1,DEWA,blue,5,ROAM,Minotaur,Shanee
 1085,1,TLID,red,1,EXP,Atlas,Aran
 1085,1,TLID,red,2,JUNGLE,Nolan,Kevinn
@@ -1134,7 +1134,7 @@ match_detail_id,game_no,team,side,slot,lane,hero,player
 1085,2,DEWA,blue,3,MID,Valentina,Octa
 1085,2,DEWA,blue,4,GOLD,Claude,Maybeee
 1085,2,DEWA,blue,5,ROAM,Mathilda,Shanee
-1085,2,TLID,red,1,EXP,cici,Aran
+1085,2,TLID,red,1,EXP,Cici,Aran
 1085,2,TLID,red,2,JUNGLE,Alice,Kevinn
 1085,2,TLID,red,3,MID,Zhuxin,Drichel
 1085,2,TLID,red,4,GOLD,Moskov,Keven
@@ -1164,20 +1164,20 @@ match_detail_id,game_no,team,side,slot,lane,hero,player
 1086,2,AE,blue,3,MID,Yve,Hijumee
 1086,2,AE,blue,4,GOLD,Claude,Arfy
 1086,2,AE,blue,5,ROAM,Badang,alekk
-1086,2,NAVI,red,1,EXP,cici,Karss
+1086,2,NAVI,red,1,EXP,Cici,Karss
 1086,2,NAVI,red,2,JUNGLE,Leomord,Joshuaa
 1086,2,NAVI,red,3,MID,Zhuxin,Jiizee
 1086,2,NAVI,red,4,GOLD,Moskov,Zeonn
 1086,2,NAVI,red,5,ROAM,Masha,Aprho
 1086,3,AE,red,1,EXP,Freya,Nino
-1086,3,AE,red,2,JUNGLE,Yi Sun-shin,Yazukee
+1086,3,AE,red,2,JUNGLE,Yi Sun-Shin,Yazukee
 1086,3,AE,red,3,MID,Yve,Hijumee
 1086,3,AE,red,4,GOLD,Claude,Arfy
 1086,3,AE,red,5,ROAM,Masha,alekk
 1086,3,NAVI,blue,1,EXP,Esmeralda,Karss
 1086,3,NAVI,blue,2,JUNGLE,Aulus,Joshuaa
 1086,3,NAVI,blue,3,MID,Zhuxin,Jiizee
-1086,3,NAVI,blue,4,GOLD,cici,Zeonn
+1086,3,NAVI,blue,4,GOLD,Cici,Zeonn
 1086,3,NAVI,blue,5,ROAM,Khaleed,Aprho
 1087,1,BTR,blue,1,EXP,Esmeralda,Shogun
 1087,1,BTR,blue,2,JUNGLE,Aulus,Nnael
@@ -1222,7 +1222,7 @@ match_detail_id,game_no,team,side,slot,lane,hero,player
 1088,2,GEEK,red,1,EXP,Uranus,MarceL
 1088,2,GEEK,red,2,JUNGLE,Nolan,Maykidss
 1088,2,GEEK,red,3,MID,Zhuxin,Aboyy
-1088,2,GEEK,red,4,GOLD,cici,KennzySkie
+1088,2,GEEK,red,4,GOLD,Cici,KennzySkie
 1088,2,GEEK,red,5,ROAM,Gatotkaca,Frenzyy
 1088,2,DEWA,blue,1,EXP,Alice,QINN
 1088,2,DEWA,blue,2,JUNGLE,Aulus,Hazle
@@ -1264,7 +1264,7 @@ match_detail_id,game_no,team,side,slot,lane,hero,player
 1090,1,RRQ,blue,3,MID,Kimmy,Hajirin
 1090,1,RRQ,blue,4,GOLD,Aulus,Arthur
 1090,1,RRQ,blue,5,ROAM,Rafaela,Said
-1090,1,EVOS,red,1,EXP,cici,Vell
+1090,1,EVOS,red,1,EXP,Cici,Vell
 1090,1,EVOS,red,2,JUNGLE,Paquito,Alberttt
 1090,1,EVOS,red,3,MID,Valentina,Ryzaa
 1090,1,EVOS,red,4,GOLD,Obsidia,Erlan
@@ -1297,7 +1297,7 @@ match_detail_id,game_no,team,side,slot,lane,hero,player
 1091,1,NAVI,red,1,EXP,Freya,Karss
 1091,1,NAVI,red,2,JUNGLE,Paquito,Joshuaa
 1091,1,NAVI,red,3,MID,Novaria,Jiizee
-1091,1,NAVI,red,4,GOLD,cici,Zeonn
+1091,1,NAVI,red,4,GOLD,Cici,Zeonn
 1091,1,NAVI,red,5,ROAM,Masha,Aprho
 1091,2,ONIC,red,1,EXP,Dyrroth,Lutpi
 1091,2,ONIC,red,2,JUNGLE,Hirara,Kairi
@@ -1307,7 +1307,7 @@ match_detail_id,game_no,team,side,slot,lane,hero,player
 1091,2,NAVI,blue,1,EXP,Uranus,Karss
 1091,2,NAVI,blue,2,JUNGLE,Aulus,Joshuaa
 1091,2,NAVI,blue,3,MID,Kimmy,Jiizee
-1091,2,NAVI,blue,4,GOLD,cici,Zeonn
+1091,2,NAVI,blue,4,GOLD,Cici,Zeonn
 1091,2,NAVI,blue,5,ROAM,Marcel,Aprho
 1091,3,ONIC,blue,1,EXP,Phoveus,Lutpi
 1091,3,ONIC,blue,2,JUNGLE,Hirara,Kairi
@@ -1329,7 +1329,7 @@ match_detail_id,game_no,team,side,slot,lane,hero,player
 1068,1,DEWA,red,3,MID,Valentina,Octa
 1068,1,DEWA,red,4,GOLD,Hanabi,Maybeee
 1068,1,DEWA,red,5,ROAM,Minotaur,Shanee
-1068,2,EVOS,red,1,EXP,cici,Rendyyy
+1068,2,EVOS,red,1,EXP,Cici,Rendyyy
 1068,2,EVOS,red,2,JUNGLE,Nolan,Alberttt
 1068,2,EVOS,red,3,MID,Selena,Ryzaa
 1068,2,EVOS,red,4,GOLD,Freya,Erlan
@@ -1342,7 +1342,7 @@ match_detail_id,game_no,team,side,slot,lane,hero,player
 1068,3,EVOS,blue,1,EXP,Alice,Rendyyy
 1068,3,EVOS,blue,2,JUNGLE,Alpha,Alberttt
 1068,3,EVOS,blue,3,MID,Lylia,Ryzaa
-1068,3,EVOS,blue,4,GOLD,cici,Erlan
+1068,3,EVOS,blue,4,GOLD,Cici,Erlan
 1068,3,EVOS,blue,5,ROAM,Masha,Muezza
 1068,3,DEWA,red,1,EXP,Sora,QINN
 1068,3,DEWA,red,2,JUNGLE,Aulus,Hazle
@@ -1372,7 +1372,7 @@ match_detail_id,game_no,team,side,slot,lane,hero,player
 1093,1,NAVI,blue,1,EXP,Alice,Karss
 1093,1,NAVI,blue,2,JUNGLE,Aulus,Joshuaa
 1093,1,NAVI,blue,3,MID,Zhuxin,Jiizee
-1093,1,NAVI,blue,4,GOLD,cici,Zeonn
+1093,1,NAVI,blue,4,GOLD,Cici,Zeonn
 1093,1,NAVI,blue,5,ROAM,Gatotkaca,Aprho
 1093,1,TLID,red,1,EXP,Masha,Aran
 1093,1,TLID,red,2,JUNGLE,Paquito,Kevinn
@@ -1382,14 +1382,14 @@ match_detail_id,game_no,team,side,slot,lane,hero,player
 1093,2,NAVI,blue,1,EXP,Alice,Karss
 1093,2,NAVI,blue,2,JUNGLE,Aulus,Joshuaa
 1093,2,NAVI,blue,3,MID,Valir,Jiizee
-1093,2,NAVI,blue,4,GOLD,cici,Zeonn
+1093,2,NAVI,blue,4,GOLD,Cici,Zeonn
 1093,2,NAVI,blue,5,ROAM,Gloo,Aprho
 1093,2,TLID,red,1,EXP,Freya,Aran
 1093,2,TLID,red,2,JUNGLE,Nolan,Kevinn
 1093,2,TLID,red,3,MID,Valentina,Drichel
 1093,2,TLID,red,4,GOLD,Claude,Keven
 1093,2,TLID,red,5,ROAM,Masha,Lyoni
-1094,1,EVOS,blue,1,EXP,cici,Rendyyy
+1094,1,EVOS,blue,1,EXP,Cici,Rendyyy
 1094,1,EVOS,blue,2,JUNGLE,Hirara,Alberttt
 1094,1,EVOS,blue,3,MID,Zhuxin,Ryzaa
 1094,1,EVOS,blue,4,GOLD,Aulus,Erlan
@@ -1409,7 +1409,7 @@ match_detail_id,game_no,team,side,slot,lane,hero,player
 1094,2,ONIC,blue,3,MID,Kimmy,Killuaa
 1094,2,ONIC,blue,4,GOLD,Obsidia,Kelra
 1094,2,ONIC,blue,5,ROAM,Marcel,Kiboy
-1094,3,EVOS,blue,1,EXP,cici,Rendyyy
+1094,3,EVOS,blue,1,EXP,Cici,Rendyyy
 1094,3,EVOS,blue,2,JUNGLE,Alice,Alberttt
 1094,3,EVOS,blue,3,MID,Cecilion,Ryzaa
 1094,3,EVOS,blue,4,GOLD,Obsidia,Erlan
@@ -1427,7 +1427,7 @@ match_detail_id,game_no,team,side,slot,lane,hero,player
 1095,1,TLID,red,1,EXP,Esmeralda,Aran
 1095,1,TLID,red,2,JUNGLE,Lukas,Kevinn
 1095,1,TLID,red,3,MID,Kimmy,Drichel
-1095,1,TLID,red,4,GOLD,cici,Keven
+1095,1,TLID,red,4,GOLD,Cici,Keven
 1095,1,TLID,red,5,ROAM,Atlas,Lyoni
 1095,2,RRQ,blue,1,EXP,Lukas,Joshua
 1095,2,RRQ,blue,2,JUNGLE,Alpha,Faviannn
@@ -1437,7 +1437,7 @@ match_detail_id,game_no,team,side,slot,lane,hero,player
 1095,2,TLID,red,1,EXP,Freya,Aran
 1095,2,TLID,red,2,JUNGLE,Alice,Kevinn
 1095,2,TLID,red,3,MID,Zhuxin,Drichel
-1095,2,TLID,red,4,GOLD,cici,Keven
+1095,2,TLID,red,4,GOLD,Cici,Keven
 1095,2,TLID,red,5,ROAM,Atlas,Lyoni
 1096,1,DEWA,blue,1,EXP,Alice,QINN
 1096,1,DEWA,blue,2,JUNGLE,Hirara,Hazle
@@ -1459,7 +1459,7 @@ match_detail_id,game_no,team,side,slot,lane,hero,player
 1096,2,NAVI,red,3,MID,Zhuxin,Jiizee
 1096,2,NAVI,red,4,GOLD,Moskov,Zeonn
 1096,2,NAVI,red,5,ROAM,Marcel,Aprho
-1097,1,EVOS,blue,1,EXP,cici,Rendyyy
+1097,1,EVOS,blue,1,EXP,Cici,Rendyyy
 1097,1,EVOS,blue,2,JUNGLE,Alice,Alberttt
 1097,1,EVOS,blue,3,MID,Valentina,Ryzaa
 1097,1,EVOS,blue,4,GOLD,Esmeralda,Erlan
@@ -1487,9 +1487,9 @@ match_detail_id,game_no,team,side,slot,lane,hero,player
 1098,1,ONIC,red,1,EXP,Phoveus,Lutpi
 1098,1,ONIC,red,2,JUNGLE,Nolan,Kairi
 1098,1,ONIC,red,3,MID,Zhuxin,Killuaa
-1098,1,ONIC,red,4,GOLD,cici,Kelra
+1098,1,ONIC,red,4,GOLD,Cici,Kelra
 1098,1,ONIC,red,5,ROAM,Atlas,Kiboy
-1098,2,RRQ,red,1,EXP,cici,Joshua
+1098,2,RRQ,red,1,EXP,Cici,Joshua
 1098,2,RRQ,red,2,JUNGLE,Alpha,Faviannn
 1098,2,RRQ,red,3,MID,Zetian,Hajirin
 1098,2,RRQ,red,4,GOLD,Paquito,Arthur
@@ -1517,12 +1517,12 @@ match_detail_id,game_no,team,side,slot,lane,hero,player
 1099,1,BTR,blue,1,EXP,Freya,Shogun
 1099,1,BTR,blue,2,JUNGLE,Alpha,Nnael
 1099,1,BTR,blue,3,MID,Valentina,Morenooo
-1099,1,BTR,blue,4,GOLD,cici,EMANN
+1099,1,BTR,blue,4,GOLD,Cici,EMANN
 1099,1,BTR,blue,5,ROAM,Gloo,Finn
 1099,2,DEWA,blue,1,EXP,Joy,QINN
 1099,2,DEWA,blue,2,JUNGLE,Alpha,Hazle
 1099,2,DEWA,blue,3,MID,Selena,Octa
-1099,2,DEWA,blue,4,GOLD,cici,Maybeee
+1099,2,DEWA,blue,4,GOLD,Cici,Maybeee
 1099,2,DEWA,blue,5,ROAM,Carmilla,Shanee
 1099,2,BTR,red,1,EXP,Freya,Shogun
 1099,2,BTR,red,2,JUNGLE,Aulus,Nnael
@@ -1537,12 +1537,12 @@ match_detail_id,game_no,team,side,slot,lane,hero,player
 1100,1,RRQ,blue,1,EXP,Dyrroth,Joshua
 1100,1,RRQ,blue,2,JUNGLE,Aulus,Faviannn
 1100,1,RRQ,blue,3,MID,Kimmy,Hajirin
-1100,1,RRQ,blue,4,GOLD,cici,Arthur
+1100,1,RRQ,blue,4,GOLD,Cici,Arthur
 1100,1,RRQ,blue,5,ROAM,Gatotkaca,Said
 1100,2,NAVI,red,1,EXP,Lukas,Karss
 1100,2,NAVI,red,2,JUNGLE,Paquito,Joshuaa
 1100,2,NAVI,red,3,MID,Lylia,Jiizee
-1100,2,NAVI,red,4,GOLD,cici,Zeonn
+1100,2,NAVI,red,4,GOLD,Cici,Zeonn
 1100,2,NAVI,red,5,ROAM,Marcel,Aprho
 1100,2,RRQ,blue,1,EXP,Esmeralda,Joshua
 1100,2,RRQ,blue,2,JUNGLE,Aulus,Faviannn
@@ -1557,14 +1557,14 @@ match_detail_id,game_no,team,side,slot,lane,hero,player
 1100,3,RRQ,red,1,EXP,Paquito,Joshua
 1100,3,RRQ,red,2,JUNGLE,Nolan,Faviannn
 1100,3,RRQ,red,3,MID,Rafaela,Hajirin
-1100,3,RRQ,red,4,GOLD,cici,Arthur
+1100,3,RRQ,red,4,GOLD,Cici,Arthur
 1100,3,RRQ,red,5,ROAM,Atlas,Said
 1101,1,GEEK,blue,1,EXP,Arlott,MarceL
 1101,1,GEEK,blue,2,JUNGLE,Aulus,Maykidss
 1101,1,GEEK,blue,3,MID,Kimmy,Aboyy
 1101,1,GEEK,blue,4,GOLD,Esmeralda,KennzySkie
 1101,1,GEEK,blue,5,ROAM,Marcel,Frenzyy
-1101,1,AE,red,1,EXP,cici,Nino
+1101,1,AE,red,1,EXP,Cici,Nino
 1101,1,AE,red,2,JUNGLE,Nolan,Yazukee
 1101,1,AE,red,3,MID,Eudora,Hijumee
 1101,1,AE,red,4,GOLD,Paquito,Arfy
@@ -1602,7 +1602,7 @@ match_detail_id,game_no,team,side,slot,lane,hero,player
 1102,3,ONIC,red,1,EXP,Phoveus,Lutpi
 1102,3,ONIC,red,2,JUNGLE,Fanny,Kairi
 1102,3,ONIC,red,3,MID,Kimmy,Killuaa
-1102,3,ONIC,red,4,GOLD,cici,Kelra
+1102,3,ONIC,red,4,GOLD,Cici,Kelra
 1102,3,ONIC,red,5,ROAM,Kalea,Kiboy
 1102,3,DEWA,blue,1,EXP,Lukas,QINN
 1102,3,DEWA,blue,2,JUNGLE,Alice,Hazle
@@ -1612,7 +1612,7 @@ match_detail_id,game_no,team,side,slot,lane,hero,player
 1103,1,BTR,red,1,EXP,Phoveus,Shogun
 1103,1,BTR,red,2,JUNGLE,Nolan,Nnael
 1103,1,BTR,red,3,MID,Zhuxin,Morenooo
-1103,1,BTR,red,4,GOLD,cici,EMANN
+1103,1,BTR,red,4,GOLD,Cici,EMANN
 1103,1,BTR,red,5,ROAM,Marcel,Finn
 1103,1,EVOS,blue,1,EXP,Alice,Rendyyy
 1103,1,EVOS,blue,2,JUNGLE,Aulus,Alberttt
@@ -1627,14 +1627,14 @@ match_detail_id,game_no,team,side,slot,lane,hero,player
 1103,2,EVOS,red,1,EXP,Esmeralda,Rendyyy
 1103,2,EVOS,red,2,JUNGLE,Saber,Alberttt
 1103,2,EVOS,red,3,MID,Kimmy,Ryzaa
-1103,2,EVOS,red,4,GOLD,cici,Erlan
+1103,2,EVOS,red,4,GOLD,Cici,Erlan
 1103,2,EVOS,red,5,ROAM,Kalea,EgaTzy
 1103,3,BTR,red,1,EXP,Phoveus,Shogun
 1103,3,BTR,red,2,JUNGLE,Nolan,Nnael
 1103,3,BTR,red,3,MID,Zhuxin,Morenooo
 1103,3,BTR,red,4,GOLD,Freya,EMANN
 1103,3,BTR,red,5,ROAM,Gatotkaca,Finn
-1103,3,EVOS,blue,1,EXP,cici,Rendyyy
+1103,3,EVOS,blue,1,EXP,Cici,Rendyyy
 1103,3,EVOS,blue,2,JUNGLE,Saber,Alberttt
 1103,3,EVOS,blue,3,MID,Selena,Ryzaa
 1103,3,EVOS,blue,4,GOLD,Aulus,Erlan

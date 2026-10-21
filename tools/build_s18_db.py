@@ -39,7 +39,12 @@ def canon_team(t):
 # One hero appears under two spellings in the API: hero_stats says "Zetian"
 # while per-player rows say "Wu/Zetian". They are the same hero (16 picks
 # each), so fold the variant at ingestion rather than losing the identity.
-HERO_RENAMES = {"wuzetian": "Zetian"}
+HERO_RENAMES = {
+    "wuzetian": "Zetian",
+    "lapulapu": "Lapu-Lapu",
+    "yisunshin": "Yi Sun-Shin",
+    "cici": "Cici",
+}
 
 
 def canon_hero(h):

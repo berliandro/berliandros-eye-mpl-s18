@@ -177,8 +177,12 @@ def main():
     # primary lanes). Moving these out of app.js means adding a player or fixing
     # an IGN is a data edit, not a code change.
     aliases = json.loads((ROOT / 'data' / 'global' / 'aliases.json').read_text(encoding='utf-8'))
+    # Hero role/lane/specialty metadata. Role and primary lane come from
+    # Liquipedia's infobox; damage_type is derived from ability text and is
+    # labelled as such in the file. Empirical lane shares come from game_picks.
+    hero_classes = json.loads((ROOT / 'data' / 'global' / 'hero_classes.json').read_text(encoding='utf-8'))
     season_js = json.dumps(season, ensure_ascii=False, separators=(',', ':'))
-    doc = doc.replace('__CSS__', css).replace('__JS__', js.replace('__DATA__', data_js).replace('__SEASON__', season_js).replace('__TEAMS__', json.dumps(TEAMS))).replace('__ASSETS__', json.dumps(manifest)).replace('__ITEM_CLASSES__', json.dumps(item_classes['items'], ensure_ascii=False, separators=(',', ':')).replace('</scr'+'ipt>', '<\\/scr'+'ipt>')).replace('__ALIASES__', json.dumps({k: v for k, v in aliases.items() if not k.startswith('_')}, ensure_ascii=False, separators=(',', ':')).replace('</scr'+'ipt>', '<\\/scr'+'ipt>'))
+    doc = doc.replace('__CSS__', css).replace('__JS__', js.replace('__DATA__', data_js).replace('__SEASON__', season_js).replace('__TEAMS__', json.dumps(TEAMS))).replace('__ASSETS__', json.dumps(manifest)).replace('__ITEM_CLASSES__', json.dumps(item_classes['items'], ensure_ascii=False, separators=(',', ':')).replace('</scr'+'ipt>', '<\\/scr'+'ipt>')).replace('__ALIASES__', json.dumps({k: v for k, v in aliases.items() if not k.startswith('_')}, ensure_ascii=False, separators=(',', ':')).replace('</scr'+'ipt>', '<\\/scr'+'ipt>')).replace('__HERO_CLASSES__', json.dumps(hero_classes['heroes'], ensure_ascii=False, separators=(',', ':')).replace('</scr'+'ipt>', '<\\/scr'+'ipt>'))
     out = ROOT / 'mpl_id_s18_dark.html'
     # Platform-independent output: inputs are read in universal-newline mode
     # (already LF-only in memory), so write with newline='\n' to keep the

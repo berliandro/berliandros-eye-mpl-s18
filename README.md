@@ -88,6 +88,7 @@ live from the mlbbhub API when online.
 | `tools/templates/` | Single source: `doc.html`, `style.css`, `app.js` |
 | `tools/build_s18_db.py` | API ETL: mlbbhub + Liquipedia → SQLite + `data/csv/` |
 | `tools/enrich_drafts.py` | Liquipedia enrichment: picks, lane order, ban order, map mode (idempotent) |
+| `tools/fetch_hero_classes.py` | Build `hero_classes.json` from Liquipedia hero infoboxes (role, lane, specialties) |
 | `tools/gen_dark.py` | Build: CSV + assets → `mpl_id_s18_dark.html` |
 | `tools/fetch_assets.py` | Download every referenced hero/item asset (`--check-only`, `--live`) |
 | `tools/check.py` | Regression suite (incl. STRICT asset coverage + JS syntax gate) |
@@ -98,10 +99,11 @@ live from the mlbbhub API when online.
 | `tools/test_config.js` | Season-config tests (node) |
 | `tools/test_liqparse.py` | Liquipedia parser + ETL gate tests |
 | `tools/test_enrich.py` | Offline draft/lane parser + data-quality gates |
+| `tools/test_hero_classes.py` | Hero role/lane/damage coverage gates |
 | `tools/test_config.py` | Season-config schema tests |
 | `data/season.json` | Validated season rules (teams, slots, priors, endpoints, cache) |
 | `data/registry.json` | Season registry — every season-aware tool resolves paths through it |
-| `data/global/` | Season-independent metadata: `aliases.json` (player/team/lane identity), `item_classes.json` |
+| `data/global/` | Season-independent metadata: `aliases.json` (player/team/lane identity), `item_classes.json`, `hero_classes.json` |
 | `tools/season.py` | Registry resolver (`legacy` and `season-dir` layouts) |
 | `tools/check_parity.py` | Regen parity gate |
 | `tools/shots.py` | README screenshots per the shooting spec below (Playwright + system Chrome) |

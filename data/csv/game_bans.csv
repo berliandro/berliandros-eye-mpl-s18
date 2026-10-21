@@ -12,7 +12,7 @@ match_detail_id,game_no,side,hero,ban_order
 1036,2,A,Marcel,1
 1036,2,A,Esmeralda,2
 1036,2,A,Hirara,3
-1036,2,A,Yi Sun-shin,4
+1036,2,A,Yi Sun-Shin,4
 1036,2,A,Nolan,5
 1036,2,B,Freya,1
 1036,2,B,Melissa,2
@@ -78,7 +78,7 @@ match_detail_id,game_no,side,hero,ban_order
 1039,1,B,Melissa,2
 1039,1,B,Marcel,3
 1039,1,B,Harley,4
-1039,1,B,Yi Sun-shin,5
+1039,1,B,Yi Sun-Shin,5
 1039,2,A,Atlas,1
 1039,2,A,Selena,2
 1039,2,A,Barats,3
@@ -296,7 +296,7 @@ match_detail_id,game_no,side,hero,ban_order
 1048,1,A,Phoveus,5
 1048,1,B,Marcel,1
 1048,1,B,Fanny,2
-1048,1,B,Yi Sun-shin,3
+1048,1,B,Yi Sun-Shin,3
 1048,1,B,Claude,4
 1048,1,B,Brody,5
 1048,2,A,Marcel,1
@@ -637,7 +637,7 @@ match_detail_id,game_no,side,hero,ban_order
 1062,3,B,Freya,1
 1062,3,B,Paquito,2
 1062,3,B,Arlott,3
-1062,3,B,Yi Sun-shin,4
+1062,3,B,Yi Sun-Shin,4
 1062,3,B,Rafaela,5
 1063,1,A,Selena,1
 1063,1,A,Paquito,2
@@ -783,7 +783,7 @@ match_detail_id,game_no,side,hero,ban_order
 1069,1,A,Fanny,2
 1069,1,A,Barats,3
 1069,1,A,Harley,4
-1069,1,A,Yi Sun-shin,5
+1069,1,A,Yi Sun-Shin,5
 1069,1,B,Freya,1
 1069,1,B,Masha,2
 1069,1,B,Marcel,3
@@ -892,7 +892,7 @@ match_detail_id,game_no,side,hero,ban_order
 1074,1,A,Selena,1
 1074,1,A,Atlas,2
 1074,1,A,Hirara,3
-1074,1,A,Yi Sun-shin,4
+1074,1,A,Yi Sun-Shin,4
 1074,1,A,Miya,5
 1074,1,B,Freya,1
 1074,1,B,Fanny,2
@@ -916,12 +916,12 @@ match_detail_id,game_no,side,hero,ban_order
 1075,1,A,Gatotkaca,5
 1075,1,B,Freya,1
 1075,1,B,Arlott,2
-1075,1,B,Yi Sun-shin,3
+1075,1,B,Yi Sun-Shin,3
 1075,1,B,Rafaela,4
 1075,1,B,Marcel,5
 1075,2,A,Arlott,1
 1075,2,A,Minotaur,2
-1075,2,A,Yi Sun-shin,3
+1075,2,A,Yi Sun-Shin,3
 1075,2,A,Phoveus,4
 1075,2,A,Aulus,5
 1075,2,B,Atlas,1
@@ -930,7 +930,7 @@ match_detail_id,game_no,side,hero,ban_order
 1075,2,B,Esmeralda,4
 1075,2,B,Chip,5
 1075,3,A,Arlott,1
-1075,3,A,Yi Sun-shin,2
+1075,3,A,Yi Sun-Shin,2
 1075,3,A,Obsidia,3
 1075,3,A,Zhuxin,4
 1075,3,A,Selena,5
@@ -976,7 +976,7 @@ match_detail_id,game_no,side,hero,ban_order
 1077,2,A,Mathilda,5
 1077,2,B,Freya,1
 1077,2,B,Arlott,2
-1077,2,B,Yi Sun-shin,3
+1077,2,B,Yi Sun-Shin,3
 1077,2,B,Zetian,4
 1077,2,B,Lylia,5
 1078,1,A,Uranus,1
@@ -1018,7 +1018,7 @@ match_detail_id,game_no,side,hero,ban_order
 1079,2,B,Selena,2
 1079,2,B,Atlas,3
 1079,2,B,Nolan,4
-1079,2,B,Yi Sun-shin,5
+1079,2,B,Yi Sun-Shin,5
 1079,3,A,Selena,1
 1079,3,A,Hirara,2
 1079,3,A,Paquito,3

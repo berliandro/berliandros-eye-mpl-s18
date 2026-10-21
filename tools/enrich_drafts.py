@@ -46,7 +46,13 @@ HERO_ALIASES = {
 # per-player rows say "Wu/Zetian". Both have exactly 16 picks, so they are one
 # hero. Fold the variant into the stats spelling; the mapping is explicit and
 # reversible.
-HERO_RENAMES = {"wuzetian": "Zetian"}
+HERO_RENAMES = {
+    "wuzetian": "Zetian",
+    # Case-only variants split across the stats and per-game tables.
+    "lapulapu": "Lapu-Lapu",
+    "yisunshin": "Yi Sun-Shin",
+    "cici": "Cici",
+}
 
 # Week 9 uses short map labels; expand them to the spellings used elsewhere in
 # the same source. Unknown labels are kept verbatim.
@@ -189,7 +195,7 @@ def main():
     ensure_schema(con)
 
     # Unify hero spellings before lookups and before rebuilding picks.
-    for table in ("game_players", "game_bans", "game_picks"):
+    for table in ("game_players", "game_bans", "game_picks", "hero_stats"):
         for (h,) in con.execute(f"SELECT DISTINCT hero FROM {table}").fetchall():
             canonical = canonical_hero(h)
             if canonical != h:
