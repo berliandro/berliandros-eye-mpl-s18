@@ -142,6 +142,25 @@ def main():
     for r in players:
         pool[r['player']][r['hero']] += 1
     hero_pool = {p: sorted(c.items(), key=lambda x: -x[1])[:6] for p,c in pool.items()}
+
+    def coerce(rows, ints=(), floats=()):
+        for r in rows:
+            for k in ints:
+                try: r[k] = int(float(r[k])) if r[k] not in ('', None) else 0
+                except Exception: r[k] = 0
+            for k in floats:
+                try: r[k] = float(r[k]) if r[k] not in ('', None) else 0
+                except Exception: r[k] = 0
+        return rows
+
+    team_games = coerce(load('team_games'),
+        ints=('game_no','players','kills','deaths','assists','gold','hero_damage',
+              'damage_taken','tower_damage','win','duration_sec'),
+        floats=('kda',))
+    team_season = coerce(load('team_season_stats'),
+        ints=('games','wins','losses','kills','deaths','assists','gold',
+              'hero_damage','damage_taken','tower_damage'),
+        floats=('kda','win_rate','avg_gold','avg_duration_sec'))
     _con = sqlite3.connect(ROOT / 'data' / 'mpl_id_s18.db')
     for _r in players:
         _row = _con.execute('SELECT emblem, talents_json, items_json FROM game_players WHERE match_detail_id=? AND game_no=? AND team=? AND player=? AND hero=?', (str(_r['match_detail_id']), int(_r['game_no']), _r['team'], _r['player'], _r['hero'])).fetchone()
@@ -160,7 +179,7 @@ def main():
                 return None
             _r['i'] = [_f for _u in json.loads(_row[2] or '[]') for _f in [_iref(_u)] if _f]
     _con.close()
-    DATA = {"schedule": sched, "games": games, "players": players, "bans": bans, "picks": picks, "hero_pool": hero_pool, "season": season_stats, "standings": stand, "matches": matches, "heroes": hero_stats, "playoffs": playoffs}
+    DATA = {"schedule": sched, "games": games, "players": players, "bans": bans, "picks": picks, "hero_pool": hero_pool, "team_games": team_games, "team_season": team_season, "season": season_stats, "standings": stand, "matches": matches, "heroes": hero_stats, "playoffs": playoffs}
     data_js = json.dumps(DATA, ensure_ascii=False, separators=(',', ':')).replace('</scr'+'ipt>', '<\\/scr'+'ipt>')
     TEAMS = season["teams"]
 

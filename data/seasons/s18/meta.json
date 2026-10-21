@@ -2,7 +2,7 @@
   "schema_version": 1,
   "season_id": "s18",
   "display_name": "MPL Indonesia Season 18",
-  "generated_at": "2026-10-21T12:12:32+00:00",
+  "generated_at": "2026-10-21T12:29:36+00:00",
   "layout": "legacy",
   "sources": {
     "hub": "https://mpl.mlbbhub.com/api/v1/id",
@@ -18,7 +18,9 @@
     "matches": 69,
     "player_season_stats": 66,
     "schedule_all": 80,
-    "standings": 9
+    "standings": 9,
+    "team_games": 334,
+    "team_season_stats": 9
   },
-  "build_commit": "a478ad5"
+  "build_commit": "7a67ae0"
 }

@@ -89,6 +89,7 @@ live from the mlbbhub API when online.
 | `tools/build_s18_db.py` | API ETL: mlbbhub + Liquipedia → SQLite + `data/csv/` |
 | `tools/enrich_drafts.py` | Liquipedia enrichment: picks, lane order, ban order, map mode (idempotent) |
 | `tools/fetch_hero_classes.py` | Build `hero_classes.json` from Liquipedia hero infoboxes (role, lane, specialties) |
+| `tools/aggregate_teams.py` | Rebuild `team_games` / `team_season_stats` from player rows (no network) |
 | `tools/gen_dark.py` | Build: CSV + assets → `mpl_id_s18_dark.html` |
 | `tools/fetch_assets.py` | Download every referenced hero/item asset (`--check-only`, `--live`) |
 | `tools/check.py` | Regression suite (incl. STRICT asset coverage + JS syntax gate) |
@@ -100,6 +101,7 @@ live from the mlbbhub API when online.
 | `tools/test_liqparse.py` | Liquipedia parser + ETL gate tests |
 | `tools/test_enrich.py` | Offline draft/lane parser + data-quality gates |
 | `tools/test_hero_classes.py` | Hero role/lane/damage coverage gates |
+| `tools/test_aggregates.py` | Team aggregate reconciliation gates |
 | `tools/test_config.py` | Season-config schema tests |
 | `data/season.json` | Validated season rules (teams, slots, priors, endpoints, cache) |
 | `data/registry.json` | Season registry — every season-aware tool resolves paths through it |
@@ -118,6 +120,7 @@ python tools/etl.py --season s18      # full pipeline: API ETL + Liquipedia enri
 python tools/build.py --season s18    # season-aware build wrapper
 python tools/build_s18_db.py   # API-only ETL (no picks/lanes/map mode)
 python tools/enrich_drafts.py --season s18  # Liquipedia enrichment alone (network)
+python tools/aggregate_teams.py --season s18  # refresh team aggregates (no network)
 python tools/fetch_assets.py   # download missing hero/item assets
 python tools/fetch_assets.py --live        # also cover season progress
 python tools/fetch_assets.py --check-only  # audit only
@@ -143,7 +146,8 @@ A new season is supported without application-code changes:
 Enrichment fills `game_picks`, `game_players.lane`/`lane_source`,
 `game_bans.ban_order` and `games.map_mode`. It is idempotent: re-running
 replaces picks and re-checks every row; unmatched heroes or players are
-reported, never guessed.
+reported, never guessed. Team aggregates fill `team_games` and
+`team_season_stats`.
 
 Season 18 currently resolves through the `legacy` layout; moving it to
 `data/seasons/s18/` is the remaining Phase 0 work.

@@ -172,7 +172,140 @@ def validate_build(con, fails, playoff_payload, season=None):
 
 
 TABLES = ["matches", "schedule_all", "games", "game_players", "game_bans",
-          "game_picks", "player_season_stats", "hero_stats", "standings"]
+          "game_picks", "team_games", "team_season_stats", "player_season_stats",
+          "hero_stats", "standings"]
+
+# Canonical schema. CREATE IF NOT EXISTS so a standalone aggregate refresh can
+# run the same definition against an already-built database.
+SCHEMA = """
+CREATE TABLE IF NOT EXISTS matches(
+  match_detail_id TEXT PRIMARY KEY,
+  schedule_id TEXT, team_a TEXT, team_b TEXT,
+  score_a INTEGER, score_b INTEGER,
+  date TEXT, iso_date TEXT, iso_datetime TEXT,
+  status TEXT, winner TEXT, vod_url TEXT, match_detail_url TEXT,
+  liq_mvp TEXT
+);
+CREATE TABLE IF NOT EXISTS games(
+  match_detail_id TEXT, game_no INTEGER,
+  team_a TEXT, team_b TEXT,
+  team_a_kills INTEGER, team_b_kills INTEGER,
+  winner TEXT, duration_str TEXT, duration_sec INTEGER,
+  team_a_side TEXT, team_b_side TEXT, vod_url TEXT,
+  map_mode TEXT,
+  PRIMARY KEY(match_detail_id, game_no)
+);
+CREATE TABLE IF NOT EXISTS game_players(
+  match_detail_id TEXT, game_no INTEGER,
+  team TEXT, player TEXT, lane TEXT, hero TEXT,
+  kills INTEGER, deaths INTEGER, assists INTEGER,
+  kda REAL, gold INTEGER, gold_per_min REAL,
+  hero_damage INTEGER, damage_taken INTEGER, tower_damage INTEGER,
+  emblem TEXT, items_json TEXT, talents_json TEXT,
+  lane_source TEXT,
+  PRIMARY KEY(match_detail_id, game_no, team, player, hero)
+);
+CREATE TABLE IF NOT EXISTS game_bans(
+  match_detail_id TEXT, game_no INTEGER, side TEXT, hero TEXT,
+  ban_order INTEGER
+);
+CREATE TABLE IF NOT EXISTS game_picks(
+  match_detail_id TEXT, game_no INTEGER, team TEXT, side TEXT,
+  slot INTEGER, lane TEXT, hero TEXT, player TEXT,
+  PRIMARY KEY(match_detail_id, game_no, team, slot)
+);
+CREATE TABLE IF NOT EXISTS team_games(
+  match_detail_id TEXT, game_no INTEGER, team TEXT, opponent TEXT,
+  players INTEGER, kills INTEGER, deaths INTEGER, assists INTEGER,
+  gold INTEGER, hero_damage INTEGER, damage_taken INTEGER, tower_damage INTEGER,
+  kda REAL, win INTEGER, map_mode TEXT, duration_sec INTEGER,
+  PRIMARY KEY(match_detail_id, game_no, team)
+);
+CREATE TABLE IF NOT EXISTS team_season_stats(
+  team TEXT PRIMARY KEY, games INTEGER, wins INTEGER, losses INTEGER,
+  kills INTEGER, deaths INTEGER, assists INTEGER, gold INTEGER,
+  hero_damage INTEGER, damage_taken INTEGER, tower_damage INTEGER,
+  kda REAL, win_rate REAL, avg_gold REAL, avg_duration_sec REAL,
+  team_name TEXT, team_slug TEXT
+);
+CREATE TABLE IF NOT EXISTS player_season_stats(
+  player TEXT PRIMARY KEY, team TEXT, team_slug TEXT, lane TEXT,
+  total_games INTEGER, total_kills INTEGER, avg_kills REAL,
+  total_deaths INTEGER, avg_deaths REAL, total_assists INTEGER, avg_assists REAL,
+  avg_kda REAL, kill_participation TEXT
+);
+CREATE TABLE IF NOT EXISTS standings(
+  rank INTEGER PRIMARY KEY, team_name TEXT, team_slug TEXT,
+  match_point INTEGER, match_win INTEGER, match_lose INTEGER,
+  game_win INTEGER, game_lose INTEGER, net_game_win INTEGER
+);
+CREATE TABLE IF NOT EXISTS hero_stats(
+  hero TEXT PRIMARY KEY, hero_image TEXT,
+  pick INTEGER, ban INTEGER, win INTEGER, win_rate TEXT
+);
+CREATE TABLE IF NOT EXISTS schedule_all(
+  schedule_id TEXT PRIMARY KEY, team_a TEXT, team_b TEXT,
+  score_a INTEGER, score_b INTEGER,
+  date TEXT, iso_date TEXT, iso_datetime TEXT,
+  status TEXT, winner TEXT, vod_url TEXT,
+  match_detail_id TEXT, match_detail_url TEXT
+);
+"""
+
+
+def rebuild_team_aggregates(con):
+    """Derive team-level facts from player rows and game results.
+
+    Idempotent: clears and rebuilds both tables. One definition is shared by
+    the ETL and tools/aggregate_teams.py so refreshes cannot drift.
+    """
+    con.execute("DELETE FROM team_games")
+    con.execute("""
+        INSERT INTO team_games
+        SELECT p.match_detail_id, p.game_no, p.team,
+               CASE WHEN p.team=g.team_a THEN g.team_b ELSE g.team_a END,
+               p.players, p.kills, p.deaths, p.assists, p.gold,
+               p.hero_damage, p.damage_taken, p.tower_damage, p.kda,
+               CASE WHEN (g.winner='team_a' AND p.team=g.team_a)
+                          OR (g.winner='team_b' AND p.team=g.team_b)
+                    THEN 1 ELSE 0 END,
+               g.map_mode, g.duration_sec
+        FROM (
+            SELECT match_detail_id, game_no, team, COUNT(*) AS players,
+                   COALESCE(SUM(kills),0) AS kills,
+                   COALESCE(SUM(deaths),0) AS deaths,
+                   COALESCE(SUM(assists),0) AS assists,
+                   COALESCE(SUM(gold),0) AS gold,
+                   COALESCE(SUM(hero_damage),0) AS hero_damage,
+                   COALESCE(SUM(damage_taken),0) AS damage_taken,
+                   COALESCE(SUM(tower_damage),0) AS tower_damage,
+                   ROUND((COALESCE(SUM(kills),0)+COALESCE(SUM(assists),0))*1.0
+                         / NULLIF(SUM(deaths),0), 3) AS kda
+            FROM game_players GROUP BY match_detail_id, game_no, team
+        ) p
+        JOIN games g ON g.match_detail_id=p.match_detail_id AND g.game_no=p.game_no
+    """)
+    con.execute("DELETE FROM team_season_stats")
+    con.execute("""
+        INSERT INTO team_season_stats(
+            team, games, wins, losses, kills, deaths, assists, gold,
+            hero_damage, damage_taken, tower_damage, kda, win_rate,
+            avg_gold, avg_duration_sec)
+        SELECT team, COUNT(*), SUM(win),
+               SUM(CASE WHEN win=0 THEN 1 ELSE 0 END),
+               SUM(kills), SUM(deaths), SUM(assists), SUM(gold),
+               SUM(hero_damage), SUM(damage_taken), SUM(tower_damage),
+               ROUND((SUM(kills)+SUM(assists))*1.0/NULLIF(SUM(deaths),0), 3),
+               ROUND(SUM(win)*1.0/COUNT(*), 4),
+               ROUND(AVG(gold), 1), ROUND(AVG(duration_sec), 1)
+        FROM team_games GROUP BY team
+    """)
+    # Slugs are the stable join key to standings (team codes use the same
+    # letters, while standings display names are spelled out).
+    for name, slug in con.execute("SELECT team_name, team_slug FROM standings"):
+        con.execute("UPDATE team_season_stats SET team_name=?, team_slug=? WHERE team=?",
+                    (name, slug, (slug or "").upper()))
+    con.commit()
 
 
 def publish_build(staging, db_path, csv_dir, playoffs_path):
@@ -224,66 +357,7 @@ def main():
     (STAGING / "csv").mkdir(parents=True)
     con = sqlite3.connect(STAGING / DB.name)
     cur = con.cursor()
-    cur.executescript("""
-    CREATE TABLE matches(
-      match_detail_id TEXT PRIMARY KEY,
-      schedule_id TEXT, team_a TEXT, team_b TEXT,
-      score_a INTEGER, score_b INTEGER,
-      date TEXT, iso_date TEXT, iso_datetime TEXT,
-      status TEXT, winner TEXT, vod_url TEXT, match_detail_url TEXT,
-      liq_mvp TEXT
-    );
-    CREATE TABLE games(
-      match_detail_id TEXT, game_no INTEGER,
-      team_a TEXT, team_b TEXT,
-      team_a_kills INTEGER, team_b_kills INTEGER,
-      winner TEXT, duration_str TEXT, duration_sec INTEGER,
-      team_a_side TEXT, team_b_side TEXT, vod_url TEXT,
-      map_mode TEXT,
-      PRIMARY KEY(match_detail_id, game_no)
-    );
-    CREATE TABLE game_players(
-      match_detail_id TEXT, game_no INTEGER,
-      team TEXT, player TEXT, lane TEXT, hero TEXT,
-      kills INTEGER, deaths INTEGER, assists INTEGER,
-      kda REAL, gold INTEGER, gold_per_min REAL,
-      hero_damage INTEGER, damage_taken INTEGER, tower_damage INTEGER,
-      emblem TEXT, items_json TEXT, talents_json TEXT,
-      lane_source TEXT,
-      PRIMARY KEY(match_detail_id, game_no, team, player, hero)
-    );
-    CREATE TABLE game_bans(
-      match_detail_id TEXT, game_no INTEGER, side TEXT, hero TEXT,
-      ban_order INTEGER
-    );
-    CREATE TABLE game_picks(
-      match_detail_id TEXT, game_no INTEGER, team TEXT, side TEXT,
-      slot INTEGER, lane TEXT, hero TEXT, player TEXT,
-      PRIMARY KEY(match_detail_id, game_no, team, slot)
-    );
-    CREATE TABLE player_season_stats(
-      player TEXT PRIMARY KEY, team TEXT, team_slug TEXT, lane TEXT,
-      total_games INTEGER, total_kills INTEGER, avg_kills REAL,
-      total_deaths INTEGER, avg_deaths REAL, total_assists INTEGER, avg_assists REAL,
-      avg_kda REAL, kill_participation TEXT
-    );
-    CREATE TABLE standings(
-      rank INTEGER PRIMARY KEY, team_name TEXT, team_slug TEXT,
-      match_point INTEGER, match_win INTEGER, match_lose INTEGER,
-      game_win INTEGER, game_lose INTEGER, net_game_win INTEGER
-    );
-    CREATE TABLE hero_stats(
-      hero TEXT PRIMARY KEY, hero_image TEXT,
-      pick INTEGER, ban INTEGER, win INTEGER, win_rate TEXT
-    );
-    CREATE TABLE schedule_all(
-      schedule_id TEXT PRIMARY KEY, team_a TEXT, team_b TEXT,
-      score_a INTEGER, score_b INTEGER,
-      date TEXT, iso_date TEXT, iso_datetime TEXT,
-      status TEXT, winner TEXT, vod_url TEXT,
-      match_detail_id TEXT, match_detail_url TEXT
-    );
-    """)
+    cur.executescript(SCHEMA)
 
     for s in standings:
         cur.execute("INSERT INTO standings VALUES(?,?,?,?,?,?,?,?,?)",
@@ -350,7 +424,10 @@ def main():
                      pl.get("lane_source")))
                 n_rows += 1
     con.commit()
+    rebuild_team_aggregates(con)
     print(f"stored games={n_games} player_rows={n_rows} bans={n_bans} fails={fails}")
+    print(f"team_games={cur.execute('SELECT COUNT(*) FROM team_games').fetchone()[0]} "
+          f"team_season={cur.execute('SELECT COUNT(*) FROM team_season_stats').fetchone()[0]}")
     # also store upcoming (non-numeric / no detail) schedule rows
     upcoming = [m for m in matches if not re.match(r"^\d+$", str(m.get("match_detail_id") or ""))]
     print(f"upcoming/no-detail entries={len(upcoming)} (not in DB matches; see schedule API)")

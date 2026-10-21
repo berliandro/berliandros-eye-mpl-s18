@@ -447,11 +447,13 @@ adding a stub `s19` config produces a build with no code edits.
 - B6 Team game aggregates
 - Added data-quality gates
 
-**Status (2026-10-21):** B1–B3 landed. 167/167 completed games have 10 picks;
+**Status (2026-10-21):** B1–B6 landed. 167/167 completed games have 10 picks;
 166/167 have 10 unique bans (one source duplicate removed and listed in
 `tools/test_enrich.py`). 1,670/1,670 player rows are tagged `liq_slot`.
 146/167 games have a map mode; the 21 missing are the Week 9 source gap.
-Remaining: B5 hero classes, B6 team aggregates.
+`hero_classes.json` covers all 133 heroes (damage type derived and labelled).
+`team_games` (334 rows) and `team_season_stats` (9 teams) reconcile with
+standings on wins/losses. Remaining: surfacing the new data in the UI.
 
 **Exit:** 100% of completed games have 10 picks + 10 bans; 100% of player rows
 have a lane + `lane_source`; cross-source ban mismatches < 1% or listed;

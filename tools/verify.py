@@ -21,6 +21,7 @@ STEPS = [
     ("alias registry", [sys.executable, str(BASE / "test_aliases.py")], "python"),
     ("draft/lane enrichment", [sys.executable, str(BASE / "test_enrich.py")], None),
     ("hero classes", [sys.executable, str(BASE / "test_hero_classes.py")], None),
+    ("team aggregates", [sys.executable, str(BASE / "test_aggregates.py")], None),
     ("refresh merge", ["node", str(BASE / "test_refresh.js")], "node"),
     ("cache versioning", ["node", str(BASE / "test_cache.js")], "node"),
     ("liquipedia parser + ETL gates", [sys.executable, str(BASE / "test_liqparse.py")], None),
