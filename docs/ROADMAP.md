@@ -453,7 +453,9 @@ adding a stub `s19` config produces a build with no code edits.
 146/167 games have a map mode; the 21 missing are the Week 9 source gap.
 `hero_classes.json` covers all 133 heroes (damage type derived and labelled).
 `team_games` (334 rows) and `team_season_stats` (9 teams) reconcile with
-standings on wins/losses. Remaining: surfacing the new data in the UI.
+standings on wins/losses. The new data is surfaced in the game dialog (map mode,
+ordered bans, lane-ordered picks), the hero table (role/lane/damage) and the team
+profiles under Standings.
 
 **Exit:** 100% of completed games have 10 picks + 10 bans; 100% of player rows
 have a lane + `lane_source`; cross-source ban mismatches < 1% or listed;

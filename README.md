@@ -41,16 +41,19 @@ live from the mlbbhub API when online.
   lane, search text; sort by KDA / games / kills.
 - **Matches** — full-width frosted list (date, logos, score, status, series MVP) and
   grid cards (also showing series MVP). A Regular/Playoffs sub-tab switches phases.
-  Regular phase shows the **standings board** on top; Playoffs shows **final
-  positions** plus a **bracket preview** (Round 1 → Grand Final) under the history.
-  Completed cards open the scoreboard.
+  Regular phase shows the **standings board** and **team profiles** (games, W-L,
+  KDA, avg gold, avg game) on top; Playoffs shows **final positions** plus a
+  **bracket preview** (Round 1 → Grand Final) under the history. Completed cards
+  open the scoreboard.
 - **Scoreboard dialog** — symmetrical 50/50 team split with first-pick blue/red glow,
-  centered header (score, duration, date), full-width bans bridge, mirrored player
-  rows, and a **per-game MVP pill** next to “TEAM won”.
+  centered header (score, duration, **map mode**, date), full-width **bans in draft
+  order**, lane-ordered player rows (EXP/JUNGLE/MID/GOLD/ROAM), and a **per-game MVP
+  pill** next to “TEAM won”.
 - **Player dialog** — per-hero table: GP, AVG KDA (`00.00`), AVG K, AVG D, AVG A,
   MANIAC, SAVAGE, GPM.
 - **Stats** — sub-tabbed dashboard: **Series MVP** (race leaderboard + history) and
-  **Heroes** (highlight tiles + sortable pick/ban/win table with share bars).
+  **Heroes** (highlight tiles + sortable pick/ban/win table with **role, lane and
+  damage-type columns** and share bars).
   Every statistic column sorts ascending/descending with a minimalist ▲▼ indicator.
   MVP names from Liquipedia are normalized to one canonical player identity
   (e.g. Coolfire → Joshuaa, JOOOOO → Kevinn, Sutsujin → Arthur,
