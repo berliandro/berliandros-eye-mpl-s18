@@ -473,6 +473,13 @@ have a lane + `lane_source`; cross-source ban mismatches < 1% or listed;
 - C6 Composition archetypes
 - C7 New "Analytics" view with metric explainers
 
+**Status (2026-10-22):** C1 + C2 core landed: Wilson CI, shrinkage, lane
+percentiles, impact composite (weights pinned by test), per-player KDA/GPM/
+damage/KP/death shares, consistency (p10–p90, IQR), form delta, off-lane delta
+and hero-adjusted damage residual. C7 first cut: Analytics view with method,
+weights and sample sizes. Remaining: C3 team ratings/SOS, C4 team form/tempo/
+clutch, C5 draft analytics, C6 composition archetypes.
+
 **Exit:** Every metric has a unit test on a deterministic fixture and a
 definition in-product; no metric displays without `n`; `verify.py` green.
 

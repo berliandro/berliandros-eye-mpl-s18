@@ -54,6 +54,11 @@ live from the mlbbhub API when online.
 - **Stats** — sub-tabbed dashboard: **Series MVP** (race leaderboard + history) and
   **Heroes** (highlight tiles + sortable pick/ban/win table with **role, lane and
   damage-type columns** and share bars).
+- **Analytics** — lane-normalised player impact (35% damage share, 25% kill
+  participation, 20% gold share, 10% tower share, −10% death share), shrunk toward
+  the lane mean with a 5-game prior. Shows KDA/GPM/damage/KP percentiles, a 95%
+  Wilson win-rate interval, form delta, and mutes rows under 5 games. The method
+  and weights are printed in-product.
   Every statistic column sorts ascending/descending with a minimalist ▲▼ indicator.
   MVP names from Liquipedia are normalized to one canonical player identity
   (e.g. Coolfire → Joshuaa, JOOOOO → Kevinn, Sutsujin → Arthur,
