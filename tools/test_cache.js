@@ -8,8 +8,10 @@ const path = require('path');
 const src = fs.readFileSync(path.join(__dirname, 'templates', 'app.js'), 'utf8');
 const m = src.match(/\/\* CACHE-START \*\/([\s\S]*?)\/\* CACHE-END \*\//);
 if (!m) { console.error('FAIL CACHE markers missing'); process.exit(1); }
-const NS = new Function(m[1] + '; return {cacheKeyFor, fingerprintSnapshot, countDecidedSet, makeCacheEntry, validateCacheEntry, selectSnapshot};')();
-const { cacheKeyFor, fingerprintSnapshot, countDecidedSet, makeCacheEntry, validateCacheEntry, selectSnapshot } = NS;
+const sm = src.match(/\/\* SNAPSHOT-START \*\/([\s\S]*?)\/\* SNAPSHOT-END \*\//);
+if (!sm) { console.error('FAIL SNAPSHOT markers missing'); process.exit(1); }
+const NS = new Function(sm[1] + '\n' + m[1] + '; return {cacheKeyFor, fingerprintSnapshot, countDecidedSet, makeCacheEntry, validateCacheEntry, selectSnapshot, derivePicks};')();
+const { cacheKeyFor, fingerprintSnapshot, countDecidedSet, makeCacheEntry, validateCacheEntry, selectSnapshot, derivePicks } = NS;
 
 let fails = 0, count = 0;
 function ok(cond, msg) {
@@ -23,12 +25,12 @@ const PO = (id) => ({ schedule_id: id, team_a: 'TBD', team_b: 'TBD', status: 'up
 const poRow = (r) => String(r.schedule_id || '').indexOf('playoffs') > -1 || (r.team_a === 'TBD' && r.team_b === 'TBD');
 const isTerm = (sa, sb) => (sa === 2 && (sb === 0 || sb === 1)) || (sb === 2 && (sa === 0 || sa === 1));
 const ST = (slug, pts) => ({ team_slug: slug, match_point: pts, match_win: pts, match_lose: 0, game_win: 0, game_lose: 0, net_game_win: 0 });
-const snap = (standings, schedule) => ({ standings, schedule, season: [], players: [], games: [], bans: [], matches: [], heroes: [], playoffs: {} });
-const OPTS = { seasonId: 's18', schema: 1 };
+const snap = (standings, schedule) => ({ standings, schedule, season: [], players: [], games: [], bans: [], picks: [], team_games: [], team_season: [], matches: [], heroes: [], playoffs: {} });
+const OPTS = { seasonId: 's18', schema: 2 };
 
 {
-  ok(cacheKeyFor('s18', 1) === 'mpl-board:s18:v1', 'C1 namespaced key format');
-  ok(cacheKeyFor('s19', 2) !== cacheKeyFor('s18', 1), 'C1 seasons do not share keys');
+  ok(cacheKeyFor('s18', 2) === 'mpl-board:s18:v2', 'C1 namespaced key format');
+  ok(cacheKeyFor('s19', 2) !== cacheKeyFor('s18', 2), 'C1 seasons do not share keys');
 }
 
 // --- fingerprint: deterministic, sensitive, ignores volatile fields ---
@@ -39,6 +41,12 @@ const OPTS = { seasonId: 's18', schema: 1 };
   ok(fingerprintSnapshot(s) !== fingerprintSnapshot(s2), 'C2 fingerprint sensitive to standings');
   const s3 = snap([ST('a', 1)], [C('x', 'A', 'B', 2, 1, 'completed'), PO('id-playoffs-0')]);
   ok(fingerprintSnapshot(s) !== fingerprintSnapshot(s3), 'C2 fingerprint sensitive to scores');
+  const s4 = snap([ST('a', 1)], [C('x', 'A', 'B', 2, 0, 'completed')]);
+  s4.players = [{ match_detail_id: 'x', game_no: 1, team: 'A', player: 'P', hero: 'H', kills: 1 }];
+  ok(fingerprintSnapshot(s) !== fingerprintSnapshot(s4), 'C2 fingerprint covers raw analytics inputs');
+  const s5 = snap([ST('a', 1)], [C('x', 'A', 'B', 2, 0, 'completed')]);
+  s5.team_games = [{ match_detail_id: 'x', game_no: 1, team: 'A', win: 1 }];
+  ok(fingerprintSnapshot(s) !== fingerprintSnapshot(s5), 'C2 fingerprint covers derived aggregates');
 }
 
 // --- countDecidedSet follows fixture rules ---
@@ -51,13 +59,23 @@ const OPTS = { seasonId: 's18', schema: 1 };
 // --- validateCacheEntry ---
 {
   const s = snap([ST('a', 1)], [C('x', 'A', 'B', 2, 0, 'completed')]);
-  const good = makeCacheEntry(s, { seasonId: 's18', schema: 1, decided: 1, complete: true, refreshedAt: 123 });
+  const good = makeCacheEntry(s, { seasonId: 's18', schema: 2, decided: 1, complete: true, refreshedAt: 123 });
   ok(validateCacheEntry(good, OPTS).ok, 'C4 valid entry accepted');
-  ok(good.v === 1 && good.source === 'refresh', 'C4 entry carries version + source');
+  ok(good.v === 2 && good.source === 'refresh', 'C4 entry carries version + source');
   ok(!validateCacheEntry({ ...good, seasonId: 's19' }, OPTS).ok, 'C5 other season rejected');
   ok(!validateCacheEntry({ ...good, schema: 0 }, OPTS).ok, 'C6 older schema rejected');
-  ok(!validateCacheEntry({ ...good, schema: 2 }, OPTS).ok, 'C6 unknown schema rejected');
+  ok(!validateCacheEntry({ ...good, schema: 3 }, OPTS).ok, 'C6 unknown schema rejected');
   ok(!validateCacheEntry({ ...good, data: { standings: [] } }, OPTS).ok, 'C7 malformed data rejected');
+  const noAnalytics = JSON.parse(JSON.stringify(good)); delete noAnalytics.data.team_games;
+  ok(!validateCacheEntry(noAnalytics, OPTS).ok, 'C7 cache without derived analytics rejected');
+  const mixed = JSON.parse(JSON.stringify(good));
+  mixed.data.games = [{ match_detail_id: 'x', game_no: 1, team_a: 'A', team_b: 'B', winner: 'team_a' }];
+  mixed.data.players = [{ match_detail_id: 'x', game_no: 1, team: 'A', player: 'P', hero: 'H', lane: 'MID', kills: 1 }];
+  mixed.data.picks = derivePicks(mixed.data.players, mixed.data.games, []);
+  mixed.data.team_games = [{ match_detail_id: 'x', game_no: 1, team: 'A', opponent: 'B', win: 1, kills: 1, deaths: 0, gold: 1 }];
+  mixed.data.team_season = [];
+  mixed.fp = fingerprintSnapshot(mixed.data);
+  ok(!validateCacheEntry(mixed, OPTS).ok, 'C7 cache with aggregates not derived from its raw rows rejected');
   ok(!validateCacheEntry({ ...good, fp: 'deadbeef' }, OPTS).ok, 'C7 fingerprint mismatch rejected');
   ok(!validateCacheEntry(null, OPTS).ok && !validateCacheEntry('x', OPTS).ok, 'C7 non-entries rejected');
 }
@@ -85,12 +103,12 @@ const OPTS = { seasonId: 's18', schema: 1 };
 {
   const s = snap([ST('a', 5)], [C('x', 'A', 'B', 2, 0, 'completed')]);
   // complete refresh then reload: cache adopted
-  const e = makeCacheEntry(s, { seasonId: 's18', schema: 1, decided: 1, complete: true, refreshedAt: 100 });
+  const e = makeCacheEntry(s, { seasonId: 's18', schema: 2, decided: 1, complete: true, refreshedAt: 100 });
   const reloaded = JSON.parse(JSON.stringify(e));
   ok(validateCacheEntry(reloaded, OPTS).ok, 'C9 complete refresh reload validates');
   ok(selectSnapshot({ fp: 'old', decided: 0 }, reloaded).use === 'cache', 'C9 newer complete cache adopted on reload');
   // partial refresh then reload: adopted but labelled
-  const pe = makeCacheEntry(s, { seasonId: 's18', schema: 1, decided: 1, complete: false, failedIds: ['7'], refreshedAt: 101 });
+  const pe = makeCacheEntry(s, { seasonId: 's18', schema: 2, decided: 1, complete: false, failedIds: ['7'], refreshedAt: 101 });
   const pick = selectSnapshot({ fp: 'old', decided: 0 }, JSON.parse(JSON.stringify(pe)));
   ok(pick.use === 'cache' && pick.partial === true, 'C9 partial reload adopted + labelled');
   ok(JSON.parse(JSON.stringify(pe)).failedIds.length === 1, 'C9 failed IDs recorded');

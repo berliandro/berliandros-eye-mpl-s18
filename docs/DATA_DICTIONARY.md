@@ -16,6 +16,34 @@ Snapshot: 69 completed series, 167 games, 1,670 player rows, 1,670 picks,
 1,669 ordered bans, 9 teams. `data/seasons/s18/meta.json` records the source
 URLs, row counts and ETL commit.
 
+## Snapshot and metric contracts
+
+- **Canonical snapshot.** `data/mpl_id_s18.db` is the committed source of truth.
+  `data/csv/*` and the embedded `DATA` object in `mpl_id_s18_dark.html` are
+  generated from that snapshot. `tools/reconcile.py` derives records from raw
+  `matches`/`games` rows and compares them with the official `standings` table.
+- **Series/match W-L.** Completed regular-season series won/lost. Derived from
+  the decisive score in `matches`; the playoff bracket is excluded by
+  `schedule_id`/TBD fixtures.
+- **Game W-L.** Completed regular-season games won/lost. Derived from
+  `games.winner`, with exactly one winner per game.
+- **GP.** In Analytics -> Teams and Team profiles, GP means game appearances
+  (team-game rows), not series played. Series W-L is shown separately.
+- **Scope.** The current snapshot has 69 completed regular-season series and
+  167 games. Playoffs are not included in these totals. Any future playoff
+  rows must be filtered explicitly rather than compared with regular-season
+  standings.
+- **Official standings.** Preserved as source-published match/game records and
+  used as a reconciliation target. They are not substituted for derived tables.
+- **Refresh/cache.** A successful live refresh merges raw rows, preserves
+  enrichment fields (map mode, lane, ban order), rebuilds picks/team games/team
+  season stats from that same raw snapshot, clears cached analytics, and stores
+  all of those inputs under cache schema 2. A partial refresh keeps failed
+  match IDs from the last good snapshot and is labelled `partially updated`.
+  The cache fingerprint covers standings, schedule, raw detail, picks and
+  derived aggregates; cache validation also re-derives those aggregates from
+  the cache's own raw rows and rejects a mixed entry.
+
 ## Tables
 
 ### `matches` (69 rows)
@@ -171,19 +199,36 @@ The current snapshot resolves all 1,670 rows at step 1. Every row keeps
 
 - Wilson 95% intervals for win rates; `n` is always shown.
 - Rows with `n < 5` are muted and labelled indicative.
-- Team ratings: Bradley-Terry on game results with a 1–1 prior against an
-  average team and 100 bootstrap resamples; displayed as
+- Team ratings: Bradley-Terry on **one paired observation per game** with a
+  1–1 prior against an average team. The bootstrap resamples whole games, keeping
+  opponents paired, and uses 100 resamples; displayed as
   `1500 + 400·log10(strength)`. SOS is the mean fitted opponent rating.
+- Player death share: player deaths / that team’s total deaths in the same
+  game. A zero-team-death game yields 0 for every player, never a division by
+  team kills or an invented value.
 - Pair synergy: pair WR − average of the two heroes' individual WRs.
 - Counter delta: hero A WR vs B − average of A's WR and B's loss rate.
-- Ban score = opponent presence per game × opponent WR on the hero. It does not
-  model our draft or pick order.
+- Ban threat score = opponent **pick presence** (picks / games) × opponent
+  win rate on that hero. The opponent’s own bans are reported separately as
+  contest context and do not enter the score. It is a proxy for pick threat,
+  not evidence of their draft intent, and it does not model our draft or pick
+  order. Ban-only heroes are not treated as pick threats.
 - Composition archetypes: frontline = Tank/Fighter count; damage = 3+ physical
   or 3+ magic picks; CC = specialties mentioning Crowd Control/Initiator/Engage.
+- Meta movement uses the last two **non-empty 7-day date windows** counted from
+  the first game date. They are not official competition weeks; the UI states
+  whether the compared windows are adjacent. Windows can straddle the
+  regular-season/playoff boundary if future data adds playoffs.
+- Pair and counter tables are sorted by **sample size**, so their labels say
+  "most observed". `delta` versus baseline is the effect measure; it is
+  descriptive, not causal.
+- Weak/strong maps exclude `Unknown`, null, empty and unresolved labels. Missing
+  map rows remain in overall team records and are surfaced as a data-quality
+  count.
 
 ## Data-quality gates
 
-`python tools/verify.py` runs 18 suites, including:
+`python tools/verify.py` runs 20 suites, including:
 
 - 167/167 completed games have 10 picks.
 - 166/167 have 10 unique bans; the exception is listed.

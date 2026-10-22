@@ -30,7 +30,7 @@ eq([SEASON.playoffSlots, SEASON.upperBracketSlots], [6, 2], 'G1 slots');
 eq(SEASON.tiebreakers, ['match_point', 'net_game_win', 'h2h'], 'G1 tiebreakers');
 eq([SEASON.model.priorWins, SEASON.model.priorGames], [2, 4], 'G1 prior');
 eq([SEASON.model.trials, SEASON.model.seed], [2000, 20907], 'G1 trials/seed');
-eq(SEASON.cacheNamespace + ':' + SEASON.seasonId + ':v' + SEASON.cacheSchema, 'mpl-board:s18:v1', 'G1 cache id');
+eq(SEASON.cacheNamespace + ':' + SEASON.seasonId + ':v' + SEASON.cacheSchema, 'mpl-board:s18:v2', 'G1 cache id');
 
 // --- validSeasonCfg ---
 ok(validSeasonCfg(SEASON), 'G2 committed config passes runtime guard');

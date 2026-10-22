@@ -10,8 +10,8 @@ const path = require('path');
 const src = fs.readFileSync(path.join(__dirname, 'templates', 'app.js'), 'utf8');
 const m = src.match(/\/\* ANALYTICS-START \*\/([\s\S]*?)\/\* ANALYTICS-END \*\//);
 if (!m) { console.error('FAIL ANALYTICS markers missing'); process.exit(1); }
-const NS = new Function(m[1] + '; return {IMPACT_WEIGHTS,anMean,anQuantile,anWilson,anShrink,anPct,anMode,anLane,buildPlayerMetrics,anBT,buildTeamMetrics,buildDraftMetrics,buildBanRanking};')();
-const { IMPACT_WEIGHTS, anMean, anQuantile, anWilson, anShrink, anPct, anMode, anLane, buildPlayerMetrics, anBT, buildTeamMetrics, buildDraftMetrics, buildBanRanking } = NS;
+const NS = new Function(m[1] + '; return {IMPACT_WEIGHTS,anMean,anQuantile,anWilson,anShrink,anPct,anMode,anLane,anKnownMap,buildPlayerMetrics,anBT,buildTeamMetrics,buildDraftMetrics,buildBanRanking};')();
+const { IMPACT_WEIGHTS, anMean, anQuantile, anWilson, anShrink, anPct, anMode, anLane, anKnownMap, buildPlayerMetrics, anBT, buildTeamMetrics, buildDraftMetrics, buildBanRanking } = NS;
 
 let fails = 0, count = 0;
 function ok(cond, msg) {
@@ -53,12 +53,12 @@ function close(a, b, tol, msg) {
 // --- fixture: two games, two lanes, four players ---
 const G = (mid, a, b, w, sa, sb) => ({ match_detail_id: String(mid), game_no: 1, team_a: a, team_b: b, winner: w, team_a_side: sa, team_b_side: sb });
 const games = [G(1, 'A', 'B', 'team_a', 'blue', 'red'), G(2, 'B', 'A', 'team_a', 'blue', 'red')];
-const TG = (mid, team, k, g, d, t, tw) => ({ match_detail_id: String(mid), game_no: 1, team, kills: k, gold: g, hero_damage: d, damage_taken: t, tower_damage: tw });
+const TG = (mid, team, k, g, d, t, tw, deaths) => ({ match_detail_id: String(mid), game_no: 1, team, kills: k, deaths: deaths || 0, gold: g, hero_damage: d, damage_taken: t, tower_damage: tw });
 const teamGames = [
-  TG(1, 'A', 7, 22000, 70000, 30000, 6000),
-  TG(1, 'B', 3, 17000, 45000, 50000, 2500),
-  TG(2, 'B', 7, 24000, 80000, 30000, 5500),
-  TG(2, 'A', 6, 20000, 60000, 43000, 1800),
+  TG(1, 'A', 7, 22000, 70000, 30000, 6000, 3),
+  TG(1, 'B', 3, 17000, 45000, 50000, 2500, 9),
+  TG(2, 'B', 7, 24000, 80000, 30000, 5500, 5),
+  TG(2, 'A', 6, 20000, 60000, 43000, 1800, 7),
 ];
 const P = (mid, team, player, lane, hero, k, d, a, gold, gpm, dmg, taken, tower) => ({
   match_detail_id: String(mid), game_no: 1, team, player, lane, hero,
@@ -94,6 +94,22 @@ close(by.P1.damageShare, 0.3976190, 1e-6, 'A1 P1 damage share');
 close(by.P1.kp, 1.1309524, 1e-6, 'A1 P1 kill participation');
 close(by.P1.goldShare, 0.4522727, 1e-6, 'A1 P1 gold share');
 close(by.P1.towerShare, 0.6944444, 1e-6, 'A1 P1 tower share');
+// Death share uses team deaths, not team kills. P1: 1/3 then 4/7.
+close(by.P1.deathShare, (1 / 3 + 4 / 7) / 2, 1e-9, 'A1 P1 death share denominator is team deaths');
+{
+  const shares = {};
+  A.players.forEach(p => p.raw.forEach(r => {
+    const k = r.mid + ':' + r.team;
+    shares[k] = (shares[k] || 0) + r.deathShare;
+  }));
+  Object.keys(shares).forEach(k => close(shares[k], 1, 1e-9, 'A1 death shares sum to 1 for ' + k));
+}
+{
+  const zero = [{ match_detail_id: '9', game_no: 1, team: 'A', kills: 5, deaths: 0, gold: 1, hero_damage: 1, damage_taken: 1, tower_damage: 1 }];
+  const zp = [{ match_detail_id: '9', game_no: 1, team: 'A', player: 'Z', lane: 'MID', hero: 'H1', kills: 5, deaths: 0, assists: 0, gold: 1, gold_per_min: 1, hero_damage: 1, damage_taken: 1, tower_damage: 1 }];
+  const Z = buildPlayerMetrics(zp, [{ match_detail_id: '9', game_no: 1, team_a: 'A', team_b: 'B', winner: 'team_a' }], zero, {}, {});
+  eq(Z.players[0].deathShare, 0, 'A1 zero team deaths -> death share 0');
+}
 eq(by.P1.heroes, 1, 'A1 P1 unique heroes');
 eq(by.P1.small, true, 'A1 small sample flagged (2 < 5)');
 eq(by.P1.winCI.n, 2, 'A1 win CI carries n');
@@ -216,6 +232,13 @@ eq(JSON.stringify(A.weights), JSON.stringify({ damageShare: 0.35, kp: 0.25, gold
   eq(TM.method.prior, 1, 'TM9 prior pinned');
   const TM2 = buildTeamMetrics(tg, teams, dg, { bootstraps: 50, seed: 7, dateOf });
   eq(bt.A.rating, TM2.teams.find(t => t.team === 'A').rating, 'TM9 deterministic bootstrap');
+  // Duplicating perspective rows must not double the modelled sample.
+  const dupRated = buildTeamMetrics(tg.concat(tg.map(r => ({ ...r }))), teams, dg, { bootstraps: 50, seed: 7, dateOf });
+  eq(dupRated.teams.find(t => t.team === 'A').rating, bt.A.rating, 'TM9 duplicate perspective rows do not change rating');
+  const uniqueRows = tg.filter((r, i, a) => a.findIndex(x => x.match_detail_id === r.match_detail_id && x.game_no === r.game_no) === i);
+  eq(JSON.stringify(anBT(tg, ['A', 'B', 'C'], 1)), JSON.stringify(anBT(uniqueRows, ['A', 'B', 'C'], 1)), 'TM9 anBT dedupes perspectives by default');
+  // Bootstrap resamples whole games, so opponents stay paired.
+  eq(TM.method.model.indexOf('paired observation per game') > -1, true, 'TM9 method documents paired game unit');
   const E = buildTeamMetrics([], [{ team: 'A', team_name: 'A' }], [], { bootstraps: 5 });
   eq(E.teams.length, 1, 'TM10 empty one team');
   eq(E.teams[0].games, 0, 'TM10 empty games');
@@ -315,11 +338,24 @@ eq(JSON.stringify(A.weights), JSON.stringify({ damageShare: 0.35, kp: 0.25, gold
   const BR = buildBanRanking('A', DM, 1);
   eq(BR.length, 6, 'BR1 six picked heroes');
   const br = BR.find(x => x.hero === 'H2');
-  close(br.presence, 1, 1e-12, 'BR1 H2 presence per game');
+  close(br.presence, 1, 1e-12, 'BR1 H2 pick presence per game');
+  close(br.contestRate, 1, 1e-12, 'BR1 H2 contest rate');
   close(br.wr, 0.5, 1e-12, 'BR1 H2 win rate');
   close(br.score, 0.5, 1e-12, 'BR1 H2 score');
+  ok(!BR.some(x => x.hero === 'H11'), 'BR1 ban-only hero is not a pick threat');
+  ok(BR.every(x => x.score === x.presence * x.wr), 'BR1 score is pick presence x pick WR');
   ok(BR[0].score >= BR[BR.length - 1].score, 'BR1 sorted by score');
   eq(buildBanRanking('Z', DM).length, 0, 'BR1 missing team returns empty');
+  eq(buildBanRanking('A', DM, 99).length, 0, 'BR1 small-sample floor');
+}
+
+// Unknown map labels can never be treated as real maps.
+{
+  eq(anKnownMap('Prime'), true, 'U1 known map accepted');
+  eq(anKnownMap('Unknown'), false, 'U1 Unknown rejected');
+  eq(anKnownMap(''), false, 'U1 empty rejected');
+  eq(anKnownMap(null), false, 'U1 null rejected');
+  eq(anKnownMap('unresolved'), false, 'U1 unresolved rejected');
 }
 
 // --- meta movement (week over week) ---
@@ -341,7 +377,12 @@ eq(JSON.stringify(A.weights), JSON.stringify({ damageShare: 0.35, kp: 0.25, gold
   eq(mv('H2').delta, -1, 'MM1 falling hero delta');
   eq(mv('H1').delta, 0, 'MM1 stable hero delta');
   eq(MM.movement[0].hero, 'H3', 'MM1 sorted by rising delta');
-  eq(mv('H3').games, 1, 'MM1 recent-week games');
+  eq(mv('H3').games, 1, 'MM1 recent-window games');
+  eq(MM.movementInfo.adjacent, true, 'MM1 adjacent windows labelled');
+  eq(mv('H3').period.start, '2026-08-10', 'MM1 explicit window start');
+  const gap = buildDraftMetrics(mp, [], mg, {}, { minPair: 1, dateOf: mid => (mid === '1' ? '2026-08-01' : '2026-08-20') });
+  eq(gap.movementInfo.adjacent, false, 'MM2 non-adjacent windows are not called consecutive');
+  eq(gap.movement.length, 3, 'MM2 gap still yields movement rows');
 }
 
 console.log('\n' + (count - fails) + '/' + count + ' passed, ' + fails + ' failed');

@@ -120,7 +120,7 @@ class S18PinsTest(unittest.TestCase):
         self.assertEqual(CFG["database"], "data/mpl_id_s18.db")
         self.assertEqual(CFG["csvDir"], "data/csv")
         self.assertEqual(CFG["cacheNamespace"], "mpl-board")
-        self.assertEqual(CFG["cacheSchema"], 1)
+        self.assertEqual(CFG["cacheSchema"], 2)
 
 
 class SyntheticConfigTest(unittest.TestCase):
@@ -139,7 +139,7 @@ class SyntheticConfigTest(unittest.TestCase):
                           "liquipediaSeasonPage": "Toy/Season"},
             "database": "data/toy.db", "csvDir": "data/toy-csv",
             "playoffsJson": "data/toy-playoffs.json",
-            "cacheNamespace": "mpl-board", "cacheSchema": 1,
+            "cacheNamespace": "mpl-board", "cacheSchema": 2,
             "model": {"winProb": "even", "priorWins": 1, "priorGames": 2,
                       "trials": 100, "seed": 7},
         }

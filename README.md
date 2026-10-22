@@ -60,12 +60,14 @@ live from the mlbbhub API when online.
   the lane mean with a 5-game prior. Shows KDA/GPM/damage/KP percentiles, a 95%
   Wilson win-rate interval, form delta, and mutes rows under 5 games. The method
   and weights are printed in-product.
-- **Analytics — Teams** — Bradley-Terry ratings with bootstrap CIs, strength of
-  schedule, form (games and series), blue/red splits, tempo, dominance, clutch
-  (game 3 and series close), map records, and a head-to-head game matrix.
+- **Analytics — Teams** — Bradley-Terry ratings with paired-game bootstrap CIs,
+  strength of schedule, form (games and series), blue/red splits, tempo,
+  dominance, clutch (game 3 and series close), map records, and a head-to-head
+  game matrix. Game W-L and Series W-L are shown as separate, explicitly scoped
+  columns; the Standings view preserves the official Match W-L and Game W-L.
 - **Analytics — Draft** — hero pick/ban/WR with CIs and flex, same-team synergy,
   opposing-pair counters, team fingerprints (top picks/bans, first-ban by side,
-  HHI, pocket picks), composition archetypes, map meta, and week-over-week meta
+  HHI, pocket picks), composition archetypes, map meta, and date-window meta
   movement. Pair/counter deltas are labelled as descriptive proxies, not causal.
 - **Prep** — pick an opponent (and optionally our team) for a one-page scouting
   report: rating/form/side/tempo, likely picks and bans, a transparent ban ranking,
@@ -103,9 +105,10 @@ live from the mlbbhub API when online.
   `–` until a source exists. They are never fabricated.
 - **Analytics / Prep**: lane percentiles shrink toward the lane mean with a
   5-game prior; win rates use 95% Wilson intervals and show `n`; impact weights
-  are pinned by `tools/test_analytics.js`; team ratings are Bradley-Terry with
-  100 bootstrap resamples; the ban score is an explicit presence × win-rate
-  proxy. Formulas and caveats are in-product and in
+  are pinned by `tools/test_analytics.js`; team ratings are Bradley-Terry on one
+  paired observation per game with 100 game-level bootstrap resamples; the ban
+  threat score uses opponent pick presence × pick win rate (their own bans are
+  context, not input). Formulas and caveats are in-product and in
   [`docs/DATA_DICTIONARY.md`](docs/DATA_DICTIONARY.md).
 
 ## Project layout
@@ -126,7 +129,10 @@ live from the mlbbhub API when online.
 | `tools/test_refresh.js` | Live-refresh merge tests (node) |
 | `tools/test_analytics.js` | Analytics engine fixtures: Wilson, shrinkage, player/team/draft metrics, ban ranking (node) |
 | `docs/` | Roadmap, data dictionary and insight catalogue |
-| `tools/test_cache.js` | Cache versioning tests (node) |
+| `tools/test_cache.js` | Cache versioning + snapshot-fingerprint tests (node) |
+| `tools/test_snapshot.js` | Refresh snapshot derivation + enrichment-preservation tests (node) |
+| `tools/reconcile.py` | Cross-view Match W-L / Game W-L reconciliation gate |
+| `tools/test_reconcile.py` | Committed-snapshot reconciliation regressions |
 | `tools/test_config.js` | Season-config tests (node) |
 | `tools/test_liqparse.py` | Liquipedia parser + ETL gate tests |
 | `tools/test_enrich.py` | Offline draft/lane parser + data-quality gates |

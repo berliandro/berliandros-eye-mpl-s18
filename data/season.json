@@ -44,7 +44,7 @@
   "csvDir": "data/csv",
   "playoffsJson": "data/playoffs.json",
   "cacheNamespace": "mpl-board",
-  "cacheSchema": 1,
+  "cacheSchema": 2,
   "model": {
     "winProb": "bradley-terry",
     "priorWins": 2,
