@@ -28,7 +28,35 @@ function itemRef(u){const id=eqId(u);if(id)return id;if(u&&u.indexOf('scoregg.co
 function srt(arr,fn,str){const d=(S.tsort&&S.tsort.d)||1;return [...arr].sort((a,b)=>str?String(fn(a)).localeCompare(String(fn(b)))*d:(fn(a)-fn(b))*d);}
 function th(t,k,label){const a=S.tsort.t===t&&S.tsort.k===k;return `<th data-ts="${t}:${k}">${label}${a?` <span class="sarr">${S.tsort.d===1?'▲':'▼'}</span>`:''}</th>`;}
 function imgSlot(el){const s=document.createElement('span');s.className='slot-miss';s.title=el.alt||'item';s.textContent=el.dataset.eq||'?';el.replaceWith(s);}
-const S = {view:'overview',q:'',team:'',sort:'kda',lane:'',compact:false,layout:'grid',ov:null,mlimit:24,plimit:24,phase:'reg',stat:'mvp',tsort:{t:'heroes',k:'pick',d:-1},anLane:''};
+const S = {view:'overview',q:'',team:'',sort:'kda',lane:'',compact:false,layout:'grid',ov:null,mlimit:24,plimit:24,phase:'reg',stat:'mvp',tsort:{t:'heroes',k:'pick',d:-1},anLane:'',anTab:'players',prepOpp:'',prepTeam:''};
+const ANA={};
+let PREP=null;
+function anPart(k){
+  if(ANA[k])return ANA[k];
+  const dm={};(DATA.schedule||[]).forEach(m=>{dm[String(m.match_detail_id)]=m.iso_date||m.date||'';});
+  const dateOf=m=>dm[String(m)]||'';
+  if(k==='AN'){
+    const twr={};(DATA.team_games||[]).forEach(r=>{const x=twr[r.team]=twr[r.team]||{n:0,w:0};x.n++;if(r.win===1)x.w++;});
+    Object.keys(twr).forEach(t=>{twr[t]=twr[t].n?twr[t].w/twr[t].n:0;});
+    ANA[k]=buildPlayerMetrics(DATA.players,DATA.games,DATA.team_games,window.HERO_CLASSES||{},{canon:canonicalPlayer,dateOf,teamWinRate:twr});
+  }
+  if(k==='TM')ANA[k]=buildTeamMetrics(DATA.team_games||[],DATA.team_season||[],DATA.games||[],{dateOf,bootstraps:100,seed:7});
+  if(k==='DM')ANA[k]=buildDraftMetrics(DATA.picks||[],DATA.bans||[],DATA.games||[],window.HERO_CLASSES||{},{minPair:3,dateOf});
+  return ANA[k];
+}
+(function initHash(){
+  try{
+    const p=new URLSearchParams((location.hash||'').replace(/^#/,''));
+    const v=p.get('view');
+    if(v&&['overview','players','matches','stats','analytics','prep'].includes(v))S.view=v;
+    if(p.get('opp'))S.prepOpp=p.get('opp');
+    if(p.get('team'))S.prepTeam=p.get('team');
+    if(p.get('tab'))S.anTab=p.get('tab');
+    if(p.get('lane'))S.anLane=p.get('lane');
+    if(p.get('q'))S.q=p.get('q');
+    if(p.get('filterTeam'))S.team=p.get('filterTeam');
+  }catch(e){}
+})();
 const PICON_RAW = ((window.ASSETS||{}).players||{});
 const PICON_CI = Object.fromEntries(Object.entries(PICON_RAW).map(([k,v])=>[k.toLowerCase(),v]));
 const PICON_ALIAS = {arfy:'dingarai',yazukee:'affan',hijumee:'dalvin',alekk:'alexander',joshuaa:'joshuaa',kevinn:'kevin',maykidss:'maykids',shanee:'shanee',sanz:'s a n z'};
@@ -100,6 +128,7 @@ show('sortBox',v==='players');
 show('laneBox',v==='players');
 show('layoutSeg',v==='players'||v==='matches');}
 function render(){const out=[];
+document.querySelectorAll('.tabs button').forEach(b=>b.setAttribute('aria-selected',b.dataset.view===S.view?'true':'false'));
 syncControls();
 board.classList.toggle('list',S.layout==='list');
 board.classList.toggle('wide',S.view==='stats');
@@ -187,18 +216,94 @@ out.push(`<div class="pin"><div class="body"><div class="kicker">MVP race · ${m
 const histBase=[...mvps].sort((a,b)=>String(a.iso_datetime||'').localeCompare(String(b.iso_datetime||'')));
 const hist=S.tsort.t==='hist'?srt(histBase,m=>S.tsort.k==='match'?(m.team_a+' '+m.team_b):S.tsort.k==='mvp'?canonicalPlayer(m.liq_mvp):(m.iso_datetime||''),true):histBase;
 out.push(`<div class="pin"><div class="body"><div class="kicker">History</div><h3 style="margin:.25em 0">Series MVPs</h3><div class="lscroll"><table style="min-width:520px"><tr>${th('hist','date','Date')}${th('hist','match','Match')}${th('hist','mvp','MVP')}</tr>${hist.map(m=>{const c=canonicalPlayer(m.liq_mvp);return `<tr><td>${esc(m.iso_date||m.date||'')}</td><td>${esc(m.team_a)} ${esc(m.score_a??'')}:${esc(m.score_b??'')} ${esc(m.team_b)}</td><td>${esc(c)}${c!==m.liq_mvp?` <span style="font-family:var(--font-mono);font-size:10.5px;color:var(--muted)">(as ${esc(m.liq_mvp)})</span>`:''}</td></tr>`;}).join('')}</table></div></div></div>`);}}
+if(S.view==='prep'){
+const TM=anPart('TM'),AN=anPart('AN'),DM=anPart('DM');
+const codes=TM.teams.map(t=>t.team).sort();
+const oppCode=codes.includes(S.prepOpp)?S.prepOpp:(codes[0]||'');
+S.prepOpp=oppCode;
+const opp=TM.teams.find(t=>t.team===oppCode);
+const myCode=(S.prepTeam&&S.prepTeam!==oppCode&&codes.includes(S.prepTeam))?S.prepTeam:'';
+const my=myCode?TM.teams.find(t=>t.team===myCode):null;
+if(opp){
+const pc=v=>Math.round(v*100);
+const mins=v=>v?Math.round(v/6)/10+'m':'—';
+const signed=v=>`${v>0?'+':''}${Math.round(v)}`;
+const noMap=(DATA.games||[]).filter(g=>!g.map_mode).length;
+const oppD=DM.teams.find(t=>t.team===opp.team)||{topPicks:[],topBans:[],firstBanBlue:[],firstBanRed:[],heroStats:{},picks:0};
+const oppPlayers=AN.players.filter(p=>p.team===opp.team).sort((a,b)=>b.impact-a.impact);
+const myPlayers=my?AN.players.filter(p=>p.team===my.team):[];
+const oppBans=buildBanRanking(opp.team,DM,3).slice(0,10);
+const heroWr=h=>{const s=(oppD.heroStats||{})[h];return s&&s.n?pc(s.w/s.n)+'%':'—';};
+const opt=(v,l,sel)=>`<option value="${esc(v)}"${sel?' selected':''}>${esc(l)}</option>`;
+const teamOpts=codes.map(c=>{const t=TM.teams.find(x=>x.team===c);return opt(c,t.team_name+' ('+c+')',c===oppCode);}).join('');
+const myOpts=`<option value="">Neutral</option>`+codes.filter(c=>c!==oppCode).map(c=>{const t=TM.teams.find(x=>x.team===c);return opt(c,t.team_name+' ('+c+')',c===myCode);}).join('');
+PREP={opp:opp,my:my,oppBans:oppBans,oppPlayers:oppPlayers};
+out.push(`<div class="pin" style="grid-column:1/-1"><div class="body phasebar prep-controls"><div><div class="kicker">Coach prep · opponent</div><h3 style="margin:.2em 0">${esc(opp.team_name)}</h3><div class="an-pct">${opp.games} games · ${opp.wins}–${opp.losses} · ${esc(opp.team)}</div></div><div class="prep-actions"><label>Opponent<select id="prepOpp" aria-label="Opponent">${teamOpts}</select></label><label>Our team<select id="prepTeam" aria-label="Our team">${myOpts}</select></label><button id="prepPrint" class="ghost" type="button">Print / PDF</button><button id="prepCsv" class="ghost" type="button">CSV</button><button id="prepLink" class="primary" type="button">Copy link</button></div></div></div>`);
+const tiles=[['Rating',`${Math.round(opp.rating)} <span class="an-pct">(${Math.round(opp.ratingCI[0])}–${Math.round(opp.ratingCI[1])})</span>`],['Record',`${opp.wins}–${opp.losses}`],['Win%',`${pc(opp.winRate)}% <span class="an-pct">(${pc(opp.winCI.lo)}–${pc(opp.winCI.hi)})</span>`],['Form5',`${pc(opp.form5)}% · series ${pc(opp.form5Series)}%`],['SOS',`${Math.round(opp.sos)||'—'}`],['Blue / Red',`${opp.side.blue.w}–${opp.side.blue.n-opp.side.blue.w} / ${opp.side.red.w}–${opp.side.red.n-opp.side.red.w}`],['Win / loss dur',`${mins(opp.tempo.winSec)} / ${mins(opp.tempo.lossSec)}`],['Gold diff',`${signed(opp.dominance.goldDiff)}`],['Blowout',`${pc(opp.dominance.blowout)}%`]];
+out.push(`<div class="pin" style="grid-column:1/-1"><div class="body"><div class="tiles">${tiles.map(([k,v])=>`<div class="tile"><b>${v}</b><span>${k}</span></div>`).join('')}</div><p class="an-pct" style="margin:.8em 0 0">Every rate is from completed games and carries n. No objective, timeline or pick-order data exists. Map mode is missing for ${noMap} games. Ban score is a proxy and ignores our draft.</p></div></div>`);
+out.push(`<div class="pin" style="grid-column:1/-1"><div class="body"><div class="kicker">Draft tendencies</div><div class="prep-two"><div><div class="kicker">Likely picks</div><table style="min-width:280px"><tr><th>Hero</th><th>Picks</th><th>Pick rate</th><th>WR</th></tr>${(oppD.topPicks||[]).map(p=>`<tr><td><b>${esc(p.hero)}</b></td><td>${p.n}</td><td>${pc(p.share)}%</td><td>${heroWr(p.hero)}</td></tr>`).join('')||'<tr><td colspan="4">—</td></tr>'}</table></div><div><div class="kicker">Ban targets</div><table style="min-width:280px"><tr><th>Hero</th><th>Bans</th></tr>${(oppD.topBans||[]).map(p=>`<tr><td><b>${esc(p.hero)}</b></td><td>${p.n}</td></tr>`).join('')||'<tr><td colspan="2">—</td></tr>'}</table><div class="an-pct" style="margin-top:6px">First ban — blue: ${(oppD.firstBanBlue||[]).map(x=>esc(x.hero)+'×'+x.n).join(', ')||'—'}<br>First ban — red: ${(oppD.firstBanRed||[]).map(x=>esc(x.hero)+'×'+x.n).join(', ')||'—'}</div></div></div><div class="an-pct" style="margin-top:6px">Pick rate = picks ÷ ${opp.games} games.</div></div></div>`);
+out.push(`<div class="pin" style="grid-column:1/-1"><div class="body"><div class="kicker">Ban recommender · proxy ranking</div><div class="lscroll"><table style="min-width:720px"><tr><th>Hero</th><th>Presence</th><th>Opp WR</th><th>Score</th><th>Picks / bans</th><th>Pick n</th></tr>${oppBans.map(b=>`<tr><td><b>${esc(b.hero)}</b></td><td>${pc(b.presence)}%</td><td>${pc(b.wr)}%</td><td>${b.score.toFixed(2)}</td><td>${b.picks} / ${b.bans}</td><td>${b.n}</td></tr>`).join('')||'<tr><td colspan="6">No hero with n≥3.</td></tr>'}</table></div><p class="an-pct" style="margin:.6em 0 0">Score = presence × opponent win rate. It ignores our draft, pick order and matchup; treat it as a starting point, not a verdict.</p></div></div>`);
+const ML={kda:'KDA',gpm:'GPM',damageShare:'Damage',kp:'KP',towerShare:'Tower'};
+const keys=Object.keys(ML);
+out.push(`<div class="pin" style="grid-column:1/-1"><div class="body"><div class="kicker">Player form · weaknesses and strengths</div><div class="lscroll"><table style="min-width:1080px"><tr><th>Player</th><th>Lane</th><th>GP</th><th>Impact</th><th>KDA</th><th>Dmg%</th><th>KP</th><th>Weakest</th><th>Strongest</th><th>Close WR</th><th>Pool</th><th>Top hero</th></tr>${oppPlayers.map(p=>{const best=keys.reduce((a,k)=>p.pct[k]>p.pct[a]?k:a,keys[0]);const worst=keys.reduce((a,k)=>p.pct[k]<p.pct[a]?k:a,keys[0]);const top=p.pool[0];return `<tr${p.small?' class="an-small"':''}><td><b>${esc(p.player)}</b></td><td>${esc(p.lane||'—')}</td><td>${p.games}</td><td>${p.impact.toFixed(0)}</td><td>${p.kda.toFixed(2)} <span class="an-pct">P${pc(p.pct.kda)}</span></td><td>${pc(p.damageShare)}% <span class="an-pct">P${pc(p.pct.damageShare)}</span></td><td>${pc(p.kp)}% <span class="an-pct">P${pc(p.pct.kp)}</span></td><td>${ML[worst]} P${pc(p.pct[worst])}</td><td>${ML[best]} P${pc(p.pct[best])}</td><td>${p.close.n?pc(p.close.winRate)+'% ('+p.close.wins+'/'+p.close.n+')':'—'}</td><td>${p.effectivePool}/${p.heroes}</td><td>${top?esc(top.hero)+' ('+top.games+' GP, '+pc(top.wr)+'%)':'—'}</td></tr>`;}).join('')||'<tr><td colspan="12">—</td></tr>'}</table></div><p class="an-pct" style="margin:.6em 0 0">Percentiles are within lane with a ${AN.priorWeight}-game prior; n&lt;${AN.minGames} is muted and indicative. Close = final kill diff ≤5 (proxy; no timeline exists).</p></div></div>`);
+const weakMaps=(opp.maps||[]).filter(m=>m.n>=5).slice().sort((a,b)=>a.wr-b.wr).slice(0,3);
+const strongMaps=(opp.maps||[]).filter(m=>m.n>=5).slice().sort((a,b)=>b.wr-a.wr).slice(0,3);
+out.push(`<div class="pin" style="grid-column:1/-1"><div class="body"><div class="kicker">Team tendencies</div><div class="prep-two"><div><div class="kicker">Weak maps</div><table style="min-width:240px"><tr><th>Map</th><th>n</th><th>WR</th></tr>${weakMaps.map(m=>`<tr><td>${esc(m.map)}</td><td>${m.n}</td><td>${pc(m.wr)}%</td></tr>`).join('')||'<tr><td colspan="3">No map at n≥5.</td></tr>'}</table></div><div><div class="kicker">Strong maps</div><table style="min-width:240px"><tr><th>Map</th><th>n</th><th>WR</th></tr>${strongMaps.map(m=>`<tr><td>${esc(m.map)}</td><td>${m.n}</td><td>${pc(m.wr)}%</td></tr>`).join('')||'<tr><td colspan="3">No map at n≥5.</td></tr>'}</table></div></div><p class="an-pct" style="margin:.6em 0 0">Series close: ${opp.clutch.decider.w}–${opp.clutch.decider.n-opp.clutch.decider.w}; game 3: ${opp.clutch.game3.w}–${opp.clutch.game3.n-opp.clutch.game3.w}. Maps require n≥5.</p></div></div>`);
+if(my){
+const lanes=['EXP','JUNGLE','MID','GOLD','ROAM'];
+const pickLane=(list,lane)=>list.filter(p=>p.lane===lane).slice().sort((a,b)=>b.games-a.games)[0];
+const hrec=my.h2h[opp.team]||{n:0,w:0};
+const mtiles=[['H2H (games)',`${hrec.w}–${hrec.n-hrec.w}`],['Rating',`${Math.round(my.rating)} vs ${Math.round(opp.rating)}`],['Form5',`${pc(my.form5)}% vs ${pc(opp.form5)}%`],['SOS',`${Math.round(my.sos)} vs ${Math.round(opp.sos)}`]];
+out.push(`<div class="pin" style="grid-column:1/-1"><div class="body"><div class="kicker">Matchup explorer · ${esc(my.team_name)} vs ${esc(opp.team_name)}</div><div class="tiles">${mtiles.map(([k,v])=>`<div class="tile"><b>${v}</b><span>${k}</span></div>`).join('')}</div><div class="lscroll"><table style="min-width:940px"><tr><th>Lane</th><th>Us</th><th>Opp</th><th>KDA</th><th>Dmg%</th><th>Impact</th><th>Close WR</th></tr>${lanes.map(lane=>{const a=pickLane(myPlayers,lane),b=pickLane(oppPlayers,lane);return `<tr><td>${lane}</td><td>${a?esc(a.player):'—'}</td><td>${b?esc(b.player):'—'}</td><td>${a?a.kda.toFixed(2):'—'} / ${b?b.kda.toFixed(2):'—'}</td><td>${a?pc(a.damageShare)+'%':'—'} / ${b?pc(b.damageShare)+'%':'—'}</td><td>${a?a.impact.toFixed(0):'—'} / ${b?b.impact.toFixed(0):'—'}</td><td>${a&&a.close.n?pc(a.close.winRate)+'%':'—'} / ${b&&b.close.n?pc(b.close.winRate)+'%':'—'}</td></tr>`;}).join('')}</table></div><p class="an-pct" style="margin:.6em 0 0">Modal lane per player; no player-vs-player head-to-head exists in the source. H2H is game results, not series.</p></div></div>`);
+}else{
+out.push(`<div class="pin" style="grid-column:1/-1"><div class="body"><div class="kicker">Matchup explorer</div><p style="margin:.4em 0 0">Pick “Our team” above to unlock the head-to-head and lane-by-lane comparison.</p></div></div>`);
+}
+}else{
+out.push(`<div class="pin" style="grid-column:1/-1"><div class="body"><div class="kicker">Coach prep</div><p>No completed games.</p></div></div>`);
+}
+}
 if(S.view==='analytics'){
 const dateByMid={};(DATA.schedule||[]).forEach(m=>{dateByMid[String(m.match_detail_id)]=m.iso_date||m.date||'';});
-const AN=buildPlayerMetrics(DATA.players,DATA.games,DATA.team_games,window.HERO_CLASSES||{},{canon:canonicalPlayer,dateOf:m=>dateByMid[String(m)]||''});
+const dateOf=m=>dateByMid[String(m)]||'';
+const part=k=>{if(ANA[k])return ANA[k];if(k==='AN'){const twr={};(DATA.team_games||[]).forEach(r=>{const x=twr[r.team]=twr[r.team]||{n:0,w:0};x.n++;if(r.win===1)x.w++;});Object.keys(twr).forEach(t=>{twr[t]=twr[t].n?twr[t].w/twr[t].n:0;});ANA[k]=buildPlayerMetrics(DATA.players,DATA.games,DATA.team_games,window.HERO_CLASSES||{},{canon:canonicalPlayer,dateOf,teamWinRate:twr});}if(k==='TM')ANA[k]=buildTeamMetrics(DATA.team_games||[],DATA.team_season||[],DATA.games||[],{dateOf,bootstraps:100,seed:7});if(k==='DM')ANA[k]=buildDraftMetrics(DATA.picks||[],DATA.bans||[],DATA.games||[],window.HERO_CLASSES||{},{minPair:3,dateOf});return ANA[k];};
+const mins=v=>v?Math.round(v/6)/10+'m':'—';
+const signed=v=>`${v>0?'+':''}${Math.round(v)}`;
+const pp=v=>`${v>0?'+':''}${Math.round(v*100)}pp`;
+const pc=v=>Math.round(v*100);
+const tabs=[['players','Players'],['teams','Teams'],['draft','Draft']].map(([k,l])=>`<button data-antab="${k}" aria-pressed="${S.anTab===k?'true':'false'}">${l}</button>`).join('');
+out.push(`<div class="pin" style="grid-column:1/-1"><div class="body phasebar"><div><div class="kicker">Analytics</div><h3 style="margin:.25em 0">${S.anTab==='teams'?'Team strength':S.anTab==='draft'?'Draft intelligence':'Player impact'}</h3></div><div class="seg" role="group" aria-label="Analytics view">${tabs}</div></div></div>`);
+if(S.anTab==='players'){
+const AN=part('AN');
 const lanes=['',...AN.lanes];
 const rows=AN.players.filter(p=>!S.anLane||p.lane===S.anLane);
 const maxImpact=Math.max(1,...rows.map(p=>Math.abs(p.impact)));
 const laneBtn=l=>`<button data-anlane="${esc(l)}" aria-pressed="${S.anLane===l?'true':'false'}">${l||'All lanes'}</button>`;
 const w=AN.weights;
-const pc=v=>Math.round(v*100);
-out.push(`<div class="pin" style="grid-column:1/-1"><div class="body phasebar"><div><div class="kicker">Analytics</div><h3 style="margin:.25em 0">Player impact</h3></div><div class="seg" role="group" aria-label="Lane filter">${lanes.map(laneBtn).join('')}</div></div></div>`);
+out.push(`<div class="pin" style="grid-column:1/-1"><div class="body"><div class="phasebar"><div class="kicker">Lane filter</div><div class="seg" role="group" aria-label="Lane filter">${lanes.map(laneBtn).join('')}</div></div></div></div>`);
 out.push(`<div class="pin" style="grid-column:1/-1"><div class="body"><div class="kicker">Method · every number shows its sample</div><p style="max-width:900px;margin:.4em 0 0">Impact = ${Math.round(w.damageShare*100)}% damage share + ${Math.round(w.kp*100)}% kill participation + ${Math.round(w.goldShare*100)}% gold share + ${Math.round(w.towerShare*100)}% tower share − ${Math.round(-w.deathShare*100)}% death share. Each component is a percentile within lane, shrunk toward the lane mean with a ${AN.priorWeight}-game prior. Win rates use a 95% Wilson interval. Rows with fewer than ${AN.minGames} games are muted and indicative only.</p></div></div>`);
 out.push(`<div class="pin" style="grid-column:1/-1"><div class="body"><div class="kicker">${rows.length} players · ${AN.lanes.length} lanes</div><div class="lscroll"><table style="min-width:1040px"><tr><th>#</th><th>Player</th><th>Team</th><th>Lane</th><th>GP</th><th>Impact</th><th>KDA</th><th>GPM</th><th>Dmg%</th><th>KP</th><th>Win% (95% CI)</th><th>Form</th></tr>${rows.map((p,i)=>`<tr${p.small?` class="an-small" title="Small sample (n<${AN.minGames}) — indicative only"`:''}><td>${i+1}</td><td><span data-p="${esc(p.player)}" tabindex="0" style="cursor:pointer;font-weight:600">${esc(p.player)}</span></td><td>${esc(p.team)}</td><td>${esc(p.lane||'—')}</td><td>${p.games}</td><td style="min-width:120px"><div style="display:flex;gap:6px;align-items:center"><span class="bar"><span style="width:${Math.max(0,Math.round(p.impact/maxImpact*100))}%"></span></span><b>${p.impact.toFixed(0)}</b></div></td><td>${p.kda.toFixed(2)}<span class="an-pct">P${pc(p.pct.kda)}</span></td><td>${Math.round(p.gpm)}<span class="an-pct">P${pc(p.pct.gpm)}</span></td><td>${pc(p.damageShare)}%<span class="an-pct">P${pc(p.pct.damageShare)}</span></td><td>${pc(p.kp)}%<span class="an-pct">P${pc(p.pct.kp)}</span></td><td>${pc(p.winRate)}% <span class="an-pct">(${pc(p.winCI.lo)}–${pc(p.winCI.hi)})</span></td><td>${p.formDelta>=0?'+':''}${p.formDelta.toFixed(2)}</td></tr>`).join('')||'<tr><td colspan="12">No games.</td></tr>'}</table></div></div></div>`);
+}else if(S.anTab==='teams'){
+const TM=part('TM');
+out.push(`<div class="pin" style="grid-column:1/-1"><div class="body"><div class="kicker">Method · relative strength with uncertainty</div><p style="max-width:980px;margin:.4em 0 0">Bradley-Terry on game results with a 1–1 prior against an average team and ${TM.method.bootstraps} bootstrap resamples. Rating = 1500 + 400·log10(strength), relative to this season only. SOS is the mean fitted opponent rating. Form5 is the last five games by date; Blue/Red use the recorded sides; tempo and clutch use completed games; Series close is the last game of a series (including 2–0 closeouts), while G3 is game 3 only. Intervals are wide at roughly 40 games per team.</p></div></div>`);
+out.push(`<div class="pin" style="grid-column:1/-1"><div class="body"><div class="kicker">${TM.teams.length} teams · ${TM.teams.reduce((s,t)=>s+t.games,0)} team-games</div><div class="lscroll"><table style="min-width:1240px"><tr><th>Team</th><th>GP</th><th>W–L</th><th>Win% (95% CI)</th><th>Rating (95% CI)</th><th>SOS</th><th>Form5</th><th>Form5 series</th><th>Blue</th><th>Red</th><th>Win dur</th><th>Loss dur</th><th>Gold diff</th><th>Blowout</th><th>G3</th><th>Series close</th></tr>${TM.teams.map(t=>`<tr><td><b>${esc(t.team_name)}</b> <span class="an-pct">${esc(t.team)}</span></td><td>${t.games}</td><td>${t.wins}–${t.losses}</td><td>${pc(t.winRate)}% <span class="an-pct">(${pc(t.winCI.lo)}–${pc(t.winCI.hi)})</span></td><td>${Math.round(t.rating)} <span class="an-pct">(${Math.round(t.ratingCI[0])}–${Math.round(t.ratingCI[1])})</span></td><td>${Math.round(t.sos)||'—'}</td><td>${pc(t.form5)}%</td><td>${pc(t.form5Series)}%</td><td>${t.side.blue.w}–${t.side.blue.n-t.side.blue.w}</td><td>${t.side.red.w}–${t.side.red.n-t.side.red.w}</td><td>${mins(t.tempo.winSec)}</td><td>${mins(t.tempo.lossSec)}</td><td>${signed(t.dominance.goldDiff)}</td><td>${pc(t.dominance.blowout)}%</td><td>${t.clutch.game3.w}–${t.clutch.game3.n-t.clutch.game3.w}</td><td>${t.clutch.decider.w}–${t.clutch.decider.n-t.clutch.decider.w}</td></tr>`).join('')}</table></div></div></div>`);
+const sorted=[...TM.teams].sort((a,b)=>b.rating-a.rating);
+out.push(`<div class="pin" style="grid-column:1/-1"><div class="body"><div class="kicker">Head-to-head · row wins–losses vs column</div><div class="lscroll"><table style="min-width:860px"><tr><th>Team</th>${sorted.map(x=>`<th>${esc(x.team)}</th>`).join('')}</tr>${sorted.map(a=>`<tr><td><b>${esc(a.team)}</b></td>${sorted.map(b=>{if(a.team===b.team)return '<td>—</td>';const h=a.h2h[b.team]||{n:0,w:0};return `<td>${h.w}–${h.n-h.w}</td>`;}).join('')}</tr>`).join('')}</table></div><p class="an-pct" style="margin:.6em 0 0">Game results, not series. A blank cell means the teams have not met.</p></div></div>`);
+}else{
+const DM=part('DM');
+const noMap=(DATA.games||[]).filter(g=>!g.map_mode).length;
+const heroRows=[...DM.heroes].sort((a,b)=>(b.picks+b.bans)-(a.picks+a.bans)||a.hero.localeCompare(b.hero));
+const topLane=h=>Object.keys(h.lanes).sort((a,b)=>h.lanes[b]-h.lanes[a]||a.localeCompare(b))[0]||'—';
+const pairRows=DM.pairs.slice(0,20),ctrRows=DM.counters.slice(0,20);
+const mvRows=[...DM.movement.slice(0,8),...DM.movement.slice(-8).reverse()].filter((x,i,a)=>a.findIndex(y=>y.hero===x.hero)===i);
+out.push(`<div class="pin" style="grid-column:1/-1"><div class="body"><div class="stats" style="display:flex;gap:30px;flex-wrap:wrap"><div><div class="kicker">Heroes seen</div><b style="font-family:var(--font-mono);font-size:22px">${DM.heroes.length}</b></div><div><div class="kicker">Pairs n≥3</div><b style="font-family:var(--font-mono);font-size:22px">${DM.pairs.length}</b></div><div><div class="kicker">Counters n≥3</div><b style="font-family:var(--font-mono);font-size:22px">${DM.counters.length}</b></div><div><div class="kicker">Maps</div><b style="font-family:var(--font-mono);font-size:22px">${DM.maps.length}</b></div><div><div class="kicker">Archetypes</div><b style="font-family:var(--font-mono);font-size:22px">${DM.compositions.length}</b></div></div><p style="max-width:1000px;margin:1em 0 0">Pairs and counters are descriptive, not causal: synergy compares a pair's win rate with the average of the two heroes' individual win rates; counters compare hero A against B with the average of A's win rate and B's loss rate. Compositions use hero classes (frontline = Tank/Fighter; damage = 3+ physical or 3+ magic; CC = specialties mentioning Crowd Control, Initiator or Engage). Map mode is missing for ${noMap} games, shown as Unknown.</p></div></div>`);
+out.push(`<div class="pin" style="grid-column:1/-1"><div class="body"><div class="kicker">Meta movement · last two weeks</div><div class="lscroll"><table style="min-width:680px"><tr><th>Hero</th><th>Recent presence/game</th><th>Previous</th><th>Delta</th><th>Games (recent)</th></tr>${mvRows.map(m=>`<tr><td>${esc(m.hero)}</td><td>${Math.round(m.recent*100)}%</td><td>${Math.round(m.previous*100)}%</td><td>${m.delta>0?'+':''}${Math.round(m.delta*100)}pp</td><td>${m.games}</td></tr>`).join('')||'<tr><td colspan="5">Not enough weeks.</td></tr>'}</table></div><p class="an-pct" style="margin:.6em 0 0">Presence = (picks + bans) ÷ games in that date week. The final week is a small sample; treat it as a signal, not proof.</p></div></div>`);
+out.push(`<div class="pin" style="grid-column:1/-1"><div class="body"><div class="kicker">Heroes · picks + bans · sorted by presence</div><div class="lscroll" style="max-height:520px"><table style="min-width:820px"><tr><th>Hero</th><th>Role</th><th>Damage</th><th>Picks</th><th>Bans</th><th>P+B</th><th>WR (95% CI)</th><th>Flex</th><th>Top lane</th></tr>${heroRows.map(h=>`<tr><td><b>${esc(h.hero)}</b></td><td>${esc(h.role||'—')}</td><td>${esc(h.damage||'—')}</td><td>${h.picks}</td><td>${h.bans}</td><td>${h.picks+h.bans}</td><td>${pc(h.winRate)}% <span class="an-pct">(${pc(h.winCI.lo)}–${pc(h.winCI.hi)})</span></td><td>${h.flex}</td><td>${esc(topLane(h))}</td></tr>`).join('')}</table></div></div></div>`);
+out.push(`<div class="pin" style="grid-column:1/-1"><div class="body"><div class="kicker">Same-team pairs · n≥3 · top ${pairRows.length}</div><div class="lscroll"><table style="min-width:560px"><tr><th>Pair</th><th>n</th><th>WR</th><th>vs baseline</th></tr>${pairRows.map(p=>`<tr><td>${esc(p.a)} + ${esc(p.b)}</td><td>${p.n}</td><td>${pc(p.wr)}%</td><td>${pp(p.delta)}</td></tr>`).join('')||'<tr><td colspan="4">No pairs at n≥3.</td></tr>'}</table></div></div></div>`);
+out.push(`<div class="pin" style="grid-column:1/-1"><div class="body"><div class="kicker">Opposing pairs · n≥3 · top ${ctrRows.length}</div><div class="lscroll"><table style="min-width:640px"><tr><th>Matchup</th><th>n</th><th>First hero WR</th><th>vs baseline</th></tr>${ctrRows.map(p=>`<tr><td>${esc(p.a)} vs ${esc(p.b)}</td><td>${p.n}</td><td>${pc(p.wr)}%</td><td>${pp(p.delta)}</td></tr>`).join('')||'<tr><td colspan="4">No counters at n≥3.</td></tr>'}</table></div></div></div>`);
+out.push(`<div class="pin" style="grid-column:1/-1"><div class="body"><div class="kicker">Composition archetypes · derived from hero classes</div><div class="lscroll"><table style="min-width:620px"><tr><th>Archetype</th><th>n</th><th>WR (95% CI)</th><th>Avg CC</th></tr>${DM.compositions.map(c=>`<tr><td>${esc(c.damage)} · ${c.frontline} front</td><td>${c.n}</td><td>${pc(c.wr)}% <span class="an-pct">(${pc(c.winCI.lo)}–${pc(c.winCI.hi)})</span></td><td>${c.avgCC.toFixed(1)}</td></tr>`).join('')||'<tr><td colspan="4">No complete drafts.</td></tr>'}</table></div></div></div>`);
+out.push(`<div class="pin" style="grid-column:1/-1"><div class="body"><div class="kicker">Map meta · completed games</div><div class="lscroll"><table style="min-width:720px"><tr><th>Map</th><th>Games</th><th>Blue WR</th><th>Avg duration</th><th>Top picks</th></tr>${DM.maps.map(m=>`<tr><td>${esc(m.map)}</td><td>${m.games}</td><td>${pc(m.blueWR)}%</td><td>${mins(m.avgSec)}</td><td>${m.topHeroes.map(h=>`${esc(h.hero)}×${h.n}`).join(', ')}</td></tr>`).join('')}</table></div></div></div>`);
+out.push(`<div class="pin" style="grid-column:1/-1"><div class="body"><div class="kicker">Team draft fingerprints · HHI = pick concentration</div><div class="lscroll"><table style="min-width:1120px"><tr><th>Team</th><th>Picks</th><th>Unique</th><th>HHI</th><th>Top picks</th><th>Top bans</th><th>First ban (blue)</th><th>First ban (red)</th><th>Pocket picks</th></tr>${DM.teams.map(t=>`<tr><td><b>${esc(t.team)}</b></td><td>${t.picks}</td><td>${Object.keys(t.heroes).length}</td><td>${t.hhi.toFixed(2)}</td><td>${t.topPicks.map(p=>`${esc(p.hero)}×${p.n}`).join(', ')}</td><td>${t.topBans.map(p=>`${esc(p.hero)}×${p.n}`).join(', ')}</td><td>${t.firstBanBlue.map(p=>`${esc(p.hero)}×${p.n}`).join(', ')||'—'}</td><td>${t.firstBanRed.map(p=>`${esc(p.hero)}×${p.n}`).join(', ')||'—'}</td><td>${t.pocketPicks.length?t.pocketPicks.map(p=>`${esc(p.hero)}×${p.n}`).join(', '):'—'}</td></tr>`).join('')}</table></div><p class="an-pct" style="margin:.6em 0 0">HHI is the sum of squared pick shares; higher means a more concentrated pool. Pocket picks require n≥3 and a team share at least twice the league share.</p></div></div>`);
+}
 }
 board.innerHTML=out.join('')||'';emptyEl.hidden=out.length>0;countEl.textContent=out.length+' pins';
 board.querySelectorAll('.pin').forEach(p=>io.observe(p));
@@ -215,6 +320,13 @@ board.querySelectorAll('[data-more]').forEach(b=>b.onclick=()=>{const n=+b.datas
 board.querySelectorAll('[data-phase]').forEach(b=>b.onclick=()=>{S.phase=b.dataset.phase;render();});
 board.querySelectorAll('[data-stat]').forEach(b=>b.onclick=()=>{S.stat=b.dataset.stat;render();});
 board.querySelectorAll('[data-anlane]').forEach(b=>b.onclick=()=>{S.anLane=b.dataset.anlane;render();});
+board.querySelectorAll('[data-antab]').forEach(b=>b.onclick=()=>{S.anTab=b.dataset.antab;render();});
+const prepOppEl=document.getElementById('prepOpp');if(prepOppEl)prepOppEl.onchange=()=>{S.prepOpp=prepOppEl.value;render();};
+const prepTeamEl=document.getElementById('prepTeam');if(prepTeamEl)prepTeamEl.onchange=()=>{S.prepTeam=prepTeamEl.value;render();};
+const prepPrintEl=document.getElementById('prepPrint');if(prepPrintEl)prepPrintEl.onclick=()=>window.print();
+const prepCsvEl=document.getElementById('prepCsv');if(prepCsvEl)prepCsvEl.onclick=()=>{if(!PREP)return;const rows=[['section','name','games','value1','value2','value3']],o=PREP.opp;rows.push(['team',o.team,o.games,(o.winRate*100).toFixed(1),Math.round(o.rating),Math.round(o.sos)]);PREP.oppBans.forEach(b=>rows.push(['ban',b.hero,b.n,(b.presence*100).toFixed(1),(b.wr*100).toFixed(1),b.score.toFixed(3)]));PREP.oppPlayers.forEach(p=>rows.push(['player',p.player,p.games,p.kda.toFixed(2),p.impact.toFixed(1),p.close.n?(p.close.winRate*100).toFixed(1):'']));const csv='\ufeff'+rows.map(r=>r.map(x=>'"'+String(x).replace(/"/g,'""')+'"').join(',')).join('\n');const blob=new Blob([csv],{type:'text/csv;charset=utf-8'}),a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download='prep_'+o.team+'.csv';a.click();setTimeout(()=>URL.revokeObjectURL(a.href),1000);};
+const prepLinkEl=document.getElementById('prepLink');if(prepLinkEl)prepLinkEl.onclick=()=>{if(!PREP)return;const url=location.href.split('#')[0]+'#view=prep&opp='+encodeURIComponent(PREP.opp.team)+(PREP.my?'&team='+encodeURIComponent(PREP.my.team):'');if(navigator.clipboard&&navigator.clipboard.writeText)navigator.clipboard.writeText(url).then(()=>{prepLinkEl.textContent='Copied';setTimeout(()=>{prepLinkEl.textContent='Copy link';},1200);}).catch(()=>prompt('Copy this link',url));else prompt('Copy this link',url);};
+try{const hp=new URLSearchParams();hp.set('view',S.view);if(S.view==='prep'){hp.set('opp',S.prepOpp||'');if(S.prepTeam)hp.set('team',S.prepTeam);}if(S.view==='analytics'){hp.set('tab',S.anTab);if(S.anLane)hp.set('lane',S.anLane);}if(S.view==='players'&&S.q)hp.set('q',S.q);if(S.view==='matches'&&S.team)hp.set('filterTeam',S.team);history.replaceState(null,'','#'+hp.toString());}catch(e){}
 board.querySelectorAll('[data-ts]').forEach(b=>b.onclick=()=>{const [t,k]=b.dataset.ts.split(':');const str=k==='hero'||k==='player'||k==='team'||k==='match'||k==='mvp'||k==='date';if(S.tsort.t===t&&S.tsort.k===k)S.tsort.d*=-1;else S.tsort={t,k,d:str?1:-1};render();});
 wireCharts();wireBracket();}
 function normId(s){return String(s||'').toLowerCase().replace(/[^a-z0-9]/g,'');}
@@ -519,6 +631,9 @@ const src=(A.items&&A.items[id])||'';
 stAssetView('Item usage',/^\d+$/.test(String(id))?'#'+id:'',src?`<p><img src="${esc(src)}" alt="" loading="lazy" style="width:40px;height:40px;border-radius:8px;border:1px solid var(--line);object-fit:cover" onerror="this.remove()"></p>`:'',list);}
 function showP(n){const r=DATA.players.filter(x=>samePlayer(x.player,n));const g=agg().find(o=>samePlayer(o.player,n))||{};
 const disp=r.length?r[0].player:(g.player||n);
+const dm={};(DATA.schedule||[]).forEach(m=>{dm[String(m.match_detail_id)]=m.iso_date||m.date||'';});
+const twr={};(DATA.team_games||[]).forEach(x=>{const o=twr[x.team]=twr[x.team]||{n:0,w:0};o.n++;if(x.win===1)o.w++;});Object.keys(twr).forEach(k=>{twr[k]=twr[k].n?twr[k].w/twr[k].n:0;});
+const anp=buildPlayerMetrics(DATA.players,DATA.games,DATA.team_games,window.HERO_CLASSES||{},{canon:canonicalPlayer,dateOf:m=>dm[String(m)]||'',teamWinRate:twr}).players.find(x=>samePlayer(x.player,disp))||null;
 const A=window.ASSETS||{heroes:{}};
 const bh={};r.forEach(x=>{(bh[x.hero]=bh[x.hero]||[]).push(x);});
 const t=Object.entries(bh).map(([h,rs])=>{const hg=rs.reduce((s,x)=>s+(x.gold_per_min||0),0)/rs.length;
@@ -526,7 +641,8 @@ const ak=rs.reduce((s,x)=>s+x.kills,0)/rs.length,ad=rs.reduce((s,x)=>s+x.deaths,
 const akda=rs.reduce((s,x)=>s+(+x.kda||0),0)/rs.length;
 const hi=(A.heroes&&A.heroes[h])||'';return `<tr><td><span class="hcell">${hi?`<img src="${esc(hi)}" alt="" loading="lazy" onerror="this.remove()">`:''}${esc(h)}</span></td><td>${rs.length}</td><td>${akda.toFixed(2)}</td><td>${ak.toFixed(1)}</td><td>${ad.toFixed(1)}</td><td>${aa.toFixed(1)}</td><td>–</td><td>–</td><td>${hg.toFixed(0)}</td></tr>`;}).join('');
 const u=PICON(disp);
-openD(disp,(g.team||'')+' · '+(g.lane||''),`<div class="pdhead">${u?`<img src="${esc(u)}" alt="" onerror="this.remove()">`:''}<div><div class="kicker">${esc(g.team||'')} · ${esc(g.lane||'—')}</div><div style="font-family:var(--font-display);font-size:19px;font-weight:700">${esc(disp)}</div></div></div><div class="tiles"><div class="tile"><b>${g.gp||r.length}</b><span>Games</span></div><div class="tile"><b>${(g.avgkda||0).toFixed(2)}</b><span>Avg KDA</span></div><div class="tile"><b>${(g.avgg||0).toFixed(0)}</b><span>Avg gold/min</span></div><div class="tile"><b>${g.k||0}/${g.d||0}/${g.a||0}</b><span>Total K / D / A</span></div></div><div class="lscroll"><table style="min-width:560px"><tr><th>Hero</th><th>GP</th><th>AVG KDA</th><th>AVG K</th><th>AVG D</th><th>AVG A</th><th title="Under development — no official ID source publishes this yet">MANIAC *</th><th title="Under development — no official ID source publishes this yet">SAVAGE *</th><th>GPM</th></tr>${t}</table></div><div class="mono" style="font-family:var(--font-mono);font-size:10.5px;color:var(--muted);margin-top:6px">* MANIAC / SAVAGE tracking is under development — no official MPL ID source publishes these counts yet.</div>`);}
+const extra=anp?`<div class="tiles"><div class="tile"><b>${anp.close.n?Math.round(anp.close.winRate*100)+'%':'–'}</b><span>Close-game WR (${anp.close.wins}/${anp.close.n})</span></div><div class="tile"><b>${anp.effectivePool}/${anp.heroes}</b><span>Effective pool</span></div><div class="tile"><b>${anp.comfort.toFixed(2)}</b><span>Comfort index</span></div><div class="tile"><b>${anp.flexHeroes}</b><span>Flex heroes</span></div><div class="tile"><b>${anp.dpg.toFixed(2)}</b><span>Damage / gold</span></div><div class="tile"><b>${Math.round(anp.towerPerGame)}</b><span>Tower dmg / game</span></div></div><div class="lscroll"><table style="min-width:520px"><tr><th>Split</th><th>GP</th><th>KDA</th><th>Dmg%</th></tr><tr><td>vs ≥50% teams</td><td>${anp.oppTier.strong.n}</td><td>${anp.oppTier.strong.kda.toFixed(2)}</td><td>${Math.round(anp.oppTier.strong.damageShare*100)}%</td></tr><tr><td>vs &lt;50% teams</td><td>${anp.oppTier.weak.n}</td><td>${anp.oppTier.weak.kda.toFixed(2)}</td><td>${Math.round(anp.oppTier.weak.damageShare*100)}%</td></tr></table></div><div class="lscroll" style="margin-top:8px"><table style="min-width:560px"><tr><th>Hero fit</th><th>GP</th><th>Player WR</th><th>League WR</th><th>Delta</th><th>Comfort</th></tr>${anp.pool.slice(0,8).map(h=>`<tr><td>${esc(h.hero)}</td><td>${h.games}</td><td>${Math.round(h.wr*100)}%</td><td>${Math.round(h.leagueWr*100)}%</td><td>${h.delta>0?'+':''}${Math.round(h.delta*100)}pp</td><td>${h.comfort.toFixed(2)}</td></tr>`).join('')}</table></div><div class="an-pct" style="margin-top:6px">Close = final kill diff ≤5 (proxy for composure; no timeline exists). Opponent split uses team win rate; n is shown. Hero fit compares the player's WR on the hero with the league WR; effective pool = heroes with ≥2 games and ≥50% WR.</div>`:'';
+openD(disp,(g.team||'')+' · '+(g.lane||''),`<div class="pdhead">${u?`<img src="${esc(u)}" alt="" onerror="this.remove()">`:''}<div><div class="kicker">${esc(g.team||'')} · ${esc(g.lane||'—')}</div><div style="font-family:var(--font-display);font-size:19px;font-weight:700">${esc(disp)}</div></div></div><div class="tiles"><div class="tile"><b>${g.gp||r.length}</b><span>Games</span></div><div class="tile"><b>${(g.avgkda||0).toFixed(2)}</b><span>Avg KDA</span></div><div class="tile"><b>${(g.avgg||0).toFixed(0)}</b><span>Avg gold/min</span></div><div class="tile"><b>${g.k||0}/${g.d||0}/${g.a||0}</b><span>Total K / D / A</span></div></div>${extra}<div class="lscroll"><table style="min-width:560px"><tr><th>Hero</th><th>GP</th><th>AVG KDA</th><th>AVG K</th><th>AVG D</th><th>AVG A</th><th title="Under development — no official ID source publishes this yet">MANIAC *</th><th title="Under development — no official ID source publishes this yet">SAVAGE *</th><th>GPM</th></tr>${t}</table></div><div class="mono" style="font-family:var(--font-mono);font-size:10.5px;color:var(--muted);margin-top:6px">* MANIAC / SAVAGE tracking is under development — no official MPL ID source publishes these counts yet.</div>`);}
 function durSec(s){const m=/(\d+):(\d+)/.exec(s||'');return m?(+m[1])*60+(+m[2]):0;}
 function normPl(r,sec){const kills=r.kill??r.kills??0,deaths=r.death??r.deaths??0,assists=r.assist??r.assists??0;
 const gpm=r.gold_per_min??((sec&&r.gold!=null)?Math.round(r.gold/(sec/60)):null);return Object.assign({},r,{kills,deaths,assists,gpm});}
@@ -869,6 +985,7 @@ function buildPlayerMetrics(players,games,teamGames,classes,opts){
   const minGames=opts.minGames==null?5:opts.minGames;
   const canon=opts.canon||(x=>x);
   const dateOf=opts.dateOf||(()=> '');
+  const teamWinRate=opts.teamWinRate||{};
   const gk=(mid,gn)=>String(mid)+':'+String(gn);
   const gameBy={};
   (games||[]).forEach(g=>{gameBy[gk(g.match_detail_id,g.game_no)]=g;});
@@ -882,9 +999,13 @@ function buildPlayerMetrics(players,games,teamGames,classes,opts){
     const kills=+r.kills||0,deaths=+r.deaths||0,assists=+r.assists||0;
     const teamKills=+tg.kills||0,teamGold=+tg.gold||0,teamDmg=+tg.hero_damage||0,teamTaken=+tg.damage_taken||0,teamTower=+tg.tower_damage||0;
     const won=g.winner==='team_a'?g.team_a===r.team:(g.winner==='team_b'?g.team_b===r.team:null);
+    const opponent=r.team===g.team_a?g.team_b:(r.team===g.team_b?g.team_a:'');
+    const oppTg=opponent?tgBy[gk(r.match_detail_id,r.game_no)+':'+opponent]:null;
+    const close=oppTg?Math.abs(teamKills-(+oppTg.kills||0))<=5:false;
     rows.push({
       player:canon(r.player), rawPlayer:r.player, team:r.team, hero:r.hero, lane:r.lane||'',
       mid:String(r.match_detail_id), gn:+r.game_no, date:dateOf(r.match_detail_id),
+      opponent:opponent, oppWr:(opponent&&teamWinRate[opponent]!=null)?+teamWinRate[opponent]:null, close:close,
       kills:kills, deaths:deaths, assists:assists, gold:+r.gold||0, gpm:+r.gold_per_min||0,
       dmg:+r.hero_damage||0, taken:+r.damage_taken||0, tower:+r.tower_damage||0,
       kda:(kills+assists)/Math.max(1,deaths),
@@ -903,6 +1024,8 @@ function buildPlayerMetrics(players,games,teamGames,classes,opts){
   rows.forEach(r=>{(heroDmg[r.hero]=heroDmg[r.hero]||[]).push(r.damageShare);});
   const heroDmgMean={};
   Object.keys(heroDmg).forEach(h=>{heroDmgMean[h]=anMean(heroDmg[h]);});
+  const leagueHero={};
+  rows.forEach(r=>{const x=leagueHero[r.hero]=leagueHero[r.hero]||{n:0,w:0};x.n++;if(r.win===1)x.w++;});
 
   const byP={};
   rows.forEach(r=>{(byP[r.player]=byP[r.player]||[]).push(r);});
@@ -915,6 +1038,21 @@ function buildPlayerMetrics(players,games,teamGames,classes,opts){
     const off=rs.filter(r=>lane&&r.lane&&r.lane!==lane);
     const main=rs.filter(r=>!lane||!r.lane||r.lane===lane);
     const last5=rs.slice(-5);
+    const closed=rs.filter(r=>r.close);
+    const closeWins=closed.filter(r=>r.win===1).length;
+    const tier=arr=>({n:arr.length,wins:arr.filter(r=>r.win===1).length,kda:anMean(arr.map(r=>r.kda)),damageShare:anMean(arr.map(r=>r.damageShare))});
+    const strong=tier(rs.filter(r=>r.oppWr!=null&&r.oppWr>=0.5));
+    const weak=tier(rs.filter(r=>r.oppWr!=null&&r.oppWr<0.5));
+    const byHero={};
+    rs.forEach(r=>{(byHero[r.hero]=byHero[r.hero]||[]).push(r);});
+    const pool=Object.keys(byHero).map(h=>{
+      const hs=byHero[h],w=hs.filter(r=>r.win===1).length,lg=leagueHero[h]||{n:0,w:0};
+      const wr=hs.length?w/hs.length:0,leagueWr=lg.n?lg.w/lg.n:0;
+      return {hero:h,games:hs.length,wins:w,wr:wr,leagueWr:leagueWr,delta:wr-leagueWr,usage:hs.length/n,comfort:(hs.length/n)*wr,lanes:[...new Set(hs.map(r=>r.lane).filter(Boolean))]};
+    }).sort((a,b)=>b.games-a.games||a.hero.localeCompare(b.hero));
+    const effectivePool=pool.filter(h=>h.games>=2&&h.wr>=0.5).length;
+    const flexHeroes=pool.filter(h=>h.lanes.length>=2).length;
+    const comfort=pool.length?Math.max(...pool.map(h=>h.comfort)):0;
     return {
       player:player, team:anMode(rs.map(r=>r.team)), lane:lane, role:lane,
       games:n, wins:wins, decided:decided, winRate:decided?wins/decided:0, winCI:anWilson(wins,decided),
@@ -932,6 +1070,11 @@ function buildPlayerMetrics(players,games,teamGames,classes,opts){
       offLaneGames:off.length,
       offLaneDelta:(off.length&&main.length)?anMean(off.map(r=>r.kda))-anMean(main.map(r=>r.kda)):null,
       heroes:new Set(rs.map(r=>r.hero)).size,
+      close:{n:closed.length,wins:closeWins,winRate:closed.length?closeWins/closed.length:0,winCI:anWilson(closeWins,closed.length)},
+      oppTier:{strong:strong,weak:weak,kdaDelta:strong.kda-weak.kda,damageDelta:strong.damageShare-weak.damageShare},
+      pool:pool,effectivePool:effectivePool,flexHeroes:flexHeroes,comfort:comfort,
+      dpg:anMean(rs.map(r=>r.dmg/Math.max(1,r.gold))),
+      towerPerGame:anMean(rs.map(r=>r.tower)),
       small:n<minGames,
       raw:rs
     };
@@ -957,6 +1100,165 @@ function buildPlayerMetrics(players,games,teamGames,classes,opts){
   });
   out.sort((a,b)=>b.impact-a.impact||a.player.localeCompare(b.player));
   return {players:out,lanes:Object.keys(lanes).sort(),weights:IMPACT_WEIGHTS,priorWeight:priorWeight,minGames:minGames};
+}
+function anMulberry32(a){return function(){a|=0;a=a+0x6D2B79F5|0;let t=Math.imul(a^a>>>15,1|a);t=t+Math.imul(t^t>>>7,61|t)^t;return((t^t>>>14)>>>0)/4294967296;};}
+function anBT(rows,teams,prior){
+  const idx={};teams.forEach((t,i)=>idx[t]=i);
+  const p=teams.map(()=>1),wins=teams.map(()=>prior),opp=teams.map(()=>new Map());
+  (rows||[]).forEach(r=>{if(!r)return;const i=idx[r.team],j=idx[r.opponent];if(i==null||j==null||i===j)return;if(r.win===1)wins[i]++;else wins[j]++;opp[i].set(j,(opp[i].get(j)||0)+1);opp[j].set(i,(opp[j].get(i)||0)+1);});
+  for(let it=0;it<40;it++){
+    const next=p.map((pi,i)=>{let den=2*prior/(pi+1);opp[i].forEach((cnt,j)=>{den+=cnt/(pi+p[j]);});return wins[i]/Math.max(1e-9,den);});
+    for(let i=0;i<next.length;i++)p[i]=next[i];
+  }
+  return p;
+}
+function buildTeamMetrics(teamGames,teams,games,opts){
+  opts=opts||{};
+  const bootstraps=opts.bootstraps==null?100:opts.bootstraps;
+  const prior=opts.prior==null?1:opts.prior;
+  const dateOf=opts.dateOf||(()=> '');
+  const gk=(mid,gn)=>String(mid)+':'+String(gn);
+  const gameBy={};(games||[]).forEach(g=>{gameBy[gk(g.match_detail_id,g.game_no)]=g;});
+  const tgBy={};(teamGames||[]).forEach(t=>{tgBy[gk(t.match_detail_id,t.game_no)+':'+t.team]=t;});
+  const list=teams||[];
+  const codes=list.map(t=>t.team);
+  const rating=anBT(teamGames,codes,prior);
+  const ratingOf=Object.fromEntries(codes.map((c,i)=>[c,rating[i]]));
+  const rand=anMulberry32(opts.seed==null?7:opts.seed);
+  const boot=[];
+  for(let b=0;b<bootstraps&&(teamGames||[]).length;b++){
+    const sample=[];
+    for(let i=0;i<teamGames.length;i++)sample.push(teamGames[Math.floor(rand()*teamGames.length)]);
+    boot.push(anBT(sample,codes,prior));
+  }
+  const ci={};codes.forEach((c,i)=>{const v=boot.map(x=>x[i]).sort((a,b)=>a-b);ci[c]=v.length?[v[Math.floor(v.length*0.025)],v[Math.floor(v.length*0.975)]]:[rating[i],rating[i]];});
+  const toElo=p=>1500+400*Math.log10(Math.max(1e-6,p));
+  const mean=a=>a.length?a.reduce((s,x)=>s+x,0)/a.length:0;
+  return {teams:list.map(t=>{
+    const code=t.team;
+    const rs=(teamGames||[]).filter(r=>r.team===code).slice().sort((a,b)=>String(dateOf(a.match_detail_id)).localeCompare(String(dateOf(b.match_detail_id)))||(+a.game_no-+b.game_no));
+    const n=rs.length,wins=rs.filter(r=>r.win===1).length;
+    const last5=rs.slice(-5),form5=last5.length?last5.filter(r=>r.win===1).length/last5.length:0;
+    const winD=rs.filter(r=>r.win===1),lossD=rs.filter(r=>r.win===0);
+    const diffs=rs.map(r=>{const o=tgBy[gk(r.match_detail_id,r.game_no)+':'+r.opponent]||{};return {k:(+r.kills||0)-(+o.kills||0),g:(+r.gold||0)-(+o.gold||0),d:(+r.hero_damage||0)-(+o.hero_damage||0),tw:(+r.tower_damage||0)-(+o.tower_damage||0)};});
+    const sides={blue:{n:0,w:0},red:{n:0,w:0}};
+    rs.forEach(r=>{const g=gameBy[gk(r.match_detail_id,r.game_no)]||{};const raw=(r.team===g.team_a?g.team_a_side:g.team_b_side)||'';const side=String(raw).toLowerCase();if(sides[side]){sides[side].n++;if(r.win===1)sides[side].w++;}});
+    const byMatch={};rs.forEach(r=>{(byMatch[r.match_detail_id]=byMatch[r.match_detail_id]||[]).push(r);});
+    const g3=rs.filter(r=>+r.game_no===3),dec=[];
+    Object.keys(byMatch).forEach(mid=>{const arr=byMatch[mid];const mx=Math.max(...arr.map(r=>+r.game_no));dec.push(...arr.filter(r=>+r.game_no===mx));});
+    const series=Object.keys(byMatch).map(mid=>{const arr=byMatch[mid];return {win:arr.filter(r=>r.win===1).length>arr.length/2,date:String(dateOf(mid))};}).sort((a,b)=>a.date.localeCompare(b.date));
+    const last5s=series.slice(-5),form5Series=last5s.length?last5s.filter(s=>s.win).length/last5s.length:0;
+    const h2h={};rs.forEach(r=>{const o=h2h[r.opponent]=h2h[r.opponent]||{n:0,w:0};o.n++;if(r.win===1)o.w++;});
+    const sos=mean(rs.map(r=>ratingOf[r.opponent]||1));
+    const ciV=ci[code]||[ratingOf[code]||1,ratingOf[code]||1];
+    const maps={};rs.forEach(r=>{const m=r.map_mode||'Unknown';const x=maps[m]=maps[m]||{n:0,w:0};x.n++;if(r.win===1)x.w++;});
+    return {
+      team:code,team_name:t.team_name||code,team_slug:t.team_slug||code,
+      games:n,wins:wins,losses:n-wins,winRate:n?wins/n:0,winCI:anWilson(wins,n),
+      rating:toElo(ratingOf[code]||1),ratingCI:[toElo(ciV[0]),toElo(ciV[1])],sos:rs.length?toElo(sos):0,
+      form5:form5,
+      form5Series:form5Series,
+      series:series.length,
+      h2h:h2h,
+      tempo:{winSec:mean(winD.map(r=>+r.duration_sec||0)),lossSec:mean(lossD.map(r=>+r.duration_sec||0)),fastWins:winD.filter(r=>(+r.duration_sec||0)<900).length,lateWins:winD.filter(r=>(+r.duration_sec||0)>1320).length},
+      dominance:{killDiff:mean(diffs.map(d=>d.k)),goldDiff:mean(diffs.map(d=>d.g)),damageDiff:mean(diffs.map(d=>d.d)),towerDiff:mean(diffs.map(d=>d.tw)),blowout:n?rs.filter((r,i)=>Math.abs(diffs[i].k)>=10).length/n:0},
+      clutch:{game3:{n:g3.length,w:g3.filter(r=>r.win===1).length},decider:{n:dec.length,w:dec.filter(r=>r.win===1).length}},
+      side:sides,
+      maps:Object.keys(maps).map(m=>({map:m,n:maps[m].n,w:maps[m].w,wr:maps[m].n?maps[m].w/maps[m].n:0})).sort((a,b)=>b.n-a.n||a.map.localeCompare(b.map))
+    };
+  }),method:{prior:prior,bootstraps:bootstraps,model:'Bradley-Terry on games, 1-1 prior vs an average team; 100 bootstrap resamples; rating = 1500 + 400*log10(strength)'}};
+}
+function buildDraftMetrics(picks,bans,games,classes,opts){
+  opts=opts||{};
+  const minPair=opts.minPair==null?5:opts.minPair;
+  const dateOf=opts.dateOf||(()=> '');
+  const dateMs=d=>{const t=Date.parse(d);return isFinite(t)?t:null;};
+  const allDates=(games||[]).map(g=>dateOf(g.match_detail_id)).map(dateMs).filter(x=>x!=null);
+  const start=allDates.length?Math.min(...allDates):0;
+  const weekOf=mid=>{const t=dateMs(dateOf(mid));return t==null||!start?-1:Math.floor((t-start)/604800000);};
+  const weekGames={};(games||[]).forEach(g=>{const w=weekOf(g.match_detail_id);if(w>=0)weekGames[w]=(weekGames[w]||0)+1;});
+  const gk=(mid,gn)=>String(mid)+':'+String(gn);
+  const gameBy={};(games||[]).forEach(g=>{gameBy[gk(g.match_detail_id,g.game_no)]=g;});
+  const wonBy=(g,team)=>g&&(g.winner==='team_a'?g.team_a===team:g.winner==='team_b'?g.team_b===team:null);
+  const H={};
+  const ensure=h=>H[h]||(H[h]={hero:h,picks:0,bans:0,wins:0,lanes:{},sides:{blue:{n:0,w:0},red:{n:0,w:0}},maps:{},weeks:{},role:(classes&&classes[h]&&classes[h].primary_role)||'',damage:(classes&&classes[h]&&classes[h].damage_type)||''});
+  (picks||[]).forEach(p=>{const h=ensure(p.hero);const g=gameBy[gk(p.match_detail_id,p.game_no)]||{};const w=wonBy(g,p.team);h.picks++;if(w)h.wins++;h.lanes[p.lane]=(h.lanes[p.lane]||0)+1;const side=String(p.side||'').toLowerCase();if(h.sides[side]){h.sides[side].n++;if(w)h.sides[side].w++;}const m=g.map_mode||'Unknown';const mm=h.maps[m]=h.maps[m]||{n:0,w:0};mm.n++;if(w)mm.w++;const wk=weekOf(p.match_detail_id);if(wk>=0){const x=h.weeks[wk]=h.weeks[wk]||{picks:0,bans:0};x.picks++;}});
+  (bans||[]).forEach(b=>{const h=ensure(b.hero);h.bans++;const wk=weekOf(b.match_detail_id);if(wk>=0){const x=h.weeks[wk]=h.weeks[wk]||{picks:0,bans:0};x.bans++;}});
+  Object.keys(H).forEach(h=>{const x=H[h];x.winRate=x.picks?x.wins/x.picks:0;x.winCI=anWilson(x.wins,x.picks);x.flex=Object.keys(x.lanes).filter(l=>x.lanes[l]/Math.max(1,x.picks)>=0.1).length;});
+  const heroes=Object.keys(H).map(h=>H[h]).sort((a,b)=>b.picks-a.picks||b.bans-a.bans||a.hero.localeCompare(b.hero));
+  const weeks=Object.keys(weekGames).map(Number).sort((a,b)=>a-b);
+  const last=weeks.length?weeks[weeks.length-1]:-1,prev=weeks.length>1?weeks[weeks.length-2]:-1;
+  const movement=(last>=0&&prev>=0)?Object.keys(H).map(k=>{const h=H[k];const a=h.weeks[last]||{picks:0,bans:0},b=h.weeks[prev]||{picks:0,bans:0};const recent=(a.picks+a.bans)/Math.max(1,weekGames[last]),previous=(b.picks+b.bans)/Math.max(1,weekGames[prev]);return {hero:h.hero,recent:recent,previous:previous,delta:recent-previous,picks:a.picks,bans:a.bans,games:weekGames[last]||0};}).sort((a,b)=>b.delta-a.delta||a.hero.localeCompare(b.hero)):[];
+
+  const pickBy={};
+  (picks||[]).forEach(p=>{const k=gk(p.match_detail_id,p.game_no)+':'+p.team;(pickBy[k]=pickBy[k]||[]).push(p);});
+  const pairMap={};
+  Object.keys(pickBy).forEach(k=>{
+    const parts=k.split(':'),g=gameBy[gk(parts[0],parts[1])]||{},team=parts[2],w=wonBy(g,team);
+    const list=pickBy[k].slice().sort((a,b)=>a.hero.localeCompare(b.hero));
+    for(let i=0;i<list.length;i++)for(let j=i+1;j<list.length;j++){
+      const a=list[i].hero,b=list[j].hero,key=a+'|'+b,e=pairMap[key]=pairMap[key]||{a:a,b:b,n:0,w:0};
+      e.n++;if(w)e.w++;
+    }
+  });
+  const pairs=Object.keys(pairMap).map(k=>pairMap[k]).map(e=>{const wr=e.n?e.w/e.n:0;const wa=(H[e.a]&&H[e.a].winRate)||0,wb=(H[e.b]&&H[e.b].winRate)||0;return {...e,wr:wr,expected:(wa+wb)/2,delta:wr-(wa+wb)/2};}).sort((a,b)=>b.n-a.n||a.a.localeCompare(b.a));
+
+  const counterMap={};
+  (games||[]).forEach(g=>{
+    const A=pickBy[gk(g.match_detail_id,g.game_no)+':'+g.team_a]||[],B=pickBy[gk(g.match_detail_id,g.game_no)+':'+g.team_b]||[];
+    const aWon=g.winner==='team_a';
+    A.forEach(a=>B.forEach(b=>{
+      const swap=a.hero>b.hero,key=swap?b.hero+'|'+a.hero:a.hero+'|'+b.hero;
+      const e=counterMap[key]=counterMap[key]||{a:swap?b.hero:a.hero,b:swap?a.hero:b.hero,n:0,w:0};
+      e.n++;if((!swap&&aWon)||(swap&&!aWon))e.w++;
+    }));
+  });
+  const counters=Object.keys(counterMap).map(k=>counterMap[k]).map(e=>{const wr=e.n?e.w/e.n:0;const wa=(H[e.a]&&H[e.a].winRate)||0,wb=(H[e.b]&&H[e.b].winRate)||0;const expected=(wa+(1-wb))/2;return {...e,wr:wr,expected:expected,delta:wr-expected};}).sort((a,b)=>b.n-a.n||a.a.localeCompare(b.a));
+
+  const T={};
+  const ensureT=team=>T[team]||(T[team]={team:team,picks:0,heroes:{},bans:{},firstBans:{blue:{},red:{}},heroStats:{}});
+  (picks||[]).forEach(p=>{const t=ensureT(p.team);t.picks++;t.heroes[p.hero]=(t.heroes[p.hero]||0)+1;const g=gameBy[gk(p.match_detail_id,p.game_no)]||{},w=wonBy(g,p.team),x=t.heroStats[p.hero]=t.heroStats[p.hero]||{n:0,w:0};x.n++;if(w)x.w++;});
+  (bans||[]).forEach(b=>{const g=gameBy[gk(b.match_detail_id,b.game_no)]||{};const team=b.side==='A'?g.team_a:g.team_b;if(!team)return;const t=ensureT(team);t.bans[b.hero]=(t.bans[b.hero]||0)+1;if(+b.ban_order===1){const raw=(b.side==='A'?g.team_a_side:g.team_b_side)||'';const side=String(raw).toLowerCase();if(t.firstBans[side])t.firstBans[side][b.hero]=(t.firstBans[side][b.hero]||0)+1;}});
+  const totalPicks=Object.keys(T).reduce((s,k)=>s+T[k].picks,0)||1;
+  const leagueHero={};Object.keys(T).forEach(k=>{Object.keys(T[k].heroes).forEach(h=>{leagueHero[h]=(leagueHero[h]||0)+T[k].heroes[h];});});
+  Object.keys(leagueHero).forEach(h=>{leagueHero[h]/=totalPicks;});
+  const top=(o,n)=>Object.keys(o).sort((a,b)=>o[b]-o[a]||a.localeCompare(b)).slice(0,n);
+  const teams=Object.keys(T).map(k=>T[k]).map(t=>{
+    const hhi=Object.keys(t.heroes).reduce((s,h)=>s+Math.pow(t.heroes[h]/Math.max(1,t.picks),2),0);
+    const games=Math.max(1,Math.round(t.picks/5));
+    const pockets=Object.keys(t.heroes).filter(h=>t.heroes[h]>=3&&(t.heroes[h]/Math.max(1,t.picks))>=(leagueHero[h]||0)*2).map(h=>({hero:h,n:t.heroes[h],share:t.heroes[h]/t.picks,leagueShare:leagueHero[h]})).sort((a,b)=>b.n-a.n);
+    return {...t,topPicks:top(t.heroes,5).map(h=>({hero:h,n:t.heroes[h],share:t.heroes[h]/games})),topBans:top(t.bans,5).map(h=>({hero:h,n:t.bans[h]})),firstBanBlue:top(t.firstBans.blue,3).map(h=>({hero:h,n:t.firstBans.blue[h]})),firstBanRed:top(t.firstBans.red,3).map(h=>({hero:h,n:t.firstBans.red[h]})),hhi:hhi,pocketPicks:pockets};
+  }).sort((a,b)=>b.picks-a.picks||a.team.localeCompare(b.team));
+
+  const maps={};
+  (games||[]).forEach(g=>{const m=g.map_mode||'Unknown';const e=maps[m]=maps[m]||{map:m,games:0,blueWins:0,totalSec:0,heroes:{}};e.games++;e.totalSec+=+g.duration_sec||0;const blue=g.team_a_side==='blue'?g.team_a:g.team_b;const blueWon=(g.winner==='team_a'&&blue===g.team_a)||(g.winner==='team_b'&&blue===g.team_b);if(blueWon)e.blueWins++;const A=pickBy[gk(g.match_detail_id,g.game_no)+':'+g.team_a]||[],B=pickBy[gk(g.match_detail_id,g.game_no)+':'+g.team_b]||[];[...A,...B].forEach(p=>{e.heroes[p.hero]=(e.heroes[p.hero]||0)+1;});});
+  const mapMeta=Object.keys(maps).map(m=>maps[m]).map(m=>({...m,blueWR:m.games?m.blueWins/m.games:0,avgSec:m.games?m.totalSec/m.games:0,topHeroes:Object.keys(m.heroes).sort((a,b)=>m.heroes[b]-m.heroes[a]||a.localeCompare(b)).slice(0,5).map(h=>({hero:h,n:m.heroes[h]}))})).sort((a,b)=>b.games-a.games||a.map.localeCompare(b.map));
+
+  const comps={};
+  Object.keys(pickBy).forEach(k=>{
+    const parts=k.split(':'),g=gameBy[gk(parts[0],parts[1])]||{},team=parts[2],list=pickBy[k];
+    if(list.length<5)return;
+    const w=wonBy(g,team),cls=list.map(p=>(classes&&classes[p.hero])||{});
+    const frontline=cls.filter(c=>c.primary_role==='Tank'||c.primary_role==='Fighter').length;
+    const phys=cls.filter(c=>c.damage_type==='physical').length,mag=cls.filter(c=>c.damage_type==='magic').length;
+    const dmg=phys>=3&&mag<=1?'physical':(mag>=3&&phys<=1?'magic':'mixed');
+    const cc=cls.filter(c=>(c.specialties||[]).some(s=>/crowd control|initiator|engage|cc/i.test(String(s)))).length;
+    const key=dmg+'|'+frontline,e=comps[key]=comps[key]||{damage:dmg,frontline:frontline,n:0,w:0,ccTotal:0};
+    e.n++;if(w)e.w++;e.ccTotal+=cc;
+  });
+  const compositions=Object.keys(comps).map(k=>comps[k]).map(e=>({...e,wr:e.n?e.w/e.n:0,winCI:anWilson(e.w,e.n),avgCC:e.n?e.ccTotal/e.n:0})).sort((a,b)=>b.n-a.n||a.damage.localeCompare(b.damage)||a.frontline-b.frontline);
+
+  return {heroes:heroes,pairs:pairs.filter(e=>e.n>=minPair),counters:counters.filter(e=>e.n>=minPair),teams:teams,maps:mapMeta,compositions:compositions,movement:movement,method:{minPair:minPair,pairBaseline:'average of the two heroes overall win rates',counterBaseline:'average of hero A win rate and hero B loss rate',compositionBaseline:'frontline = Tank/Fighter count; damage = 3+ physical or magic picks; CC = specialties mentioning Crowd Control/Initiator/Engage',movement:'presence per game in the last two date weeks; late-season weeks are small samples'}};
+}
+function buildBanRanking(team,dm,minN){
+  const t=(dm&&dm.teams||[]).find(x=>x.team===team);
+  if(!t)return [];
+  const games=Math.max(1,Math.round(t.picks/5)),floor=minN==null?1:minN;
+  return Object.keys(t.heroStats||{}).map(h=>{
+    const s=t.heroStats[h],bans=(t.bans&&t.bans[h])||0;
+    const presence=(s.n+bans)/games,wr=s.n?s.w/s.n:0;
+    return {hero:h,picks:s.n,wins:s.w,bans:bans,wr:wr,presence:presence,score:presence*wr,n:s.n};
+  }).filter(x=>x.n>=floor).sort((a,b)=>b.score-a.score||a.hero.localeCompare(b.hero));
 }
 /* ANALYTICS-END */
 function poRow(m){return String(m.schedule_id||m.match_id||'').indexOf('playoffs')>-1||(m.team_a==='TBD'&&m.team_b==='TBD');}
@@ -1172,7 +1474,7 @@ const wn=winName(g);const gm=gameMvp(plistA,plistB,wn);
 const wonA=wn?wn===g.team_a:null,wonB=wn?wn===g.team_b:null;
 const bans=(bansA.length||bansB.length)?`<div class="sb-bans"><span>BAN ${esc(g.team_a)}: ${bansA.map(esc).join(', ')||'–'}</span><span>BAN ${esc(g.team_b)}: ${bansB.map(esc).join(', ')||'–'}</span></div>`:'';
 return `<div class="sb-game" data-g="${esc(String(g.game_no))}"${active?'':' hidden'}>`
-+`<div class="sb-ghead"><h4>Game ${esc(String(g.game_no))}</h4><span>${esc(g.team_a)} ${esc(g.team_a_kills)} : ${esc(g.team_b_kills)} ${esc(g.team_b)} · ${esc(dur)}${g.map_mode?` · ${esc(g.map_mode)}`:''}${wn?` · <b class="sb-win">${esc(wn)} won</b>`:''}${gm?` · <span class="gmvp">MVP ${esc(gm.player)}</span>`:''}</span></div>`
++`<div class="sb-ghead"><h4>Game ${esc(String(g.game_no))}</h4><span>${esc(g.team_a)} ${esc(g.team_a_kills)} : ${esc(g.team_b_kills)} ${esc(g.team_b)} · ${esc(dur)}${g.map_mode?` · ${esc(g.map_mode)}`:''}${g.vod_url?` · <a href="${esc(g.vod_url)}" target="_blank" rel="noopener noreferrer">VOD</a>`:''}${wn?` · <b class="sb-win">${esc(wn)} won</b>`:''}${gm?` · <span class="gmvp">MVP ${esc(gm.player)}</span>`:''}</span></div>`
 +bans+`<div class="sb-duo">`+teamBlock(g.team_a,g.team_a_kills,plistA,sec,g.team_a_side,'',wonA)+teamBlock(g.team_b,g.team_b_kills,plistB,sec,g.team_b_side,'flip',wonB)+`</div></div>`;}
 function wireTabs(){const db=document.getElementById('db');
 db.querySelectorAll('[data-gtab]').forEach(b=>b.onclick=()=>selGame(b.dataset.gtab));}
@@ -1237,6 +1539,29 @@ const first=f[0],last=f[f.length-1];
 if(e.shiftKey&&document.activeElement===first){e.preventDefault();last.focus();}
 else if(!e.shiftKey&&document.activeElement===last){e.preventDefault();first.focus();}});
 document.getElementById('dlg2').addEventListener('close',()=>{if(lastFocus)lastFocus.focus();});
+function palRows(q){
+  const s=String(q||'').toLowerCase().trim();
+  if(!s)return [];
+  const seen={},res=[];
+  const add=(t,label,sub,id)=>{const k=t+'|'+label;if(seen[k])return;seen[k]=1;res.push({t:t,label:label,sub:sub,id:id||''});};
+  DATA.players.forEach(r=>{const c=canonicalPlayer(r.player);if(c.toLowerCase().includes(s))add('player',c,(r.team||'')+' · '+(r.lane||'—'));});
+  TEAMS.forEach(t=>{if(t.toLowerCase().includes(s))add('team',t,'Team');});
+  (DATA.heroes||[]).forEach(h=>{if(String(h.hero).toLowerCase().includes(s))add('hero',h.hero,(h.pick||0)+' picks · '+(h.ban||0)+' bans');});
+  DATA.schedule.forEach(m=>{if((m.team_a+' '+m.team_b+' '+m.iso_date).toLowerCase().includes(s))add('match',m.team_a+' vs '+m.team_b,(m.iso_date||'')+' · '+(m.score_a??'-')+':'+(m.score_b??'-'),m.match_detail_id);});
+  return res.slice(0,14);
+}
+function palList(q){
+  const rows=palRows(q);
+  return rows.map(r=>`<button type="button" class="palrow" data-pal="${r.t}" data-id="${esc(r.id)}" data-q="${esc(r.label)}"><b>${esc(r.label)}</b><span>${esc(r.sub)}</span></button>`).join('')||`<div class="an-pct" style="padding:8px 0">${q?'No matches.':'Type to search players, teams, heroes or matches.'}</div>`;
+}
+function openPalette(){
+  openD('Search','Players · teams · heroes · matches',`<input id="paletteQ" type="search" placeholder="Search everything…" aria-label="Search everything" style="width:100%;background:var(--bg2);color:var(--ink);border:1px solid var(--line);border-radius:6px;padding:10px"><div id="paletteList" style="margin-top:10px">${palList('')}</div>`);
+  const q=document.getElementById('paletteQ'),list=document.getElementById('paletteList');
+  if(q){q.focus();q.oninput=()=>{list.innerHTML=palList(q.value);};}
+  if(list)list.onclick=e=>{const b=e.target.closest('[data-pal]');if(!b)return;const t=b.dataset.pal,id=b.dataset.id,label=b.dataset.q;dlg.close();if(t==='player'){S.view='players';S.q=label.toLowerCase();render();}else if(t==='team'){S.view='matches';S.team=label;render();}else if(t==='hero'){stHeroDrill(label);}else if(t==='match'&&id){showM(id);}};
+}
+document.addEventListener('keydown',e=>{if((e.ctrlKey||e.metaKey)&&String(e.key).toLowerCase()==='k'){e.preventDefault();openPalette();}});
+const palBtn=document.getElementById('paletteBtn');if(palBtn)palBtn.onclick=openPalette;
 const HUB=SEASON.endpoints.hub;
 function normLive(d){const games=[],pros=[],bans=[];
 const num=v=>{const n=+v;return isFinite(n)?n:0;};

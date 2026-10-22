@@ -5,8 +5,9 @@
 > matchup weaknesses a head coach can act on. Reusable every season, not rebuilt
 > each season.
 >
-> **Status of this document.** Planning artifact. Nothing here is implemented
-> yet. Effort estimates assume one focused maintainer.
+> **Status of this document.** Living plan of record. Phases 0–3 are implemented
+> (2026-10-22); Phase 4 is ongoing/future work. Effort estimates assume one
+> focused maintainer.
 
 ---
 
@@ -49,21 +50,27 @@ data/season.json ────────────────────┘
 | `matches` | 69 | completed series |
 | `games` | 167 | per-game result, duration, sides, VOD |
 | `game_players` | 1,670 | 167 × 10; K/D/A, gold, GPM, damage, tanked, tower dmg, emblem, 6 items, 3 talents |
-| `game_bans` | 1,670 | 10 bans per game |
+| `game_bans` | 1,669 | 10 ordered bans per game; one source duplicate removed and listed in `tools/test_enrich.py` |
+| `game_picks` | 1,670 | 5 picks per side with lane + lane source |
 | `hero_stats` | 133 | pick / ban / win / WR |
 | `player_season_stats` | 66 | season totals + primary lane |
+| `team_games` | 334 | per-game team aggregates derived from the five player rows |
+| `team_season_stats` | 9 | team season aggregates; wins/losses reconcile with standings 9/9 |
 | `standings` | 9 | match points, game diff |
 | `schedule_all` | 80 | 72 regular + 8 playoff |
 
-Distinct: **61 players**, **91 heroes picked**, **114 item identifiers**.
-Built HTML ≈ **1.0 MB**, fully self-contained.
+Distinct: **60 players with completed game rows** (66 season-stat rows),
+**93 heroes picked or banned**, **114 item identifiers**.
+Built HTML ≈ **1.49 MB**, fully self-contained.
 
 **Application surface:** Overview (player deep dive), Players, Matches (list/grid,
-regular/playoffs, bracket preview), Stats (MVP race + hero dashboard), plus
-drill-down dialogs for hero / item / emblem / talent / opponent / game, a
-Bradley-Terry playoff-chance simulator, offline cache, and live refresh.
+regular/playoffs, bracket preview), Stats (MVP race + hero dashboard), **Analytics**
+(players, teams, draft) and **Prep** (opponent scouting report). Plus drill-down
+dialogs for hero / item / emblem / talent / opponent / game (with map mode and VOD),
+a Bradley-Terry playoff-chance simulator, a `Ctrl/⌘K` search palette, URL
+permalinks for views/analytics/prep, offline cache, and live refresh.
 
-**Engineering:** 13 verification suites (`tools/verify.py`), generated-output
+**Engineering:** 18 verification suites (`tools/verify.py`), generated-output
 parity gate, XSS sink tests, ETL staging + atomic publish, season-config
 validation, ruff, GitHub Actions CI.
 
@@ -77,20 +84,17 @@ validation, ruff, GitHub Actions CI.
   embedded. The seed of reusability is there.
 - **Single-file offline artifact** is a real distribution advantage.
 
-### 2.3 Structural debt that blocks Season 19
+### 2.3 Structural debt (resolved in Phases 0–1)
 
-| Debt | Where | Impact |
-|---|---|---|
-| Season baked into filenames | `build_s18_db.py`, `mpl_id_s18.db`, `mpl_id_s18_dark.html` | Every new season needs renames and workflow edits |
-| Player aliases hardcoded in JS | `PLAYER_ALIAS`, `SALIAS`, `GALIAS` in `app.js` | Roster/alias churn requires code changes |
-| Lane map hardcoded in JS | `LIQLANES` (64 entries) in `app.js` | Cannot add players without editing code |
-| Branding hardcoded | `doc.html` title/brand | No season parameterisation |
-| Cache key hardcoded | `s18db`, `mpl-board` | Stale-data collisions across seasons |
-| One output path | `mpl_id_s18_dark.html` at repo root | No multi-season build or archive |
-| No provenance record | DB has no `meta` table | Cannot prove what data a build used |
-| Hero metadata absent | no role / lane / damage-type map | Blocks composition and role-normalised analytics |
-| Per-game lane is `NULL` | `game_players.lane` | Blocks lane matchups and role-normalised stats |
-| Draft data under-used | only bans ingested | Full picks, map mode, VOD left on the table |
+| Debt | Resolution |
+|---|---|
+| Season baked into filenames | `data/registry.json` + `--season` wrappers; S18 keeps `layout:"legacy"` without a physical move |
+| Player aliases / lanes hardcoded in JS | `data/global/aliases.json`, embedded as `window.ALIASES` |
+| Branding / cache key / single output path | season config and `--season` output; root artifact retained for link compatibility |
+| No provenance record | `data/seasons/s18/meta.json` (schema, sources, row counts); a SQLite `meta` table remains optional |
+| Hero metadata absent | `data/global/hero_classes.json` covers all 133 heroes (damage type derived and labelled) |
+| Per-game lane `NULL` | 1,670/1,670 player rows carry `lane` + `lane_source=liq_slot` |
+| Draft data under-used | 1,670 picks, 1,669 ordered bans, 146/167 map modes, 167/167 VOD links, team aggregates |
 
 ### 2.4 Data ceilings (verified, not assumed)
 
@@ -217,15 +221,10 @@ rewrite S18 history.
 
 ### 4.4 Provenance and schema versioning
 
-Add a `meta` table (and mirrored `meta.json`):
-
-```
-schema_version, season_id, generated_at, source_endpoints,
-source_hashes, row_counts, build_commit
-```
-
-Surface it in the UI footer ("data as of … · 69 series · 167 games · build
-abc1234"). This is what makes the numbers citable.
+`data/seasons/s18/meta.json` is implemented with `schema_version`, `season_id`,
+`layout`, `sources`, `row_counts` and `build_commit`. A SQLite `meta` table remains
+optional/deferred; the JSON file is the provenance record used by the build and
+the docs. The UI footer can surface the same counts when a season index is added.
 
 ### 4.5 Build & distribution ops
 
@@ -433,6 +432,12 @@ Every workflow must state **what it does not know** (e.g. "no objective data").
 - A5 Move output to `dist/`; update CI, parity, README
 - A6 Season onboarding checklist documented
 
+**Status (2026-10-21):** A1–A3 and A6 landed. A4 landed as
+`data/seasons/s18/meta.json`; the SQLite `meta` table is deferred. A5 landed as
+`--season` output while keeping the root artifact for link compatibility; a
+`dist/` season index is Phase 4. S18 deliberately keeps `layout:"legacy"` rather
+than moving files. Verify is 18/18.
+
 **Exit:** S18 output is byte-identical after the refactor; `verify.py` green;
 adding a stub `s19` config produces a build with no code edits.
 
@@ -457,9 +462,10 @@ standings on wins/losses. The new data is surfaced in the game dialog (map mode,
 ordered bans, lane-ordered picks), the hero table (role/lane/damage) and the team
 profiles under Standings.
 
-**Exit:** 100% of completed games have 10 picks + 10 bans; 100% of player rows
-have a lane + `lane_source`; cross-source ban mismatches < 1% or listed;
-`verify.py` gains draft/lane/aggregate suites and passes.
+**Exit:** 100% of completed games have 10 picks + 10 bans (the one source
+duplicate is listed); 100% of player rows have a lane + `lane_source`;
+cross-source ban mismatches < 1% or listed; `verify.py` gains draft/lane/aggregate
+suites and passes.
 
 ### Phase 2 — Analytics engine · ~15–20 days
 
@@ -473,15 +479,20 @@ have a lane + `lane_source`; cross-source ban mismatches < 1% or listed;
 - C6 Composition archetypes
 - C7 New "Analytics" view with metric explainers
 
-**Status (2026-10-22):** C1 + C2 core landed: Wilson CI, shrinkage, lane
-percentiles, impact composite (weights pinned by test), per-player KDA/GPM/
-damage/KP/death shares, consistency (p10–p90, IQR), form delta, off-lane delta
-and hero-adjusted damage residual. C7 first cut: Analytics view with method,
-weights and sample sizes. Remaining: C3 team ratings/SOS, C4 team form/tempo/
-clutch, C5 draft analytics, C6 composition archetypes.
+**Status (2026-10-22): complete.** C1–C7 landed.
+C1/C2: Wilson CI, shrinkage, lane percentiles, the pinned impact composite,
+per-player KDA/GPM/damage/KP/death shares, p10–p90/IQR consistency, form delta,
+off-lane delta, hero-adjusted damage, effective pool, comfort/flex, damage per
+gold, close-game record, opponent split and hero-fit vs league. C3/C4: Bradley-
+Terry ratings with bootstrap CIs, SOS, form (games and series), side splits,
+tempo, dominance, game-3/series-close records, map records and a head-to-head
+matrix. C5/C6: hero flex/side/map splits, synergy, counters, team fingerprints,
+meta movement and composition archetypes. C7: Players/Teams/Draft Analytics
+sub-tabs with method text, sample sizes and proxy labels. `tools/test_analytics.js`
+has 160 deterministic assertions; `verify.py` is green.
 
-**Exit:** Every metric has a unit test on a deterministic fixture and a
-definition in-product; no metric displays without `n`; `verify.py` green.
+**Exit:** satisfied. Every metric has a unit test on a deterministic fixture and
+a definition in-product; rates are not shown without `n`; `verify.py` is 18/18.
 
 ### Phase 3 — Coach workspace · ~12–18 days
 
@@ -494,8 +505,17 @@ definition in-product; no metric displays without `n`; `verify.py` green.
 - D5 Prep export (print + CSV)
 - D6 Saved/shareable reports (permalink)
 
-**Exit:** Scripted usability test — pick an opponent, produce a prep sheet,
-and every claim in it traces to a row in the DB.
+**Status (2026-10-22): complete.** The **Prep** view takes an opponent and an
+optional "our team" and produces: rating/form/side/tempo tiles, likely picks and
+bans, a ban ranking (presence × opponent WR, with the proxy and sample sizes
+shown), player weaknesses/strengths by lane percentile, weak/strong maps, H2H and
+lane matchups, and print/PDF + CSV export. The URL records view/opponent/team so
+the report is shareable; `Ctrl/⌘K` searches players, teams, heroes and matches.
+No player-vs-player head-to-head exists in the source, and the report says so.
+
+**Exit:** satisfied for the available data. Every claim is derived from the DB;
+the report explicitly states what it does not know (no objectives, timelines or
+pick order).
 
 ### Phase 4 — Scale & polish · ongoing
 
@@ -504,6 +524,12 @@ and every claim in it traces to a row in the DB.
 - E3 Additional regions (MPL PH / MY) if the pipeline holds
 - E4 Public launch: Pages, docs, screenshots, changelog
 - E5 Accessibility and performance hardening
+
+**Status (2026-10-22):** E5 baseline landed: visible focus, skip link, synced
+`aria-selected` tabs, dialog focus trap, sticky first column and 34 px controls
+on mobile, and a print stylesheet. E1–E3 remain future/data-limited: only S18 is
+loaded, no historical source is committed, and no other region pipeline is
+configured. E4 needs deployment credentials and is not performed from this repo.
 
 **Total to Phase 3:** roughly **45–60 focused days** (~3 months part-time).
 
@@ -549,6 +575,12 @@ and every claim in it traces to a row in the DB.
 | U4 | Mobile tables | 2 | 2 d | — | Usable at 360 px |
 | U8 | Accessibility pass | 4 | 3 d | — | Automated + manual checks pass |
 | E4 | Public launch | 4 | 3 d | Phase 3 | Pages live, docs current |
+
+**Backlog status (2026-10-22):** A1–A6, B1–B6, B10, C1–C7, D1–D6, U2 and
+view-level U1 permalinks have landed. U3 explainers are in-product method text;
+U4/U8 have the baseline described above. B7 is a static bracket preview; B8
+(patch), B9 (season objective totals) and B11 (historical backfill) need sources
+that are not committed. E4 needs deployment credentials.
 
 ---
 
@@ -606,19 +638,19 @@ the committed roadmap.
 
 ---
 
-## 12. Next two weeks (concrete)
+## 12. After Phase 3 (remaining work)
 
-1. **Decide the one open question:** does the project stay a per-season artifact,
-   or become a multi-season site? The plan assumes per-season builds + a season
-   index, which preserves the single-file advantage.
-2. **Execute Phase 0, items A1–A3.** Nothing else matters until S19 is config.
-3. **Spike B1+B2** — parse one Liquipedia page, ingest full drafts and lane
-   order, and diff against the current DB. The 89.5% / 13-of-14 evidence says
-   this will work; the spike proves it end to end.
-4. **Write the data dictionary** (`docs/DATA_DICTIONARY.md`) — every table,
-   column, derivation and source.
-5. **Do not start analytics** until lane and draft data are in the DB. Metrics
-   built on incomplete context will be rebuilt anyway.
+1. **Season 19 onboarding** — follow the README checklist. This is config/data
+   only, but it remains an unexecuted test until S19 data exists.
+2. **Deployment** — publish the single-file artifact (or a `dist/` index) to
+   Pages. E4 needs credentials and is not performed from this repo.
+3. **Source-gated upgrades** — patch per week (B8), season objective totals (B9)
+   and historical backfill (B11). Do not infer missing values; add the source
+   adapter and fixture test first.
+4. **Explainers** — method text is in-product for analytics and Prep; add per-
+   metric `?` tooltips if usability testing asks for them.
+5. **Multi-season / regions** — E1/E3 once a second season or region pipeline
+   exists. The registry and `--season` wrappers are ready; the data is not.
 
 ---
 
@@ -637,5 +669,5 @@ the committed roadmap.
 
 ---
 
-*Last updated: 2026-10-21. This document is the plan of record; changes should
+*Last updated: 2026-10-22. This document is the plan of record; changes should
 be proposed as edits to this file so the roadmap stays reviewable.*

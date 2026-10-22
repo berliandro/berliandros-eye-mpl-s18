@@ -47,23 +47,37 @@ live from the mlbbhub API when online.
   open the scoreboard.
 - **Scoreboard dialog** — symmetrical 50/50 team split with first-pick blue/red glow,
   centered header (score, duration, **map mode**, date), full-width **bans in draft
-  order**, lane-ordered player rows (EXP/JUNGLE/MID/GOLD/ROAM), and a **per-game MVP
-  pill** next to “TEAM won”.
+  order**, lane-ordered player rows (EXP/JUNGLE/MID/GOLD/ROAM), a **per-game MVP
+  pill** next to “TEAM won”, and a **VOD deep link**.
 - **Player dialog** — per-hero table: GP, AVG KDA (`00.00`), AVG K, AVG D, AVG A,
-  MANIAC, SAVAGE, GPM.
+  MANIAC, SAVAGE, GPM, plus close-game WR, effective pool, comfort/flex, damage per
+  gold, tower damage per game, an opponent split, and hero-fit vs the league.
 - **Stats** — sub-tabbed dashboard: **Series MVP** (race leaderboard + history) and
   **Heroes** (highlight tiles + sortable pick/ban/win table with **role, lane and
   damage-type columns** and share bars).
-- **Analytics** — lane-normalised player impact (35% damage share, 25% kill
+- **Analytics — Players** — lane-normalised player impact (35% damage share, 25% kill
   participation, 20% gold share, 10% tower share, −10% death share), shrunk toward
   the lane mean with a 5-game prior. Shows KDA/GPM/damage/KP percentiles, a 95%
   Wilson win-rate interval, form delta, and mutes rows under 5 games. The method
   and weights are printed in-product.
-  Every statistic column sorts ascending/descending with a minimalist ▲▼ indicator.
+- **Analytics — Teams** — Bradley-Terry ratings with bootstrap CIs, strength of
+  schedule, form (games and series), blue/red splits, tempo, dominance, clutch
+  (game 3 and series close), map records, and a head-to-head game matrix.
+- **Analytics — Draft** — hero pick/ban/WR with CIs and flex, same-team synergy,
+  opposing-pair counters, team fingerprints (top picks/bans, first-ban by side,
+  HHI, pocket picks), composition archetypes, map meta, and week-over-week meta
+  movement. Pair/counter deltas are labelled as descriptive proxies, not causal.
+- **Prep** — pick an opponent (and optionally our team) for a one-page scouting
+  report: rating/form/side/tempo, likely picks and bans, a transparent ban ranking,
+  player weaknesses/strengths, weak/strong maps, H2H and lane matchups; print/PDF,
+  CSV, and a copyable permalink.
+- **Search + links** — `Ctrl/⌘K` palette across players, teams, heroes and matches;
+  view/analytics/prep state is written to the URL so links restore the report.
+- **Tables and identity** — Every statistic column sorts ascending/descending with
+  a minimalist ▲▼ indicator.
   MVP names from Liquipedia are normalized to one canonical player identity
   (e.g. Coolfire → Joshuaa, JOOOOO → Kevinn, Sutsujin → Arthur,
-  Lynchh → Joshua — see
-  `PLAYER_ALIAS` in `tools/templates/app.js`), so aliases aggregate instead of
+  Lynchh → Joshua — see `data/global/aliases.json`), so aliases aggregate instead of
   splitting into phantom players; the source spelling is kept as an “as …” note.
   Every hero opens a drill-down modal (picks/bans/WR tiles, most-used
   items/emblems/talents, players with counts, and a game list with
@@ -87,6 +101,12 @@ live from the mlbbhub API when online.
   `/stats/players`, `/stats/heroes`) or official MPL ID page publishes kill-streak
   data (the official leaderboard exists for MPL MY only), so these columns render
   `–` until a source exists. They are never fabricated.
+- **Analytics / Prep**: lane percentiles shrink toward the lane mean with a
+  5-game prior; win rates use 95% Wilson intervals and show `n`; impact weights
+  are pinned by `tools/test_analytics.js`; team ratings are Bradley-Terry with
+  100 bootstrap resamples; the ban score is an explicit presence × win-rate
+  proxy. Formulas and caveats are in-product and in
+  [`docs/DATA_DICTIONARY.md`](docs/DATA_DICTIONARY.md).
 
 ## Project layout
 
@@ -104,6 +124,8 @@ live from the mlbbhub API when online.
 | `tools/verify.py` | Standard verification: all unit suites + `check.py` + parity gate |
 | `tools/test_chances.js` | Probability-engine tests (node) |
 | `tools/test_refresh.js` | Live-refresh merge tests (node) |
+| `tools/test_analytics.js` | Analytics engine fixtures: Wilson, shrinkage, player/team/draft metrics, ban ranking (node) |
+| `docs/` | Roadmap, data dictionary and insight catalogue |
 | `tools/test_cache.js` | Cache versioning tests (node) |
 | `tools/test_config.js` | Season-config tests (node) |
 | `tools/test_liqparse.py` | Liquipedia parser + ETL gate tests |
@@ -136,6 +158,7 @@ python tools/gen_dark.py       # rebuild the HTML
 python tools/verify.py         # standard regression: unit suites + check.py + parity
 python tools/check.py          # data-integrity + asset suite alone (0 failures expected)
 node tools/test_chances.js     # probability-engine tests alone
+node tools/test_analytics.js   # analytics engine tests alone
 python tools/shots.py --zoom # re-capture README screenshots (see spec)
 ```
 
@@ -157,8 +180,9 @@ replaces picks and re-checks every row; unmatched heroes or players are
 reported, never guessed. Team aggregates fill `team_games` and
 `team_season_stats`.
 
-Season 18 currently resolves through the `legacy` layout; moving it to
-`data/seasons/s18/` is the remaining Phase 0 work.
+Season 18 intentionally keeps the `legacy` layout; `data/registry.json` and the
+`--season` wrappers resolve it without a physical move. A new season follows the
+onboarding checklist above and does not fork application code.
 
 GitHub Actions (`.github/workflows/ci.yml`) runs the build plus
 `tools/verify.py` on pushes to `main` and pull requests targeting `main`.
@@ -179,6 +203,12 @@ Serve locally (or just double-click the HTML):
 python -m http.server 8931
 # → http://localhost:8931/mpl_id_s18_dark.html
 ```
+
+## Docs
+
+- [Roadmap](docs/ROADMAP.md)
+- [Data dictionary](docs/DATA_DICTIONARY.md)
+- [Insight catalogue](docs/INSIGHT_CATALOGUE.md)
 
 ## Data sources
 
