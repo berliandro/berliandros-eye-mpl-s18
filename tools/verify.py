@@ -29,6 +29,7 @@ STEPS = [
     ("cache versioning", ["node", str(BASE / "test_cache.js")], "node"),
     ("liquipedia parser + ETL gates", [sys.executable, str(BASE / "test_liqparse.py")], None),
     ("schedule VOD resolver + metadata gates", [sys.executable, str(BASE / "test_resolve_and_align_sources.py")], None),
+    ("yt-dlp JavaScript runtime selection", [sys.executable, str(BASE / "test_link_video_source.py")], None),
     ("match winner orientation repair", [sys.executable, str(BASE / "test_repair_match_winner_orientation.py")], None),
     ("database inventory warning accuracy", [sys.executable, str(BASE / "test_analysis_inventory.py")], None),
     ("season config (python)", [sys.executable, str(BASE / "test_config.py")], None),
