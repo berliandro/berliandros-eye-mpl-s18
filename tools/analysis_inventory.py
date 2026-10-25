@@ -217,19 +217,23 @@ def db_snapshot(manifest: dict) -> dict:
                 "player communications/intent/vision",
                 "official damage-type split",
             ],
-            "warnings": [
-                {
-                    "table": "matches",
-                    "field": "winner",
-                    "status": "orientation_mismatch",
-                    "detail": (
-                        f"{len(winner_mismatch)}/72 rows disagree with the matches score because matches.team_a/team_b "
-                        "is flipped relative to schedule_all while winner retains schedule orientation. "
-                        "Use schedule_all.winner or derive the winner from the score."
-                    ),
-                    "example_match_ids": [row["match_detail_id"] for row in winner_mismatch[:5]],
-                }
-            ],
+            "warnings": (
+                [
+                    {
+                        "table": "matches",
+                        "field": "winner",
+                        "status": "orientation_mismatch",
+                        "mismatch_count": len(winner_mismatch),
+                        "detail": (
+                            f"{len(winner_mismatch)}/{len(match_rows)} rows disagree with the score in their own "
+                            "matches.team_a/team_b orientation. Derive the result from the row's score or map "
+                            "the named winning team across tables."
+                        ),
+                        "example_match_ids": [row["match_detail_id"] for row in winner_mismatch[:5]],
+                    }
+                ]
+                if winner_mismatch else []
+            ),
         },
         "relationships": [
             "schedule_all.match_detail_id -> matches.match_detail_id",
@@ -247,6 +251,40 @@ def db_snapshot(manifest: dict) -> dict:
     return snapshot
 
 
+def winner_integrity_section(snapshot: dict) -> list[str]:
+    """Render result semantics from current measured mismatches, never stale constants."""
+    warning = next(
+        (
+            item for item in snapshot.get("warnings", [])
+            if item.get("table") == "matches" and item.get("field") == "winner"
+        ),
+        None,
+    )
+    if warning:
+        count = int(warning.get("mismatch_count", 0))
+        total = int(snapshot.get("coverage", {}).get("matches", 0))
+        examples = ", ".join(str(value) for value in warning.get("example_match_ids", []))
+        return [
+            "### `matches.winner` conflicts with row scores",
+            "",
+            f"The current snapshot has **{count}/{total}** `matches` rows where `winner` disagrees "
+            "with `score_a/score_b` interpreted in that same row's `team_a/team_b` order.",
+            str(warning.get("detail") or ""),
+            f"Example match-detail IDs: {examples or 'not recorded'}.",
+            "",
+            "Do not compare the `team_a` / `team_b` tokens across `matches` and `schedule_all` "
+            "without mapping the actual team names and score orientation.",
+        ]
+    return [
+        "### `matches.winner` orientation",
+        "",
+        "No row in the current snapshot has a `matches.winner` value that conflicts with its own "
+        "`score_a/score_b` and `team_a/team_b` order.",
+        "`matches.winner` is interpreted in `matches` row order; `schedule_all.winner` is interpreted "
+        "in schedule row order. Map the named teams before comparing side tokens across tables.",
+    ]
+
+
 def database_report(snapshot: dict) -> str:
     c = snapshot["coverage"]
     lines = [
@@ -259,7 +297,7 @@ def database_report(snapshot: dict) -> str:
         f"- Bytes: **{snapshot['bytes']:,}**",
         f"- Inspected: {snapshot['inspected_at']}",
         "",
-        "The database was opened read-only (`mode=ro`). No table, CSV, metadata or dashboard artifact was modified by this project.",
+        "This inventory generator opened the database read-only (`mode=ro`). Any data migration is a separate explicit operation.",
         "",
         "## Coverage that matters for coaching",
         "",
@@ -285,18 +323,14 @@ def database_report(snapshot: dict) -> str:
         "- **Heuristic/app-derived:** dashboard game MVP and all win-probability/ratings metrics. Do not present them as official.",
         "- **Unavailable:** per-game objective counts (Lord/Turtle/Tower), gold/damage timelines, exact pick order, communications, vision, intent, official damage-type split.",
         "",
-        "### `matches.winner` is not usable as a match-order winner",
-        "",
-        "The snapshot has **21/72** rows where `matches.winner` disagrees with the `matches` score. The reason is an orientation mismatch: `matches.team_a/team_b` is flipped relative to `schedule_all` for many series, while `winner` kept schedule orientation. This pilot therefore uses `schedule_all.winner` or derives the winner from `score_a/score_b`.",
-        "",
-        "Example — series 1107: `matches` order is TLID/ONIC and score 2-0, but `matches.winner = 'team_b'` (which would mean ONIC if read naively). `schedule_all` has ONIC/TLID, 0-2, winner `team_b` = TLID. The result is TLID 2-0.",
+        *winner_integrity_section(snapshot),
         "",
         "### Recommended joins",
         "",
         "- Series: `schedule_all.match_detail_id` → `matches` → `games` / `team_games` / `game_players` / `game_picks` / `game_bans`.",
         "- Game: `(match_detail_id, game_no)` is the composite key for games and derived rows.",
         "- Player identity: `game_picks.player` and `game_players.player` use the app/Liquipedia spelling. Broadcast overlays can use different names; do not join broadcast names to database handles without evidence.",
-        "- Result: use `schedule_all.score_a/score_b` and schedule orientation, or derive from the score; never `matches.winner` alone.",
+        "- Result: `matches.winner` is relative to `matches.team_a/team_b`; `schedule_all.winner` is relative to schedule row order. Map the named teams before comparing side tokens.",
         "",
         "## Query catalog",
         "",
