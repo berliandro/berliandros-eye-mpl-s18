@@ -1,0 +1,2976 @@
+{
+  "_note": "Role/lane/specialties from Liquipedia Infobox hero; damage_type is derived from ability-text mentions and is not official; lanes_empirical comes from game_picks.",
+  "schema_version": 1,
+  "source": "https://liquipedia.net/mobilelegends/",
+  "fetched_at": "2026-10-24T02:55:36+00:00",
+  "heroes": {
+    "Aamon": {
+      "primary_role": "Assassin",
+      "primary_lane": "JUNGLE",
+      "primary_lane_source": "liquipedia",
+      "specialties": [
+        "Chase",
+        "Magic Damage"
+      ],
+      "damage_type": "magic",
+      "damage_type_source": "derived:ability_text",
+      "damage_counts": {
+        "physical": 0,
+        "magic": 6
+      },
+      "resource": "Mana",
+      "release_date": "2021-10-25",
+      "lanes_empirical": {}
+    },
+    "Akai": {
+      "primary_role": "Tank",
+      "primary_lane": "ROAM",
+      "primary_lane_source": "liquipedia",
+      "specialties": [
+        "Guard",
+        "Crowd Control"
+      ],
+      "damage_type": "physical",
+      "damage_type_source": "derived:ability_text",
+      "damage_counts": {
+        "physical": 4,
+        "magic": 0
+      },
+      "resource": "Mana",
+      "release_date": "2016",
+      "lanes_empirical": {}
+    },
+    "Aldous": {
+      "primary_role": "Fighter",
+      "primary_lane": "EXP",
+      "primary_lane_source": "liquipedia",
+      "specialties": [
+        "Burst",
+        "Support"
+      ],
+      "damage_type": "physical",
+      "damage_type_source": "derived:ability_text",
+      "damage_counts": {
+        "physical": 3,
+        "magic": 0
+      },
+      "resource": "Mana",
+      "release_date": "2018",
+      "lanes_empirical": {}
+    },
+    "Alice": {
+      "primary_role": "Tank",
+      "primary_lane": "EXP",
+      "primary_lane_source": "liquipedia",
+      "specialties": [
+        "Charge",
+        "Regen"
+      ],
+      "damage_type": "magic",
+      "damage_type_source": "derived:ability_text",
+      "damage_counts": {
+        "physical": 0,
+        "magic": 5
+      },
+      "resource": null,
+      "release_date": "2016",
+      "lanes_empirical": {
+        "EXP": {
+          "picks": 26,
+          "share": 0.7429
+        },
+        "JUNGLE": {
+          "picks": 9,
+          "share": 0.2571
+        }
+      }
+    },
+    "Alpha": {
+      "primary_role": "Fighter",
+      "primary_lane": "JUNGLE",
+      "primary_lane_source": "liquipedia",
+      "specialties": [
+        "Charge",
+        "Damage"
+      ],
+      "damage_type": "physical",
+      "damage_type_source": "derived:ability_text",
+      "damage_counts": {
+        "physical": 4,
+        "magic": 0
+      },
+      "resource": "Mana",
+      "release_date": "2017",
+      "lanes_empirical": {
+        "JUNGLE": {
+          "picks": 13,
+          "share": 0.8125
+        },
+        "EXP": {
+          "picks": 3,
+          "share": 0.1875
+        }
+      }
+    },
+    "Alucard": {
+      "primary_role": "Fighter",
+      "primary_lane": "JUNGLE",
+      "primary_lane_source": "liquipedia",
+      "specialties": [
+        "Chase",
+        "Damage"
+      ],
+      "damage_type": "physical",
+      "damage_type_source": "derived:ability_text",
+      "damage_counts": {
+        "physical": 4,
+        "magic": 0
+      },
+      "resource": null,
+      "release_date": "2016",
+      "lanes_empirical": {}
+    },
+    "Angela": {
+      "primary_role": "Support",
+      "primary_lane": "ROAM",
+      "primary_lane_source": "liquipedia",
+      "specialties": [
+        "Guard",
+        "Support"
+      ],
+      "damage_type": "magic",
+      "damage_type_source": "derived:ability_text",
+      "damage_counts": {
+        "physical": 0,
+        "magic": 3
+      },
+      "resource": "Mana",
+      "release_date": "2018-02-06",
+      "lanes_empirical": {
+        "MID": {
+          "picks": 3,
+          "share": 1.0
+        }
+      }
+    },
+    "Argus": {
+      "primary_role": "Fighter",
+      "primary_lane": "EXP",
+      "primary_lane_source": "liquipedia",
+      "specialties": [
+        "Charge",
+        "Burst"
+      ],
+      "damage_type": "physical",
+      "damage_type_source": "derived:ability_text",
+      "damage_counts": {
+        "physical": 5,
+        "magic": 0
+      },
+      "resource": null,
+      "release_date": "2017",
+      "lanes_empirical": {
+        "GOLD": {
+          "picks": 2,
+          "share": 1.0
+        }
+      }
+    },
+    "Arlott": {
+      "primary_role": "Fighter",
+      "primary_lane": "EXP",
+      "primary_lane_source": "liquipedia",
+      "specialties": [
+        "Charge",
+        "Burst"
+      ],
+      "damage_type": "physical",
+      "damage_type_source": "derived:ability_text",
+      "damage_counts": {
+        "physical": 3,
+        "magic": 0
+      },
+      "resource": null,
+      "release_date": "2023-02-14",
+      "lanes_empirical": {
+        "EXP": {
+          "picks": 11,
+          "share": 1.0
+        }
+      }
+    },
+    "Atlas": {
+      "primary_role": "Tank",
+      "primary_lane": "ROAM",
+      "primary_lane_source": "liquipedia",
+      "specialties": [
+        "Crowd Control",
+        "Initiator"
+      ],
+      "damage_type": "magic",
+      "damage_type_source": "derived:ability_text",
+      "damage_counts": {
+        "physical": 0,
+        "magic": 4
+      },
+      "resource": "Mana",
+      "release_date": "2020-03-20",
+      "lanes_empirical": {
+        "ROAM": {
+          "picks": 28,
+          "share": 0.6512
+        },
+        "EXP": {
+          "picks": 15,
+          "share": 0.3488
+        }
+      }
+    },
+    "Aulus": {
+      "primary_role": "Fighter",
+      "primary_lane": "JUNGLE",
+      "primary_lane_source": "liquipedia",
+      "specialties": [
+        "Damage",
+        "Charge"
+      ],
+      "damage_type": "physical",
+      "damage_type_source": "derived:ability_text",
+      "damage_counts": {
+        "physical": 5,
+        "magic": 0
+      },
+      "resource": null,
+      "release_date": "2021-08-31",
+      "lanes_empirical": {
+        "JUNGLE": {
+          "picks": 34,
+          "share": 0.6667
+        },
+        "EXP": {
+          "picks": 10,
+          "share": 0.1961
+        },
+        "GOLD": {
+          "picks": 7,
+          "share": 0.1373
+        }
+      }
+    },
+    "Aurora": {
+      "primary_role": "Mage",
+      "primary_lane": "MID",
+      "primary_lane_source": "liquipedia",
+      "specialties": [
+        "Crowd Control",
+        "Poke"
+      ],
+      "damage_type": "magic",
+      "damage_type_source": "derived:ability_text",
+      "damage_counts": {
+        "physical": 0,
+        "magic": 6
+      },
+      "resource": "Mana",
+      "release_date": "09-05-2017",
+      "lanes_empirical": {}
+    },
+    "Badang": {
+      "primary_role": "Fighter",
+      "primary_lane": "ROAM",
+      "primary_lane_source": "liquipedia",
+      "specialties": [
+        "Charge",
+        "Burst"
+      ],
+      "damage_type": "physical",
+      "damage_type_source": "derived:ability_text",
+      "damage_counts": {
+        "physical": 7,
+        "magic": 0
+      },
+      "resource": null,
+      "release_date": "2019-01-15",
+      "lanes_empirical": {
+        "ROAM": {
+          "picks": 14,
+          "share": 0.8235
+        },
+        "EXP": {
+          "picks": 3,
+          "share": 0.1765
+        }
+      }
+    },
+    "Balmond": {
+      "primary_role": "Fighter",
+      "primary_lane": "JUNGLE",
+      "primary_lane_source": "liquipedia",
+      "specialties": [
+        "Damage",
+        "Regen"
+      ],
+      "damage_type": "physical",
+      "damage_type_source": "derived:ability_text",
+      "damage_counts": {
+        "physical": 2,
+        "magic": 0
+      },
+      "resource": null,
+      "release_date": "2016",
+      "lanes_empirical": {}
+    },
+    "Bane": {
+      "primary_role": "Fighter",
+      "primary_lane": "JUNGLE",
+      "primary_lane_source": "liquipedia",
+      "specialties": [
+        "Push",
+        "Burst"
+      ],
+      "damage_type": "mixed",
+      "damage_type_source": "derived:ability_text",
+      "damage_counts": {
+        "physical": 2,
+        "magic": 2
+      },
+      "resource": "Mana",
+      "release_date": "2016",
+      "lanes_empirical": {}
+    },
+    "Barats": {
+      "primary_role": "Tank",
+      "primary_lane": "JUNGLE",
+      "primary_lane_source": "liquipedia",
+      "specialties": [
+        "Damage",
+        "Crowd Control"
+      ],
+      "damage_type": "physical",
+      "damage_type_source": "derived:ability_text",
+      "damage_counts": {
+        "physical": 7,
+        "magic": 0
+      },
+      "resource": "Mana",
+      "release_date": "2020-09-18",
+      "lanes_empirical": {
+        "EXP": {
+          "picks": 39,
+          "share": 1.0
+        }
+      }
+    },
+    "Baxia": {
+      "primary_role": "Tank",
+      "primary_lane": "JUNGLE",
+      "primary_lane_source": "liquipedia",
+      "specialties": [
+        "Support",
+        "Damage"
+      ],
+      "damage_type": "magic",
+      "damage_type_source": "derived:ability_text",
+      "damage_counts": {
+        "physical": 0,
+        "magic": 4
+      },
+      "resource": "Mana",
+      "release_date": "2019-10-08",
+      "lanes_empirical": {}
+    },
+    "Beatrix": {
+      "primary_role": "Marksman",
+      "primary_lane": "GOLD",
+      "primary_lane_source": "liquipedia",
+      "specialties": [
+        "Finisher",
+        "Damage"
+      ],
+      "damage_type": "physical",
+      "damage_type_source": "derived:ability_text",
+      "damage_counts": {
+        "physical": 8,
+        "magic": 0
+      },
+      "resource": null,
+      "release_date": "2021-03-19",
+      "lanes_empirical": {}
+    },
+    "Belerick": {
+      "primary_role": "Tank",
+      "primary_lane": "ROAM",
+      "primary_lane_source": "liquipedia",
+      "specialties": [
+        "Crowd Control",
+        "Regen"
+      ],
+      "damage_type": "magic",
+      "damage_type_source": "derived:ability_text",
+      "damage_counts": {
+        "physical": 0,
+        "magic": 5
+      },
+      "resource": "Mana",
+      "release_date": "2018-12-17",
+      "lanes_empirical": {
+        "ROAM": {
+          "picks": 50,
+          "share": 0.7353
+        },
+        "EXP": {
+          "picks": 18,
+          "share": 0.2647
+        }
+      }
+    },
+    "Benedetta": {
+      "primary_role": "Assassin",
+      "primary_lane": "EXP",
+      "primary_lane_source": "liquipedia",
+      "specialties": [
+        "Chase",
+        "Burst"
+      ],
+      "damage_type": "physical",
+      "damage_type_source": "derived:ability_text",
+      "damage_counts": {
+        "physical": 5,
+        "magic": 0
+      },
+      "resource": "Mana",
+      "release_date": "2020-11-07",
+      "lanes_empirical": {}
+    },
+    "Brody": {
+      "primary_role": "Marksman",
+      "primary_lane": "GOLD",
+      "primary_lane_source": "liquipedia",
+      "specialties": [
+        "Burst",
+        "Finisher"
+      ],
+      "damage_type": "physical",
+      "damage_type_source": "derived:ability_text",
+      "damage_counts": {
+        "physical": 5,
+        "magic": 0
+      },
+      "resource": "Mana",
+      "release_date": "2020-10-16",
+      "lanes_empirical": {
+        "GOLD": {
+          "picks": 28,
+          "share": 1.0
+        }
+      }
+    },
+    "Bruno": {
+      "primary_role": "Marksman",
+      "primary_lane": "GOLD",
+      "primary_lane_source": "liquipedia",
+      "specialties": [
+        "Finisher",
+        "Burst"
+      ],
+      "damage_type": "physical",
+      "damage_type_source": "derived:ability_text",
+      "damage_counts": {
+        "physical": 3,
+        "magic": 0
+      },
+      "resource": "Mana",
+      "release_date": "2016",
+      "lanes_empirical": {
+        "GOLD": {
+          "picks": 3,
+          "share": 1.0
+        }
+      }
+    },
+    "Carmilla": {
+      "primary_role": "Support",
+      "primary_lane": "ROAM",
+      "primary_lane_source": "liquipedia",
+      "specialties": [
+        "Crowd Control",
+        "Damage"
+      ],
+      "damage_type": "magic",
+      "damage_type_source": "derived:ability_text",
+      "damage_counts": {
+        "physical": 0,
+        "magic": 3
+      },
+      "resource": "Mana",
+      "release_date": "2020-01-17",
+      "lanes_empirical": {
+        "ROAM": {
+          "picks": 31,
+          "share": 0.7949
+        },
+        "EXP": {
+          "picks": 8,
+          "share": 0.2051
+        }
+      }
+    },
+    "Cecilion": {
+      "primary_role": "Mage",
+      "primary_lane": "MID",
+      "primary_lane_source": "liquipedia",
+      "specialties": [
+        "Poke",
+        "Burst"
+      ],
+      "damage_type": "magic",
+      "damage_type_source": "derived:ability_text",
+      "damage_counts": {
+        "physical": 0,
+        "magic": 5
+      },
+      "resource": "Mana",
+      "release_date": "2020-02-12",
+      "lanes_empirical": {
+        "MID": {
+          "picks": 15,
+          "share": 1.0
+        }
+      }
+    },
+    "Chang'e": {
+      "primary_role": "Mage",
+      "primary_lane": "MID",
+      "primary_lane_source": "liquipedia",
+      "specialties": [
+        "Poke",
+        "Burst"
+      ],
+      "damage_type": "magic",
+      "damage_type_source": "derived:ability_text",
+      "damage_counts": {
+        "physical": 0,
+        "magic": 4
+      },
+      "resource": "Mana",
+      "release_date": "2018-05-30",
+      "lanes_empirical": {}
+    },
+    "Chip": {
+      "primary_role": "Support",
+      "primary_lane": "ROAM",
+      "primary_lane_source": "liquipedia",
+      "specialties": [
+        "Support",
+        "Crowd Control"
+      ],
+      "damage_type": "magic",
+      "damage_type_source": "derived:ability_text",
+      "damage_counts": {
+        "physical": 0,
+        "magic": 4
+      },
+      "resource": "Mana",
+      "release_date": "2024-03-16",
+      "lanes_empirical": {
+        "ROAM": {
+          "picks": 7,
+          "share": 1.0
+        }
+      }
+    },
+    "Chou": {
+      "primary_role": "Fighter",
+      "primary_lane": "EXP",
+      "primary_lane_source": "liquipedia",
+      "specialties": [
+        "Chase",
+        "Control"
+      ],
+      "damage_type": "physical",
+      "damage_type_source": "derived:ability_text",
+      "damage_counts": {
+        "physical": 3,
+        "magic": 0
+      },
+      "resource": null,
+      "release_date": "2016",
+      "lanes_empirical": {
+        "ROAM": {
+          "picks": 8,
+          "share": 0.5714
+        },
+        "GOLD": {
+          "picks": 6,
+          "share": 0.4286
+        }
+      }
+    },
+    "Cici": {
+      "primary_role": "Fighter",
+      "primary_lane": "EXP",
+      "primary_lane_source": "liquipedia",
+      "specialties": [
+        "Damage",
+        "Regen"
+      ],
+      "damage_type": "physical",
+      "damage_type_source": "derived:ability_text",
+      "damage_counts": {
+        "physical": 3,
+        "magic": 0
+      },
+      "resource": null,
+      "release_date": "2023-12-27",
+      "lanes_empirical": {
+        "GOLD": {
+          "picks": 24,
+          "share": 0.6
+        },
+        "EXP": {
+          "picks": 16,
+          "share": 0.4
+        }
+      }
+    },
+    "Claude": {
+      "primary_role": "Marksman",
+      "primary_lane": "GOLD",
+      "primary_lane_source": "liquipedia",
+      "specialties": [
+        "Burst",
+        "Chase"
+      ],
+      "damage_type": "physical",
+      "damage_type_source": "derived:ability_text",
+      "damage_counts": {
+        "physical": 4,
+        "magic": 0
+      },
+      "resource": "Mana",
+      "release_date": "2018-08-07",
+      "lanes_empirical": {
+        "GOLD": {
+          "picks": 60,
+          "share": 1.0
+        }
+      }
+    },
+    "Clint": {
+      "primary_role": "Marksman",
+      "primary_lane": "GOLD",
+      "primary_lane_source": "liquipedia",
+      "specialties": [
+        "Finisher",
+        "Burst"
+      ],
+      "damage_type": "physical",
+      "damage_type_source": "derived:ability_text",
+      "damage_counts": {
+        "physical": 4,
+        "magic": 0
+      },
+      "resource": "Mana",
+      "release_date": "2016",
+      "lanes_empirical": {
+        "GOLD": {
+          "picks": 7,
+          "share": 1.0
+        }
+      }
+    },
+    "Cyclops": {
+      "primary_role": "Mage",
+      "primary_lane": "MID",
+      "primary_lane_source": "liquipedia",
+      "specialties": [
+        "Damage",
+        "Control"
+      ],
+      "damage_type": "magic",
+      "damage_type_source": "derived:ability_text",
+      "damage_counts": {
+        "physical": 0,
+        "magic": 3
+      },
+      "resource": "Mana",
+      "release_date": "2017",
+      "lanes_empirical": {}
+    },
+    "Diggie": {
+      "primary_role": "Support",
+      "primary_lane": "ROAM",
+      "primary_lane_source": "liquipedia",
+      "specialties": [
+        "Guard",
+        "Poke"
+      ],
+      "damage_type": "magic",
+      "damage_type_source": "derived:ability_text",
+      "damage_counts": {
+        "physical": 0,
+        "magic": 2
+      },
+      "resource": "Mana",
+      "release_date": "2017-11-19",
+      "lanes_empirical": {}
+    },
+    "Dyrroth": {
+      "primary_role": "Fighter",
+      "primary_lane": "EXP",
+      "primary_lane_source": "liquipedia",
+      "specialties": [
+        "Charge",
+        "Burst"
+      ],
+      "damage_type": "physical",
+      "damage_type_source": "derived:ability_text",
+      "damage_counts": {
+        "physical": 5,
+        "magic": 0
+      },
+      "resource": null,
+      "release_date": "2019-06-25",
+      "lanes_empirical": {
+        "EXP": {
+          "picks": 9,
+          "share": 1.0
+        }
+      }
+    },
+    "Edith": {
+      "primary_role": "Tank",
+      "primary_lane": "EXP",
+      "primary_lane_source": "liquipedia",
+      "specialties": [
+        "Control",
+        "Burst"
+      ],
+      "damage_type": "mixed",
+      "damage_type_source": "derived:ability_text",
+      "damage_counts": {
+        "physical": 3,
+        "magic": 5
+      },
+      "resource": null,
+      "release_date": "2021-12-24",
+      "lanes_empirical": {
+        "EXP": {
+          "picks": 1,
+          "share": 1.0
+        }
+      }
+    },
+    "Esmeralda": {
+      "primary_role": "Tank",
+      "primary_lane": "EXP",
+      "primary_lane_source": "liquipedia",
+      "specialties": [
+        "Regen",
+        "Mixed Damage"
+      ],
+      "damage_type": "mixed",
+      "damage_type_source": "derived:ability_text",
+      "damage_counts": {
+        "physical": 4,
+        "magic": 4
+      },
+      "resource": "Mana",
+      "release_date": "2019-04-02",
+      "lanes_empirical": {
+        "EXP": {
+          "picks": 25,
+          "share": 0.8333
+        },
+        "GOLD": {
+          "picks": 5,
+          "share": 0.1667
+        }
+      }
+    },
+    "Estes": {
+      "primary_role": "Support",
+      "primary_lane": "ROAM",
+      "primary_lane_source": "liquipedia",
+      "specialties": [
+        "Regen",
+        "Guard"
+      ],
+      "damage_type": "magic",
+      "damage_type_source": "derived:ability_text",
+      "damage_counts": {
+        "physical": 0,
+        "magic": 3
+      },
+      "resource": "Mana",
+      "release_date": "12-04-2017",
+      "lanes_empirical": {
+        "ROAM": {
+          "picks": 2,
+          "share": 1.0
+        }
+      }
+    },
+    "Eudora": {
+      "primary_role": "Mage",
+      "primary_lane": "MID",
+      "primary_lane_source": "liquipedia",
+      "specialties": [
+        "Control",
+        "Burst"
+      ],
+      "damage_type": "magic",
+      "damage_type_source": "derived:ability_text",
+      "damage_counts": {
+        "physical": 0,
+        "magic": 7
+      },
+      "resource": "Mana",
+      "release_date": "2016",
+      "lanes_empirical": {
+        "MID": {
+          "picks": 49,
+          "share": 1.0
+        }
+      }
+    },
+    "Fanny": {
+      "primary_role": "Assassin",
+      "primary_lane": "JUNGLE",
+      "primary_lane_source": "liquipedia",
+      "specialties": [
+        "Chase",
+        "Finisher"
+      ],
+      "damage_type": "physical",
+      "damage_type_source": "derived:ability_text",
+      "damage_counts": {
+        "physical": 2,
+        "magic": 0
+      },
+      "resource": "Energy",
+      "release_date": "2016",
+      "lanes_empirical": {
+        "JUNGLE": {
+          "picks": 21,
+          "share": 1.0
+        }
+      }
+    },
+    "Faramis": {
+      "primary_role": "Support",
+      "primary_lane": "MID",
+      "primary_lane_source": "liquipedia",
+      "specialties": [
+        "Guard",
+        "Charge"
+      ],
+      "damage_type": "magic",
+      "damage_type_source": "derived:ability_text",
+      "damage_counts": {
+        "physical": 0,
+        "magic": 4
+      },
+      "resource": "Mana",
+      "release_date": "2019-05-18",
+      "lanes_empirical": {
+        "MID": {
+          "picks": 2,
+          "share": 1.0
+        }
+      }
+    },
+    "Floryn": {
+      "primary_role": "Support",
+      "primary_lane": "ROAM",
+      "primary_lane_source": "liquipedia",
+      "specialties": [
+        "Poke",
+        "Guard"
+      ],
+      "damage_type": "magic",
+      "damage_type_source": "derived:ability_text",
+      "damage_counts": {
+        "physical": 0,
+        "magic": 2
+      },
+      "resource": "Mana",
+      "release_date": "2021-09-22",
+      "lanes_empirical": {}
+    },
+    "Franco": {
+      "primary_role": "Tank",
+      "primary_lane": "ROAM",
+      "primary_lane_source": "liquipedia",
+      "specialties": [
+        "Initiator",
+        "Control"
+      ],
+      "damage_type": "physical",
+      "damage_type_source": "derived:ability_text",
+      "damage_counts": {
+        "physical": 3,
+        "magic": 0
+      },
+      "resource": "Mana",
+      "release_date": "2016",
+      "lanes_empirical": {}
+    },
+    "Fredrinn": {
+      "primary_role": "Fighter",
+      "primary_lane": "JUNGLE",
+      "primary_lane_source": "liquipedia",
+      "specialties": [
+        "Damage",
+        "Chase"
+      ],
+      "damage_type": "physical",
+      "damage_type_source": "derived:ability_text",
+      "damage_counts": {
+        "physical": 5,
+        "magic": 0
+      },
+      "resource": null,
+      "release_date": "2022-08-12",
+      "lanes_empirical": {
+        "JUNGLE": {
+          "picks": 3,
+          "share": 1.0
+        }
+      }
+    },
+    "Freya": {
+      "primary_role": "Fighter",
+      "primary_lane": "EXP",
+      "primary_lane_source": "liquipedia",
+      "specialties": [
+        "Chase",
+        "Damage"
+      ],
+      "damage_type": "physical",
+      "damage_type_source": "derived:ability_text",
+      "damage_counts": {
+        "physical": 3,
+        "magic": 0
+      },
+      "resource": null,
+      "release_date": "2016",
+      "lanes_empirical": {
+        "EXP": {
+          "picks": 25,
+          "share": 0.5952
+        },
+        "GOLD": {
+          "picks": 17,
+          "share": 0.4048
+        }
+      }
+    },
+    "Gatotkaca": {
+      "primary_role": "Tank",
+      "primary_lane": "ROAM",
+      "primary_lane_source": "liquipedia",
+      "specialties": [
+        "Crowd Control",
+        "Burst"
+      ],
+      "damage_type": "magic",
+      "damage_type_source": "derived:ability_text",
+      "damage_counts": {
+        "physical": 0,
+        "magic": 5
+      },
+      "resource": null,
+      "release_date": "2017",
+      "lanes_empirical": {
+        "ROAM": {
+          "picks": 27,
+          "share": 1.0
+        }
+      }
+    },
+    "Gloo": {
+      "primary_role": "Tank",
+      "primary_lane": "ROAM",
+      "primary_lane_source": "liquipedia",
+      "specialties": [
+        "Regen",
+        "Control"
+      ],
+      "damage_type": "magic",
+      "damage_type_source": "derived:ability_text",
+      "damage_counts": {
+        "physical": 0,
+        "magic": 5
+      },
+      "resource": "Mana",
+      "release_date": "2021-04-16",
+      "lanes_empirical": {
+        "ROAM": {
+          "picks": 36,
+          "share": 0.973
+        },
+        "EXP": {
+          "picks": 1,
+          "share": 0.027
+        }
+      }
+    },
+    "Gord": {
+      "primary_role": "Mage",
+      "primary_lane": "MID",
+      "primary_lane_source": "liquipedia",
+      "specialties": [
+        "Poke",
+        "Burst"
+      ],
+      "damage_type": "magic",
+      "damage_type_source": "derived:ability_text",
+      "damage_counts": {
+        "physical": 0,
+        "magic": 3
+      },
+      "resource": "Mana",
+      "release_date": "2016",
+      "lanes_empirical": {}
+    },
+    "Granger": {
+      "primary_role": "Marksman",
+      "primary_lane": "GOLD",
+      "primary_lane_source": "liquipedia",
+      "specialties": [
+        "Burst",
+        "Finisher"
+      ],
+      "damage_type": "physical",
+      "damage_type_source": "derived:ability_text",
+      "damage_counts": {
+        "physical": 2,
+        "magic": 0
+      },
+      "resource": "|releasedate=2019-04-23",
+      "release_date": "2019-04-23",
+      "lanes_empirical": {
+        "GOLD": {
+          "picks": 1,
+          "share": 1.0
+        }
+      }
+    },
+    "Grock": {
+      "primary_role": "Tank",
+      "primary_lane": "ROAM",
+      "primary_lane_source": "liquipedia",
+      "specialties": [
+        "Crowd Control",
+        "Initiator"
+      ],
+      "damage_type": "physical",
+      "damage_type_source": "derived:ability_text",
+      "damage_counts": {
+        "physical": 6,
+        "magic": 0
+      },
+      "resource": null,
+      "release_date": "2017",
+      "lanes_empirical": {}
+    },
+    "Guinevere": {
+      "primary_role": "Fighter",
+      "primary_lane": "EXP",
+      "primary_lane_source": "liquipedia",
+      "specialties": [
+        "Burst",
+        "Magic Damage"
+      ],
+      "damage_type": "magic",
+      "damage_type_source": "derived:ability_text",
+      "damage_counts": {
+        "physical": 0,
+        "magic": 8
+      },
+      "resource": null,
+      "release_date": "2019-02-21",
+      "lanes_empirical": {
+        "JUNGLE": {
+          "picks": 3,
+          "share": 1.0
+        }
+      }
+    },
+    "Gusion": {
+      "primary_role": "Assassin",
+      "primary_lane": "JUNGLE",
+      "primary_lane_source": "liquipedia",
+      "specialties": [
+        "Burst",
+        "Magic Damage"
+      ],
+      "damage_type": "magic",
+      "damage_type_source": "derived:ability_text",
+      "damage_counts": {
+        "physical": 0,
+        "magic": 5
+      },
+      "resource": "Mana",
+      "release_date": "2018-02-20",
+      "lanes_empirical": {}
+    },
+    "Hanabi": {
+      "primary_role": "Marksman",
+      "primary_lane": "GOLD",
+      "primary_lane_source": "liquipedia",
+      "specialties": [
+        "Finisher",
+        "Damage"
+      ],
+      "damage_type": "physical",
+      "damage_type_source": "derived:ability_text",
+      "damage_counts": {
+        "physical": 4,
+        "magic": 0
+      },
+      "resource": "Mana",
+      "release_date": "2018-04-17",
+      "lanes_empirical": {
+        "GOLD": {
+          "picks": 4,
+          "share": 1.0
+        }
+      }
+    },
+    "Hanzo": {
+      "primary_role": "Assassin",
+      "primary_lane": "JUNGLE",
+      "primary_lane_source": "liquipedia",
+      "specialties": [
+        "Poke",
+        "Burst"
+      ],
+      "damage_type": "physical",
+      "damage_type_source": "derived:ability_text",
+      "damage_counts": {
+        "physical": 4,
+        "magic": 0
+      },
+      "resource": null,
+      "release_date": "2018-12-04",
+      "lanes_empirical": {
+        "JUNGLE": {
+          "picks": 4,
+          "share": 1.0
+        }
+      }
+    },
+    "Harith": {
+      "primary_role": "Mage",
+      "primary_lane": "GOLD",
+      "primary_lane_source": "liquipedia",
+      "specialties": [
+        "Chase",
+        "Damage"
+      ],
+      "damage_type": "magic",
+      "damage_type_source": "derived:ability_text",
+      "damage_counts": {
+        "physical": 0,
+        "magic": 4
+      },
+      "resource": "Mana",
+      "release_date": "2018-11",
+      "lanes_empirical": {
+        "GOLD": {
+          "picks": 2,
+          "share": 1.0
+        }
+      }
+    },
+    "Harley": {
+      "primary_role": "Assassin",
+      "primary_lane": "JUNGLE",
+      "primary_lane_source": "liquipedia",
+      "specialties": [
+        "Burst",
+        "Poke"
+      ],
+      "damage_type": "magic",
+      "damage_type_source": "derived:ability_text",
+      "damage_counts": {
+        "physical": 0,
+        "magic": 4
+      },
+      "resource": "Mana",
+      "release_date": "2017-08-04",
+      "lanes_empirical": {
+        "JUNGLE": {
+          "picks": 18,
+          "share": 1.0
+        }
+      }
+    },
+    "Hayabusa": {
+      "primary_role": "Assassin",
+      "primary_lane": "JUNGLE",
+      "primary_lane_source": "liquipedia",
+      "specialties": [
+        "Chase",
+        "Burst"
+      ],
+      "damage_type": "physical",
+      "damage_type_source": "derived:ability_text",
+      "damage_counts": {
+        "physical": 5,
+        "magic": 0
+      },
+      "resource": "Energy",
+      "release_date": "2016",
+      "lanes_empirical": {
+        "JUNGLE": {
+          "picks": 6,
+          "share": 1.0
+        }
+      }
+    },
+    "Helcurt": {
+      "primary_role": "Assassin",
+      "primary_lane": "JUNGLE",
+      "primary_lane_source": "liquipedia",
+      "specialties": [
+        "Push",
+        "Burst"
+      ],
+      "damage_type": "physical",
+      "damage_type_source": "derived:ability_text",
+      "damage_counts": {
+        "physical": 2,
+        "magic": 0
+      },
+      "resource": null,
+      "release_date": "2017",
+      "lanes_empirical": {}
+    },
+    "Hilda": {
+      "primary_role": "Fighter",
+      "primary_lane": "ROAM",
+      "primary_lane_source": "liquipedia",
+      "specialties": [
+        "Damage",
+        "Regen"
+      ],
+      "damage_type": "physical",
+      "damage_type_source": "derived:ability_text",
+      "damage_counts": {
+        "physical": 4,
+        "magic": 0
+      },
+      "resource": null,
+      "release_date": "2017",
+      "lanes_empirical": {
+        "EXP": {
+          "picks": 3,
+          "share": 1.0
+        }
+      }
+    },
+    "Hirara": {
+      "primary_role": "Assassin",
+      "primary_lane": "JUNGLE",
+      "primary_lane_source": "liquipedia",
+      "specialties": [
+        "Chase",
+        "Finisher"
+      ],
+      "damage_type": "physical",
+      "damage_type_source": "derived:ability_text",
+      "damage_counts": {
+        "physical": 2,
+        "magic": 0
+      },
+      "resource": null,
+      "release_date": "2026-06-17",
+      "lanes_empirical": {
+        "JUNGLE": {
+          "picks": 84,
+          "share": 1.0
+        }
+      }
+    },
+    "Hylos": {
+      "primary_role": "Tank",
+      "primary_lane": "ROAM",
+      "primary_lane_source": "liquipedia",
+      "specialties": [
+        "Guard",
+        "Initiator"
+      ],
+      "damage_type": "magic",
+      "damage_type_source": "derived:ability_text",
+      "damage_counts": {
+        "physical": 0,
+        "magic": 2
+      },
+      "resource": "Mana",
+      "release_date": "2017",
+      "lanes_empirical": {
+        "ROAM": {
+          "picks": 18,
+          "share": 0.9
+        },
+        "EXP": {
+          "picks": 2,
+          "share": 0.1
+        }
+      }
+    },
+    "Irithel": {
+      "primary_role": "Marksman",
+      "primary_lane": "GOLD",
+      "primary_lane_source": "liquipedia",
+      "specialties": [
+        "Finisher",
+        "Burst"
+      ],
+      "damage_type": "physical",
+      "damage_type_source": "derived:ability_text",
+      "damage_counts": {
+        "physical": 4,
+        "magic": 0
+      },
+      "resource": null,
+      "release_date": "2017-08-15",
+      "lanes_empirical": {}
+    },
+    "Ixia": {
+      "primary_role": "Marksman",
+      "primary_lane": "GOLD",
+      "primary_lane_source": "liquipedia",
+      "specialties": [
+        "Finisher",
+        "Damage"
+      ],
+      "damage_type": "physical",
+      "damage_type_source": "derived:ability_text",
+      "damage_counts": {
+        "physical": 3,
+        "magic": 0
+      },
+      "resource": "Mana",
+      "release_date": "2023-07-08",
+      "lanes_empirical": {
+        "GOLD": {
+          "picks": 1,
+          "share": 1.0
+        }
+      }
+    },
+    "Jawhead": {
+      "primary_role": "Fighter",
+      "primary_lane": "ROAM",
+      "primary_lane_source": "liquipedia",
+      "specialties": [
+        "Charge",
+        "Burst"
+      ],
+      "damage_type": "physical",
+      "damage_type_source": "derived:ability_text",
+      "damage_counts": {
+        "physical": 3,
+        "magic": 0
+      },
+      "resource": "Mana",
+      "release_date": "2018",
+      "lanes_empirical": {}
+    },
+    "Johnson": {
+      "primary_role": "Tank",
+      "primary_lane": "ROAM",
+      "primary_lane_source": "liquipedia",
+      "specialties": [
+        "Support",
+        "Crowd Control"
+      ],
+      "damage_type": "magic",
+      "damage_type_source": "derived:ability_text",
+      "damage_counts": {
+        "physical": 0,
+        "magic": 4
+      },
+      "resource": null,
+      "release_date": "2017",
+      "lanes_empirical": {}
+    },
+    "Joy": {
+      "primary_role": "Assassin",
+      "primary_lane": "JUNGLE",
+      "primary_lane_source": "liquipedia",
+      "specialties": [
+        "Chase",
+        "Damage"
+      ],
+      "damage_type": "magic",
+      "damage_type_source": "derived:ability_text",
+      "damage_counts": {
+        "physical": 0,
+        "magic": 5
+      },
+      "resource": null,
+      "release_date": "2022-11-18",
+      "lanes_empirical": {
+        "EXP": {
+          "picks": 1,
+          "share": 0.5
+        },
+        "GOLD": {
+          "picks": 1,
+          "share": 0.5
+        }
+      }
+    },
+    "Julian": {
+      "primary_role": "Assassin",
+      "primary_lane": "JUNGLE",
+      "primary_lane_source": "liquipedia",
+      "specialties": [
+        "Chase",
+        "Magic Damage"
+      ],
+      "damage_type": "magic",
+      "damage_type_source": "derived:ability_text",
+      "damage_counts": {
+        "physical": 0,
+        "magic": 10
+      },
+      "resource": "Mana",
+      "release_date": "2022-05-24",
+      "lanes_empirical": {}
+    },
+    "Kadita": {
+      "primary_role": "Mage",
+      "primary_lane": "MID",
+      "primary_lane_source": "liquipedia",
+      "specialties": [
+        "Burst",
+        "Charge"
+      ],
+      "damage_type": "magic",
+      "damage_type_source": "derived:ability_text",
+      "damage_counts": {
+        "physical": 0,
+        "magic": 4
+      },
+      "resource": "Mana",
+      "release_date": "2018",
+      "lanes_empirical": {
+        "MID": {
+          "picks": 2,
+          "share": 1.0
+        }
+      }
+    },
+    "Kagura": {
+      "primary_role": "Mage",
+      "primary_lane": "MID",
+      "primary_lane_source": "liquipedia",
+      "specialties": [
+        "Poke",
+        "Finisher"
+      ],
+      "damage_type": "magic",
+      "damage_type_source": "derived:ability_text",
+      "damage_counts": {
+        "physical": 0,
+        "magic": 6
+      },
+      "resource": "Mana",
+      "release_date": "2016",
+      "lanes_empirical": {
+        "MID": {
+          "picks": 1,
+          "share": 1.0
+        }
+      }
+    },
+    "Kaja": {
+      "primary_role": "Support",
+      "primary_lane": "ROAM",
+      "primary_lane_source": "liquipedia",
+      "specialties": [
+        "Initiator",
+        "Charge"
+      ],
+      "damage_type": "magic",
+      "damage_type_source": "derived:ability_text",
+      "damage_counts": {
+        "physical": 0,
+        "magic": 4
+      },
+      "resource": "Energy",
+      "release_date": "2018",
+      "lanes_empirical": {
+        "ROAM": {
+          "picks": 3,
+          "share": 1.0
+        }
+      }
+    },
+    "Kalea": {
+      "primary_role": "Support",
+      "primary_lane": "ROAM",
+      "primary_lane_source": "liquipedia",
+      "specialties": [
+        "Control",
+        "Regen"
+      ],
+      "damage_type": "physical",
+      "damage_type_source": "derived:ability_text",
+      "damage_counts": {
+        "physical": 7,
+        "magic": 0
+      },
+      "resource": null,
+      "release_date": "2025-03-19",
+      "lanes_empirical": {
+        "ROAM": {
+          "picks": 10,
+          "share": 0.7692
+        },
+        "EXP": {
+          "picks": 3,
+          "share": 0.2308
+        }
+      }
+    },
+    "Karina": {
+      "primary_role": "Assassin",
+      "primary_lane": "JUNGLE",
+      "primary_lane_source": "liquipedia",
+      "specialties": [
+        "Finisher",
+        "Magic Damage"
+      ],
+      "damage_type": "magic",
+      "damage_type_source": "derived:ability_text",
+      "damage_counts": {
+        "physical": 0,
+        "magic": 6
+      },
+      "resource": "Mana",
+      "release_date": "2016",
+      "lanes_empirical": {}
+    },
+    "Karrie": {
+      "primary_role": "Marksman",
+      "primary_lane": "GOLD",
+      "primary_lane_source": "liquipedia",
+      "specialties": [
+        "Finisher",
+        "Damage"
+      ],
+      "damage_type": "physical",
+      "damage_type_source": "derived:ability_text",
+      "damage_counts": {
+        "physical": 4,
+        "magic": 0
+      },
+      "resource": "Mana",
+      "release_date": "2017-07-05",
+      "lanes_empirical": {
+        "GOLD": {
+          "picks": 2,
+          "share": 1.0
+        }
+      }
+    },
+    "Khaleed": {
+      "primary_role": "Fighter",
+      "primary_lane": "ROAM",
+      "primary_lane_source": "liquipedia",
+      "specialties": [
+        "Damage",
+        "Regen"
+      ],
+      "damage_type": "physical",
+      "damage_type_source": "derived:ability_text",
+      "damage_counts": {
+        "physical": 4,
+        "magic": 0
+      },
+      "resource": null,
+      "release_date": "2020-08-06",
+      "lanes_empirical": {
+        "ROAM": {
+          "picks": 2,
+          "share": 1.0
+        }
+      }
+    },
+    "Khufra": {
+      "primary_role": "Tank",
+      "primary_lane": "ROAM",
+      "primary_lane_source": "liquipedia",
+      "specialties": [
+        "Initiator",
+        "Crowd Control"
+      ],
+      "damage_type": "physical",
+      "damage_type_source": "derived:ability_text",
+      "damage_counts": {
+        "physical": 4,
+        "magic": 2
+      },
+      "resource": "Mana",
+      "release_date": "2019",
+      "lanes_empirical": {
+        "ROAM": {
+          "picks": 2,
+          "share": 1.0
+        }
+      }
+    },
+    "Kimmy": {
+      "primary_role": "Marksman",
+      "primary_lane": "MID",
+      "primary_lane_source": "liquipedia",
+      "specialties": [
+        "Damage",
+        "Magic Damage"
+      ],
+      "damage_type": "magic",
+      "damage_type_source": "derived:ability_text",
+      "damage_counts": {
+        "physical": 0,
+        "magic": 6
+      },
+      "resource": "|releasedate=2018-10",
+      "release_date": "2018-10",
+      "lanes_empirical": {
+        "MID": {
+          "picks": 31,
+          "share": 0.9394
+        },
+        "GOLD": {
+          "picks": 2,
+          "share": 0.0606
+        }
+      }
+    },
+    "Lancelot": {
+      "primary_role": "Assassin",
+      "primary_lane": "JUNGLE",
+      "primary_lane_source": "liquipedia",
+      "specialties": [
+        "Chase",
+        "Burst"
+      ],
+      "damage_type": "physical",
+      "damage_type_source": "derived:ability_text",
+      "damage_counts": {
+        "physical": 3,
+        "magic": 0
+      },
+      "resource": "Mana",
+      "release_date": "2017",
+      "lanes_empirical": {}
+    },
+    "Lapu-Lapu": {
+      "primary_role": "Fighter",
+      "primary_lane": "EXP",
+      "primary_lane_source": "liquipedia",
+      "specialties": [
+        "Chase",
+        "Burst"
+      ],
+      "damage_type": "physical",
+      "damage_type_source": "derived:ability_text",
+      "damage_counts": {
+        "physical": 8,
+        "magic": 0
+      },
+      "resource": null,
+      "release_date": "23-05-2017",
+      "lanes_empirical": {
+        "EXP": {
+          "picks": 1,
+          "share": 1.0
+        }
+      }
+    },
+    "Layla": {
+      "primary_role": "Marksman",
+      "primary_lane": "GOLD",
+      "primary_lane_source": "liquipedia",
+      "specialties": [
+        "Finisher",
+        "Damage"
+      ],
+      "damage_type": "physical",
+      "damage_type_source": "derived:ability_text",
+      "damage_counts": {
+        "physical": 4,
+        "magic": 0
+      },
+      "resource": "Mana",
+      "release_date": "2016",
+      "lanes_empirical": {}
+    },
+    "Leomord": {
+      "primary_role": "Fighter",
+      "primary_lane": "JUNGLE",
+      "primary_lane_source": "liquipedia",
+      "specialties": [
+        "Chase",
+        "Burst"
+      ],
+      "damage_type": "physical",
+      "damage_type_source": "derived:ability_text",
+      "damage_counts": {
+        "physical": 5,
+        "magic": 0
+      },
+      "resource": null,
+      "release_date": "2018",
+      "lanes_empirical": {
+        "JUNGLE": {
+          "picks": 4,
+          "share": 1.0
+        }
+      }
+    },
+    "Lesley": {
+      "primary_role": "Marksman",
+      "primary_lane": "GOLD",
+      "primary_lane_source": "liquipedia",
+      "specialties": [
+        "Finisher",
+        "Burst"
+      ],
+      "damage_type": "physical",
+      "damage_type_source": "derived:ability_text",
+      "damage_counts": {
+        "physical": 2,
+        "magic": 0
+      },
+      "resource": "Energy",
+      "release_date": "2018-01",
+      "lanes_empirical": {
+        "GOLD": {
+          "picks": 1,
+          "share": 1.0
+        }
+      }
+    },
+    "Ling": {
+      "primary_role": "Assassin",
+      "primary_lane": "JUNGLE",
+      "primary_lane_source": "liquipedia",
+      "specialties": [
+        "Chase",
+        "Burst"
+      ],
+      "damage_type": "physical",
+      "damage_type_source": "derived:ability_text",
+      "damage_counts": {
+        "physical": 3,
+        "magic": 0
+      },
+      "resource": "Energy",
+      "release_date": "2019",
+      "lanes_empirical": {
+        "JUNGLE": {
+          "picks": 1,
+          "share": 1.0
+        }
+      }
+    },
+    "Lolita": {
+      "primary_role": "Support",
+      "primary_lane": "ROAM",
+      "primary_lane_source": "liquipedia",
+      "specialties": [
+        "Guard",
+        "Crowd Control"
+      ],
+      "damage_type": "physical",
+      "damage_type_source": "derived:ability_text",
+      "damage_counts": {
+        "physical": 2,
+        "magic": 0
+      },
+      "resource": "Mana",
+      "release_date": "2016",
+      "lanes_empirical": {}
+    },
+    "Lukas": {
+      "primary_role": "Fighter",
+      "primary_lane": "EXP",
+      "primary_lane_source": "liquipedia",
+      "specialties": [
+        "Regen",
+        "Damage"
+      ],
+      "damage_type": "physical",
+      "damage_type_source": "derived:ability_text",
+      "damage_counts": {
+        "physical": 14,
+        "magic": 0
+      },
+      "resource": null,
+      "release_date": "2024-12-21",
+      "lanes_empirical": {
+        "EXP": {
+          "picks": 14,
+          "share": 0.7368
+        },
+        "JUNGLE": {
+          "picks": 3,
+          "share": 0.1579
+        },
+        "GOLD": {
+          "picks": 2,
+          "share": 0.1053
+        }
+      }
+    },
+    "Lunox": {
+      "primary_role": "Mage",
+      "primary_lane": "MID",
+      "primary_lane_source": "liquipedia",
+      "specialties": [
+        "Burst",
+        "Damage"
+      ],
+      "damage_type": "magic",
+      "damage_type_source": "derived:ability_text",
+      "damage_counts": {
+        "physical": 0,
+        "magic": 5
+      },
+      "resource": "Mana",
+      "release_date": "2018",
+      "lanes_empirical": {
+        "MID": {
+          "picks": 5,
+          "share": 1.0
+        }
+      }
+    },
+    "Luo Yi": {
+      "primary_role": "Mage",
+      "primary_lane": "MID",
+      "primary_lane_source": "liquipedia",
+      "specialties": [
+        "Support",
+        "Crowd Control"
+      ],
+      "damage_type": "magic",
+      "damage_type_source": "derived:ability_text",
+      "damage_counts": {
+        "physical": 0,
+        "magic": 4
+      },
+      "resource": "Mana",
+      "release_date": "2020-05-16",
+      "lanes_empirical": {
+        "MID": {
+          "picks": 1,
+          "share": 1.0
+        }
+      }
+    },
+    "Lylia": {
+      "primary_role": "Mage",
+      "primary_lane": "MID",
+      "primary_lane_source": "liquipedia",
+      "specialties": [
+        "Push",
+        "Damage"
+      ],
+      "damage_type": "magic",
+      "damage_type_source": "derived:ability_text",
+      "damage_counts": {
+        "physical": 0,
+        "magic": 3
+      },
+      "resource": "Mana",
+      "release_date": "2019-07-23",
+      "lanes_empirical": {
+        "MID": {
+          "picks": 27,
+          "share": 1.0
+        }
+      }
+    },
+    "Marcel": {
+      "primary_role": "Support",
+      "primary_lane": "ROAM",
+      "primary_lane_source": "liquipedia",
+      "specialties": [
+        "Crowd Control",
+        "Support"
+      ],
+      "damage_type": "physical",
+      "damage_type_source": "derived:ability_text",
+      "damage_counts": {
+        "physical": 2,
+        "magic": 0
+      },
+      "resource": "Mana",
+      "release_date": "2026-03-11",
+      "lanes_empirical": {
+        "ROAM": {
+          "picks": 29,
+          "share": 1.0
+        }
+      }
+    },
+    "Martis": {
+      "primary_role": "Fighter",
+      "primary_lane": "JUNGLE",
+      "primary_lane_source": "liquipedia",
+      "specialties": [
+        "Finisher",
+        "Charge"
+      ],
+      "damage_type": "physical",
+      "damage_type_source": "derived:ability_text",
+      "damage_counts": {
+        "physical": 4,
+        "magic": 0
+      },
+      "resource": null,
+      "release_date": "2018",
+      "lanes_empirical": {}
+    },
+    "Masha": {
+      "primary_role": "Fighter",
+      "primary_lane": "EXP",
+      "primary_lane_source": "liquipedia",
+      "specialties": [
+        "Push",
+        "Damage"
+      ],
+      "damage_type": "physical",
+      "damage_type_source": "derived:ability_text",
+      "damage_counts": {
+        "physical": 4,
+        "magic": 0
+      },
+      "resource": null,
+      "release_date": "2019-09-17",
+      "lanes_empirical": {
+        "ROAM": {
+          "picks": 6,
+          "share": 0.4615
+        },
+        "GOLD": {
+          "picks": 4,
+          "share": 0.3077
+        },
+        "EXP": {
+          "picks": 3,
+          "share": 0.2308
+        }
+      }
+    },
+    "Mathilda": {
+      "primary_role": "Support",
+      "primary_lane": "ROAM",
+      "primary_lane_source": "liquipedia",
+      "specialties": [
+        "Initiator",
+        "Guard"
+      ],
+      "damage_type": "magic",
+      "damage_type_source": "derived:ability_text",
+      "damage_counts": {
+        "physical": 0,
+        "magic": 4
+      },
+      "resource": "Mana",
+      "release_date": "2020-12-12",
+      "lanes_empirical": {
+        "ROAM": {
+          "picks": 19,
+          "share": 0.8636
+        },
+        "MID": {
+          "picks": 3,
+          "share": 0.1364
+        }
+      }
+    },
+    "Melissa": {
+      "primary_role": "Marksman",
+      "primary_lane": "GOLD",
+      "primary_lane_source": "liquipedia",
+      "specialties": [
+        "Finisher",
+        "Damage"
+      ],
+      "damage_type": "magic",
+      "damage_type_source": "derived:ability_text",
+      "damage_counts": {
+        "physical": 1,
+        "magic": 2
+      },
+      "resource": "Mana",
+      "release_date": "2022-02-22",
+      "lanes_empirical": {
+        "GOLD": {
+          "picks": 34,
+          "share": 1.0
+        }
+      }
+    },
+    "Minotaur": {
+      "primary_role": "Tank",
+      "primary_lane": "ROAM",
+      "primary_lane_source": "liquipedia",
+      "specialties": [
+        "Crowd Control"
+      ],
+      "damage_type": "physical",
+      "damage_type_source": "derived:ability_text",
+      "damage_counts": {
+        "physical": 4,
+        "magic": 0
+      },
+      "resource": null,
+      "release_date": "2016",
+      "lanes_empirical": {
+        "ROAM": {
+          "picks": 33,
+          "share": 0.7674
+        },
+        "EXP": {
+          "picks": 10,
+          "share": 0.2326
+        }
+      }
+    },
+    "Minsitthar": {
+      "primary_role": "Fighter",
+      "primary_lane": "EXP",
+      "primary_lane_source": "liquipedia",
+      "specialties": [
+        "Initiator",
+        "Crowd Control"
+      ],
+      "damage_type": "physical",
+      "damage_type_source": "derived:ability_text",
+      "damage_counts": {
+        "physical": 6,
+        "magic": 0
+      },
+      "resource": "Mana",
+      "release_date": "2018",
+      "lanes_empirical": {
+        "GOLD": {
+          "picks": 1,
+          "share": 1.0
+        }
+      }
+    },
+    "Miya": {
+      "primary_role": "Marksman",
+      "primary_lane": "GOLD",
+      "primary_lane_source": "liquipedia",
+      "specialties": [
+        "Finisher",
+        "Damage"
+      ],
+      "damage_type": "physical",
+      "damage_type_source": "derived:ability_text",
+      "damage_counts": {
+        "physical": 4,
+        "magic": 0
+      },
+      "resource": "Mana",
+      "release_date": "2016-09-22",
+      "lanes_empirical": {
+        "GOLD": {
+          "picks": 27,
+          "share": 1.0
+        }
+      }
+    },
+    "Moskov": {
+      "primary_role": "Marksman",
+      "primary_lane": "GOLD",
+      "primary_lane_source": "liquipedia",
+      "specialties": [
+        "Finisher",
+        "Chase"
+      ],
+      "damage_type": "physical",
+      "damage_type_source": "derived:ability_text",
+      "damage_counts": {
+        "physical": 5,
+        "magic": 0
+      },
+      "resource": "Mana",
+      "release_date": "2017-03-20",
+      "lanes_empirical": {
+        "GOLD": {
+          "picks": 32,
+          "share": 1.0
+        }
+      }
+    },
+    "Nana": {
+      "primary_role": "Mage",
+      "primary_lane": "MID",
+      "primary_lane_source": "liquipedia",
+      "specialties": [
+        "Poke",
+        "Burst"
+      ],
+      "damage_type": "magic",
+      "damage_type_source": "derived:ability_text",
+      "damage_counts": {
+        "physical": 0,
+        "magic": 3
+      },
+      "resource": "Mana",
+      "release_date": "2016",
+      "lanes_empirical": {}
+    },
+    "Natalia": {
+      "primary_role": "Assassin",
+      "primary_lane": "JUNGLE",
+      "primary_lane_source": "liquipedia",
+      "specialties": [
+        "Chase",
+        "Finisher"
+      ],
+      "damage_type": "physical",
+      "damage_type_source": "derived:ability_text",
+      "damage_counts": {
+        "physical": 2,
+        "magic": 0
+      },
+      "resource": null,
+      "release_date": "2016-12",
+      "lanes_empirical": {}
+    },
+    "Natan": {
+      "primary_role": "Marksman",
+      "primary_lane": "GOLD",
+      "primary_lane_source": "liquipedia",
+      "specialties": [
+        "Burst",
+        "Magic Damage"
+      ],
+      "damage_type": "magic",
+      "damage_type_source": "derived:ability_text",
+      "damage_counts": {
+        "physical": 0,
+        "magic": 5
+      },
+      "resource": "Mana",
+      "release_date": "2021-07-23",
+      "lanes_empirical": {}
+    },
+    "Nolan": {
+      "primary_role": "Assassin",
+      "primary_lane": "JUNGLE",
+      "primary_lane_source": "liquipedia",
+      "specialties": [
+        "Chase",
+        "Burst"
+      ],
+      "damage_type": "physical",
+      "damage_type_source": "derived:ability_text",
+      "damage_counts": {
+        "physical": 5,
+        "magic": 0
+      },
+      "resource": "Energy",
+      "release_date": "2023-09-30",
+      "lanes_empirical": {
+        "JUNGLE": {
+          "picks": 54,
+          "share": 1.0
+        }
+      }
+    },
+    "Novaria": {
+      "primary_role": "Mage",
+      "primary_lane": "MID",
+      "primary_lane_source": "liquipedia",
+      "specialties": [
+        "Burst",
+        "Poke"
+      ],
+      "damage_type": "magic",
+      "damage_type_source": "derived:ability_text",
+      "damage_counts": {
+        "physical": 0,
+        "magic": 3
+      },
+      "resource": "Mana",
+      "release_date": "2023-05-16",
+      "lanes_empirical": {
+        "MID": {
+          "picks": 20,
+          "share": 1.0
+        }
+      }
+    },
+    "Obsidia": {
+      "primary_role": "Marksman",
+      "primary_lane": "GOLD",
+      "primary_lane_source": "liquipedia",
+      "specialties": [
+        "Finisher",
+        "Damage"
+      ],
+      "damage_type": "physical",
+      "damage_type_source": "derived:ability_text",
+      "damage_counts": {
+        "physical": 4,
+        "magic": 0
+      },
+      "resource": "Mana",
+      "release_date": "2025-09-17",
+      "lanes_empirical": {
+        "GOLD": {
+          "picks": 43,
+          "share": 1.0
+        }
+      }
+    },
+    "Odette": {
+      "primary_role": "Mage",
+      "primary_lane": "MID",
+      "primary_lane_source": "liquipedia",
+      "specialties": [
+        "Burst",
+        "Poke"
+      ],
+      "damage_type": "magic",
+      "damage_type_source": "derived:ability_text",
+      "damage_counts": {
+        "physical": 0,
+        "magic": 5
+      },
+      "resource": "Mana",
+      "release_date": "2017-09-29",
+      "lanes_empirical": {
+        "MID": {
+          "picks": 2,
+          "share": 1.0
+        }
+      }
+    },
+    "Paquito": {
+      "primary_role": "Fighter",
+      "primary_lane": "EXP",
+      "primary_lane_source": "liquipedia",
+      "specialties": [
+        "Chase",
+        "Damage"
+      ],
+      "damage_type": "physical",
+      "damage_type_source": "derived:ability_text",
+      "damage_counts": {
+        "physical": 7,
+        "magic": 0
+      },
+      "resource": null,
+      "release_date": "2021-01-15",
+      "lanes_empirical": {
+        "JUNGLE": {
+          "picks": 56,
+          "share": 0.6437
+        },
+        "GOLD": {
+          "picks": 27,
+          "share": 0.3103
+        },
+        "EXP": {
+          "picks": 4,
+          "share": 0.046
+        }
+      }
+    },
+    "Pharsa": {
+      "primary_role": "Mage",
+      "primary_lane": "MID",
+      "primary_lane_source": "liquipedia",
+      "specialties": [
+        "Burst",
+        "Poke"
+      ],
+      "damage_type": "magic",
+      "damage_type_source": "derived:ability_text",
+      "damage_counts": {
+        "physical": 0,
+        "magic": 4
+      },
+      "resource": "Mana",
+      "release_date": "2017",
+      "lanes_empirical": {
+        "MID": {
+          "picks": 6,
+          "share": 1.0
+        }
+      }
+    },
+    "Phoveus": {
+      "primary_role": "Fighter",
+      "primary_lane": "EXP",
+      "primary_lane_source": "liquipedia",
+      "specialties": [
+        "Regen",
+        "Damage"
+      ],
+      "damage_type": "mixed",
+      "damage_type_source": "derived:ability_text",
+      "damage_counts": {
+        "physical": 2,
+        "magic": 3
+      },
+      "resource": null,
+      "release_date": "2021-05-11",
+      "lanes_empirical": {
+        "EXP": {
+          "picks": 15,
+          "share": 1.0
+        }
+      }
+    },
+    "Popol and Kupa": {
+      "primary_role": "Marksman",
+      "primary_lane": "JUNGLE",
+      "primary_lane_source": "liquipedia",
+      "specialties": [
+        "Push",
+        "Burst"
+      ],
+      "damage_type": "physical",
+      "damage_type_source": "derived:ability_text",
+      "damage_counts": {
+        "physical": 7,
+        "magic": 1
+      },
+      "resource": "Mana",
+      "release_date": "2020-04-21",
+      "lanes_empirical": {}
+    },
+    "Rafaela": {
+      "primary_role": "Support",
+      "primary_lane": "ROAM",
+      "primary_lane_source": "liquipedia",
+      "specialties": [
+        "Regen",
+        "Guard"
+      ],
+      "damage_type": "magic",
+      "damage_type_source": "derived:ability_text",
+      "damage_counts": {
+        "physical": 0,
+        "magic": 2
+      },
+      "resource": "Mana",
+      "release_date": "2016",
+      "lanes_empirical": {
+        "MID": {
+          "picks": 20,
+          "share": 0.5405
+        },
+        "ROAM": {
+          "picks": 17,
+          "share": 0.4595
+        }
+      }
+    },
+    "Roger": {
+      "primary_role": "Fighter",
+      "primary_lane": "JUNGLE",
+      "primary_lane_source": "liquipedia",
+      "specialties": [
+        "Finisher",
+        "Burst"
+      ],
+      "damage_type": "physical",
+      "damage_type_source": "derived:ability_text",
+      "damage_counts": {
+        "physical": 3,
+        "magic": 0
+      },
+      "resource": "Mana",
+      "release_date": "2017-06-25",
+      "lanes_empirical": {}
+    },
+    "Ruby": {
+      "primary_role": "Fighter",
+      "primary_lane": "EXP",
+      "primary_lane_source": "liquipedia",
+      "specialties": [
+        "Crowd Control",
+        "Regen"
+      ],
+      "damage_type": "physical",
+      "damage_type_source": "derived:ability_text",
+      "damage_counts": {
+        "physical": 4,
+        "magic": 0
+      },
+      "resource": "Mana",
+      "release_date": "2017",
+      "lanes_empirical": {
+        "EXP": {
+          "picks": 8,
+          "share": 0.5714
+        },
+        "ROAM": {
+          "picks": 4,
+          "share": 0.2857
+        },
+        "GOLD": {
+          "picks": 2,
+          "share": 0.1429
+        }
+      }
+    },
+    "Saber": {
+      "primary_role": "Assassin",
+      "primary_lane": "JUNGLE",
+      "primary_lane_source": "liquipedia",
+      "specialties": [
+        "Charge",
+        "Finisher"
+      ],
+      "damage_type": "physical",
+      "damage_type_source": "derived:ability_text",
+      "damage_counts": {
+        "physical": 6,
+        "magic": 0
+      },
+      "resource": "Mana",
+      "release_date": "2016",
+      "lanes_empirical": {
+        "JUNGLE": {
+          "picks": 6,
+          "share": 1.0
+        }
+      }
+    },
+    "Selena": {
+      "primary_role": "Assassin",
+      "primary_lane": "MID",
+      "primary_lane_source": "liquipedia",
+      "specialties": [
+        "Initiator",
+        "Finisher"
+      ],
+      "damage_type": "magic",
+      "damage_type_source": "derived:ability_text",
+      "damage_counts": {
+        "physical": 0,
+        "magic": 6
+      },
+      "resource": "Mana",
+      "release_date": "2018-07-18",
+      "lanes_empirical": {
+        "MID": {
+          "picks": 46,
+          "share": 1.0
+        }
+      }
+    },
+    "Silvanna": {
+      "primary_role": "Fighter",
+      "primary_lane": "EXP",
+      "primary_lane_source": "liquipedia",
+      "specialties": [
+        "Initiator",
+        "Magic Damage"
+      ],
+      "damage_type": "magic",
+      "damage_type_source": "derived:ability_text",
+      "damage_counts": {
+        "physical": 0,
+        "magic": 5
+      },
+      "resource": "Mana",
+      "release_date": "2019-12-17",
+      "lanes_empirical": {}
+    },
+    "Sora": {
+      "primary_role": "Fighter",
+      "primary_lane": "EXP",
+      "primary_lane_source": "liquipedia",
+      "specialties": [
+        "Charge",
+        "Burst"
+      ],
+      "damage_type": "physical",
+      "damage_type_source": "derived:ability_text",
+      "damage_counts": {
+        "physical": 16,
+        "magic": 0
+      },
+      "resource": null,
+      "release_date": "2025-12-18",
+      "lanes_empirical": {
+        "EXP": {
+          "picks": 16,
+          "share": 0.9412
+        },
+        "GOLD": {
+          "picks": 1,
+          "share": 0.0588
+        }
+      }
+    },
+    "Sun": {
+      "primary_role": "Fighter",
+      "primary_lane": "EXP",
+      "primary_lane_source": "liquipedia",
+      "specialties": [
+        "Push",
+        "Damage"
+      ],
+      "damage_type": "physical",
+      "damage_type_source": "derived:ability_text",
+      "damage_counts": {
+        "physical": 3,
+        "magic": 0
+      },
+      "resource": "Mana",
+      "release_date": "2016",
+      "lanes_empirical": {}
+    },
+    "Suyou": {
+      "primary_role": "Assassin",
+      "primary_lane": "JUNGLE",
+      "primary_lane_source": "liquipedia",
+      "specialties": [
+        "Chase",
+        "Burst"
+      ],
+      "damage_type": "physical",
+      "damage_type_source": "derived:ability_text",
+      "damage_counts": {
+        "physical": 10,
+        "magic": 0
+      },
+      "resource": null,
+      "release_date": "2024-09-21",
+      "lanes_empirical": {
+        "JUNGLE": {
+          "picks": 15,
+          "share": 1.0
+        }
+      }
+    },
+    "Terizla": {
+      "primary_role": "Fighter",
+      "primary_lane": "EXP",
+      "primary_lane_source": "liquipedia",
+      "specialties": [
+        "Burst",
+        "Crowd Control"
+      ],
+      "damage_type": "physical",
+      "damage_type_source": "derived:ability_text",
+      "damage_counts": {
+        "physical": 6,
+        "magic": 0
+      },
+      "resource": null,
+      "release_date": "2019-06-04",
+      "lanes_empirical": {
+        "EXP": {
+          "picks": 6,
+          "share": 1.0
+        }
+      }
+    },
+    "Thamuz": {
+      "primary_role": "Fighter",
+      "primary_lane": "EXP",
+      "primary_lane_source": "liquipedia",
+      "specialties": [
+        "Chase",
+        "Damage"
+      ],
+      "damage_type": "physical",
+      "damage_type_source": "derived:ability_text",
+      "damage_counts": {
+        "physical": 5,
+        "magic": 0
+      },
+      "resource": null,
+      "release_date": "2018",
+      "lanes_empirical": {}
+    },
+    "Tigreal": {
+      "primary_role": "Tank",
+      "primary_lane": "ROAM",
+      "primary_lane_source": "liquipedia",
+      "specialties": [],
+      "damage_type": "physical",
+      "damage_type_source": "derived:ability_text",
+      "damage_counts": {
+        "physical": 4,
+        "magic": 0
+      },
+      "resource": "Mana",
+      "release_date": "2016",
+      "lanes_empirical": {
+        "ROAM": {
+          "picks": 1,
+          "share": 1.0
+        }
+      }
+    },
+    "Uranus": {
+      "primary_role": "Tank",
+      "primary_lane": "EXP",
+      "primary_lane_source": "liquipedia",
+      "specialties": [
+        "Regen"
+      ],
+      "damage_type": "magic",
+      "damage_type_source": "derived:ability_text",
+      "damage_counts": {
+        "physical": 0,
+        "magic": 5
+      },
+      "resource": "Mana",
+      "release_date": "2018-05-07",
+      "lanes_empirical": {
+        "EXP": {
+          "picks": 49,
+          "share": 1.0
+        }
+      }
+    },
+    "Vale": {
+      "primary_role": "Mage",
+      "primary_lane": "MID",
+      "primary_lane_source": "liquipedia",
+      "specialties": [
+        "Burst",
+        "Crowd Control"
+      ],
+      "damage_type": "magic",
+      "damage_type_source": "derived:ability_text",
+      "damage_counts": {
+        "physical": 0,
+        "magic": 5
+      },
+      "resource": "Mana",
+      "release_date": "2019-01-29",
+      "lanes_empirical": {}
+    },
+    "Valentina": {
+      "primary_role": "Mage",
+      "primary_lane": "MID",
+      "primary_lane_source": "liquipedia",
+      "specialties": [
+        "Burst",
+        "Finisher"
+      ],
+      "damage_type": "magic",
+      "damage_type_source": "derived:ability_text",
+      "damage_counts": {
+        "physical": 1,
+        "magic": 2
+      },
+      "resource": "Mana",
+      "release_date": "2021",
+      "lanes_empirical": {
+        "MID": {
+          "picks": 39,
+          "share": 0.9286
+        },
+        "EXP": {
+          "picks": 2,
+          "share": 0.0476
+        },
+        "ROAM": {
+          "picks": 1,
+          "share": 0.0238
+        }
+      }
+    },
+    "Valir": {
+      "primary_role": "Mage",
+      "primary_lane": "MID",
+      "primary_lane_source": "liquipedia",
+      "specialties": [
+        "Damage",
+        "Guard"
+      ],
+      "damage_type": "magic",
+      "damage_type_source": "derived:ability_text",
+      "damage_counts": {
+        "physical": 0,
+        "magic": 6
+      },
+      "resource": "Mana",
+      "release_date": "2018",
+      "lanes_empirical": {
+        "MID": {
+          "picks": 3,
+          "share": 1.0
+        }
+      }
+    },
+    "Vexana": {
+      "primary_role": "Mage",
+      "primary_lane": "MID",
+      "primary_lane_source": "liquipedia",
+      "specialties": [
+        "Poke",
+        "Control"
+      ],
+      "damage_type": "magic",
+      "damage_type_source": "derived:ability_text",
+      "damage_counts": {
+        "physical": 0,
+        "magic": 6
+      },
+      "resource": "Mana",
+      "release_date": "2017",
+      "lanes_empirical": {
+        "MID": {
+          "picks": 2,
+          "share": 1.0
+        }
+      }
+    },
+    "Wanwan": {
+      "primary_role": "Marksman",
+      "primary_lane": "GOLD",
+      "primary_lane_source": "liquipedia",
+      "specialties": [
+        "Finisher",
+        "Burst"
+      ],
+      "damage_type": "physical",
+      "damage_type_source": "derived:ability_text",
+      "damage_counts": {
+        "physical": 4,
+        "magic": 0
+      },
+      "resource": "Mana",
+      "release_date": "2019-11-26",
+      "lanes_empirical": {
+        "GOLD": {
+          "picks": 2,
+          "share": 1.0
+        }
+      }
+    },
+    "X.Borg": {
+      "primary_role": "Fighter",
+      "primary_lane": "EXP",
+      "primary_lane_source": "liquipedia",
+      "specialties": [
+        "Regen",
+        "Burst"
+      ],
+      "damage_type": "physical",
+      "damage_type_source": "derived:ability_text",
+      "damage_counts": {
+        "physical": 3,
+        "magic": 0
+      },
+      "resource": null,
+      "release_date": "2019-08-09",
+      "lanes_empirical": {}
+    },
+    "Xavier": {
+      "primary_role": "Mage",
+      "primary_lane": "MID",
+      "primary_lane_source": "liquipedia",
+      "specialties": [
+        "Damage",
+        "Burst"
+      ],
+      "damage_type": "magic",
+      "damage_type_source": "derived:ability_text",
+      "damage_counts": {
+        "physical": 0,
+        "magic": 4
+      },
+      "resource": "Mana",
+      "release_date": "2022-03-22",
+      "lanes_empirical": {}
+    },
+    "Yi Sun-Shin": {
+      "primary_role": "Assassin",
+      "primary_lane": "JUNGLE",
+      "primary_lane_source": "liquipedia",
+      "specialties": [
+        "Finisher",
+        "Chase"
+      ],
+      "damage_type": "physical",
+      "damage_type_source": "derived:ability_text",
+      "damage_counts": {
+        "physical": 5,
+        "magic": 0
+      },
+      "resource": "Mana",
+      "release_date": "2017",
+      "lanes_empirical": {
+        "JUNGLE": {
+          "picks": 14,
+          "share": 1.0
+        }
+      }
+    },
+    "Yin": {
+      "primary_role": "Fighter",
+      "primary_lane": "JUNGLE",
+      "primary_lane_source": "liquipedia",
+      "specialties": [
+        "Burst",
+        "Control"
+      ],
+      "damage_type": "physical",
+      "damage_type_source": "derived:ability_text",
+      "damage_counts": {
+        "physical": 7,
+        "magic": 0
+      },
+      "resource": null,
+      "release_date": "2022-01-18",
+      "lanes_empirical": {}
+    },
+    "Yu Zhong": {
+      "primary_role": "Fighter",
+      "primary_lane": "EXP",
+      "primary_lane_source": "liquipedia",
+      "specialties": [
+        "Regen",
+        "Damage"
+      ],
+      "damage_type": "physical",
+      "damage_type_source": "derived:ability_text",
+      "damage_counts": {
+        "physical": 7,
+        "magic": 0
+      },
+      "resource": null,
+      "release_date": "2020-06-19",
+      "lanes_empirical": {
+        "EXP": {
+          "picks": 1,
+          "share": 1.0
+        }
+      }
+    },
+    "Yve": {
+      "primary_role": "Mage",
+      "primary_lane": "MID",
+      "primary_lane_source": "liquipedia",
+      "specialties": [
+        "Poke",
+        "Burst"
+      ],
+      "damage_type": "magic",
+      "damage_type_source": "derived:ability_text",
+      "damage_counts": {
+        "physical": 0,
+        "magic": 5
+      },
+      "resource": "Mana",
+      "release_date": "2021-02-12",
+      "lanes_empirical": {
+        "MID": {
+          "picks": 6,
+          "share": 1.0
+        }
+      }
+    },
+    "Zetian": {
+      "primary_role": "Mage",
+      "primary_lane": "MID",
+      "primary_lane_source": "liquipedia",
+      "specialties": [
+        "Damage",
+        "Crowd Control"
+      ],
+      "damage_type": "magic",
+      "damage_type_source": "derived:ability_text",
+      "damage_counts": {
+        "physical": 0,
+        "magic": 8
+      },
+      "resource": "Mana",
+      "release_date": "2025-06-18",
+      "lanes_empirical": {
+        "MID": {
+          "picks": 18,
+          "share": 1.0
+        }
+      }
+    },
+    "Zhask": {
+      "primary_role": "Mage",
+      "primary_lane": "MID",
+      "primary_lane_source": "liquipedia",
+      "specialties": [
+        "Chase",
+        "Damage"
+      ],
+      "damage_type": "magic",
+      "damage_type_source": "derived:ability_text",
+      "damage_counts": {
+        "physical": 0,
+        "magic": 4
+      },
+      "resource": "Mana",
+      "release_date": "2017-11-27",
+      "lanes_empirical": {}
+    },
+    "Zhuxin": {
+      "primary_role": "Mage",
+      "primary_lane": "MID",
+      "primary_lane_source": "liquipedia",
+      "specialties": [
+        "Damage",
+        "Crowd Control"
+      ],
+      "damage_type": "magic",
+      "damage_type_source": "derived:ability_text",
+      "damage_counts": {
+        "physical": 0,
+        "magic": 5
+      },
+      "resource": "Mana",
+      "release_date": "2024-06-29",
+      "lanes_empirical": {
+        "MID": {
+          "picks": 47,
+          "share": 1.0
+        }
+      }
+    },
+    "Zilong": {
+      "primary_role": "Fighter",
+      "primary_lane": "EXP",
+      "primary_lane_source": "liquipedia",
+      "specialties": [
+        "Chase",
+        "Damage"
+      ],
+      "damage_type": "physical",
+      "damage_type_source": "derived:ability_text",
+      "damage_counts": {
+        "physical": 3,
+        "magic": 0
+      },
+      "resource": "Mana",
+      "release_date": "2016",
+      "lanes_empirical": {}
+    }
+  }
+}

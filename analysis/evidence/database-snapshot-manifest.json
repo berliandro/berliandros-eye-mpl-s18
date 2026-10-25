@@ -1,0 +1,1053 @@
+{
+  "schema_version": 1,
+  "snapshot_id": "mpl-s18-db-1fb1768560e1",
+  "path": "data/mpl_id_s18.db",
+  "sha256": "1fb1768560e1ca5c2613761e5a9150f77aecb1941096b557e16e072f772125a2",
+  "bytes": 5234688,
+  "inspected_at": "2026-10-25T13:42:13+00:00",
+  "tables": {
+    "game_bans": {
+      "row_count": 1738,
+      "columns": [
+        {
+          "name": "match_detail_id",
+          "type": "TEXT",
+          "notnull": false,
+          "pk": false
+        },
+        {
+          "name": "game_no",
+          "type": "INTEGER",
+          "notnull": false,
+          "pk": false
+        },
+        {
+          "name": "side",
+          "type": "TEXT",
+          "notnull": false,
+          "pk": false
+        },
+        {
+          "name": "hero",
+          "type": "TEXT",
+          "notnull": false,
+          "pk": false
+        },
+        {
+          "name": "ban_order",
+          "type": "INTEGER",
+          "notnull": false,
+          "pk": false
+        }
+      ],
+      "sql": "CREATE TABLE game_bans(\n  match_detail_id TEXT, game_no INTEGER, side TEXT, hero TEXT,\n  ban_order INTEGER\n)"
+    },
+    "game_picks": {
+      "row_count": 1740,
+      "columns": [
+        {
+          "name": "match_detail_id",
+          "type": "TEXT",
+          "notnull": false,
+          "pk": true
+        },
+        {
+          "name": "game_no",
+          "type": "INTEGER",
+          "notnull": false,
+          "pk": true
+        },
+        {
+          "name": "team",
+          "type": "TEXT",
+          "notnull": false,
+          "pk": true
+        },
+        {
+          "name": "side",
+          "type": "TEXT",
+          "notnull": false,
+          "pk": false
+        },
+        {
+          "name": "slot",
+          "type": "INTEGER",
+          "notnull": false,
+          "pk": true
+        },
+        {
+          "name": "lane",
+          "type": "TEXT",
+          "notnull": false,
+          "pk": false
+        },
+        {
+          "name": "hero",
+          "type": "TEXT",
+          "notnull": false,
+          "pk": false
+        },
+        {
+          "name": "player",
+          "type": "TEXT",
+          "notnull": false,
+          "pk": false
+        }
+      ],
+      "sql": "CREATE TABLE game_picks(\n  match_detail_id TEXT, game_no INTEGER, team TEXT, side TEXT,\n  slot INTEGER, lane TEXT, hero TEXT, player TEXT,\n  PRIMARY KEY(match_detail_id, game_no, team, slot)\n)"
+    },
+    "game_players": {
+      "row_count": 1740,
+      "columns": [
+        {
+          "name": "match_detail_id",
+          "type": "TEXT",
+          "notnull": false,
+          "pk": true
+        },
+        {
+          "name": "game_no",
+          "type": "INTEGER",
+          "notnull": false,
+          "pk": true
+        },
+        {
+          "name": "team",
+          "type": "TEXT",
+          "notnull": false,
+          "pk": true
+        },
+        {
+          "name": "player",
+          "type": "TEXT",
+          "notnull": false,
+          "pk": true
+        },
+        {
+          "name": "lane",
+          "type": "TEXT",
+          "notnull": false,
+          "pk": false
+        },
+        {
+          "name": "hero",
+          "type": "TEXT",
+          "notnull": false,
+          "pk": true
+        },
+        {
+          "name": "kills",
+          "type": "INTEGER",
+          "notnull": false,
+          "pk": false
+        },
+        {
+          "name": "deaths",
+          "type": "INTEGER",
+          "notnull": false,
+          "pk": false
+        },
+        {
+          "name": "assists",
+          "type": "INTEGER",
+          "notnull": false,
+          "pk": false
+        },
+        {
+          "name": "kda",
+          "type": "REAL",
+          "notnull": false,
+          "pk": false
+        },
+        {
+          "name": "gold",
+          "type": "INTEGER",
+          "notnull": false,
+          "pk": false
+        },
+        {
+          "name": "gold_per_min",
+          "type": "REAL",
+          "notnull": false,
+          "pk": false
+        },
+        {
+          "name": "hero_damage",
+          "type": "INTEGER",
+          "notnull": false,
+          "pk": false
+        },
+        {
+          "name": "damage_taken",
+          "type": "INTEGER",
+          "notnull": false,
+          "pk": false
+        },
+        {
+          "name": "tower_damage",
+          "type": "INTEGER",
+          "notnull": false,
+          "pk": false
+        },
+        {
+          "name": "emblem",
+          "type": "TEXT",
+          "notnull": false,
+          "pk": false
+        },
+        {
+          "name": "items_json",
+          "type": "TEXT",
+          "notnull": false,
+          "pk": false
+        },
+        {
+          "name": "talents_json",
+          "type": "TEXT",
+          "notnull": false,
+          "pk": false
+        },
+        {
+          "name": "lane_source",
+          "type": "TEXT",
+          "notnull": false,
+          "pk": false
+        }
+      ],
+      "sql": "CREATE TABLE game_players(\n  match_detail_id TEXT, game_no INTEGER,\n  team TEXT, player TEXT, lane TEXT, hero TEXT,\n  kills INTEGER, deaths INTEGER, assists INTEGER,\n  kda REAL, gold INTEGER, gold_per_min REAL,\n  hero_damage INTEGER, damage_taken INTEGER, tower_damage INTEGER,\n  emblem TEXT, items_json TEXT, talents_json TEXT,\n  lane_source TEXT,\n  PRIMARY KEY(match_detail_id, game_no, team, player, hero)\n)"
+    },
+    "games": {
+      "row_count": 174,
+      "columns": [
+        {
+          "name": "match_detail_id",
+          "type": "TEXT",
+          "notnull": false,
+          "pk": true
+        },
+        {
+          "name": "game_no",
+          "type": "INTEGER",
+          "notnull": false,
+          "pk": true
+        },
+        {
+          "name": "team_a",
+          "type": "TEXT",
+          "notnull": false,
+          "pk": false
+        },
+        {
+          "name": "team_b",
+          "type": "TEXT",
+          "notnull": false,
+          "pk": false
+        },
+        {
+          "name": "team_a_kills",
+          "type": "INTEGER",
+          "notnull": false,
+          "pk": false
+        },
+        {
+          "name": "team_b_kills",
+          "type": "INTEGER",
+          "notnull": false,
+          "pk": false
+        },
+        {
+          "name": "winner",
+          "type": "TEXT",
+          "notnull": false,
+          "pk": false
+        },
+        {
+          "name": "duration_str",
+          "type": "TEXT",
+          "notnull": false,
+          "pk": false
+        },
+        {
+          "name": "duration_sec",
+          "type": "INTEGER",
+          "notnull": false,
+          "pk": false
+        },
+        {
+          "name": "team_a_side",
+          "type": "TEXT",
+          "notnull": false,
+          "pk": false
+        },
+        {
+          "name": "team_b_side",
+          "type": "TEXT",
+          "notnull": false,
+          "pk": false
+        },
+        {
+          "name": "vod_url",
+          "type": "TEXT",
+          "notnull": false,
+          "pk": false
+        },
+        {
+          "name": "map_mode",
+          "type": "TEXT",
+          "notnull": false,
+          "pk": false
+        }
+      ],
+      "sql": "CREATE TABLE games(\n  match_detail_id TEXT, game_no INTEGER,\n  team_a TEXT, team_b TEXT,\n  team_a_kills INTEGER, team_b_kills INTEGER,\n  winner TEXT, duration_str TEXT, duration_sec INTEGER,\n  team_a_side TEXT, team_b_side TEXT, vod_url TEXT,\n  map_mode TEXT,\n  PRIMARY KEY(match_detail_id, game_no)\n)"
+    },
+    "hero_stats": {
+      "row_count": 133,
+      "columns": [
+        {
+          "name": "hero",
+          "type": "TEXT",
+          "notnull": false,
+          "pk": true
+        },
+        {
+          "name": "hero_image",
+          "type": "TEXT",
+          "notnull": false,
+          "pk": false
+        },
+        {
+          "name": "pick",
+          "type": "INTEGER",
+          "notnull": false,
+          "pk": false
+        },
+        {
+          "name": "ban",
+          "type": "INTEGER",
+          "notnull": false,
+          "pk": false
+        },
+        {
+          "name": "win",
+          "type": "INTEGER",
+          "notnull": false,
+          "pk": false
+        },
+        {
+          "name": "win_rate",
+          "type": "TEXT",
+          "notnull": false,
+          "pk": false
+        }
+      ],
+      "sql": "CREATE TABLE hero_stats(\n  hero TEXT PRIMARY KEY, hero_image TEXT,\n  pick INTEGER, ban INTEGER, win INTEGER, win_rate TEXT\n)"
+    },
+    "matches": {
+      "row_count": 72,
+      "columns": [
+        {
+          "name": "match_detail_id",
+          "type": "TEXT",
+          "notnull": false,
+          "pk": true
+        },
+        {
+          "name": "schedule_id",
+          "type": "TEXT",
+          "notnull": false,
+          "pk": false
+        },
+        {
+          "name": "team_a",
+          "type": "TEXT",
+          "notnull": false,
+          "pk": false
+        },
+        {
+          "name": "team_b",
+          "type": "TEXT",
+          "notnull": false,
+          "pk": false
+        },
+        {
+          "name": "score_a",
+          "type": "INTEGER",
+          "notnull": false,
+          "pk": false
+        },
+        {
+          "name": "score_b",
+          "type": "INTEGER",
+          "notnull": false,
+          "pk": false
+        },
+        {
+          "name": "date",
+          "type": "TEXT",
+          "notnull": false,
+          "pk": false
+        },
+        {
+          "name": "iso_date",
+          "type": "TEXT",
+          "notnull": false,
+          "pk": false
+        },
+        {
+          "name": "iso_datetime",
+          "type": "TEXT",
+          "notnull": false,
+          "pk": false
+        },
+        {
+          "name": "status",
+          "type": "TEXT",
+          "notnull": false,
+          "pk": false
+        },
+        {
+          "name": "winner",
+          "type": "TEXT",
+          "notnull": false,
+          "pk": false
+        },
+        {
+          "name": "vod_url",
+          "type": "TEXT",
+          "notnull": false,
+          "pk": false
+        },
+        {
+          "name": "match_detail_url",
+          "type": "TEXT",
+          "notnull": false,
+          "pk": false
+        },
+        {
+          "name": "liq_mvp",
+          "type": "TEXT",
+          "notnull": false,
+          "pk": false
+        }
+      ],
+      "sql": "CREATE TABLE matches(\n  match_detail_id TEXT PRIMARY KEY,\n  schedule_id TEXT, team_a TEXT, team_b TEXT,\n  score_a INTEGER, score_b INTEGER,\n  date TEXT, iso_date TEXT, iso_datetime TEXT,\n  status TEXT, winner TEXT, vod_url TEXT, match_detail_url TEXT,\n  liq_mvp TEXT\n)"
+    },
+    "player_season_stats": {
+      "row_count": 66,
+      "columns": [
+        {
+          "name": "player",
+          "type": "TEXT",
+          "notnull": false,
+          "pk": true
+        },
+        {
+          "name": "team",
+          "type": "TEXT",
+          "notnull": false,
+          "pk": false
+        },
+        {
+          "name": "team_slug",
+          "type": "TEXT",
+          "notnull": false,
+          "pk": false
+        },
+        {
+          "name": "lane",
+          "type": "TEXT",
+          "notnull": false,
+          "pk": false
+        },
+        {
+          "name": "total_games",
+          "type": "INTEGER",
+          "notnull": false,
+          "pk": false
+        },
+        {
+          "name": "total_kills",
+          "type": "INTEGER",
+          "notnull": false,
+          "pk": false
+        },
+        {
+          "name": "avg_kills",
+          "type": "REAL",
+          "notnull": false,
+          "pk": false
+        },
+        {
+          "name": "total_deaths",
+          "type": "INTEGER",
+          "notnull": false,
+          "pk": false
+        },
+        {
+          "name": "avg_deaths",
+          "type": "REAL",
+          "notnull": false,
+          "pk": false
+        },
+        {
+          "name": "total_assists",
+          "type": "INTEGER",
+          "notnull": false,
+          "pk": false
+        },
+        {
+          "name": "avg_assists",
+          "type": "REAL",
+          "notnull": false,
+          "pk": false
+        },
+        {
+          "name": "avg_kda",
+          "type": "REAL",
+          "notnull": false,
+          "pk": false
+        },
+        {
+          "name": "kill_participation",
+          "type": "TEXT",
+          "notnull": false,
+          "pk": false
+        }
+      ],
+      "sql": "CREATE TABLE player_season_stats(\n  player TEXT PRIMARY KEY, team TEXT, team_slug TEXT, lane TEXT,\n  total_games INTEGER, total_kills INTEGER, avg_kills REAL,\n  total_deaths INTEGER, avg_deaths REAL, total_assists INTEGER, avg_assists REAL,\n  avg_kda REAL, kill_participation TEXT\n)"
+    },
+    "schedule_all": {
+      "row_count": 80,
+      "columns": [
+        {
+          "name": "schedule_id",
+          "type": "TEXT",
+          "notnull": false,
+          "pk": true
+        },
+        {
+          "name": "team_a",
+          "type": "TEXT",
+          "notnull": false,
+          "pk": false
+        },
+        {
+          "name": "team_b",
+          "type": "TEXT",
+          "notnull": false,
+          "pk": false
+        },
+        {
+          "name": "score_a",
+          "type": "INTEGER",
+          "notnull": false,
+          "pk": false
+        },
+        {
+          "name": "score_b",
+          "type": "INTEGER",
+          "notnull": false,
+          "pk": false
+        },
+        {
+          "name": "date",
+          "type": "TEXT",
+          "notnull": false,
+          "pk": false
+        },
+        {
+          "name": "iso_date",
+          "type": "TEXT",
+          "notnull": false,
+          "pk": false
+        },
+        {
+          "name": "iso_datetime",
+          "type": "TEXT",
+          "notnull": false,
+          "pk": false
+        },
+        {
+          "name": "status",
+          "type": "TEXT",
+          "notnull": false,
+          "pk": false
+        },
+        {
+          "name": "winner",
+          "type": "TEXT",
+          "notnull": false,
+          "pk": false
+        },
+        {
+          "name": "vod_url",
+          "type": "TEXT",
+          "notnull": false,
+          "pk": false
+        },
+        {
+          "name": "match_detail_id",
+          "type": "TEXT",
+          "notnull": false,
+          "pk": false
+        },
+        {
+          "name": "match_detail_url",
+          "type": "TEXT",
+          "notnull": false,
+          "pk": false
+        }
+      ],
+      "sql": "CREATE TABLE schedule_all(\n  schedule_id TEXT PRIMARY KEY, team_a TEXT, team_b TEXT,\n  score_a INTEGER, score_b INTEGER,\n  date TEXT, iso_date TEXT, iso_datetime TEXT,\n  status TEXT, winner TEXT, vod_url TEXT,\n  match_detail_id TEXT, match_detail_url TEXT\n)"
+    },
+    "standings": {
+      "row_count": 9,
+      "columns": [
+        {
+          "name": "rank",
+          "type": "INTEGER",
+          "notnull": false,
+          "pk": true
+        },
+        {
+          "name": "team_name",
+          "type": "TEXT",
+          "notnull": false,
+          "pk": false
+        },
+        {
+          "name": "team_slug",
+          "type": "TEXT",
+          "notnull": false,
+          "pk": false
+        },
+        {
+          "name": "match_point",
+          "type": "INTEGER",
+          "notnull": false,
+          "pk": false
+        },
+        {
+          "name": "match_win",
+          "type": "INTEGER",
+          "notnull": false,
+          "pk": false
+        },
+        {
+          "name": "match_lose",
+          "type": "INTEGER",
+          "notnull": false,
+          "pk": false
+        },
+        {
+          "name": "game_win",
+          "type": "INTEGER",
+          "notnull": false,
+          "pk": false
+        },
+        {
+          "name": "game_lose",
+          "type": "INTEGER",
+          "notnull": false,
+          "pk": false
+        },
+        {
+          "name": "net_game_win",
+          "type": "INTEGER",
+          "notnull": false,
+          "pk": false
+        }
+      ],
+      "sql": "CREATE TABLE standings(\n  rank INTEGER PRIMARY KEY, team_name TEXT, team_slug TEXT,\n  match_point INTEGER, match_win INTEGER, match_lose INTEGER,\n  game_win INTEGER, game_lose INTEGER, net_game_win INTEGER\n)"
+    },
+    "team_games": {
+      "row_count": 348,
+      "columns": [
+        {
+          "name": "match_detail_id",
+          "type": "TEXT",
+          "notnull": false,
+          "pk": true
+        },
+        {
+          "name": "game_no",
+          "type": "INTEGER",
+          "notnull": false,
+          "pk": true
+        },
+        {
+          "name": "team",
+          "type": "TEXT",
+          "notnull": false,
+          "pk": true
+        },
+        {
+          "name": "opponent",
+          "type": "TEXT",
+          "notnull": false,
+          "pk": false
+        },
+        {
+          "name": "players",
+          "type": "INTEGER",
+          "notnull": false,
+          "pk": false
+        },
+        {
+          "name": "kills",
+          "type": "INTEGER",
+          "notnull": false,
+          "pk": false
+        },
+        {
+          "name": "deaths",
+          "type": "INTEGER",
+          "notnull": false,
+          "pk": false
+        },
+        {
+          "name": "assists",
+          "type": "INTEGER",
+          "notnull": false,
+          "pk": false
+        },
+        {
+          "name": "gold",
+          "type": "INTEGER",
+          "notnull": false,
+          "pk": false
+        },
+        {
+          "name": "hero_damage",
+          "type": "INTEGER",
+          "notnull": false,
+          "pk": false
+        },
+        {
+          "name": "damage_taken",
+          "type": "INTEGER",
+          "notnull": false,
+          "pk": false
+        },
+        {
+          "name": "tower_damage",
+          "type": "INTEGER",
+          "notnull": false,
+          "pk": false
+        },
+        {
+          "name": "kda",
+          "type": "REAL",
+          "notnull": false,
+          "pk": false
+        },
+        {
+          "name": "win",
+          "type": "INTEGER",
+          "notnull": false,
+          "pk": false
+        },
+        {
+          "name": "map_mode",
+          "type": "TEXT",
+          "notnull": false,
+          "pk": false
+        },
+        {
+          "name": "duration_sec",
+          "type": "INTEGER",
+          "notnull": false,
+          "pk": false
+        }
+      ],
+      "sql": "CREATE TABLE team_games(\n  match_detail_id TEXT, game_no INTEGER, team TEXT, opponent TEXT,\n  players INTEGER, kills INTEGER, deaths INTEGER, assists INTEGER,\n  gold INTEGER, hero_damage INTEGER, damage_taken INTEGER, tower_damage INTEGER,\n  kda REAL, win INTEGER, map_mode TEXT, duration_sec INTEGER,\n  PRIMARY KEY(match_detail_id, game_no, team)\n)"
+    },
+    "team_season_stats": {
+      "row_count": 9,
+      "columns": [
+        {
+          "name": "team",
+          "type": "TEXT",
+          "notnull": false,
+          "pk": true
+        },
+        {
+          "name": "games",
+          "type": "INTEGER",
+          "notnull": false,
+          "pk": false
+        },
+        {
+          "name": "wins",
+          "type": "INTEGER",
+          "notnull": false,
+          "pk": false
+        },
+        {
+          "name": "losses",
+          "type": "INTEGER",
+          "notnull": false,
+          "pk": false
+        },
+        {
+          "name": "kills",
+          "type": "INTEGER",
+          "notnull": false,
+          "pk": false
+        },
+        {
+          "name": "deaths",
+          "type": "INTEGER",
+          "notnull": false,
+          "pk": false
+        },
+        {
+          "name": "assists",
+          "type": "INTEGER",
+          "notnull": false,
+          "pk": false
+        },
+        {
+          "name": "gold",
+          "type": "INTEGER",
+          "notnull": false,
+          "pk": false
+        },
+        {
+          "name": "hero_damage",
+          "type": "INTEGER",
+          "notnull": false,
+          "pk": false
+        },
+        {
+          "name": "damage_taken",
+          "type": "INTEGER",
+          "notnull": false,
+          "pk": false
+        },
+        {
+          "name": "tower_damage",
+          "type": "INTEGER",
+          "notnull": false,
+          "pk": false
+        },
+        {
+          "name": "kda",
+          "type": "REAL",
+          "notnull": false,
+          "pk": false
+        },
+        {
+          "name": "win_rate",
+          "type": "REAL",
+          "notnull": false,
+          "pk": false
+        },
+        {
+          "name": "avg_gold",
+          "type": "REAL",
+          "notnull": false,
+          "pk": false
+        },
+        {
+          "name": "avg_duration_sec",
+          "type": "REAL",
+          "notnull": false,
+          "pk": false
+        },
+        {
+          "name": "team_name",
+          "type": "TEXT",
+          "notnull": false,
+          "pk": false
+        },
+        {
+          "name": "team_slug",
+          "type": "TEXT",
+          "notnull": false,
+          "pk": false
+        }
+      ],
+      "sql": "CREATE TABLE team_season_stats(\n  team TEXT PRIMARY KEY, games INTEGER, wins INTEGER, losses INTEGER,\n  kills INTEGER, deaths INTEGER, assists INTEGER, gold INTEGER,\n  hero_damage INTEGER, damage_taken INTEGER, tower_damage INTEGER,\n  kda REAL, win_rate REAL, avg_gold REAL, avg_duration_sec REAL,\n  team_name TEXT, team_slug TEXT\n)"
+    }
+  },
+  "coverage": {
+    "matches": 72,
+    "completed_regular_matches": 72,
+    "games": 174,
+    "game_players": 1740,
+    "game_picks": 1740,
+    "game_bans": 1738,
+    "team_games": 348,
+    "standings": 9,
+    "games_with_map_mode": 153,
+    "games_with_both_sides": 174,
+    "games_with_per_game_vod": 173,
+    "matches_with_vod": 72,
+    "matches_with_liquipedia_mvp": 72,
+    "distinct_players": 61,
+    "distinct_heroes": 93
+  },
+  "completed_by_date": [
+    {
+      "iso_date": "2026-08-14",
+      "completed": 2
+    },
+    {
+      "iso_date": "2026-08-15",
+      "completed": 3
+    },
+    {
+      "iso_date": "2026-08-16",
+      "completed": 3
+    },
+    {
+      "iso_date": "2026-08-21",
+      "completed": 2
+    },
+    {
+      "iso_date": "2026-08-22",
+      "completed": 3
+    },
+    {
+      "iso_date": "2026-08-23",
+      "completed": 3
+    },
+    {
+      "iso_date": "2026-08-28",
+      "completed": 2
+    },
+    {
+      "iso_date": "2026-08-29",
+      "completed": 3
+    },
+    {
+      "iso_date": "2026-08-30",
+      "completed": 3
+    },
+    {
+      "iso_date": "2026-09-04",
+      "completed": 2
+    },
+    {
+      "iso_date": "2026-09-05",
+      "completed": 3
+    },
+    {
+      "iso_date": "2026-09-06",
+      "completed": 3
+    },
+    {
+      "iso_date": "2026-09-11",
+      "completed": 1
+    },
+    {
+      "iso_date": "2026-09-12",
+      "completed": 3
+    },
+    {
+      "iso_date": "2026-09-13",
+      "completed": 2
+    },
+    {
+      "iso_date": "2026-09-18",
+      "completed": 3
+    },
+    {
+      "iso_date": "2026-09-19",
+      "completed": 3
+    },
+    {
+      "iso_date": "2026-09-20",
+      "completed": 3
+    },
+    {
+      "iso_date": "2026-10-02",
+      "completed": 2
+    },
+    {
+      "iso_date": "2026-10-03",
+      "completed": 3
+    },
+    {
+      "iso_date": "2026-10-04",
+      "completed": 3
+    },
+    {
+      "iso_date": "2026-10-08",
+      "completed": 3
+    },
+    {
+      "iso_date": "2026-10-09",
+      "completed": 3
+    },
+    {
+      "iso_date": "2026-10-11",
+      "completed": 3
+    },
+    {
+      "iso_date": "2026-10-16",
+      "completed": 2
+    },
+    {
+      "iso_date": "2026-10-17",
+      "completed": 3
+    },
+    {
+      "iso_date": "2026-10-18",
+      "completed": 3
+    }
+  ],
+  "lineage": {
+    "source_reported": [
+      "schedule_all results/scores/status",
+      "matches detail rows, dates, VOD and Liquipedia series MVP",
+      "games per-game winner/duration/side/map mode",
+      "game_players scoreboard stats",
+      "standings"
+    ],
+    "deterministic_derived": [
+      "team_games from ten player rows",
+      "team_season_stats from team_games",
+      "picks/bans enrichment joins from Liquipedia"
+    ],
+    "heuristic_or_app_derived": [
+      "app game MVP (highest KDA on winning team) where shown",
+      "win probability/ratings/analytics models in the dashboard"
+    ],
+    "unavailable": [
+      "per-game Lord/Turtle/Tower objective counts",
+      "gold/damage timelines and gold diff at fixed times",
+      "pick order (Liquipedia slots are lane order)",
+      "player communications/intent/vision",
+      "official damage-type split"
+    ],
+    "warnings": [
+      {
+        "table": "matches",
+        "field": "winner",
+        "status": "orientation_mismatch",
+        "detail": "21/72 rows disagree with the matches score because matches.team_a/team_b is flipped relative to schedule_all while winner retains schedule orientation. Use schedule_all.winner or derive the winner from the score.",
+        "example_match_ids": [
+          "1037",
+          "1038",
+          "1043",
+          "1045",
+          "1046"
+        ]
+      }
+    ]
+  },
+  "relationships": [
+    "schedule_all.match_detail_id -> matches.match_detail_id",
+    "matches.match_detail_id -> games.match_detail_id",
+    "matches.match_detail_id -> team_games.match_detail_id",
+    "matches.match_detail_id -> game_players.match_detail_id",
+    "matches.match_detail_id -> game_picks.match_detail_id",
+    "matches.match_detail_id -> game_bans.match_detail_id",
+    "games(match_detail_id,game_no) -> game_players/game_picks/game_bans/team_games",
+    "standings.team_slug/team_name -> team_games.team / team_season_stats.team_slug"
+  ],
+  "source_manifest": "analysis/sources/source-manifest.json",
+  "query_catalog": "analysis/evidence/query-catalog.json"
+}
