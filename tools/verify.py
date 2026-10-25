@@ -54,8 +54,10 @@ for name, cmd, runtime in STEPS:
     for line in tail:
         print("    " + line)
     if r.returncode != 0:
-        err = (r.stderr.strip().splitlines() or [])[-5:]
-        for line in err:
+        # On failure, preserve enough diagnostics to identify the actual cause.
+        # The old five-line stderr tail hid unittest assertion names and Ruff locations.
+        diagnostics = (r.stdout + "\\n" + r.stderr).strip().splitlines()
+        for line in diagnostics[-80:]:
             print("    ! " + line)
         results.append((name, False))
     else:
