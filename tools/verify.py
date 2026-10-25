@@ -28,6 +28,7 @@ STEPS = [
     ("refresh merge", ["node", str(BASE / "test_refresh.js")], "node"),
     ("cache versioning", ["node", str(BASE / "test_cache.js")], "node"),
     ("liquipedia parser + ETL gates", [sys.executable, str(BASE / "test_liqparse.py")], None),
+    ("schedule VOD resolver + metadata gates", [sys.executable, str(BASE / "test_resolve_and_align_sources.py")], None),
     ("season config (python)", [sys.executable, str(BASE / "test_config.py")], None),
     ("season config (node)", ["node", str(BASE / "test_config.js")], "node"),
     ("ruff lint (pip install ruff if missing)", [sys.executable, "-m", "ruff", "check", "tools/",

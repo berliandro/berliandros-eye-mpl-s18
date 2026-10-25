@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "generated_at": "2026-10-25T13:14:04+00:00",
+  "generated_at": "2026-10-25T14:09:20.583Z",
   "corpus_root": "analysis/sources/raw-transcripts",
   "local_only": true,
   "source_file_count": 27,
@@ -35,19 +35,50 @@
           "match_detail_id": "1036",
           "confidence": "high",
           "method": "broadcast_day_schedule_order_and_transcript_context",
-          "rationale": "2026-08-14 W1D1 broadcast. Transcript 03:30 identifies match 2 as NAVI vs Alter Ego; schedule places EVOS-RRQ (1036) first and NAVI-AE (1037) second; 01:16 fan chants name EVOS/RRQ."
+          "rationale": "2026-08-14 W1D1 broadcast. Transcript 03:30 identifies match 2 as NAVI vs Alter Ego; schedule places EVOS-RRQ (1036) first and NAVI-AE (1037) second; 01:16 fan chants name EVOS/RRQ.",
+          "schedule_date": "2026-08-14",
+          "scheduled_start": "2026-08-14T15:00:00+07:00",
+          "scheduled_team_a": "EVOS",
+          "scheduled_team_b": "RRQ",
+          "schedule_vod_candidate_id": null
         },
         {
           "match_detail_id": "1037",
           "confidence": "high",
           "method": "broadcast_day_schedule_order_and_transcript_context",
-          "rationale": "2026-08-14 W1D1 broadcast. Transcript 03:30 identifies match 2 as NAVI vs Alter Ego; schedule places EVOS-RRQ (1036) first and NAVI-AE (1037) second; 01:16 fan chants name EVOS/RRQ."
+          "rationale": "2026-08-14 W1D1 broadcast. Transcript 03:30 identifies match 2 as NAVI vs Alter Ego; schedule places EVOS-RRQ (1036) first and NAVI-AE (1037) second; 01:16 fan chants name EVOS/RRQ.",
+          "schedule_date": "2026-08-14",
+          "scheduled_start": "2026-08-14T18:00:00+07:00",
+          "scheduled_team_a": "NAVI",
+          "scheduled_team_b": "AE",
+          "schedule_vod_candidate_id": null
         }
       ],
       "local_only": true,
       "metadata_provenance": "filename; no embedded metadata/timestamps",
       "duplicate_of": null,
-      "resolved_at": "2026-10-25T13:14:00+00:00"
+      "resolved_at": "2026-10-25T13:14:00+00:00",
+      "broadcast_date": "2026-08-14",
+      "candidate_video_id": null,
+      "candidate_video_url": null,
+      "candidate_provenance": {
+        "source": "data/csv/schedule_all.csv",
+        "blob_sha": "455c29002d93186ef8cb7371f6ec35e56e28b581",
+        "method": "unique VOD ID across completed regular-season series on chronological broadcast date",
+        "schedule_match_ids": [
+          "1036",
+          "1037"
+        ],
+        "resolution_errors": [
+          "invalid VOD for 1036",
+          "invalid VOD for 1037"
+        ]
+      },
+      "schedule_match_ids": [
+        "1036",
+        "1037"
+      ],
+      "video_resolution_status": "caption_alignment_verified"
     },
     {
       "source_id": "src-s18-w01d02",
@@ -73,10 +104,68 @@
       "video_duration_seconds": null,
       "video_metadata_provenance": null,
       "mapping_confidence": "week_day_from_filename",
-      "series_mapping": [],
+      "series_mapping": [
+        {
+          "match_detail_id": "1038",
+          "confidence": "medium",
+          "method": "canonical_schedule_date_and_vod_url",
+          "schedule_date": "2026-08-15",
+          "scheduled_start": "2026-08-15T14:00:00+07:00",
+          "scheduled_team_a": "TLID",
+          "scheduled_team_b": "GEEK",
+          "schedule_vod_candidate_id": null,
+          "rationale": "Canonical schedule places TLID vs GEEK (series 1038) on 2026-08-15 and associates this broadcast date with VOD candidate unresolved. Exact in-video series/game offsets remain unverified."
+        },
+        {
+          "match_detail_id": "1039",
+          "confidence": "medium",
+          "method": "canonical_schedule_date_and_vod_url",
+          "schedule_date": "2026-08-15",
+          "scheduled_start": "2026-08-15T17:00:00+07:00",
+          "scheduled_team_a": "DEWA",
+          "scheduled_team_b": "RRQ",
+          "schedule_vod_candidate_id": null,
+          "rationale": "Canonical schedule places DEWA vs RRQ (series 1039) on 2026-08-15 and associates this broadcast date with VOD candidate unresolved. Exact in-video series/game offsets remain unverified."
+        },
+        {
+          "match_detail_id": "1040",
+          "confidence": "medium",
+          "method": "canonical_schedule_date_and_vod_url",
+          "schedule_date": "2026-08-15",
+          "scheduled_start": "2026-08-15T20:00:00+07:00",
+          "scheduled_team_a": "EVOS",
+          "scheduled_team_b": "NAVI",
+          "schedule_vod_candidate_id": null,
+          "rationale": "Canonical schedule places EVOS vs NAVI (series 1040) on 2026-08-15 and associates this broadcast date with VOD candidate unresolved. Exact in-video series/game offsets remain unverified."
+        }
+      ],
       "local_only": true,
       "metadata_provenance": "filename; no embedded metadata/timestamps",
-      "duplicate_of": null
+      "duplicate_of": null,
+      "broadcast_date": "2026-08-15",
+      "candidate_video_id": null,
+      "candidate_video_url": null,
+      "candidate_provenance": {
+        "source": "data/csv/schedule_all.csv",
+        "blob_sha": "455c29002d93186ef8cb7371f6ec35e56e28b581",
+        "method": "unique VOD ID across completed regular-season series on chronological broadcast date",
+        "schedule_match_ids": [
+          "1038",
+          "1039",
+          "1040"
+        ],
+        "resolution_errors": [
+          "invalid VOD for 1038",
+          "invalid VOD for 1039",
+          "invalid VOD for 1040"
+        ]
+      },
+      "schedule_match_ids": [
+        "1038",
+        "1039",
+        "1040"
+      ],
+      "video_resolution_status": "candidate_resolution_failed"
     },
     {
       "source_id": "src-s18-w01d03",
@@ -102,10 +191,68 @@
       "video_duration_seconds": null,
       "video_metadata_provenance": null,
       "mapping_confidence": "week_day_from_filename",
-      "series_mapping": [],
+      "series_mapping": [
+        {
+          "match_detail_id": "1041",
+          "confidence": "medium",
+          "method": "canonical_schedule_date_and_vod_url",
+          "schedule_date": "2026-08-16",
+          "scheduled_start": "2026-08-16T14:00:00+07:00",
+          "scheduled_team_a": "TLID",
+          "scheduled_team_b": "DEWA",
+          "schedule_vod_candidate_id": null,
+          "rationale": "Canonical schedule places TLID vs DEWA (series 1041) on 2026-08-16 and associates this broadcast date with VOD candidate unresolved. Exact in-video series/game offsets remain unverified."
+        },
+        {
+          "match_detail_id": "1042",
+          "confidence": "medium",
+          "method": "canonical_schedule_date_and_vod_url",
+          "schedule_date": "2026-08-16",
+          "scheduled_start": "2026-08-16T17:00:00+07:00",
+          "scheduled_team_a": "BTR",
+          "scheduled_team_b": "GEEK",
+          "schedule_vod_candidate_id": null,
+          "rationale": "Canonical schedule places BTR vs GEEK (series 1042) on 2026-08-16 and associates this broadcast date with VOD candidate unresolved. Exact in-video series/game offsets remain unverified."
+        },
+        {
+          "match_detail_id": "1043",
+          "confidence": "medium",
+          "method": "canonical_schedule_date_and_vod_url",
+          "schedule_date": "2026-08-16",
+          "scheduled_start": "2026-08-16T20:00:00+07:00",
+          "scheduled_team_a": "AE",
+          "scheduled_team_b": "ONIC",
+          "schedule_vod_candidate_id": null,
+          "rationale": "Canonical schedule places AE vs ONIC (series 1043) on 2026-08-16 and associates this broadcast date with VOD candidate unresolved. Exact in-video series/game offsets remain unverified."
+        }
+      ],
       "local_only": true,
       "metadata_provenance": "filename; no embedded metadata/timestamps",
-      "duplicate_of": null
+      "duplicate_of": null,
+      "broadcast_date": "2026-08-16",
+      "candidate_video_id": null,
+      "candidate_video_url": null,
+      "candidate_provenance": {
+        "source": "data/csv/schedule_all.csv",
+        "blob_sha": "455c29002d93186ef8cb7371f6ec35e56e28b581",
+        "method": "unique VOD ID across completed regular-season series on chronological broadcast date",
+        "schedule_match_ids": [
+          "1041",
+          "1042",
+          "1043"
+        ],
+        "resolution_errors": [
+          "invalid VOD for 1041",
+          "invalid VOD for 1042",
+          "invalid VOD for 1043"
+        ]
+      },
+      "schedule_match_ids": [
+        "1041",
+        "1042",
+        "1043"
+      ],
+      "video_resolution_status": "candidate_resolution_failed"
     },
     {
       "source_id": "src-s18-w02d01",
@@ -131,10 +278,54 @@
       "video_duration_seconds": null,
       "video_metadata_provenance": null,
       "mapping_confidence": "week_day_from_filename",
-      "series_mapping": [],
+      "series_mapping": [
+        {
+          "match_detail_id": "1044",
+          "confidence": "medium",
+          "method": "canonical_schedule_date_and_vod_url",
+          "schedule_date": "2026-08-21",
+          "scheduled_start": "2026-08-21T15:00:00+07:00",
+          "scheduled_team_a": "TLID",
+          "scheduled_team_b": "NAVI",
+          "schedule_vod_candidate_id": null,
+          "rationale": "Canonical schedule places TLID vs NAVI (series 1044) on 2026-08-21 and associates this broadcast date with VOD candidate unresolved. Exact in-video series/game offsets remain unverified."
+        },
+        {
+          "match_detail_id": "1045",
+          "confidence": "medium",
+          "method": "canonical_schedule_date_and_vod_url",
+          "schedule_date": "2026-08-21",
+          "scheduled_start": "2026-08-21T18:00:00+07:00",
+          "scheduled_team_a": "BTR",
+          "scheduled_team_b": "DEWA",
+          "schedule_vod_candidate_id": null,
+          "rationale": "Canonical schedule places BTR vs DEWA (series 1045) on 2026-08-21 and associates this broadcast date with VOD candidate unresolved. Exact in-video series/game offsets remain unverified."
+        }
+      ],
       "local_only": true,
       "metadata_provenance": "filename; no embedded metadata/timestamps",
-      "duplicate_of": null
+      "duplicate_of": null,
+      "broadcast_date": "2026-08-21",
+      "candidate_video_id": null,
+      "candidate_video_url": null,
+      "candidate_provenance": {
+        "source": "data/csv/schedule_all.csv",
+        "blob_sha": "455c29002d93186ef8cb7371f6ec35e56e28b581",
+        "method": "unique VOD ID across completed regular-season series on chronological broadcast date",
+        "schedule_match_ids": [
+          "1044",
+          "1045"
+        ],
+        "resolution_errors": [
+          "invalid VOD for 1044",
+          "invalid VOD for 1045"
+        ]
+      },
+      "schedule_match_ids": [
+        "1044",
+        "1045"
+      ],
+      "video_resolution_status": "candidate_resolution_failed"
     },
     {
       "source_id": "src-s18-w02d02",
@@ -160,10 +351,68 @@
       "video_duration_seconds": null,
       "video_metadata_provenance": null,
       "mapping_confidence": "week_day_from_filename",
-      "series_mapping": [],
+      "series_mapping": [
+        {
+          "match_detail_id": "1046",
+          "confidence": "medium",
+          "method": "canonical_schedule_date_and_vod_url",
+          "schedule_date": "2026-08-22",
+          "scheduled_start": "2026-08-22T14:00:00+07:00",
+          "scheduled_team_a": "TLID",
+          "scheduled_team_b": "EVOS",
+          "schedule_vod_candidate_id": null,
+          "rationale": "Canonical schedule places TLID vs EVOS (series 1046) on 2026-08-22 and associates this broadcast date with VOD candidate unresolved. Exact in-video series/game offsets remain unverified."
+        },
+        {
+          "match_detail_id": "1047",
+          "confidence": "medium",
+          "method": "canonical_schedule_date_and_vod_url",
+          "schedule_date": "2026-08-22",
+          "scheduled_start": "2026-08-22T17:00:00+07:00",
+          "scheduled_team_a": "NAVI",
+          "scheduled_team_b": "GEEK",
+          "schedule_vod_candidate_id": null,
+          "rationale": "Canonical schedule places NAVI vs GEEK (series 1047) on 2026-08-22 and associates this broadcast date with VOD candidate unresolved. Exact in-video series/game offsets remain unverified."
+        },
+        {
+          "match_detail_id": "1048",
+          "confidence": "medium",
+          "method": "canonical_schedule_date_and_vod_url",
+          "schedule_date": "2026-08-22",
+          "scheduled_start": "2026-08-22T20:00:00+07:00",
+          "scheduled_team_a": "ONIC",
+          "scheduled_team_b": "RRQ",
+          "schedule_vod_candidate_id": null,
+          "rationale": "Canonical schedule places ONIC vs RRQ (series 1048) on 2026-08-22 and associates this broadcast date with VOD candidate unresolved. Exact in-video series/game offsets remain unverified."
+        }
+      ],
       "local_only": true,
       "metadata_provenance": "filename; no embedded metadata/timestamps",
-      "duplicate_of": null
+      "duplicate_of": null,
+      "broadcast_date": "2026-08-22",
+      "candidate_video_id": null,
+      "candidate_video_url": null,
+      "candidate_provenance": {
+        "source": "data/csv/schedule_all.csv",
+        "blob_sha": "455c29002d93186ef8cb7371f6ec35e56e28b581",
+        "method": "unique VOD ID across completed regular-season series on chronological broadcast date",
+        "schedule_match_ids": [
+          "1046",
+          "1047",
+          "1048"
+        ],
+        "resolution_errors": [
+          "invalid VOD for 1046",
+          "invalid VOD for 1047",
+          "invalid VOD for 1048"
+        ]
+      },
+      "schedule_match_ids": [
+        "1046",
+        "1047",
+        "1048"
+      ],
+      "video_resolution_status": "candidate_resolution_failed"
     },
     {
       "source_id": "src-s18-w02d03",
@@ -189,10 +438,68 @@
       "video_duration_seconds": null,
       "video_metadata_provenance": null,
       "mapping_confidence": "week_day_from_filename",
-      "series_mapping": [],
+      "series_mapping": [
+        {
+          "match_detail_id": "1049",
+          "confidence": "medium",
+          "method": "canonical_schedule_date_and_vod_url",
+          "schedule_date": "2026-08-23",
+          "scheduled_start": "2026-08-23T14:00:00+07:00",
+          "scheduled_team_a": "DEWA",
+          "scheduled_team_b": "AE",
+          "schedule_vod_candidate_id": null,
+          "rationale": "Canonical schedule places DEWA vs AE (series 1049) on 2026-08-23 and associates this broadcast date with VOD candidate unresolved. Exact in-video series/game offsets remain unverified."
+        },
+        {
+          "match_detail_id": "1050",
+          "confidence": "medium",
+          "method": "canonical_schedule_date_and_vod_url",
+          "schedule_date": "2026-08-23",
+          "scheduled_start": "2026-08-23T17:00:00+07:00",
+          "scheduled_team_a": "ONIC",
+          "scheduled_team_b": "BTR",
+          "schedule_vod_candidate_id": null,
+          "rationale": "Canonical schedule places ONIC vs BTR (series 1050) on 2026-08-23 and associates this broadcast date with VOD candidate unresolved. Exact in-video series/game offsets remain unverified."
+        },
+        {
+          "match_detail_id": "1051",
+          "confidence": "medium",
+          "method": "canonical_schedule_date_and_vod_url",
+          "schedule_date": "2026-08-23",
+          "scheduled_start": "2026-08-23T20:00:00+07:00",
+          "scheduled_team_a": "GEEK",
+          "scheduled_team_b": "EVOS",
+          "schedule_vod_candidate_id": null,
+          "rationale": "Canonical schedule places GEEK vs EVOS (series 1051) on 2026-08-23 and associates this broadcast date with VOD candidate unresolved. Exact in-video series/game offsets remain unverified."
+        }
+      ],
       "local_only": true,
       "metadata_provenance": "filename; no embedded metadata/timestamps",
-      "duplicate_of": null
+      "duplicate_of": null,
+      "broadcast_date": "2026-08-23",
+      "candidate_video_id": null,
+      "candidate_video_url": null,
+      "candidate_provenance": {
+        "source": "data/csv/schedule_all.csv",
+        "blob_sha": "455c29002d93186ef8cb7371f6ec35e56e28b581",
+        "method": "unique VOD ID across completed regular-season series on chronological broadcast date",
+        "schedule_match_ids": [
+          "1049",
+          "1050",
+          "1051"
+        ],
+        "resolution_errors": [
+          "invalid VOD for 1049",
+          "invalid VOD for 1050",
+          "invalid VOD for 1051"
+        ]
+      },
+      "schedule_match_ids": [
+        "1049",
+        "1050",
+        "1051"
+      ],
+      "video_resolution_status": "candidate_resolution_failed"
     },
     {
       "source_id": "src-s18-w03d01",
@@ -218,10 +525,54 @@
       "video_duration_seconds": null,
       "video_metadata_provenance": null,
       "mapping_confidence": "week_day_from_filename",
-      "series_mapping": [],
+      "series_mapping": [
+        {
+          "match_detail_id": "1052",
+          "confidence": "medium",
+          "method": "canonical_schedule_date_and_vod_url",
+          "schedule_date": "2026-08-28",
+          "scheduled_start": "2026-08-28T15:00:00+07:00",
+          "scheduled_team_a": "BTR",
+          "scheduled_team_b": "NAVI",
+          "schedule_vod_candidate_id": null,
+          "rationale": "Canonical schedule places BTR vs NAVI (series 1052) on 2026-08-28 and associates this broadcast date with VOD candidate unresolved. Exact in-video series/game offsets remain unverified."
+        },
+        {
+          "match_detail_id": "1053",
+          "confidence": "medium",
+          "method": "canonical_schedule_date_and_vod_url",
+          "schedule_date": "2026-08-28",
+          "scheduled_start": "2026-08-28T18:00:00+07:00",
+          "scheduled_team_a": "DEWA",
+          "scheduled_team_b": "GEEK",
+          "schedule_vod_candidate_id": null,
+          "rationale": "Canonical schedule places DEWA vs GEEK (series 1053) on 2026-08-28 and associates this broadcast date with VOD candidate unresolved. Exact in-video series/game offsets remain unverified."
+        }
+      ],
       "local_only": true,
       "metadata_provenance": "filename; no embedded metadata/timestamps",
-      "duplicate_of": null
+      "duplicate_of": null,
+      "broadcast_date": "2026-08-28",
+      "candidate_video_id": null,
+      "candidate_video_url": null,
+      "candidate_provenance": {
+        "source": "data/csv/schedule_all.csv",
+        "blob_sha": "455c29002d93186ef8cb7371f6ec35e56e28b581",
+        "method": "unique VOD ID across completed regular-season series on chronological broadcast date",
+        "schedule_match_ids": [
+          "1052",
+          "1053"
+        ],
+        "resolution_errors": [
+          "invalid VOD for 1052",
+          "invalid VOD for 1053"
+        ]
+      },
+      "schedule_match_ids": [
+        "1052",
+        "1053"
+      ],
+      "video_resolution_status": "candidate_resolution_failed"
     },
     {
       "source_id": "src-s18-w03d02",
@@ -247,10 +598,68 @@
       "video_duration_seconds": null,
       "video_metadata_provenance": null,
       "mapping_confidence": "week_day_from_filename",
-      "series_mapping": [],
+      "series_mapping": [
+        {
+          "match_detail_id": "1054",
+          "confidence": "medium",
+          "method": "canonical_schedule_date_and_vod_url",
+          "schedule_date": "2026-08-29",
+          "scheduled_start": "2026-08-29T14:00:00+07:00",
+          "scheduled_team_a": "TLID",
+          "scheduled_team_b": "ONIC",
+          "schedule_vod_candidate_id": null,
+          "rationale": "Canonical schedule places TLID vs ONIC (series 1054) on 2026-08-29 and associates this broadcast date with VOD candidate unresolved. Exact in-video series/game offsets remain unverified."
+        },
+        {
+          "match_detail_id": "1055",
+          "confidence": "medium",
+          "method": "canonical_schedule_date_and_vod_url",
+          "schedule_date": "2026-08-29",
+          "scheduled_start": "2026-08-29T17:00:00+07:00",
+          "scheduled_team_a": "AE",
+          "scheduled_team_b": "EVOS",
+          "schedule_vod_candidate_id": null,
+          "rationale": "Canonical schedule places AE vs EVOS (series 1055) on 2026-08-29 and associates this broadcast date with VOD candidate unresolved. Exact in-video series/game offsets remain unverified."
+        },
+        {
+          "match_detail_id": "1056",
+          "confidence": "medium",
+          "method": "canonical_schedule_date_and_vod_url",
+          "schedule_date": "2026-08-29",
+          "scheduled_start": "2026-08-29T20:00:00+07:00",
+          "scheduled_team_a": "RRQ",
+          "scheduled_team_b": "BTR",
+          "schedule_vod_candidate_id": null,
+          "rationale": "Canonical schedule places RRQ vs BTR (series 1056) on 2026-08-29 and associates this broadcast date with VOD candidate unresolved. Exact in-video series/game offsets remain unverified."
+        }
+      ],
       "local_only": true,
       "metadata_provenance": "filename; no embedded metadata/timestamps",
-      "duplicate_of": null
+      "duplicate_of": null,
+      "broadcast_date": "2026-08-29",
+      "candidate_video_id": null,
+      "candidate_video_url": null,
+      "candidate_provenance": {
+        "source": "data/csv/schedule_all.csv",
+        "blob_sha": "455c29002d93186ef8cb7371f6ec35e56e28b581",
+        "method": "unique VOD ID across completed regular-season series on chronological broadcast date",
+        "schedule_match_ids": [
+          "1054",
+          "1055",
+          "1056"
+        ],
+        "resolution_errors": [
+          "invalid VOD for 1054",
+          "invalid VOD for 1055",
+          "invalid VOD for 1056"
+        ]
+      },
+      "schedule_match_ids": [
+        "1054",
+        "1055",
+        "1056"
+      ],
+      "video_resolution_status": "candidate_resolution_failed"
     },
     {
       "source_id": "src-s18-w03d03",
@@ -276,10 +685,68 @@
       "video_duration_seconds": null,
       "video_metadata_provenance": null,
       "mapping_confidence": "week_day_from_filename",
-      "series_mapping": [],
+      "series_mapping": [
+        {
+          "match_detail_id": "1057",
+          "confidence": "medium",
+          "method": "canonical_schedule_date_and_vod_url",
+          "schedule_date": "2026-08-30",
+          "scheduled_start": "2026-08-30T14:00:00+07:00",
+          "scheduled_team_a": "NAVI",
+          "scheduled_team_b": "ONIC",
+          "schedule_vod_candidate_id": null,
+          "rationale": "Canonical schedule places NAVI vs ONIC (series 1057) on 2026-08-30 and associates this broadcast date with VOD candidate unresolved. Exact in-video series/game offsets remain unverified."
+        },
+        {
+          "match_detail_id": "1058",
+          "confidence": "medium",
+          "method": "canonical_schedule_date_and_vod_url",
+          "schedule_date": "2026-08-30",
+          "scheduled_start": "2026-08-30T17:00:00+07:00",
+          "scheduled_team_a": "GEEK",
+          "scheduled_team_b": "RRQ",
+          "schedule_vod_candidate_id": null,
+          "rationale": "Canonical schedule places GEEK vs RRQ (series 1058) on 2026-08-30 and associates this broadcast date with VOD candidate unresolved. Exact in-video series/game offsets remain unverified."
+        },
+        {
+          "match_detail_id": "1059",
+          "confidence": "medium",
+          "method": "canonical_schedule_date_and_vod_url",
+          "schedule_date": "2026-08-30",
+          "scheduled_start": "2026-08-30T20:00:00+07:00",
+          "scheduled_team_a": "TLID",
+          "scheduled_team_b": "AE",
+          "schedule_vod_candidate_id": null,
+          "rationale": "Canonical schedule places TLID vs AE (series 1059) on 2026-08-30 and associates this broadcast date with VOD candidate unresolved. Exact in-video series/game offsets remain unverified."
+        }
+      ],
       "local_only": true,
       "metadata_provenance": "filename; no embedded metadata/timestamps",
-      "duplicate_of": null
+      "duplicate_of": null,
+      "broadcast_date": "2026-08-30",
+      "candidate_video_id": null,
+      "candidate_video_url": null,
+      "candidate_provenance": {
+        "source": "data/csv/schedule_all.csv",
+        "blob_sha": "455c29002d93186ef8cb7371f6ec35e56e28b581",
+        "method": "unique VOD ID across completed regular-season series on chronological broadcast date",
+        "schedule_match_ids": [
+          "1057",
+          "1058",
+          "1059"
+        ],
+        "resolution_errors": [
+          "invalid VOD for 1057",
+          "invalid VOD for 1058",
+          "invalid VOD for 1059"
+        ]
+      },
+      "schedule_match_ids": [
+        "1057",
+        "1058",
+        "1059"
+      ],
+      "video_resolution_status": "candidate_resolution_failed"
     },
     {
       "source_id": "src-s18-w04d01",
@@ -305,10 +772,54 @@
       "video_duration_seconds": null,
       "video_metadata_provenance": null,
       "mapping_confidence": "week_day_from_filename",
-      "series_mapping": [],
+      "series_mapping": [
+        {
+          "match_detail_id": "1060",
+          "confidence": "medium",
+          "method": "canonical_schedule_date_and_vod_url",
+          "schedule_date": "2026-09-04",
+          "scheduled_start": "2026-09-04T15:00:00+07:00",
+          "scheduled_team_a": "NAVI",
+          "scheduled_team_b": "DEWA",
+          "schedule_vod_candidate_id": null,
+          "rationale": "Canonical schedule places NAVI vs DEWA (series 1060) on 2026-09-04 and associates this broadcast date with VOD candidate unresolved. Exact in-video series/game offsets remain unverified."
+        },
+        {
+          "match_detail_id": "1061",
+          "confidence": "medium",
+          "method": "canonical_schedule_date_and_vod_url",
+          "schedule_date": "2026-09-04",
+          "scheduled_start": "2026-09-04T18:00:00+07:00",
+          "scheduled_team_a": "TLID",
+          "scheduled_team_b": "RRQ",
+          "schedule_vod_candidate_id": null,
+          "rationale": "Canonical schedule places TLID vs RRQ (series 1061) on 2026-09-04 and associates this broadcast date with VOD candidate unresolved. Exact in-video series/game offsets remain unverified."
+        }
+      ],
       "local_only": true,
       "metadata_provenance": "filename; no embedded metadata/timestamps",
-      "duplicate_of": null
+      "duplicate_of": null,
+      "broadcast_date": "2026-09-04",
+      "candidate_video_id": null,
+      "candidate_video_url": null,
+      "candidate_provenance": {
+        "source": "data/csv/schedule_all.csv",
+        "blob_sha": "455c29002d93186ef8cb7371f6ec35e56e28b581",
+        "method": "unique VOD ID across completed regular-season series on chronological broadcast date",
+        "schedule_match_ids": [
+          "1060",
+          "1061"
+        ],
+        "resolution_errors": [
+          "invalid VOD for 1060",
+          "invalid VOD for 1061"
+        ]
+      },
+      "schedule_match_ids": [
+        "1060",
+        "1061"
+      ],
+      "video_resolution_status": "candidate_resolution_failed"
     },
     {
       "source_id": "src-s18-w04d02",
@@ -334,10 +845,68 @@
       "video_duration_seconds": null,
       "video_metadata_provenance": null,
       "mapping_confidence": "week_day_from_filename",
-      "series_mapping": [],
+      "series_mapping": [
+        {
+          "match_detail_id": "1062",
+          "confidence": "medium",
+          "method": "canonical_schedule_date_and_vod_url",
+          "schedule_date": "2026-09-05",
+          "scheduled_start": "2026-09-05T14:00:00+07:00",
+          "scheduled_team_a": "DEWA",
+          "scheduled_team_b": "ONIC",
+          "schedule_vod_candidate_id": null,
+          "rationale": "Canonical schedule places DEWA vs ONIC (series 1062) on 2026-09-05 and associates this broadcast date with VOD candidate unresolved. Exact in-video series/game offsets remain unverified."
+        },
+        {
+          "match_detail_id": "1063",
+          "confidence": "medium",
+          "method": "canonical_schedule_date_and_vod_url",
+          "schedule_date": "2026-09-05",
+          "scheduled_start": "2026-09-05T17:00:00+07:00",
+          "scheduled_team_a": "EVOS",
+          "scheduled_team_b": "BTR",
+          "schedule_vod_candidate_id": null,
+          "rationale": "Canonical schedule places EVOS vs BTR (series 1063) on 2026-09-05 and associates this broadcast date with VOD candidate unresolved. Exact in-video series/game offsets remain unverified."
+        },
+        {
+          "match_detail_id": "1064",
+          "confidence": "medium",
+          "method": "canonical_schedule_date_and_vod_url",
+          "schedule_date": "2026-09-05",
+          "scheduled_start": "2026-09-05T20:00:00+07:00",
+          "scheduled_team_a": "AE",
+          "scheduled_team_b": "GEEK",
+          "schedule_vod_candidate_id": null,
+          "rationale": "Canonical schedule places AE vs GEEK (series 1064) on 2026-09-05 and associates this broadcast date with VOD candidate unresolved. Exact in-video series/game offsets remain unverified."
+        }
+      ],
       "local_only": true,
       "metadata_provenance": "filename; no embedded metadata/timestamps",
-      "duplicate_of": null
+      "duplicate_of": null,
+      "broadcast_date": "2026-09-05",
+      "candidate_video_id": null,
+      "candidate_video_url": null,
+      "candidate_provenance": {
+        "source": "data/csv/schedule_all.csv",
+        "blob_sha": "455c29002d93186ef8cb7371f6ec35e56e28b581",
+        "method": "unique VOD ID across completed regular-season series on chronological broadcast date",
+        "schedule_match_ids": [
+          "1062",
+          "1063",
+          "1064"
+        ],
+        "resolution_errors": [
+          "invalid VOD for 1062",
+          "invalid VOD for 1063",
+          "invalid VOD for 1064"
+        ]
+      },
+      "schedule_match_ids": [
+        "1062",
+        "1063",
+        "1064"
+      ],
+      "video_resolution_status": "candidate_resolution_failed"
     },
     {
       "source_id": "src-s18-w04d03",
@@ -363,10 +932,68 @@
       "video_duration_seconds": null,
       "video_metadata_provenance": null,
       "mapping_confidence": "week_day_from_filename",
-      "series_mapping": [],
+      "series_mapping": [
+        {
+          "match_detail_id": "1065",
+          "confidence": "medium",
+          "method": "canonical_schedule_date_and_vod_url",
+          "schedule_date": "2026-09-06",
+          "scheduled_start": "2026-09-06T14:00:00+07:00",
+          "scheduled_team_a": "RRQ",
+          "scheduled_team_b": "NAVI",
+          "schedule_vod_candidate_id": null,
+          "rationale": "Canonical schedule places RRQ vs NAVI (series 1065) on 2026-09-06 and associates this broadcast date with VOD candidate unresolved. Exact in-video series/game offsets remain unverified."
+        },
+        {
+          "match_detail_id": "1066",
+          "confidence": "medium",
+          "method": "canonical_schedule_date_and_vod_url",
+          "schedule_date": "2026-09-06",
+          "scheduled_start": "2026-09-06T17:00:00+07:00",
+          "scheduled_team_a": "ONIC",
+          "scheduled_team_b": "EVOS",
+          "schedule_vod_candidate_id": null,
+          "rationale": "Canonical schedule places ONIC vs EVOS (series 1066) on 2026-09-06 and associates this broadcast date with VOD candidate unresolved. Exact in-video series/game offsets remain unverified."
+        },
+        {
+          "match_detail_id": "1067",
+          "confidence": "medium",
+          "method": "canonical_schedule_date_and_vod_url",
+          "schedule_date": "2026-09-06",
+          "scheduled_start": "2026-09-06T20:00:00+07:00",
+          "scheduled_team_a": "BTR",
+          "scheduled_team_b": "AE",
+          "schedule_vod_candidate_id": null,
+          "rationale": "Canonical schedule places BTR vs AE (series 1067) on 2026-09-06 and associates this broadcast date with VOD candidate unresolved. Exact in-video series/game offsets remain unverified."
+        }
+      ],
       "local_only": true,
       "metadata_provenance": "filename; no embedded metadata/timestamps",
-      "duplicate_of": null
+      "duplicate_of": null,
+      "broadcast_date": "2026-09-06",
+      "candidate_video_id": null,
+      "candidate_video_url": null,
+      "candidate_provenance": {
+        "source": "data/csv/schedule_all.csv",
+        "blob_sha": "455c29002d93186ef8cb7371f6ec35e56e28b581",
+        "method": "unique VOD ID across completed regular-season series on chronological broadcast date",
+        "schedule_match_ids": [
+          "1065",
+          "1066",
+          "1067"
+        ],
+        "resolution_errors": [
+          "invalid VOD for 1065",
+          "invalid VOD for 1066",
+          "invalid VOD for 1067"
+        ]
+      },
+      "schedule_match_ids": [
+        "1065",
+        "1066",
+        "1067"
+      ],
+      "video_resolution_status": "candidate_resolution_failed"
     },
     {
       "source_id": "src-s18-w05d01",
@@ -392,10 +1019,40 @@
       "video_duration_seconds": null,
       "video_metadata_provenance": null,
       "mapping_confidence": "week_day_from_filename",
-      "series_mapping": [],
+      "series_mapping": [
+        {
+          "match_detail_id": "1069",
+          "confidence": "medium",
+          "method": "canonical_schedule_date_and_vod_url",
+          "schedule_date": "2026-09-11",
+          "scheduled_start": "2026-09-11T18:00:00+07:00",
+          "scheduled_team_a": "GEEK",
+          "scheduled_team_b": "ONIC",
+          "schedule_vod_candidate_id": null,
+          "rationale": "Canonical schedule places GEEK vs ONIC (series 1069) on 2026-09-11 and associates this broadcast date with VOD candidate unresolved. Exact in-video series/game offsets remain unverified."
+        }
+      ],
       "local_only": true,
       "metadata_provenance": "filename; no embedded metadata/timestamps",
-      "duplicate_of": null
+      "duplicate_of": null,
+      "broadcast_date": "2026-09-11",
+      "candidate_video_id": null,
+      "candidate_video_url": null,
+      "candidate_provenance": {
+        "source": "data/csv/schedule_all.csv",
+        "blob_sha": "455c29002d93186ef8cb7371f6ec35e56e28b581",
+        "method": "unique VOD ID across completed regular-season series on chronological broadcast date",
+        "schedule_match_ids": [
+          "1069"
+        ],
+        "resolution_errors": [
+          "invalid VOD for 1069"
+        ]
+      },
+      "schedule_match_ids": [
+        "1069"
+      ],
+      "video_resolution_status": "candidate_resolution_failed"
     },
     {
       "source_id": "src-s18-w05d02",
@@ -421,10 +1078,68 @@
       "video_duration_seconds": null,
       "video_metadata_provenance": null,
       "mapping_confidence": "week_day_from_filename",
-      "series_mapping": [],
+      "series_mapping": [
+        {
+          "match_detail_id": "1070",
+          "confidence": "medium",
+          "method": "canonical_schedule_date_and_vod_url",
+          "schedule_date": "2026-09-12",
+          "scheduled_start": "2026-09-12T14:00:00+07:00",
+          "scheduled_team_a": "TLID",
+          "scheduled_team_b": "BTR",
+          "schedule_vod_candidate_id": null,
+          "rationale": "Canonical schedule places TLID vs BTR (series 1070) on 2026-09-12 and associates this broadcast date with VOD candidate unresolved. Exact in-video series/game offsets remain unverified."
+        },
+        {
+          "match_detail_id": "1071",
+          "confidence": "medium",
+          "method": "canonical_schedule_date_and_vod_url",
+          "schedule_date": "2026-09-12",
+          "scheduled_start": "2026-09-12T17:00:00+07:00",
+          "scheduled_team_a": "AE",
+          "scheduled_team_b": "RRQ",
+          "schedule_vod_candidate_id": null,
+          "rationale": "Canonical schedule places AE vs RRQ (series 1071) on 2026-09-12 and associates this broadcast date with VOD candidate unresolved. Exact in-video series/game offsets remain unverified."
+        },
+        {
+          "match_detail_id": "1072",
+          "confidence": "medium",
+          "method": "canonical_schedule_date_and_vod_url",
+          "schedule_date": "2026-09-12",
+          "scheduled_start": "2026-09-12T20:00:00+07:00",
+          "scheduled_team_a": "NAVI",
+          "scheduled_team_b": "EVOS",
+          "schedule_vod_candidate_id": null,
+          "rationale": "Canonical schedule places NAVI vs EVOS (series 1072) on 2026-09-12 and associates this broadcast date with VOD candidate unresolved. Exact in-video series/game offsets remain unverified."
+        }
+      ],
       "local_only": true,
       "metadata_provenance": "filename; no embedded metadata/timestamps",
-      "duplicate_of": null
+      "duplicate_of": null,
+      "broadcast_date": "2026-09-12",
+      "candidate_video_id": null,
+      "candidate_video_url": null,
+      "candidate_provenance": {
+        "source": "data/csv/schedule_all.csv",
+        "blob_sha": "455c29002d93186ef8cb7371f6ec35e56e28b581",
+        "method": "unique VOD ID across completed regular-season series on chronological broadcast date",
+        "schedule_match_ids": [
+          "1070",
+          "1071",
+          "1072"
+        ],
+        "resolution_errors": [
+          "invalid VOD for 1070",
+          "invalid VOD for 1071",
+          "invalid VOD for 1072"
+        ]
+      },
+      "schedule_match_ids": [
+        "1070",
+        "1071",
+        "1072"
+      ],
+      "video_resolution_status": "candidate_resolution_failed"
     },
     {
       "source_id": "src-s18-w05d03",
@@ -450,10 +1165,54 @@
       "video_duration_seconds": null,
       "video_metadata_provenance": null,
       "mapping_confidence": "week_day_from_filename",
-      "series_mapping": [],
+      "series_mapping": [
+        {
+          "match_detail_id": "1073",
+          "confidence": "medium",
+          "method": "canonical_schedule_date_and_vod_url",
+          "schedule_date": "2026-09-13",
+          "scheduled_start": "2026-09-13T14:00:00+07:00",
+          "scheduled_team_a": "GEEK",
+          "scheduled_team_b": "TLID",
+          "schedule_vod_candidate_id": null,
+          "rationale": "Canonical schedule places GEEK vs TLID (series 1073) on 2026-09-13 and associates this broadcast date with VOD candidate unresolved. Exact in-video series/game offsets remain unverified."
+        },
+        {
+          "match_detail_id": "1074",
+          "confidence": "medium",
+          "method": "canonical_schedule_date_and_vod_url",
+          "schedule_date": "2026-09-13",
+          "scheduled_start": "2026-09-13T17:00:00+07:00",
+          "scheduled_team_a": "ONIC",
+          "scheduled_team_b": "AE",
+          "schedule_vod_candidate_id": null,
+          "rationale": "Canonical schedule places ONIC vs AE (series 1074) on 2026-09-13 and associates this broadcast date with VOD candidate unresolved. Exact in-video series/game offsets remain unverified."
+        }
+      ],
       "local_only": true,
       "metadata_provenance": "filename; no embedded metadata/timestamps",
-      "duplicate_of": null
+      "duplicate_of": null,
+      "broadcast_date": "2026-09-13",
+      "candidate_video_id": null,
+      "candidate_video_url": null,
+      "candidate_provenance": {
+        "source": "data/csv/schedule_all.csv",
+        "blob_sha": "455c29002d93186ef8cb7371f6ec35e56e28b581",
+        "method": "unique VOD ID across completed regular-season series on chronological broadcast date",
+        "schedule_match_ids": [
+          "1073",
+          "1074"
+        ],
+        "resolution_errors": [
+          "invalid VOD for 1073",
+          "invalid VOD for 1074"
+        ]
+      },
+      "schedule_match_ids": [
+        "1073",
+        "1074"
+      ],
+      "video_resolution_status": "candidate_resolution_failed"
     },
     {
       "source_id": "src-s18-w06d01",
@@ -479,10 +1238,68 @@
       "video_duration_seconds": null,
       "video_metadata_provenance": null,
       "mapping_confidence": "week_day_from_filename",
-      "series_mapping": [],
+      "series_mapping": [
+        {
+          "match_detail_id": "1076",
+          "confidence": "medium",
+          "method": "canonical_schedule_date_and_vod_url",
+          "schedule_date": "2026-09-18",
+          "scheduled_start": "2026-09-18T14:00:00+07:00",
+          "scheduled_team_a": "ONIC",
+          "scheduled_team_b": "GEEK",
+          "schedule_vod_candidate_id": null,
+          "rationale": "Canonical schedule places ONIC vs GEEK (series 1076) on 2026-09-18 and associates this broadcast date with VOD candidate unresolved. Exact in-video series/game offsets remain unverified."
+        },
+        {
+          "match_detail_id": "1077",
+          "confidence": "medium",
+          "method": "canonical_schedule_date_and_vod_url",
+          "schedule_date": "2026-09-18",
+          "scheduled_start": "2026-09-18T17:00:00+07:00",
+          "scheduled_team_a": "DEWA",
+          "scheduled_team_b": "EVOS",
+          "schedule_vod_candidate_id": null,
+          "rationale": "Canonical schedule places DEWA vs EVOS (series 1077) on 2026-09-18 and associates this broadcast date with VOD candidate unresolved. Exact in-video series/game offsets remain unverified."
+        },
+        {
+          "match_detail_id": "1075",
+          "confidence": "medium",
+          "method": "canonical_schedule_date_and_vod_url",
+          "schedule_date": "2026-09-18",
+          "scheduled_start": "2026-09-18T20:00:00+07:00",
+          "scheduled_team_a": "RRQ",
+          "scheduled_team_b": "DEWA",
+          "schedule_vod_candidate_id": null,
+          "rationale": "Canonical schedule places RRQ vs DEWA (series 1075) on 2026-09-18 and associates this broadcast date with VOD candidate unresolved. Exact in-video series/game offsets remain unverified."
+        }
+      ],
       "local_only": true,
       "metadata_provenance": "filename; no embedded metadata/timestamps",
-      "duplicate_of": null
+      "duplicate_of": null,
+      "broadcast_date": "2026-09-18",
+      "candidate_video_id": null,
+      "candidate_video_url": null,
+      "candidate_provenance": {
+        "source": "data/csv/schedule_all.csv",
+        "blob_sha": "455c29002d93186ef8cb7371f6ec35e56e28b581",
+        "method": "unique VOD ID across completed regular-season series on chronological broadcast date",
+        "schedule_match_ids": [
+          "1076",
+          "1077",
+          "1075"
+        ],
+        "resolution_errors": [
+          "invalid VOD for 1076",
+          "invalid VOD for 1077",
+          "invalid VOD for 1075"
+        ]
+      },
+      "schedule_match_ids": [
+        "1076",
+        "1077",
+        "1075"
+      ],
+      "video_resolution_status": "candidate_resolution_failed"
     },
     {
       "source_id": "src-s18-w06d02",
@@ -508,10 +1325,68 @@
       "video_duration_seconds": null,
       "video_metadata_provenance": null,
       "mapping_confidence": "week_day_from_filename",
-      "series_mapping": [],
+      "series_mapping": [
+        {
+          "match_detail_id": "1078",
+          "confidence": "medium",
+          "method": "canonical_schedule_date_and_vod_url",
+          "schedule_date": "2026-09-19",
+          "scheduled_start": "2026-09-19T14:00:00+07:00",
+          "scheduled_team_a": "GEEK",
+          "scheduled_team_b": "NAVI",
+          "schedule_vod_candidate_id": null,
+          "rationale": "Canonical schedule places GEEK vs NAVI (series 1078) on 2026-09-19 and associates this broadcast date with VOD candidate unresolved. Exact in-video series/game offsets remain unverified."
+        },
+        {
+          "match_detail_id": "1079",
+          "confidence": "medium",
+          "method": "canonical_schedule_date_and_vod_url",
+          "schedule_date": "2026-09-19",
+          "scheduled_start": "2026-09-19T17:00:00+07:00",
+          "scheduled_team_a": "RRQ",
+          "scheduled_team_b": "AE",
+          "schedule_vod_candidate_id": null,
+          "rationale": "Canonical schedule places RRQ vs AE (series 1079) on 2026-09-19 and associates this broadcast date with VOD candidate unresolved. Exact in-video series/game offsets remain unverified."
+        },
+        {
+          "match_detail_id": "1080",
+          "confidence": "medium",
+          "method": "canonical_schedule_date_and_vod_url",
+          "schedule_date": "2026-09-19",
+          "scheduled_start": "2026-09-19T20:00:00+07:00",
+          "scheduled_team_a": "BTR",
+          "scheduled_team_b": "TLID",
+          "schedule_vod_candidate_id": null,
+          "rationale": "Canonical schedule places BTR vs TLID (series 1080) on 2026-09-19 and associates this broadcast date with VOD candidate unresolved. Exact in-video series/game offsets remain unverified."
+        }
+      ],
       "local_only": true,
       "metadata_provenance": "filename; no embedded metadata/timestamps",
-      "duplicate_of": null
+      "duplicate_of": null,
+      "broadcast_date": "2026-09-19",
+      "candidate_video_id": null,
+      "candidate_video_url": null,
+      "candidate_provenance": {
+        "source": "data/csv/schedule_all.csv",
+        "blob_sha": "455c29002d93186ef8cb7371f6ec35e56e28b581",
+        "method": "unique VOD ID across completed regular-season series on chronological broadcast date",
+        "schedule_match_ids": [
+          "1078",
+          "1079",
+          "1080"
+        ],
+        "resolution_errors": [
+          "invalid VOD for 1078",
+          "invalid VOD for 1079",
+          "invalid VOD for 1080"
+        ]
+      },
+      "schedule_match_ids": [
+        "1078",
+        "1079",
+        "1080"
+      ],
+      "video_resolution_status": "candidate_resolution_failed"
     },
     {
       "source_id": "src-s18-w06d03",
@@ -537,10 +1412,68 @@
       "video_duration_seconds": null,
       "video_metadata_provenance": null,
       "mapping_confidence": "week_day_from_filename",
-      "series_mapping": [],
+      "series_mapping": [
+        {
+          "match_detail_id": "1081",
+          "confidence": "medium",
+          "method": "canonical_schedule_date_and_vod_url",
+          "schedule_date": "2026-09-20",
+          "scheduled_start": "2026-09-20T14:00:00+07:00",
+          "scheduled_team_a": "AE",
+          "scheduled_team_b": "DEWA",
+          "schedule_vod_candidate_id": null,
+          "rationale": "Canonical schedule places AE vs DEWA (series 1081) on 2026-09-20 and associates this broadcast date with VOD candidate unresolved. Exact in-video series/game offsets remain unverified."
+        },
+        {
+          "match_detail_id": "1082",
+          "confidence": "medium",
+          "method": "canonical_schedule_date_and_vod_url",
+          "schedule_date": "2026-09-20",
+          "scheduled_start": "2026-09-20T17:00:00+07:00",
+          "scheduled_team_a": "BTR",
+          "scheduled_team_b": "ONIC",
+          "schedule_vod_candidate_id": null,
+          "rationale": "Canonical schedule places BTR vs ONIC (series 1082) on 2026-09-20 and associates this broadcast date with VOD candidate unresolved. Exact in-video series/game offsets remain unverified."
+        },
+        {
+          "match_detail_id": "1083",
+          "confidence": "medium",
+          "method": "canonical_schedule_date_and_vod_url",
+          "schedule_date": "2026-09-20",
+          "scheduled_start": "2026-09-20T20:00:00+07:00",
+          "scheduled_team_a": "EVOS",
+          "scheduled_team_b": "TLID",
+          "schedule_vod_candidate_id": null,
+          "rationale": "Canonical schedule places EVOS vs TLID (series 1083) on 2026-09-20 and associates this broadcast date with VOD candidate unresolved. Exact in-video series/game offsets remain unverified."
+        }
+      ],
       "local_only": true,
       "metadata_provenance": "filename; no embedded metadata/timestamps",
-      "duplicate_of": null
+      "duplicate_of": null,
+      "broadcast_date": "2026-09-20",
+      "candidate_video_id": null,
+      "candidate_video_url": null,
+      "candidate_provenance": {
+        "source": "data/csv/schedule_all.csv",
+        "blob_sha": "455c29002d93186ef8cb7371f6ec35e56e28b581",
+        "method": "unique VOD ID across completed regular-season series on chronological broadcast date",
+        "schedule_match_ids": [
+          "1081",
+          "1082",
+          "1083"
+        ],
+        "resolution_errors": [
+          "invalid VOD for 1081",
+          "invalid VOD for 1082",
+          "invalid VOD for 1083"
+        ]
+      },
+      "schedule_match_ids": [
+        "1081",
+        "1082",
+        "1083"
+      ],
+      "video_resolution_status": "candidate_resolution_failed"
     },
     {
       "source_id": "src-s18-w07d01",
@@ -566,10 +1499,54 @@
       "video_duration_seconds": null,
       "video_metadata_provenance": null,
       "mapping_confidence": "week_day_from_filename",
-      "series_mapping": [],
+      "series_mapping": [
+        {
+          "match_detail_id": "1084",
+          "confidence": "medium",
+          "method": "canonical_schedule_date_and_vod_url",
+          "schedule_date": "2026-10-02",
+          "scheduled_start": "2026-10-02T15:00:00+07:00",
+          "scheduled_team_a": "GEEK",
+          "scheduled_team_b": "BTR",
+          "schedule_vod_candidate_id": null,
+          "rationale": "Canonical schedule places GEEK vs BTR (series 1084) on 2026-10-02 and associates this broadcast date with VOD candidate unresolved. Exact in-video series/game offsets remain unverified."
+        },
+        {
+          "match_detail_id": "1085",
+          "confidence": "medium",
+          "method": "canonical_schedule_date_and_vod_url",
+          "schedule_date": "2026-10-02",
+          "scheduled_start": "2026-10-02T18:00:00+07:00",
+          "scheduled_team_a": "DEWA",
+          "scheduled_team_b": "TLID",
+          "schedule_vod_candidate_id": null,
+          "rationale": "Canonical schedule places DEWA vs TLID (series 1085) on 2026-10-02 and associates this broadcast date with VOD candidate unresolved. Exact in-video series/game offsets remain unverified."
+        }
+      ],
       "local_only": true,
       "metadata_provenance": "filename; no embedded metadata/timestamps",
-      "duplicate_of": null
+      "duplicate_of": null,
+      "broadcast_date": "2026-10-02",
+      "candidate_video_id": null,
+      "candidate_video_url": null,
+      "candidate_provenance": {
+        "source": "data/csv/schedule_all.csv",
+        "blob_sha": "455c29002d93186ef8cb7371f6ec35e56e28b581",
+        "method": "unique VOD ID across completed regular-season series on chronological broadcast date",
+        "schedule_match_ids": [
+          "1084",
+          "1085"
+        ],
+        "resolution_errors": [
+          "invalid VOD for 1084",
+          "invalid VOD for 1085"
+        ]
+      },
+      "schedule_match_ids": [
+        "1084",
+        "1085"
+      ],
+      "video_resolution_status": "candidate_resolution_failed"
     },
     {
       "source_id": "src-s18-w07d02",
@@ -595,10 +1572,68 @@
       "video_duration_seconds": null,
       "video_metadata_provenance": null,
       "mapping_confidence": "week_day_from_filename",
-      "series_mapping": [],
+      "series_mapping": [
+        {
+          "match_detail_id": "1086",
+          "confidence": "medium",
+          "method": "canonical_schedule_date_and_vod_url",
+          "schedule_date": "2026-10-03",
+          "scheduled_start": "2026-10-03T14:00:00+07:00",
+          "scheduled_team_a": "AE",
+          "scheduled_team_b": "NAVI",
+          "schedule_vod_candidate_id": null,
+          "rationale": "Canonical schedule places AE vs NAVI (series 1086) on 2026-10-03 and associates this broadcast date with VOD candidate unresolved. Exact in-video series/game offsets remain unverified."
+        },
+        {
+          "match_detail_id": "1087",
+          "confidence": "medium",
+          "method": "canonical_schedule_date_and_vod_url",
+          "schedule_date": "2026-10-03",
+          "scheduled_start": "2026-10-03T17:00:00+07:00",
+          "scheduled_team_a": "BTR",
+          "scheduled_team_b": "RRQ",
+          "schedule_vod_candidate_id": null,
+          "rationale": "Canonical schedule places BTR vs RRQ (series 1087) on 2026-10-03 and associates this broadcast date with VOD candidate unresolved. Exact in-video series/game offsets remain unverified."
+        },
+        {
+          "match_detail_id": "1088",
+          "confidence": "medium",
+          "method": "canonical_schedule_date_and_vod_url",
+          "schedule_date": "2026-10-03",
+          "scheduled_start": "2026-10-03T20:00:00+07:00",
+          "scheduled_team_a": "GEEK",
+          "scheduled_team_b": "DEWA",
+          "schedule_vod_candidate_id": null,
+          "rationale": "Canonical schedule places GEEK vs DEWA (series 1088) on 2026-10-03 and associates this broadcast date with VOD candidate unresolved. Exact in-video series/game offsets remain unverified."
+        }
+      ],
       "local_only": true,
       "metadata_provenance": "filename; no embedded metadata/timestamps",
-      "duplicate_of": null
+      "duplicate_of": null,
+      "broadcast_date": "2026-10-03",
+      "candidate_video_id": null,
+      "candidate_video_url": null,
+      "candidate_provenance": {
+        "source": "data/csv/schedule_all.csv",
+        "blob_sha": "455c29002d93186ef8cb7371f6ec35e56e28b581",
+        "method": "unique VOD ID across completed regular-season series on chronological broadcast date",
+        "schedule_match_ids": [
+          "1086",
+          "1087",
+          "1088"
+        ],
+        "resolution_errors": [
+          "invalid VOD for 1086",
+          "invalid VOD for 1087",
+          "invalid VOD for 1088"
+        ]
+      },
+      "schedule_match_ids": [
+        "1086",
+        "1087",
+        "1088"
+      ],
+      "video_resolution_status": "candidate_resolution_failed"
     },
     {
       "source_id": "src-s18-w07d03",
@@ -624,10 +1659,68 @@
       "video_duration_seconds": null,
       "video_metadata_provenance": null,
       "mapping_confidence": "week_day_from_filename",
-      "series_mapping": [],
+      "series_mapping": [
+        {
+          "match_detail_id": "1089",
+          "confidence": "medium",
+          "method": "canonical_schedule_date_and_vod_url",
+          "schedule_date": "2026-10-04",
+          "scheduled_start": "2026-10-04T14:00:00+07:00",
+          "scheduled_team_a": "AE",
+          "scheduled_team_b": "TLID",
+          "schedule_vod_candidate_id": null,
+          "rationale": "Canonical schedule places AE vs TLID (series 1089) on 2026-10-04 and associates this broadcast date with VOD candidate unresolved. Exact in-video series/game offsets remain unverified."
+        },
+        {
+          "match_detail_id": "1090",
+          "confidence": "medium",
+          "method": "canonical_schedule_date_and_vod_url",
+          "schedule_date": "2026-10-04",
+          "scheduled_start": "2026-10-04T17:00:00+07:00",
+          "scheduled_team_a": "RRQ",
+          "scheduled_team_b": "EVOS",
+          "schedule_vod_candidate_id": null,
+          "rationale": "Canonical schedule places RRQ vs EVOS (series 1090) on 2026-10-04 and associates this broadcast date with VOD candidate unresolved. Exact in-video series/game offsets remain unverified."
+        },
+        {
+          "match_detail_id": "1091",
+          "confidence": "medium",
+          "method": "canonical_schedule_date_and_vod_url",
+          "schedule_date": "2026-10-04",
+          "scheduled_start": "2026-10-04T20:00:00+07:00",
+          "scheduled_team_a": "ONIC",
+          "scheduled_team_b": "NAVI",
+          "schedule_vod_candidate_id": null,
+          "rationale": "Canonical schedule places ONIC vs NAVI (series 1091) on 2026-10-04 and associates this broadcast date with VOD candidate unresolved. Exact in-video series/game offsets remain unverified."
+        }
+      ],
       "local_only": true,
       "metadata_provenance": "filename; no embedded metadata/timestamps",
-      "duplicate_of": null
+      "duplicate_of": null,
+      "broadcast_date": "2026-10-04",
+      "candidate_video_id": null,
+      "candidate_video_url": null,
+      "candidate_provenance": {
+        "source": "data/csv/schedule_all.csv",
+        "blob_sha": "455c29002d93186ef8cb7371f6ec35e56e28b581",
+        "method": "unique VOD ID across completed regular-season series on chronological broadcast date",
+        "schedule_match_ids": [
+          "1089",
+          "1090",
+          "1091"
+        ],
+        "resolution_errors": [
+          "invalid VOD for 1089",
+          "invalid VOD for 1090",
+          "invalid VOD for 1091"
+        ]
+      },
+      "schedule_match_ids": [
+        "1089",
+        "1090",
+        "1091"
+      ],
+      "video_resolution_status": "candidate_resolution_failed"
     },
     {
       "source_id": "src-s18-w08d01",
@@ -653,10 +1746,68 @@
       "video_duration_seconds": null,
       "video_metadata_provenance": null,
       "mapping_confidence": "week_day_from_filename",
-      "series_mapping": [],
+      "series_mapping": [
+        {
+          "match_detail_id": "1068",
+          "confidence": "medium",
+          "method": "canonical_schedule_date_and_vod_url",
+          "schedule_date": "2026-10-08",
+          "scheduled_start": "2026-10-08T14:00:00+07:00",
+          "scheduled_team_a": "EVOS",
+          "scheduled_team_b": "DEWA",
+          "schedule_vod_candidate_id": null,
+          "rationale": "Canonical schedule places EVOS vs DEWA (series 1068) on 2026-10-08 and associates this broadcast date with VOD candidate unresolved. Exact in-video series/game offsets remain unverified."
+        },
+        {
+          "match_detail_id": "1092",
+          "confidence": "medium",
+          "method": "canonical_schedule_date_and_vod_url",
+          "schedule_date": "2026-10-08",
+          "scheduled_start": "2026-10-08T17:00:00+07:00",
+          "scheduled_team_a": "AE",
+          "scheduled_team_b": "BTR",
+          "schedule_vod_candidate_id": null,
+          "rationale": "Canonical schedule places AE vs BTR (series 1092) on 2026-10-08 and associates this broadcast date with VOD candidate unresolved. Exact in-video series/game offsets remain unverified."
+        },
+        {
+          "match_detail_id": "1093",
+          "confidence": "medium",
+          "method": "canonical_schedule_date_and_vod_url",
+          "schedule_date": "2026-10-08",
+          "scheduled_start": "2026-10-08T20:00:00+07:00",
+          "scheduled_team_a": "NAVI",
+          "scheduled_team_b": "TLID",
+          "schedule_vod_candidate_id": null,
+          "rationale": "Canonical schedule places NAVI vs TLID (series 1093) on 2026-10-08 and associates this broadcast date with VOD candidate unresolved. Exact in-video series/game offsets remain unverified."
+        }
+      ],
       "local_only": true,
       "metadata_provenance": "filename; no embedded metadata/timestamps",
-      "duplicate_of": null
+      "duplicate_of": null,
+      "broadcast_date": "2026-10-08",
+      "candidate_video_id": null,
+      "candidate_video_url": null,
+      "candidate_provenance": {
+        "source": "data/csv/schedule_all.csv",
+        "blob_sha": "455c29002d93186ef8cb7371f6ec35e56e28b581",
+        "method": "unique VOD ID across completed regular-season series on chronological broadcast date",
+        "schedule_match_ids": [
+          "1068",
+          "1092",
+          "1093"
+        ],
+        "resolution_errors": [
+          "invalid VOD for 1068",
+          "invalid VOD for 1092",
+          "invalid VOD for 1093"
+        ]
+      },
+      "schedule_match_ids": [
+        "1068",
+        "1092",
+        "1093"
+      ],
+      "video_resolution_status": "candidate_resolution_failed"
     },
     {
       "source_id": "src-s18-w08d02",
@@ -682,10 +1833,68 @@
       "video_duration_seconds": null,
       "video_metadata_provenance": null,
       "mapping_confidence": "week_day_from_filename",
-      "series_mapping": [],
+      "series_mapping": [
+        {
+          "match_detail_id": "1094",
+          "confidence": "medium",
+          "method": "canonical_schedule_date_and_vod_url",
+          "schedule_date": "2026-10-09",
+          "scheduled_start": "2026-10-09T14:00:00+07:00",
+          "scheduled_team_a": "EVOS",
+          "scheduled_team_b": "ONIC",
+          "schedule_vod_candidate_id": null,
+          "rationale": "Canonical schedule places EVOS vs ONIC (series 1094) on 2026-10-09 and associates this broadcast date with VOD candidate unresolved. Exact in-video series/game offsets remain unverified."
+        },
+        {
+          "match_detail_id": "1095",
+          "confidence": "medium",
+          "method": "canonical_schedule_date_and_vod_url",
+          "schedule_date": "2026-10-09",
+          "scheduled_start": "2026-10-09T17:00:00+07:00",
+          "scheduled_team_a": "RRQ",
+          "scheduled_team_b": "TLID",
+          "schedule_vod_candidate_id": null,
+          "rationale": "Canonical schedule places RRQ vs TLID (series 1095) on 2026-10-09 and associates this broadcast date with VOD candidate unresolved. Exact in-video series/game offsets remain unverified."
+        },
+        {
+          "match_detail_id": "1096",
+          "confidence": "medium",
+          "method": "canonical_schedule_date_and_vod_url",
+          "schedule_date": "2026-10-09",
+          "scheduled_start": "2026-10-09T20:00:00+07:00",
+          "scheduled_team_a": "DEWA",
+          "scheduled_team_b": "NAVI",
+          "schedule_vod_candidate_id": null,
+          "rationale": "Canonical schedule places DEWA vs NAVI (series 1096) on 2026-10-09 and associates this broadcast date with VOD candidate unresolved. Exact in-video series/game offsets remain unverified."
+        }
+      ],
       "local_only": true,
       "metadata_provenance": "filename; no embedded metadata/timestamps",
-      "duplicate_of": null
+      "duplicate_of": null,
+      "broadcast_date": "2026-10-09",
+      "candidate_video_id": null,
+      "candidate_video_url": null,
+      "candidate_provenance": {
+        "source": "data/csv/schedule_all.csv",
+        "blob_sha": "455c29002d93186ef8cb7371f6ec35e56e28b581",
+        "method": "unique VOD ID across completed regular-season series on chronological broadcast date",
+        "schedule_match_ids": [
+          "1094",
+          "1095",
+          "1096"
+        ],
+        "resolution_errors": [
+          "invalid VOD for 1094",
+          "invalid VOD for 1095",
+          "invalid VOD for 1096"
+        ]
+      },
+      "schedule_match_ids": [
+        "1094",
+        "1095",
+        "1096"
+      ],
+      "video_resolution_status": "candidate_resolution_failed"
     },
     {
       "source_id": "src-s18-w08d03",
@@ -711,10 +1920,68 @@
       "video_duration_seconds": null,
       "video_metadata_provenance": null,
       "mapping_confidence": "week_day_from_filename",
-      "series_mapping": [],
+      "series_mapping": [
+        {
+          "match_detail_id": "1097",
+          "confidence": "medium",
+          "method": "canonical_schedule_date_and_vod_url",
+          "schedule_date": "2026-10-11",
+          "scheduled_start": "2026-10-11T14:00:00+07:00",
+          "scheduled_team_a": "EVOS",
+          "scheduled_team_b": "GEEK",
+          "schedule_vod_candidate_id": null,
+          "rationale": "Canonical schedule places EVOS vs GEEK (series 1097) on 2026-10-11 and associates this broadcast date with VOD candidate unresolved. Exact in-video series/game offsets remain unverified."
+        },
+        {
+          "match_detail_id": "1098",
+          "confidence": "medium",
+          "method": "canonical_schedule_date_and_vod_url",
+          "schedule_date": "2026-10-11",
+          "scheduled_start": "2026-10-11T17:00:00+07:00",
+          "scheduled_team_a": "RRQ",
+          "scheduled_team_b": "ONIC",
+          "schedule_vod_candidate_id": null,
+          "rationale": "Canonical schedule places RRQ vs ONIC (series 1098) on 2026-10-11 and associates this broadcast date with VOD candidate unresolved. Exact in-video series/game offsets remain unverified."
+        },
+        {
+          "match_detail_id": "1099",
+          "confidence": "medium",
+          "method": "canonical_schedule_date_and_vod_url",
+          "schedule_date": "2026-10-11",
+          "scheduled_start": "2026-10-11T20:00:00+07:00",
+          "scheduled_team_a": "DEWA",
+          "scheduled_team_b": "BTR",
+          "schedule_vod_candidate_id": null,
+          "rationale": "Canonical schedule places DEWA vs BTR (series 1099) on 2026-10-11 and associates this broadcast date with VOD candidate unresolved. Exact in-video series/game offsets remain unverified."
+        }
+      ],
       "local_only": true,
       "metadata_provenance": "filename; no embedded metadata/timestamps",
-      "duplicate_of": null
+      "duplicate_of": null,
+      "broadcast_date": "2026-10-11",
+      "candidate_video_id": null,
+      "candidate_video_url": null,
+      "candidate_provenance": {
+        "source": "data/csv/schedule_all.csv",
+        "blob_sha": "455c29002d93186ef8cb7371f6ec35e56e28b581",
+        "method": "unique VOD ID across completed regular-season series on chronological broadcast date",
+        "schedule_match_ids": [
+          "1097",
+          "1098",
+          "1099"
+        ],
+        "resolution_errors": [
+          "invalid VOD for 1097",
+          "invalid VOD for 1098",
+          "invalid VOD for 1099"
+        ]
+      },
+      "schedule_match_ids": [
+        "1097",
+        "1098",
+        "1099"
+      ],
+      "video_resolution_status": "candidate_resolution_failed"
     },
     {
       "source_id": "src-s18-w09d01",
@@ -740,10 +2007,54 @@
       "video_duration_seconds": null,
       "video_metadata_provenance": null,
       "mapping_confidence": "week_day_from_filename",
-      "series_mapping": [],
+      "series_mapping": [
+        {
+          "match_detail_id": "1100",
+          "confidence": "medium",
+          "method": "canonical_schedule_date_and_vod_url",
+          "schedule_date": "2026-10-16",
+          "scheduled_start": "2026-10-16T15:00:00+07:00",
+          "scheduled_team_a": "NAVI",
+          "scheduled_team_b": "RRQ",
+          "schedule_vod_candidate_id": null,
+          "rationale": "Canonical schedule places NAVI vs RRQ (series 1100) on 2026-10-16 and associates this broadcast date with VOD candidate unresolved. Exact in-video series/game offsets remain unverified."
+        },
+        {
+          "match_detail_id": "1101",
+          "confidence": "medium",
+          "method": "canonical_schedule_date_and_vod_url",
+          "schedule_date": "2026-10-16",
+          "scheduled_start": "2026-10-16T18:00:00+07:00",
+          "scheduled_team_a": "GEEK",
+          "scheduled_team_b": "AE",
+          "schedule_vod_candidate_id": null,
+          "rationale": "Canonical schedule places GEEK vs AE (series 1101) on 2026-10-16 and associates this broadcast date with VOD candidate unresolved. Exact in-video series/game offsets remain unverified."
+        }
+      ],
       "local_only": true,
       "metadata_provenance": "filename; no embedded metadata/timestamps",
-      "duplicate_of": null
+      "duplicate_of": null,
+      "broadcast_date": "2026-10-16",
+      "candidate_video_id": null,
+      "candidate_video_url": null,
+      "candidate_provenance": {
+        "source": "data/csv/schedule_all.csv",
+        "blob_sha": "455c29002d93186ef8cb7371f6ec35e56e28b581",
+        "method": "unique VOD ID across completed regular-season series on chronological broadcast date",
+        "schedule_match_ids": [
+          "1100",
+          "1101"
+        ],
+        "resolution_errors": [
+          "invalid VOD for 1100",
+          "invalid VOD for 1101"
+        ]
+      },
+      "schedule_match_ids": [
+        "1100",
+        "1101"
+      ],
+      "video_resolution_status": "candidate_resolution_failed"
     },
     {
       "source_id": "src-s18-w09d02",
@@ -769,10 +2080,68 @@
       "video_duration_seconds": null,
       "video_metadata_provenance": null,
       "mapping_confidence": "week_day_from_filename",
-      "series_mapping": [],
+      "series_mapping": [
+        {
+          "match_detail_id": "1102",
+          "confidence": "medium",
+          "method": "canonical_schedule_date_and_vod_url",
+          "schedule_date": "2026-10-17",
+          "scheduled_start": "2026-10-17T14:00:00+07:00",
+          "scheduled_team_a": "ONIC",
+          "scheduled_team_b": "DEWA",
+          "schedule_vod_candidate_id": null,
+          "rationale": "Canonical schedule places ONIC vs DEWA (series 1102) on 2026-10-17 and associates this broadcast date with VOD candidate unresolved. Exact in-video series/game offsets remain unverified."
+        },
+        {
+          "match_detail_id": "1103",
+          "confidence": "medium",
+          "method": "canonical_schedule_date_and_vod_url",
+          "schedule_date": "2026-10-17",
+          "scheduled_start": "2026-10-17T17:00:00+07:00",
+          "scheduled_team_a": "BTR",
+          "scheduled_team_b": "EVOS",
+          "schedule_vod_candidate_id": null,
+          "rationale": "Canonical schedule places BTR vs EVOS (series 1103) on 2026-10-17 and associates this broadcast date with VOD candidate unresolved. Exact in-video series/game offsets remain unverified."
+        },
+        {
+          "match_detail_id": "1104",
+          "confidence": "medium",
+          "method": "canonical_schedule_date_and_vod_url",
+          "schedule_date": "2026-10-17",
+          "scheduled_start": "2026-10-17T20:00:00+07:00",
+          "scheduled_team_a": "RRQ",
+          "scheduled_team_b": "GEEK",
+          "schedule_vod_candidate_id": null,
+          "rationale": "Canonical schedule places RRQ vs GEEK (series 1104) on 2026-10-17 and associates this broadcast date with VOD candidate unresolved. Exact in-video series/game offsets remain unverified."
+        }
+      ],
       "local_only": true,
       "metadata_provenance": "filename; no embedded metadata/timestamps",
-      "duplicate_of": null
+      "duplicate_of": null,
+      "broadcast_date": "2026-10-17",
+      "candidate_video_id": null,
+      "candidate_video_url": null,
+      "candidate_provenance": {
+        "source": "data/csv/schedule_all.csv",
+        "blob_sha": "455c29002d93186ef8cb7371f6ec35e56e28b581",
+        "method": "unique VOD ID across completed regular-season series on chronological broadcast date",
+        "schedule_match_ids": [
+          "1102",
+          "1103",
+          "1104"
+        ],
+        "resolution_errors": [
+          "invalid VOD for 1102",
+          "invalid VOD for 1103",
+          "invalid VOD for 1104"
+        ]
+      },
+      "schedule_match_ids": [
+        "1102",
+        "1103",
+        "1104"
+      ],
+      "video_resolution_status": "candidate_resolution_failed"
     },
     {
       "source_id": "src-s18-w09d03",
@@ -800,16 +2169,75 @@
       "mapping_confidence": "high_video_metadata",
       "series_mapping": [
         {
+          "match_detail_id": "1105",
+          "confidence": "medium",
+          "method": "canonical_schedule_date_and_vod_url",
+          "schedule_date": "2026-10-18",
+          "scheduled_start": "2026-10-18T14:00:00+07:00",
+          "scheduled_team_a": "EVOS",
+          "scheduled_team_b": "AE",
+          "schedule_vod_candidate_id": null,
+          "rationale": "Canonical schedule places EVOS vs AE (series 1105) on 2026-10-18 and associates this broadcast date with VOD candidate unresolved. Exact in-video series/game offsets remain unverified."
+        },
+        {
+          "match_detail_id": "1106",
+          "confidence": "medium",
+          "method": "canonical_schedule_date_and_vod_url",
+          "schedule_date": "2026-10-18",
+          "scheduled_start": "2026-10-18T17:00:00+07:00",
+          "scheduled_team_a": "NAVI",
+          "scheduled_team_b": "BTR",
+          "schedule_vod_candidate_id": null,
+          "rationale": "Canonical schedule places NAVI vs BTR (series 1106) on 2026-10-18 and associates this broadcast date with VOD candidate unresolved. Exact in-video series/game offsets remain unverified."
+        },
+        {
           "match_detail_id": "1107",
           "confidence": "high",
           "method": "broadcast_day_schedule_order_and_transcript_context",
-          "rationale": "2026-10-18 W9D3 broadcast. Transcript 07:46 reports Team Liquid as regular-season champion after a 2-0 over Onic; schedule places ONIC-TLID (1107) at 20:00 as the final match."
+          "rationale": "2026-10-18 W9D3 broadcast. Transcript 07:46 reports Team Liquid as regular-season champion after a 2-0 over Onic; schedule places ONIC-TLID (1107) at 20:00 as the final match.",
+          "schedule_date": "2026-10-18",
+          "scheduled_start": "2026-10-18T20:00:00+07:00",
+          "scheduled_team_a": "ONIC",
+          "scheduled_team_b": "TLID",
+          "schedule_vod_candidate_id": null
         }
       ],
       "local_only": true,
       "metadata_provenance": "filename; no embedded metadata/timestamps",
       "duplicate_of": null,
-      "resolved_at": "2026-10-25T13:14:04+00:00"
+      "resolved_at": "2026-10-25T13:14:04+00:00",
+      "broadcast_date": "2026-10-18",
+      "candidate_video_id": null,
+      "candidate_video_url": null,
+      "candidate_provenance": {
+        "source": "data/csv/schedule_all.csv",
+        "blob_sha": "455c29002d93186ef8cb7371f6ec35e56e28b581",
+        "method": "unique VOD ID across completed regular-season series on chronological broadcast date",
+        "schedule_match_ids": [
+          "1105",
+          "1106",
+          "1107"
+        ],
+        "resolution_errors": [
+          "invalid VOD for 1105",
+          "invalid VOD for 1106",
+          "invalid VOD for 1107"
+        ]
+      },
+      "schedule_match_ids": [
+        "1105",
+        "1106",
+        "1107"
+      ],
+      "video_resolution_status": "caption_alignment_verified"
     }
-  ]
+  ],
+  "schedule_mapping_provenance": {
+    "source": "data/csv/schedule_all.csv",
+    "blob_sha": "455c29002d93186ef8cb7371f6ec35e56e28b581",
+    "method": "sources sorted by week/day paired with chronologically sorted completed regular-season dates",
+    "broadcast_days": 27,
+    "completed_series": 72,
+    "note": "Schedule VODs are candidates until metadata verifies the official title/channel; timestamp links require 1:1 caption alignment."
+  }
 }

@@ -39,7 +39,8 @@ def corpus_report(manifest: dict, verification: dict, timed: dict) -> str:
     for source in sources:
         if source.get("week"):
             weeks.setdefault(source["week"], []).append(source.get("day"))
-    with_video = [s for s in sources if s.get("video_id")]
+    with_video = [s for s in sources if s.get("video_id") and s.get("video_metadata_provenance")]
+    candidates = [s for s in sources if s.get("candidate_video_id")]
     timed_ids = {row["source_id"] for row in timed.get("sources", [])}
     duplicates = [s for s in sources if s.get("duplicate_of")]
     lines = [
@@ -64,21 +65,25 @@ def corpus_report(manifest: dict, verification: dict, timed: dict) -> str:
         f"days per week: " + ", ".join(f"W{w}: {len(d)}" for w, d in sorted(weeks.items())),
         "- Encoding: UTF-8 without BOM; CRLF line endings in the raw files.",
         "- Native timestamp strings in the raw files: **0**. The files are caption text only; filenames carry week/day but no video ID.",
-        f"- Verified YouTube video IDs/URLs: **{len(with_video)}/{len(sources)}** (pilot only).",
-        f"- Timed caption alignments: **{len(timed_ids)}/{len(with_video)}** pilot videos, one-to-one with raw caption lines.",
-        f"- Byte-identical duplicate files: **{len(duplicates)}**.",
+        f"- Schedule-derived VOD candidates: **{len(candidates)}/{len(sources)}** (candidates, not verified identities).",
+        f"- Metadata-verified official video IDs: **{len(with_video)}/{len(sources)}**.",
+        f"- Timed caption alignments: **{len(timed_ids)}/{len(sources)}**; timestamps derive from reproducible 1:1 caption alignment.        f"- Byte-identical duplicate files: **{len(duplicates)}**.",
         "",
         "## Source table",
         "",
-        "| Source ID | Week/day | Bytes | Lines | Native timestamps | Video ID | Timed alignment |",
-        "|---|---:|---:|---:|---|---|---|",
+        "| Source ID | Week/day | Broadcast date | Bytes | Lines | VOD candidate | Status | Timed alignment | Series IDs |",
+        "|---|---:|---|---:|---:|---|---|---|---|",
     ]
     for source in sources:
+        status = source.get("video_resolution_status", "unverified")
+        series_ids = ",".join(str(item.get("match_detail_id")) for item in source.get("series_mapping", []))
+        candidate_id = source.get("candidate_video_id")
+        candidate_link = f"[{candidate_id}](https://www.youtube.com/watch?v={candidate_id})" if candidate_id else "none"
         lines.append(
             f"| `{source['source_id']}` | W{source.get('week')}D{source.get('day')} | "
-            f"{source['bytes']:,} | {source.get('line_count')} | none | "
-            f"{source.get('video_id') or 'unknown'} | "
-            f"{'yes' if source['source_id'] in timed_ids else 'no'} |"
+            f"{source.get('broadcast_date') or 'unknown'} | {source['bytes']:,} | {source.get('line_count')} | "
+            f"{candidate_link} | {status} | {'yes' if source['source_id'] in timed_ids else 'no'} | "
+            f"{series_ids or 'none'} |"
         )
     lines += [
         "",
@@ -101,8 +106,8 @@ def corpus_report(manifest: dict, verification: dict, timed: dict) -> str:
         "- Captions are Indonesian auto-generated ASR: names, hero names and punctuation can be wrong; there are no speaker labels.",
         "- Some lines are music/noise tags (`[musik]`, `[berteriak]`, `[tertawa]`), not evidence of gameplay.",
         "- Line breaks split sentences; quotes must preserve the source line span.",
-        "- 25/27 sources still have no verified video ID and therefore no timestamp links or visual verification.",
-        "- Week/day mapping comes from the filename. Series mapping is only claimed for the pilot sources in the manifest, with rationale recorded.",
+        f"- {len([s for s in sources if not s.get('video_id')])}/{len(sources)} schedule VOD candidates still need metadata verification; candidate URLs are not citation authorities.",
+        "- Broadcast dates and series IDs come from the canonical schedule. Exact in-video series/game offsets remain unverified unless independently established.",
         "- The raw corpus is local-only. Committed reports contain only short pilot quotations; validators that need raw text are run in this local workspace and require the ignored corpus copy.",
         "",
         "## Duplicate/suspicious files",
@@ -298,7 +303,7 @@ def database_report(snapshot: dict) -> str:
         "",
         "## Source-to-series mapping",
         "",
-        "Only the pilot sources are mapped. See `analysis/sources/source-manifest.json` for the two verified videos and `analysis/reports/pilot-quality-report.md` for mapping confidence and limitations. The other 25 days remain unmapped to a video ID and therefore cannot be visually verified yet.",
+        "All completed regular-season series have schedule-derived broadcast-date/VOD candidates in the source manifest. Candidates are not verified until `tools/resolve_and_align_sources.py` confirms official channel/title metadata and one-to-one timed-caption alignment. Exact series/game offsets remain separate work.",
     ]
     return "\n".join(lines) + "\n"
 
