@@ -52,6 +52,54 @@ def metadata_errors(source,video_id,meta):
  if want not in title:errors.append(f"title missing {want!r}: {title!r}")
  if "mpl id s18" not in title and "mpl indonesia season 18" not in title:errors.append(f"title does not identify MPL ID S18: {title!r}")
  return errors
+def cache_alignment_is_current(source, candidate_id, alignment):
+    """Return True only when a local sidecar is tied to the current source and candidate."""
+    if not isinstance(alignment, dict) or not candidate_id:
+        return False
+    if source.get("video_id") != candidate_id or not source.get("video_metadata_provenance"):
+        return False
+    if alignment.get("source_id") != source.get("source_id"):
+        return False
+    if alignment.get("video_id") != candidate_id or alignment.get("raw_sha256") != source.get("sha256"):
+        return False
+    if alignment.get("alignment_status") != "verified" or alignment.get("mismatch_count") != 0:
+        return False
+    return alignment.get("raw_line_count") == alignment.get("timed_snippet_count")
+
+
+def derive_source_status(source, candidate, alignment):
+    """Derive source state from current candidate, metadata provenance, and sidecar integrity."""
+    candidate_id = candidate.get("candidate_video_id")
+    if not candidate_id:
+        return "candidate_resolution_failed"
+    if source.get("video_id") != candidate_id or not source.get("video_metadata_provenance"):
+        return "schedule_candidate_pending_verification"
+    if cache_alignment_is_current(source, candidate_id, alignment):
+        return "caption_alignment_verified"
+    return "metadata_verified"
+
+
+def summary_from_alignment(source, alignment):
+    return {
+        "source_id": source["source_id"],
+        "video_id": alignment["video_id"],
+        "raw_sha256": alignment["raw_sha256"],
+        "raw_lines": alignment["raw_line_count"],
+        "exact_matches": alignment["exact_matches"],
+        "normalized_matches": alignment["normalized_matches"],
+        "timestamp_provenance": alignment["timestamp_provenance"],
+    }
+
+
+def write_timed_summary(items):
+    """Replace the active summary with only cache sidecars verified for current source hashes."""
+    atomic_json(SUMMARY, {
+        "schema_version": 1,
+        "generated_at": now(),
+        "sources": sorted(items, key=lambda item: item["source_id"]),
+    })
+
+
 def save_manifest(path,m):m["generated_at"]=now();atomic_json(path,m)
 def resolve_one(source,c,no_align=False):
  vid=c.get("candidate_video_id")
@@ -79,9 +127,12 @@ def main(argv=None):
  if not isinstance(manifest,dict):print("ERROR: invalid manifest",file=sys.stderr);return 2
  try:candidates,sched_errors=build_schedule_candidates(manifest,args.schedule)
  except Exception as e:print(f"ERROR: schedule resolution failed: {e}",file=sys.stderr);return 2
- byid={s["source_id"]:s for s in manifest.get("sources",[])};timed=read_json(SUMMARY,{"sources":[]});aligned={x.get("source_id") for x in timed.get("sources",[])}
+ byid={s["source_id"]:s for s in manifest.get("sources",[])}
  for sid,c in candidates.items():
-  s=byid[sid];s.update(c);s["video_resolution_status"]="caption_alignment_verified" if sid in aligned else ("metadata_verified" if s.get("video_id") and s.get("video_metadata_provenance") else ("schedule_candidate_pending_verification" if c["candidate_video_id"] else "candidate_resolution_failed"))
+  source=byid[sid]
+  source.update(c)
+  cached=read_json(ALIGN/f"{sid}.json",None)
+  source["video_resolution_status"]=derive_source_status(source,c,cached)
  manifest["schedule_mapping_provenance"]={"source":str(args.schedule),"sha256":sha256_file(args.schedule),"method":"source week/day paired with chronological completed regular-season dates","broadcast_days":len({c["broadcast_date"] for c in candidates.values()}),"completed_series":len(regular_schedule_rows(args.schedule)),"note":"schedule candidate, metadata verification and timed-caption alignment are separate states"}
  save_manifest(args.manifest,manifest);selected=list(manifest.get("sources",[]))
  if args.source_id:
@@ -94,15 +145,39 @@ def main(argv=None):
   sid=s["source_id"];c=candidates[sid];cp=ALIGN/f"{sid}.json"
   if not args.refresh_metadata and s.get("video_resolution_status")=="caption_alignment_verified" and cp.exists():
    a=read_json(cp,{})
-   if a.get("raw_sha256")==s.get("sha256") and a.get("video_id")==c.get("candidate_video_id"):
-    results.append({"source_id":sid,"status":"caption_alignment_verified","skipped":"valid alignment cache"})
-    summaries.append({"source_id":sid,"video_id":a.get("video_id"),"raw_sha256":a.get("raw_sha256"),"raw_lines":a.get("raw_line_count"),"exact_matches":a.get("exact_matches"),"normalized_matches":a.get("normalized_matches"),"timestamp_provenance":a.get("timestamp_provenance")});continue
+   if cache_alignment_is_current(s,c.get("candidate_video_id"),a):
+    results.append({"source_id":sid,"status":"caption_alignment_verified","skipped":"verified current alignment cache"})
+    summaries.append(summary_from_alignment(s,a))
+    continue
   result=resolve_one(s,c,args.no_align);results.append(result)
-  if result.get("status")=="caption_alignment_verified":
-   a=read_json(cp,{});summaries.append({"source_id":sid,"video_id":a.get("video_id"),"raw_sha256":a.get("raw_sha256"),"raw_lines":a.get("raw_line_count"),"exact_matches":a.get("exact_matches"),"normalized_matches":a.get("normalized_matches"),"timestamp_provenance":a.get("timestamp_provenance")})
+  if result.get("status")=="metadata_mismatch":
+   s["video_resolution_status"]="metadata_mismatch"
+  elif result.get("status")=="candidate_failed":
+   s["video_resolution_status"]="candidate_resolution_failed"
+  elif result.get("status")=="caption_alignment_failed":
+   s["video_resolution_status"]="metadata_verified"
+  elif result.get("status")=="metadata_verified":
+   s["video_resolution_status"]="metadata_verified"
+  elif result.get("status")=="caption_alignment_verified":
+   s["video_resolution_status"]="caption_alignment_verified"
   if result.get("status") not in ("metadata_verified","caption_alignment_verified"):failures+=1
   save_manifest(args.manifest,manifest)
- if summaries:update_summary(summaries)
+ # Rebuild the active alignment summary from integrity-checked local sidecars.
+ # Stale entries are removed rather than making a source look aligned by source_id alone.
+ active=[]
+ for source in manifest.get("sources",[]):
+  candidate=candidates[source["source_id"]]
+  cached=read_json(ALIGN/f"{source['source_id']}.json",None)
+  status=derive_source_status(source,candidate,cached)
+  if source.get("video_resolution_status")=="metadata_mismatch":
+   status="metadata_mismatch"
+  elif source.get("video_resolution_status")=="candidate_resolution_failed":
+   status="candidate_resolution_failed"
+  source["video_resolution_status"]=status
+  if status=="caption_alignment_verified":
+   active.append(summary_from_alignment(source,cached))
+ write_timed_summary(active)
+ save_manifest(args.manifest,manifest)
  out={"schema_version":1,"generated_at":now(),"selected_count":len(selected),"schedule_failures":sched_errors,"no_align":args.no_align,"results":results,"metadata_verified":sum(r.get("status") in ("metadata_verified","caption_alignment_verified") for r in results),"caption_alignment_verified":sum(r.get("status")=="caption_alignment_verified" for r in results),"failed":[r for r in results if r.get("status") not in ("metadata_verified","caption_alignment_verified")]}
  atomic_json(REPORT,out);print(json.dumps(out,ensure_ascii=False,indent=2))
  if not args.no_inventory:
