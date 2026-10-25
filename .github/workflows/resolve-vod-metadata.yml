@@ -1,0 +1,35 @@
+name: one-off VOD metadata resolution
+
+on:
+  push:
+    branches:
+      - semantic/resolve-all-vod-sources
+
+permissions:
+  contents: read
+
+jobs:
+  resolve:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Install metadata resolver dependency
+        run: python -m pip install --upgrade yt-dlp
+      - name: Verify candidate titles and channels (no transcript fetch)
+        id: resolve
+        continue-on-error: true
+        run: python tools/resolve_and_align_sources.py --no-align --no-inventory
+      - name: Upload metadata-only report and updated candidate manifest
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: vod-metadata-resolution
+          path: |
+            analysis/sources/source-manifest.json
+            analysis/cache/video-resolution-report.json
+          if-no-files-found: warn
+          retention-days: 3
