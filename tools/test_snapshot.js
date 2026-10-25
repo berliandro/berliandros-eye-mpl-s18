@@ -60,9 +60,12 @@ eq(derived.picks.length, 8, 'S4 picks use same raw snapshot');
 ok(JSON.stringify(deriveAnalyticsSnapshot({ players, games, picks: oldPicks, team_games: stale, team_season: oldSeason, standings })) === JSON.stringify(derived), 'S4 deterministic');
 
 // Live refresh: fresh rows omit enrichment fields; preserve last-known-good.
-const oldGames = [{ match_detail_id: '2', game_no: 1, team_a: 'B', team_b: 'A', winner: 'team_b', map_mode: 'Prime', duration_sec: 1200 }];
-const freshGames = [{ match_detail_id: '2', game_no: 1, team_a: 'B', team_b: 'A', winner: 'team_b', map_mode: undefined, duration_sec: 1200 }];
-eq(preserveFields(freshGames, oldGames, g => g.match_detail_id + ':' + g.game_no, ['map_mode'])[0].map_mode, 'Prime', 'S5 map mode survives live refresh');
+const oldGames = [{ match_detail_id: '2', game_no: 1, team_a: 'B', team_b: 'A', winner: 'team_b', map_mode: 'Prime', team_a_side: 'blue', team_b_side: 'red', vod_url: 'v', duration_sec: 1200 }];
+const freshGames = [{ match_detail_id: '2', game_no: 1, team_a: 'B', team_b: 'A', winner: 'team_b', map_mode: undefined, team_a_side: null, team_b_side: null, vod_url: null, duration_sec: 1200 }];
+const keptGame = preserveFields(freshGames, oldGames, g => g.match_detail_id + ':' + g.game_no, ['map_mode', 'team_a_side', 'team_b_side', 'vod_url'])[0];
+eq(keptGame.map_mode, 'Prime', 'S5 map mode survives live refresh');
+eq([keptGame.team_a_side, keptGame.team_b_side], ['blue', 'red'], 'S5 recorded sides survive a null-side refresh');
+eq(keptGame.vod_url, 'v', 'S5 VOD survives a null refresh');
 const oldBans = [{ match_detail_id: '1', game_no: 1, side: 'A', hero: 'H9', ban_order: 1 }];
 const freshBans = [{ match_detail_id: '1', game_no: 1, side: 'A', hero: 'H9' }];
 eq(preserveFields(freshBans, oldBans, b => b.match_detail_id + ':' + b.game_no + ':' + b.side + ':' + b.hero, ['ban_order'])[0].ban_order, 1, 'S5 ban order survives live refresh');

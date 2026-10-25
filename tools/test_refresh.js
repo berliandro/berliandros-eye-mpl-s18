@@ -8,8 +8,8 @@ const path = require('path');
 const src = fs.readFileSync(path.join(__dirname, 'templates', 'app.js'), 'utf8');
 const m = src.match(/\/\* REFRESH-START \*\/([\s\S]*?)\/\* REFRESH-END \*\//);
 if (!m) { console.error('FAIL REFRESH markers missing'); process.exit(1); }
-const NS = new Function(m[1] + '; return {keyGame, keyPro, keyBan, mergeRefresh, validSnapshot, refreshStatus};')();
-const { keyGame, keyPro, keyBan, mergeRefresh, validSnapshot, refreshStatus } = NS;
+const NS = new Function(m[1] + '; return {keyGame, keyPro, keyBan, mergeRefresh, mergeBansRefresh, validSnapshot, refreshStatus};')();
+const { keyGame, keyPro, keyBan, mergeRefresh, mergeBansRefresh, validSnapshot, refreshStatus } = NS;
 // parseMvps lives outside the markers (DOM-free); extract by name.
 const pm = src.match(/function parseMvps\(wt\)\{[\s\S]*?return out;\}/);
 if (!pm) { console.error('FAIL parseMvps not found'); process.exit(1); }
@@ -71,6 +71,20 @@ const fresh = (rows) => ({ ok: true, games: [], pros: [], bans: [], ...rows });
     'R5 bans replaced-per-key, failed kept, no dupes (' + keys + ')');
 }
 
+// --- bans: a game whose fresh payload has no bans keeps its enriched set ---
+{
+  const oldB = [B('1', 1, 'A', 'H'), B('1', 1, 'B', 'H2'), B('1', 2, 'A', 'H3')];
+  const out = mergeBansRefresh(oldB, { 1: fresh({ bans: [B('1', 1, 'A', 'H'), B('1', 1, 'B', 'H2')] }) }, keyBan);
+  const keys = out.map(keyBan).sort();
+  ok(JSON.stringify(keys) === JSON.stringify(['1:1:A:H', '1:1:B:H2', '1:2:A:H3']),
+    'R5b empty fresh game keeps Liquipedia bans (' + keys + ')');
+  const replaced = mergeBansRefresh(oldB, {
+    1: fresh({ bans: [B('1', 1, 'A', 'H9'), B('1', 1, 'B', 'H2'), B('1', 2, 'A', 'H3')] })
+  }, keyBan);
+  ok(replaced.some(b => b.hero === 'H9') && replaced.length === 3,
+    'R5b fresh bans still win when the API supplies them');
+}
+
 // --- idempotence: repeated identical refreshes do not grow collections ---
 {
   const oldG = [G('1', 1)];
@@ -103,8 +117,12 @@ const fresh = (rows) => ({ ok: true, games: [], pros: [], bans: [], ...rows });
 {
   const c = refreshStatus({ complete: true, fails: 0, games: 144, mvpN: 60, newMsg: '' });
   const p = refreshStatus({ complete: false, fails: 3, games: 120, mvpN: 60, newMsg: '' });
+  const missing = refreshStatus({ complete: false, fails: 0, missing: 3, games: 120, mvpN: 60, newMsg: '' });
+  const draft = refreshStatus({ complete: false, fails: 0, missing: 0, draftIssues: ['bans:1'], games: 120, mvpN: 60, newMsg: '' });
   ok(c.indexOf('updated ') === 0 && c.indexOf('partially') === -1, 'R14 complete wording (' + c + ')');
   ok(p.indexOf('partially updated') === 0 && p.indexOf('3 failed') > -1, 'R15 partial wording (' + p + ')');
+  ok(missing.indexOf('3 completed result(s) missing') > -1, 'R15 missing completed results are surfaced');
+  ok(draft.indexOf('draft integrity bans:1') > -1, 'R15 draft gaps are surfaced');
 }
 
 // --- parseMvps keeps the final block (regression lock for app parser) ---

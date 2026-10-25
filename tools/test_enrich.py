@@ -12,7 +12,7 @@ BASE = Path(__file__).parent
 sys.path.insert(0, str(BASE))
 
 from enrich_drafts import (LANES, MAP_MODE_ALIASES, canonical_hero, dedupe_bans,
-                           hero_key, parse_series)
+                           hero_key, parse_series, remove_blank_bans)
 from season import resolve
 
 FIXTURE = """|M1={{Match
@@ -65,6 +65,20 @@ class IdentityTest(unittest.TestCase):
 
 
 class DedupeTest(unittest.TestCase):
+    def test_blank_ban_is_not_a_ban(self):
+        con = sqlite3.connect(":memory:")
+        con.execute("CREATE TABLE game_bans(match_detail_id TEXT, game_no INTEGER, "
+                    "side TEXT, hero TEXT, ban_order INTEGER)")
+        con.executemany("INSERT INTO game_bans VALUES(?,?,?,?,?)", [
+            ("1", 1, "A", "", None),
+            ("1", 1, "A", "   ", None),
+            ("1", 1, "A", None, None),
+            ("1", 1, "A", "Atlas", 1),
+        ])
+        self.assertEqual(remove_blank_bans(con), 3)
+        self.assertEqual(con.execute("SELECT COUNT(*) FROM game_bans").fetchone()[0], 1)
+        con.close()
+
     def test_duplicate_ban_is_removed(self):
         con = sqlite3.connect(":memory:")
         con.execute("CREATE TABLE game_bans(match_detail_id TEXT, game_no INTEGER, "
@@ -90,6 +104,24 @@ class DataGateTest(unittest.TestCase):
     @classmethod
     def tearDownClass(cls):
         cls.con.close()
+
+    def test_completed_snapshot_counts(self):
+        counts = {t: self.con.execute(f"SELECT COUNT(*) FROM {t}").fetchone()[0]
+                  for t in ("matches", "games", "game_players", "game_picks",
+                            "team_games", "standings")}
+        self.assertEqual(counts["matches"], 72)
+        self.assertEqual(counts["games"], 174)
+        self.assertEqual(counts["game_players"], 1740)
+        self.assertEqual(counts["game_picks"], 1740)
+        self.assertEqual(counts["team_games"], 348)
+        self.assertEqual(counts["standings"], 9)
+
+    def test_no_blank_or_unassigned_picks(self):
+        self.assertEqual(self.con.execute(
+            "SELECT COUNT(*) FROM game_picks WHERE player IS NULL OR TRIM(player)='' "
+            "OR hero IS NULL OR TRIM(hero)=''").fetchone()[0], 0)
+        self.assertEqual(self.con.execute(
+            "SELECT COUNT(*) FROM game_bans WHERE hero IS NULL OR TRIM(hero)=''").fetchone()[0], 0)
 
     def test_every_player_row_has_a_lane(self):
         missing = self.con.execute(

@@ -47,21 +47,21 @@ data/season.json ────────────────────┘
 
 | Table | Rows | Notes |
 |---|---:|---|
-| `matches` | 69 | completed series |
-| `games` | 167 | per-game result, duration, sides, VOD |
-| `game_players` | 1,670 | 167 × 10; K/D/A, gold, GPM, damage, tanked, tower dmg, emblem, 6 items, 3 talents |
-| `game_bans` | 1,669 | 10 ordered bans per game; one source duplicate removed and listed in `tools/test_enrich.py` |
-| `game_picks` | 1,670 | 5 picks per side with lane + lane source |
+| `matches` | 72 | completed series |
+| `games` | 174 | per-game result, duration, sides, VOD |
+| `game_players` | 1,740 | 174 × 10; K/D/A, gold, GPM, damage, tanked, tower dmg, emblem, 6 items, 3 talents |
+| `game_bans` | 1,738 | 10 ordered bans per game, except two 9-ban games (duplicate/blank source rows) listed in `quality.json` |
+| `game_picks` | 1,740 | 5 picks per side with lane + lane source |
 | `hero_stats` | 133 | pick / ban / win / WR |
 | `player_season_stats` | 66 | season totals + primary lane |
-| `team_games` | 334 | per-game team aggregates derived from the five player rows |
+| `team_games` | 348 | per-game team aggregates derived from the five player rows |
 | `team_season_stats` | 9 | team season aggregates; wins/losses reconcile with standings 9/9 |
 | `standings` | 9 | match points, game diff |
 | `schedule_all` | 80 | 72 regular + 8 playoff |
 
-Distinct: **60 players with completed game rows** (66 season-stat rows),
+Distinct: **61 players with completed game rows** (66 season-stat rows),
 **93 heroes picked or banned**, **114 item identifiers**.
-Built HTML ≈ **1.49 MB**, fully self-contained.
+Built HTML ≈ **1.55 MB**, fully self-contained.
 
 **Application surface:** Overview (player deep dive), Players, Matches (list/grid,
 regular/playoffs, bracket preview), Stats (MVP race + hero dashboard), **Analytics**
@@ -93,8 +93,8 @@ validation, ruff, GitHub Actions CI.
 | Branding / cache key / single output path | season config and `--season` output; root artifact retained for link compatibility |
 | No provenance record | `data/seasons/s18/meta.json` (schema, sources, row counts); a SQLite `meta` table remains optional |
 | Hero metadata absent | `data/global/hero_classes.json` covers all 133 heroes (damage type derived and labelled) |
-| Per-game lane `NULL` | 1,670/1,670 player rows carry `lane` + `lane_source=liq_slot` |
-| Draft data under-used | 1,670 picks, 1,669 ordered bans, 146/167 map modes, 167/167 VOD links, team aggregates |
+| Per-game lane `NULL` | 1,740/1,740 player rows carry `lane` + `lane_source=liq_slot` |
+| Draft data under-used | 1,740 picks, 1,738 ordered bans, 153/174 map modes, 174/174 VOD links, team aggregates |
 
 ### 2.4 Data ceilings (verified, not assumed)
 
@@ -452,20 +452,20 @@ adding a stub `s19` config produces a build with no code edits.
 - B6 Team game aggregates
 - Added data-quality gates
 
-**Status (2026-10-21):** B1–B6 landed. 167/167 completed games have 10 picks;
-166/167 have 10 unique bans (one source duplicate removed and listed in
-`tools/test_enrich.py`). 1,670/1,670 player rows are tagged `liq_slot`.
-146/167 games have a map mode; the 21 missing are the Week 9 source gap.
+**Status (2026-10-24):** B1-B6 landed. 174/174 completed games have 10 picks;
+172/174 have 10 unique bans (one source duplicate and one blank placeholder
+removed; exceptions listed in `data/seasons/s18/quality.json`). 1,740/1,740
+player rows are tagged `liq_slot`. 153/174 games have a map mode; the 21
+missing are the Week 9 source gap.
 `hero_classes.json` covers all 133 heroes (damage type derived and labelled).
-`team_games` (334 rows) and `team_season_stats` (9 teams) reconcile with
-standings on wins/losses. The new data is surfaced in the game dialog (map mode,
+`team_games` (348 rows) and `team_season_stats` (9 teams) reconcile with
+standings on wins/losses. The data is surfaced in the game dialog (map mode,
 ordered bans, lane-ordered picks), the hero table (role/lane/damage) and the team
 profiles under Standings.
 
-**Exit:** 100% of completed games have 10 picks + 10 bans (the one source
-duplicate is listed); 100% of player rows have a lane + `lane_source`;
-cross-source ban mismatches < 1% or listed; `verify.py` gains draft/lane/aggregate
-suites and passes.
+**Exit:** 100% of completed games have 10 picks and every player row has a
+lane + `lane_source`; the two 9-ban source gaps are listed; cross-source ban
+mismatches are listed; `verify.py` gains draft/lane/aggregate suites and passes.
 
 ### Phase 2 — Analytics engine · ~15–20 days
 

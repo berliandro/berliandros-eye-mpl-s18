@@ -28,20 +28,28 @@ class ReconciliationTest(unittest.TestCase):
         # Both definitions are present and not silently substituted.
         total_match_wins = sum(r["official"]["match_win"] for r in self.report["rows"])
         total_game_wins = sum(r["official"]["game_win"] for r in self.report["rows"])
-        self.assertEqual(total_match_wins, 69)
-        self.assertEqual(total_game_wins, 167)
+        self.assertEqual(total_match_wins, 72)
+        self.assertEqual(total_game_wins, 174)
 
     def test_game_appearances_balanced(self):
         i = self.report["integrity"]
         self.assertTrue(i["appearance_balance"])
-        self.assertEqual(i["team_game_appearances"], 334)
-        self.assertEqual(i["included_games"], 167)
+        self.assertEqual(i["team_game_appearances"], 348)
+        self.assertEqual(i["included_games"], 174)
         self.assertTrue(i["all_games_have_one_winner"])
         self.assertTrue(i["all_teams_present"])
 
     def test_explicit_regular_season_scope(self):
         self.assertIn("regular-season", self.report["scope"])
-        self.assertEqual(self.report["integrity"]["included_matches"], 69)
+        self.assertEqual(self.report["integrity"]["included_matches"], 72)
+
+    def test_final_regular_snapshot_is_complete(self):
+        paths = resolve("s18")
+        cfg = json.loads(Path(paths["config"]).read_text(encoding="utf-8"))
+        self.assertEqual(self.report["integrity"]["included_matches"],
+                         cfg["totalRegularFixtures"])
+        self.assertEqual(self.report["integrity"]["included_games"], 174)
+        self.assertFalse(self.report["excluded"], self.report["excluded"])
 
     def test_alias_variants_resolve_one_identity(self):
         paths = resolve("s18")

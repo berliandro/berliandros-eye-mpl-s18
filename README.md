@@ -90,6 +90,11 @@ live from the mlbbhub API when online.
   data with retry/timeout, merges per-match results (failed match IDs keep
   their previous records, never partial-overwritten), caches to a versioned
   `localStorage` key, and reports `updated` vs `partially updated` status.
+  A refresh is labelled final only when all 72 completed regular fixtures have
+  detail, the standings totals agree, and every game retains ten picks, two
+  team rows, recorded sides and its ordered bans; missing results or draft
+  gaps are called out explicitly. Source conflicts and data-quality exceptions
+  live in `data/seasons/s18/quality.json` and `meta.json`.
   A failed ETL build keeps the last known-good database/CSVs (rerun to
   retry); a failed refresh keeps showing the last snapshot. To reset cached
   data, clear the site's `localStorage` and reload.
@@ -139,7 +144,7 @@ live from the mlbbhub API when online.
 | `tools/test_hero_classes.py` | Hero role/lane/damage coverage gates |
 | `tools/test_aggregates.py` | Team aggregate reconciliation gates |
 | `tools/test_config.py` | Season-config schema tests |
-| `data/season.json` | Validated season rules (teams, slots, priors, endpoints, cache) |
+| `data/season.json` | Validated season rules (teams, slots, priors, endpoints, cache schema 4) |
 | `data/registry.json` | Season registry — every season-aware tool resolves paths through it |
 | `data/global/` | Season-independent metadata: `aliases.json` (player/team/lane identity), `item_classes.json`, `hero_classes.json` |
 | `tools/season.py` | Registry resolver (`legacy` and `season-dir` layouts) |

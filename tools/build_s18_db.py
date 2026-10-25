@@ -51,6 +51,15 @@ def canon_hero(h):
     return HERO_RENAMES.get(norm_team(h), h)
 
 
+def clean_bans(bans):
+    """Deduplicate ban heroes and drop empty placeholder ids.
+
+    An empty string is a missing ban, not a hero named "". The API occasionally
+    emits one in place of a fifth ban; it must never enter game_bans.
+    """
+    return [b for b in dict.fromkeys(bans or []) if b and str(b).strip()]
+
+
 def attach_mvps(hub_numeric, liq):
     """Map hub match_detail_id -> Liquipedia MVP by normalized team pair.
 
@@ -130,44 +139,247 @@ def parse_liq_matches(wikitext):
     return liq
 
 
-def validate_build(con, fails, playoff_payload, season=None):
-    """Integrity gate for a freshly built (staging) database.
+def _is_playoff_schedule(row):
+    """True for bracket rows, never for a regular-season fixture."""
+    sid = str(row.get("schedule_id") or "").lower()
+    return "playoff" in sid or (row.get("team_a") == "TBD" and row.get("team_b") == "TBD")
 
-    Returns a list of human-readable problems (empty = publishable).
+
+def _score_winner(row):
+    """Return the winning team code from a decided schedule row, else None."""
+    try:
+        sa, sb = int(row.get("score_a")), int(row.get("score_b"))
+    except (TypeError, ValueError):
+        return None
+    if sa == sb:
+        return None
+    return row.get("team_a") if sa > sb else row.get("team_b")
+
+
+def validate_build(con, fails, playoff_payload, season=None):
+    """Phase-aware completeness gate for a freshly built (staging) database.
+
+    Returns a list of human-readable problems (empty = publishable). This is
+    deliberately stricter than "tables are non-empty": every completed
+    regular-season schedule row must have its detail, every declared series
+    score must be backed by exactly that many game rows, and the derived
+    Match/Game W-L must reconcile with the published standings.
+
+    A season that still has unplayed regular-season fixtures may publish a
+    partial snapshot, but it is never called final: finality requires all
+    configured regular fixtures to be completed and present. Finality/scope is
+    also recorded by tools/write_meta.py from the same database.
     Never touches the network; operates on the given connection only.
-    Expected fixture totals derive from the season config when given,
-    else fall back to the Season 18 shape (72 regular + 8 playoffs).
     """
-    exp_regular = (season or {}).get("totalRegularFixtures", 72)
-    exp_playoffs = (season or {}).get("playoffMatches", 8)
+    season = season or {}
+    exp_regular = int(season.get("totalRegularFixtures", 72))
+    exp_playoffs = int(season.get("playoffMatches", 8))
+    aliases = {re.sub(r"[^a-z0-9]", "", str(k).lower()): str(v).upper()
+               for k, v in (season.get("aliases") or {}).items()}
+    def canon(team):
+        key = re.sub(r"[^a-z0-9]", "", str(team or "").lower())
+        return aliases.get(key, key.upper())
     problems = []
+    con.row_factory = sqlite3.Row
     try:
         tables = {r[0] for r in con.execute(
             "SELECT name FROM sqlite_master WHERE type='table'").fetchall()}
     except Exception as e:
         return [f"schema unreadable: {e}"]
     for t in ("matches", "schedule_all", "games", "game_players",
-              "player_season_stats", "hero_stats", "standings"):
+              "player_season_stats", "hero_stats", "standings", "team_games"):
         if t not in tables:
             problems.append(f"missing table {t}")
     if problems:
         return problems
-    count = lambda q: con.execute(q).fetchone()[0]
-    n_stand = count("SELECT COUNT(*) FROM standings")
-    n_sched = count("SELECT COUNT(*) FROM schedule_all")
-    if n_stand <= 0:
-        problems.append("standings empty")
+
+    sched = [dict(r) for r in con.execute(
+        "SELECT schedule_id, team_a, team_b, score_a, score_b, status, winner, "
+        "match_detail_id FROM schedule_all")]
+    regular = [r for r in sched if not _is_playoff_schedule(r)]
+    playoffs = [r for r in sched if _is_playoff_schedule(r)]
+    completed = [r for r in regular if str(r.get("status")) == "completed"]
+    n_sched = len(sched)
     if n_sched != exp_regular + exp_playoffs:
         problems.append(f"schedule_all has {n_sched} rows, expected {exp_regular + exp_playoffs}")
-    if count("SELECT COUNT(*) FROM games") <= 0:
-        problems.append("games empty")
-    if count("SELECT COUNT(*) FROM game_players") <= 0:
-        problems.append("game_players empty")
+    if len(regular) != exp_regular:
+        problems.append(f"regular schedule has {len(regular)} rows, expected {exp_regular}")
+    if len(playoffs) != exp_playoffs:
+        problems.append(f"playoff schedule has {len(playoffs)} rows, expected {exp_playoffs}")
+    phase = str(season.get("regularSeasonStatus") or "in-progress")
+    if phase == "final" and len(completed) != exp_regular:
+        problems.append(
+            f"final phase requires {exp_regular} completed regular fixtures, "
+            f"found {len(completed)}")
+    if phase not in ("in-progress", "final"):
+        problems.append(f"unknown regularSeasonStatus {phase!r}")
+    if con.execute("SELECT COUNT(*) FROM standings").fetchone()[0] <= 0:
+        problems.append("standings empty")
+    if not isinstance(playoff_payload, dict):
+        problems.append("playoffs payload malformed")
     if fails:
         problems.append(f"{len(fails)} match-detail fetches failed: "
                         + ",".join(str(d) for d, _ in fails[:5]))
-    if not isinstance(playoff_payload, dict):
-        problems.append("playoffs payload malformed")
+
+    # Every completed regular fixture must have a numeric detail id, a
+    # terminal score, and that detail must be present in matches.
+    detail_ids = {}
+    expected_games = 0
+    for r in completed:
+        sid = r.get("schedule_id")
+        did = str(r.get("match_detail_id") or "")
+        if not re.match(r"^\d+$", did):
+            problems.append(f"completed fixture {sid} has no numeric match detail id")
+            continue
+        if did in detail_ids:
+            problems.append(f"duplicate match detail id {did} in completed schedule")
+            continue
+        detail_ids[did] = r
+        sa, sb = r.get("score_a"), r.get("score_b")
+        try:
+            sa, sb = int(sa), int(sb)
+        except (TypeError, ValueError):
+            problems.append(f"completed fixture {sid} has non-numeric score {sa!r}-{sb!r}")
+            continue
+        if sa == sb or not ((sa == 2 and sb in (0, 1)) or (sb == 2 and sa in (0, 1))):
+            problems.append(f"completed fixture {sid} has non-terminal BO3 score {sa}-{sb}")
+            continue
+        expected_games += sa + sb
+
+    match_rows = {str(r[0]): dict(zip(
+        ("match_detail_id", "team_a", "team_b", "score_a", "score_b", "status"), r))
+        for r in con.execute("SELECT match_detail_id, team_a, team_b, score_a, score_b, status FROM matches")}
+    if set(match_rows) != set(detail_ids):
+        missing = sorted(set(detail_ids) - set(match_rows))
+        extra = sorted(set(match_rows) - set(detail_ids))
+        if missing:
+            problems.append(f"matches missing completed detail ids: {','.join(missing[:8])}")
+        if extra:
+            problems.append(f"matches contains ids not in completed schedule: {','.join(extra[:8])}")
+    for did, sched_row in detail_ids.items():
+        m = match_rows.get(did)
+        if not m:
+            continue
+        same_order = (canon(m.get("team_a")) == canon(sched_row.get("team_a")) and
+                      canon(m.get("team_b")) == canon(sched_row.get("team_b")))
+        flipped = (canon(m.get("team_a")) == canon(sched_row.get("team_b")) and
+                   canon(m.get("team_b")) == canon(sched_row.get("team_a")))
+        try:
+            if same_order:
+                same_score = (int(m.get("score_a")) == int(sched_row.get("score_a")) and
+                              int(m.get("score_b")) == int(sched_row.get("score_b")))
+            elif flipped:
+                same_score = (int(m.get("score_a")) == int(sched_row.get("score_b")) and
+                              int(m.get("score_b")) == int(sched_row.get("score_a")))
+            else:
+                same_score = False
+        except (TypeError, ValueError):
+            same_score = False
+        if not same_score:
+            problems.append(f"detail {did} teams/score do not match schedule "
+                            f"{m.get('team_a')} {m.get('score_a')}-{m.get('score_b')} {m.get('team_b')} vs "
+                            f"{sched_row.get('team_a')} {sched_row.get('score_a')}-{sched_row.get('score_b')} "
+                            f"{sched_row.get('team_b')}")
+
+    n_games = con.execute("SELECT COUNT(*) FROM games").fetchone()[0]
+    if n_games != expected_games:
+        problems.append(f"games has {n_games} rows, expected {expected_games} from completed series scores")
+    bad_winner = con.execute(
+        "SELECT COUNT(*) FROM games WHERE winner NOT IN ('team_a','team_b')").fetchone()[0]
+    if bad_winner:
+        problems.append(f"{bad_winner} games have no valid winner")
+    for did, sched_row in detail_ids.items():
+        expected = int(sched_row["score_a"]) + int(sched_row["score_b"])
+        got = con.execute("SELECT COUNT(*) FROM games WHERE match_detail_id=?", (did,)).fetchone()[0]
+        if got != expected:
+            problems.append(f"detail {did} has {got} games, expected {expected}")
+        game_nos = {r[0] for r in con.execute(
+            "SELECT game_no FROM games WHERE match_detail_id=?", (did,))}
+        if game_nos != set(range(1, expected + 1)):
+            problems.append(f"detail {did} game numbers are not 1..{expected}: {sorted(game_nos)}")
+        wins = {canon(sched_row.get("team_a")): 0, canon(sched_row.get("team_b")): 0}
+        for g_a, g_b, g_winner in con.execute(
+                "SELECT team_a, team_b, winner FROM games WHERE match_detail_id=?", (did,)):
+            win = canon(g_a) if g_winner == "team_a" else (
+                canon(g_b) if g_winner == "team_b" else None)
+            if win in wins:
+                wins[win] += 1
+        want_a = int(sched_row["score_a"])
+        want_b = int(sched_row["score_b"])
+        if (wins.get(canon(sched_row.get("team_a"))) != want_a or
+                wins.get(canon(sched_row.get("team_b"))) != want_b):
+            problems.append(
+                f"detail {did} game winners do not match series score "
+                f"{sched_row.get('score_a')}-{sched_row.get('score_b')}: {wins}")
+
+    n_tg = con.execute("SELECT COUNT(*) FROM team_games").fetchone()[0]
+    if n_tg != 2 * n_games:
+        problems.append(f"team_games has {n_tg} rows, expected {2 * n_games}")
+    bad_tg = con.execute(
+        "SELECT COUNT(*) FROM (SELECT match_detail_id, game_no, COUNT(*) c, SUM(win) w "
+        "FROM team_games GROUP BY 1,2 HAVING c<>2 OR w<>1)").fetchone()[0]
+    if bad_tg:
+        problems.append(f"{bad_tg} games do not have exactly two team rows with one winner")
+    wrong_tg_teams = con.execute(
+        "SELECT COUNT(*) FROM games g WHERE (SELECT COUNT(*) FROM team_games t "
+        "WHERE t.match_detail_id=g.match_detail_id AND t.game_no=g.game_no "
+        "AND t.team IN (g.team_a, g.team_b)) <> 2").fetchone()[0]
+    if wrong_tg_teams:
+        problems.append(f"{wrong_tg_teams} games have team-game rows for the wrong teams")
+    bad_players = con.execute(
+        "SELECT COUNT(*) FROM (SELECT match_detail_id, game_no, COUNT(*) c "
+        "FROM game_players GROUP BY 1,2 HAVING c<>10)").fetchone()[0]
+    if bad_players:
+        problems.append(f"{bad_players} games do not have exactly ten player rows")
+    if con.execute("SELECT COUNT(*) FROM game_players").fetchone()[0] <= 0:
+        problems.append("game_players empty")
+
+    # Reconcile both records with the published standings, not with a
+    # separately stored aggregate. This is the cross-view contract.
+    official = {canon(r[0]): dict(zip(
+        ("team_slug", "match_win", "match_lose", "game_win", "game_lose"), r))
+        for r in con.execute(
+            "SELECT team_slug, match_win, match_lose, game_win, game_lose FROM standings")}
+    derived = {}
+    def rec(team):
+        return derived.setdefault(canon(team), {
+            "match_win": 0, "match_lose": 0, "game_win": 0, "game_lose": 0})
+    for r in completed:
+        a, b = canon(r.get("team_a")), canon(r.get("team_b"))
+        if a == b or a not in official or b not in official:
+            problems.append(f"completed fixture {r.get('schedule_id')} has unknown/self teams")
+            continue
+        winner = canon(r.get("team_a")) if _score_winner(r) == r.get("team_a") else canon(r.get("team_b"))
+        rec(a)["match_win" if winner == a else "match_lose"] += 1
+        rec(b)["match_win" if winner == b else "match_lose"] += 1
+    # Sides can swap between games in the same series, so use each game's own
+    # team_a/team_b orientation rather than a per-match orientation cache.
+    for r in con.execute("SELECT team_a, team_b, winner FROM games"):
+        a, b = canon(r[0]), canon(r[1])
+        winner = r[2]
+        if winner not in ("team_a", "team_b"):
+            continue
+        win = a if winner == "team_a" else b
+        lose = b if win == a else a
+        if win not in official or lose not in official:
+            continue
+        rec(win)["game_win"] += 1
+        rec(lose)["game_lose"] += 1
+    if set(official) != set(derived):
+        problems.append(f"standings/derived team sets differ: official={sorted(official)} derived={sorted(derived)}")
+    total_match_wins = sum(int(v.get("match_win") or 0) for v in official.values())
+    total_game_wins = sum(int(v.get("game_win") or 0) for v in official.values())
+    if total_match_wins != len(completed):
+        problems.append(f"standings match wins {total_match_wins} != completed matches {len(completed)}")
+    if total_game_wins != n_games:
+        problems.append(f"standings game wins {total_game_wins} != games {n_games}")
+    for team, o in official.items():
+        d = derived.get(team)
+        if not d:
+            continue
+        for key in ("match_win", "match_lose", "game_win", "game_lose"):
+            if int(o.get(key) or 0) != d[key]:
+                problems.append(f"{team} {key} official {o.get(key)} != derived {d[key]}")
     return problems
 
 
@@ -408,7 +620,7 @@ def main():
             for side, bans in (("A", g.get("bans_a")), ("B", g.get("bans_b"))):
                 # Exact duplicate bans are a known API defect (e.g. 1088 game 1
                 # lists Nolan twice); dedupe on ingest, never in the UI.
-                for b in dict.fromkeys(bans or []):
+                for b in clean_bans(bans):
                     cur.execute("INSERT INTO game_bans VALUES(?,?,?,?,?)",
                                 (str(did), g.get("game"), side, canon_hero(b), None))
                     n_bans += 1

@@ -29,6 +29,7 @@
   "roundRobinRounds": 2,
   "seriesPerTeam": 16,
   "totalRegularFixtures": 72,
+  "regularSeasonStatus": "final",
   "playoffMatches": 8,
   "playoffSlots": 6,
   "upperBracketSlots": 2,
@@ -44,7 +45,7 @@
   "csvDir": "data/csv",
   "playoffsJson": "data/playoffs.json",
   "cacheNamespace": "mpl-board",
-  "cacheSchema": 2,
+  "cacheSchema": 4,
   "model": {
     "winProb": "bradley-terry",
     "priorWins": 2,

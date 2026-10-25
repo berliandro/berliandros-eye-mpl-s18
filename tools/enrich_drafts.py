@@ -22,6 +22,7 @@ import sqlite3
 import sys
 import urllib.parse
 import urllib.request
+from datetime import datetime, timezone
 from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))
@@ -147,6 +148,13 @@ def ensure_schema(con):
     con.commit()
 
 
+def remove_blank_bans(con):
+    """Remove API placeholder rows that have no hero identity at all."""
+    cur = con.execute(
+        "DELETE FROM game_bans WHERE hero IS NULL OR TRIM(hero) = ''")
+    return cur.rowcount if cur.rowcount and cur.rowcount > 0 else 0
+
+
 def dedupe_bans(con):
     """Drop exact duplicate ban rows (the API occasionally repeats a hero)."""
     dupes = con.execute(
@@ -202,6 +210,9 @@ def main():
                 con.execute(f"UPDATE {table} SET hero=? WHERE hero=?", (canonical, h))
     con.commit()
 
+    blank_removed = remove_blank_bans(con)
+    if blank_removed:
+        print(f"blank ban rows removed: {blank_removed}")
     removed = dedupe_bans(con)
     if removed:
         print(f"duplicate ban rows removed: {removed}")
@@ -265,13 +276,14 @@ def main():
     liq_bans = {}
 
     picks_rows = 0
-    missing_examples = []
     lane_set = 0
-    lane_missing = 0
     hero_missing = set()
     map_set = 0
+    side_set = 0
     ban_mismatch = []
     score_mismatch = []
+    source_conflicts = []
+    unresolved_conflicts = []
 
     picks = []
     for s, m in pairs:
@@ -287,16 +299,32 @@ def main():
 
         for mp in s["maps"]:
             gn = mp["no"]
-            g = con.execute("SELECT team_a, team_b FROM games WHERE match_detail_id=? AND game_no=?",
-                            (mid, gn)).fetchone()
+            g = con.execute(
+                "SELECT team_a, team_b, team_a_side, team_b_side FROM games "
+                "WHERE match_detail_id=? AND game_no=?", (mid, gn)).fetchone()
             if not g:
                 continue
-            g_ta, g_tb = g
+            g_ta, g_tb, g_aside, g_bside = g
             if mp["mapmode"]:
                 mode = MAP_MODE_ALIASES.get(norm(mp["mapmode"]), mp["mapmode"])
                 con.execute("UPDATE games SET map_mode=? WHERE match_detail_id=? AND game_no=?",
                             (mode, mid, gn))
                 map_set += 1
+
+            # Liquipedia supplies draft sides where the API omits them. Fill
+            # only missing values so a verified API side is never overwritten.
+            side_by_team = {}
+            if mp["team1side"]:
+                side_by_team[g_ta if canon(s["t1"]) == canon(g_ta) else g_tb] = mp["team1side"].strip().lower()
+            if mp["team2side"]:
+                side_by_team[g_tb if canon(s["t2"]) == canon(g_tb) else g_ta] = mp["team2side"].strip().lower()
+            new_a = g_aside or side_by_team.get(g_ta)
+            new_b = g_bside or side_by_team.get(g_tb)
+            if new_a != g_aside or new_b != g_bside:
+                con.execute(
+                    "UPDATE games SET team_a_side=?, team_b_side=? "
+                    "WHERE match_detail_id=? AND game_no=?", (new_a, new_b, mid, gn))
+                side_set += 1
 
             for side_no, team_liq, heroes, bans in (
                 (1, s["t1"], mp["t1h"], mp["t1b"]),
@@ -304,7 +332,21 @@ def main():
             ):
                 team = g_ta if canon(team_liq) == canon(g_ta) else g_tb
                 side_letter = "A" if team == g_ta else "B"
-                side_name = mp["team1side"] if side_no == 1 else mp["team2side"]
+                side_name = (side_by_team.get(team) or
+                             (g_aside if team == g_ta else g_bside) or "")
+
+                # A single hero mismatch between the Liquipedia draft and the
+                # API scoreboard is a source conflict. Resolve that slot to the
+                # API hero/player (the scoreboard row that owns the game stats)
+                # and record the conflict; never mix Liq hero with API player.
+                api_rows = con.execute(
+                    "SELECT player, hero FROM game_players WHERE match_detail_id=? AND game_no=? AND team=?",
+                    (mid, gn, team)).fetchall()
+                api_keys = {hero_key(h): (h, p) for p, h in api_rows if h and p}
+                liq_keys = {hero_key(canon_hero(h) or h) for h in heroes if h}
+                liq_only = liq_keys - set(api_keys)
+                api_only = set(api_keys) - liq_keys
+                replace_conflict = len(liq_only) == 1 and len(api_only) == 1
 
                 for slot, hero in enumerate(heroes, 1):
                     if not hero:
@@ -318,18 +360,41 @@ def main():
                         "AND team=? AND hero=? COLLATE NOCASE",
                         (mid, gn, team, ch)).fetchone()
                     player = row[0] if row else None
+                    if not player and replace_conflict and hero_key(ch) in liq_only:
+                        api_hero, api_player = api_keys[next(iter(api_only))]
+                        fixed = canon_hero(api_hero) or api_hero
+                        source_conflicts.append({
+                            "match_detail_id": mid,
+                            "game_no": gn,
+                            "team": team,
+                            "slot": slot,
+                            "lane": LANES[slot - 1],
+                            "liquipedia_hero": ch,
+                            "api_hero": fixed,
+                            "player": api_player,
+                            "resolution": "api-scoreboard-hero",
+                        })
+                        ch, player = fixed, api_player
+                    if not player:
+                        # Never emit a synthetic pick with no player: analytics
+                        # would count a row that does not exist on the
+                        # scoreboard. Record it and leave the draft incomplete.
+                        unresolved_conflicts.append({
+                            "match_detail_id": mid,
+                            "game_no": gn,
+                            "team": team,
+                            "slot": slot,
+                            "hero": ch,
+                            "reason": "no-api-player-for-hero",
+                        })
+                        continue
                     picks.append((mid, gn, team, side_name, slot, LANES[slot - 1], ch, player))
                     picks_rows += 1
-                    if player:
-                        con.execute(
-                            "UPDATE game_players SET lane=?, lane_source='liq_slot' "
-                            "WHERE match_detail_id=? AND game_no=? AND team=? AND player=? AND hero=?",
-                            (LANES[slot - 1], mid, gn, team, player, ch))
-                        lane_set += 1
-                    else:
-                        lane_missing += 1
-                        if len(missing_examples) < 10:
-                            missing_examples.append((mid, gn, team, ch))
+                    con.execute(
+                        "UPDATE game_players SET lane=?, lane_source='liq_slot' "
+                        "WHERE match_detail_id=? AND game_no=? AND team=? AND player=? AND hero=?",
+                        (LANES[slot - 1], mid, gn, team, player, ch))
+                    lane_set += 1
 
                 for order, hero in enumerate(bans, 1):
                     if not hero:
@@ -358,7 +423,10 @@ def main():
     for key, lib in liq_bans.items():
         api_set = api_bans.get(key)
         if api_set is None:
-            ban_mismatch.append((key[0], key[1], key[2], "missing-api-side"))
+            # The API published no bans for this side; Liquipedia supplied the
+            # complete ordered set. Record the provenance gap, not a conflict.
+            ban_mismatch.append((key[0], key[1], key[2],
+                                 "api-bans-absent-liquipedia-filled"))
         elif lib != api_set:
             ban_mismatch.append((key[0], key[1], key[2], sorted(lib ^ api_set)))
 
@@ -368,13 +436,14 @@ def main():
     lane_tagged = con.execute(
         "SELECT COUNT(*) FROM game_players WHERE lane_source='liq_slot'").fetchone()[0]
     print(f"\ngames: {total_games}  picks-covered games: {covered_games}")
-    print(f"pick rows: {picks_rows}  lanes set: {lane_set}  players not found: {lane_missing}")
-    if missing_examples:
-        print(f"  missing examples: {missing_examples[:6]}")
+    print(f"pick rows: {picks_rows}  lanes set: {lane_set}  unresolved picks: {len(unresolved_conflicts)}")
+    if unresolved_conflicts:
+        print(f"  unresolved examples: {unresolved_conflicts[:6]}")
     print(f"player rows with lane_source=liq_slot: {lane_tagged}/{total_rows}")
-    print(f"map modes set: {map_set}  unresolved hero names: {sorted(hero_missing)[:10]}")
+    print(f"map modes set: {map_set}  sides filled: {side_set}  unresolved hero names: {sorted(hero_missing)[:10]}")
     print(f"score mismatches: {len(score_mismatch)} {score_mismatch[:5]}")
     print(f"ban set mismatches: {len(ban_mismatch)} {ban_mismatch[:5]}")
+    print(f"source conflicts resolved to API scoreboard: {len(source_conflicts)} {source_conflicts[:3]}")
 
     if not args.check_only:
         con.execute("DELETE FROM game_picks")
@@ -382,6 +451,44 @@ def main():
         con.commit()
         export_tables(con, season["csvDir"],
                       ["games", "game_players", "game_bans", "game_picks"])
+        quality = {
+            "schema_version": 1,
+            "generated_at": datetime.now(timezone.utc).isoformat(timespec="seconds"),
+            "sources": {
+                "api": "https://mpl.mlbbhub.com/api/v1/id",
+                "liquipedia": page,
+            },
+            "counts": {
+                "games": total_games,
+                "players": total_rows,
+                "picks": picks_rows,
+                "bans": con.execute("SELECT COUNT(*) FROM game_bans").fetchone()[0],
+            },
+            "blank_bans_removed_by_enrichment": blank_removed,
+            "duplicate_bans_removed": removed,
+            "sides_filled_from_liquipedia": side_set,
+            "missing_sides": con.execute(
+                "SELECT COUNT(*) FROM games WHERE team_a_side IS NULL OR team_a_side='' "
+                "OR team_b_side IS NULL OR team_b_side=''").fetchone()[0],
+            "missing_lanes": con.execute(
+                "SELECT COUNT(*) FROM game_players WHERE lane IS NULL OR lane=''").fetchone()[0],
+            "missing_map_modes": con.execute(
+                "SELECT COUNT(*) FROM games WHERE map_mode IS NULL OR map_mode=''").fetchone()[0],
+            "games_without_ten_bans": [
+                {"match_detail_id": r[0], "game_no": r[1], "bans": r[2]}
+                for r in con.execute(
+                    "SELECT match_detail_id, game_no, COUNT(*) c FROM game_bans "
+                    "GROUP BY 1,2 HAVING c <> 10 ORDER BY 1,2")],
+            "draft_conflicts": source_conflicts,
+            "unresolved_draft_conflicts": unresolved_conflicts,
+            "ban_set_conflicts": [list(x) for x in ban_mismatch],
+            "score_mismatches": [list(x) for x in score_mismatch],
+        }
+        quality_path = Path(season["meta"]).parent / "quality.json"
+        quality_path.parent.mkdir(parents=True, exist_ok=True)
+        quality_path.write_text(json.dumps(quality, indent=2, ensure_ascii=False) + "\n",
+                                encoding="utf-8")
+        print("wrote", quality_path)
     else:
         con.rollback()
         print("check-only: no writes committed")

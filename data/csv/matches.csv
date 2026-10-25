@@ -63,8 +63,11 @@ match_detail_id,schedule_id,team_a,team_b,score_a,score_b,date,iso_date,iso_date
 1097,id-w8-6,EVOS,GEEK,0,2,"Sunday, 11 October 2026",2026-10-11,2026-10-11T14:00:00+07:00,completed,team_b,https://www.youtube.com/watch?v=jz3rH4xDoak,https://id-mpl.com/match-detail/1097,Maykids
 1098,id-w8-7,RRQ,ONIC,1,2,"Sunday, 11 October 2026",2026-10-11,2026-10-11T17:00:00+07:00,completed,team_b,https://www.youtube.com/watch?v=jz3rH4xDoak,https://id-mpl.com/match-detail/1098,Lutpiii
 1099,id-w8-8,BTR,DEWA,2,0,"Sunday, 11 October 2026",2026-10-11,2026-10-11T20:00:00+07:00,completed,team_b,https://www.youtube.com/watch?v=jz3rH4xDoak,https://id-mpl.com/match-detail/1099,Shogun
-1100,id-w9-0,RRQ,NAVI,1,2,"Friday, 16 October 2026",2026-10-16,2026-10-16T15:00:00+07:00,completed,team_a,,https://id-mpl.com/match-detail/1100,Aprho
+1100,id-w9-0,RRQ,NAVI,1,2,"Friday, 16 October 2026",2026-10-16,2026-10-16T15:00:00+07:00,completed,team_a,https://www.youtube.com/watch?v=-QC1gIugHrM,https://id-mpl.com/match-detail/1100,Aprho
 1101,id-w9-1,GEEK,AE,0,2,"Friday, 16 October 2026",2026-10-16,2026-10-16T18:00:00+07:00,completed,team_b,https://www.youtube.com/watch?v=-QC1gIugHrM,https://id-mpl.com/match-detail/1101,Arfy
-1102,id-w9-2,DEWA,ONIC,1,2,"Saturday, 17 October 2026",2026-10-17,2026-10-17T14:00:00+07:00,completed,team_a,,https://id-mpl.com/match-detail/1102,Lutpiii
+1102,id-w9-2,DEWA,ONIC,1,2,"Saturday, 17 October 2026",2026-10-17,2026-10-17T14:00:00+07:00,completed,team_a,https://www.youtube.com/watch?v=b9SktblDNuc,https://id-mpl.com/match-detail/1102,Lutpiii
 1103,id-w9-3,EVOS,BTR,1,2,"Saturday, 17 October 2026",2026-10-17,2026-10-17T17:00:00+07:00,completed,team_a,https://www.youtube.com/watch?v=b9SktblDNuc,https://id-mpl.com/match-detail/1103,Nnael
 1104,id-w9-4,RRQ,GEEK,2,1,"Saturday, 17 October 2026",2026-10-17,2026-10-17T20:00:00+07:00,completed,team_a,https://www.youtube.com/watch?v=b9SktblDNuc,https://id-mpl.com/match-detail/1104,Sutsujin
+1105,id-w9-5,AE,EVOS,1,2,"Sunday, 18 October 2026",2026-10-18,2026-10-18T14:00:00+07:00,completed,team_a,https://www.youtube.com/watch?v=hY0Upem95uo,https://id-mpl.com/match-detail/1105,Alberttt
+1106,id-w9-6,NAVI,BTR,0,2,"Sunday, 18 October 2026",2026-10-18,2026-10-18T17:00:00+07:00,completed,team_b,https://www.youtube.com/watch?v=hY0Upem95uo,https://id-mpl.com/match-detail/1106,Shogun
+1107,id-w9-7,TLID,ONIC,2,0,"Sunday, 18 October 2026",2026-10-18,2026-10-18T20:00:00+07:00,completed,team_b,https://www.youtube.com/watch?v=hY0Upem95uo,https://id-mpl.com/match-detail/1107,Lyoni

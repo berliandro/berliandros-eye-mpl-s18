@@ -11,6 +11,7 @@ TPL = BASE / 'templates'
 
 REQUIRED_SEASON_KEYS = ("seasonId", "teams", "aliases", "totalTeams",
                         "roundRobinRounds", "seriesPerTeam", "totalRegularFixtures",
+                        "regularSeasonStatus",
                         "playoffMatches", "playoffSlots", "upperBracketSlots",
                         "tiebreakers", "matchFormat", "endpoints", "database",
                         "csvDir", "playoffsJson", "cacheNamespace", "cacheSchema",
@@ -51,6 +52,8 @@ def validate_season(cfg):
             err("seriesPerTeam != roundRobinRounds*(teams-1)")
         if cfg["totalRegularFixtures"] != rr * n * (n - 1) // 2:
             err("totalRegularFixtures != rounds*n*(n-1)/2")
+    if cfg["regularSeasonStatus"] not in ("in-progress", "final"):
+        err("regularSeasonStatus must be 'in-progress' or 'final'")
     ps, ub = cfg["playoffSlots"], cfg["upperBracketSlots"]
     if not isinstance(ps, int) or not 1 <= ps < max(n, 1):
         err("playoffSlots must satisfy 1 <= slots < teams")
@@ -179,7 +182,19 @@ def main():
                 return None
             _r['i'] = [_f for _u in json.loads(_row[2] or '[]') for _f in [_iref(_u)] if _f]
     _con.close()
-    DATA = {"schedule": sched, "games": games, "players": players, "bans": bans, "picks": picks, "hero_pool": hero_pool, "team_games": team_games, "team_season": team_season, "season": season_stats, "standings": stand, "matches": matches, "heroes": hero_stats, "playoffs": playoffs}
+    meta_path = ROOT / 'data' / 'seasons' / season['seasonId'] / 'meta.json'
+    snapshot_meta = {}
+    if meta_path.exists():
+        try:
+            snapshot_meta = json.loads(meta_path.read_text(encoding='utf-8'))
+        except Exception:
+            snapshot_meta = {}
+    DATA = {"schedule": sched, "games": games, "players": players, "bans": bans,
+            "picks": picks, "hero_pool": hero_pool, "team_games": team_games,
+            "team_season": team_season, "season": season_stats, "standings": stand,
+            "matches": matches, "heroes": hero_stats, "playoffs": playoffs,
+            "snapshot": {k: snapshot_meta.get(k) for k in
+                         ("snapshot_status", "snapshot_scope", "verified_as_of")}}
     data_js = json.dumps(DATA, ensure_ascii=False, separators=(',', ':')).replace('</scr'+'ipt>', '<\\/scr'+'ipt>')
     TEAMS = season["teams"]
 

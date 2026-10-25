@@ -166,3 +166,10 @@ match_detail_id,game_no,team_a,team_b,team_a_kills,team_b_kills,winner,duration_
 1104,1,RRQ,GEEK,6,17,team_b,12:04,724,blue,red,https://www.youtube.com/watch?v=jes730IPIao,Healing Turtle
 1104,2,RRQ,GEEK,23,18,team_a,19:08,1148,blue,red,https://www.youtube.com/watch?v=VgpaT2KJERQ,Healing Turtle
 1104,3,RRQ,GEEK,18,9,team_a,15:55,955,blue,red,https://www.youtube.com/watch?v=IhPtDaOsShg,Healing Turtle
+1105,1,AE,EVOS,16,8,team_a,14:35,875,blue,red,https://www.youtube.com/watch?v=ep-EjdUPQ7s,Revealing Wisps
+1105,2,EVOS,AE,14,6,team_a,15:47,947,blue,red,https://www.youtube.com/watch?v=dGNxqTm6MQg,Flying Cloud
+1105,3,AE,EVOS,9,22,team_b,13:18,798,blue,red,https://www.youtube.com/watch?v=7Y3lC7XSfVs,Flying Cloud
+1106,1,NAVI,BTR,5,18,team_b,11:26,686,blue,red,https://www.youtube.com/watch?v=g6zbw9yE254,Revealing Wisps
+1106,2,BTR,NAVI,16,11,team_a,23:00,1380,blue,red,https://www.youtube.com/watch?v=ZBONqmVxYkM,Flying Cloud
+1107,1,TLID,ONIC,14,3,team_a,14:47,887,blue,red,https://www.youtube.com/watch?v=paUEKUP6Fo8,Healing Turtle
+1107,2,TLID,ONIC,11,7,team_a,12:25,745,blue,red,,Healing Turtle

@@ -2,7 +2,7 @@
   "_note": "Role/lane/specialties from Liquipedia Infobox hero; damage_type is derived from ability-text mentions and is not official; lanes_empirical comes from game_picks.",
   "schema_version": 1,
   "source": "https://liquipedia.net/mobilelegends/",
-  "fetched_at": "2026-10-21T12:18:50+00:00",
+  "fetched_at": "2026-10-24T02:55:36+00:00",
   "heroes": {
     "Aamon": {
       "primary_role": "Assassin",
@@ -76,12 +76,12 @@
       "release_date": "2016",
       "lanes_empirical": {
         "EXP": {
-          "picks": 24,
-          "share": 0.7273
+          "picks": 26,
+          "share": 0.7429
         },
         "JUNGLE": {
           "picks": 9,
-          "share": 0.2727
+          "share": 0.2571
         }
       }
     },
@@ -103,12 +103,12 @@
       "release_date": "2017",
       "lanes_empirical": {
         "JUNGLE": {
-          "picks": 10,
-          "share": 0.7692
+          "picks": 13,
+          "share": 0.8125
         },
         "EXP": {
           "picks": 3,
-          "share": 0.2308
+          "share": 0.1875
         }
       }
     },
@@ -171,7 +171,7 @@
       "release_date": "2017",
       "lanes_empirical": {
         "GOLD": {
-          "picks": 1,
+          "picks": 2,
           "share": 1.0
         }
       }
@@ -218,11 +218,11 @@
       "lanes_empirical": {
         "ROAM": {
           "picks": 28,
-          "share": 0.6667
+          "share": 0.6512
         },
         "EXP": {
-          "picks": 14,
-          "share": 0.3333
+          "picks": 15,
+          "share": 0.3488
         }
       }
     },
@@ -244,16 +244,16 @@
       "release_date": "2021-08-31",
       "lanes_empirical": {
         "JUNGLE": {
-          "picks": 30,
+          "picks": 34,
           "share": 0.6667
         },
         "EXP": {
-          "picks": 8,
-          "share": 0.1778
+          "picks": 10,
+          "share": 0.1961
         },
         "GOLD": {
           "picks": 7,
-          "share": 0.1556
+          "share": 0.1373
         }
       }
     },
@@ -293,12 +293,12 @@
       "release_date": "2019-01-15",
       "lanes_empirical": {
         "ROAM": {
-          "picks": 13,
-          "share": 0.8125
+          "picks": 14,
+          "share": 0.8235
         },
         "EXP": {
           "picks": 3,
-          "share": 0.1875
+          "share": 0.1765
         }
       }
     },
@@ -483,7 +483,7 @@
       "release_date": "2016",
       "lanes_empirical": {
         "GOLD": {
-          "picks": 2,
+          "picks": 3,
           "share": 1.0
         }
       }
@@ -506,12 +506,12 @@
       "release_date": "2020-01-17",
       "lanes_empirical": {
         "ROAM": {
-          "picks": 28,
-          "share": 0.7778
+          "picks": 31,
+          "share": 0.7949
         },
         "EXP": {
           "picks": 8,
-          "share": 0.2222
+          "share": 0.2051
         }
       }
     },
@@ -624,12 +624,12 @@
       "release_date": "2023-12-27",
       "lanes_empirical": {
         "GOLD": {
-          "picks": 21,
-          "share": 0.6176
+          "picks": 24,
+          "share": 0.6
         },
         "EXP": {
-          "picks": 13,
-          "share": 0.3824
+          "picks": 16,
+          "share": 0.4
         }
       }
     },
@@ -651,7 +651,7 @@
       "release_date": "2018-08-07",
       "lanes_empirical": {
         "GOLD": {
-          "picks": 59,
+          "picks": 60,
           "share": 1.0
         }
       }
@@ -733,7 +733,7 @@
       "release_date": "2019-06-25",
       "lanes_empirical": {
         "EXP": {
-          "picks": 8,
+          "picks": 9,
           "share": 1.0
         }
       }
@@ -779,12 +779,12 @@
       "release_date": "2019-04-02",
       "lanes_empirical": {
         "EXP": {
-          "picks": 24,
-          "share": 0.8571
+          "picks": 25,
+          "share": 0.8333
         },
         "GOLD": {
-          "picks": 4,
-          "share": 0.1429
+          "picks": 5,
+          "share": 0.1667
         }
       }
     },
@@ -829,7 +829,7 @@
       "release_date": "2016",
       "lanes_empirical": {
         "MID": {
-          "picks": 48,
+          "picks": 49,
           "share": 1.0
         }
       }
@@ -957,12 +957,12 @@
       "release_date": "2016",
       "lanes_empirical": {
         "EXP": {
-          "picks": 23,
-          "share": 0.5897
+          "picks": 25,
+          "share": 0.5952
         },
         "GOLD": {
-          "picks": 16,
-          "share": 0.4103
+          "picks": 17,
+          "share": 0.4048
         }
       }
     },
@@ -984,7 +984,7 @@
       "release_date": "2017",
       "lanes_empirical": {
         "ROAM": {
-          "picks": 26,
+          "picks": 27,
           "share": 1.0
         }
       }
@@ -1007,12 +1007,12 @@
       "release_date": "2021-04-16",
       "lanes_empirical": {
         "ROAM": {
-          "picks": 34,
-          "share": 0.9714
+          "picks": 36,
+          "share": 0.973
         },
         "EXP": {
           "picks": 1,
-          "share": 0.0286
+          "share": 0.027
         }
       }
     },
@@ -1290,7 +1290,7 @@
       "release_date": "2026-06-17",
       "lanes_empirical": {
         "JUNGLE": {
-          "picks": 82,
+          "picks": 84,
           "share": 1.0
         }
       }
@@ -1531,12 +1531,12 @@
       "release_date": "2025-03-19",
       "lanes_empirical": {
         "ROAM": {
-          "picks": 8,
-          "share": 0.7273
+          "picks": 10,
+          "share": 0.7692
         },
         "EXP": {
           "picks": 3,
-          "share": 0.2727
+          "share": 0.2308
         }
       }
     },
@@ -1622,7 +1622,7 @@
       "release_date": "2019",
       "lanes_empirical": {
         "ROAM": {
-          "picks": 1,
+          "picks": 2,
           "share": 1.0
         }
       }
@@ -1645,12 +1645,12 @@
       "release_date": "2018-10",
       "lanes_empirical": {
         "MID": {
-          "picks": 29,
-          "share": 0.9667
+          "picks": 31,
+          "share": 0.9394
         },
         "GOLD": {
-          "picks": 1,
-          "share": 0.0333
+          "picks": 2,
+          "share": 0.0606
         }
       }
     },
@@ -1731,7 +1731,7 @@
       "release_date": "2018",
       "lanes_empirical": {
         "JUNGLE": {
-          "picks": 3,
+          "picks": 4,
           "share": 1.0
         }
       }
@@ -1895,7 +1895,7 @@
       "release_date": "2019-07-23",
       "lanes_empirical": {
         "MID": {
-          "picks": 26,
+          "picks": 27,
           "share": 1.0
         }
       }
@@ -1918,7 +1918,7 @@
       "release_date": "2026-03-11",
       "lanes_empirical": {
         "ROAM": {
-          "picks": 25,
+          "picks": 29,
           "share": 1.0
         }
       }
@@ -2189,7 +2189,7 @@
       "release_date": "2023-09-30",
       "lanes_empirical": {
         "JUNGLE": {
-          "picks": 50,
+          "picks": 54,
           "share": 1.0
         }
       }
@@ -2235,7 +2235,7 @@
       "release_date": "2025-09-17",
       "lanes_empirical": {
         "GOLD": {
-          "picks": 41,
+          "picks": 43,
           "share": 1.0
         }
       }
@@ -2282,15 +2282,15 @@
       "lanes_empirical": {
         "JUNGLE": {
           "picks": 56,
-          "share": 0.6667
+          "share": 0.6437
         },
         "GOLD": {
-          "picks": 24,
-          "share": 0.2857
+          "picks": 27,
+          "share": 0.3103
         },
         "EXP": {
           "picks": 4,
-          "share": 0.0476
+          "share": 0.046
         }
       }
     },
@@ -2475,7 +2475,7 @@
       "release_date": "2018-07-18",
       "lanes_empirical": {
         "MID": {
-          "picks": 45,
+          "picks": 46,
           "share": 1.0
         }
       }
@@ -2516,12 +2516,12 @@
       "release_date": "2025-12-18",
       "lanes_empirical": {
         "EXP": {
-          "picks": 15,
-          "share": 0.9375
+          "picks": 16,
+          "share": 0.9412
         },
         "GOLD": {
           "picks": 1,
-          "share": 0.0625
+          "share": 0.0588
         }
       }
     },
@@ -2584,7 +2584,7 @@
       "release_date": "2019-06-04",
       "lanes_empirical": {
         "EXP": {
-          "picks": 5,
+          "picks": 6,
           "share": 1.0
         }
       }
@@ -2685,16 +2685,16 @@
       "release_date": "2021",
       "lanes_empirical": {
         "MID": {
-          "picks": 38,
-          "share": 0.9268
+          "picks": 39,
+          "share": 0.9286
         },
         "EXP": {
           "picks": 2,
-          "share": 0.0488
+          "share": 0.0476
         },
         "ROAM": {
           "picks": 1,
-          "share": 0.0244
+          "share": 0.0238
         }
       }
     },
@@ -2716,7 +2716,7 @@
       "release_date": "2018",
       "lanes_empirical": {
         "MID": {
-          "picks": 2,
+          "picks": 3,
           "share": 1.0
         }
       }
@@ -2885,7 +2885,7 @@
       "release_date": "2021-02-12",
       "lanes_empirical": {
         "MID": {
-          "picks": 5,
+          "picks": 6,
           "share": 1.0
         }
       }
@@ -2908,7 +2908,7 @@
       "release_date": "2025-06-18",
       "lanes_empirical": {
         "MID": {
-          "picks": 16,
+          "picks": 18,
           "share": 1.0
         }
       }
@@ -2949,7 +2949,7 @@
       "release_date": "2024-06-29",
       "lanes_empirical": {
         "MID": {
-          "picks": 43,
+          "picks": 47,
           "share": 1.0
         }
       }

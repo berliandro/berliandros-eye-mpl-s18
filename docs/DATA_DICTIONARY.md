@@ -12,9 +12,11 @@ not in a source, it is shown as `–`; it is never inferred without a label.
 | `liquipedia.net/mobilelegends/api.php` | picks, ordered bans, lane slots, map mode, VOD, duration, MVP | low-rate API use; page `MPL/Indonesia/Season_18/Regular_Season` |
 | `id-mpl.com` | cross-checks / artwork | season-level objective totals are **not** ingested |
 
-Snapshot: 69 completed series, 167 games, 1,670 player rows, 1,670 picks,
-1,669 ordered bans, 9 teams. `data/seasons/s18/meta.json` records the source
-URLs, row counts and ETL commit.
+Snapshot: 72 completed series, 174 games, 1,740 player rows, 1,740 picks,
+1,738 ordered bans, 348 team-game rows, 9 teams. `data/seasons/s18/meta.json`
+labels this snapshot `final`, scope `completed regular season; playoffs
+excluded`, verified as of 2026-10-18, and records the source URLs, row counts,
+reconciliation and ETL commit.
 
 ## Snapshot and metric contracts
 
@@ -29,24 +31,35 @@ URLs, row counts and ETL commit.
   `games.winner`, with exactly one winner per game.
 - **GP.** In Analytics -> Teams and Team profiles, GP means game appearances
   (team-game rows), not series played. Series W-L is shown separately.
-- **Scope.** The current snapshot has 69 completed regular-season series and
-  167 games. Playoffs are not included in these totals. Any future playoff
+- **Scope.** The current final snapshot has 72 completed regular-season series
+  and 174 games. Playoffs are not included in these totals. Any future playoff
   rows must be filtered explicitly rather than compared with regular-season
-  standings.
+  standings. `data/season.json` declares `regularSeasonStatus` (`in-progress`
+  or `final`); a `final` season is rejected by `validate_build()` unless all
+  configured regular fixtures are completed and present. `tools/write_meta.py`
+  writes `snapshot_status: final` only when that phase is `final` and the
+  configured fixture count, detail rows, game rows and standings totals all
+  agree; otherwise it writes `partial`.
 - **Official standings.** Preserved as source-published match/game records and
   used as a reconciliation target. They are not substituted for derived tables.
 - **Refresh/cache.** A successful live refresh merges raw rows, preserves
-  enrichment fields (map mode, lane, ban order), rebuilds picks/team games/team
-  season stats from that same raw snapshot, clears cached analytics, and stores
-  all of those inputs under cache schema 2. A partial refresh keeps failed
-  match IDs from the last good snapshot and is labelled `partially updated`.
+  enrichment fields (map mode, recorded sides, VOD, lane, ban order), keeps
+  last-good ordered bans for any game whose API payload has none, rebuilds
+  picks/team games/team season stats from that same raw snapshot, clears cached
+  analytics, and stores all of those inputs under cache schema 4. A refresh is
+  complete only when all 72 configured completed regular fixtures have detail
+  rows, the standings totals match the same schedule, and every game still has
+  ten picks, two team rows, recorded sides and at least nine ordered bans;
+  failed IDs, missing completed results and draft gaps keep the last-good rows
+  and are labelled `partially updated`.
   The cache fingerprint covers standings, schedule, raw detail, picks and
-  derived aggregates; cache validation also re-derives those aggregates from
-  the cache's own raw rows and rejects a mixed entry.
+  derived aggregates; cache validation re-derives those aggregates from the
+  cache's own raw rows, rejects a mixed entry, and rejects a cache claiming
+  complete while results are missing.
 
 ## Tables
 
-### `matches` (69 rows)
+### `matches` (72 rows)
 
 `match_detail_id` (PK), `schedule_id`, `team_a`, `team_b`, `score_a`, `score_b`,
 `date`, `iso_date`, `iso_datetime`, `status`, `winner`, `vod_url`,
@@ -55,7 +68,7 @@ URLs, row counts and ETL commit.
 - One row per completed series. `liq_mvp` is the Liquipedia series MVP, not a
   per-game MVP.
 
-### `games` (167 rows)
+### `games` (174 rows)
 
 `match_detail_id` + `game_no` (PK), `team_a`, `team_b`, `team_a_kills`,
 `team_b_kills`, `winner` (`team_a`/`team_b`), `duration_str`, `duration_sec`,
@@ -63,9 +76,9 @@ URLs, row counts and ETL commit.
 
 - `team_*_side` is the recorded side, not a guess. `map_mode` is missing for 21
   games (Week 9 source gap) and is shown as `Unknown` in analytics.
-- `vod_url` is populated for 167/167 games.
+- `vod_url` is populated for 174/174 games.
 
-### `game_players` (1,670 rows)
+### `game_players` (1,740 rows)
 
 `match_detail_id`, `game_no`, `team`, `player`, `lane`, `hero`, `kills`,
 `deaths`, `assists`, `kda`, `gold`, `gold_per_min`, `hero_damage`,
@@ -74,24 +87,26 @@ URLs, row counts and ETL commit.
 
 - 10 rows per completed game. `lane` is one of EXP/JUNGLE/MID/GOLD/ROAM.
 - `lane_source` records how the lane was obtained. Current snapshot:
-  `liq_slot` for 1,670/1,670 rows. No lane is stored without a source tag.
+  `liq_slot` for 1,740/1,740 rows. No lane is stored without a source tag.
 - `items_json` / `talents_json` are arrays of item/rune references; artwork is
   resolved through `data/global/item_classes.json` and the local asset manifest.
 
-### `game_picks` (1,670 rows)
+### `game_picks` (1,740 rows)
 
 `match_detail_id`, `game_no`, `team`, `side`, `slot`, `lane`, `hero`, `player`.
 
 - 5 picks per team per game. `slot` is Liquipedia's lane-order slot
   (EXP→JUNGLE→MID→GOLD→ROAM), **not** pick order. Pick order is not published.
 
-### `game_bans` (1,669 rows)
+### `game_bans` (1,738 rows)
 
 `match_detail_id`, `game_no`, `side` (`A`/`B`), `hero`, `ban_order`.
 
-- 10 bans per game, ordered. 166/167 games have 10 unique bans; match 1088
-  game 1 has 9 because the API returned a duplicate that was removed. The
-  exception is asserted in `tools/test_enrich.py`.
+- 10 bans per game, ordered. 172/174 games have 10 unique bans; observations
+  1088 game 1 and 1105 game 3 have 9 (the API returned a duplicate/blank row).
+  Blank hero ids are filtered at ETL and enrichment; match 1107 game 2 had no
+  API bans at all and was filled from Liquipedia. `data/seasons/s18/quality.json`
+  records the exceptions and source conflicts.
 
 ### `hero_stats` (133 rows)
 
@@ -126,7 +141,7 @@ URLs, row counts and ETL commit.
 - 72 regular-season + 8 playoff fixtures. `match_detail_id` is empty/null for
   fixtures that have not been played.
 
-### `team_games` (334 rows, derived)
+### `team_games` (348 rows, derived)
 
 `match_detail_id`, `game_no`, `team`, `opponent`, `players`, `kills`, `deaths`,
 `assists`, `gold`, `hero_damage`, `damage_taken`, `tower_damage`, `kda`, `win`,
@@ -155,7 +170,8 @@ URLs, row counts and ETL commit.
 | `data/global/hero_classes.json` | 133 heroes: role, primary lane, specialties, damage type, empirical lane shares |
 | `data/global/item_classes.json` | item identifiers → category/artwork grouping |
 | `data/seasons/s18/season.json` | season rules, endpoints, priors |
-| `data/seasons/s18/meta.json` | schema version, sources, row counts, ETL commit |
+| `data/seasons/s18/meta.json` | snapshot status/scope, sources, row counts, reconciliation, ETL commit |
+| `data/seasons/s18/quality.json` | source conflicts, blank-ban disposition, missing map/lane counts |
 | `data/seasons/s18/playoffs.json` | bracket/seed snapshot |
 
 ## Derivations used in the app
@@ -167,7 +183,7 @@ URLs, row counts and ETL commit.
 3. Hero's modal lane (`inferred_hero`).
 4. Player's season lane (`inferred_season`).
 
-The current snapshot resolves all 1,670 rows at step 1. Every row keeps
+The current snapshot resolves all 1,740 rows at step 1. Every row keeps
 `lane_source` so the UI can label inferred values if the source changes.
 
 ### Hero classes
@@ -230,9 +246,11 @@ The current snapshot resolves all 1,670 rows at step 1. Every row keeps
 
 `python tools/verify.py` runs 20 suites, including:
 
-- 167/167 completed games have 10 picks.
-- 166/167 have 10 unique bans; the exception is listed.
-- 1,670/1,670 player rows have a lane and `lane_source`.
+- 174/174 completed games have 10 picks and 1,740/1,740 picks have a player.
+- 172/174 have 10 unique bans; the two 9-ban exceptions are listed.
+- 1,740/1,740 player rows have a lane and `lane_source`.
+- 72 matches, 174 games and 348 team-game rows; every game has one winner.
+- Match W-L and Game W-L reconcile with final standings for all nine teams.
 - API vs Liquipedia bans reconciled; score/ban mismatches reported.
 - Team aggregates reconcile with player sums and standings.
 - Orphan checks for `game_players` → `games`/`matches`.
@@ -244,7 +262,16 @@ The current snapshot resolves all 1,670 rows at step 1. Every row keeps
 - No gold/damage timelines, gold-diff-at-15, comeback curves or objective control.
 - No pick order (Liquipedia slots are lane order).
 - No MANIAC/SAVAGE counts.
-- Map mode missing for 21 games (Week 9 source gap).
+- Map mode missing for 21 games (source gap; listed in `quality.json`).
+- Match 1107 game 2: Liquipedia lists TLID slot 3 as Zetian; the API scoreboard
+  lists Drichel/Zhuxin. The canonical pick follows the API scoreboard hero and
+  player (the row that owns that game's stats) and records the conflict in
+  `quality.json`; this is a source conflict, not a silently merged row. The API
+  also returned no side or ban fields for this game; sides and the ten ordered
+  bans come from Liquipedia and are labelled as such in `quality.json`.
+- Match 1105 game 3: the API supplied a blank ban placeholder; it is filtered
+  at ETL before the canonical database and excluded from every export. Both
+  sources identify only nine valid bans for that game.
 - No official damage-type split; composition analysis uses the labelled proxy.
 - No player-vs-player head-to-head; matchup explorer compares lane-level
   season metrics only.

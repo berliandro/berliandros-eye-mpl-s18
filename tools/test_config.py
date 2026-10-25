@@ -29,7 +29,7 @@ class SchemaTest(unittest.TestCase):
     def test_missing_field(self):
         for field in ("teams", "aliases", "totalTeams", "playoffSlots",
                       "upperBracketSlots", "tiebreakers", "endpoints", "model",
-                      "cacheNamespace", "cacheSchema"):
+                      "cacheNamespace", "cacheSchema", "regularSeasonStatus"):
             bad = copy.deepcopy(CFG)
             del bad[field]
             self.assertTrue(validate_season(bad), field)
@@ -64,6 +64,12 @@ class SchemaTest(unittest.TestCase):
         self.assertTrue(validate_season(bad))
         bad = copy.deepcopy(CFG)
         bad["aliases"]["zzz"] = "ZZZ"
+        self.assertTrue(validate_season(bad))
+
+    def test_regular_season_phase_is_declared(self):
+        self.assertEqual(CFG["regularSeasonStatus"], "final")
+        bad = copy.deepcopy(CFG)
+        bad["regularSeasonStatus"] = "maybe"
         self.assertTrue(validate_season(bad))
 
     def test_bad_priors(self):
@@ -120,7 +126,7 @@ class S18PinsTest(unittest.TestCase):
         self.assertEqual(CFG["database"], "data/mpl_id_s18.db")
         self.assertEqual(CFG["csvDir"], "data/csv")
         self.assertEqual(CFG["cacheNamespace"], "mpl-board")
-        self.assertEqual(CFG["cacheSchema"], 2)
+        self.assertEqual(CFG["cacheSchema"], 4)
 
 
 class SyntheticConfigTest(unittest.TestCase):
@@ -130,7 +136,8 @@ class SyntheticConfigTest(unittest.TestCase):
             "teams": ["AA", "BB", "CC", "DD"],
             "aliases": {"aa": "AA", "bb": "BB", "cc": "CC", "dd": "DD"},
             "totalTeams": 4, "roundRobinRounds": 1, "seriesPerTeam": 3,
-            "totalRegularFixtures": 6, "playoffMatches": 2,
+            "totalRegularFixtures": 6, "regularSeasonStatus": "in-progress",
+            "playoffMatches": 2,
             "playoffSlots": 2, "upperBracketSlots": 1,
             "tiebreakers": ["match_point", "net_game_win", "h2h"],
             "matchFormat": "BO3", "seriesWinPoints": 1,
@@ -139,7 +146,7 @@ class SyntheticConfigTest(unittest.TestCase):
                           "liquipediaSeasonPage": "Toy/Season"},
             "database": "data/toy.db", "csvDir": "data/toy-csv",
             "playoffsJson": "data/toy-playoffs.json",
-            "cacheNamespace": "mpl-board", "cacheSchema": 2,
+            "cacheNamespace": "mpl-board", "cacheSchema": 4,
             "model": {"winProb": "even", "priorWins": 1, "priorGames": 2,
                       "trials": 100, "seed": 7},
         }

@@ -66,9 +66,35 @@ try:
     games = load('games')
     season = load('player_season_stats')
     praw = load('game_players')
+    picks = load('game_picks')
+    bans = load('game_bans')
+    team_games = load('team_games')
 except Exception as e:
     ok(False, f"csv load ({e})")
-    praw = matches = sched = games = season = []
+    praw = matches = sched = games = season = picks = bans = team_games = []
+
+season_cfg_early = json.loads((ROOT / 'data' / 'season.json').read_text(encoding='utf-8'))
+reg_completed = [m for m in sched if m.get('status') == 'completed'
+                 and 'playoffs' not in (m.get('schedule_id') or '')]
+expected_games = 0
+for m in reg_completed:
+    try:
+        expected_games += int(m['score_a']) + int(m['score_b'])
+    except (KeyError, TypeError, ValueError):
+        pass
+ok(len(reg_completed) == season_cfg_early['totalRegularFixtures'],
+   f"completed regular fixtures = {season_cfg_early['totalRegularFixtures']} ({len(reg_completed)})")
+ok(len(matches) == len(reg_completed), f"detail matches cover every completed fixture ({len(matches)})")
+ok(len(games) == expected_games, f"games match series scores ({len(games)} vs {expected_games})")
+ok(len(praw) == expected_games * 10, f"player rows = 10/game ({len(praw)})")
+ok(len(picks) == expected_games * 10, f"pick rows = 10/game ({len(picks)})")
+ok(len(team_games) == expected_games * 2, f"team-game rows = 2/game ({len(team_games)})")
+ok(not any(not (b.get('hero') or '').strip() for b in bans), "no blank ban heroes")
+ok(not any(not (p.get('player') or '').strip() or not (p.get('hero') or '').strip() for p in picks),
+   "no blank pick player/hero")
+meta_early = json.loads((ROOT / 'data' / 'seasons' / 's18' / 'meta.json').read_text(encoding='utf-8'))
+ok(meta_early.get('snapshot_status') == 'final',
+   f"metadata labels snapshot {meta_early.get('snapshot_status')}")
 
 mvp_n = sum(1 for m in matches if (m.get('liq_mvp') or '').strip())
 n_completed_detail = sum(1 for s in sched if s.get('status') == 'completed'

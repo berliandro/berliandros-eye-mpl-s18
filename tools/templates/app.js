@@ -1701,6 +1701,29 @@ if(good(freshById[id]))return;
 var k=keyFn(r);if(!seen[k]){seen[k]=1;out.push(r);}});
 return out;
 }
+/* Bans are enrichment-heavy: the API omits them for some drafted games (1107
+   game 2 today). Replacing every row of a successfully fetched match would
+   silently delete valid ordered bans, so keep last-good bans for any game the
+   fresh payload leaves empty or shorter. Fresh bans still win by key. */
+function mergeBansRefresh(oldArr,freshById,keyFn){
+var out=[],seen={},oldByGame={},freshCount={};
+function add(r){var k=keyFn(r);if(!seen[k]){seen[k]=1;out.push(r);}}
+(oldArr||[]).forEach(function(r){
+if(!r)return;var g=String(r.match_detail_id)+':'+String(r.game_no);
+(oldByGame[g]=oldByGame[g]||[]).push(r);});
+Object.keys(freshById).forEach(function(id){
+var f=freshById[id];if(!f||!f.ok||!Array.isArray(f.bans))return;
+f.bans.forEach(function(r){var g=String(r.match_detail_id)+':'+String(r.game_no);
+freshCount[g]=(freshCount[g]||0)+1;add(r);});});
+Object.keys(oldByGame).forEach(function(g){
+var id=g.slice(0,g.indexOf(':'));
+var f=freshById[id];if(!f||!f.ok)return;
+if((freshCount[g]||0)>=(oldByGame[g]||[]).length)return;
+(oldByGame[g]||[]).forEach(add);});
+(oldArr||[]).forEach(function(r){
+if(!r)return;var f=freshById[r.match_detail_id];if(f&&f.ok)return;add(r);});
+return out;
+}
 function validSnapshot(s){
 var errors=[];
 if(!s||!Array.isArray(s.schedule)||!s.schedule.length)errors.push('schedule');
@@ -1713,7 +1736,8 @@ function refreshStatus(o){
 var t=new Date().toLocaleTimeString();
 var base=' · '+o.games+' games · '+o.mvpN+' MVPs'+(o.newMsg||'');
 if(o.complete)return 'updated '+t+base;
-return 'partially updated '+t+base+' · '+o.fails+' failed (kept previous records)';
+var reason=o.fails?o.fails+' failed':(o.missing?o.missing+' completed result(s) missing':((o.draftIssues&&o.draftIssues.length)?'draft integrity '+o.draftIssues.join(','):'incomplete coverage'));
+return 'partially updated '+t+base+' · '+reason+' (kept previous records)';
 }
 /* REFRESH-END */
 /* CACHE-START */
@@ -1747,9 +1771,62 @@ var n=0;(schedule||[]).forEach(function(m){
 if(poRowFn(m))return;
 var sa=+m.score_a,sb=+m.score_b;
 if(String(m.status)==='completed'||isTermFn(sa,sb))n++;});return n;}
+/* Explicit completeness contract. A fetch that succeeded but returned fewer
+   completed results than the configured regular season is partial, even when
+   every request returned HTTP 200. Final requires the configured number of
+   completed regular fixtures, a detail row for each, and standings whose
+   match/game totals match that same schedule. */
+function snapshotCompleteness(s,expected){
+var schedule=(s&&s.schedule)||[],matches=(s&&s.matches)||[],standings=(s&&s.standings)||[];
+var games=(s&&s.games)||[],picks=(s&&s.picks)||[],teamGames=(s&&s.team_games)||[],bans=(s&&s.bans)||[];
+var reg=[],done=[],byId={},officialMatches=0,officialGames=0,scheduleGames=0;
+expected=+expected||0;
+schedule.forEach(function(m){
+var sid=String((m&&(m.schedule_id||m.match_id))||'').toLowerCase();
+var po=sid.indexOf('playoff')>-1||(m&&m.team_a==='TBD'&&m.team_b==='TBD');
+if(po)return;reg.push(m);
+if(String(m&&m.status)==='completed'){done.push(m);
+var sa=+m.score_a,sb=+m.score_b;if(isFinite(sa)&&isFinite(sb))scheduleGames+=sa+sb;}});
+matches.forEach(function(m){var id=String((m&&m.match_detail_id)||'');if(/^\d+$/.test(id))byId[id]=1;});
+standings.forEach(function(r){officialMatches+=(+r.match_win||0);officialGames+=(+r.game_win||0);});
+var missing=done.filter(function(m){var id=String((m&&m.match_detail_id)||'');return !/^\d+$/.test(id)||!byId[id];});
+/* Draft integrity: a complete refresh must still carry 10 picks and two team
+   rows per game, recorded sides, and at least nine ordered bans (this season's
+   floor; two games have exactly nine because the source row was invalid).
+   Without these checks a successful API refresh could drop Liquipedia-only
+   bans/sides and still claim to be complete. */
+var draftOk=true,draftIssues=[];
+var hasDraft=games.length||picks.length||teamGames.length||bans.length;
+if(hasDraft){
+ if(games.length!==scheduleGames)draftIssues.push('games:'+games.length+'/'+scheduleGames);
+ if(picks.length!==games.length*10)draftIssues.push('picks');
+ if(teamGames.length!==games.length*2)draftIssues.push('team-games');
+ var bansByGame={},sidesMissing=0,lowBans=0;
+ games.forEach(function(g){
+  if(!g.team_a_side||!g.team_b_side)sidesMissing++;
+  var k=String(g.match_detail_id)+':'+String(g.game_no);
+  bansByGame[k]=bansByGame[k]||0;});
+ bans.forEach(function(b){var k=String(b.match_detail_id)+':'+String(b.game_no);
+  if(bansByGame[k]===undefined)bansByGame[k]=0;bansByGame[k]++;});
+ games.forEach(function(g){var k=String(g.match_detail_id)+':'+String(g.game_no);
+  if((bansByGame[k]||0)<9)lowBans++;});
+ if(sidesMissing)draftIssues.push('sides:'+sidesMissing);
+ if(lowBans)draftIssues.push('bans:'+lowBans);
+ draftOk=!draftIssues.length;
+}
+var complete=expected>0&&reg.length===expected&&done.length===expected&&missing.length===0&&
+ Object.keys(byId).length===expected&&officialMatches===expected&&
+ scheduleGames>0&&officialGames===scheduleGames&&draftOk;
+return {status:complete?'final':'partial',complete:complete,expected:expected,
+ regular:reg.length,completed:done.length,detail:Object.keys(byId).length,
+ officials:{matches:officialMatches,games:officialGames},scheduleGames:scheduleGames,
+ draftOk:draftOk,draftIssues:draftIssues,
+ missingIds:missing.map(function(m){return String((m&&(m.schedule_id||m.match_id))||'');})};
+}
 function makeCacheEntry(s,meta){
 return {v:2,seasonId:meta.seasonId,schema:meta.schema,fp:fingerprintSnapshot(s),
 decided:meta.decided!=null?meta.decided:0,complete:!!meta.complete,
+expected:meta.expected||0,completed:meta.completed||0,missingIds:meta.missingIds||[],
 failedIds:meta.failedIds||[],refreshedAt:meta.refreshedAt||null,
 source:meta.source||'refresh',data:s};
 }
@@ -1762,6 +1839,8 @@ if(!Array.isArray(e.data.schedule)||!e.data.schedule.length)return {ok:false,rea
 if(!Array.isArray(e.data.standings)||!e.data.standings.length)return {ok:false,reason:'shape'};
 if(!Array.isArray(e.data.games)||!Array.isArray(e.data.players)||!Array.isArray(e.data.bans)||!Array.isArray(e.data.picks)||!Array.isArray(e.data.team_games)||!Array.isArray(e.data.team_season))return {ok:false,reason:'analytics-shape'};
 if(fingerprintSnapshot(e.data)!==e.fp)return {ok:false,reason:'fingerprint'};
+if(e.complete&&e.expected>0&&!snapshotCompleteness(e.data,e.expected).complete)
+return {ok:false,reason:'incomplete'};
 // Derived inputs must be reproducible from this cache's own raw rows. A
 // hand-edited or half-migrated cache cannot smuggle stale aggregates into a
 // newer standings/raw snapshot.
@@ -1849,23 +1928,24 @@ const n=normLive(d);fresh[id]={ok:true,games:n.games,pros:n.pros,bans:n.bans};}c
 done++;upd.textContent='games '+done+'/'+ids.length+'…';}})()));
 const failedIds=ids.filter(id=>!fresh[id].ok);
 const oldGames=DATA.games||[],oldPlayers=DATA.players||[],oldBans=DATA.bans||[];
-DATA.games=preserveFields(mergeRefresh(DATA.games,fresh,'games',keyGame),oldGames,keyGame,['map_mode']);
+DATA.games=preserveFields(mergeRefresh(DATA.games,fresh,'games',keyGame),oldGames,keyGame,['map_mode','team_a_side','team_b_side','vod_url']);
 DATA.players=preserveFields(mergeRefresh(DATA.players,fresh,'pros',keyPro),oldPlayers,keyPro,['lane','lane_source']);
 DATA.hero_pool=buildPool(DATA.players);
-DATA.bans=preserveFields(mergeRefresh(DATA.bans,fresh,'bans',keyBan),oldBans,keyBan,['ban_order']);
+DATA.bans=preserveFields(mergeBansRefresh(DATA.bans,fresh,keyBan),oldBans,keyBan,['ban_order']);
 // Rebuild every derived analytics input from the merged raw snapshot, then
 // discard cached analytics so the next render cannot show pre-refresh values.
 const derived=deriveAnalyticsSnapshot({players:DATA.players,games:DATA.games,bans:DATA.bans,picks:DATA.picks,team_games:DATA.team_games,team_season:DATA.team_season,standings:DATA.standings});
 DATA.picks=derived.picks;DATA.team_games=derived.team_games;DATA.team_season=derived.team_season;
 Object.keys(ANA).forEach(k=>delete ANA[k]);PREP=null;
-const complete=!failedIds.length;
+const coverage=snapshotCompleteness({schedule:ms,standings:st,matches:DATA.matches,games:DATA.games,picks:DATA.picks,team_games:DATA.team_games,bans:DATA.bans},SEASON.totalRegularFixtures);
+const complete=!failedIds.length&&coverage.complete;
 const AH2=(window.ASSETS||{}).heroes||{},AI2=(window.ASSETS||{}).items||{};
 const newH=[...new Set(DATA.players.map(p=>p.hero).filter(h=>h&&!Object.prototype.hasOwnProperty.call(AH2,h)))];
 const newI=[...new Set(DATA.players.flatMap(p=>p.i||[]).filter(x=>x&&!Object.prototype.hasOwnProperty.call(AI2,x)))];
 const newMsg=(newH.length||newI.length)?` · ${newH.length+newI.length} new art via live CDN (persist: python tools/fetch_assets.py)`:'';
-var cacheObj=makeCacheEntry({schedule:ms,standings:st,season:ps,players:DATA.players,games:DATA.games,bans:DATA.bans,picks:DATA.picks,team_games:DATA.team_games,team_season:DATA.team_season,heroPool:DATA.hero_pool,matches:DATA.matches,heroes:DATA.heroes,playoffs:DATA.playoffs},{seasonId:SEASON_ID,schema:CACHE_SCHEMA,decided:countDecidedSet(ms,isPORow,isTerminalScore),complete:complete,failedIds:failedIds,refreshedAt:Date.now(),source:'refresh'});
+var cacheObj=makeCacheEntry({schedule:ms,standings:st,season:ps,players:DATA.players,games:DATA.games,bans:DATA.bans,picks:DATA.picks,team_games:DATA.team_games,team_season:DATA.team_season,heroPool:DATA.hero_pool,matches:DATA.matches,heroes:DATA.heroes,playoffs:DATA.playoffs},{seasonId:SEASON_ID,schema:CACHE_SCHEMA,decided:countDecidedSet(ms,isPORow,isTerminalScore),complete:complete,expected:coverage.expected,completed:coverage.completed,missingIds:coverage.missingIds,failedIds:failedIds,refreshedAt:Date.now(),source:'refresh'});
 try{localStorage.setItem(CK,JSON.stringify(cacheObj));}catch(e){upd.textContent='updated '+new Date().toLocaleTimeString()+' (not cached: storage full)';render();btn.disabled=false;btn.textContent=old;return;}
-upd.textContent=refreshStatus({complete:complete,fails:failedIds.length,games:DATA.games.length,mvpN:mvpN,newMsg:newMsg});setNet();render();
+upd.textContent=refreshStatus({complete:complete,fails:failedIds.length,missing:coverage.missingIds.length,draftIssues:coverage.draftIssues,games:DATA.games.length,mvpN:mvpN,newMsg:newMsg});setNet();render();
 }catch(e){upd.textContent='refresh failed — offline? showing last snapshot';setNet();}
 btn.disabled=false;btn.textContent=old;}
 document.getElementById('refresh').onclick=refreshDB;
@@ -1899,4 +1979,6 @@ if(!dd.picks||!dd.team_games||!dd.team_season){var dv=deriveAnalyticsSnapshot(DA
 if(dd.heroPool)DATA.hero_pool=dd.heroPool;if(dd.matches&&dd.matches.length)DATA.matches=dd.matches;
 if(dd.heroes&&dd.heroes.length)DATA.heroes=dd.heroes;if(dd.playoffs)DATA.playoffs=dd.playoffs;
 document.getElementById('upd').textContent='snapshot '+new Date(cacheEntry.refreshedAt||Date.now()).toLocaleString()+(pick.partial?' (partial)':'');}}catch(e){}
+if(!document.getElementById('upd').textContent&&DATA.snapshot&&DATA.snapshot.snapshot_status){
+var sm=DATA.snapshot;document.getElementById('upd').textContent=(sm.snapshot_status==='final'?'final':'partial')+' · '+(sm.verified_as_of||'undated')+' · '+(sm.snapshot_scope||'regular season');}
 render();

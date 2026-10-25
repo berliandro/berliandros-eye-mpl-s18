@@ -1,4 +1,7 @@
 # MPL Indonesia Season 18 — Regular Season
+
+**Research snapshot note.** This page records the Liquipedia research captured on 2026-10-03, when the final three series were still upcoming. The canonical, complete results are in `data/mpl_id_s18.db` and the generated app; do not treat status words below as current.
+
 Source: https://liquipedia.net/mobilelegends/MPL/Indonesia/Season_18/Regular_Season
 Method: `api.php?action=parse&prop=wikitext` (100,196 chars, 72× `{{Match}}`) + `prop=text` (1,817,315 chars) for standings/crosstable.
 Format: Aug 14 – Oct 18, 2026, Double Round Robin, All Bo3, 1 pt/win, Top 6 to Playoffs. Venue XO Hall (MPL Arena). Times ICT (WIB, UTC+7).
