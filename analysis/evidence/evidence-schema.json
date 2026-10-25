@@ -1,0 +1,142 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://berliandros-eye.local/schemas/evidence-pilot-v1.json",
+  "title": "Berliandro's Eye pilot evidence ledger record",
+  "description": "Versioned JSONL records for the transcript/database/gameplay pilot. Short transcript excerpts only; raw corpus stays local.",
+  "oneOf": [
+    { "$ref": "#/$defs/segment" },
+    { "$ref": "#/$defs/observation" },
+    { "$ref": "#/$defs/insight" },
+    { "$ref": "#/$defs/audit" }
+  ],
+  "$defs": {
+    "database_ref": {
+      "type": "object",
+      "required": ["query_id", "description", "sql", "params", "fields", "provenance", "snapshot_id", "snapshot_sha256", "rows", "row_count"],
+      "properties": {
+        "query_id": { "type": "string", "minLength": 1 },
+        "description": { "type": "string", "minLength": 1 },
+        "sql": { "type": "string", "minLength": 1 },
+        "params": { "type": "object" },
+        "fields": { "type": "array", "items": { "type": "string" } },
+        "provenance": { "type": "string", "minLength": 1 },
+        "snapshot_id": { "type": "string", "minLength": 1 },
+        "snapshot_sha256": { "type": "string", "pattern": "^[0-9a-f]{64}$" },
+        "rows": { "type": "array", "items": { "type": "object" } },
+        "row_count": { "type": "integer", "minimum": 0 },
+        "truncated": { "type": "boolean" },
+        "note": { "type": ["string", "null"] }
+      },
+      "additionalProperties": true
+    },
+    "visual_ref": {
+      "type": "object",
+      "required": ["frame_id", "frame_path", "requested_seconds", "actual_seconds", "reviewed", "observation"],
+      "properties": {
+        "frame_id": { "type": "string", "minLength": 1 },
+        "frame_path": { "type": "string", "minLength": 1 },
+        "requested_seconds": { "type": "number", "minimum": 0 },
+        "actual_seconds": { "type": "number", "minimum": 0 },
+        "timestamp_link": { "type": ["string", "null"] },
+        "reviewed": { "type": "boolean" },
+        "reviewer": { "type": ["string", "null"] },
+        "reviewed_at": { "type": ["string", "null"] },
+        "observation": { "type": "string", "minLength": 1 },
+        "uncertainty": { "type": "string" }
+      },
+      "additionalProperties": true
+    },
+    "segment": {
+      "type": "object",
+      "required": ["record_type", "schema_version", "id", "source_id", "path", "line_start", "line_end", "text", "text_sha256", "timestamp_start", "timestamp_end", "timestamp_link", "timestamp_provenance", "video_id"],
+      "properties": {
+        "record_type": { "const": "segment" },
+        "schema_version": { "const": 1 },
+        "id": { "type": "string", "pattern": "^seg-" },
+        "source_id": { "type": "string" },
+        "path": { "type": "string" },
+        "line_start": { "type": "integer", "minimum": 1 },
+        "line_end": { "type": "integer", "minimum": 1 },
+        "text": { "type": "string", "minLength": 1 },
+        "text_sha256": { "type": "string", "pattern": "^[0-9a-f]{64}$" },
+        "timestamp_start": { "type": "number", "minimum": 0 },
+        "timestamp_end": { "type": "number", "minimum": 0 },
+        "timestamp_link": { "type": "string", "pattern": "^https://youtu\\.be/" },
+        "timestamp_provenance": { "type": "string", "minLength": 1 },
+        "video_id": { "type": "string", "pattern": "^[A-Za-z0-9_-]{11}$" }
+      },
+      "additionalProperties": true
+    },
+    "observation": {
+      "type": "object",
+      "required": ["record_type", "schema_version", "id", "version", "pilot_id", "category", "claim", "evidence_type", "verification_state", "segment_ids", "source_ids", "database_refs", "visual_refs", "scope", "uncertainty", "extraction_version"],
+      "properties": {
+        "record_type": { "const": "observation" },
+        "schema_version": { "const": 1 },
+        "id": { "type": "string", "pattern": "^OBS-" },
+        "version": { "type": "integer", "minimum": 1 },
+        "pilot_id": { "type": "string" },
+        "category": { "type": "string", "minLength": 1 },
+        "claim": { "type": "string", "minLength": 1 },
+        "evidence_type": {
+          "enum": ["transcript_statement", "commentator_interpretation", "database_record", "derived_stat", "gameplay_observation", "analytical_inference"]
+        },
+        "verification_state": {
+          "enum": ["unverified", "transcript-verified", "gameplay-verified", "cross-checked", "partially-supported", "contradicted", "inconclusive"]
+        },
+        "segment_ids": { "type": "array", "items": { "type": "string" } },
+        "source_ids": { "type": "array", "items": { "type": "string" } },
+        "database_refs": { "type": "array", "items": { "$ref": "#/$defs/database_ref" } },
+        "visual_refs": { "type": "array", "items": { "$ref": "#/$defs/visual_ref" } },
+        "scope": { "type": "string", "minLength": 1 },
+        "uncertainty": { "type": "string", "minLength": 1 },
+        "notes": { "type": "string" },
+        "extraction_version": { "type": "string", "minLength": 1 }
+      },
+      "additionalProperties": true
+    },
+    "insight": {
+      "type": "object",
+      "required": ["record_type", "schema_version", "id", "version", "pilot_id", "claim", "supporting_observation_ids", "contradicting_observation_ids", "alternative_explanations", "scope", "confidence_rationale", "coaching_question", "verification_state", "extraction_version"],
+      "properties": {
+        "record_type": { "const": "insight" },
+        "schema_version": { "const": 1 },
+        "id": { "type": "string", "pattern": "^INS-" },
+        "version": { "type": "integer", "minimum": 1 },
+        "pilot_id": { "type": "string" },
+        "claim": { "type": "string", "minLength": 1 },
+        "supporting_observation_ids": { "type": "array", "minItems": 1, "items": { "type": "string" } },
+        "contradicting_observation_ids": { "type": "array", "items": { "type": "string" } },
+        "alternative_explanations": { "type": "array", "items": { "type": "string" } },
+        "scope": { "type": "string", "minLength": 1 },
+        "confidence_rationale": { "type": "string", "minLength": 1 },
+        "coaching_question": { "type": "string" },
+        "verification_state": {
+          "enum": ["unverified", "transcript-verified", "gameplay-verified", "cross-checked", "partially-supported", "contradicted", "inconclusive"]
+        },
+        "extraction_version": { "type": "string", "minLength": 1 }
+      },
+      "additionalProperties": true
+    },
+    "audit": {
+      "type": "object",
+      "required": ["record_type", "schema_version", "id", "insight_id", "insight_version", "sources_inspected", "quote_checks", "database_checks", "counterexamples_searched", "visual_review", "verdict", "limitations", "created_at"],
+      "properties": {
+        "record_type": { "const": "audit" },
+        "schema_version": { "const": 1 },
+        "id": { "type": "string", "pattern": "^AUD-" },
+        "insight_id": { "type": "string", "pattern": "^INS-" },
+        "insight_version": { "type": "integer", "minimum": 1 },
+        "sources_inspected": { "type": "array", "items": { "type": "string" } },
+        "quote_checks": { "type": "array", "items": { "type": "object" } },
+        "database_checks": { "type": "array", "items": { "type": "object" } },
+        "counterexamples_searched": { "type": "array", "items": { "type": "object" } },
+        "visual_review": { "type": "array", "items": { "type": "object" } },
+        "verdict": { "enum": ["supported", "partially supported", "contradicted", "inconclusive"] },
+        "limitations": { "type": "array", "items": { "type": "string" } },
+        "created_at": { "type": "string", "minLength": 1 }
+      },
+      "additionalProperties": true
+    }
+  }
+}

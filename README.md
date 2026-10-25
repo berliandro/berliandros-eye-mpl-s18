@@ -6,6 +6,10 @@ Ships as a **single self-contained HTML file** (`mpl_id_s18_dark.html`) with all
 and hero/item artwork embedded — it works offline from the snapshot and refreshes
 live from the mlbbhub API when online.
 
+## Semantic coaching pilot
+
+A separate, auditable transcript/database pilot lives in [`analysis/`](analysis/README.md). It imports the local nine-week transcript corpus, verifies hashes, derives timestamps for verified videos, captures gameplay frames with sidecar provenance, and publishes three evidence-backed series reports plus one skeptical audit. Current coverage is **2/27 broadcast days and 3/72 series** — not full-season semantic analysis. Raw transcripts and screenshots stay local and Git-ignored.
+
 ## Screenshots
 
 ### Overview — player deep dive (KDA trend, hero pool, win rates, items, game log)
@@ -130,6 +134,11 @@ live from the mlbbhub API when online.
 | `tools/fetch_assets.py` | Download every referenced hero/item asset (`--check-only`, `--live`) |
 | `tools/check.py` | Regression suite (incl. STRICT asset coverage + JS syntax gate) |
 | `tools/verify.py` | Standard verification: all unit suites + `check.py` + parity gate |
+| `tools/import_transcripts.py` | Safe copy + SHA-256 manifest for the local transcript corpus |
+| `tools/link_video_source.py` | Verify and record a YouTube video ID for a transcript source |
+| `tools/transcript_evidence.py` | Quote/timestamp alignment, evidence build and validation |
+| `tools/video_frames.py` | Full-frame screenshot capture + sidecar provenance + contact sheets |
+| `tools/verify_analysis.py` | Semantic-coaching pilot tests + ledger/boundary checks |
 | `tools/test_chances.js` | Probability-engine tests (node) |
 | `tools/test_refresh.js` | Live-refresh merge tests (node) |
 | `tools/test_analytics.js` | Analytics engine fixtures: Wilson, shrinkage, player/team/draft metrics, ban ranking (node) |

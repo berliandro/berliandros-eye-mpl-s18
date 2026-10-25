@@ -1,0 +1,24 @@
+{
+  "schema_version": 1,
+  "generated_at": "2026-10-25T13:41:57+00:00",
+  "sources": [
+    {
+      "source_id": "src-s18-w01d01",
+      "video_id": "40fehk2f4_E",
+      "raw_sha256": "ef078e6c661a5da92005694311ee44ed22a843aa5b016bf94de1a93f4ad09c70",
+      "raw_lines": 9104,
+      "exact_matches": 9103,
+      "normalized_matches": 1,
+      "timestamp_provenance": "youtube-auto-caption-alignment-v1"
+    },
+    {
+      "source_id": "src-s18-w09d03",
+      "video_id": "hY0Upem95uo",
+      "raw_sha256": "d6139940624db59a5282b42b1cdc4271d2b1973d493e2abfa856a11e150e5680",
+      "raw_lines": 12273,
+      "exact_matches": 12273,
+      "normalized_matches": 0,
+      "timestamp_provenance": "youtube-auto-caption-alignment-v1"
+    }
+  ]
+}

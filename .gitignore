@@ -13,6 +13,14 @@ backups/
 # ETL staging output (removed after publish; never commit partial builds)
 data/.staging-s18/
 
+# Semantic coaching local-only source corpus and media caches. Keep manifests,
+# schemas, tools, tests and short curated reports trackable.
+analysis/sources/raw-transcripts/
+analysis/cache/
+analysis/evidence/segments.jsonl
+analysis/evidence/segments/
+.playwright-mcp/
+
 # OS / editor
 .DS_Store
 Thumbs.db
