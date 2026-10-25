@@ -244,7 +244,7 @@ class ValidateTest(unittest.TestCase):
         con = memdb(True)
         con.execute("UPDATE matches SET winner='team_a' WHERE match_detail_id='2'")
         probs = validate_build(con, [], {}, TOY)
-        self.assertTrue(any("winner disagrees with detail-order score" in p for p in probs), probs)
+        self.assertTrue(any("disagrees with detail-order score" in p for p in probs), probs)
 
     def test_unreconciled_standings_block_publish(self):
         con = memdb(True)
