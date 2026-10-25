@@ -90,6 +90,26 @@ On this machine, yt-dlp/FFmpeg section downloads from the long VODs stalled; the
 - **AI inference** is an insight, labelled with alternatives, counterexamples, scope and confidence rationale.
 - Verification states are separate from evidence types. A transcript-only claim is never upgraded to gameplay-verified.
 
+## Database winner-orientation repair
+
+The checked-in database snapshot currently contains **21/72** `matches.winner` values that disagree with the score when interpreted in the same `matches.team_a/team_b` order. The schedule table uses its own team order, so side tokens must not be copied across tables without mapping the named teams.
+
+On the local machine that contains the ignored raw transcript corpus and existing timed-caption cache, preview the migration first:
+
+```bash
+python tools/repair_match_winner_orientation.py
+```
+
+If the preview lists the expected rows and the database/CSV scopes reconcile, run:
+
+```bash
+python tools/repair_match_winner_orientation.py --apply
+```
+
+The apply command backs up the SQLite database, `matches.csv`, generated HTML, query catalog, evidence ledger and reports beneath the Git-ignored `analysis/cache/migration-backups/` directory. It repairs `matches.winner` relative to that row's score/team order, rebuilds snapshot-bound evidence references and generated artifacts, then runs the evidence, integrity, parity and full regression validators. A failed stage triggers rollback. It does not edit raw transcript files.
+
+This local migration has **not** been executed from this remote environment because the corpus and timed-caption sidecars are intentionally absent from GitHub. The migration is not complete until the local command reports `repaired_and_verified` and the regenerated inventory reports zero row-score winner mismatches.
+
 ## Important lineage warning
 
 The existing `matches.winner` column is **not** reliable in `matches` team order: 21/72 rows disagree with the score because team order is flipped relative to `schedule_all`. Use `schedule_all.winner` or derive the winner from `score_a/score_b`. See `analysis/reports/database-inventory.md` and `OBS-LINEAGE-WINNER`.
