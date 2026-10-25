@@ -41,14 +41,15 @@ This directory contains the first **traceable, transcript-powered** coaching pil
 python tools/import_transcripts.py `
   --source "D:\! Coding\~ shit projects\get-youtube-transcript\mpl-s18-raw-transcripts"
 
-# 2. The two pilot videos are already linked in the manifest. To resolve another:
-python tools/link_video_source.py --source-id src-s18-w01d01 `
-  --video-id 40fehk2f4_E --series 1036,1037 --confidence high `
-  --rationale "..."
+# 2. Verify schedule-derived VOD candidates against official metadata and align
+#    every local transcript line to official timed captions. This is resumable.
+python tools/resolve_and_align_sources.py
 
-# 3. Derive timed caption cues for a verified video (network; cached locally)
-python tools/transcript_evidence.py align --source-id src-s18-w01d01
-python tools/transcript_evidence.py align --source-id src-s18-w09d03
+# Optional metadata-only pass:
+python tools/resolve_and_align_sources.py --no-align
+
+# Retry an individual source after network/transcript failures:
+python tools/resolve_and_align_sources.py --source-id src-s18-w02d01
 
 # 4. Search exact transcript text with line numbers and timestamps
 python tools/transcript_evidence.py search --source-id src-s18-w01d01 `
