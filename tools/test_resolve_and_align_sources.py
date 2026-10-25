@@ -3,7 +3,7 @@
 import csv,json,sys,tempfile,unittest
 from pathlib import Path
 TOOLS=Path(__file__).resolve().parent;REPO=TOOLS.parent;sys.path.insert(0,str(TOOLS))
-from resolve_and_align_sources import build_schedule_candidates,metadata_errors,regular_schedule_rows
+from resolve_and_align_sources import build_schedule_candidates,metadata_errors,regular_schedule_rows,cache_alignment_is_current,derive_source_status
 MANIFEST=REPO/"analysis/sources/source-manifest.json";SCHEDULE=REPO/"data/csv/schedule_all.csv"
 class ResolverTests(unittest.TestCase):
  @classmethod
@@ -24,6 +24,22 @@ class ResolverTests(unittest.TestCase):
    with p.open("w",encoding="utf-8",newline="") as f:w=csv.DictWriter(f,fieldnames=rows[0].keys());w.writeheader();w.writerows(rows)
    candidates,errors=build_schedule_candidates(self.manifest,p)
   self.assertIsNone(candidates["src-s18-w01d01"]["candidate_video_id"]);self.assertTrue(any("one distinct VOD ID" in e for e in errors))
+ def test_alignment_requires_same_candidate_and_current_raw_hash(self):
+  source={"source_id":"src-s18-w02d01","video_id":"O1vhySUmgj0","video_metadata_provenance":"yt-dlp verified","sha256":"raw-hash"}
+  alignment={"source_id":"src-s18-w02d01","video_id":"O1vhySUmgj0","raw_sha256":"raw-hash","alignment_status":"verified","mismatch_count":0,"raw_line_count":12,"timed_snippet_count":12,"exact_matches":12,"normalized_matches":0,"timestamp_provenance":"test"}
+  self.assertTrue(cache_alignment_is_current(source,"O1vhySUmgj0",alignment))
+  self.assertEqual(derive_source_status(source,{"candidate_video_id":"O1vhySUmgj0"},alignment),"caption_alignment_verified")
+  self.assertFalse(cache_alignment_is_current({**source,"sha256":"changed"},"O1vhySUmgj0",alignment))
+  self.assertEqual(derive_source_status({**source,"sha256":"changed"},{"candidate_video_id":"O1vhySUmgj0"},alignment),"metadata_verified")
+
+ def test_alignment_rejects_candidate_mismatch_or_bad_counts(self):
+  source={"source_id":"src-s18-w02d01","video_id":"O1vhySUmgj0","video_metadata_provenance":"yt-dlp verified","sha256":"raw-hash"}
+  alignment={"source_id":"src-s18-w02d01","video_id":"O1vhySUmgj0","raw_sha256":"raw-hash","alignment_status":"verified","mismatch_count":0,"raw_line_count":12,"timed_snippet_count":11,"exact_matches":11,"normalized_matches":0,"timestamp_provenance":"test"}
+  self.assertFalse(cache_alignment_is_current(source,"otherVideoID",alignment))
+  self.assertFalse(cache_alignment_is_current(source,"O1vhySUmgj0",alignment))
+  self.assertEqual(derive_source_status(source,{"candidate_video_id":None},alignment),"candidate_resolution_failed")
+  self.assertEqual(derive_source_status(source,{"candidate_video_id":"different123"},alignment),"schedule_candidate_pending_verification")
+
  def test_metadata_gates_channel_season_day(self):
   s={"week":2,"day":1};good={"title":"LIVE | MPL ID S18 | Minggu 2 Hari 1 | Bahasa Indonesia","channel":"MPL Indonesia"}
   self.assertEqual(metadata_errors(s,"O1vhySUmgj0",good),[]);self.assertTrue(metadata_errors(s,"O1vhySUmgj0",{**good,"channel":"fan archive"}));self.assertTrue(metadata_errors(s,"O1vhySUmgj0",{**good,"title":"MPL ID S18 | Minggu 2 Hari 2"}));self.assertTrue(metadata_errors(s,"O1vhySUmgj0",{**good,"title":"Minggu 2 Hari 1"}))
