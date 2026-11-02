@@ -1,6 +1,1591 @@
 {
   "schema_version": 1,
-  "generated_at": "2026-10-31T00:00:00Z",
+  "generated_at": "2026-11-02T06:46:31.651604Z",
   "description": "Maps broadcast sources to series/game start offsets within multi-hour VODs. Offsets are in seconds from video start.",
-  "sources": {}
+  "sources": {
+    "src-s18-w01d01": {
+      "video_id": "40fehk2f4_E",
+      "broadcast_date": "2026-08-14",
+      "video_duration_seconds": 20405,
+      "series": [
+        {
+          "series_index": 0,
+          "match_detail_id": "1036",
+          "team_a": "EVOS",
+          "team_b": "RRQ",
+          "game_no": 1,
+          "start_seconds": 300,
+          "end_seconds": null,
+          "confidence": "low",
+          "provenance": {
+            "method": "schedule_order_heuristic",
+            "source": "D:\\! Coding\\~ shit projects\\mpls18\\data\\csv\\schedule_all.csv",
+            "broadcast_date": "2026-08-14",
+            "scheduled_start": "2026-08-14T15:00:00+07:00",
+            "note": "Heuristic initial placement; requires validation against transcript/boundaries/frames"
+          },
+          "verified_by": null,
+          "status": "pending_validation"
+        },
+        {
+          "series_index": 1,
+          "match_detail_id": "1037",
+          "team_a": "NAVI",
+          "team_b": "AE",
+          "game_no": 1,
+          "start_seconds": null,
+          "end_seconds": null,
+          "confidence": "low",
+          "provenance": {
+            "method": "schedule_order_heuristic",
+            "source": "D:\\! Coding\\~ shit projects\\mpls18\\data\\csv\\schedule_all.csv",
+            "broadcast_date": "2026-08-14",
+            "scheduled_start": "2026-08-14T18:00:00+07:00",
+            "note": "Heuristic initial placement; requires validation against transcript/boundaries/frames"
+          },
+          "verified_by": null,
+          "status": "pending_validation"
+        }
+      ],
+      "validation_status": "pending"
+    },
+    "src-s18-w01d02": {
+      "video_id": "tpgvzhEO1Qc",
+      "broadcast_date": "2026-08-15",
+      "video_duration_seconds": 31300,
+      "series": [
+        {
+          "series_index": 0,
+          "match_detail_id": "1038",
+          "team_a": "TLID",
+          "team_b": "GEEK",
+          "game_no": 1,
+          "start_seconds": 300,
+          "end_seconds": null,
+          "confidence": "low",
+          "provenance": {
+            "method": "schedule_order_heuristic",
+            "source": "D:\\! Coding\\~ shit projects\\mpls18\\data\\csv\\schedule_all.csv",
+            "broadcast_date": "2026-08-15",
+            "scheduled_start": "2026-08-15T14:00:00+07:00",
+            "note": "Heuristic initial placement; requires validation against transcript/boundaries/frames"
+          },
+          "verified_by": null,
+          "status": "pending_validation"
+        },
+        {
+          "series_index": 1,
+          "match_detail_id": "1039",
+          "team_a": "DEWA",
+          "team_b": "RRQ",
+          "game_no": 1,
+          "start_seconds": null,
+          "end_seconds": null,
+          "confidence": "low",
+          "provenance": {
+            "method": "schedule_order_heuristic",
+            "source": "D:\\! Coding\\~ shit projects\\mpls18\\data\\csv\\schedule_all.csv",
+            "broadcast_date": "2026-08-15",
+            "scheduled_start": "2026-08-15T17:00:00+07:00",
+            "note": "Heuristic initial placement; requires validation against transcript/boundaries/frames"
+          },
+          "verified_by": null,
+          "status": "pending_validation"
+        },
+        {
+          "series_index": 2,
+          "match_detail_id": "1040",
+          "team_a": "EVOS",
+          "team_b": "NAVI",
+          "game_no": 1,
+          "start_seconds": null,
+          "end_seconds": null,
+          "confidence": "low",
+          "provenance": {
+            "method": "schedule_order_heuristic",
+            "source": "D:\\! Coding\\~ shit projects\\mpls18\\data\\csv\\schedule_all.csv",
+            "broadcast_date": "2026-08-15",
+            "scheduled_start": "2026-08-15T20:00:00+07:00",
+            "note": "Heuristic initial placement; requires validation against transcript/boundaries/frames"
+          },
+          "verified_by": null,
+          "status": "pending_validation"
+        }
+      ],
+      "validation_status": "pending"
+    },
+    "src-s18-w01d03": {
+      "video_id": "X1yGjaXTbww",
+      "broadcast_date": "2026-08-16",
+      "video_duration_seconds": 28160,
+      "series": [
+        {
+          "series_index": 0,
+          "match_detail_id": "1041",
+          "team_a": "TLID",
+          "team_b": "DEWA",
+          "game_no": 1,
+          "start_seconds": 300,
+          "end_seconds": null,
+          "confidence": "low",
+          "provenance": {
+            "method": "schedule_order_heuristic",
+            "source": "D:\\! Coding\\~ shit projects\\mpls18\\data\\csv\\schedule_all.csv",
+            "broadcast_date": "2026-08-16",
+            "scheduled_start": "2026-08-16T14:00:00+07:00",
+            "note": "Heuristic initial placement; requires validation against transcript/boundaries/frames"
+          },
+          "verified_by": null,
+          "status": "pending_validation"
+        },
+        {
+          "series_index": 1,
+          "match_detail_id": "1042",
+          "team_a": "BTR",
+          "team_b": "GEEK",
+          "game_no": 1,
+          "start_seconds": null,
+          "end_seconds": null,
+          "confidence": "low",
+          "provenance": {
+            "method": "schedule_order_heuristic",
+            "source": "D:\\! Coding\\~ shit projects\\mpls18\\data\\csv\\schedule_all.csv",
+            "broadcast_date": "2026-08-16",
+            "scheduled_start": "2026-08-16T17:00:00+07:00",
+            "note": "Heuristic initial placement; requires validation against transcript/boundaries/frames"
+          },
+          "verified_by": null,
+          "status": "pending_validation"
+        },
+        {
+          "series_index": 2,
+          "match_detail_id": "1043",
+          "team_a": "AE",
+          "team_b": "ONIC",
+          "game_no": 1,
+          "start_seconds": null,
+          "end_seconds": null,
+          "confidence": "low",
+          "provenance": {
+            "method": "schedule_order_heuristic",
+            "source": "D:\\! Coding\\~ shit projects\\mpls18\\data\\csv\\schedule_all.csv",
+            "broadcast_date": "2026-08-16",
+            "scheduled_start": "2026-08-16T20:00:00+07:00",
+            "note": "Heuristic initial placement; requires validation against transcript/boundaries/frames"
+          },
+          "verified_by": null,
+          "status": "pending_validation"
+        }
+      ],
+      "validation_status": "pending"
+    },
+    "src-s18-w02d01": {
+      "video_id": "O1vhySUmgj0",
+      "broadcast_date": "2026-08-21",
+      "video_duration_seconds": 19466,
+      "series": [
+        {
+          "series_index": 0,
+          "match_detail_id": "1044",
+          "team_a": "TLID",
+          "team_b": "NAVI",
+          "game_no": 1,
+          "start_seconds": 300,
+          "end_seconds": null,
+          "confidence": "low",
+          "provenance": {
+            "method": "schedule_order_heuristic",
+            "source": "D:\\! Coding\\~ shit projects\\mpls18\\data\\csv\\schedule_all.csv",
+            "broadcast_date": "2026-08-21",
+            "scheduled_start": "2026-08-21T15:00:00+07:00",
+            "note": "Heuristic initial placement; requires validation against transcript/boundaries/frames"
+          },
+          "verified_by": null,
+          "status": "pending_validation"
+        },
+        {
+          "series_index": 1,
+          "match_detail_id": "1045",
+          "team_a": "BTR",
+          "team_b": "DEWA",
+          "game_no": 1,
+          "start_seconds": null,
+          "end_seconds": null,
+          "confidence": "low",
+          "provenance": {
+            "method": "schedule_order_heuristic",
+            "source": "D:\\! Coding\\~ shit projects\\mpls18\\data\\csv\\schedule_all.csv",
+            "broadcast_date": "2026-08-21",
+            "scheduled_start": "2026-08-21T18:00:00+07:00",
+            "note": "Heuristic initial placement; requires validation against transcript/boundaries/frames"
+          },
+          "verified_by": null,
+          "status": "pending_validation"
+        }
+      ],
+      "validation_status": "pending"
+    },
+    "src-s18-w02d02": {
+      "video_id": "QsOUpAE-Jd8",
+      "broadcast_date": "2026-08-22",
+      "video_duration_seconds": 30123,
+      "series": [
+        {
+          "series_index": 0,
+          "match_detail_id": "1046",
+          "team_a": "TLID",
+          "team_b": "EVOS",
+          "game_no": 1,
+          "start_seconds": 300,
+          "end_seconds": null,
+          "confidence": "low",
+          "provenance": {
+            "method": "schedule_order_heuristic",
+            "source": "D:\\! Coding\\~ shit projects\\mpls18\\data\\csv\\schedule_all.csv",
+            "broadcast_date": "2026-08-22",
+            "scheduled_start": "2026-08-22T14:00:00+07:00",
+            "note": "Heuristic initial placement; requires validation against transcript/boundaries/frames"
+          },
+          "verified_by": null,
+          "status": "pending_validation"
+        },
+        {
+          "series_index": 1,
+          "match_detail_id": "1047",
+          "team_a": "NAVI",
+          "team_b": "GEEK",
+          "game_no": 1,
+          "start_seconds": null,
+          "end_seconds": null,
+          "confidence": "low",
+          "provenance": {
+            "method": "schedule_order_heuristic",
+            "source": "D:\\! Coding\\~ shit projects\\mpls18\\data\\csv\\schedule_all.csv",
+            "broadcast_date": "2026-08-22",
+            "scheduled_start": "2026-08-22T17:00:00+07:00",
+            "note": "Heuristic initial placement; requires validation against transcript/boundaries/frames"
+          },
+          "verified_by": null,
+          "status": "pending_validation"
+        },
+        {
+          "series_index": 2,
+          "match_detail_id": "1048",
+          "team_a": "ONIC",
+          "team_b": "RRQ",
+          "game_no": 1,
+          "start_seconds": null,
+          "end_seconds": null,
+          "confidence": "low",
+          "provenance": {
+            "method": "schedule_order_heuristic",
+            "source": "D:\\! Coding\\~ shit projects\\mpls18\\data\\csv\\schedule_all.csv",
+            "broadcast_date": "2026-08-22",
+            "scheduled_start": "2026-08-22T20:00:00+07:00",
+            "note": "Heuristic initial placement; requires validation against transcript/boundaries/frames"
+          },
+          "verified_by": null,
+          "status": "pending_validation"
+        }
+      ],
+      "validation_status": "pending"
+    },
+    "src-s18-w02d03": {
+      "video_id": "C-H_iCLxtL8",
+      "broadcast_date": "2026-08-23",
+      "video_duration_seconds": 29262,
+      "series": [
+        {
+          "series_index": 0,
+          "match_detail_id": "1049",
+          "team_a": "DEWA",
+          "team_b": "AE",
+          "game_no": 1,
+          "start_seconds": 300,
+          "end_seconds": null,
+          "confidence": "low",
+          "provenance": {
+            "method": "schedule_order_heuristic",
+            "source": "D:\\! Coding\\~ shit projects\\mpls18\\data\\csv\\schedule_all.csv",
+            "broadcast_date": "2026-08-23",
+            "scheduled_start": "2026-08-23T14:00:00+07:00",
+            "note": "Heuristic initial placement; requires validation against transcript/boundaries/frames"
+          },
+          "verified_by": null,
+          "status": "pending_validation"
+        },
+        {
+          "series_index": 1,
+          "match_detail_id": "1050",
+          "team_a": "ONIC",
+          "team_b": "BTR",
+          "game_no": 1,
+          "start_seconds": null,
+          "end_seconds": null,
+          "confidence": "low",
+          "provenance": {
+            "method": "schedule_order_heuristic",
+            "source": "D:\\! Coding\\~ shit projects\\mpls18\\data\\csv\\schedule_all.csv",
+            "broadcast_date": "2026-08-23",
+            "scheduled_start": "2026-08-23T17:00:00+07:00",
+            "note": "Heuristic initial placement; requires validation against transcript/boundaries/frames"
+          },
+          "verified_by": null,
+          "status": "pending_validation"
+        },
+        {
+          "series_index": 2,
+          "match_detail_id": "1051",
+          "team_a": "GEEK",
+          "team_b": "EVOS",
+          "game_no": 1,
+          "start_seconds": null,
+          "end_seconds": null,
+          "confidence": "low",
+          "provenance": {
+            "method": "schedule_order_heuristic",
+            "source": "D:\\! Coding\\~ shit projects\\mpls18\\data\\csv\\schedule_all.csv",
+            "broadcast_date": "2026-08-23",
+            "scheduled_start": "2026-08-23T20:00:00+07:00",
+            "note": "Heuristic initial placement; requires validation against transcript/boundaries/frames"
+          },
+          "verified_by": null,
+          "status": "pending_validation"
+        }
+      ],
+      "validation_status": "pending"
+    },
+    "src-s18-w03d01": {
+      "video_id": "9c2wPhSYTGA",
+      "broadcast_date": "2026-08-28",
+      "video_duration_seconds": 18435,
+      "series": [
+        {
+          "series_index": 0,
+          "match_detail_id": "1052",
+          "team_a": "BTR",
+          "team_b": "NAVI",
+          "game_no": 1,
+          "start_seconds": 300,
+          "end_seconds": null,
+          "confidence": "low",
+          "provenance": {
+            "method": "schedule_order_heuristic",
+            "source": "D:\\! Coding\\~ shit projects\\mpls18\\data\\csv\\schedule_all.csv",
+            "broadcast_date": "2026-08-28",
+            "scheduled_start": "2026-08-28T15:00:00+07:00",
+            "note": "Heuristic initial placement; requires validation against transcript/boundaries/frames"
+          },
+          "verified_by": null,
+          "status": "pending_validation"
+        },
+        {
+          "series_index": 1,
+          "match_detail_id": "1053",
+          "team_a": "DEWA",
+          "team_b": "GEEK",
+          "game_no": 1,
+          "start_seconds": null,
+          "end_seconds": null,
+          "confidence": "low",
+          "provenance": {
+            "method": "schedule_order_heuristic",
+            "source": "D:\\! Coding\\~ shit projects\\mpls18\\data\\csv\\schedule_all.csv",
+            "broadcast_date": "2026-08-28",
+            "scheduled_start": "2026-08-28T18:00:00+07:00",
+            "note": "Heuristic initial placement; requires validation against transcript/boundaries/frames"
+          },
+          "verified_by": null,
+          "status": "pending_validation"
+        }
+      ],
+      "validation_status": "pending"
+    },
+    "src-s18-w03d02": {
+      "video_id": "FDioYoG4ads",
+      "broadcast_date": "2026-08-29",
+      "video_duration_seconds": 31979,
+      "series": [
+        {
+          "series_index": 0,
+          "match_detail_id": "1054",
+          "team_a": "TLID",
+          "team_b": "ONIC",
+          "game_no": 1,
+          "start_seconds": 300,
+          "end_seconds": null,
+          "confidence": "low",
+          "provenance": {
+            "method": "schedule_order_heuristic",
+            "source": "D:\\! Coding\\~ shit projects\\mpls18\\data\\csv\\schedule_all.csv",
+            "broadcast_date": "2026-08-29",
+            "scheduled_start": "2026-08-29T14:00:00+07:00",
+            "note": "Heuristic initial placement; requires validation against transcript/boundaries/frames"
+          },
+          "verified_by": null,
+          "status": "pending_validation"
+        },
+        {
+          "series_index": 1,
+          "match_detail_id": "1055",
+          "team_a": "AE",
+          "team_b": "EVOS",
+          "game_no": 1,
+          "start_seconds": null,
+          "end_seconds": null,
+          "confidence": "low",
+          "provenance": {
+            "method": "schedule_order_heuristic",
+            "source": "D:\\! Coding\\~ shit projects\\mpls18\\data\\csv\\schedule_all.csv",
+            "broadcast_date": "2026-08-29",
+            "scheduled_start": "2026-08-29T17:00:00+07:00",
+            "note": "Heuristic initial placement; requires validation against transcript/boundaries/frames"
+          },
+          "verified_by": null,
+          "status": "pending_validation"
+        },
+        {
+          "series_index": 2,
+          "match_detail_id": "1056",
+          "team_a": "RRQ",
+          "team_b": "BTR",
+          "game_no": 1,
+          "start_seconds": null,
+          "end_seconds": null,
+          "confidence": "low",
+          "provenance": {
+            "method": "schedule_order_heuristic",
+            "source": "D:\\! Coding\\~ shit projects\\mpls18\\data\\csv\\schedule_all.csv",
+            "broadcast_date": "2026-08-29",
+            "scheduled_start": "2026-08-29T20:00:00+07:00",
+            "note": "Heuristic initial placement; requires validation against transcript/boundaries/frames"
+          },
+          "verified_by": null,
+          "status": "pending_validation"
+        }
+      ],
+      "validation_status": "pending"
+    },
+    "src-s18-w03d03": {
+      "video_id": "3bAUu2t3FGI",
+      "broadcast_date": "2026-08-30",
+      "video_duration_seconds": 30950,
+      "series": [
+        {
+          "series_index": 0,
+          "match_detail_id": "1057",
+          "team_a": "NAVI",
+          "team_b": "ONIC",
+          "game_no": 1,
+          "start_seconds": 300,
+          "end_seconds": null,
+          "confidence": "low",
+          "provenance": {
+            "method": "schedule_order_heuristic",
+            "source": "D:\\! Coding\\~ shit projects\\mpls18\\data\\csv\\schedule_all.csv",
+            "broadcast_date": "2026-08-30",
+            "scheduled_start": "2026-08-30T14:00:00+07:00",
+            "note": "Heuristic initial placement; requires validation against transcript/boundaries/frames"
+          },
+          "verified_by": null,
+          "status": "pending_validation"
+        },
+        {
+          "series_index": 1,
+          "match_detail_id": "1058",
+          "team_a": "GEEK",
+          "team_b": "RRQ",
+          "game_no": 1,
+          "start_seconds": null,
+          "end_seconds": null,
+          "confidence": "low",
+          "provenance": {
+            "method": "schedule_order_heuristic",
+            "source": "D:\\! Coding\\~ shit projects\\mpls18\\data\\csv\\schedule_all.csv",
+            "broadcast_date": "2026-08-30",
+            "scheduled_start": "2026-08-30T17:00:00+07:00",
+            "note": "Heuristic initial placement; requires validation against transcript/boundaries/frames"
+          },
+          "verified_by": null,
+          "status": "pending_validation"
+        },
+        {
+          "series_index": 2,
+          "match_detail_id": "1059",
+          "team_a": "TLID",
+          "team_b": "AE",
+          "game_no": 1,
+          "start_seconds": null,
+          "end_seconds": null,
+          "confidence": "low",
+          "provenance": {
+            "method": "schedule_order_heuristic",
+            "source": "D:\\! Coding\\~ shit projects\\mpls18\\data\\csv\\schedule_all.csv",
+            "broadcast_date": "2026-08-30",
+            "scheduled_start": "2026-08-30T20:00:00+07:00",
+            "note": "Heuristic initial placement; requires validation against transcript/boundaries/frames"
+          },
+          "verified_by": null,
+          "status": "pending_validation"
+        }
+      ],
+      "validation_status": "pending"
+    },
+    "src-s18-w04d01": {
+      "video_id": "W-LSKxUkUi4",
+      "broadcast_date": "2026-09-04",
+      "video_duration_seconds": 18545,
+      "series": [
+        {
+          "series_index": 0,
+          "match_detail_id": "1060",
+          "team_a": "NAVI",
+          "team_b": "DEWA",
+          "game_no": 1,
+          "start_seconds": 300,
+          "end_seconds": null,
+          "confidence": "low",
+          "provenance": {
+            "method": "schedule_order_heuristic",
+            "source": "D:\\! Coding\\~ shit projects\\mpls18\\data\\csv\\schedule_all.csv",
+            "broadcast_date": "2026-09-04",
+            "scheduled_start": "2026-09-04T15:00:00+07:00",
+            "note": "Heuristic initial placement; requires validation against transcript/boundaries/frames"
+          },
+          "verified_by": null,
+          "status": "pending_validation"
+        },
+        {
+          "series_index": 1,
+          "match_detail_id": "1061",
+          "team_a": "TLID",
+          "team_b": "RRQ",
+          "game_no": 1,
+          "start_seconds": null,
+          "end_seconds": null,
+          "confidence": "low",
+          "provenance": {
+            "method": "schedule_order_heuristic",
+            "source": "D:\\! Coding\\~ shit projects\\mpls18\\data\\csv\\schedule_all.csv",
+            "broadcast_date": "2026-09-04",
+            "scheduled_start": "2026-09-04T18:00:00+07:00",
+            "note": "Heuristic initial placement; requires validation against transcript/boundaries/frames"
+          },
+          "verified_by": null,
+          "status": "pending_validation"
+        }
+      ],
+      "validation_status": "pending"
+    },
+    "src-s18-w04d02": {
+      "video_id": "-M1_bwTRlHk",
+      "broadcast_date": "2026-09-05",
+      "video_duration_seconds": 30485,
+      "series": [
+        {
+          "series_index": 0,
+          "match_detail_id": "1062",
+          "team_a": "DEWA",
+          "team_b": "ONIC",
+          "game_no": 1,
+          "start_seconds": 300,
+          "end_seconds": null,
+          "confidence": "low",
+          "provenance": {
+            "method": "schedule_order_heuristic",
+            "source": "D:\\! Coding\\~ shit projects\\mpls18\\data\\csv\\schedule_all.csv",
+            "broadcast_date": "2026-09-05",
+            "scheduled_start": "2026-09-05T14:00:00+07:00",
+            "note": "Heuristic initial placement; requires validation against transcript/boundaries/frames"
+          },
+          "verified_by": null,
+          "status": "pending_validation"
+        },
+        {
+          "series_index": 1,
+          "match_detail_id": "1063",
+          "team_a": "EVOS",
+          "team_b": "BTR",
+          "game_no": 1,
+          "start_seconds": null,
+          "end_seconds": null,
+          "confidence": "low",
+          "provenance": {
+            "method": "schedule_order_heuristic",
+            "source": "D:\\! Coding\\~ shit projects\\mpls18\\data\\csv\\schedule_all.csv",
+            "broadcast_date": "2026-09-05",
+            "scheduled_start": "2026-09-05T17:00:00+07:00",
+            "note": "Heuristic initial placement; requires validation against transcript/boundaries/frames"
+          },
+          "verified_by": null,
+          "status": "pending_validation"
+        },
+        {
+          "series_index": 2,
+          "match_detail_id": "1064",
+          "team_a": "AE",
+          "team_b": "GEEK",
+          "game_no": 1,
+          "start_seconds": null,
+          "end_seconds": null,
+          "confidence": "low",
+          "provenance": {
+            "method": "schedule_order_heuristic",
+            "source": "D:\\! Coding\\~ shit projects\\mpls18\\data\\csv\\schedule_all.csv",
+            "broadcast_date": "2026-09-05",
+            "scheduled_start": "2026-09-05T20:00:00+07:00",
+            "note": "Heuristic initial placement; requires validation against transcript/boundaries/frames"
+          },
+          "verified_by": null,
+          "status": "pending_validation"
+        }
+      ],
+      "validation_status": "pending"
+    },
+    "src-s18-w04d03": {
+      "video_id": "nu3RfzQdsec",
+      "broadcast_date": "2026-09-06",
+      "video_duration_seconds": 29126,
+      "series": [
+        {
+          "series_index": 0,
+          "match_detail_id": "1065",
+          "team_a": "RRQ",
+          "team_b": "NAVI",
+          "game_no": 1,
+          "start_seconds": 300,
+          "end_seconds": null,
+          "confidence": "low",
+          "provenance": {
+            "method": "schedule_order_heuristic",
+            "source": "D:\\! Coding\\~ shit projects\\mpls18\\data\\csv\\schedule_all.csv",
+            "broadcast_date": "2026-09-06",
+            "scheduled_start": "2026-09-06T14:00:00+07:00",
+            "note": "Heuristic initial placement; requires validation against transcript/boundaries/frames"
+          },
+          "verified_by": null,
+          "status": "pending_validation"
+        },
+        {
+          "series_index": 1,
+          "match_detail_id": "1066",
+          "team_a": "ONIC",
+          "team_b": "EVOS",
+          "game_no": 1,
+          "start_seconds": null,
+          "end_seconds": null,
+          "confidence": "low",
+          "provenance": {
+            "method": "schedule_order_heuristic",
+            "source": "D:\\! Coding\\~ shit projects\\mpls18\\data\\csv\\schedule_all.csv",
+            "broadcast_date": "2026-09-06",
+            "scheduled_start": "2026-09-06T17:00:00+07:00",
+            "note": "Heuristic initial placement; requires validation against transcript/boundaries/frames"
+          },
+          "verified_by": null,
+          "status": "pending_validation"
+        },
+        {
+          "series_index": 2,
+          "match_detail_id": "1067",
+          "team_a": "BTR",
+          "team_b": "AE",
+          "game_no": 1,
+          "start_seconds": null,
+          "end_seconds": null,
+          "confidence": "low",
+          "provenance": {
+            "method": "schedule_order_heuristic",
+            "source": "D:\\! Coding\\~ shit projects\\mpls18\\data\\csv\\schedule_all.csv",
+            "broadcast_date": "2026-09-06",
+            "scheduled_start": "2026-09-06T20:00:00+07:00",
+            "note": "Heuristic initial placement; requires validation against transcript/boundaries/frames"
+          },
+          "verified_by": null,
+          "status": "pending_validation"
+        }
+      ],
+      "validation_status": "pending"
+    },
+    "src-s18-w05d01": {
+      "video_id": "TeegcSSZJbI",
+      "broadcast_date": "2026-09-11",
+      "video_duration_seconds": 11865,
+      "series": [
+        {
+          "series_index": 0,
+          "match_detail_id": "1069",
+          "team_a": "GEEK",
+          "team_b": "ONIC",
+          "game_no": 1,
+          "start_seconds": 300,
+          "end_seconds": null,
+          "confidence": "low",
+          "provenance": {
+            "method": "schedule_order_heuristic",
+            "source": "D:\\! Coding\\~ shit projects\\mpls18\\data\\csv\\schedule_all.csv",
+            "broadcast_date": "2026-09-11",
+            "scheduled_start": "2026-09-11T18:00:00+07:00",
+            "note": "Heuristic initial placement; requires validation against transcript/boundaries/frames"
+          },
+          "verified_by": null,
+          "status": "pending_validation"
+        }
+      ],
+      "validation_status": "pending"
+    },
+    "src-s18-w05d02": {
+      "video_id": "ykgecDVRvlI",
+      "broadcast_date": "2026-09-12",
+      "video_duration_seconds": 30215,
+      "series": [
+        {
+          "series_index": 0,
+          "match_detail_id": "1070",
+          "team_a": "TLID",
+          "team_b": "BTR",
+          "game_no": 1,
+          "start_seconds": 300,
+          "end_seconds": null,
+          "confidence": "low",
+          "provenance": {
+            "method": "schedule_order_heuristic",
+            "source": "D:\\! Coding\\~ shit projects\\mpls18\\data\\csv\\schedule_all.csv",
+            "broadcast_date": "2026-09-12",
+            "scheduled_start": "2026-09-12T14:00:00+07:00",
+            "note": "Heuristic initial placement; requires validation against transcript/boundaries/frames"
+          },
+          "verified_by": null,
+          "status": "pending_validation"
+        },
+        {
+          "series_index": 1,
+          "match_detail_id": "1071",
+          "team_a": "AE",
+          "team_b": "RRQ",
+          "game_no": 1,
+          "start_seconds": null,
+          "end_seconds": null,
+          "confidence": "low",
+          "provenance": {
+            "method": "schedule_order_heuristic",
+            "source": "D:\\! Coding\\~ shit projects\\mpls18\\data\\csv\\schedule_all.csv",
+            "broadcast_date": "2026-09-12",
+            "scheduled_start": "2026-09-12T17:00:00+07:00",
+            "note": "Heuristic initial placement; requires validation against transcript/boundaries/frames"
+          },
+          "verified_by": null,
+          "status": "pending_validation"
+        },
+        {
+          "series_index": 2,
+          "match_detail_id": "1072",
+          "team_a": "NAVI",
+          "team_b": "EVOS",
+          "game_no": 1,
+          "start_seconds": null,
+          "end_seconds": null,
+          "confidence": "low",
+          "provenance": {
+            "method": "schedule_order_heuristic",
+            "source": "D:\\! Coding\\~ shit projects\\mpls18\\data\\csv\\schedule_all.csv",
+            "broadcast_date": "2026-09-12",
+            "scheduled_start": "2026-09-12T20:00:00+07:00",
+            "note": "Heuristic initial placement; requires validation against transcript/boundaries/frames"
+          },
+          "verified_by": null,
+          "status": "pending_validation"
+        }
+      ],
+      "validation_status": "pending"
+    },
+    "src-s18-w05d03": {
+      "video_id": "YPbOKyQltIo",
+      "broadcast_date": "2026-09-13",
+      "video_duration_seconds": 20130,
+      "series": [
+        {
+          "series_index": 0,
+          "match_detail_id": "1073",
+          "team_a": "GEEK",
+          "team_b": "TLID",
+          "game_no": 1,
+          "start_seconds": 300,
+          "end_seconds": null,
+          "confidence": "low",
+          "provenance": {
+            "method": "schedule_order_heuristic",
+            "source": "D:\\! Coding\\~ shit projects\\mpls18\\data\\csv\\schedule_all.csv",
+            "broadcast_date": "2026-09-13",
+            "scheduled_start": "2026-09-13T14:00:00+07:00",
+            "note": "Heuristic initial placement; requires validation against transcript/boundaries/frames"
+          },
+          "verified_by": null,
+          "status": "pending_validation"
+        },
+        {
+          "series_index": 1,
+          "match_detail_id": "1074",
+          "team_a": "ONIC",
+          "team_b": "AE",
+          "game_no": 1,
+          "start_seconds": null,
+          "end_seconds": null,
+          "confidence": "low",
+          "provenance": {
+            "method": "schedule_order_heuristic",
+            "source": "D:\\! Coding\\~ shit projects\\mpls18\\data\\csv\\schedule_all.csv",
+            "broadcast_date": "2026-09-13",
+            "scheduled_start": "2026-09-13T17:00:00+07:00",
+            "note": "Heuristic initial placement; requires validation against transcript/boundaries/frames"
+          },
+          "verified_by": null,
+          "status": "pending_validation"
+        }
+      ],
+      "validation_status": "pending"
+    },
+    "src-s18-w06d01": {
+      "video_id": "wRRWT8fO_h0",
+      "broadcast_date": "2026-09-18",
+      "video_duration_seconds": 33885,
+      "series": [
+        {
+          "series_index": 0,
+          "match_detail_id": "1076",
+          "team_a": "ONIC",
+          "team_b": "GEEK",
+          "game_no": 1,
+          "start_seconds": 300,
+          "end_seconds": null,
+          "confidence": "low",
+          "provenance": {
+            "method": "schedule_order_heuristic",
+            "source": "D:\\! Coding\\~ shit projects\\mpls18\\data\\csv\\schedule_all.csv",
+            "broadcast_date": "2026-09-18",
+            "scheduled_start": "2026-09-18T14:00:00+07:00",
+            "note": "Heuristic initial placement; requires validation against transcript/boundaries/frames"
+          },
+          "verified_by": null,
+          "status": "pending_validation"
+        },
+        {
+          "series_index": 1,
+          "match_detail_id": "1077",
+          "team_a": "DEWA",
+          "team_b": "EVOS",
+          "game_no": 1,
+          "start_seconds": null,
+          "end_seconds": null,
+          "confidence": "low",
+          "provenance": {
+            "method": "schedule_order_heuristic",
+            "source": "D:\\! Coding\\~ shit projects\\mpls18\\data\\csv\\schedule_all.csv",
+            "broadcast_date": "2026-09-18",
+            "scheduled_start": "2026-09-18T17:00:00+07:00",
+            "note": "Heuristic initial placement; requires validation against transcript/boundaries/frames"
+          },
+          "verified_by": null,
+          "status": "pending_validation"
+        },
+        {
+          "series_index": 2,
+          "match_detail_id": "1075",
+          "team_a": "RRQ",
+          "team_b": "DEWA",
+          "game_no": 1,
+          "start_seconds": null,
+          "end_seconds": null,
+          "confidence": "low",
+          "provenance": {
+            "method": "schedule_order_heuristic",
+            "source": "D:\\! Coding\\~ shit projects\\mpls18\\data\\csv\\schedule_all.csv",
+            "broadcast_date": "2026-09-18",
+            "scheduled_start": "2026-09-18T20:00:00+07:00",
+            "note": "Heuristic initial placement; requires validation against transcript/boundaries/frames"
+          },
+          "verified_by": null,
+          "status": "pending_validation"
+        }
+      ],
+      "validation_status": "pending"
+    },
+    "src-s18-w06d02": {
+      "video_id": "5tOPeDiETK0",
+      "broadcast_date": "2026-09-19",
+      "video_duration_seconds": 29530,
+      "series": [
+        {
+          "series_index": 0,
+          "match_detail_id": "1078",
+          "team_a": "GEEK",
+          "team_b": "NAVI",
+          "game_no": 1,
+          "start_seconds": 300,
+          "end_seconds": null,
+          "confidence": "low",
+          "provenance": {
+            "method": "schedule_order_heuristic",
+            "source": "D:\\! Coding\\~ shit projects\\mpls18\\data\\csv\\schedule_all.csv",
+            "broadcast_date": "2026-09-19",
+            "scheduled_start": "2026-09-19T14:00:00+07:00",
+            "note": "Heuristic initial placement; requires validation against transcript/boundaries/frames"
+          },
+          "verified_by": null,
+          "status": "pending_validation"
+        },
+        {
+          "series_index": 1,
+          "match_detail_id": "1079",
+          "team_a": "RRQ",
+          "team_b": "AE",
+          "game_no": 1,
+          "start_seconds": null,
+          "end_seconds": null,
+          "confidence": "low",
+          "provenance": {
+            "method": "schedule_order_heuristic",
+            "source": "D:\\! Coding\\~ shit projects\\mpls18\\data\\csv\\schedule_all.csv",
+            "broadcast_date": "2026-09-19",
+            "scheduled_start": "2026-09-19T17:00:00+07:00",
+            "note": "Heuristic initial placement; requires validation against transcript/boundaries/frames"
+          },
+          "verified_by": null,
+          "status": "pending_validation"
+        },
+        {
+          "series_index": 2,
+          "match_detail_id": "1080",
+          "team_a": "BTR",
+          "team_b": "TLID",
+          "game_no": 1,
+          "start_seconds": null,
+          "end_seconds": null,
+          "confidence": "low",
+          "provenance": {
+            "method": "schedule_order_heuristic",
+            "source": "D:\\! Coding\\~ shit projects\\mpls18\\data\\csv\\schedule_all.csv",
+            "broadcast_date": "2026-09-19",
+            "scheduled_start": "2026-09-19T20:00:00+07:00",
+            "note": "Heuristic initial placement; requires validation against transcript/boundaries/frames"
+          },
+          "verified_by": null,
+          "status": "pending_validation"
+        }
+      ],
+      "validation_status": "pending"
+    },
+    "src-s18-w06d03": {
+      "video_id": "K30JsmMhQ4Q",
+      "broadcast_date": "2026-09-20",
+      "video_duration_seconds": 33060,
+      "series": [
+        {
+          "series_index": 0,
+          "match_detail_id": "1081",
+          "team_a": "AE",
+          "team_b": "DEWA",
+          "game_no": 1,
+          "start_seconds": 300,
+          "end_seconds": null,
+          "confidence": "low",
+          "provenance": {
+            "method": "schedule_order_heuristic",
+            "source": "D:\\! Coding\\~ shit projects\\mpls18\\data\\csv\\schedule_all.csv",
+            "broadcast_date": "2026-09-20",
+            "scheduled_start": "2026-09-20T14:00:00+07:00",
+            "note": "Heuristic initial placement; requires validation against transcript/boundaries/frames"
+          },
+          "verified_by": null,
+          "status": "pending_validation"
+        },
+        {
+          "series_index": 1,
+          "match_detail_id": "1082",
+          "team_a": "BTR",
+          "team_b": "ONIC",
+          "game_no": 1,
+          "start_seconds": null,
+          "end_seconds": null,
+          "confidence": "low",
+          "provenance": {
+            "method": "schedule_order_heuristic",
+            "source": "D:\\! Coding\\~ shit projects\\mpls18\\data\\csv\\schedule_all.csv",
+            "broadcast_date": "2026-09-20",
+            "scheduled_start": "2026-09-20T17:00:00+07:00",
+            "note": "Heuristic initial placement; requires validation against transcript/boundaries/frames"
+          },
+          "verified_by": null,
+          "status": "pending_validation"
+        },
+        {
+          "series_index": 2,
+          "match_detail_id": "1083",
+          "team_a": "EVOS",
+          "team_b": "TLID",
+          "game_no": 1,
+          "start_seconds": null,
+          "end_seconds": null,
+          "confidence": "low",
+          "provenance": {
+            "method": "schedule_order_heuristic",
+            "source": "D:\\! Coding\\~ shit projects\\mpls18\\data\\csv\\schedule_all.csv",
+            "broadcast_date": "2026-09-20",
+            "scheduled_start": "2026-09-20T20:00:00+07:00",
+            "note": "Heuristic initial placement; requires validation against transcript/boundaries/frames"
+          },
+          "verified_by": null,
+          "status": "pending_validation"
+        }
+      ],
+      "validation_status": "pending"
+    },
+    "src-s18-w07d01": {
+      "video_id": "Nd_s3qCnRPY",
+      "broadcast_date": "2026-10-02",
+      "video_duration_seconds": 22395,
+      "series": [
+        {
+          "series_index": 0,
+          "match_detail_id": "1084",
+          "team_a": "GEEK",
+          "team_b": "BTR",
+          "game_no": 1,
+          "start_seconds": 300,
+          "end_seconds": null,
+          "confidence": "low",
+          "provenance": {
+            "method": "schedule_order_heuristic",
+            "source": "D:\\! Coding\\~ shit projects\\mpls18\\data\\csv\\schedule_all.csv",
+            "broadcast_date": "2026-10-02",
+            "scheduled_start": "2026-10-02T15:00:00+07:00",
+            "note": "Heuristic initial placement; requires validation against transcript/boundaries/frames"
+          },
+          "verified_by": null,
+          "status": "pending_validation"
+        },
+        {
+          "series_index": 1,
+          "match_detail_id": "1085",
+          "team_a": "DEWA",
+          "team_b": "TLID",
+          "game_no": 1,
+          "start_seconds": null,
+          "end_seconds": null,
+          "confidence": "low",
+          "provenance": {
+            "method": "schedule_order_heuristic",
+            "source": "D:\\! Coding\\~ shit projects\\mpls18\\data\\csv\\schedule_all.csv",
+            "broadcast_date": "2026-10-02",
+            "scheduled_start": "2026-10-02T18:00:00+07:00",
+            "note": "Heuristic initial placement; requires validation against transcript/boundaries/frames"
+          },
+          "verified_by": null,
+          "status": "pending_validation"
+        }
+      ],
+      "validation_status": "pending"
+    },
+    "src-s18-w07d02": {
+      "video_id": "px_HftyZBxo",
+      "broadcast_date": "2026-10-03",
+      "video_duration_seconds": 33530,
+      "series": [
+        {
+          "series_index": 0,
+          "match_detail_id": "1086",
+          "team_a": "AE",
+          "team_b": "NAVI",
+          "game_no": 1,
+          "start_seconds": 300,
+          "end_seconds": null,
+          "confidence": "low",
+          "provenance": {
+            "method": "schedule_order_heuristic",
+            "source": "D:\\! Coding\\~ shit projects\\mpls18\\data\\csv\\schedule_all.csv",
+            "broadcast_date": "2026-10-03",
+            "scheduled_start": "2026-10-03T14:00:00+07:00",
+            "note": "Heuristic initial placement; requires validation against transcript/boundaries/frames"
+          },
+          "verified_by": null,
+          "status": "pending_validation"
+        },
+        {
+          "series_index": 1,
+          "match_detail_id": "1087",
+          "team_a": "BTR",
+          "team_b": "RRQ",
+          "game_no": 1,
+          "start_seconds": null,
+          "end_seconds": null,
+          "confidence": "low",
+          "provenance": {
+            "method": "schedule_order_heuristic",
+            "source": "D:\\! Coding\\~ shit projects\\mpls18\\data\\csv\\schedule_all.csv",
+            "broadcast_date": "2026-10-03",
+            "scheduled_start": "2026-10-03T17:00:00+07:00",
+            "note": "Heuristic initial placement; requires validation against transcript/boundaries/frames"
+          },
+          "verified_by": null,
+          "status": "pending_validation"
+        },
+        {
+          "series_index": 2,
+          "match_detail_id": "1088",
+          "team_a": "GEEK",
+          "team_b": "DEWA",
+          "game_no": 1,
+          "start_seconds": null,
+          "end_seconds": null,
+          "confidence": "low",
+          "provenance": {
+            "method": "schedule_order_heuristic",
+            "source": "D:\\! Coding\\~ shit projects\\mpls18\\data\\csv\\schedule_all.csv",
+            "broadcast_date": "2026-10-03",
+            "scheduled_start": "2026-10-03T20:00:00+07:00",
+            "note": "Heuristic initial placement; requires validation against transcript/boundaries/frames"
+          },
+          "verified_by": null,
+          "status": "pending_validation"
+        }
+      ],
+      "validation_status": "pending"
+    },
+    "src-s18-w07d03": {
+      "video_id": "S7ugRA3UMjo",
+      "broadcast_date": "2026-10-04",
+      "video_duration_seconds": 32615,
+      "series": [
+        {
+          "series_index": 0,
+          "match_detail_id": "1089",
+          "team_a": "AE",
+          "team_b": "TLID",
+          "game_no": 1,
+          "start_seconds": 300,
+          "end_seconds": null,
+          "confidence": "low",
+          "provenance": {
+            "method": "schedule_order_heuristic",
+            "source": "D:\\! Coding\\~ shit projects\\mpls18\\data\\csv\\schedule_all.csv",
+            "broadcast_date": "2026-10-04",
+            "scheduled_start": "2026-10-04T14:00:00+07:00",
+            "note": "Heuristic initial placement; requires validation against transcript/boundaries/frames"
+          },
+          "verified_by": null,
+          "status": "pending_validation"
+        },
+        {
+          "series_index": 1,
+          "match_detail_id": "1090",
+          "team_a": "RRQ",
+          "team_b": "EVOS",
+          "game_no": 1,
+          "start_seconds": null,
+          "end_seconds": null,
+          "confidence": "low",
+          "provenance": {
+            "method": "schedule_order_heuristic",
+            "source": "D:\\! Coding\\~ shit projects\\mpls18\\data\\csv\\schedule_all.csv",
+            "broadcast_date": "2026-10-04",
+            "scheduled_start": "2026-10-04T17:00:00+07:00",
+            "note": "Heuristic initial placement; requires validation against transcript/boundaries/frames"
+          },
+          "verified_by": null,
+          "status": "pending_validation"
+        },
+        {
+          "series_index": 2,
+          "match_detail_id": "1091",
+          "team_a": "ONIC",
+          "team_b": "NAVI",
+          "game_no": 1,
+          "start_seconds": null,
+          "end_seconds": null,
+          "confidence": "low",
+          "provenance": {
+            "method": "schedule_order_heuristic",
+            "source": "D:\\! Coding\\~ shit projects\\mpls18\\data\\csv\\schedule_all.csv",
+            "broadcast_date": "2026-10-04",
+            "scheduled_start": "2026-10-04T20:00:00+07:00",
+            "note": "Heuristic initial placement; requires validation against transcript/boundaries/frames"
+          },
+          "verified_by": null,
+          "status": "pending_validation"
+        }
+      ],
+      "validation_status": "pending"
+    },
+    "src-s18-w08d01": {
+      "video_id": "7Fk2t0Kc9-Q",
+      "broadcast_date": "2026-10-08",
+      "video_duration_seconds": 30678,
+      "series": [
+        {
+          "series_index": 0,
+          "match_detail_id": "1068",
+          "team_a": "EVOS",
+          "team_b": "DEWA",
+          "game_no": 1,
+          "start_seconds": 300,
+          "end_seconds": null,
+          "confidence": "low",
+          "provenance": {
+            "method": "schedule_order_heuristic",
+            "source": "D:\\! Coding\\~ shit projects\\mpls18\\data\\csv\\schedule_all.csv",
+            "broadcast_date": "2026-10-08",
+            "scheduled_start": "2026-10-08T14:00:00+07:00",
+            "note": "Heuristic initial placement; requires validation against transcript/boundaries/frames"
+          },
+          "verified_by": null,
+          "status": "pending_validation"
+        },
+        {
+          "series_index": 1,
+          "match_detail_id": "1092",
+          "team_a": "AE",
+          "team_b": "BTR",
+          "game_no": 1,
+          "start_seconds": null,
+          "end_seconds": null,
+          "confidence": "low",
+          "provenance": {
+            "method": "schedule_order_heuristic",
+            "source": "D:\\! Coding\\~ shit projects\\mpls18\\data\\csv\\schedule_all.csv",
+            "broadcast_date": "2026-10-08",
+            "scheduled_start": "2026-10-08T17:00:00+07:00",
+            "note": "Heuristic initial placement; requires validation against transcript/boundaries/frames"
+          },
+          "verified_by": null,
+          "status": "pending_validation"
+        },
+        {
+          "series_index": 2,
+          "match_detail_id": "1093",
+          "team_a": "NAVI",
+          "team_b": "TLID",
+          "game_no": 1,
+          "start_seconds": null,
+          "end_seconds": null,
+          "confidence": "low",
+          "provenance": {
+            "method": "schedule_order_heuristic",
+            "source": "D:\\! Coding\\~ shit projects\\mpls18\\data\\csv\\schedule_all.csv",
+            "broadcast_date": "2026-10-08",
+            "scheduled_start": "2026-10-08T20:00:00+07:00",
+            "note": "Heuristic initial placement; requires validation against transcript/boundaries/frames"
+          },
+          "verified_by": null,
+          "status": "pending_validation"
+        }
+      ],
+      "validation_status": "pending"
+    },
+    "src-s18-w08d02": {
+      "video_id": "VWScHYPW7Qc",
+      "broadcast_date": "2026-10-09",
+      "video_duration_seconds": 30346,
+      "series": [
+        {
+          "series_index": 0,
+          "match_detail_id": "1094",
+          "team_a": "EVOS",
+          "team_b": "ONIC",
+          "game_no": 1,
+          "start_seconds": 300,
+          "end_seconds": null,
+          "confidence": "low",
+          "provenance": {
+            "method": "schedule_order_heuristic",
+            "source": "D:\\! Coding\\~ shit projects\\mpls18\\data\\csv\\schedule_all.csv",
+            "broadcast_date": "2026-10-09",
+            "scheduled_start": "2026-10-09T14:00:00+07:00",
+            "note": "Heuristic initial placement; requires validation against transcript/boundaries/frames"
+          },
+          "verified_by": null,
+          "status": "pending_validation"
+        },
+        {
+          "series_index": 1,
+          "match_detail_id": "1095",
+          "team_a": "RRQ",
+          "team_b": "TLID",
+          "game_no": 1,
+          "start_seconds": null,
+          "end_seconds": null,
+          "confidence": "low",
+          "provenance": {
+            "method": "schedule_order_heuristic",
+            "source": "D:\\! Coding\\~ shit projects\\mpls18\\data\\csv\\schedule_all.csv",
+            "broadcast_date": "2026-10-09",
+            "scheduled_start": "2026-10-09T17:00:00+07:00",
+            "note": "Heuristic initial placement; requires validation against transcript/boundaries/frames"
+          },
+          "verified_by": null,
+          "status": "pending_validation"
+        },
+        {
+          "series_index": 2,
+          "match_detail_id": "1096",
+          "team_a": "DEWA",
+          "team_b": "NAVI",
+          "game_no": 1,
+          "start_seconds": null,
+          "end_seconds": null,
+          "confidence": "low",
+          "provenance": {
+            "method": "schedule_order_heuristic",
+            "source": "D:\\! Coding\\~ shit projects\\mpls18\\data\\csv\\schedule_all.csv",
+            "broadcast_date": "2026-10-09",
+            "scheduled_start": "2026-10-09T20:00:00+07:00",
+            "note": "Heuristic initial placement; requires validation against transcript/boundaries/frames"
+          },
+          "verified_by": null,
+          "status": "pending_validation"
+        }
+      ],
+      "validation_status": "pending"
+    },
+    "src-s18-w08d03": {
+      "video_id": "jz3rH4xDoak",
+      "broadcast_date": "2026-10-11",
+      "video_duration_seconds": 30560,
+      "series": [
+        {
+          "series_index": 0,
+          "match_detail_id": "1097",
+          "team_a": "EVOS",
+          "team_b": "GEEK",
+          "game_no": 1,
+          "start_seconds": 300,
+          "end_seconds": null,
+          "confidence": "low",
+          "provenance": {
+            "method": "schedule_order_heuristic",
+            "source": "D:\\! Coding\\~ shit projects\\mpls18\\data\\csv\\schedule_all.csv",
+            "broadcast_date": "2026-10-11",
+            "scheduled_start": "2026-10-11T14:00:00+07:00",
+            "note": "Heuristic initial placement; requires validation against transcript/boundaries/frames"
+          },
+          "verified_by": null,
+          "status": "pending_validation"
+        },
+        {
+          "series_index": 1,
+          "match_detail_id": "1098",
+          "team_a": "RRQ",
+          "team_b": "ONIC",
+          "game_no": 1,
+          "start_seconds": null,
+          "end_seconds": null,
+          "confidence": "low",
+          "provenance": {
+            "method": "schedule_order_heuristic",
+            "source": "D:\\! Coding\\~ shit projects\\mpls18\\data\\csv\\schedule_all.csv",
+            "broadcast_date": "2026-10-11",
+            "scheduled_start": "2026-10-11T17:00:00+07:00",
+            "note": "Heuristic initial placement; requires validation against transcript/boundaries/frames"
+          },
+          "verified_by": null,
+          "status": "pending_validation"
+        },
+        {
+          "series_index": 2,
+          "match_detail_id": "1099",
+          "team_a": "DEWA",
+          "team_b": "BTR",
+          "game_no": 1,
+          "start_seconds": null,
+          "end_seconds": null,
+          "confidence": "low",
+          "provenance": {
+            "method": "schedule_order_heuristic",
+            "source": "D:\\! Coding\\~ shit projects\\mpls18\\data\\csv\\schedule_all.csv",
+            "broadcast_date": "2026-10-11",
+            "scheduled_start": "2026-10-11T20:00:00+07:00",
+            "note": "Heuristic initial placement; requires validation against transcript/boundaries/frames"
+          },
+          "verified_by": null,
+          "status": "pending_validation"
+        }
+      ],
+      "validation_status": "pending"
+    },
+    "src-s18-w09d01": {
+      "video_id": "-QC1gIugHrM",
+      "broadcast_date": "2026-10-16",
+      "video_duration_seconds": 20146,
+      "series": [
+        {
+          "series_index": 0,
+          "match_detail_id": "1100",
+          "team_a": "NAVI",
+          "team_b": "RRQ",
+          "game_no": 1,
+          "start_seconds": 300,
+          "end_seconds": null,
+          "confidence": "low",
+          "provenance": {
+            "method": "schedule_order_heuristic",
+            "source": "D:\\! Coding\\~ shit projects\\mpls18\\data\\csv\\schedule_all.csv",
+            "broadcast_date": "2026-10-16",
+            "scheduled_start": "2026-10-16T15:00:00+07:00",
+            "note": "Heuristic initial placement; requires validation against transcript/boundaries/frames"
+          },
+          "verified_by": null,
+          "status": "pending_validation"
+        },
+        {
+          "series_index": 1,
+          "match_detail_id": "1101",
+          "team_a": "GEEK",
+          "team_b": "AE",
+          "game_no": 1,
+          "start_seconds": null,
+          "end_seconds": null,
+          "confidence": "low",
+          "provenance": {
+            "method": "schedule_order_heuristic",
+            "source": "D:\\! Coding\\~ shit projects\\mpls18\\data\\csv\\schedule_all.csv",
+            "broadcast_date": "2026-10-16",
+            "scheduled_start": "2026-10-16T18:00:00+07:00",
+            "note": "Heuristic initial placement; requires validation against transcript/boundaries/frames"
+          },
+          "verified_by": null,
+          "status": "pending_validation"
+        }
+      ],
+      "validation_status": "pending"
+    },
+    "src-s18-w09d02": {
+      "video_id": "b9SktblDNuc",
+      "broadcast_date": "2026-10-17",
+      "video_duration_seconds": 32147,
+      "series": [
+        {
+          "series_index": 0,
+          "match_detail_id": "1102",
+          "team_a": "ONIC",
+          "team_b": "DEWA",
+          "game_no": 1,
+          "start_seconds": 300,
+          "end_seconds": null,
+          "confidence": "low",
+          "provenance": {
+            "method": "schedule_order_heuristic",
+            "source": "D:\\! Coding\\~ shit projects\\mpls18\\data\\csv\\schedule_all.csv",
+            "broadcast_date": "2026-10-17",
+            "scheduled_start": "2026-10-17T14:00:00+07:00",
+            "note": "Heuristic initial placement; requires validation against transcript/boundaries/frames"
+          },
+          "verified_by": null,
+          "status": "pending_validation"
+        },
+        {
+          "series_index": 1,
+          "match_detail_id": "1103",
+          "team_a": "BTR",
+          "team_b": "EVOS",
+          "game_no": 1,
+          "start_seconds": null,
+          "end_seconds": null,
+          "confidence": "low",
+          "provenance": {
+            "method": "schedule_order_heuristic",
+            "source": "D:\\! Coding\\~ shit projects\\mpls18\\data\\csv\\schedule_all.csv",
+            "broadcast_date": "2026-10-17",
+            "scheduled_start": "2026-10-17T17:00:00+07:00",
+            "note": "Heuristic initial placement; requires validation against transcript/boundaries/frames"
+          },
+          "verified_by": null,
+          "status": "pending_validation"
+        },
+        {
+          "series_index": 2,
+          "match_detail_id": "1104",
+          "team_a": "RRQ",
+          "team_b": "GEEK",
+          "game_no": 1,
+          "start_seconds": null,
+          "end_seconds": null,
+          "confidence": "low",
+          "provenance": {
+            "method": "schedule_order_heuristic",
+            "source": "D:\\! Coding\\~ shit projects\\mpls18\\data\\csv\\schedule_all.csv",
+            "broadcast_date": "2026-10-17",
+            "scheduled_start": "2026-10-17T20:00:00+07:00",
+            "note": "Heuristic initial placement; requires validation against transcript/boundaries/frames"
+          },
+          "verified_by": null,
+          "status": "pending_validation"
+        }
+      ],
+      "validation_status": "pending"
+    },
+    "src-s18-w09d03": {
+      "video_id": "hY0Upem95uo",
+      "broadcast_date": "2026-10-18",
+      "video_duration_seconds": 30434,
+      "series": [
+        {
+          "series_index": 0,
+          "match_detail_id": "1105",
+          "team_a": "EVOS",
+          "team_b": "AE",
+          "game_no": 1,
+          "start_seconds": 300,
+          "end_seconds": null,
+          "confidence": "low",
+          "provenance": {
+            "method": "schedule_order_heuristic",
+            "source": "D:\\! Coding\\~ shit projects\\mpls18\\data\\csv\\schedule_all.csv",
+            "broadcast_date": "2026-10-18",
+            "scheduled_start": "2026-10-18T14:00:00+07:00",
+            "note": "Heuristic initial placement; requires validation against transcript/boundaries/frames"
+          },
+          "verified_by": null,
+          "status": "pending_validation"
+        },
+        {
+          "series_index": 1,
+          "match_detail_id": "1106",
+          "team_a": "NAVI",
+          "team_b": "BTR",
+          "game_no": 1,
+          "start_seconds": null,
+          "end_seconds": null,
+          "confidence": "low",
+          "provenance": {
+            "method": "schedule_order_heuristic",
+            "source": "D:\\! Coding\\~ shit projects\\mpls18\\data\\csv\\schedule_all.csv",
+            "broadcast_date": "2026-10-18",
+            "scheduled_start": "2026-10-18T17:00:00+07:00",
+            "note": "Heuristic initial placement; requires validation against transcript/boundaries/frames"
+          },
+          "verified_by": null,
+          "status": "pending_validation"
+        },
+        {
+          "series_index": 2,
+          "match_detail_id": "1107",
+          "team_a": "ONIC",
+          "team_b": "TLID",
+          "game_no": 1,
+          "start_seconds": null,
+          "end_seconds": null,
+          "confidence": "low",
+          "provenance": {
+            "method": "schedule_order_heuristic",
+            "source": "D:\\! Coding\\~ shit projects\\mpls18\\data\\csv\\schedule_all.csv",
+            "broadcast_date": "2026-10-18",
+            "scheduled_start": "2026-10-18T20:00:00+07:00",
+            "note": "Heuristic initial placement; requires validation against transcript/boundaries/frames"
+          },
+          "verified_by": null,
+          "status": "pending_validation"
+        }
+      ],
+      "validation_status": "pending"
+    }
+  }
 }
