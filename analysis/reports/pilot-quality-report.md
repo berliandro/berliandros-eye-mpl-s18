@@ -23,10 +23,10 @@ The two pilot sources were selected because their exact transcript lines align o
 - Verified video IDs: **27/27** (official MPL Indonesia channel, exact season/week/day title).
 - Fully caption-aligned sources: **26/27**. The pilot videos alone cover **9,104** and **12,273** lines; W1D1 has **9,103 exact + 1 normalized** and W9D3 has **12,273 exact + 0**.
 - Partial alignment: **1/27** (`src-s18-w09d02`, `b9SktblDNuc`): 14,259 raw lines vs 14,551 caption snippets, 13,759 exact + 463 token-matched, 37 short ad/transition lines without trustworthy timestamps. Excluded from timestamp citations.
-- Pilot evidence: **8 segments**, **18 observations**, **3 insights**, **1 audit**.
+- Series-pilot evidence: **8 segments**, **18 series observations**, **3 series insights**, **1 series audit**. The same canonical ledger also contains a player-stat extension with **6 player observations**, **3 player insights**, and **1 player audit**. Combined ledger total: **8 segments / 24 observations / 6 insights / 2 audits**.
 - Quote validation: **8/8** stored segments match the source line span exactly after newline normalization; **0** quote mismatches.
 - Database references: every observation’s query is re-executed by the validator; **0** reproducibility errors.
-- Visual review: **6** used frames, **1** rejected promotional overlay, **1** failed frame; **3** series-level frames / **2** contact sheets.
+- Legacy visual-review history: **6** frames marked usable/context-only, **1** rejected promotional overlay, **1** failed capture; **3** series-level frames / **2** contact sheets. These records predate the DeepSeek handoff and must be independently re-reviewed by DeepSeek before their visual verdicts are reused.
 - Live video smoke test: **PASS** at requested 04:14:05 on `40fehk2f4_E` (actual 04:14:06.521), frame 669,722 bytes.
 
 ## Evidence inventory
@@ -37,8 +37,11 @@ The two pilot sources were selected because their exact transcript lines align o
 | Database observations | 5 | schedule/game/team/pick/lineage/coverage queries |
 | Gameplay observations | 2 | 5 frames reviewed, actual timestamps recorded |
 | Counterexample observations | 3 | DB queries and corpus search |
-| Insights | 3 | one `cross-checked`, two `partially-supported` |
-| Audits | 1 | `AUD-1037-01`, verdict `partially supported` |
+| Player-stat observations | 6 | season aggregates and database-backed player profiles; not visual player-performance observations |
+| Series insights | 3 | one `cross-checked`, two `partially-supported` |
+| Player-stat insights | 3 | descriptive season-stat insights; not transcript-verified player tendencies |
+| Series audits | 1 | `AUD-1037-01`, verdict `partially supported` |
+| Player-stat audits | 1 | `AUD-PLAYER-HIGH-KDA-01`, verdict `partially supported` |
 
 ## What is supported
 
@@ -70,7 +73,7 @@ Deterministic analysis suite (`python tools/verify_analysis.py`, local corpus re
 - `test_transcript_import.py`: **4/4**
 - `test_transcript_evidence.py`: **10/10**
 - `test_video_frames.py`: **7/7**
-- ledger validation: **PASS** (8 segments / 18 observations / 3 insights / 1 audit)
+- ledger validation: **PASS** (8 segments / 24 observations / 6 insights / 2 audits in the canonical ledger; the original series-pilot subset remains 18 / 3 / 1)
 - source/corpus boundary check: **PASS** (27/27 source paths, hashes; raw/cache ignored)
 - inventory regeneration: **PASS**
 
@@ -85,6 +88,6 @@ Existing app verification (`python tools/verify.py`) passed **24/24 suites** aft
 1. Resolve or explicitly quarantine the 37 unmatched short lines in `src-s18-w09d02`; do not use that source for timestamp citations until then.
 2. Build a mapping from each verified broadcast to all series/games and game start offsets; do not use fuzzy names alone.
 3. Process more than one game per claimed pattern; use matched comparisons and patch partitions.
-4. Review full clips for turning-point claims; still frames cannot prove a 1v3 or a Lord sequence.
-5. Add OCR-assisted scoreboard extraction only if it can be validated; do not read blurry values.
+4. Use temporally ordered screenshots reviewed by DeepSeek for visual claims. A single still cannot prove a 1v3 or a Lord sequence; if the screenshot sequence remains insufficient, keep the claim unverified rather than escalating to a human reviewer.
+5. Treat DeepSeek as the sole screenshot reviewer. Any OCR-assisted scoreboard extraction must be validated against the original screenshot; unreadable values remain unknown.
 6. Keep raw transcripts and media local. Only short quotes and derived metadata/reports belong in Git.
