@@ -1,13 +1,13 @@
 # Database inventory
 
-Snapshot: `mpl-s18-db-1fb1768560e1`
+Snapshot: `mpl-s18-db-20c5ea2c51f3`
 
 - Path: `data/mpl_id_s18.db`
-- SHA-256: `1fb1768560e1ca5c2613761e5a9150f77aecb1941096b557e16e072f772125a2`
+- SHA-256: `20c5ea2c51f30d1a24cd2ce6927f0d182b47f951ebd8209f1aaef429941cf2ef`
 - Bytes: **5,234,688**
-- Inspected: 2026-10-25T13:42:13+00:00
+- Inspected: 2026-11-02T07:15:54+00:00
 
-The database was opened read-only (`mode=ro`). No table, CSV, metadata or dashboard artifact was modified by this project.
+This inventory generator opened the database read-only (`mode=ro`). Any data migration is a separate explicit operation.
 
 ## Coverage that matters for coaching
 
@@ -33,18 +33,17 @@ The database was opened read-only (`mode=ro`). No table, CSV, metadata or dashbo
 - **Heuristic/app-derived:** dashboard game MVP and all win-probability/ratings metrics. Do not present them as official.
 - **Unavailable:** per-game objective counts (Lord/Turtle/Tower), gold/damage timelines, exact pick order, communications, vision, intent, official damage-type split.
 
-### `matches.winner` is not usable as a match-order winner
+### `matches.winner` orientation
 
-The snapshot has **21/72** rows where `matches.winner` disagrees with the `matches` score. The reason is an orientation mismatch: `matches.team_a/team_b` is flipped relative to `schedule_all` for many series, while `winner` kept schedule orientation. This pilot therefore uses `schedule_all.winner` or derives the winner from `score_a/score_b`.
-
-Example — series 1107: `matches` order is TLID/ONIC and score 2-0, but `matches.winner = 'team_b'` (which would mean ONIC if read naively). `schedule_all` has ONIC/TLID, 0-2, winner `team_b` = TLID. The result is TLID 2-0.
+No row in the current snapshot has a `matches.winner` value that conflicts with its own `score_a/score_b` and `team_a/team_b` order.
+`matches.winner` is interpreted in `matches` row order; `schedule_all.winner` is interpreted in schedule row order. Map the named teams before comparing side tokens across tables.
 
 ### Recommended joins
 
 - Series: `schedule_all.match_detail_id` → `matches` → `games` / `team_games` / `game_players` / `game_picks` / `game_bans`.
 - Game: `(match_detail_id, game_no)` is the composite key for games and derived rows.
 - Player identity: `game_picks.player` and `game_players.player` use the app/Liquipedia spelling. Broadcast overlays can use different names; do not join broadcast names to database handles without evidence.
-- Result: use `schedule_all.score_a/score_b` and schedule orientation, or derive from the score; never `matches.winner` alone.
+- Result: `matches.winner` is relative to `matches.team_a/team_b`; `schedule_all.winner` is relative to schedule row order. Map the named teams before comparing side tokens.
 
 ## Query catalog
 
@@ -52,4 +51,4 @@ Reproducible read-only queries used by the pilot are in `analysis/evidence/query
 
 ## Source-to-series mapping
 
-Only the pilot sources are mapped. See `analysis/sources/source-manifest.json` for the two verified videos and `analysis/reports/pilot-quality-report.md` for mapping confidence and limitations. The other 25 days remain unmapped to a video ID and therefore cannot be visually verified yet.
+All completed regular-season series have schedule-derived broadcast-date/VOD candidates in the source manifest. Candidates are not verified until `tools/resolve_and_align_sources.py` confirms official channel/title metadata and one-to-one timed-caption alignment. Exact series/game offsets remain separate work.

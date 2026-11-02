@@ -21,11 +21,14 @@ newline normalization.
 from __future__ import annotations
 
 import argparse
+import difflib
 import hashlib
 import json
 import re
 import sqlite3
 import sys
+import unicodedata
+from collections import Counter
 from datetime import datetime, timezone
 from pathlib import Path
 
@@ -123,63 +126,316 @@ def fetch_timed(video_id: str, languages: tuple[str, ...] = ("id",)) -> list[dic
     ]
 
 
+def normalize_for_alignment(text: str) -> str:
+    """Normalize only for matching; raw text is never rewritten.
+
+    NFKC folds width/compatibility forms, casefold handles case, and punctuation
+    is removed so caption punctuation changes do not break alignment.
+    """
+    text = unicodedata.normalize("NFKC", text).casefold()
+    text = re.sub(r"[^\w\s]", " ", text)
+    return re.sub(r"\s+", " ", text).strip()
+
+
+def _line_match_kind(raw: str, timed: str) -> str | None:
+    if raw == timed:
+        return "exact"
+    if caption_key(raw) == caption_key(timed):
+        return "normalized"
+    if normalize_for_alignment(raw) == normalize_for_alignment(timed):
+        return "normalized"
+    return None
+
+
+def _caption_row(line_no: int, raw: str, snippet: dict, kind: str) -> dict:
+    start = float(snippet["start"])
+    duration = float(snippet["duration"])
+    return {
+        "line_no": line_no,
+        "text": raw,
+        "start": round(start, 3),
+        "duration": round(duration, 3),
+        "end": round(start + duration, 3),
+        "match_kind": kind,
+    }
+
+
+def _unaligned_row(line_no: int, raw: str) -> dict:
+    return {
+        "line_no": line_no,
+        "text": raw,
+        "start": None,
+        "duration": None,
+        "end": None,
+        "match_kind": "unmapped",
+    }
+
+
+NOISE_TOKENS = {"musik", "berteriak", "tertawa", "tepuk", "applause", "music"}
+
+
+def _tokens_for_line(text: str) -> list[str]:
+    """Word tokens used only for monotonic matching, never for stored quotes."""
+    normalized = normalize_for_alignment(text)
+    return [token for token in re.findall(r"[a-z0-9]+", normalized) if token not in NOISE_TOKENS]
+
+
+def _all_noise(texts: list[str]) -> bool:
+    return all(not _tokens_for_line(text) for text in texts)
+
+
+def _span_row(
+    line_no: int, raw: str, snippets: list[dict], first: int, last: int, kind: str
+) -> dict:
+    start = float(snippets[first]["start"])
+    end = float(snippets[last]["start"]) + float(snippets[last]["duration"])
+    return {
+        "line_no": line_no,
+        "text": raw,
+        "start": round(start, 3),
+        "duration": round(end - start, 3),
+        "end": round(end, 3),
+        "match_kind": kind,
+    }
+
+
+def _strict_alignment(lines: list[str], snippets: list[dict]) -> dict | None:
+    """Fast path: the raw file is the same caption track, line for line."""
+    if len(lines) != len(snippets):
+        return None
+    rows = []
+    exact = normalized = 0
+    for index, (line, snippet) in enumerate(zip(lines, snippets), start=1):
+        kind = _line_match_kind(line, snippet["text"])
+        if kind is None:
+            return None
+        if kind == "exact":
+            exact += 1
+        else:
+            normalized += 1
+        rows.append(_caption_row(index, line, snippet, kind))
+    return {
+        "rows": rows,
+        "exact": exact,
+        "normalized": normalized,
+        "fuzzy": 0,
+        "unmapped": 0,
+        "ambiguous": 0,
+        "status": "verified",
+        "provenance": "youtube-auto-caption-alignment-v1",
+    }
+
+
+def _robust_alignment(
+    lines: list[str],
+    snippets: list[dict],
+    source_id: str = "",
+    max_gap: int = 3,
+    min_confidence: float = 0.90,
+) -> dict:
+    """Monotonic fallback for punctuation, ASR and small omission differences.
+
+    The method is deliberately conservative. A line is timestamped only when it
+    can be placed monotonically against the caption track with high confidence.
+    Small unmatched blocks are left unmapped and make the result `partial`; they
+    never receive a guessed timestamp. Repeated one-line phrases are treated as
+    ambiguous unless they are anchored by a longer matching block.
+    """
+    raw_norm = [normalize_for_alignment(line) for line in lines]
+    cap_norm = [normalize_for_alignment(snippet["text"]) for snippet in snippets]
+    if not any(raw_norm) or not any(cap_norm):
+        raise EvidenceError("caption alignment has no comparable text")
+    raw_counts = Counter(value for value in raw_norm if value)
+    cap_counts = Counter(value for value in cap_norm if value)
+    mapping: list[dict | None] = [None] * len(lines)
+    exact = normalized = fuzzy = unmapped = ambiguous = ignored_caption_lines = 0
+
+    def assign(index: int, snippet: dict, kind: str) -> None:
+        nonlocal exact, normalized, fuzzy
+        mapping[index] = _caption_row(index + 1, lines[index], snippet, kind)
+        if kind == "exact":
+            exact += 1
+        elif kind == "normalized":
+            normalized += 1
+        else:
+            fuzzy += 1
+
+    def duplicate_without_context(index: int) -> bool:
+        key = raw_norm[index]
+        return bool(key) and (raw_counts[key] > 1 or cap_counts[key] > 1)
+
+    matcher = difflib.SequenceMatcher(None, raw_norm, cap_norm, autojunk=False)
+    for tag, i1, i2, j1, j2 in matcher.get_opcodes():
+        if tag == "equal":
+            block_raw = i2 - i1
+            for offset in range(block_raw):
+                index = i1 + offset
+                kind = _line_match_kind(lines[index], snippets[j1 + offset]["text"]) or "normalized"
+                # A one-line equal block on a repeated phrase can be positional
+                # luck. Require a longer block or a unique phrase.
+                if block_raw == 1 and duplicate_without_context(index):
+                    ambiguous += 1
+                    unmapped += 1
+                    continue
+                assign(index, snippets[j1 + offset], kind)
+        elif tag == "replace":
+            block_raw = i2 - i1
+            block_cap = j2 - j1
+            if block_raw > 200 or block_cap > 200:
+                raise EvidenceError(
+                    f"caption alignment replace block too large at raw lines "
+                    f"{i1 + 1}-{i2} vs caption lines {j1 + 1}-{j2}"
+                )
+            # Handle case where all lines in replace block are repeated short phrases
+            # and we need to be conservative
+            all_repeated_short = all(
+                duplicate_without_context(idx) and len(_tokens_for_line(lines[idx])) <= 2
+                for idx in range(i1, i2)
+            )
+            if all_repeated_short and block_raw == block_cap:
+                for index in range(i1, i2):
+                    ambiguous += 1
+                    unmapped += 1
+                ignored_caption_lines += block_cap
+                continue
+            # Caption line breaks often differ from raw line breaks. Align words
+            # within the block so a raw line can span several caption snippets
+            # without inventing a timestamp from wording alone.
+            raw_tokens: list[tuple[str, int]] = []
+            for index in range(i1, i2):
+                raw_tokens.extend((token, index) for token in _tokens_for_line(lines[index]))
+            cap_tokens: list[tuple[str, int]] = []
+            for cap_index in range(j1, j2):
+                cap_tokens.extend(
+                    (token, cap_index) for token in _tokens_for_line(snippets[cap_index]["text"])
+                )
+            if not raw_tokens or not cap_tokens:
+                for index in range(i1, i2):
+                    mapping[index] = None
+                    unmapped += 1
+                ignored_caption_lines += block_cap
+                continue
+            token_matcher = difflib.SequenceMatcher(
+                None, [token for token, _ in raw_tokens], [token for token, _ in cap_tokens],
+                autojunk=False,
+            )
+            matched_caps: dict[int, list[int]] = {index: [] for index in range(i1, i2)}
+            for token_tag, a1, a2, b1, b2 in token_matcher.get_opcodes():
+                if token_tag != "equal":
+                    continue
+                for offset in range(a2 - a1):
+                    raw_index = raw_tokens[a1 + offset][1]
+                    cap_index = cap_tokens[b1 + offset][1]
+                    matched_caps[raw_index].append(cap_index)
+            cap_token_counts = Counter(token for token, _ in cap_tokens)
+            for index in range(i1, i2):
+                tokens = _tokens_for_line(lines[index])
+                cap_indexes = sorted(set(matched_caps[index]))
+                if not tokens or not cap_indexes:
+                    mapping[index] = None
+                    unmapped += 1
+                    continue
+                coverage = len(matched_caps[index]) / len(tokens)
+                # Very short lines are too easy to match by accident. Require
+                # either unique words or a multi-line block.
+                if coverage < 0.5 or (
+                    len(tokens) <= 2
+                    and block_raw == 1
+                    and any(cap_token_counts[token] > 1 for token in tokens)
+                ):
+                    mapping[index] = None
+                    unmapped += 1
+                    continue
+                mapping[index] = _span_row(
+                    index + 1, lines[index], snippets, cap_indexes[0], cap_indexes[-1], "token"
+                )
+                fuzzy += 1
+            ignored_caption_lines += max(0, block_cap - len(set(
+                cap_index for cap_indexes in matched_caps.values() for cap_index in cap_indexes
+            )))
+        elif tag == "delete":
+            if i2 - i1 > max_gap and not _all_noise(lines[i1:i2]):
+                raise EvidenceError(
+                    f"caption alignment has an unmatched raw block at lines {i1 + 1}-{i2}"
+                )
+            for index in range(i1, i2):
+                mapping[index] = None
+                unmapped += 1
+        elif tag == "insert":
+            if j2 - j1 > max_gap and not _all_noise(
+                [snippet["text"] for snippet in snippets[j1:j2]]
+            ):
+                raise EvidenceError(
+                    f"caption alignment has an unmatched caption block at {j1 + 1}-{j2}"
+                )
+            # Extra caption lines are ignored; they never shift raw timestamps.
+            ignored_caption_lines += j2 - j1
+            continue
+    coverage = (len(lines) - unmapped) / len(lines) if lines else 0.0
+    confidence = (exact + normalized + fuzzy) / len(lines) if lines else 0.0
+    caption_coverage = (exact + normalized + fuzzy) / max(len(lines), len(snippets))
+    if confidence < min_confidence or coverage < min_confidence:
+        raise EvidenceError(
+            f"caption alignment confidence too low for {source_id}: "
+            f"confidence={confidence:.3f}, coverage={coverage:.3f}"
+        )
+    status = "verified" if unmapped == 0 and ambiguous == 0 else "partial"
+    rows = [
+        mapping[index] or _unaligned_row(index + 1, lines[index])
+        for index in range(len(lines))
+    ]
+    return {
+        "rows": rows,
+        "exact": exact,
+        "normalized": normalized,
+        "fuzzy": fuzzy,
+        "unmapped": unmapped,
+        "ambiguous": ambiguous,
+        "ignored_caption_lines": ignored_caption_lines,
+        "caption_coverage": caption_coverage,
+        "status": status,
+        "provenance": "youtube-auto-caption-alignment-v2-robust",
+    }
+
+
 def align_captions(source: dict, snippets: list[dict], manifest_path: Path = DEFAULT_MANIFEST) -> dict:
     text = load_source_text(source)
     lines = text.split("\n")
     if lines and lines[-1] == "":
         lines = lines[:-1]
-    if len(lines) != len(snippets):
-        raise EvidenceError(
-            f"alignment count mismatch for {source['source_id']}: "
-            f"{len(lines)} raw lines vs {len(snippets)} timed snippets"
-        )
-    mismatches = []
-    exact = 0
-    normalized = 0
-    for index, (line, snippet) in enumerate(zip(lines, snippets)):
-        if line == snippet["text"]:
-            exact += 1
-        elif caption_key(line) == caption_key(snippet["text"]):
-            normalized += 1
-        else:
-            mismatches.append(
-                {"line_no": index + 1, "raw": line, "timed": snippet["text"]}
-            )
-            if len(mismatches) >= 10:
-                break
-    if mismatches:
-        raise EvidenceError(
-            f"caption alignment failed for {source['source_id']}: {len(mismatches)} mismatches "
-            f"(first: {mismatches[0]})"
-        )
-    mapping = []
-    for index, (line, snippet) in enumerate(zip(lines, snippets), start=1):
-        start = snippet["start"]
-        end = start + snippet["duration"]
-        mapping.append(
-            {
-                "line_no": index,
-                "text": line,
-                "start": round(start, 3),
-                "duration": round(snippet["duration"], 3),
-                "end": round(end, 3),
-            }
-        )
+    if not snippets:
+        raise EvidenceError(f"no timed captions for {source['source_id']}")
+    strict = _strict_alignment(lines, snippets)
+    result = strict or _robust_alignment(lines, snippets, source["source_id"])
+    mapping = result["rows"]
+    mismatch_count = result["unmapped"] + result["ambiguous"]
+    raw_matches = result["exact"] + result["normalized"] + result["fuzzy"]
     return {
-        "schema_version": 1,
+        "schema_version": 2,
         "source_id": source["source_id"],
         "video_id": source["video_id"],
         "video_url": source.get("video_url"),
         "raw_sha256": source["sha256"],
         "raw_line_count": len(lines),
         "timed_snippet_count": len(snippets),
-        "exact_matches": exact,
-        "normalized_matches": normalized,
-        "mismatch_count": 0,
-        "normalization": "CRLF/CR->LF; caption alignment strips leading/trailing whitespace",
-        "timestamp_provenance": "youtube-auto-caption-alignment-v1",
+        "exact_matches": result["exact"],
+        "normalized_matches": result["normalized"],
+        "fuzzy_matches": result["fuzzy"],
+        "unmapped_lines": result["unmapped"],
+        "ambiguous_lines": result["ambiguous"],
+        "ignored_caption_lines": result.get("ignored_caption_lines", 0),
+        "mismatch_count": mismatch_count,
+        "alignment_confidence": round(raw_matches / len(lines), 4) if lines else 0.0,
+        "caption_coverage": round(
+            result.get("caption_coverage", raw_matches / max(len(lines), len(snippets))), 4
+        ),
+        "normalization": (
+            "CRLF/CR->LF; raw text preserved. Matching uses NFKC, casefold, "
+            "punctuation removal and whitespace collapse; unmatched lines never receive timestamps."
+        ),
+        "timestamp_provenance": result["provenance"],
         "aligned_at": now(),
-        "alignment_status": "verified",
+        "alignment_status": result["status"],
         "timed_captions": mapping,
     }
 
@@ -251,6 +507,26 @@ def build_segment(
     mapping = {row["line_no"]: row for row in alignment["timed_captions"]}
     first = mapping[line_start + 1]
     last = mapping[line_end + 1]
+    if first.get("start") is None or last.get("start") is None:
+        raise EvidenceError(
+            f"quote covers caption lines without verified timestamps: "
+            f"{source['source_id']} lines {line_start + 1}-{line_end + 1}"
+        )
+    if alignment.get("alignment_status") != "verified":
+        raise EvidenceError(
+            f"source {source.get('source_id')} alignment is {alignment.get('alignment_status')}; "
+            "timestamp citations require fully verified alignment"
+        )
+    if alignment.get("unmapped_lines") and alignment.get("unmapped_lines") > 0:
+        raise EvidenceError(
+            f"source {source.get('source_id')} has {alignment.get('unmapped_lines')} unmapped lines; "
+            "timestamp citations require full-line alignment"
+        )
+    if source.get("citation_policy") == "quarantined":
+        raise EvidenceError(
+            f"source {source.get('source_id')} is quarantined for citation: "
+            f"{source.get('citation_policy_reason', 'not citation-ready')}"
+        )
     video_id = source["video_id"]
     link = f"https://youtu.be/{video_id}?t={int(first['start'])}"
     return {
@@ -467,26 +743,6 @@ def build_ledger(
     audit_log.write_text(
         "".join(json.dumps(record, ensure_ascii=False, sort_keys=True) + "\n" for record in audits),
         encoding="utf-8",
-    )
-    timed_summary = {
-        "schema_version": 1,
-        "generated_at": now(),
-        "sources": [
-            {
-                "source_id": sid,
-                "video_id": source_by_id(manifest, sid)["video_id"],
-                "raw_sha256": source_by_id(manifest, sid)["sha256"],
-                "raw_lines": alignment_for(source_by_id(manifest, sid), cache_dir)["raw_line_count"],
-                "exact_matches": alignment_for(source_by_id(manifest, sid), cache_dir)["exact_matches"],
-                "normalized_matches": alignment_for(source_by_id(manifest, sid), cache_dir)["normalized_matches"],
-                "timestamp_provenance": "youtube-auto-caption-alignment-v1",
-            }
-            for sid in sorted({o["source_ids"][0] for o in observations if o["source_ids"]})
-            if source_by_id(manifest, sid).get("video_id")
-        ],
-    }
-    (ledger_path.parent / "timed-alignment.json").write_text(
-        json.dumps(timed_summary, indent=2, ensure_ascii=False) + "\n", encoding="utf-8"
     )
     return {
         "segments": len(segments),

@@ -4,8 +4,10 @@
 
 - Corpus imported: **27 files / 9,682,086 bytes**, SHA-256 verified **27/27**, conflicts **0**.
 - Native transcript timestamps: **0**.
-- Verified pilot videos: **2/27** (`src-s18-w01d01`, `src-s18-w09d03`).
-- Timed alignments: **2/2** at 9,104 and 12,273 caption lines.
+- Unique schedule VOD candidates: **27/27 broadcast dates**, derived from the canonical completed schedule.
+- Metadata-verified official videos: **27/27** (official MPL Indonesia channel, exact season/week/day title).
+- Fully caption-aligned sources: **26/27**; one partial source (`src-s18-w09d02`) is explicitly not citation-ready.
+- Database winner orientation: repaired **21/72** rows; **0/72** row-score mismatches remain.
 - Pilot series: **3** — 1036, 1037, 1107.
 - Evidence: **8 segments / 18 observations / 3 insights / 1 audit**.
 - Visual review: **6 used frames** (5 gameplay + 1 post-game context), **1 rejected promo**, **1 failed frame**.
@@ -15,7 +17,7 @@
 
 1. [`README.md`](README.md) — scope, safety, reproduction commands.
 2. [`reports/corpus-inventory.md`](reports/corpus-inventory.md) — what was imported, timestamp/video coverage, parsing risks.
-3. [`reports/database-inventory.md`](reports/database-inventory.md) — DB coverage, joins, and the `matches.winner` orientation warning.
+3. [`reports/database-inventory.md`](reports/database-inventory.md) — DB coverage, joins, and the post-migration `matches.winner` semantics.
 4. [`reports/pilot-quality-report.md`](reports/pilot-quality-report.md) — pilot coverage, validation results, gaps.
 5. [`coaching/pilot-coaching-brief.md`](coaching/pilot-coaching-brief.md) — the three practical prep points.
 
@@ -37,10 +39,17 @@
 - [`evidence/database-snapshot-manifest.json`](evidence/database-snapshot-manifest.json) — DB fingerprint, coverage and lineage.
 - [`evidence/audit-log.jsonl`](evidence/audit-log.jsonl) — audit export.
 - [`evidence/visual-review.json`](evidence/visual-review.json) — frame dispositions.
-- [`evidence/timed-alignment.json`](evidence/timed-alignment.json) — caption alignment coverage.
-- [`sources/source-manifest.json`](sources/source-manifest.json) — source hashes, verified video IDs and series mapping.
+- [`evidence/timed-alignment.json`](evidence/timed-alignment.json) — caption alignment coverage for 26 verified sources.
+- [`sources/source-manifest.json`](sources/source-manifest.json) — source hashes, verified video IDs, status semantics and series mapping.
 - [`pilot/selection.json`](pilot/selection.json) — curated claims/quotes used to build the ledger.
+
+## Video source resolution
+
+- [Video source resolution report](reports/video-source-resolution.md) lists every source, status, failure reason and status transition.
+- Local result: **27/27 metadata-verified**, **26/27 fully aligned**, **1/27 partial** (`src-s18-w09d02`; 37 short lines without trustworthy timestamps).
+- Run `python tools/resolve_and_align_sources.py` on the local machine with the ignored raw corpus to re-check metadata and alignment.
+- Broadcast-date mapping does not establish exact in-video start times for individual series or games.
 
 ## Coverage warning
 
-Only 2/27 broadcast days have verified video IDs and timestamp links. The remaining 25 days are **unprocessed**, not “empty” or “irrelevant”. Do not read this pilot as a season-level finding.
+Only 3 series have curated semantic insights. Twenty-six sources are alignment-ready, but alignment readiness is not semantic analysis. The remaining source days are **unprocessed**, not “empty” or “irrelevant”. Do not read this pilot as a season-level finding.

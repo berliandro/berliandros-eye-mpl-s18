@@ -2,7 +2,8 @@
 
 **Pilot:** `pilot-mpl-s18-semantic-v1`
 **Status:** first working end-to-end pilot; **not full-season coverage**
-**Coverage:** 3 series across 2 verified broadcast days / 2 videos
+**Pilot coverage:** 3 series across 2 verified broadcast days / 2 videos
+**Source-resolution coverage:** 27/27 metadata-verified, 26/27 fully caption-aligned, 1/27 partial
 **Evidence store:** `analysis/evidence/pilot-ledger.jsonl` (canonical JSONL, versioned schema)
 
 ## Scope and selection
@@ -13,14 +14,15 @@
 | 1037 NAVI 0–2 AE | 2026-08-14 | `src-s18-w01d01` | `40fehk2f4_E` | same broadcast, contrasting close late game; visually reviewable |
 | 1107 ONIC 0–2 TLID | 2026-10-18 | `src-s18-w09d03` | `hY0Upem95uo` | final series, title-deciding context; objective/map-control commentary |
 
-The two sources were selected because their exact transcript lines align one-to-one with the official YouTube timed captions, and their video identities were verified by title/week/day/channel metadata. The other 25 days remain unmapped to a video ID.
+The two pilot sources were selected because their exact transcript lines align one-to-one with the official YouTube timed captions, and their video identities were verified by title/week/day/channel metadata. The wider local resolution pass now verifies all 27 official videos; 26 sources have full-line caption timing, and one remains partial.
 
 ## Processing coverage
 
 - Sources imported: **27**, **9,682,086 bytes**, **27/27** SHA-256 verified after copy, **0** conflicts.
 - Native timestamp strings in raw transcripts: **0**.
-- Verified video IDs: **2/27**.
-- Timed alignments: **2/2** verified videos; **9,104** and **12,273** lines; **9,103 + 1** exact/whitespace-normalized match on W1D1 and **12,273 + 0** on W9D3.
+- Verified video IDs: **27/27** (official MPL Indonesia channel, exact season/week/day title).
+- Fully caption-aligned sources: **26/27**. The pilot videos alone cover **9,104** and **12,273** lines; W1D1 has **9,103 exact + 1 normalized** and W9D3 has **12,273 exact + 0**.
+- Partial alignment: **1/27** (`src-s18-w09d02`, `b9SktblDNuc`): 14,259 raw lines vs 14,551 caption snippets, 13,759 exact + 463 token-matched, 37 short ad/transition lines without trustworthy timestamps. Excluded from timestamp citations.
 - Pilot evidence: **8 segments**, **18 observations**, **3 insights**, **1 audit**.
 - Quote validation: **8/8** stored segments match the source line span exactly after newline normalization; **0** quote mismatches.
 - Database references: every observation’s query is re-executed by the validator; **0** reproducibility errors.
@@ -49,12 +51,15 @@ The two sources were selected because their exact transcript lines align one-to-
 - No claim that a draft “caused” a win, that a team has a repeatable season-long trait, or that a player communicated/intended anything.
 - No objective counts: the database has no per-game Lord/Turtle/Tower counts. Transcript mentions are commentary.
 - No reaction-time, hidden-vision or mechanical-execution claims.
-- No full-season semantic analysis. Only 2/27 sources and 3/72 series have been processed.
-- No claim that the other 25 transcript days are unusable; they are simply not linked to a verified video or analyzed.
+- No full-season semantic analysis. Twenty-six sources are alignment-ready, but only 3/72 series have curated semantic insights.
+- No claim that unprocessed series are uninformative. They are simply not analyzed semantically yet.
+- No timestamp citations from the partial source `src-s18-w09d02`; its 37 unmatched short lines remain explicitly unaligned.
 
 ## Data lineage finding
 
-`matches.winner` disagrees with the score in **21/72** rows because `matches.team_a/team_b` is flipped relative to `schedule_all` while `winner` keeps schedule orientation. This report and ledger use `schedule_all` or the score, never `matches.winner`. This is a read-only finding; the app database was not modified.
+The guarded winner-orientation migration changed **21/72** `matches.winner` values so each agrees with its own row's `score_a/score_b` and `team_a/team_b` order. Post-migration integrity is **0/72** row-score mismatches; SQLite `integrity_check` returned `ok`. The database SHA-256 changed from `1fb1768560e1ca5c2613761e5a9150f77aecb1941096b557e16e072f772125a2` to `20c5ea2c51f30d1a24cd2ce6927f0d182b47f951ebd8209f1aaef429941cf2ef`.
+
+`schedule_all.winner` is still expressed in schedule row order. `matches` sometimes stores the same series with the teams reversed, so map the named teams before comparing side tokens. The backup is `analysis/cache/migration-backups/winner-orientation-20261031T011845Z`.
 
 The database also has **153/174** games with map mode, **173/174** with per-game VOD, **174/174** with recorded sides, **72/72** with series VOD and **72/72** with a Liquipedia series MVP. It has no per-game objective counts. See `analysis/reports/database-inventory.md`.
 
@@ -73,12 +78,12 @@ Live-only smoke (network, separately marked):
 
 - `RUN_LIVE_VIDEO_SMOKE=1 python tools/test_video_frames_live.py`: **PASS**
 
-Existing app verification (`python tools/verify.py`) passed **20/20 suites** after this work. The semantic work did not modify the app database, CSVs, season metadata or dashboard.
+Existing app verification (`python tools/verify.py`) passed **24/24 suites** after the migration. The migration intentionally modified `data/mpl_id_s18.db`, `data/csv/matches.csv` and the generated dashboard; all changes are backed up and validated. Season metadata and raw transcripts were not edited.
 
 ## Known gaps and next steps before scaling
 
-1. Resolve video IDs for the remaining 25 transcript days (exact title/week/day/channel match + timed alignment), then align timestamps.
-2. Build a mapping from a broadcast day to all series/games and game start offsets; do not use fuzzy names alone.
+1. Resolve or explicitly quarantine the 37 unmatched short lines in `src-s18-w09d02`; do not use that source for timestamp citations until then.
+2. Build a mapping from each verified broadcast to all series/games and game start offsets; do not use fuzzy names alone.
 3. Process more than one game per claimed pattern; use matched comparisons and patch partitions.
 4. Review full clips for turning-point claims; still frames cannot prove a 1v3 or a Lord sequence.
 5. Add OCR-assisted scoreboard extraction only if it can be validated; do not read blurry values.

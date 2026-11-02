@@ -211,7 +211,7 @@
           "params": {
             "match_detail_id": "1037"
           },
-          "note": "documents matches.winner orientation caveat"
+          "note": "matches.winner is team_a (AE) after repair; the schedule row is NAVI/AE with winner team_b. Both refer to AE."
         },
         {
           "query_id": "Q-GAMES",
@@ -343,7 +343,7 @@
           "params": {
             "match_detail_id": "1107"
           },
-          "note": "matches.winner is in schedule orientation; not used as matches team order"
+          "note": "matches.winner is team_a (TLID) after repair; the schedule row is ONIC/TLID with winner team_b. Both refer to TLID."
         },
         {
           "query_id": "Q-GAMES",
@@ -436,22 +436,26 @@
     {
       "id": "OBS-LINEAGE-WINNER",
       "category": "data_lineage",
-      "claim": "matches.winner disagrees with the score in 21/72 rows because matches team order is flipped relative to schedule orientation. This analysis uses schedule_all.winner or the score, never matches.winner.",
+      "claim": "After the guarded repair, matches.winner agrees with the score in all 72 rows when interpreted in each row's own team_a/team_b order. schedule_all.winner remains in schedule orientation, so named teams must be mapped before comparing side tokens. The migration changed 21 rows and is reproducible via tools/repair_match_winner_orientation.py.",
       "evidence_type": "database_record",
       "verification_state": "cross-checked",
       "scope": "all completed matches in snapshot 1fb1768560e1",
       "uncertainty": "This is a read-only finding about the existing app database; no migration was attempted.",
       "database_refs": [
         {
+          "query_id": "Q-WINNER-INTEGRITY",
+          "note": "72 matches, 0 invalid rows after repair"
+        },
+        {
           "query_id": "Q-LINEAGE-WINNER-MISMATCH",
-          "note": "21 rows returned"
+          "note": "0 rows after repair"
         },
         {
           "query_id": "Q-MATCH-DETAIL",
           "params": {
             "match_detail_id": "1107"
           },
-          "note": "example: matches team order is TLID/ONIC but winner is team_b (schedule orientation)"
+          "note": "matches order TLID/ONIC, score 2-0, winner team_a; schedule order ONIC/TLID, winner team_b. Both refer to TLID."
         }
       ]
     },

@@ -1,87 +1,182 @@
 {
   "schema_version": 1,
-  "snapshot_id": "mpl-s18-db-1fb1768560e1",
+  "snapshot_id": "mpl-s18-db-20c5ea2c51f3",
   "snapshot_path": "data/mpl_id_s18.db",
-  "snapshot_sha256": "1fb1768560e1ca5c2613761e5a9150f77aecb1941096b557e16e072f772125a2",
-  "generated_at": "2026-10-25T00:00:00+00:00",
-  "notes": "All queries are read-only and parameterised by the evidence layer. schedule_all.winner is the result in schedule orientation; matches.winner is NOT used because its orientation is inconsistent for 21/72 rows.",
+  "snapshot_sha256": "20c5ea2c51f30d1a24cd2ce6927f0d182b47f951ebd8209f1aaef429941cf2ef",
+  "generated_at": "2026-10-31T01:18:45+00:00",
+  "notes": "Queries are read-only and parameterised. schedule_all.winner is expressed in schedule orientation; matches.winner is expressed relative to matches.team_a/team_b and is validated against the score in that same row. Do not compare winner side tokens across tables without mapping the named teams.",
   "queries": {
     "Q-MATCH-RESULT": {
       "description": "Source schedule result for one series, in schedule team order.",
       "sql": "select schedule_id, match_detail_id, team_a, team_b, score_a, score_b, winner, iso_date from schedule_all where match_detail_id = :match_detail_id",
       "params": {},
-      "fields": ["schedule_id", "match_detail_id", "team_a", "team_b", "score_a", "score_b", "winner", "iso_date"],
+      "fields": [
+        "schedule_id",
+        "match_detail_id",
+        "team_a",
+        "team_b",
+        "score_a",
+        "score_b",
+        "winner",
+        "iso_date"
+      ],
       "provenance": "source-reported schedule row; winner is in schedule orientation"
     },
     "Q-MATCH-DETAIL": {
       "description": "Canonical matches row for one series, including its team orientation and MVP field.",
       "sql": "select match_detail_id, schedule_id, team_a, team_b, score_a, score_b, winner, iso_date, liq_mvp from matches where match_detail_id = :match_detail_id",
       "params": {},
-      "fields": ["match_detail_id", "schedule_id", "team_a", "team_b", "score_a", "score_b", "winner", "iso_date", "liq_mvp"],
+      "fields": [
+        "match_detail_id",
+        "schedule_id",
+        "team_a",
+        "team_b",
+        "score_a",
+        "score_b",
+        "winner",
+        "iso_date",
+        "liq_mvp"
+      ],
       "provenance": "source-reported detail row; matches.winner keeps schedule orientation and must not be read as the winner of matches.team_a/team_b"
     },
     "Q-GAMES": {
       "description": "Per-game duration, winner, side and map mode for one series.",
       "sql": "select game_no, team_a, team_b, winner, duration_sec, team_a_side, team_b_side, map_mode from games where match_detail_id = :match_detail_id order by game_no",
       "params": {},
-      "fields": ["game_no", "team_a", "team_b", "winner", "duration_sec", "team_a_side", "team_b_side", "map_mode"],
+      "fields": [
+        "game_no",
+        "team_a",
+        "team_b",
+        "winner",
+        "duration_sec",
+        "team_a_side",
+        "team_b_side",
+        "map_mode"
+      ],
       "provenance": "source-reported API detail; winner uses games.team_a/team_b orientation"
     },
     "Q-TEAM-GAMES": {
       "description": "Per-team per-game scoreboard aggregates for one series.",
       "sql": "select game_no, team, opponent, kills, deaths, assists, gold, tower_damage, duration_sec, win from team_games where match_detail_id = :match_detail_id order by game_no, team",
       "params": {},
-      "fields": ["game_no", "team", "opponent", "kills", "deaths", "assists", "gold", "tower_damage", "duration_sec", "win"],
+      "fields": [
+        "game_no",
+        "team",
+        "opponent",
+        "kills",
+        "deaths",
+        "assists",
+        "gold",
+        "tower_damage",
+        "duration_sec",
+        "win"
+      ],
       "provenance": "deterministic aggregate from ten player rows; not an official tournament table"
     },
     "Q-GAME-PICKS": {
       "description": "Liquipedia lane-order picks for one series.",
       "sql": "select game_no, team, slot, lane, hero, player from game_picks where match_detail_id = :match_detail_id order by game_no, team, slot",
       "params": {},
-      "fields": ["game_no", "team", "slot", "lane", "hero", "player"],
+      "fields": [
+        "game_no",
+        "team",
+        "slot",
+        "lane",
+        "hero",
+        "player"
+      ],
       "provenance": "Liquipedia draft slot order; slot is lane order, not pick order"
     },
     "Q-GAME-BANS": {
       "description": "Ordered bans for one series.",
       "sql": "select game_no, side, hero, ban_order from game_bans where match_detail_id = :match_detail_id order by game_no, side, ban_order",
       "params": {},
-      "fields": ["game_no", "side", "hero", "ban_order"],
+      "fields": [
+        "game_no",
+        "side",
+        "hero",
+        "ban_order"
+      ],
       "provenance": "Liquipedia ordered bans where available; two games have nine valid bans"
     },
     "Q-EVOS-PAQUITO-EUDORA": {
       "description": "Counterexample sample: every EVOS game containing Paquito or Eudora, with result and tower damage.",
       "sql": "select p.match_detail_id, p.game_no, p.hero, g.duration_sec, t.tower_damage, t.win from game_picks p join games g on g.match_detail_id = p.match_detail_id and g.game_no = p.game_no join team_games t on t.match_detail_id = p.match_detail_id and t.game_no = p.game_no and t.team = p.team where p.team = 'EVOS' and p.hero in ('Paquito','Eudora') order by p.match_detail_id, p.game_no, p.hero",
       "params": {},
-      "fields": ["match_detail_id", "game_no", "hero", "duration_sec", "tower_damage", "win"],
+      "fields": [
+        "match_detail_id",
+        "game_no",
+        "hero",
+        "duration_sec",
+        "tower_damage",
+        "win"
+      ],
       "provenance": "derived join; one row per hero per EVOS game"
     },
     "Q-CLOSE-GOLD-WINNERS": {
       "description": "Counterexample sample: games with final gold difference under 3,000, including whether the winner had less tower damage.",
       "sql": "select match_detail_id, game_no, max(case when win=1 then team end) as winner, max(case when win=1 then gold end) as winner_gold, max(case when win=0 then gold end) as loser_gold, max(case when win=1 then tower_damage end) as winner_tower_damage, max(case when win=0 then tower_damage end) as loser_tower_damage, max(duration_sec) as duration_sec from team_games group by match_detail_id, game_no having abs(winner_gold - loser_gold) < 3000 order by abs(winner_gold - loser_gold), match_detail_id, game_no",
       "params": {},
-      "fields": ["match_detail_id", "game_no", "winner", "winner_gold", "loser_gold", "winner_tower_damage", "loser_tower_damage", "duration_sec"],
+      "fields": [
+        "match_detail_id",
+        "game_no",
+        "winner",
+        "winner_gold",
+        "loser_gold",
+        "winner_tower_damage",
+        "loser_tower_damage",
+        "duration_sec"
+      ],
       "provenance": "derived from team_games; gold/tower values are scoreboard aggregates"
     },
     "Q-TLID-TOWER-GAMES": {
       "description": "Counterexample sample: every TLID game with win, gold, tower damage and duration.",
       "sql": "select match_detail_id, game_no, opponent, win, gold, tower_damage, duration_sec from team_games where team = 'TLID' order by match_detail_id, game_no",
       "params": {},
-      "fields": ["match_detail_id", "game_no", "opponent", "win", "gold", "tower_damage", "duration_sec"],
+      "fields": [
+        "match_detail_id",
+        "game_no",
+        "opponent",
+        "win",
+        "gold",
+        "tower_damage",
+        "duration_sec"
+      ],
       "provenance": "derived from team_games; outcome field is the per-game win flag"
     },
     "Q-LINEAGE-WINNER-MISMATCH": {
-      "description": "Lineage audit: matches whose winner does not agree with the score in matches team order.",
+      "description": "Lineage audit: matches whose winner disagrees with the score in that row's team order. Should return zero rows after the guarded repair.",
       "sql": "select match_detail_id, team_a, team_b, score_a, score_b, winner from matches where (score_a > score_b and winner <> 'team_a') or (score_b > score_a and winner <> 'team_b') order by match_detail_id",
       "params": {},
-      "fields": ["match_detail_id", "team_a", "team_b", "score_a", "score_b", "winner"],
+      "fields": [
+        "match_detail_id",
+        "team_a",
+        "team_b",
+        "score_a",
+        "score_b",
+        "winner"
+      ],
       "provenance": "derived consistency check; exposes orientation mismatch in matches.winner"
     },
     "Q-GAME-VOD-COVERAGE": {
       "description": "Coverage of per-game YouTube VOD links.",
       "sql": "select count(*) as games, sum(case when vod_url is not null and trim(vod_url) <> '' then 1 else 0 end) as with_vod from games",
       "params": {},
-      "fields": ["games", "with_vod"],
+      "fields": [
+        "games",
+        "with_vod"
+      ],
       "provenance": "coverage count from games.vod_url"
+    },
+    "Q-WINNER-INTEGRITY": {
+      "description": "Post-repair integrity count for matches.winner in each row's own team order.",
+      "sql": "select count(*) as match_count, sum(case when CAST(score_a AS INTEGER)=CAST(score_b AS INTEGER) or winner <> CASE WHEN CAST(score_a AS INTEGER)>CAST(score_b AS INTEGER) THEN 'team_a' ELSE 'team_b' END then 1 else 0 end) as invalid_rows from matches",
+      "params": {},
+      "fields": [
+        "match_count",
+        "invalid_rows"
+      ],
+      "provenance": "derived consistency check; 0 invalid rows is the migration gate"
     }
   }
 }

@@ -155,6 +155,16 @@ def _score_winner(row):
         return None
     return row.get("team_a") if sa > sb else row.get("team_b")
 
+def winner_from_detail_score(score_a, score_b):
+    """Return the winning side relative to the match-detail row's team order."""
+    try:
+        a, b = int(score_a), int(score_b)
+    except (TypeError, ValueError):
+        return None
+    if a == b:
+        return None
+    return "team_a" if a > b else "team_b"
+
 
 def validate_build(con, fails, playoff_payload, season=None):
     """Phase-aware completeness gate for a freshly built (staging) database.
@@ -247,8 +257,17 @@ def validate_build(con, fails, playoff_payload, season=None):
         expected_games += sa + sb
 
     match_rows = {str(r[0]): dict(zip(
-        ("match_detail_id", "team_a", "team_b", "score_a", "score_b", "status"), r))
-        for r in con.execute("SELECT match_detail_id, team_a, team_b, score_a, score_b, status FROM matches")}
+        ("match_detail_id", "team_a", "team_b", "score_a", "score_b", "status", "winner"), r))
+        for r in con.execute("SELECT match_detail_id, team_a, team_b, score_a, score_b, status, winner FROM matches")}
+    for did, detail in match_rows.items():
+        expected_winner = winner_from_detail_score(detail.get("score_a"), detail.get("score_b"))
+        if expected_winner is None:
+            problems.append(f"detail {did} has invalid/tied match score; winner cannot be derived")
+        elif detail.get("winner") != expected_winner:
+            problems.append(
+                f"detail {did} winner {detail.get('winner')!r} disagrees with detail-order score "
+                f"{detail.get('score_a')}-{detail.get('score_b')} (expected {expected_winner})"
+            )
     if set(match_rows) != set(detail_ids):
         missing = sorted(set(detail_ids) - set(match_rows))
         extra = sorted(set(match_rows) - set(detail_ids))
@@ -607,7 +626,7 @@ def main():
         cur.execute("INSERT OR REPLACE INTO matches VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?,?)",
             (str(did), sched.get("match_id"), d.get("team_a"), d.get("team_b"),
              d.get("score_a"), d.get("score_b"), sched.get("date"), sched.get("iso_date"),
-             sched.get("iso_datetime"), sched.get("status"), sched.get("winner"),
+             sched.get("iso_datetime"), sched.get("status"), winner_from_detail_score(d.get("score_a"), d.get("score_b")),
              sched.get("vod_url"), sched.get("match_detail_url"), mvp_map.get(str(did),"")))
         for g in d.get("games", []):
             dur = g.get("duration"); sec = parse_duration(dur)

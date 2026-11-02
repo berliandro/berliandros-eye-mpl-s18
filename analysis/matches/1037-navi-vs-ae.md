@@ -4,7 +4,7 @@
 
 **Result:** schedule row 1037 — NAVI 0–2 AE. Game 1: AE won in **22:42**, 21–16 kills; AE 72,200 gold vs NAVI 70,169 (+2,031); AE tower damage 20,158 vs NAVI 33,132. Game 2: AE won in 11:27. Source: `OBS-1037-G1-DB` (`Q-MATCH-RESULT`, `Q-MATCH-DETAIL`, `Q-GAMES`, `Q-TEAM-GAMES`).
 
-> **Database orientation warning:** in the `matches` table this series is stored as AE/NAVI, 2–0, but `matches.winner = 'team_b'` — that is schedule orientation (NAVI/AE, 0–2, winner `team_b` = AE), not a statement that NAVI won. This report uses `schedule_all` and the score. See `OBS-LINEAGE-WINNER`.
+> **Database orientation note:** in the repaired `matches` table this series is stored as AE/NAVI, 2-0, with `matches.winner = 'team_a'` (AE). The schedule row is NAVI/AE, 0-2, with `schedule_all.winner = 'team_b'` (also AE). Both tables agree on the named winner; side tokens differ because team order differs. See `OBS-LINEAGE-WINNER`.
 
 ## Timeline and evidence
 

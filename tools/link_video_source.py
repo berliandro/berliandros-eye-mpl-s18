@@ -17,6 +17,7 @@ from __future__ import annotations
 import argparse
 import json
 import re
+import shutil
 import subprocess
 from datetime import datetime, timezone
 from pathlib import Path
@@ -37,9 +38,26 @@ def video_id_from(value: str) -> str:
     raise ValueError(f"not a YouTube video ID or URL: {value!r}")
 
 
-def ytdlp_metadata(video_id: str) -> dict:
+def ytdlp_command(video_id: str, which=shutil.which) -> list[str]:
+    """Build a metadata command with an explicit JavaScript runtime for YouTube extraction.
+
+    Prefer Deno when installed; otherwise opt into Node, which this repository
+    already uses for its JavaScript build and regression workflow.
+    """
     url = f"https://www.youtube.com/watch?v={video_id}"
-    cmd = ["yt-dlp", "--no-playlist", "--skip-download", "--dump-single-json", url]
+    cmd = ["yt-dlp", "--no-playlist", "--skip-download", "--dump-single-json"]
+    deno = which("deno")
+    node = which("node")
+    if deno:
+        cmd.extend(["--js-runtimes", f"deno:{deno}"])
+    elif node:
+        cmd.extend(["--js-runtimes", f"node:{node}"])
+    cmd.append(url)
+    return cmd
+
+
+def ytdlp_metadata(video_id: str) -> dict:
+    cmd = ytdlp_command(video_id)
     try:
         raw = subprocess.check_output(cmd, stderr=subprocess.STDOUT, timeout=120)
     except FileNotFoundError as exc:

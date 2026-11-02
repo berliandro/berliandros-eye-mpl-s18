@@ -4,7 +4,7 @@
 
 **Result:** schedule row 1107 — ONIC 0–2 TLID. Game 1: TLID won in **14:47**, 14–3 kills, 49,124 vs 39,093 gold (+10,031), 32,659 vs 1,902 tower damage. Game 2: TLID won in **12:25**, 11–7 kills, 45,031 vs 6,534 tower damage. Source: `OBS-1107-G1-DB` (`Q-MATCH-RESULT`, `Q-MATCH-DETAIL`, `Q-GAMES`, `Q-TEAM-GAMES`, `Q-GAME-PICKS`).
 
-> **Database orientation warning:** `matches` stores TLID/ONIC 2–0 but `matches.winner = 'team_b'`; that is schedule orientation (ONIC/TLID, 0–2, winner `team_b` = TLID), not a statement that ONIC won. This report uses `schedule_all` and the score. See `OBS-LINEAGE-WINNER`.
+> **Database orientation note:** the repaired `matches` table stores TLID/ONIC 2-0 with `matches.winner = 'team_a'` (TLID). The schedule row is ONIC/TLID, 0-2, with `schedule_all.winner = 'team_b'` (also TLID). Both tables agree on the named winner; side tokens differ because team order differs. See `OBS-LINEAGE-WINNER`.
 
 ## Timeline and evidence
 

@@ -15,7 +15,7 @@ from pathlib import Path
 BASE = Path(__file__).parent
 sys.path.insert(0, str(BASE))
 from build_s18_db import (parse_liq_matches, validate_build, publish_build, TABLES,
-                          attach_mvps, canon_team, clean_bans, SCHEMA)
+                          attach_mvps, canon_team, clean_bans, SCHEMA, winner_from_detail_score)
 
 
 def block(mid, t1, t2, date, mvp, winners):
@@ -135,6 +135,17 @@ def memdb(fill=True):
     return con
 
 
+class DetailWinnerOrientationTest(unittest.TestCase):
+    def test_winner_uses_detail_order(self):
+        self.assertEqual(winner_from_detail_score(2, 0), "team_a")
+        self.assertEqual(winner_from_detail_score(0, 2), "team_b")
+        self.assertEqual(winner_from_detail_score("1", "2"), "team_b")
+
+    def test_invalid_or_tied_scores_have_no_winner(self):
+        self.assertIsNone(winner_from_detail_score(None, 2))
+        self.assertIsNone(winner_from_detail_score(1, 1))
+
+
 class BanFilterTest(unittest.TestCase):
     def test_blank_and_duplicate_ban_ids_never_become_rows(self):
         self.assertEqual(clean_bans(["", "   ", None, "Atlas", "Atlas"]), ["Atlas"])
@@ -228,6 +239,12 @@ class ValidateTest(unittest.TestCase):
                     "AND player='a0'")
         probs = validate_build(con, [], {}, TOY)
         self.assertTrue(any("exactly ten player rows" in p for p in probs), probs)
+
+    def test_matches_winner_orientation_mismatch_blocks_publish(self):
+        con = memdb(True)
+        con.execute("UPDATE matches SET winner='team_a' WHERE match_detail_id='2'")
+        probs = validate_build(con, [], {}, TOY)
+        self.assertTrue(any("disagrees with detail-order score" in p for p in probs), probs)
 
     def test_unreconciled_standings_block_publish(self):
         con = memdb(True)

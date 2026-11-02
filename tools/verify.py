@@ -28,6 +28,10 @@ STEPS = [
     ("refresh merge", ["node", str(BASE / "test_refresh.js")], "node"),
     ("cache versioning", ["node", str(BASE / "test_cache.js")], "node"),
     ("liquipedia parser + ETL gates", [sys.executable, str(BASE / "test_liqparse.py")], None),
+    ("schedule VOD resolver + metadata gates", [sys.executable, str(BASE / "test_resolve_and_align_sources.py")], None),
+    ("yt-dlp JavaScript runtime selection", [sys.executable, str(BASE / "test_link_video_source.py")], None),
+    ("match winner orientation repair", [sys.executable, str(BASE / "test_repair_match_winner_orientation.py")], None),
+    ("database inventory warning accuracy", [sys.executable, str(BASE / "test_analysis_inventory.py")], None),
     ("season config (python)", [sys.executable, str(BASE / "test_config.py")], None),
     ("season config (node)", ["node", str(BASE / "test_config.js")], "node"),
     ("ruff lint (pip install ruff if missing)", [sys.executable, "-m", "ruff", "check", "tools/",
@@ -53,8 +57,10 @@ for name, cmd, runtime in STEPS:
     for line in tail:
         print("    " + line)
     if r.returncode != 0:
-        err = (r.stderr.strip().splitlines() or [])[-5:]
-        for line in err:
+        # On failure, preserve enough diagnostics to identify the actual cause.
+        # The old five-line stderr tail hid unittest assertion names and Ruff locations.
+        diagnostics = (r.stdout + "\\n" + r.stderr).strip().splitlines()
+        for line in diagnostics[-80:]:
             print("    ! " + line)
         results.append((name, False))
     else:

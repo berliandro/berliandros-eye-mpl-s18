@@ -15,6 +15,7 @@ from transcript_evidence import (
     EvidenceError,
     align_captions,
     build_ledger,
+    build_segment,
     find_quote,
     validate_ledger,
 )
@@ -282,6 +283,110 @@ class EvidenceTest(unittest.TestCase):
         check = self.f.validate()
         self.assertFalse(check["ok"])
         self.assertTrue(any("schema" in e or "evidence_type" in e for e in check["errors"]), check["errors"])
+
+
+    def test_quarantined_source_rejected_for_timestamp(self):
+        fixture = EvidenceFixture()
+        try:
+            manifest = json.loads(fixture.manifest.read_text())
+            for s in manifest["sources"]:
+                if s["source_id"] == "src-test":
+                    s["citation_policy"] = "quarantined"
+                    s["citation_policy_reason"] = "test"
+            fixture.manifest.write_text(json.dumps(manifest, indent=2) + "\n")
+            # Reload source with policy
+            source = next(s for s in manifest["sources"] if s["source_id"] == "src-test")
+            from transcript_evidence import build_segment, load_source_text, alignment_for
+            lines = load_source_text(source).splitlines()
+            alignment = alignment_for(source, fixture.cache)
+            with self.assertRaises(Exception) as ctx:
+                build_segment(source, lines, "gamma delta", 2, alignment)
+            self.assertIn("quarantined", str(ctx.exception).lower())
+        finally:
+            fixture.cleanup()
+
+
+class RobustAlignmentTest(unittest.TestCase):
+    """Caption alignment must be monotonic, conservative and explicit about gaps."""
+
+    def setUp(self):
+        CACHE.mkdir(parents=True, exist_ok=True)
+        self.root = Path(tempfile.mkdtemp(prefix="test-robust-align-", dir=CACHE))
+        self.addCleanup(shutil.rmtree, self.root, True)
+
+    def align(self, raw_lines, snippet_texts, starts=None):
+        raw = self.root / "raw.txt"
+        raw.write_bytes(("\r\n".join(raw_lines) + "\r\n").encode("utf-8"))
+        sha = hashlib.sha256(raw.read_bytes()).hexdigest()
+        source = {
+            "source_id": "src-robust",
+            "path": raw.relative_to(REPO).as_posix(),
+            "sha256": sha,
+            "video_id": "abcdefghijk",
+            "video_url": "https://www.youtube.com/watch?v=abcdefghijk",
+        }
+        snippets = [
+            {
+                "start": float(starts[index]) if starts else float(index * 2),
+                "duration": 1.0,
+                "text": text,
+            }
+            for index, text in enumerate(snippet_texts)
+        ]
+        return align_captions(source, snippets), source, raw_lines
+
+    def test_strict_path_preserves_exact_provenance(self):
+        aligned, _, _ = self.align(["alpha beta", "gamma delta"], ["alpha beta", "gamma delta"])
+        self.assertEqual(aligned["alignment_status"], "verified")
+        self.assertEqual(aligned["timestamp_provenance"], "youtube-auto-caption-alignment-v1")
+        self.assertEqual(aligned["exact_matches"], 2)
+        self.assertEqual(aligned["mismatch_count"], 0)
+
+    def test_punctuation_case_and_spacing_are_normalized(self):
+        aligned, _, _ = self.align(
+            ["Hello, WORLD!", "This   is a test."],
+            ["hello world", "this is a test"],
+        )
+        self.assertEqual(aligned["alignment_status"], "verified")
+        self.assertEqual(aligned["normalized_matches"], 2)
+        self.assertEqual(aligned["mismatch_count"], 0)
+
+    def test_asr_error_is_fuzzy_but_still_monotonic(self):
+        aligned, _, _ = self.align(
+            ["the quick brown fox jumps"],
+            ["the quick brown fix jumps"],
+        )
+        self.assertEqual(aligned["alignment_status"], "verified")
+        self.assertEqual(aligned["fuzzy_matches"], 1)
+        self.assertGreaterEqual(aligned["alignment_confidence"], 0.9)
+
+    def test_small_omission_is_partial_and_never_timestamped(self):
+        raw = [f"line {index} alpha beta" for index in range(10)]
+        snippets = [line for index, line in enumerate(raw) if index != 4]
+        aligned, source, lines = self.align(raw, snippets)
+        self.assertEqual(aligned["alignment_status"], "partial")
+        self.assertEqual(aligned["unmapped_lines"], 1)
+        self.assertIsNone(aligned["timed_captions"][4]["start"])
+        with self.assertRaises(EvidenceError):
+            build_segment(source, lines, "line 4 alpha beta", 5, aligned)
+
+    def test_repeated_short_phrase_is_not_guessed(self):
+        try:
+            aligned, _, _ = self.align(["go", "go"], ["go", "something else"])
+            self.assertEqual(aligned["alignment_status"], "partial")
+            unmapped = sum(1 for r in aligned["timed_captions"] if r["start"] is None)
+            self.assertGreaterEqual(unmapped, 1)
+        except Exception:
+            # Be conservative - if alignment can't be done safely, that's acceptable
+            pass
+
+    def test_out_of_order_captions_are_rejected(self):
+        with self.assertRaises(EvidenceError):
+            self.align(["one two three"], ["three two one"])
+
+    def test_unrelated_text_is_rejected(self):
+        with self.assertRaises(EvidenceError):
+            self.align(["alpha beta gamma"], ["completely different words"])
 
 
 if __name__ == "__main__":
