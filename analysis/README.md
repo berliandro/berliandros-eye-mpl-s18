@@ -124,3 +124,16 @@ The apply command backs up the affected files, repairs `matches.winner` relative
 ## Next milestone
 
 Map each verified broadcast to series/game start offsets, expand the curated evidence sample beyond the three pilot series, and resolve or explicitly quarantine the 37 unmapped short lines in `src-s18-w09d02`. Only after quotation fidelity, timestamp/link integrity and audit quality hold across a stratified sample should all nine weeks be processed semantically.
+
+## How to add a series (workflow)
+Follow this checklist to add a new series with full provenance:
+
+1. **Resolve source**: Ensure the broadcast day is in `source-manifest.json` with verified `video_id` and `caption_alignment_status: verified` (non-quarantined). `src-s18-w09d02` is quarantined - do not cite.
+2. **Confirm citation-ready**: Check alignment coverage is full-line (no unmapped lines). Run `python tools/transcript_evidence.py build` to validate.
+3. **Map offsets**: Update `analysis/evidence/game-offsets.json` for the series with `start_seconds`, `confidence`, `method`, `provenance`. Run `python tools/validate_game_offsets.py`.
+4. **Detect boundaries**: Use `python tools/refine_game_offsets.py` or manual boundary detection with audit trail (caster transitions/scoreboard/series changes). Mark low confidence items for review.
+5. **Extract quotes**: Use `transcript_evidence.py` to find exact spans with `line_hint`. Only use fully aligned sources.
+6. **Add frames**: Use `tools/video_frames.py` with purpose, verdict (used/rejected), and rejection reason. Tie frames to observations/segments.
+7. **Cross-ref DB**: Link to `matches`, `games`, `team_games`, `schedule_all` with query provenance from `analysis/evidence/query-catalog.json`.
+8. **Audit**: For turning points, require supporting evidence (quote + context + DB state where possible). Follow existing audit structure.
+9. **Build & validate**: Run `python tools/transcript_evidence.py build --selection ...` and `python tools/transcript_evidence.py validate`. Run `python tools/verify_analysis.py`. No citations from quarantined/partial sources allowed.
