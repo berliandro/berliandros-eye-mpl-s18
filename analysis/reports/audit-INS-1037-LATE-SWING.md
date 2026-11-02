@@ -31,7 +31,7 @@ The quote checker found each quote at the asserted line span; the ledger records
 - `Q-MATCH-RESULT` (1037): schedule row is NAVI 0–2 AE on 2026-08-14; winner `team_b` in schedule orientation.
 - `Q-GAMES` (1037): game 1 AE winner, duration 22:42; game 2 AE winner, 11:27.
 - `Q-TEAM-GAMES` (1037): game 1 AE 72,200 gold / 20,158 tower damage; NAVI 70,169 / 33,132. AE won by 2,031 gold while dealing less tower damage.
-- `Q-MATCH-DETAIL` (1037): the `matches` row has AE/NAVI order and `winner='team_b'`. This is an orientation mismatch; the audit did **not** use that field to infer the winner. See `OBS-LINEAGE-WINNER`.
+- `Q-MATCH-DETAIL` (1037): after the guarded repair, the `matches` row has AE/NAVI order, score 2-0, and `winner='team_a'` (AE). The schedule row is NAVI/AE, 0-2, with `winner='team_b'` (also AE). No row-score mismatch remains; side tokens differ because team order differs. See `OBS-LINEAGE-WINNER`.
 
 ## Visual review (actually inspected)
 

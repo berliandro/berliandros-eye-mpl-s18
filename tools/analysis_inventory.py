@@ -42,6 +42,9 @@ def corpus_report(manifest: dict, verification: dict, timed: dict) -> str:
     with_video = [s for s in sources if s.get("video_id") and s.get("video_metadata_provenance")]
     candidates = [s for s in sources if s.get("candidate_video_id")]
     timed_ids = {row["source_id"] for row in timed.get("sources", [])}
+    partial = [
+        s for s in sources if s.get("video_resolution_status") == "caption_alignment_partial"
+    ]
     duplicates = [s for s in sources if s.get("duplicate_of")]
     lines = [
         "# Corpus inventory",
@@ -65,9 +68,11 @@ def corpus_report(manifest: dict, verification: dict, timed: dict) -> str:
         f"days per week: " + ", ".join(f"W{w}: {len(d)}" for w, d in sorted(weeks.items())),
         "- Encoding: UTF-8 without BOM; CRLF line endings in the raw files.",
         "- Native timestamp strings in the raw files: **0**. The files are caption text only; filenames carry week/day but no video ID.",
-        f"- Schedule-derived VOD candidates: **{len(candidates)}/{len(sources)}** (candidates, not verified identities).",
+        f"- Schedule-derived VOD candidates: **{len(candidates)}/{len(sources)}**.",
         f"- Metadata-verified official video IDs: **{len(with_video)}/{len(sources)}**.",
-        f"- Timed caption alignments: **{len(timed_ids)}/{len(sources)}**; timestamps derive from reproducible 1:1 caption alignment.",
+        f"- Fully caption-aligned sources: **{len(timed_ids)}/{len(sources)}**; every raw line has a verified timestamp.",
+        f"- Partially aligned sources (not used for timestamp citations): **{len(partial)}/{len(sources)}**"
+        + (": " + ", ".join(f"`{s['source_id']}`" for s in partial) if partial else "."),
         f"- Byte-identical duplicate files: **{len(duplicates)}**.",
         "",
         "## Source table",
@@ -90,7 +95,7 @@ def corpus_report(manifest: dict, verification: dict, timed: dict) -> str:
         "",
         "## Timestamp/link coverage",
         "",
-        "The pilot uses an explicit derived method: the raw caption lines are aligned one-to-one with the official YouTube auto-caption snippets, then timestamps and `t=` links are generated only for verified video IDs.",
+        "The verified sources use an explicit derived method: raw caption lines are aligned monotonically with official YouTube timed captions, then timestamps and `t=` links are generated only for sources whose alignment covers every raw line. A partial source is recorded but excluded from timestamp citations.",
         "",
     ]
     for row in timed.get("sources", []):
@@ -225,7 +230,7 @@ def db_snapshot(manifest: dict) -> dict:
                         "status": "orientation_mismatch",
                         "mismatch_count": len(winner_mismatch),
                         "detail": (
-                            f"{len(winner_mismatch)}/{len(match_rows)} rows disagree with the score in their own "
+                            f"{len(winner_mismatch)}/{coverage['matches']} rows disagree with the score in their own "
                             "matches.team_a/team_b orientation. Derive the result from the row's score or map "
                             "the named winning team across tables."
                         ),
@@ -253,9 +258,12 @@ def db_snapshot(manifest: dict) -> dict:
 
 def winner_integrity_section(snapshot: dict) -> list[str]:
     """Render result semantics from current measured mismatches, never stale constants."""
+    warnings = snapshot.get("warnings")
+    if warnings is None:
+        warnings = snapshot.get("lineage", {}).get("warnings", [])
     warning = next(
         (
-            item for item in snapshot.get("warnings", [])
+            item for item in warnings
             if item.get("table") == "matches" and item.get("field") == "winner"
         ),
         None,

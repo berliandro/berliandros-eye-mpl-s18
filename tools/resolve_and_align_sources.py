@@ -64,7 +64,12 @@ def cache_alignment_is_current(source, candidate_id, alignment):
         return False
     if alignment.get("alignment_status") != "verified" or alignment.get("mismatch_count") != 0:
         return False
-    return alignment.get("raw_line_count") == alignment.get("timed_snippet_count")
+    if alignment.get("unmapped_lines", 0) != 0:
+        return False
+    # Older v1 sidecars had no explicit unmapped count; they were strict 1:1.
+    if "unmapped_lines" not in alignment:
+        return alignment.get("raw_line_count") == alignment.get("timed_snippet_count")
+    return True
 
 
 def derive_source_status(source, candidate, alignment):
@@ -76,6 +81,8 @@ def derive_source_status(source, candidate, alignment):
         return "schedule_candidate_pending_verification"
     if cache_alignment_is_current(source, candidate_id, alignment):
         return "caption_alignment_verified"
+    if source.get("video_resolution_status") == "caption_alignment_partial":
+        return "caption_alignment_partial"
     return "metadata_verified"
 
 
@@ -85,8 +92,17 @@ def summary_from_alignment(source, alignment):
         "video_id": alignment["video_id"],
         "raw_sha256": alignment["raw_sha256"],
         "raw_lines": alignment["raw_line_count"],
+        "timed_snippets": alignment["timed_snippet_count"],
         "exact_matches": alignment["exact_matches"],
         "normalized_matches": alignment["normalized_matches"],
+        "fuzzy_matches": alignment.get("fuzzy_matches", 0),
+        "unmapped_lines": alignment.get("unmapped_lines", 0),
+        "alignment_confidence": alignment.get("alignment_confidence")
+        or round(
+            (alignment["exact_matches"] + alignment["normalized_matches"])
+            / max(alignment["raw_line_count"], 1),
+            4,
+        ),
         "timestamp_provenance": alignment["timestamp_provenance"],
     }
 
@@ -113,8 +129,12 @@ def resolve_one(source,c,no_align=False):
  if no_align:return result
  try:
   captions=fetch_timed(vid,("id",));a=align_captions(source,captions);atomic_json(ALIGN/f"{source['source_id']}.json",a)
-  source.update(video_resolution_status="caption_alignment_verified",caption_alignment_status="verified",caption_alignment_provenance="youtube-transcript-api; exact or whitespace-normalized 1:1 raw-line alignment")
-  result.update(status="caption_alignment_verified",raw_line_count=a["raw_line_count"],timed_snippet_count=a["timed_snippet_count"],exact_matches=a["exact_matches"],normalized_matches=a["normalized_matches"])
+  if a.get("alignment_status")!="verified" or a.get("mismatch_count")!=0:
+   source.update(video_resolution_status="caption_alignment_partial",caption_alignment_status="partial",caption_alignment_provenance="youtube-transcript-api; monotonic alignment left unmatched raw lines un-timestamped")
+   result.update(status="caption_alignment_partial",raw_line_count=a["raw_line_count"],timed_snippet_count=a["timed_snippet_count"],exact_matches=a["exact_matches"],normalized_matches=a["normalized_matches"],fuzzy_matches=a.get("fuzzy_matches",0),unmapped_lines=a.get("unmapped_lines",0),error="alignment left raw lines without verified timestamps")
+  else:
+   source.update(video_resolution_status="caption_alignment_verified",caption_alignment_status="verified",caption_alignment_provenance="youtube-transcript-api; monotonic alignment verified for every raw line")
+   result.update(status="caption_alignment_verified",raw_line_count=a["raw_line_count"],timed_snippet_count=a["timed_snippet_count"],exact_matches=a["exact_matches"],normalized_matches=a["normalized_matches"],fuzzy_matches=a.get("fuzzy_matches",0),unmapped_lines=a.get("unmapped_lines",0),alignment_confidence=a.get("alignment_confidence"))
  except (Exception,SystemExit) as e:result.update(status="caption_alignment_failed",error=str(e)[:1200])
  return result
 def update_summary(items):
@@ -146,6 +166,9 @@ def main(argv=None):
   if not args.refresh_metadata and s.get("video_resolution_status")=="caption_alignment_verified" and cp.exists():
    a=read_json(cp,{})
    if cache_alignment_is_current(s,c.get("candidate_video_id"),a):
+    s["video_resolution_status"]="caption_alignment_verified"
+    s["caption_alignment_status"]="verified"
+    s["caption_alignment_provenance"]="cached sidecar; source hash, candidate and alignment status verified"
     results.append({"source_id":sid,"status":"caption_alignment_verified","skipped":"verified current alignment cache"})
     summaries.append(summary_from_alignment(s,a))
     continue
@@ -154,13 +177,18 @@ def main(argv=None):
    s["video_resolution_status"]="metadata_mismatch"
   elif result.get("status")=="candidate_failed":
    s["video_resolution_status"]="candidate_resolution_failed"
+  elif result.get("status")=="caption_alignment_partial":
+   s["video_resolution_status"]="caption_alignment_partial"
   elif result.get("status")=="caption_alignment_failed":
    s["video_resolution_status"]="metadata_verified"
   elif result.get("status")=="metadata_verified":
    s["video_resolution_status"]="metadata_verified"
   elif result.get("status")=="caption_alignment_verified":
    s["video_resolution_status"]="caption_alignment_verified"
-  if result.get("status") not in ("metadata_verified","caption_alignment_verified"):failures+=1
+  s["last_resolution_attempt"]=now()
+  s["last_resolution_status"]=result.get("status")
+  s["last_resolution_error"]=result.get("error") or result.get("errors") or None
+  if result.get("status") in ("metadata_failed","metadata_mismatch","candidate_failed","caption_alignment_failed"):failures+=1
   save_manifest(args.manifest,manifest)
  # Rebuild the active alignment summary from integrity-checked local sidecars.
  # Stale entries are removed rather than making a source look aligned by source_id alone.
@@ -178,8 +206,8 @@ def main(argv=None):
    active.append(summary_from_alignment(source,cached))
  write_timed_summary(active)
  save_manifest(args.manifest,manifest)
- out={"schema_version":1,"generated_at":now(),"selected_count":len(selected),"schedule_failures":sched_errors,"no_align":args.no_align,"results":results,"metadata_verified":sum(r.get("status") in ("metadata_verified","caption_alignment_verified") for r in results),"caption_alignment_verified":sum(r.get("status")=="caption_alignment_verified" for r in results),"failed":[r for r in results if r.get("status") not in ("metadata_verified","caption_alignment_verified")]}
- atomic_json(REPORT,out);print(json.dumps(out,ensure_ascii=False,indent=2))
+ out={"schema_version":1,"generated_at":now(),"selected_count":len(selected),"schedule_failures":sched_errors,"no_align":args.no_align,"results":results,"metadata_verified":sum(r.get("status") in ("metadata_verified","caption_alignment_verified","caption_alignment_partial") for r in results),"caption_alignment_verified":sum(r.get("status")=="caption_alignment_verified" for r in results),"caption_alignment_partial":sum(r.get("status")=="caption_alignment_partial" for r in results),"failed":[r for r in results if r.get("status") not in ("metadata_verified","caption_alignment_verified")]}
+ atomic_json(REPORT,out);print(json.dumps(out,ensure_ascii=True,indent=2))
  if not args.no_inventory:
   run=subprocess.run([sys.executable,str(TOOLS/"analysis_inventory.py")],cwd=REPO,capture_output=True,text=True,timeout=120);print(run.stdout)
   if run.returncode:print(run.stderr,file=sys.stderr);return run.returncode

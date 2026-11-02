@@ -2,7 +2,7 @@
 
 This directory contains the first **traceable, transcript-powered** coaching pilot for Berliandro’s Eye. It is deliberately separate from the app and the canonical match database.
 
-**Status:** pilot complete (2 caption-aligned videos, 3 series, 18 observations, 3 insights, 1 audit). **Not** full-season semantic coverage. The canonical schedule provides one VOD candidate for each transcript date, but candidates remain unverified until official metadata and caption alignment pass.
+**Status:** source resolution complete locally — **27/27** official videos metadata-verified, **26/27** fully caption-aligned, **1/27** partial and explicitly not citation-ready. The curated pilot covers 3 series with 18 observations, 3 insights and 1 audit. **Not** full-season semantic coverage.
 
 ## What is here
 
@@ -12,7 +12,8 @@ This directory contains the first **traceable, transcript-powered** coaching pil
 | `sources/copy-verification.json` | byte/hash copy verification of the source corpus |
 | `sources/raw-transcripts/` | **local-only, Git-ignored** copy of the original corpus |
 | `reports/corpus-inventory.md` | corpus counts, timestamp/link coverage and parsing risks |
-| `reports/database-inventory.md` | read-only DB coverage, lineage warnings and join guidance |
+| `reports/video-source-resolution.md` | 27-source metadata/alignment status, status semantics and failure reasons |
+| `reports/database-inventory.md` | DB coverage, post-migration lineage and join guidance |
 | `reports/pilot-quality-report.md` | pilot scope, coverage, validation results and gaps |
 | `reports/audit-INS-1037-LATE-SWING.md` | skeptical audit of the main ambiguous insight |
 | `matches/` | one report for each pilot series |
@@ -31,8 +32,8 @@ This directory contains the first **traceable, transcript-powered** coaching pil
 
 - The original transcript directory was **copied, not moved or edited**. Its 27 files and 9,682,086 bytes match the copies by SHA-256; no conflicts occurred.
 - `analysis/sources/raw-transcripts/` and `analysis/cache/` are Git-ignored. Raw transcripts, full videos, cookies and screenshots are not committed.
-- The app database, CSVs, season metadata and dashboard were treated as read-only. No ETL/build was run by this project.
-- Reports contain only short quotations needed to support a claim; the ledger preserves exact source line spans and hashes.
+- The app database and CSVs were read-only until the explicit, backed-up winner-orientation migration. That migration changed only `matches.winner` values that disagreed with their own row score, then regenerated `matches.csv`, the dashboard and snapshot-bound evidence through the supported pipeline.
+- Season metadata and all source transcripts were not edited. Reports contain only short quotations needed to support a claim; the ledger preserves exact source line spans and hashes.
 
 ## How to reproduce (local machine with the corpus)
 
@@ -51,21 +52,21 @@ python tools/resolve_and_align_sources.py --no-align
 # Retry an individual source after network/transcript failures:
 python tools/resolve_and_align_sources.py --source-id src-s18-w02d01
 
-# 4. Search exact transcript text with line numbers and timestamps
+# 3. Search exact transcript text with line numbers and timestamps
 python tools/transcript_evidence.py search --source-id src-s18-w01d01 `
   --pattern "turtle|lord|rotasi" --context 2
 
-# 5. Rebuild and validate the pilot ledger
+# 4. Rebuild and validate the pilot ledger
 python tools/transcript_evidence.py build --selection analysis/pilot/selection.json
 python tools/transcript_evidence.py validate
 
-# 6. Regenerate inventories/reports
+# 5. Regenerate inventories/reports
 python tools/analysis_inventory.py
 
-# 7. Deterministic tests
+# 6. Deterministic tests
 python tools/verify_analysis.py
 
-# 8. Optional live YouTube frame smoke test (network)
+# 7. Optional live YouTube frame smoke test (network)
 $env:RUN_LIVE_VIDEO_SMOKE="1"
 python tools/test_video_frames_live.py
 Remove-Item Env:RUN_LIVE_VIDEO_SMOKE
@@ -85,42 +86,41 @@ On this machine, yt-dlp/FFmpeg section downloads from the long VODs stalled; the
 ## Evidence rules
 
 - **Transcript quotation** proves what the speaker said, not that the interpretation is correct.
-- **Database record** is tied to snapshot `mpl-s18-db-1fb1768560e1`, SQL, parameters and returned rows.
+- **Database record** is tied to snapshot `mpl-s18-db-20c5ea2c51f3`, SQL, parameters and returned rows.
 - **Gameplay observation** is only used where frames were actually reviewed; frame paths and actual times are recorded.
 - **AI inference** is an insight, labelled with alternatives, counterexamples, scope and confidence rationale.
 - Verification states are separate from evidence types. A transcript-only claim is never upgraded to gameplay-verified.
 
 ## Database winner-orientation repair
 
-The checked-in database snapshot currently contains **21/72** `matches.winner` values that disagree with the score when interpreted in the same `matches.team_a/team_b` order. The schedule table uses its own team order, so side tokens must not be copied across tables without mapping the named teams.
+The guarded local migration has been executed and verified.
 
-On the local machine that contains the ignored raw transcript corpus and existing timed-caption cache, preview the migration first:
+- Preview: **21/72** `matches` rows had a `winner` that disagreed with the score in that row's own `team_a/team_b` order.
+- Apply: **21 rows changed** in SQLite and **21 rows changed** in `data/csv/matches.csv`; the dashboard and snapshot-bound evidence were regenerated.
+- Database SHA-256: `1fb1768560e1ca5c2613761e5a9150f77aecb1941096b557e16e072f772125a2` → `20c5ea2c51f30d1a24cd2ce6927f0d182b47f951ebd8209f1aaef429941cf2ef`.
+- Post-migration gate: **0/72** row-score winner mismatches; SQLite `integrity_check` = `ok`; full regression **24/24**.
+- Backup: `analysis/cache/migration-backups/winner-orientation-20261031T011845Z` (Git-ignored; contains the pre-migration DB, CSV, HTML and evidence/report files).
+
+The command is idempotent: a second preview reports zero changes. To reproduce the preview/apply workflow:
 
 ```bash
 python tools/repair_match_winner_orientation.py
-```
-
-If the preview lists the expected rows and the database/CSV scopes reconcile, run:
-
-```bash
 python tools/repair_match_winner_orientation.py --apply
 ```
 
-The apply command backs up the SQLite database, `matches.csv`, generated HTML, query catalog, evidence ledger and reports beneath the Git-ignored `analysis/cache/migration-backups/` directory. It repairs `matches.winner` relative to that row's score/team order, rebuilds snapshot-bound evidence references and generated artifacts, then runs the evidence, integrity, parity and full regression validators. A failed stage triggers rollback. It does not edit raw transcript files.
+The apply command backs up the affected files, repairs `matches.winner` relative to that row's score/team order, rebuilds snapshot-bound evidence references and generated artifacts, then runs the evidence, integrity, parity and full regression validators. A failed stage triggers rollback. It does not edit raw transcript files.
 
-This local migration has **not** been executed from this remote environment because the corpus and timed-caption sidecars are intentionally absent from GitHub. The migration is not complete until the local command reports `repaired_and_verified` and the regenerated inventory reports zero row-score winner mismatches.
+## Important lineage note
 
-## Important lineage warning
-
-The existing `matches.winner` column is **not** reliable in `matches` team order: 21/72 rows disagree with the score because team order is flipped relative to `schedule_all`. Use `schedule_all.winner` or derive the winner from `score_a/score_b`. See `analysis/reports/database-inventory.md` and `OBS-LINEAGE-WINNER`.
+`matches.winner` is now correct **relative to `matches.team_a/team_b`**. `schedule_all.winner` remains relative to schedule row order. The two tables sometimes store the same series with the teams in the opposite order, so map the named teams before comparing side tokens. See `analysis/reports/database-inventory.md` and `OBS-LINEAGE-WINNER`.
 
 ## What this is not
 
-- Not a full-season semantic analysis.
-- Not a claim that the 25 unlinked days are uninformative.
+- Not a full-season semantic analysis: 26 sources are alignment-ready, but only 3 series have curated insights.
+- Not a claim that the partially aligned source is uninformative; it is simply not citation-ready until its remaining short lines are resolved.
 - Not a replacement for watching full games or for the app’s structured database.
 - Not a source of objective counts, hidden vision, communications or intent.
 
 ## Next milestone
 
-Resolve and align the remaining 25 video sources, map each broadcast to all series/game start offsets, then re-run the pilot process on a stratified sample before scaling. Only after quotation fidelity, timestamp/link integrity and audit quality hold across that sample should all nine weeks be processed.
+Map each verified broadcast to series/game start offsets, expand the curated evidence sample beyond the three pilot series, and resolve or explicitly quarantine the 37 unmapped short lines in `src-s18-w09d02`. Only after quotation fidelity, timestamp/link integrity and audit quality hold across a stratified sample should all nine weeks be processed semantically.
