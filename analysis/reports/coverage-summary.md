@@ -54,4 +54,4 @@ All 72 series now have curated reports in `analysis/matches/`. See `analysis/ind
 3. Add matched comparisons for all insights.
 4. Do not claim full-season semantic coverage until transcript-verified observations exist for a stratified sample beyond the pilot.
 
-For all screenshot-based work, follow [`../docs/goals/active/mpl-s18-visual-proof-deepseek-handoff.md`](../docs/goals/active/mpl-s18-visual-proof-deepseek-handoff.md).
+For all screenshot-based work, follow [`../../docs/goals/active/mpl-s18-visual-proof-deepseek-handoff.md`](../docs/goals/active/mpl-s18-visual-proof-deepseek-handoff.md).
