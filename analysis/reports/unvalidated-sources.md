@@ -70,4 +70,4 @@ The three middle status columns list the match IDs in that source for each curre
 - A series boundary screenshot does not prove a later tactical event. Objective, scoreboard, teamfight, player, draft, and macro/meso/micro claims need their own appropriately timed screenshot(s) and DeepSeek review.
 - Do not use heuristic offsets for timestamp citations until the relevant boundary target is accepted by the required evidence rules.
 
-See [the full DeepSeek visual-proof goal](../docs/goals/active/mpl-s18-visual-proof-deepseek-handoff.md) for the screenshot capture/review contract, all visual target classes, automated retry policy, tests, and definition of done.
+See [the full DeepSeek visual-proof goal](../../docs/goals/active/mpl-s18-visual-proof-deepseek-handoff.md) for the screenshot capture/review contract, all visual target classes, automated retry policy, tests, and definition of done.
