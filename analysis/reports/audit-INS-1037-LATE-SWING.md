@@ -14,7 +14,7 @@
 - Raw transcript copy: `analysis/sources/raw-transcripts/...Minggu 1 Hari 1...txt` (local, Git-ignored), lines 6451–6452 and 6524–6532.
 - Timed alignment: `analysis/cache/timed/src-s18-w01d01.json`; 9,104 raw lines vs 9,104 timed caption snippets, 9,103 exact + 1 whitespace-normalized match.
 - Broadcast video: `https://www.youtube.com/watch?v=40fehk2f4_E`, frames at requested 04:13:50, 04:14:05, 04:16:10; actual capture times 04:13:51.476, 04:14:06.335, 04:16:11.480.
-- Database snapshot `mpl-s18-db-1fb1768560e1`, SHA-256 `1fb1768560e1ca5c2613761e5a9150f77aecb1941096b557e16e072f772125a2`.
+- Database snapshot `mpl-s18-db-20c5ea2c51f3`, SHA-256 `20c5ea2c51f30d1a24cd2ce6927f0d182b47f951ebd8209f1aaef429941cf2ef` (current canonical snapshot; the 2026-10-31 winner-orientation migration changed only `matches.winner` values, so the score/gold/tower facts audited here are unchanged).
 - Query catalog entries `Q-MATCH-RESULT`, `Q-MATCH-DETAIL`, `Q-GAMES`, `Q-TEAM-GAMES`, `Q-CLOSE-GOLD-WINNERS`.
 
 ## Quote and link validation

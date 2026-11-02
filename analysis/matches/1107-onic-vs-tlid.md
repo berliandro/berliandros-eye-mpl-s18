@@ -6,6 +6,13 @@
 
 > **Database orientation note:** the repaired `matches` table stores TLID/ONIC 2-0 with `matches.winner = 'team_a'` (TLID). The schedule row is ONIC/TLID, 0-2, with `schedule_all.winner = 'team_b'` (also TLID). Both tables agree on the named winner; side tokens differ because team order differs. See `OBS-LINEAGE-WINNER`.
 
+## Game-level database context
+
+| Game | Winner | Duration | Map mode | Side (blue/red) | Per-game VOD | Series MVP |
+|---:|---|---:|---|---|---|---|
+| 1 | TLID | 14:47 | Healing Turtle | TLID blue / ONIC red | https://www.youtube.com/watch?v=paUEKUP6Fo8 | Lyoni |
+| 2 | TLID | 12:25 | Healing Turtle | TLID blue / ONIC red | (no per-game VOD recorded) | Lyoni |
+
 ## Timeline and evidence
 
 | Broadcast | Evidence | What is directly supported |
@@ -46,7 +53,7 @@ TLID’s game-1 win was **fast and structure-heavy**. The commentary describes e
 - Frames: `VF-1107-early` (07:04:51.481), `VF-1107-item` (07:05:10.920), `VF-1107-mid` (07:12:41.281); local ignored cache plus sidecars
 - `OBS-1107-SOURCE-MAP`, `OBS-1107-ROTATION`, `OBS-1107-TURTLE`, `OBS-1107-G1-DB`, `OBS-1107-VISUAL`, `OBS-1107-COUNTER`
 - `Q-MATCH-RESULT`, `Q-MATCH-DETAIL`, `Q-GAMES`, `Q-TEAM-GAMES`, `Q-GAME-PICKS`, `Q-TLID-TOWER-GAMES`
-- Database snapshot `mpl-s18-db-1fb1768560e1`
+- Database snapshot `mpl-s18-db-20c5ea2c51f3`
 
 ## Limits
 

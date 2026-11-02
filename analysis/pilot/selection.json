@@ -100,7 +100,7 @@
       "claim": "Schedule 1036 is EVOS 2-0 RRQ. Game 1 ended 16:51 with EVOS 11-7 kills, 22,472 tower damage to RRQ's 1,252, and EVOS picks included Paquito and Eudora.",
       "evidence_type": "database_record",
       "verification_state": "cross-checked",
-      "scope": "series 1036 game 1; database snapshot 1fb1768560e1",
+      "scope": "series 1036 game 1; database snapshot 20c5ea2c51f3",
       "uncertainty": "The database is a local snapshot; team-game aggregates are derived from player rows, not an official tournament table.",
       "database_refs": [
         {
@@ -197,7 +197,7 @@
       "claim": "Schedule 1037 is NAVI 0-2 AE. Game 1: AE won in 22:42, 21-16 kills; AE gold 72,200 vs NAVI 70,169 (+2,031); AE tower damage 20,158 vs NAVI 33,132. The winner had less tower damage.",
       "evidence_type": "database_record",
       "verification_state": "cross-checked",
-      "scope": "series 1037 game 1; database snapshot 1fb1768560e1",
+      "scope": "series 1037 game 1; database snapshot 20c5ea2c51f3",
       "uncertainty": "Team aggregates are derived from player rows; gold/tower values are scoreboard aggregates, not a causal model.",
       "database_refs": [
         {
@@ -329,7 +329,7 @@
       "claim": "Schedule 1107 is ONIC 0-2 TLID. Game 1: TLID won 14:47, 14-3 kills, 49,124 vs 39,093 gold (+10,031), 32,659 vs 1,902 tower damage. Game 2: 12:25, TLID 11-7, 45,031 vs 6,534 tower damage.",
       "evidence_type": "database_record",
       "verification_state": "cross-checked",
-      "scope": "series 1107; database snapshot 1fb1768560e1",
+      "scope": "series 1107; database snapshot 20c5ea2c51f3",
       "uncertainty": "Team aggregates are derived from player rows and the local snapshot, not an official tournament table.",
       "database_refs": [
         {
@@ -439,7 +439,7 @@
       "claim": "After the guarded repair, matches.winner agrees with the score in all 72 rows when interpreted in each row's own team_a/team_b order. schedule_all.winner remains in schedule orientation, so named teams must be mapped before comparing side tokens. The migration changed 21 rows and is reproducible via tools/repair_match_winner_orientation.py.",
       "evidence_type": "database_record",
       "verification_state": "cross-checked",
-      "scope": "all completed matches in snapshot 1fb1768560e1",
+      "scope": "all completed matches in snapshot 20c5ea2c51f3",
       "uncertainty": "This is a read-only finding about the existing app database; no migration was attempted.",
       "database_refs": [
         {
@@ -551,7 +551,7 @@
       "sources_inspected": [
         "src-s18-w01d01 raw copy and timed alignment",
         "src-s18-w01d01 broadcast frames at 04:13:51, 04:14:06 and 04:16:11",
-        "data/mpl_id_s18.db snapshot 1fb1768560e1",
+        "data/mpl_id_s18.db snapshot 20c5ea2c51f3",
         "analysis/evidence/query-catalog.json"
       ],
       "quote_checks": [

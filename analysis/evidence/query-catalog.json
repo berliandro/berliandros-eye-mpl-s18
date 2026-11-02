@@ -177,6 +177,96 @@
         "invalid_rows"
       ],
       "provenance": "derived consistency check; 0 invalid rows is the migration gate"
+    },
+    "Q-PLAYER-SEASON": {
+      "description": "Season aggregates for one player from player_season_stats.",
+      "sql": "select player, team, team_slug, lane, total_games, total_kills, avg_kills, total_deaths, avg_deaths, total_assists, avg_assists, avg_kda, kill_participation from player_season_stats where player = :player",
+      "params": {
+        "player": "ALBERTTT"
+      },
+      "fields": [
+        "player",
+        "team",
+        "team_slug",
+        "lane",
+        "total_games",
+        "total_kills",
+        "avg_kills",
+        "total_deaths",
+        "avg_deaths",
+        "total_assists",
+        "avg_assists",
+        "avg_kda",
+        "kill_participation"
+      ],
+      "provenance": "source-reported app aggregate; player names stored uppercase"
+    },
+    "Q-PLAYER-GAMES": {
+      "description": "Per-game scoreboard and game context for one player.",
+      "sql": "select gp.match_detail_id, gp.game_no, gp.team, gp.lane, gp.hero, gp.kills, gp.deaths, gp.assists, gp.kda, gp.gold, gp.gold_per_min, gp.hero_damage, gp.damage_taken, gp.tower_damage, gp.emblem, gp.items_json, gp.talents_json, gp.lane_source, g.duration_str, g.duration_sec, g.map_mode, g.team_a, g.team_b, g.winner, m.liq_mvp from game_players gp left join games g on gp.match_detail_id=g.match_detail_id and gp.game_no=g.game_no left join matches m on gp.match_detail_id=m.match_detail_id where upper(gp.player)=upper(:player) order by gp.match_detail_id, gp.game_no",
+      "params": {
+        "player": "Alberttt"
+      },
+      "fields": [
+        "match_detail_id",
+        "game_no",
+        "team",
+        "lane",
+        "hero",
+        "kills",
+        "deaths",
+        "assists",
+        "kda",
+        "gold",
+        "gold_per_min",
+        "hero_damage",
+        "damage_taken",
+        "tower_damage",
+        "emblem",
+        "items_json",
+        "talents_json",
+        "lane_source",
+        "duration_str",
+        "duration_sec",
+        "map_mode",
+        "team_a",
+        "team_b",
+        "winner",
+        "liq_mvp"
+      ],
+      "provenance": "source-reported scoreboard; items/talents as stored"
+    },
+    "Q-PLAYER-PICKS": {
+      "description": "Draft picks (hero/lane/slot) for one player across all games.",
+      "sql": "select match_detail_id, game_no, team, slot, lane, hero from game_picks where upper(player)=upper(:player) order by match_detail_id, game_no, slot",
+      "params": {
+        "player": "Alberttt"
+      },
+      "fields": [
+        "match_detail_id",
+        "game_no",
+        "team",
+        "slot",
+        "lane",
+        "hero"
+      ],
+      "provenance": "Liquipedia lane-order picks; slot is lane order, not pick order"
+    },
+    "Q-PLAYER-MVP-SERIES": {
+      "description": "Series where a given player was the Liquipedia series MVP.",
+      "sql": "select match_detail_id, team_a, team_b, score_a, score_b, liq_mvp from matches where liq_mvp = :player",
+      "params": {
+        "player": "Alberttt"
+      },
+      "fields": [
+        "match_detail_id",
+        "team_a",
+        "team_b",
+        "score_a",
+        "score_b",
+        "liq_mvp"
+      ],
+      "provenance": "source-reported Liquipedia series MVP"
     }
   }
 }
