@@ -5,6 +5,45 @@ from pathlib import Path
 TOOLS=Path(__file__).resolve().parent;REPO=TOOLS.parent;sys.path.insert(0,str(TOOLS))
 from resolve_and_align_sources import build_schedule_candidates,metadata_errors,regular_schedule_rows,cache_alignment_is_current,derive_source_status
 MANIFEST=REPO/"analysis/sources/source-manifest.json";SCHEDULE=REPO/"data/csv/schedule_all.csv"
+
+
+class ResolverRegressionTests(unittest.TestCase):
+    def test_partial_alignment_not_citation_ready(self):
+        from resolve_and_align_sources import cache_alignment_is_current
+        manifest = {"sources": [{"source_id": "s1", "sha256": "x", "video_id": "abc"}]}
+        alignment = {"video_id": "abc", "raw_sha256": "x", "alignment_status": "partial", "mismatch_count": 1}
+        self.assertFalse(cache_alignment_is_current(manifest["sources"][0], "abc", alignment))
+
+    def test_quarantined_source_not_treated_as_verified(self):
+        import json
+        m = json.loads((Path(__file__).resolve().parent.parent / "analysis" / "sources" / "source-manifest.json").read_text())
+        for s in m["sources"]:
+            if s["source_id"] == "src-s18-w09d02":
+                self.assertEqual(s.get("citation_policy"), "quarantined")
+                break
+        import json
+        m = json.loads((Path(__file__).resolve().parent.parent / "analysis" / "sources" / "source-manifest.json").read_text())
+        for s in m["sources"]:
+            if s["source_id"] == "src-s18-w09d02":
+                self.assertEqual(s.get("citation_policy"), "quarantined")
+                break
+
+
+    def test_partial_alignment_not_citation_ready(self):
+        from resolve_and_align_sources import cache_alignment_is_current
+        manifest = {"sources": [{"source_id": "s1", "sha256": "x", "video_id": "abc"}]}
+        alignment = {"video_id": "abc", "raw_sha256": "x", "alignment_status": "partial", "mismatch_count": 1}
+        self.assertFalse(cache_alignment_is_current(manifest["sources"][0], "abc", alignment))
+
+    def test_quarantined_source_not_treated_as_verified(self):
+        import json
+        m = json.loads((Path(__file__).resolve().parent.parent / "analysis" / "sources" / "source-manifest.json").read_text())
+        for s in m["sources"]:
+            if s["source_id"] == "src-s18-w09d02":
+                self.assertEqual(s.get("citation_policy"), "quarantined")
+                break
+
+
 class ResolverTests(unittest.TestCase):
  @classmethod
  def setUpClass(cls):

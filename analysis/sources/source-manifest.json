@@ -2126,7 +2126,9 @@
       "last_resolution_status": "caption_alignment_partial",
       "last_resolution_error": "alignment left raw lines without verified timestamps",
       "caption_alignment_status": "partial",
-      "caption_alignment_provenance": "youtube-transcript-api; monotonic alignment left unmatched raw lines un-timestamped"
+      "caption_alignment_provenance": "youtube-transcript-api; monotonic alignment left unmatched raw lines un-timestamped",
+      "citation_policy": "quarantined",
+      "citation_policy_reason": "37 short ad/transition/interjection lines without trustworthy timestamps; excluded from timestamp citations until resolved or explicitly approved"
     },
     {
       "source_id": "src-s18-w09d03",
