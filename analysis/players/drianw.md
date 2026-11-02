@@ -48,6 +48,69 @@ Sample game: 1036 game 1 (Eudora).
 - Talents: https://mlbb-image.scoregg.com/rune/511.png, https://mlbb-image.scoregg.com/rune/821.png, https://mlbb-image.scoregg.com/rune/631.png
 - Lane source: liq_slot
 
+
+## Opponent context
+
+Record vs top-4 teams (TLID, NAVI, AE, BTR): **1-2** (3 games)
+Record vs bottom-5 teams (EVOS, ONIC, DEWA, RRQ, GEEK): **2-0** (2 games)
+
+> Derived from `game_players` + `team_games` + `matches`. Opponent classification by final standings rank.
+
+
+## Series appearances
+
+`1036`, `1040`
+
+> Links to `analysis/matches/<series>.md` where available.
+
+
+## Transcript evidence
+
+Source: `src-s18-w01d01` (verified YouTube video `40fehk2f4_E`). Broadcast timestamps from one-to-one caption alignment.
+
+- **Line 883 (00:38:31):** "llan karena Ada Drian Way dan juga"
+  - Context: Commentator references DrianW's mid-lane role.
+  - Link: https://youtu.be/40fehk2f4_E?t=003831
+
+> **ASR caveat:** Auto-captions contain spelling errors and no speaker labels. Quotes are exact to the timed caption text.
+
+
+## Matched comparisons (positional peers)
+
+**DRIANW** (EVOS, MID): 5 games, 5.17 avg KDA.
+
+### Same-team positional peers
+
+| Player | Games | Avg KDA |
+|---|---:|---:|
+| Ryzaa | 35 | 4.74 |
+
+**Assessment:** Outperforms same-team peers (avg KDA 4.74).
+
+### League positional peers (top 5 by KDA, min 10 games)
+
+| Player | Team | Games | Avg KDA |
+|---|---|---:|---:|
+| JIIZEE | NAVI | 37 | 7.54 |
+| DRICHEL | TEAM LIQUID ID | 37 | 6.78 |
+| MORENOOO | BIGETRON BY VIT | 39 | 6.29 |
+| SANZ | ONIC | 17 | 5.88 |
+| Killuaa | ONIC | 18 | 5.63 |
+
+
+## Role-specific metrics
+
+Derived from `game_players` + `team_games` (5 games):
+
+| Metric | Value | Notes |
+|---|---:|---|
+| Avg tower-damage share | 5.7% | player tower_damage / team tower_damage |
+| Avg assist participation | 39.8% | player assists / team kills |
+| Avg kill participation | 67.7% | (kills+assists) / team kills |
+| Avg gold share | 16.9% | player gold / team gold |
+
+> **Note:** First-blood and first-objective (Turtle/Lord) tracking are not available in the database. These metrics are derived from scoreboard aggregates, not objective-level data.
+
 ## References
 
 - Database snapshot `mpl-s18-db-20c5ea2c51f3`

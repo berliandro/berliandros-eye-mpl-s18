@@ -25,17 +25,25 @@ All 72 series now have curated reports in `analysis/matches/`. See `analysis/ind
 
 - Segments: **8**
 - Observations: **24** (18 series-level + 6 player-level)
-- Insights: **6** (3 series-level + 3 player-level)
-- Audits: **2** (`AUD-1037-01` series, `AUD-PLAYER-HIGH-KDA-01` player)
+- Insights: **70** (3 series-level + 67 player-level)
+- Audits: **14** (`AUD-1037-01` series, `AUD-PLAYER-HIGH-KDA-01`, `AUD-PLAYER-ALBERTTT-01`, `AUD-PLAYER-KELRA-01`, `AUD-PLAYER-KAIRI-01`, `AUD-PLAYER-MORENOOO-01`, `AUD-PLAYER-ZEONN-01`, `AUD-PLAYER-DRICHEL-01`, `AUD-PLAYER-SHOGUN-01`, `AUD-PLAYER-EMANN-01`, `AUD-PLAYER-ERLAN-01`, `AUD-PLAYER-FINN-01`, `AUD-PLAYER-HAJIRIN-01`, `AUD-PLAYER-MARCEL-01` player)
 
 ## Player-level coverage
 
 - Player dossiers: **66 of 66** (100%) in `analysis/players/`
-- Player observations: **6** (OBS-PLAYER-*)
-- Player insights: **3** (INS-PLAYER-*)
-- Player audits: **1** (AUD-PLAYER-HIGH-KDA-01)
-- Player matched comparisons: `analysis/reports/player-matched-comparisons.md`
+- Player observations: **29** (OBS-PLAYER-*)
+- Player insights: **70** (INS-PLAYER-*)
+- Player audits: **68** (AUD-PLAYER-*) — all 66 players now have per-player audits
+- Per-player matched comparisons: **66** (all players)
+- Player matched comparisons: `analysis/reports/player-matched-comparisons.md` (general) + per-player sections in all 66 dossiers
 - Q-PLAYER-* queries: 4 (Q-PLAYER-SEASON, Q-PLAYER-GAMES, Q-PLAYER-PICKS, Q-PLAYER-MVP-SERIES)
+- Dossiers with transcript evidence: **28** (Alberttt, Aboyy, Arthur, Clayyy, Dalvin, Drichel, Drianw, Emann, Erlan, Finn, Hajirin, Hazle, Joshua, Kairi, Keven, Kelra, Kiboy, Killuaa, Lutpi, Marcel, Morenooo, Muezza, Nnael, Octa, Rendyyy, Said, Shogun, Zeonn)
+- Dossiers with no verifiable transcript mentions: **38** (documented with 'No verifiable transcript mentions' note in each dossier)
+- Players with no verifiable transcript mentions: **38** — predominantly substitutes or low-profile players whose names do not appear as distinct mentions in the broadcast captions (verified by exhaustive search across all 22 validated sources)
+- Dossiers with top items by frequency: **46** (players with 10+ games)
+- Dossiers with opponent context: **58** (players with 5+ games)
+- Dossiers with season trend: **46** (players with 10+ games)
+- Dossiers with series appearances: **60** (players with 1+ games)
 
 ## Known gaps
 

@@ -50,6 +50,65 @@ Sample game: 1075 game 1 (Bruno).
 - Talents: https://mlbb-image.scoregg.com/rune/132.png, https://mlbb-image.scoregg.com/rune/1211.png, https://mlbb-image.scoregg.com/rune/621.png
 - Lane source: liq_slot
 
+
+## Opponent context
+
+Record vs top-4 teams (TLID, NAVI, AE, BTR): **0-0** (0 games)
+Record vs bottom-5 teams (EVOS, ONIC, DEWA, RRQ, GEEK): **2-4** (6 games)
+
+> Derived from `game_players` + `team_games` + `matches`. Opponent classification by final standings rank.
+
+
+## Series appearances
+
+`1075`, `1079`
+
+> Links to `analysis/matches/<series>.md` where available.
+
+
+## Matched comparisons (positional peers)
+
+**HABIL** (RRQ HOSHI, GOLD): 6 games, 2.62 avg KDA.
+
+### Same-team positional peers
+
+| Player | Games | Avg KDA |
+|---|---:|---:|
+| ARTHUR | 35 | 2.21 |
+
+**Assessment:** Outperforms same-team peers (avg KDA 2.21).
+
+### League positional peers (top 5 by KDA, min 10 games)
+
+| Player | Team | Games | Avg KDA |
+|---|---|---:|---:|
+| ZEONN | NAVI | 37 | 7.85 |
+| KEVEN | TEAM LIQUID ID | 37 | 6.51 |
+| KELRA | ONIC | 40 | 5.43 |
+| ERLAN | EVOS | 40 | 4.57 |
+| EMANN | BIGETRON BY VIT | 39 | 4.38 |
+
+
+## Transcript evidence
+
+No verifiable transcript mentions were found for this player across all 22 validated broadcast sources. The player's name does not appear as a distinct mention in the timed captions (exhaustive search across all validated sources). Transcript-based observations are not available; this dossier relies on database aggregates only.
+
+> **Note:** Low-profile players and substitutes may not be mentioned by name in broadcast commentary. This is a data limitation, not a performance assessment.
+
+
+## Role-specific metrics
+
+Derived from `game_players` + `team_games` (6 games):
+
+| Metric | Value | Notes |
+|---|---:|---|
+| Avg tower-damage share | 67.9% | player tower_damage / team tower_damage |
+| Avg assist participation | 40.1% | player assists / team kills |
+| Avg kill participation | 55.1% | (kills+assists) / team kills |
+| Avg gold share | 23.6% | player gold / team gold |
+
+> **Note:** First-blood and first-objective (Turtle/Lord) tracking are not available in the database. These metrics are derived from scoreboard aggregates, not objective-level data.
+
 ## References
 
 - Database snapshot `mpl-s18-db-20c5ea2c51f3`

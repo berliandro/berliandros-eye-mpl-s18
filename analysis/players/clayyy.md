@@ -48,6 +48,61 @@ Sample game: 1065 game 1 (Pharsa).
 - Talents: https://mlbb-image.scoregg.com/rune/811.png, https://mlbb-image.scoregg.com/rune/121.png, https://mlbb-image.scoregg.com/rune/631.png
 - Lane source: liq_slot
 
+
+## Series appearances
+
+`1065`, `1071`
+
+> Links to `analysis/matches/<series>.md` where available.
+
+
+## Transcript evidence
+
+Source: `src-s18-w01d01` (verified YouTube video `40fehk2f4_E`). Broadcast timestamps from one-to-one caption alignment.
+
+- **Line 233 (00:16:08):** "dengan dua king yang kembali? King Clay"
+  - Context: Commentator references Clayyy's return.
+  - Link: https://youtu.be/40fehk2f4_E?t=001608
+
+> **ASR caveat:** Auto-captions contain spelling errors and no speaker labels. Quotes are exact to the timed caption text.
+
+
+## Matched comparisons (positional peers)
+
+**CLAYYY** (RRQ HOSHI, MID): 4 games, 2.10 avg KDA.
+
+### Same-team positional peers
+
+| Player | Games | Avg KDA |
+|---|---:|---:|
+| HAJIRIN | 37 | 2.77 |
+
+**Assessment:** Underperforms same-team peers (avg KDA 2.77).
+
+### League positional peers (top 5 by KDA, min 10 games)
+
+| Player | Team | Games | Avg KDA |
+|---|---|---:|---:|
+| JIIZEE | NAVI | 37 | 7.54 |
+| DRICHEL | TEAM LIQUID ID | 37 | 6.78 |
+| MORENOOO | BIGETRON BY VIT | 39 | 6.29 |
+| SANZ | ONIC | 17 | 5.88 |
+| Killuaa | ONIC | 18 | 5.63 |
+
+
+## Role-specific metrics
+
+Derived from `game_players` + `team_games` (4 games):
+
+| Metric | Value | Notes |
+|---|---:|---|
+| Avg tower-damage share | 1.3% | player tower_damage / team tower_damage |
+| Avg assist participation | 48.6% | player assists / team kills |
+| Avg kill participation | 84.4% | (kills+assists) / team kills |
+| Avg gold share | 16.8% | player gold / team gold |
+
+> **Note:** First-blood and first-objective (Turtle/Lord) tracking are not available in the database. These metrics are derived from scoreboard aggregates, not objective-level data.
+
 ## References
 
 - Database snapshot `mpl-s18-db-20c5ea2c51f3`

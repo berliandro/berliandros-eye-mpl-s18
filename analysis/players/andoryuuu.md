@@ -47,13 +47,79 @@ Database snapshot: `mpl-s18-db-20c5ea2c51f3` (SHA-256 `20c5ea2c51f30d1a24cd2ce69
 | Paquito | 3 |
 | Harley | 1 |
 
-## Items & talents (sample game)
 
-Sample game: 1037 game 1 (Hirara).
-- Emblem: https://mlbb-image.scoregg.com/emblem/20005.png
-- Items: https://cdn.id-mpl.com/match-detail/equipment/3001.png?X-Amz-Content-Sha256=UNSIGNED-PAYLOAD&X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=DO00UK9XG63MGT2KWV9H%2F20261022%2Fsgp1%2Fs3%2Faws4_request&X-Amz-Date=20261022T075206Z&X-Amz-SignedHeaders=host&X-Amz-Expires=21600&X-Amz-Signature=998c4b4c57bb20fb926b5e1387d7a900687eda2cb62b0641e23a590c473c3db5, https://cdn.id-mpl.com/match-detail/equipment/3008.png?X-Amz-Content-Sha256=UNSIGNED-PAYLOAD&X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=DO00UK9XG63MGT2KWV9H%2F20261022%2Fsgp1%2Fs3%2Faws4_request&X-Amz-Date=20261022T075206Z&X-Amz-SignedHeaders=host&X-Amz-Expires=21600&X-Amz-Signature=a2ada9944a55e0101f5e999cabb065a1b86cc84b1533064949e74b24ad586cf6, https://mlbb-image.scoregg.com/equip/3432.png, https://cdn.id-mpl.com/match-detail/equipment/3009.png?X-Amz-Content-Sha256=UNSIGNED-PAYLOAD&X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=DO00UK9XG63MGT2KWV9H%2F20261022%2Fsgp1%2Fs3%2Faws4_request&X-Amz-Date=20261022T075206Z&X-Amz-SignedHeaders=host&X-Amz-Expires=21600&X-Amz-Signature=32a0f0f6622360809bffc3598c7ec43fedc6b1d38d7e28483179de99b6f6928f, https://mlbb-image.scoregg.com/m/33/p/248/1615180828774.png, https://cdn.id-mpl.com/match-detail/equipment/3013.png?X-Amz-Content-Sha256=UNSIGNED-PAYLOAD&X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=DO00UK9XG63MGT2KWV9H%2F20261022%2Fsgp1%2Fs3%2Faws4_request&X-Amz-Date=20261022T075709Z&X-Amz-SignedHeaders=host&X-Amz-Expires=21600&X-Amz-Signature=29244aaa57b75ee4d7d9fba0d923bd9cba0f4d542b2302ea23468c08bba05be9
-- Talents: https://mlbb-image.scoregg.com/rune/531.png, https://mlbb-image.scoregg.com/rune/111.png, https://mlbb-image.scoregg.com/rune/122.png
-- Lane source: liq_slot
+## Items & talents (full summary)
+
+Across 12 games:
+
+### Top items by frequency
+
+| Item | Games | Frequency |
+|---|---:|---:|
+| https://cdn.id-mpl.com/match-detail/equipment/3009.png?X-Amz-Content-Sha256=UNSIGNED-PAYLOAD&X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=DO00UK9XG63MGT2KWV9H%2F20261022%2Fsgp1%2Fs3%2Faws4_request&X-Amz-Date=20261022T075206Z&X-Amz-SignedHeaders=host&X-Amz-Expires=21600&X-Amz-Signature=32a0f0f6622360809bffc3598c7ec43fedc6b1d38d7e28483179de99b6f6928f | 11 | 92% |
+| https://mlbb-image.scoregg.com/m/33/p/248/1615180828774.png | 11 | 92% |
+| https://cdn.id-mpl.com/match-detail/equipment/3001.png?X-Amz-Content-Sha256=UNSIGNED-PAYLOAD&X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=DO00UK9XG63MGT2KWV9H%2F20261022%2Fsgp1%2Fs3%2Faws4_request&X-Amz-Date=20261022T075206Z&X-Amz-SignedHeaders=host&X-Amz-Expires=21600&X-Amz-Signature=998c4b4c57bb20fb926b5e1387d7a900687eda2cb62b0641e23a590c473c3db5 | 10 | 83% |
+| https://mlbb-image.scoregg.com/equip/3431.png | 6 | 50% |
+| https://cdn.id-mpl.com/match-detail/equipment/3008.png?X-Amz-Content-Sha256=UNSIGNED-PAYLOAD&X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=DO00UK9XG63MGT2KWV9H%2F20261022%2Fsgp1%2Fs3%2Faws4_request&X-Amz-Date=20261022T075206Z&X-Amz-SignedHeaders=host&X-Amz-Expires=21600&X-Amz-Signature=a2ada9944a55e0101f5e999cabb065a1b86cc84b1533064949e74b24ad586cf6 | 5 | 42% |
+| https://cdn.id-mpl.com/match-detail/equipment/3004.png?X-Amz-Content-Sha256=UNSIGNED-PAYLOAD&X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=DO00UK9XG63MGT2KWV9H%2F20261022%2Fsgp1%2Fs3%2Faws4_request&X-Amz-Date=20261022T075207Z&X-Amz-SignedHeaders=host&X-Amz-Expires=21600&X-Amz-Signature=9a267be2eb8a5825a711fe5477c0b9eb42306c744b9191457cd5f2708f99fe0e | 4 | 33% |
+| https://mlbb-image.scoregg.com/equip/3432.png | 3 | 25% |
+| https://cdn.id-mpl.com/match-detail/equipment/1001.png?X-Amz-Content-Sha256=UNSIGNED-PAYLOAD&X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=DO00UK9XG63MGT2KWV9H%2F20261022%2Fsgp1%2Fs3%2Faws4_request&X-Amz-Date=20261022T075212Z&X-Amz-SignedHeaders=host&X-Amz-Expires=21600&X-Amz-Signature=e99dc084d754cf92c862835bc3030da18edfbbc9cbb2ae93a56aec1e13112bf8 | 3 | 25% |
+| https://cdn.id-mpl.com/match-detail/equipment/2001.png?X-Amz-Content-Sha256=UNSIGNED-PAYLOAD&X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=DO00UK9XG63MGT2KWV9H%2F20261022%2Fsgp1%2Fs3%2Faws4_request&X-Amz-Date=20261022T075209Z&X-Amz-SignedHeaders=host&X-Amz-Expires=21600&X-Amz-Signature=211ccae95ae2a3625d384232a10bfed89c3abf73604e20afaa0a402852d10970 | 3 | 25% |
+| https://cdn.id-mpl.com/match-detail/equipment/3013.png?X-Amz-Content-Sha256=UNSIGNED-PAYLOAD&X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=DO00UK9XG63MGT2KWV9H%2F20261022%2Fsgp1%2Fs3%2Faws4_request&X-Amz-Date=20261022T075709Z&X-Amz-SignedHeaders=host&X-Amz-Expires=21600&X-Amz-Signature=29244aaa57b75ee4d7d9fba0d923bd9cba0f4d542b2302ea23468c08bba05be9 | 2 | 17% |
+
+### Top talents by frequency
+
+| Talent | Games | Frequency |
+|---|---:|---:|
+| https://mlbb-image.scoregg.com/rune/111.png | 12 | 100% |
+| https://mlbb-image.scoregg.com/rune/122.png | 12 | 100% |
+| https://mlbb-image.scoregg.com/rune/531.png | 11 | 92% |
+| https://mlbb-image.scoregg.com/rune/131.png | 1 | 8% |
+
+### Emblems used
+
+| Emblem | Games | Frequency |
+|---|---:|---:|
+| https://mlbb-image.scoregg.com/emblem/20005.png | 11 | 92% |
+| https://mlbb-image.scoregg.com/emblem/20006.png | 1 | 8% |
+
+
+
+## Role-specific metrics
+
+Derived from `game_players` + `team_games` (12 games):
+
+| Metric | Value | Notes |
+|---|---:|---|
+| Avg tower-damage share | 13.9% | player tower_damage / team tower_damage |
+| Avg assist participation | 41.0% | player assists / team kills |
+| Avg kill participation | 79.2% | (kills+assists) / team kills |
+| Avg gold share | 24.5% | player gold / team gold |
+
+> **Note:** First-blood and first-objective (Turtle/Lord) tracking are not available in the database. These metrics are derived from scoreboard aggregates, not objective-level data.
+
+
+## Matched comparisons (positional peers)
+
+**ANDORYUUU** (NAVI, JUNGLE): 12 games, 3.44 avg KDA.
+
+### Same-team positional peers
+
+| Player | Games | Avg KDA |
+|---|---:|---:|
+| Joshuaa | 25 | 6.00 |
+
+**Assessment:** Underperforms same-team peers (avg KDA 6.00).
+
+### League positional peers (top 5 by KDA, min 10 games)
+
+| Player | Team | Games | Avg KDA |
+|---|---|---:|---:|
+| Joshuaa | NAVI | 25 | 6.00 |
+| ALBERTTT | EVOS | 35 | 4.70 |
+| KAIRI | ONIC | 40 | 4.64 |
+| KEVIN | TEAM LIQUID ID | 37 | 4.29 |
+| Affan | ALTER EGO ESPORTS | 36 | 4.18 |
 
 ## References
 

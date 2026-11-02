@@ -53,6 +53,65 @@ Sample game: 1053 game 2 (Uranus).
 - Talents: https://mlbb-image.scoregg.com/rune/811.png, https://mlbb-image.scoregg.com/rune/321.png, https://mlbb-image.scoregg.com/rune/731.png
 - Lane source: liq_slot
 
+
+## Opponent context
+
+Record vs top-4 teams (TLID, NAVI, AE, BTR): **0-0** (0 games)
+Record vs bottom-5 teams (EVOS, ONIC, DEWA, RRQ, GEEK): **3-5** (8 games)
+
+> Derived from `game_players` + `team_games` + `matches`. Opponent classification by final standings rank.
+
+
+## Series appearances
+
+`1053`, `1069`, `1073`, `1104`
+
+> Links to `analysis/matches/<series>.md` where available.
+
+
+## Matched comparisons (positional peers)
+
+**FEBRIII** (GEEK FAM, EXP): 8 games, 1.92 avg KDA.
+
+### Same-team positional peers
+
+| Player | Games | Avg KDA |
+|---|---:|---:|
+| MARCEL | 31 | 2.02 |
+
+**Assessment:** Underperforms same-team peers (avg KDA 2.02).
+
+### League positional peers (top 5 by KDA, min 10 games)
+
+| Player | Team | Games | Avg KDA |
+|---|---|---:|---:|
+| ARAN | TEAM LIQUID ID | 37 | 4.86 |
+| VELL | EVOS | 10 | 4.59 |
+| KARSS | NAVI | 37 | 3.79 |
+| Nino | ALTER EGO ESPORTS | 36 | 3.53 |
+| SHOGUN | BIGETRON BY VIT | 39 | 3.28 |
+
+
+## Transcript evidence
+
+No verifiable transcript mentions were found for this player across all 22 validated broadcast sources. The player's name does not appear as a distinct mention in the timed captions (exhaustive search across all validated sources). Transcript-based observations are not available; this dossier relies on database aggregates only.
+
+> **Note:** Low-profile players and substitutes may not be mentioned by name in broadcast commentary. This is a data limitation, not a performance assessment.
+
+
+## Role-specific metrics
+
+Derived from `game_players` + `team_games` (8 games):
+
+| Metric | Value | Notes |
+|---|---:|---|
+| Avg tower-damage share | 4.6% | player tower_damage / team tower_damage |
+| Avg assist participation | 59.5% | player assists / team kills |
+| Avg kill participation | 65.3% | (kills+assists) / team kills |
+| Avg gold share | 16.5% | player gold / team gold |
+
+> **Note:** First-blood and first-objective (Turtle/Lord) tracking are not available in the database. These metrics are derived from scoreboard aggregates, not objective-level data.
+
 ## References
 
 - Database snapshot `mpl-s18-db-20c5ea2c51f3`

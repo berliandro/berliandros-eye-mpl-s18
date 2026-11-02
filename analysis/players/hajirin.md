@@ -82,13 +82,76 @@ Database snapshot: `mpl-s18-db-20c5ea2c51f3` (SHA-256 `20c5ea2c51f30d1a24cd2ce69
 | Lunox | 1 |
 | Yve | 1 |
 
-## Items & talents (sample game)
 
-Sample game: 1036 game 1 (Kadita).
-- Emblem: https://mlbb-image.scoregg.com/emblem/20005.png
-- Items: https://cdn.id-mpl.com/match-detail/equipment/3101.png?X-Amz-Content-Sha256=UNSIGNED-PAYLOAD&X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=DO00UK9XG63MGT2KWV9H%2F20261017%2Fsgp1%2Fs3%2Faws4_request&X-Amz-Date=20261017T212821Z&X-Amz-SignedHeaders=host&X-Amz-Expires=21600&X-Amz-Signature=25759068d6b4734cc1d329df63dfeb7eb4d5e22aa7dcccf855c056dcb1c7decf, https://cdn.id-mpl.com/match-detail/equipment/2304.png?X-Amz-Content-Sha256=UNSIGNED-PAYLOAD&X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=DO00UK9XG63MGT2KWV9H%2F20261017%2Fsgp1%2Fs3%2Faws4_request&X-Amz-Date=20261017T215037Z&X-Amz-SignedHeaders=host&X-Amz-Expires=21600&X-Amz-Signature=c5da17e84e96c9d6e882c6f3dbb5bf192f83524254ac0b10632e9444d131f648, https://cdn.id-mpl.com/match-detail/equipment/3111.png?X-Amz-Content-Sha256=UNSIGNED-PAYLOAD&X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=DO00UK9XG63MGT2KWV9H%2F20261017%2Fsgp1%2Fs3%2Faws4_request&X-Amz-Date=20261017T215721Z&X-Amz-SignedHeaders=host&X-Amz-Expires=21600&X-Amz-Signature=6938ae2288b11f70dcda83ddde98e341db9ff128a0d2f48bec473a61f8749447, https://cdn.id-mpl.com/match-detail/equipment/3102.png?X-Amz-Content-Sha256=UNSIGNED-PAYLOAD&X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=DO00UK9XG63MGT2KWV9H%2F20261017%2Fsgp1%2Fs3%2Faws4_request&X-Amz-Date=20261017T221746Z&X-Amz-SignedHeaders=host&X-Amz-Expires=21600&X-Amz-Signature=865327f5b980eddadf3a8ba56253f951096f03c1734ec248d11937824210e94d
-- Talents: https://mlbb-image.scoregg.com/rune/131.png, https://mlbb-image.scoregg.com/rune/511.png, https://mlbb-image.scoregg.com/rune/821.png
-- Lane source: liq_slot
+## Items & talents (full summary)
+
+Across 37 games:
+
+### Top items by frequency
+
+| Item | Games | Frequency |
+|---|---:|---:|
+| https://cdn.id-mpl.com/match-detail/equipment/3105.png?X-Amz-Content-Sha256=UNSIGNED-PAYLOAD&X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=DO00UK9XG63MGT2KWV9H%2F20261022%2Fsgp1%2Fs3%2Faws4_request&X-Amz-Date=20261022T075206Z&X-Amz-SignedHeaders=host&X-Amz-Expires=21600&X-Amz-Signature=2f6a8543a620aa83733edf7d82303150920cd64a2438f176ea7214e8cdd7b848 | 31 | 84% |
+| https://cdn.id-mpl.com/match-detail/equipment/3101.png?X-Amz-Content-Sha256=UNSIGNED-PAYLOAD&X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=DO00UK9XG63MGT2KWV9H%2F20261022%2Fsgp1%2Fs3%2Faws4_request&X-Amz-Date=20261022T075207Z&X-Amz-SignedHeaders=host&X-Amz-Expires=21600&X-Amz-Signature=77ca89811baece68320d5c15690e7156ba8d1f0559e83f31312b516294d03a07 | 21 | 57% |
+| https://cdn.id-mpl.com/match-detail/equipment/2304.png?X-Amz-Content-Sha256=UNSIGNED-PAYLOAD&X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=DO00UK9XG63MGT2KWV9H%2F20261022%2Fsgp1%2Fs3%2Faws4_request&X-Amz-Date=20261022T075311Z&X-Amz-SignedHeaders=host&X-Amz-Expires=21600&X-Amz-Signature=e9d1bb8f6baaaa58e3b86b31c4d6964ec1aa2f381067565acafdf35a15423ad0 | 14 | 38% |
+| https://cdn.id-mpl.com/match-detail/equipment/2101.png?X-Amz-Content-Sha256=UNSIGNED-PAYLOAD&X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=DO00UK9XG63MGT2KWV9H%2F20261022%2Fsgp1%2Fs3%2Faws4_request&X-Amz-Date=20261022T075206Z&X-Amz-SignedHeaders=host&X-Amz-Expires=21600&X-Amz-Signature=59db4aec7c2fa3fc3a6257dd4ad6372594e6398da1ec9ba0e322125fa3fecff7 | 12 | 32% |
+| https://cdn.id-mpl.com/match-detail/equipment/3110.png?X-Amz-Content-Sha256=UNSIGNED-PAYLOAD&X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=DO00UK9XG63MGT2KWV9H%2F20261022%2Fsgp1%2Fs3%2Faws4_request&X-Amz-Date=20261022T075208Z&X-Amz-SignedHeaders=host&X-Amz-Expires=21600&X-Amz-Signature=b1161a452c7b24885ba4821e12bfc60135bb8f41f31566b66ca86033cf409aac | 10 | 27% |
+| https://cdn.id-mpl.com/match-detail/equipment/3108.png?X-Amz-Content-Sha256=UNSIGNED-PAYLOAD&X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=DO00UK9XG63MGT2KWV9H%2F20261022%2Fsgp1%2Fs3%2Faws4_request&X-Amz-Date=20261022T075208Z&X-Amz-SignedHeaders=host&X-Amz-Expires=21600&X-Amz-Signature=7590c457d4539e700340d4cd19af15c1c21ba476aa23b7c86edf8f5b16d51eab | 10 | 27% |
+| https://cdn.id-mpl.com/match-detail/equipment/2303.png?X-Amz-Content-Sha256=UNSIGNED-PAYLOAD&X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=DO00UK9XG63MGT2KWV9H%2F20261022%2Fsgp1%2Fs3%2Faws4_request&X-Amz-Date=20261022T075206Z&X-Amz-SignedHeaders=host&X-Amz-Expires=21600&X-Amz-Signature=22f6b72538d8a40a2c05116e93ab5696d87710c3fe850e4a4e41cf695836c344 | 8 | 22% |
+| https://cdn.id-mpl.com/match-detail/equipment/2107.png?X-Amz-Content-Sha256=UNSIGNED-PAYLOAD&X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=DO00UK9XG63MGT2KWV9H%2F20261022%2Fsgp1%2Fs3%2Faws4_request&X-Amz-Date=20261022T075207Z&X-Amz-SignedHeaders=host&X-Amz-Expires=21600&X-Amz-Signature=049737943bee999d972728798dc726c8268d9baa159abe061f7658c4c3ee9096 | 8 | 22% |
+| https://cdn.id-mpl.com/match-detail/equipment/1101.png?X-Amz-Content-Sha256=UNSIGNED-PAYLOAD&X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=DO00UK9XG63MGT2KWV9H%2F20261022%2Fsgp1%2Fs3%2Faws4_request&X-Amz-Date=20261022T075207Z&X-Amz-SignedHeaders=host&X-Amz-Expires=21600&X-Amz-Signature=62369a9d6d2734f48eec3ae5ecddf91b8666a215c1c7d5b033cbe3dc4a181207 | 7 | 19% |
+| https://cdn.id-mpl.com/match-detail/equipment/2106.png?X-Amz-Content-Sha256=UNSIGNED-PAYLOAD&X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=DO00UK9XG63MGT2KWV9H%2F20261022%2Fsgp1%2Fs3%2Faws4_request&X-Amz-Date=20261022T075206Z&X-Amz-SignedHeaders=host&X-Amz-Expires=21600&X-Amz-Signature=9e0d992767993755b13b7e92bdf25e9a749b99e0b75251a92e0ace60a30d2856 | 5 | 14% |
+
+### Top talents by frequency
+
+| Talent | Games | Frequency |
+|---|---:|---:|
+| https://mlbb-image.scoregg.com/rune/131.png | 23 | 62% |
+| https://mlbb-image.scoregg.com/rune/121.png | 23 | 62% |
+| https://mlbb-image.scoregg.com/rune/611.png | 18 | 49% |
+| https://mlbb-image.scoregg.com/rune/821.png | 13 | 35% |
+| https://mlbb-image.scoregg.com/rune/511.png | 12 | 32% |
+| https://mlbb-image.scoregg.com/rune/631.png | 6 | 16% |
+| https://mlbb-image.scoregg.com/rune/811.png | 5 | 14% |
+| https://mlbb-image.scoregg.com/rune/1231.png | 5 | 14% |
+
+### Emblems used
+
+| Emblem | Games | Frequency |
+|---|---:|---:|
+| https://mlbb-image.scoregg.com/emblem/20006.png | 32 | 86% |
+| https://mlbb-image.scoregg.com/emblem/20001.png | 3 | 8% |
+| https://mlbb-image.scoregg.com/emblem/20005.png | 2 | 5% |
+
+
+
+## Role-specific metrics
+
+Derived from `game_players` + `team_games` (37 games):
+
+| Metric | Value | Notes |
+|---|---:|---|
+| Avg tower-damage share | 16.1% | player tower_damage / team tower_damage |
+| Avg assist participation | 60.2% | player assists / team kills |
+| Avg kill participation | 79.7% | (kills+assists) / team kills |
+| Avg gold share | 18.6% | player gold / team gold |
+
+> **Note:** First-blood and first-objective (Turtle/Lord) tracking are not available in the database. These metrics are derived from scoreboard aggregates, not objective-level data.
+
+
+## Matched comparisons (positional peers)
+
+**HAJIRIN** (RRQ HOSHI, MID): 37 games, 2.77 avg KDA.
+
+### League positional peers (top 5 by KDA, min 10 games)
+
+| Player | Team | Games | Avg KDA |
+|---|---|---:|---:|
+| JIIZEE | NAVI | 37 | 7.54 |
+| DRICHEL | TEAM LIQUID ID | 37 | 6.78 |
+| MORENOOO | BIGETRON BY VIT | 39 | 6.29 |
+| SANZ | ONIC | 17 | 5.88 |
+| Killuaa | ONIC | 18 | 5.63 |
 
 ## References
 

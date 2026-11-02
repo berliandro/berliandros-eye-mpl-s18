@@ -83,13 +83,75 @@ Database snapshot: `mpl-s18-db-20c5ea2c51f3` (SHA-256 `20c5ea2c51f30d1a24cd2ce69
 | Aulus | 1 |
 | Esmeralda | 1 |
 
-## Items & talents (sample game)
 
-Sample game: 1039 game 1 (Brody).
-- Emblem: https://mlbb-image.scoregg.com/emblem/20007.png
-- Items: https://cdn.id-mpl.com/match-detail/equipment/1001.png?X-Amz-Content-Sha256=UNSIGNED-PAYLOAD&X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=DO00UK9XG63MGT2KWV9H%2F20261022%2Fsgp1%2Fs3%2Faws4_request&X-Amz-Date=20261022T075212Z&X-Amz-SignedHeaders=host&X-Amz-Expires=21600&X-Amz-Signature=e99dc084d754cf92c862835bc3030da18edfbbc9cbb2ae93a56aec1e13112bf8, https://cdn.id-mpl.com/match-detail/equipment/3007.png?X-Amz-Content-Sha256=UNSIGNED-PAYLOAD&X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=DO00UK9XG63MGT2KWV9H%2F20261022%2Fsgp1%2Fs3%2Faws4_request&X-Amz-Date=20261022T075709Z&X-Amz-SignedHeaders=host&X-Amz-Expires=21600&X-Amz-Signature=b686c2c3ec48de3bbb29daf5e28748015f2ba390b229951fe61a5aab9ac3bc47, https://cdn.id-mpl.com/match-detail/equipment/2302.png?X-Amz-Content-Sha256=UNSIGNED-PAYLOAD&X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=DO00UK9XG63MGT2KWV9H%2F20261022%2Fsgp1%2Fs3%2Faws4_request&X-Amz-Date=20261022T075206Z&X-Amz-SignedHeaders=host&X-Amz-Expires=21599&X-Amz-Signature=a31955b5a2a7a3f0450d594f17992885dfd8ece2f880695c82d8dd7b5cb99df9, https://mlbb-image.scoregg.com/m/33/p/248/1620354227288.png, https://cdn.id-mpl.com/match-detail/equipment/3013.png?X-Amz-Content-Sha256=UNSIGNED-PAYLOAD&X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=DO00UK9XG63MGT2KWV9H%2F20261022%2Fsgp1%2Fs3%2Faws4_request&X-Amz-Date=20261022T075709Z&X-Amz-SignedHeaders=host&X-Amz-Expires=21600&X-Amz-Signature=29244aaa57b75ee4d7d9fba0d923bd9cba0f4d542b2302ea23468c08bba05be9
-- Talents: https://mlbb-image.scoregg.com/rune/111.png, https://mlbb-image.scoregg.com/rune/521.png, https://mlbb-image.scoregg.com/rune/132.png
-- Lane source: liq_slot
+## Items & talents (full summary)
+
+Across 39 games:
+
+### Top items by frequency
+
+| Item | Games | Frequency |
+|---|---:|---:|
+| https://cdn.id-mpl.com/match-detail/equipment/2009.png?X-Amz-Content-Sha256=UNSIGNED-PAYLOAD&X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=DO00UK9XG63MGT2KWV9H%2F20261022%2Fsgp1%2Fs3%2Faws4_request&X-Amz-Date=20261022T075208Z&X-Amz-SignedHeaders=host&X-Amz-Expires=21600&X-Amz-Signature=bef810adf9b2538a11599e36239011994eeafd6363cd5a408eb244fe815e7290 | 25 | 64% |
+| https://cdn.id-mpl.com/match-detail/equipment/2006.png?X-Amz-Content-Sha256=UNSIGNED-PAYLOAD&X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=DO00UK9XG63MGT2KWV9H%2F20261022%2Fsgp1%2Fs3%2Faws4_request&X-Amz-Date=20261022T075208Z&X-Amz-SignedHeaders=host&X-Amz-Expires=21600&X-Amz-Signature=031ecdf67977b5416e8a33085535e552820a552888bcc9e002650bbb64451844 | 25 | 64% |
+| https://cdn.id-mpl.com/match-detail/equipment/2008.png?X-Amz-Content-Sha256=UNSIGNED-PAYLOAD&X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=DO00UK9XG63MGT2KWV9H%2F20261022%2Fsgp1%2Fs3%2Faws4_request&X-Amz-Date=20261022T075208Z&X-Amz-SignedHeaders=host&X-Amz-Expires=21600&X-Amz-Signature=b929af0905fdb0c4bb2f97517d0773502654b38e3fc972a0e3b18a1ffc1463f0 | 24 | 62% |
+| https://cdn.id-mpl.com/match-detail/equipment/2301.png?X-Amz-Content-Sha256=UNSIGNED-PAYLOAD&X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=DO00UK9XG63MGT2KWV9H%2F20261022%2Fsgp1%2Fs3%2Faws4_request&X-Amz-Date=20261022T075210Z&X-Amz-SignedHeaders=host&X-Amz-Expires=21600&X-Amz-Signature=12b96736a0de1730fd7bcfc82031d4a1d447b85ebee24e481e4397b6fc7872e3 | 23 | 59% |
+| https://mlbb-image.scoregg.com/m/33/p/248/1620354227288.png | 16 | 41% |
+| https://cdn.id-mpl.com/match-detail/equipment/1006.png?X-Amz-Content-Sha256=UNSIGNED-PAYLOAD&X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=DO00UK9XG63MGT2KWV9H%2F20261022%2Fsgp1%2Fs3%2Faws4_request&X-Amz-Date=20261022T075213Z&X-Amz-SignedHeaders=host&X-Amz-Expires=21600&X-Amz-Signature=608852b836e122a883fcd4694f1a3182baf7bd4f59572fefc95f0ccd821e2226 | 12 | 31% |
+| https://cdn.id-mpl.com/match-detail/equipment/3013.png?X-Amz-Content-Sha256=UNSIGNED-PAYLOAD&X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=DO00UK9XG63MGT2KWV9H%2F20261022%2Fsgp1%2Fs3%2Faws4_request&X-Amz-Date=20261022T075709Z&X-Amz-SignedHeaders=host&X-Amz-Expires=21600&X-Amz-Signature=29244aaa57b75ee4d7d9fba0d923bd9cba0f4d542b2302ea23468c08bba05be9 | 10 | 26% |
+| https://cdn.id-mpl.com/match-detail/equipment/2302.png?X-Amz-Content-Sha256=UNSIGNED-PAYLOAD&X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=DO00UK9XG63MGT2KWV9H%2F20261022%2Fsgp1%2Fs3%2Faws4_request&X-Amz-Date=20261022T075206Z&X-Amz-SignedHeaders=host&X-Amz-Expires=21599&X-Amz-Signature=a31955b5a2a7a3f0450d594f17992885dfd8ece2f880695c82d8dd7b5cb99df9 | 9 | 23% |
+| https://cdn.id-mpl.com/match-detail/equipment/1001.png?X-Amz-Content-Sha256=UNSIGNED-PAYLOAD&X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=DO00UK9XG63MGT2KWV9H%2F20261022%2Fsgp1%2Fs3%2Faws4_request&X-Amz-Date=20261022T075212Z&X-Amz-SignedHeaders=host&X-Amz-Expires=21600&X-Amz-Signature=e99dc084d754cf92c862835bc3030da18edfbbc9cbb2ae93a56aec1e13112bf8 | 8 | 21% |
+| https://mlbb-image.scoregg.com/m/33/p/248/1615180828774.png | 8 | 21% |
+
+### Top talents by frequency
+
+| Talent | Games | Frequency |
+|---|---:|---:|
+| https://mlbb-image.scoregg.com/rune/111.png | 27 | 69% |
+| https://mlbb-image.scoregg.com/rune/132.png | 26 | 67% |
+| https://mlbb-image.scoregg.com/rune/721.png | 22 | 56% |
+| https://mlbb-image.scoregg.com/rune/621.png | 13 | 33% |
+| https://mlbb-image.scoregg.com/rune/112.png | 9 | 23% |
+| https://mlbb-image.scoregg.com/rune/631.png | 5 | 13% |
+| https://mlbb-image.scoregg.com/rune/821.png | 3 | 8% |
+| https://mlbb-image.scoregg.com/rune/731.png | 3 | 8% |
+
+### Emblems used
+
+| Emblem | Games | Frequency |
+|---|---:|---:|
+| https://mlbb-image.scoregg.com/emblem/20007.png | 38 | 97% |
+| https://mlbb-image.scoregg.com/emblem/20008.png | 1 | 3% |
+
+
+
+## Role-specific metrics
+
+Derived from `game_players` + `team_games` (39 games):
+
+| Metric | Value | Notes |
+|---|---:|---|
+| Avg tower-damage share | 58.8% | player tower_damage / team tower_damage |
+| Avg assist participation | 37.5% | player assists / team kills |
+| Avg kill participation | 56.9% | (kills+assists) / team kills |
+| Avg gold share | 22.9% | player gold / team gold |
+
+> **Note:** First-blood and first-objective (Turtle/Lord) tracking are not available in the database. These metrics are derived from scoreboard aggregates, not objective-level data.
+
+
+## Matched comparisons (positional peers)
+
+**MAYBEEE** (DEWA UNITED, GOLD): 39 games, 4.12 avg KDA.
+
+### League positional peers (top 5 by KDA, min 10 games)
+
+| Player | Team | Games | Avg KDA |
+|---|---|---:|---:|
+| ZEONN | NAVI | 37 | 7.85 |
+| KEVEN | TEAM LIQUID ID | 37 | 6.51 |
+| KELRA | ONIC | 40 | 5.43 |
+| ERLAN | EVOS | 40 | 4.57 |
+| EMANN | BIGETRON BY VIT | 39 | 4.38 |
 
 ## References
 

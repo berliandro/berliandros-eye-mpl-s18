@@ -93,6 +93,43 @@ Sample game: 1038 game 1 (Brody).
 - Talents: https://mlbb-image.scoregg.com/rune/111.png, https://mlbb-image.scoregg.com/rune/521.png, https://mlbb-image.scoregg.com/rune/132.png
 - Lane source: liq_slot
 
+
+## Opponent context
+
+Record vs top-4 teams (TLID, NAVI, AE, BTR): **0-0** (0 games)
+Record vs bottom-5 teams (EVOS, ONIC, DEWA, RRQ, GEEK): **0-0** (0 games)
+
+> Derived from `game_players` + `team_games` + `matches`. Opponent classification by final standings rank.
+
+
+## Series appearances
+
+
+
+> Links to `analysis/matches/<series>.md` where available.
+
+
+## Matched comparisons (positional peers)
+
+**KENNZYYSKIE** (GEEK FAM, GOLD): 39 games, 3.15 avg KDA.
+
+### League positional peers (top 5 by KDA, min 10 games)
+
+| Player | Team | Games | Avg KDA |
+|---|---|---:|---:|
+| ZEONN | NAVI | 37 | 7.85 |
+| KEVEN | TEAM LIQUID ID | 37 | 6.51 |
+| KELRA | ONIC | 40 | 5.43 |
+| ERLAN | EVOS | 40 | 4.57 |
+| EMANN | BIGETRON BY VIT | 39 | 4.38 |
+
+
+## Transcript evidence
+
+No verifiable transcript mentions were found for this player across all 22 validated broadcast sources. The player's name does not appear as a distinct mention in the timed captions (exhaustive search across all validated sources). Transcript-based observations are not available; this dossier relies on database aggregates only.
+
+> **Note:** Low-profile players and substitutes may not be mentioned by name in broadcast commentary. This is a data limitation, not a performance assessment.
+
 ## References
 
 - Database snapshot `mpl-s18-db-20c5ea2c51f3`

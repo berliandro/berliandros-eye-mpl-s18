@@ -102,7 +102,7 @@
 - [`reports/unvalidated-sources.md`](reports/unvalidated-sources.md) — 5 sources that could not be auto-validated and require manual review.
 - [`reports/coverage-summary.md`](reports/coverage-summary.md) — current coverage state of the semantic analysis.
 - [`reports/player-matched-comparisons.md`](reports/player-matched-comparisons.md) — database-backed matched comparisons for player-level insights.
-- [`players/`](players/) — 66 player dossiers (one per player).
+- [`players/`](players/) — 66 player dossiers (one per player). See `analysis/players/` for the full list.
 - [`reports/counter-analysis-pilot.md`](reports/counter-analysis-pilot.md) — antithesis/counter-analysis of the three pilot insights.
 - [`reports/matched-comparisons.md`](reports/matched-comparisons.md) — database-backed matched comparisons expanding the counterexample set beyond the pilot.
 
@@ -128,3 +128,74 @@
 ## Coverage warning
 
 Only 3 series have curated semantic insights. Twenty-six sources are alignment-ready, but alignment readiness is not semantic analysis. The remaining source days are **unprocessed**, not “empty” or “irrelevant”. Do not read this pilot as a season-level finding.
+
+## Player index
+
+| Player | Team | Lane | Dossier |
+|---|---|---|---|
+| Nino | ALTER EGO ESPORTS | EXP | [dossier](players/nino.md) |
+| Dingarai | ALTER EGO ESPORTS | GOLD | [dossier](players/dingarai.md) |
+| Affan | ALTER EGO ESPORTS | JUNGLE | [dossier](players/affan.md) |
+| Reyy | ALTER EGO ESPORTS | JUNGLE | [dossier](players/reyy.md) |
+| Dalvin | ALTER EGO ESPORTS | MID | [dossier](players/dalvin.md) |
+| Halim | ALTER EGO ESPORTS | MID | [dossier](players/halim.md) |
+| Alexander | ALTER EGO ESPORTS | ROAM | [dossier](players/alexander.md) |
+| SHOGUN | BIGETRON BY VIT | EXP | [dossier](players/shogun.md) |
+| EMANN | BIGETRON BY VIT | GOLD | [dossier](players/emann.md) |
+| NNAEL | BIGETRON BY VIT | JUNGLE | [dossier](players/nnael.md) |
+| MIGUEL | BIGETRON BY VIT | MID | [dossier](players/miguel.md) |
+| MORENOOO | BIGETRON BY VIT | MID | [dossier](players/morenooo.md) |
+| FINN | BIGETRON BY VIT | ROAM | [dossier](players/finn.md) |
+| QINN | DEWA UNITED | EXP | [dossier](players/qinn.md) |
+| MAYBEEE | DEWA UNITED | GOLD | [dossier](players/maybeee.md) |
+| Hazle | DEWA UNITED | JUNGLE | [dossier](players/hazle.md) |
+| KAYN | DEWA UNITED | JUNGLE | [dossier](players/kayn.md) |
+| OCTA | DEWA UNITED | MID | [dossier](players/octa.md) |
+| RUL GOOD | DEWA UNITED | MID | [dossier](players/rul-good.md) |
+| ITOSHI KESU | DEWA UNITED | ROAM | [dossier](players/itoshi-kesu.md) |
+| SHANEE | DEWA UNITED | ROAM | [dossier](players/shanee.md) |
+| RENDYYY | EVOS | EXP | [dossier](players/rendyyy.md) |
+| VELL | EVOS | EXP | [dossier](players/vell.md) |
+| ERLAN | EVOS | GOLD | [dossier](players/erlan.md) |
+| ALBERTTT | EVOS | JUNGLE | [dossier](players/alberttt.md) |
+| DRIANW | EVOS | MID | [dossier](players/drianw.md) |
+| Ryzaa | EVOS | MID | [dossier](players/ryzaa.md) |
+| EgaTzy | EVOS | ROAM | [dossier](players/egatzy.md) |
+| MUEZZA | EVOS | ROAM | [dossier](players/muezza.md) |
+| FEBRIII | GEEK FAM | EXP | [dossier](players/febriii.md) |
+| MARCEL | GEEK FAM | EXP | [dossier](players/marcel.md) |
+| KENNZYYSKIE | GEEK FAM | GOLD | [dossier](players/kennzyyskie.md) |
+| MAYKIDSS | GEEK FAM | JUNGLE | [dossier](players/maykidss.md) |
+| NAZARA | GEEK FAM | JUNGLE | [dossier](players/nazara.md) |
+| ABOYY | GEEK FAM | MID | [dossier](players/aboyy.md) |
+| AUDYTZY | GEEK FAM | ROAM | [dossier](players/audytzy.md) |
+| Frenzyy | GEEK FAM | ROAM | [dossier](players/frenzyy.md) |
+| FEBBB | NAVI | EXP | [dossier](players/febbb.md) |
+| KARSS | NAVI | EXP | [dossier](players/karss.md) |
+| ZEONN | NAVI | GOLD | [dossier](players/zeonn.md) |
+| ANDORYUUU | NAVI | JUNGLE | [dossier](players/andoryuuu.md) |
+| Joshuaa | NAVI | JUNGLE | [dossier](players/joshuaa.md) |
+| JIIZEE | NAVI | MID | [dossier](players/jiizee.md) |
+| APRHO | NAVI | ROAM | [dossier](players/aprho.md) |
+| LUTPI | ONIC | EXP | [dossier](players/lutpi.md) |
+| KELRA | ONIC | GOLD | [dossier](players/kelra.md) |
+| KAIRI | ONIC | JUNGLE | [dossier](players/kairi.md) |
+| Killuaa | ONIC | MID | [dossier](players/killuaa.md) |
+| SANZ | ONIC | MID | [dossier](players/sanz.md) |
+| KIBOY | ONIC | ROAM | [dossier](players/kiboy.md) |
+| SSAMUEL | ONIC | ROAM | [dossier](players/ssamuel.md) |
+| JOSHUA | RRQ HOSHI | EXP | [dossier](players/joshua.md) |
+| ARTHUR | RRQ HOSHI | GOLD | [dossier](players/arthur.md) |
+| HABIL | RRQ HOSHI | GOLD | [dossier](players/habil.md) |
+| DEMONKITE | RRQ HOSHI | JUNGLE | [dossier](players/demonkite.md) |
+| Faviannn | RRQ HOSHI | JUNGLE | [dossier](players/faviannn.md) |
+| CLAYYY | RRQ HOSHI | MID | [dossier](players/clayyy.md) |
+| HAJIRIN | RRQ HOSHI | MID | [dossier](players/hajirin.md) |
+| Excellent99 | RRQ HOSHI | ROAM | [dossier](players/excellent99.md) |
+| SAID | RRQ HOSHI | ROAM | [dossier](players/said.md) |
+| ARAN | TEAM LIQUID ID | EXP | [dossier](players/aran.md) |
+| KEVEN | TEAM LIQUID ID | GOLD | [dossier](players/keven.md) |
+| KEVIN | TEAM LIQUID ID | JUNGLE | [dossier](players/kevin.md) |
+| ANAVER | TEAM LIQUID ID | MID | [dossier](players/anaver.md) |
+| DRICHEL | TEAM LIQUID ID | MID | [dossier](players/drichel.md) |
+| LYONI | TEAM LIQUID ID | ROAM | [dossier](players/lyoni.md) |

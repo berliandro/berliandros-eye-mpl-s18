@@ -87,6 +87,43 @@ Sample game: 1038 game 1 (Paquito).
 - Talents: https://mlbb-image.scoregg.com/rune/531.png, https://mlbb-image.scoregg.com/rune/811.png, https://mlbb-image.scoregg.com/rune/122.png
 - Lane source: liq_slot
 
+
+## Opponent context
+
+Record vs top-4 teams (TLID, NAVI, AE, BTR): **0-0** (0 games)
+Record vs bottom-5 teams (EVOS, ONIC, DEWA, RRQ, GEEK): **0-0** (0 games)
+
+> Derived from `game_players` + `team_games` + `matches`. Opponent classification by final standings rank.
+
+
+## Series appearances
+
+
+
+> Links to `analysis/matches/<series>.md` where available.
+
+
+## Matched comparisons (positional peers)
+
+**KEVIN** (TEAM LIQUID ID, JUNGLE): 37 games, 4.29 avg KDA.
+
+### League positional peers (top 5 by KDA, min 10 games)
+
+| Player | Team | Games | Avg KDA |
+|---|---|---:|---:|
+| Joshuaa | NAVI | 25 | 6.00 |
+| ALBERTTT | EVOS | 35 | 4.70 |
+| KAIRI | ONIC | 40 | 4.64 |
+| Affan | ALTER EGO ESPORTS | 36 | 4.18 |
+| NNAEL | BIGETRON BY VIT | 39 | 4.10 |
+
+
+## Transcript evidence
+
+No verifiable transcript mentions were found for this player across all 22 validated broadcast sources. The player's name does not appear as a distinct mention in the timed captions (exhaustive search across all validated sources). Transcript-based observations are not available; this dossier relies on database aggregates only.
+
+> **Note:** Low-profile players and substitutes may not be mentioned by name in broadcast commentary. This is a data limitation, not a performance assessment.
+
 ## References
 
 - Database snapshot `mpl-s18-db-20c5ea2c51f3`

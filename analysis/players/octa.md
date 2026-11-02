@@ -84,13 +84,75 @@ Database snapshot: `mpl-s18-db-20c5ea2c51f3` (SHA-256 `20c5ea2c51f30d1a24cd2ce69
 | Pharsa | 1 |
 | Vexana | 1 |
 
-## Items & talents (sample game)
 
-Sample game: 1039 game 1 (Rafaela).
-- Emblem: https://mlbb-image.scoregg.com/emblem/20006.png
-- Items: https://cdn.id-mpl.com/match-detail/equipment/2102.png?X-Amz-Content-Sha256=UNSIGNED-PAYLOAD&X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=DO00UK9XG63MGT2KWV9H%2F20261022%2Fsgp1%2Fs3%2Faws4_request&X-Amz-Date=20261022T081902Z&X-Amz-SignedHeaders=host&X-Amz-Expires=21600&X-Amz-Signature=296517f9a3f39002a019dd26ab0f7595b79e1ea53e7b621159aa743b571d9449, https://cdn.id-mpl.com/match-detail/equipment/1103.png?X-Amz-Content-Sha256=UNSIGNED-PAYLOAD&X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=DO00UK9XG63MGT2KWV9H%2F20261022%2Fsgp1%2Fs3%2Faws4_request&X-Amz-Date=20261022T075212Z&X-Amz-SignedHeaders=host&X-Amz-Expires=21600&X-Amz-Signature=0fa864ac8282403cc03181c530bbfa49bd767988ecd82c03794624d16e9e1e66, https://cdn.id-mpl.com/match-detail/equipment/2303.png?X-Amz-Content-Sha256=UNSIGNED-PAYLOAD&X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=DO00UK9XG63MGT2KWV9H%2F20261022%2Fsgp1%2Fs3%2Faws4_request&X-Amz-Date=20261022T075206Z&X-Amz-SignedHeaders=host&X-Amz-Expires=21600&X-Amz-Signature=22f6b72538d8a40a2c05116e93ab5696d87710c3fe850e4a4e41cf695836c344, https://cdn.id-mpl.com/match-detail/equipment/3105.png?X-Amz-Content-Sha256=UNSIGNED-PAYLOAD&X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=DO00UK9XG63MGT2KWV9H%2F20261022%2Fsgp1%2Fs3%2Faws4_request&X-Amz-Date=20261022T075206Z&X-Amz-SignedHeaders=host&X-Amz-Expires=21600&X-Amz-Signature=2f6a8543a620aa83733edf7d82303150920cd64a2438f176ea7214e8cdd7b848, https://cdn.id-mpl.com/match-detail/equipment/3112.png?X-Amz-Content-Sha256=UNSIGNED-PAYLOAD&X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=DO00UK9XG63MGT2KWV9H%2F20261022%2Fsgp1%2Fs3%2Faws4_request&X-Amz-Date=20261022T075208Z&X-Amz-SignedHeaders=host&X-Amz-Expires=21600&X-Amz-Signature=28e5bd91bd7e043af2f7fdd2e8e687df94a3832d1e4be99770e8b622802229b4, https://cdn.id-mpl.com/match-detail/equipment/1101.png?X-Amz-Content-Sha256=UNSIGNED-PAYLOAD&X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=DO00UK9XG63MGT2KWV9H%2F20261022%2Fsgp1%2Fs3%2Faws4_request&X-Amz-Date=20261022T075207Z&X-Amz-SignedHeaders=host&X-Amz-Expires=21600&X-Amz-Signature=62369a9d6d2734f48eec3ae5ecddf91b8666a215c1c7d5b033cbe3dc4a181207
-- Talents: https://mlbb-image.scoregg.com/rune/611.png, https://mlbb-image.scoregg.com/rune/121.png, https://mlbb-image.scoregg.com/rune/131.png
-- Lane source: liq_slot
+## Items & talents (full summary)
+
+Across 39 games:
+
+### Top items by frequency
+
+| Item | Games | Frequency |
+|---|---:|---:|
+| https://cdn.id-mpl.com/match-detail/equipment/3105.png?X-Amz-Content-Sha256=UNSIGNED-PAYLOAD&X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=DO00UK9XG63MGT2KWV9H%2F20261022%2Fsgp1%2Fs3%2Faws4_request&X-Amz-Date=20261022T075206Z&X-Amz-SignedHeaders=host&X-Amz-Expires=21600&X-Amz-Signature=2f6a8543a620aa83733edf7d82303150920cd64a2438f176ea7214e8cdd7b848 | 38 | 97% |
+| https://cdn.id-mpl.com/match-detail/equipment/3101.png?X-Amz-Content-Sha256=UNSIGNED-PAYLOAD&X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=DO00UK9XG63MGT2KWV9H%2F20261022%2Fsgp1%2Fs3%2Faws4_request&X-Amz-Date=20261022T075207Z&X-Amz-SignedHeaders=host&X-Amz-Expires=21600&X-Amz-Signature=77ca89811baece68320d5c15690e7156ba8d1f0559e83f31312b516294d03a07 | 19 | 49% |
+| https://cdn.id-mpl.com/match-detail/equipment/2303.png?X-Amz-Content-Sha256=UNSIGNED-PAYLOAD&X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=DO00UK9XG63MGT2KWV9H%2F20261022%2Fsgp1%2Fs3%2Faws4_request&X-Amz-Date=20261022T075206Z&X-Amz-SignedHeaders=host&X-Amz-Expires=21600&X-Amz-Signature=22f6b72538d8a40a2c05116e93ab5696d87710c3fe850e4a4e41cf695836c344 | 15 | 38% |
+| https://cdn.id-mpl.com/match-detail/equipment/2101.png?X-Amz-Content-Sha256=UNSIGNED-PAYLOAD&X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=DO00UK9XG63MGT2KWV9H%2F20261022%2Fsgp1%2Fs3%2Faws4_request&X-Amz-Date=20261022T075206Z&X-Amz-SignedHeaders=host&X-Amz-Expires=21600&X-Amz-Signature=59db4aec7c2fa3fc3a6257dd4ad6372594e6398da1ec9ba0e322125fa3fecff7 | 15 | 38% |
+| https://cdn.id-mpl.com/match-detail/equipment/3108.png?X-Amz-Content-Sha256=UNSIGNED-PAYLOAD&X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=DO00UK9XG63MGT2KWV9H%2F20261022%2Fsgp1%2Fs3%2Faws4_request&X-Amz-Date=20261022T075208Z&X-Amz-SignedHeaders=host&X-Amz-Expires=21600&X-Amz-Signature=7590c457d4539e700340d4cd19af15c1c21ba476aa23b7c86edf8f5b16d51eab | 12 | 31% |
+| https://cdn.id-mpl.com/match-detail/equipment/2304.png?X-Amz-Content-Sha256=UNSIGNED-PAYLOAD&X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=DO00UK9XG63MGT2KWV9H%2F20261022%2Fsgp1%2Fs3%2Faws4_request&X-Amz-Date=20261022T075311Z&X-Amz-SignedHeaders=host&X-Amz-Expires=21600&X-Amz-Signature=e9d1bb8f6baaaa58e3b86b31c4d6964ec1aa2f381067565acafdf35a15423ad0 | 12 | 31% |
+| https://cdn.id-mpl.com/match-detail/equipment/1101.png?X-Amz-Content-Sha256=UNSIGNED-PAYLOAD&X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=DO00UK9XG63MGT2KWV9H%2F20261022%2Fsgp1%2Fs3%2Faws4_request&X-Amz-Date=20261022T075207Z&X-Amz-SignedHeaders=host&X-Amz-Expires=21600&X-Amz-Signature=62369a9d6d2734f48eec3ae5ecddf91b8666a215c1c7d5b033cbe3dc4a181207 | 10 | 26% |
+| https://cdn.id-mpl.com/match-detail/equipment/2302.png?X-Amz-Content-Sha256=UNSIGNED-PAYLOAD&X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=DO00UK9XG63MGT2KWV9H%2F20261022%2Fsgp1%2Fs3%2Faws4_request&X-Amz-Date=20261022T075206Z&X-Amz-SignedHeaders=host&X-Amz-Expires=21599&X-Amz-Signature=a31955b5a2a7a3f0450d594f17992885dfd8ece2f880695c82d8dd7b5cb99df9 | 10 | 26% |
+| https://cdn.id-mpl.com/match-detail/equipment/3111.png?X-Amz-Content-Sha256=UNSIGNED-PAYLOAD&X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=DO00UK9XG63MGT2KWV9H%2F20261022%2Fsgp1%2Fs3%2Faws4_request&X-Amz-Date=20261022T075708Z&X-Amz-SignedHeaders=host&X-Amz-Expires=21600&X-Amz-Signature=e6f6f56e08f5ec239867b79d6520ca8ba77d4eb3f2c9babdddec516c456c4aee | 7 | 18% |
+| https://cdn.id-mpl.com/match-detail/equipment/1205.png?X-Amz-Content-Sha256=UNSIGNED-PAYLOAD&X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=DO00UK9XG63MGT2KWV9H%2F20261022%2Fsgp1%2Fs3%2Faws4_request&X-Amz-Date=20261022T075211Z&X-Amz-SignedHeaders=host&X-Amz-Expires=21600&X-Amz-Signature=8520dd77066260f044f21db34e6360cd7a0df69e3f3b5b20c32b81d1480cb25b | 7 | 18% |
+
+### Top talents by frequency
+
+| Talent | Games | Frequency |
+|---|---:|---:|
+| https://mlbb-image.scoregg.com/rune/611.png | 19 | 49% |
+| https://mlbb-image.scoregg.com/rune/511.png | 15 | 38% |
+| https://mlbb-image.scoregg.com/rune/631.png | 15 | 38% |
+| https://mlbb-image.scoregg.com/rune/121.png | 12 | 31% |
+| https://mlbb-image.scoregg.com/rune/131.png | 12 | 31% |
+| https://mlbb-image.scoregg.com/rune/821.png | 11 | 28% |
+| https://mlbb-image.scoregg.com/rune/731.png | 9 | 23% |
+| https://mlbb-image.scoregg.com/rune/122.png | 6 | 15% |
+
+### Emblems used
+
+| Emblem | Games | Frequency |
+|---|---:|---:|
+| https://mlbb-image.scoregg.com/emblem/20006.png | 31 | 79% |
+| https://mlbb-image.scoregg.com/emblem/20001.png | 8 | 21% |
+
+
+
+## Role-specific metrics
+
+Derived from `game_players` + `team_games` (39 games):
+
+| Metric | Value | Notes |
+|---|---:|---|
+| Avg tower-damage share | 9.8% | player tower_damage / team tower_damage |
+| Avg assist participation | 66.5% | player assists / team kills |
+| Avg kill participation | 81.3% | (kills+assists) / team kills |
+| Avg gold share | 17.3% | player gold / team gold |
+
+> **Note:** First-blood and first-objective (Turtle/Lord) tracking are not available in the database. These metrics are derived from scoreboard aggregates, not objective-level data.
+
+
+## Matched comparisons (positional peers)
+
+**OCTA** (DEWA UNITED, MID): 39 games, 5.13 avg KDA.
+
+### League positional peers (top 5 by KDA, min 10 games)
+
+| Player | Team | Games | Avg KDA |
+|---|---|---:|---:|
+| JIIZEE | NAVI | 37 | 7.54 |
+| DRICHEL | TEAM LIQUID ID | 37 | 6.78 |
+| MORENOOO | BIGETRON BY VIT | 39 | 6.29 |
+| SANZ | ONIC | 17 | 5.88 |
+| Killuaa | ONIC | 18 | 5.63 |
 
 ## References
 
