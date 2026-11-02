@@ -5,7 +5,7 @@ Snapshot: `mpl-s18-db-20c5ea2c51f3`
 - Path: `data/mpl_id_s18.db`
 - SHA-256: `20c5ea2c51f30d1a24cd2ce6927f0d182b47f951ebd8209f1aaef429941cf2ef`
 - Bytes: **5,234,688**
-- Inspected: 2026-11-02T07:01:32+00:00
+- Inspected: 2026-11-02T07:09:56+00:00
 
 This inventory generator opened the database read-only (`mode=ro`). Any data migration is a separate explicit operation.
 

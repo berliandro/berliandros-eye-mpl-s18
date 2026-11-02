@@ -4,7 +4,7 @@
   "path": "data/mpl_id_s18.db",
   "sha256": "20c5ea2c51f30d1a24cd2ce6927f0d182b47f951ebd8209f1aaef429941cf2ef",
   "bytes": 5234688,
-  "inspected_at": "2026-11-02T07:01:32+00:00",
+  "inspected_at": "2026-11-02T07:09:56+00:00",
   "tables": {
     "game_bans": {
       "row_count": 1738,
