@@ -62,18 +62,20 @@
           "team_a": "TLID",
           "team_b": "GEEK",
           "game_no": 1,
-          "start_seconds": 300,
+          "start_seconds": 1655,
           "end_seconds": null,
-          "confidence": "low",
+          "confidence": "med",
           "provenance": {
             "method": "schedule_order_heuristic",
             "source": "D:\\! Coding\\~ shit projects\\mpls18\\data\\csv\\schedule_all.csv",
             "broadcast_date": "2026-08-15",
             "scheduled_start": "2026-08-15T14:00:00+07:00",
-            "note": "Heuristic initial placement; requires validation against transcript/boundaries/frames"
+            "note": "Boundary verified against timed caption line 603 (raw line 603); medium confidence. Quote is a lineup announcement.",
+            "boundary_line": 603,
+            "boundary_text": "kita langsung mulai di match pertama"
           },
           "verified_by": null,
-          "status": "pending_validation"
+          "status": "boundary_verified"
         },
         {
           "series_index": 1,
@@ -81,7 +83,7 @@
           "team_a": "DEWA",
           "team_b": "RRQ",
           "game_no": 1,
-          "start_seconds": 11888,
+          "start_seconds": 11946,
           "end_seconds": null,
           "confidence": "med",
           "provenance": {
@@ -89,12 +91,12 @@
             "source": "D:\\! Coding\\~ shit projects\\mpls18\\data\\csv\\schedule_all.csv",
             "broadcast_date": "2026-08-15",
             "scheduled_start": "2026-08-15T17:00:00+07:00",
-            "note": "Heuristic initial placement; requires validation against transcript/boundaries/frames",
-            "boundary_line": 5193,
-            "boundary_text": "Dewa dan juga RRQ. Yehe. Menyambut"
+            "note": "Boundary verified against timed caption line 5192 (raw line 5192); medium confidence.",
+            "boundary_line": 5191,
+            "boundary_text": "Yeay. Ini dia match kedua kita antara"
           },
           "verified_by": null,
-          "status": "detected_pending_review"
+          "status": "boundary_verified"
         },
         {
           "series_index": 2,
@@ -102,7 +104,7 @@
           "team_a": "EVOS",
           "team_b": "NAVI",
           "game_no": 1,
-          "start_seconds": 22612,
+          "start_seconds": 24067,
           "end_seconds": null,
           "confidence": "med",
           "provenance": {
@@ -110,12 +112,12 @@
             "source": "D:\\! Coding\\~ shit projects\\mpls18\\data\\csv\\schedule_all.csv",
             "broadcast_date": "2026-08-15",
             "scheduled_start": "2026-08-15T20:00:00+07:00",
-            "note": "Heuristic initial placement; requires validation against transcript/boundaries/frames",
-            "boundary_line": 10130,
-            "boundary_text": "EVOS. Apa yang Navi butuhkan nih untuk"
+            "note": "Boundary verified against timed caption line 10853 (raw line 10853); medium confidence. Quote is a draft announcement.",
+            "boundary_line": 10853,
+            "boundary_text": "melakukan drafik antara EVOS dan juga"
           },
           "verified_by": null,
-          "status": "detected_pending_review"
+          "status": "boundary_verified"
         }
       ],
       "validation_status": "pending"
@@ -131,18 +133,20 @@
           "team_a": "TLID",
           "team_b": "DEWA",
           "game_no": 1,
-          "start_seconds": 300,
+          "start_seconds": 1198,
           "end_seconds": null,
-          "confidence": "low",
+          "confidence": "med",
           "provenance": {
             "method": "schedule_order_heuristic",
             "source": "D:\\! Coding\\~ shit projects\\mpls18\\data\\csv\\schedule_all.csv",
             "broadcast_date": "2026-08-16",
             "scheduled_start": "2026-08-16T14:00:00+07:00",
-            "note": "Heuristic initial placement; requires validation against transcript/boundaries/frames"
+            "note": "Boundary verified against timed caption line 313 (raw line 313); medium confidence.",
+            "boundary_line": 313,
+            "boundary_text": "match yang pertama ya antara TL ID yang"
           },
           "verified_by": null,
-          "status": "pending_validation"
+          "status": "boundary_verified"
         },
         {
           "series_index": 1,
@@ -217,18 +221,20 @@
           "team_a": "BTR",
           "team_b": "DEWA",
           "game_no": 1,
-          "start_seconds": null,
+          "start_seconds": 12126,
           "end_seconds": null,
-          "confidence": "low",
+          "confidence": "med",
           "provenance": {
             "method": "schedule_order_heuristic",
             "source": "D:\\! Coding\\~ shit projects\\mpls18\\data\\csv\\schedule_all.csv",
             "broadcast_date": "2026-08-21",
             "scheduled_start": "2026-08-21T18:00:00+07:00",
-            "note": "Heuristic initial placement; requires validation against transcript/boundaries/frames"
+            "note": "Boundary verified against timed caption line 4853 (raw line 4853); medium confidence.",
+            "boundary_line": 4852,
+            "boundary_text": "ngelihat bagaimana match antara BTR dan"
           },
           "verified_by": null,
-          "status": "pending_validation"
+          "status": "boundary_verified"
         }
       ],
       "validation_status": "pending"
@@ -263,7 +269,7 @@
           "team_a": "NAVI",
           "team_b": "GEEK",
           "game_no": 1,
-          "start_seconds": 11825,
+          "start_seconds": 11886,
           "end_seconds": null,
           "confidence": "med",
           "provenance": {
@@ -271,12 +277,12 @@
             "source": "D:\\! Coding\\~ shit projects\\mpls18\\data\\csv\\schedule_all.csv",
             "broadcast_date": "2026-08-22",
             "scheduled_start": "2026-08-22T17:00:00+07:00",
-            "note": "Heuristic initial placement; requires validation against transcript/boundaries/frames",
-            "boundary_line": 4432,
-            "boundary_text": "antara Navi dan juga GeekF."
+            "note": "Boundary verified against timed caption line 4431 (raw line 4431); medium confidence.",
+            "boundary_line": 4431,
+            "boundary_text": "kedua yang akan segera berlangsung"
           },
           "verified_by": null,
-          "status": "detected_pending_review"
+          "status": "boundary_verified"
         },
         {
           "series_index": 2,
@@ -332,7 +338,7 @@
           "team_a": "ONIC",
           "team_b": "BTR",
           "game_no": 1,
-          "start_seconds": 20903,
+          "start_seconds": 20963,
           "end_seconds": null,
           "confidence": "med",
           "provenance": {
@@ -340,12 +346,12 @@
             "source": "D:\\! Coding\\~ shit projects\\mpls18\\data\\csv\\schedule_all.csv",
             "broadcast_date": "2026-08-23",
             "scheduled_start": "2026-08-23T17:00:00+07:00",
-            "note": "Heuristic initial placement; requires validation against transcript/boundaries/frames",
+            "note": "Boundary verified against timed caption line 9143 (raw line 9143); medium confidence. Quote is a brief reference, not full intro.",
             "boundary_line": 9143,
             "boundary_text": "nyebut pertemuan antara ONIC BTR ini"
           },
           "verified_by": null,
-          "status": "detected_pending_review"
+          "status": "boundary_verified"
         },
         {
           "series_index": 2,
@@ -382,7 +388,7 @@
           "team_a": "BTR",
           "team_b": "NAVI",
           "game_no": 1,
-          "start_seconds": 6523,
+          "start_seconds": 2666,
           "end_seconds": null,
           "confidence": "med",
           "provenance": {
@@ -390,12 +396,12 @@
             "source": "D:\\! Coding\\~ shit projects\\mpls18\\data\\csv\\schedule_all.csv",
             "broadcast_date": "2026-08-28",
             "scheduled_start": "2026-08-28T15:00:00+07:00",
-            "note": "Heuristic initial placement; requires validation against transcript/boundaries/frames",
-            "boundary_line": 3213,
-            "boundary_text": "gitu. Sebenarnya kalau mau Navi mau BTR"
+            "note": "Boundary verified against timed caption line 1122 (raw line 1122); medium confidence.",
+            "boundary_line": 1122,
+            "boundary_text": "pertama untuk match pertama kita"
           },
           "verified_by": null,
-          "status": "detected_pending_review"
+          "status": "boundary_verified"
         },
         {
           "series_index": 1,
@@ -403,7 +409,7 @@
           "team_a": "DEWA",
           "team_b": "GEEK",
           "game_no": 1,
-          "start_seconds": 1149,
+          "start_seconds": 12043,
           "end_seconds": null,
           "confidence": "med",
           "provenance": {
@@ -411,12 +417,12 @@
             "source": "D:\\! Coding\\~ shit projects\\mpls18\\data\\csv\\schedule_all.csv",
             "broadcast_date": "2026-08-28",
             "scheduled_start": "2026-08-28T18:00:00+07:00",
-            "note": "Heuristic initial placement; requires validation against transcript/boundaries/frames",
-            "boundary_line": 293,
-            "boundary_text": "ditutup oleh Dewa versus Geek Fam."
+            "note": "Boundary verified against timed caption line 4622 (raw line 4622); medium confidence.",
+            "boundary_line": 4622,
+            "boundary_text": "sampai situ saja ya. Oke. Oke. Match"
           },
           "verified_by": null,
-          "status": "detected_pending_review"
+          "status": "boundary_verified"
         }
       ],
       "validation_status": "pending"
@@ -451,7 +457,7 @@
           "team_a": "AE",
           "team_b": "EVOS",
           "game_no": 1,
-          "start_seconds": 18679,
+          "start_seconds": 12108,
           "end_seconds": null,
           "confidence": "med",
           "provenance": {
@@ -459,12 +465,12 @@
             "source": "D:\\! Coding\\~ shit projects\\mpls18\\data\\csv\\schedule_all.csv",
             "broadcast_date": "2026-08-29",
             "scheduled_start": "2026-08-29T17:00:00+07:00",
-            "note": "Heuristic initial placement; requires validation against transcript/boundaries/frames",
-            "boundary_line": 8994,
-            "boundary_text": "ae yang up atau EVOS yang down atau"
+            "note": "Boundary verified against timed caption line 5405 (raw line 5405); medium confidence.",
+            "boundary_line": 5405,
+            "boundary_text": "aja, ini dia match antar EVOS melawan"
           },
           "verified_by": null,
-          "status": "detected_pending_review"
+          "status": "boundary_verified"
         },
         {
           "series_index": 2,
@@ -543,18 +549,20 @@
           "team_a": "TLID",
           "team_b": "AE",
           "game_no": 1,
-          "start_seconds": null,
+          "start_seconds": 22502,
           "end_seconds": null,
-          "confidence": "low",
+          "confidence": "med",
           "provenance": {
             "method": "schedule_order_heuristic",
             "source": "D:\\! Coding\\~ shit projects\\mpls18\\data\\csv\\schedule_all.csv",
             "broadcast_date": "2026-08-30",
             "scheduled_start": "2026-08-30T20:00:00+07:00",
-            "note": "Heuristic initial placement; requires validation against transcript/boundaries/frames"
+            "note": "Boundary verified against timed caption line 7749 (raw line 7749); medium confidence.",
+            "boundary_line": 7749,
+            "boundary_text": "akan lihat di match penutupan antara"
           },
           "verified_by": null,
-          "status": "pending_validation"
+          "status": "boundary_verified"
         }
       ],
       "validation_status": "pending"
@@ -570,7 +578,7 @@
           "team_a": "NAVI",
           "team_b": "DEWA",
           "game_no": 1,
-          "start_seconds": 1037,
+          "start_seconds": 1638,
           "end_seconds": null,
           "confidence": "med",
           "provenance": {
@@ -578,12 +586,12 @@
             "source": "D:\\! Coding\\~ shit projects\\mpls18\\data\\csv\\schedule_all.csv",
             "broadcast_date": "2026-09-04",
             "scheduled_start": "2026-09-04T15:00:00+07:00",
-            "note": "Heuristic initial placement; requires validation against transcript/boundaries/frames",
-            "boundary_line": 101,
-            "boundary_text": "mana akan ada Navi dan juga Dewa United."
+            "note": "Boundary verified against timed caption line 412 (raw line 412); medium confidence.",
+            "boundary_line": 412,
+            "boundary_text": "diturunkan untuk match pertama pembuka"
           },
           "verified_by": null,
-          "status": "detected_pending_review"
+          "status": "boundary_verified"
         },
         {
           "series_index": 1,
@@ -618,7 +626,7 @@
           "team_a": "DEWA",
           "team_b": "ONIC",
           "game_no": 1,
-          "start_seconds": 4679,
+          "start_seconds": 2460,
           "end_seconds": null,
           "confidence": "med",
           "provenance": {
@@ -626,12 +634,12 @@
             "source": "D:\\! Coding\\~ shit projects\\mpls18\\data\\csv\\schedule_all.csv",
             "broadcast_date": "2026-09-05",
             "scheduled_start": "2026-09-05T14:00:00+07:00",
-            "note": "Heuristic initial placement; requires validation against transcript/boundaries/frames",
-            "boundary_line": 2156,
-            "boundary_text": "teman-teman Sonic dan juga anak Dewa."
+            "note": "Boundary verified against timed caption line 908 (raw line 908); medium confidence.",
+            "boundary_line": 908,
+            "boundary_text": "match pertama ya. Dewa United versus"
           },
           "verified_by": null,
-          "status": "detected_pending_review"
+          "status": "boundary_verified"
         },
         {
           "series_index": 1,
@@ -685,7 +693,7 @@
           "team_a": "RRQ",
           "team_b": "NAVI",
           "game_no": 1,
-          "start_seconds": 1878,
+          "start_seconds": 26175,
           "end_seconds": null,
           "confidence": "med",
           "provenance": {
@@ -693,12 +701,12 @@
             "source": "D:\\! Coding\\~ shit projects\\mpls18\\data\\csv\\schedule_all.csv",
             "broadcast_date": "2026-09-06",
             "scheduled_start": "2026-09-06T14:00:00+07:00",
-            "note": "Heuristic initial placement; requires validation against transcript/boundaries/frames",
-            "boundary_line": 605,
-            "boundary_text": "Jovi Joshua Navi. Joki Joshua RRQ"
+            "note": "Boundary verified against timed caption line 9983 (raw line 9983); medium confidence.",
+            "boundary_line": 9983,
+            "boundary_text": "dari match yang pertama ya antara Navi"
           },
           "verified_by": null,
-          "status": "detected_pending_review"
+          "status": "boundary_verified"
         },
         {
           "series_index": 1,
@@ -756,7 +764,7 @@
           "team_a": "GEEK",
           "team_b": "ONIC",
           "game_no": 1,
-          "start_seconds": 3118,
+          "start_seconds": 1745,
           "end_seconds": null,
           "confidence": "med",
           "provenance": {
@@ -764,12 +772,12 @@
             "source": "D:\\! Coding\\~ shit projects\\mpls18\\data\\csv\\schedule_all.csv",
             "broadcast_date": "2026-09-11",
             "scheduled_start": "2026-09-11T18:00:00+07:00",
-            "note": "Heuristic initial placement; requires validation against transcript/boundaries/frames",
-            "boundary_line": 1021,
-            "boundary_text": "dua untuk Geek. Empat untuk Onik."
+            "note": "Boundary verified against timed caption line 248 (raw line 248); medium confidence.",
+            "boundary_line": 247,
+            "boundary_text": "pertandingan antara Onic Esports melawan"
           },
           "verified_by": null,
-          "status": "detected_pending_review"
+          "status": "boundary_verified"
         }
       ],
       "validation_status": "pending"
@@ -804,18 +812,20 @@
           "team_a": "AE",
           "team_b": "RRQ",
           "game_no": 1,
-          "start_seconds": null,
+          "start_seconds": 11653,
           "end_seconds": null,
-          "confidence": "low",
+          "confidence": "med",
           "provenance": {
             "method": "schedule_order_heuristic",
             "source": "D:\\! Coding\\~ shit projects\\mpls18\\data\\csv\\schedule_all.csv",
             "broadcast_date": "2026-09-12",
             "scheduled_start": "2026-09-12T17:00:00+07:00",
-            "note": "Heuristic initial placement; requires validation against transcript/boundaries/frames"
+            "note": "Boundary verified against timed caption line 4325 (raw line 4325); medium confidence.",
+            "boundary_line": 4325,
+            "boundary_text": "Arena untuk match kedua kita antara"
           },
           "verified_by": null,
-          "status": "pending_validation"
+          "status": "boundary_verified"
         },
         {
           "series_index": 2,
@@ -871,18 +881,20 @@
           "team_a": "ONIC",
           "team_b": "AE",
           "game_no": 1,
-          "start_seconds": null,
+          "start_seconds": 12328,
           "end_seconds": null,
-          "confidence": "low",
+          "confidence": "med",
           "provenance": {
             "method": "schedule_order_heuristic",
             "source": "D:\\! Coding\\~ shit projects\\mpls18\\data\\csv\\schedule_all.csv",
             "broadcast_date": "2026-09-13",
             "scheduled_start": "2026-09-13T17:00:00+07:00",
-            "note": "Heuristic initial placement; requires validation against transcript/boundaries/frames"
+            "note": "Boundary verified against timed caption line 4370 (raw line 4370); medium confidence.",
+            "boundary_line": 4370,
+            "boundary_text": "ya untuk match berikut ini melawan Onik."
           },
           "verified_by": null,
-          "status": "pending_validation"
+          "status": "boundary_verified"
         }
       ],
       "validation_status": "pending"
@@ -1009,18 +1021,20 @@
           "team_a": "BTR",
           "team_b": "TLID",
           "game_no": 1,
-          "start_seconds": null,
+          "start_seconds": 23717,
           "end_seconds": null,
-          "confidence": "low",
+          "confidence": "med",
           "provenance": {
             "method": "schedule_order_heuristic",
             "source": "D:\\! Coding\\~ shit projects\\mpls18\\data\\csv\\schedule_all.csv",
             "broadcast_date": "2026-09-19",
             "scheduled_start": "2026-09-19T20:00:00+07:00",
-            "note": "Heuristic initial placement; requires validation against transcript/boundaries/frames"
+            "note": "Boundary verified against timed caption line 10394 (raw line 10394); medium confidence.",
+            "boundary_line": 10394,
+            "boundary_text": "match terakhir untuk hari ini antara"
           },
           "verified_by": null,
-          "status": "pending_validation"
+          "status": "boundary_verified"
         }
       ],
       "validation_status": "pending"
@@ -1036,18 +1050,20 @@
           "team_a": "AE",
           "team_b": "DEWA",
           "game_no": 1,
-          "start_seconds": 300,
+          "start_seconds": 1800,
           "end_seconds": null,
-          "confidence": "low",
+          "confidence": "med",
           "provenance": {
             "method": "schedule_order_heuristic",
             "source": "D:\\! Coding\\~ shit projects\\mpls18\\data\\csv\\schedule_all.csv",
             "broadcast_date": "2026-09-20",
             "scheduled_start": "2026-09-20T14:00:00+07:00",
-            "note": "Heuristic initial placement; requires validation against transcript/boundaries/frames"
+            "note": "Boundary verified against timed caption line 530 (raw line 530); medium confidence. Intro is a schedule overview, not a single-series call.",
+            "boundary_line": 530,
+            "boundary_text": "hello untuk Alterigo dan juga Dewa"
           },
           "verified_by": null,
-          "status": "pending_validation"
+          "status": "boundary_verified"
         },
         {
           "series_index": 1,
@@ -1103,7 +1119,7 @@
           "team_a": "GEEK",
           "team_b": "BTR",
           "game_no": 1,
-          "start_seconds": 8849,
+          "start_seconds": 2686,
           "end_seconds": null,
           "confidence": "med",
           "provenance": {
@@ -1111,12 +1127,12 @@
             "source": "D:\\! Coding\\~ shit projects\\mpls18\\data\\csv\\schedule_all.csv",
             "broadcast_date": "2026-10-02",
             "scheduled_start": "2026-10-02T15:00:00+07:00",
-            "note": "Heuristic initial placement; requires validation against transcript/boundaries/frames",
-            "boundary_line": 4015,
-            "boundary_text": "draftnya bagusan BTR atau Geek Farm?"
+            "note": "Boundary verified against timed caption line 694 (raw line 694); medium confidence. Quote is a lineup announcement, not full intro.",
+            "boundary_line": 694,
+            "boundary_text": "line up dari match pertama di minggu"
           },
           "verified_by": null,
-          "status": "detected_pending_review"
+          "status": "boundary_verified"
         },
         {
           "series_index": 1,
@@ -1260,7 +1276,7 @@
           "team_a": "ONIC",
           "team_b": "NAVI",
           "game_no": 1,
-          "start_seconds": 23044,
+          "start_seconds": 22942,
           "end_seconds": null,
           "confidence": "med",
           "provenance": {
@@ -1268,12 +1284,12 @@
             "source": "D:\\! Coding\\~ shit projects\\mpls18\\data\\csv\\schedule_all.csv",
             "broadcast_date": "2026-10-04",
             "scheduled_start": "2026-10-04T20:00:00+07:00",
-            "note": "Heuristic initial placement; requires validation against transcript/boundaries/frames",
-            "boundary_line": 9021,
-            "boundary_text": "Oh, Navi lagi kuat-kuatnya. Bahkan Sonic"
+            "note": "Boundary verified against timed caption line 8934 (raw line 8934); medium confidence.",
+            "boundary_line": 8934,
+            "boundary_text": "ditutup dengan match antara Onik melawan"
           },
           "verified_by": null,
-          "status": "detected_pending_review"
+          "status": "boundary_verified"
         }
       ],
       "validation_status": "pending"
@@ -1289,7 +1305,7 @@
           "team_a": "EVOS",
           "team_b": "DEWA",
           "game_no": 1,
-          "start_seconds": 2073,
+          "start_seconds": 2969,
           "end_seconds": null,
           "confidence": "med",
           "provenance": {
@@ -1297,12 +1313,12 @@
             "source": "D:\\! Coding\\~ shit projects\\mpls18\\data\\csv\\schedule_all.csv",
             "broadcast_date": "2026-10-08",
             "scheduled_start": "2026-10-08T14:00:00+07:00",
-            "note": "Heuristic initial placement; requires validation against transcript/boundaries/frames",
-            "boundary_line": 550,
-            "boundary_text": "EVOS dan juga Dewa United. Dimulai dari"
+            "note": "Boundary verified against timed caption line 1031 (raw line 1031); medium confidence.",
+            "boundary_line": 1031,
+            "boundary_text": "Kamis kali ini match pertama EVOS dan"
           },
           "verified_by": null,
-          "status": "detected_pending_review"
+          "status": "boundary_verified"
         },
         {
           "series_index": 1,
@@ -1448,7 +1464,7 @@
           "team_a": "RRQ",
           "team_b": "ONIC",
           "game_no": 1,
-          "start_seconds": 2055,
+          "start_seconds": 17865,
           "end_seconds": null,
           "confidence": "med",
           "provenance": {
@@ -1456,12 +1472,12 @@
             "source": "D:\\! Coding\\~ shit projects\\mpls18\\data\\csv\\schedule_all.csv",
             "broadcast_date": "2026-10-11",
             "scheduled_start": "2026-10-11T17:00:00+07:00",
-            "note": "Heuristic initial placement; requires validation against transcript/boundaries/frames",
-            "boundary_line": 335,
-            "boundary_text": "akan ada RRQ versus Onic. Serta di match"
+            "note": "Boundary verified against timed caption line 7202 (raw line 7202); medium confidence.",
+            "boundary_line": 7202,
+            "boundary_text": "Antara hidup dan mati inilah match"
           },
           "verified_by": null,
-          "status": "detected_pending_review"
+          "status": "boundary_verified"
         },
         {
           "series_index": 2,
@@ -1496,7 +1512,7 @@
           "team_a": "NAVI",
           "team_b": "RRQ",
           "game_no": 1,
-          "start_seconds": 1556,
+          "start_seconds": 2650,
           "end_seconds": null,
           "confidence": "med",
           "provenance": {
@@ -1504,12 +1520,12 @@
             "source": "D:\\! Coding\\~ shit projects\\mpls18\\data\\csv\\schedule_all.csv",
             "broadcast_date": "2026-10-16",
             "scheduled_start": "2026-10-16T15:00:00+07:00",
-            "note": "Heuristic initial placement; requires validation against transcript/boundaries/frames",
-            "boundary_line": 177,
-            "boundary_text": "Navi dan juga tim RRQ. Dan ngebahas"
+            "note": "Boundary verified against timed caption line 688 (raw line 688); medium confidence.",
+            "boundary_line": 687,
+            "boundary_text": "Match pertama kita, ya antara Navi dan"
           },
           "verified_by": null,
-          "status": "detected_pending_review"
+          "status": "boundary_verified"
         },
         {
           "series_index": 1,
@@ -1632,7 +1648,7 @@
           "team_a": "NAVI",
           "team_b": "BTR",
           "game_no": 1,
-          "start_seconds": 24389,
+          "start_seconds": 13093,
           "end_seconds": null,
           "confidence": "med",
           "provenance": {
@@ -1640,12 +1656,12 @@
             "source": "D:\\! Coding\\~ shit projects\\mpls18\\data\\csv\\schedule_all.csv",
             "broadcast_date": "2026-10-18",
             "scheduled_start": "2026-10-18T17:00:00+07:00",
-            "note": "Heuristic initial placement; requires validation against transcript/boundaries/frames",
-            "boundary_line": 9408,
-            "boundary_text": "Navi disetop sama BTR. Iya."
+            "note": "Boundary verified against timed caption line 5070 (raw line 5070); medium confidence.",
+            "boundary_line": 5070,
+            "boundary_text": "match antara Navi melawan Bron. Silakan"
           },
           "verified_by": null,
-          "status": "detected_pending_review"
+          "status": "boundary_verified"
         },
         {
           "series_index": 2,
@@ -1653,7 +1669,7 @@
           "team_a": "ONIC",
           "team_b": "TLID",
           "game_no": 1,
-          "start_seconds": 18571,
+          "start_seconds": 23893,
           "end_seconds": null,
           "confidence": "med",
           "provenance": {
@@ -1661,12 +1677,12 @@
             "source": "D:\\! Coding\\~ shit projects\\mpls18\\data\\csv\\schedule_all.csv",
             "broadcast_date": "2026-10-18",
             "scheduled_start": "2026-10-18T20:00:00+07:00",
-            "note": "Heuristic initial placement; requires validation against transcript/boundaries/frames",
-            "boundary_line": 7834,
-            "boundary_text": "hari ini bakal ada Onik versus TLID,"
+            "note": "Boundary verified against timed caption line 9126 (raw line 9126); medium confidence. Replaces earlier suspicious 18571s detection.",
+            "boundary_line": 9126,
+            "boundary_text": "saksikan. Inilah dia match antara Onik"
           },
           "verified_by": null,
-          "status": "detected_pending_review"
+          "status": "boundary_verified"
         }
       ],
       "validation_status": "pending"

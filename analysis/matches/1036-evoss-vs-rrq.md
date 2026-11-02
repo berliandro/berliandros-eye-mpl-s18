@@ -4,6 +4,13 @@
 
 **Result:** schedule row 1036 — EVOS 2–0 RRQ. Game 1: EVOS won in **16:51**, 11–7 kills, 22,472 vs 1,252 tower damage. Game 2: EVOS won in **24:40**. Source: `OBS-1036-G1-DB` (`Q-MATCH-RESULT`, `Q-GAMES`, `Q-TEAM-GAMES`, `Q-GAME-PICKS`).
 
+## Game-level database context
+
+| Game | Winner | Duration | Map mode | Side (blue/red) | Per-game VOD | Series MVP |
+|---:|---|---:|---|---|---|---|
+| 1 | EVOS | 16:51 | Broken Walls | EVOS blue / RRQ red | https://www.youtube.com/watch?v=SuqcHmHNTos | Alberttt |
+| 2 | EVOS | 24:40 | Flying Cloud | RRQ blue / EVOS red | https://www.youtube.com/watch?v=7D7HZLDDKew | Alberttt |
+
 ## Timeline and evidence
 
 | Broadcast | Evidence | What is directly supported |
@@ -38,7 +45,7 @@ The caster’s early-snowball framing is **consistent with** the recorded compos
 - `seg-src-s18-w01d01-L001533-L001534` — https://youtu.be/40fehk2f4_E?t=3489 (00:58:09)
 - `OBS-1036-DRAFT`, `OBS-1036-LORD`, `OBS-1036-G1-DB`, `OBS-1036-COUNTER`
 - `Q-MATCH-RESULT`, `Q-GAMES`, `Q-TEAM-GAMES`, `Q-GAME-PICKS`, `Q-EVOS-PAQUITO-EUDORA` in `analysis/evidence/query-catalog.json`
-- Database snapshot `mpl-s18-db-1fb1768560e1`
+- Database snapshot `mpl-s18-db-20c5ea2c51f3`
 
 ## Limits
 

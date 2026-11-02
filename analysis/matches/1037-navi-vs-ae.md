@@ -6,6 +6,13 @@
 
 > **Database orientation note:** in the repaired `matches` table this series is stored as AE/NAVI, 2-0, with `matches.winner = 'team_a'` (AE). The schedule row is NAVI/AE, 0-2, with `schedule_all.winner = 'team_b'` (also AE). Both tables agree on the named winner; side tokens differ because team order differs. See `OBS-LINEAGE-WINNER`.
 
+## Game-level database context
+
+| Game | Winner | Duration | Map mode | Side (blue/red) | Per-game VOD | Series MVP |
+|---:|---|---:|---|---|---|---|
+| 1 | AE | 22:42 | Dangerous Grass | AE blue / NAVI red | https://www.youtube.com/watch?v=CGCbVSueZ7c | Yazukee |
+| 2 | AE | 11:27 | Flying Cloud | NAVI blue / AE red | https://www.youtube.com/watch?v=Ap4igKgFkwU | Yazukee |
+
 ## Timeline and evidence
 
 | Broadcast | Evidence | What is directly supported |
@@ -52,7 +59,7 @@ The skeptical audit is recorded as `AUD-1037-01` and expanded in `analysis/repor
 - Frames: `VF-1037-replay` (04:13:51.476), `VF-1037-base` (04:14:06.335), `VF-1037-post` (04:16:11.480); local ignored cache plus sidecars
 - `OBS-1037-SOURCE-MAP`, `OBS-1037-CLUTCH`, `OBS-1037-DEFENSE`, `OBS-1037-G1-DB`, `OBS-1037-VISUAL`, `OBS-1037-COUNTER`
 - `Q-MATCH-RESULT`, `Q-MATCH-DETAIL`, `Q-GAMES`, `Q-TEAM-GAMES`, `Q-CLOSE-GOLD-WINNERS`
-- Database snapshot `mpl-s18-db-1fb1768560e1`
+- Database snapshot `mpl-s18-db-20c5ea2c51f3`
 
 ## Limits
 

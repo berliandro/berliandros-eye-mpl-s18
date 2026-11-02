@@ -17,7 +17,7 @@ This directory contains the first **traceable, transcript-powered** coaching pil
 | `reports/pilot-quality-report.md` | pilot scope, coverage, validation results and gaps |
 | `reports/audit-INS-1037-LATE-SWING.md` | skeptical audit of the main ambiguous insight |
 | `matches/` | one report for each pilot series |
-| `coaching/pilot-coaching-brief.md` | practical prep questions/drills with evidence |
+| `players/` | one dossier for each of the 66 MPL ID S18 players || `coaching/pilot-coaching-brief.md` | practical prep questions/drills with evidence |
 | `evidence/evidence-schema.json` | versioned JSON Schema for ledger records |
 | `evidence/pilot-ledger.jsonl` | canonical pilot evidence (short excerpts only) |
 | `evidence/query-catalog.json` | reproducible read-only SQL for every database reference |
@@ -124,6 +124,22 @@ The apply command backs up the affected files, repairs `matches.winner` relative
 ## Next milestone
 
 Map each verified broadcast to series/game start offsets, expand the curated evidence sample beyond the three pilot series, and resolve or explicitly quarantine the 37 unmapped short lines in `src-s18-w09d02`. Only after quotation fidelity, timestamp/link integrity and audit quality hold across a stratified sample should all nine weeks be processed semantically.
+
+## Final regular-season standings (source-reported, cross-checked)
+
+| Rank | Team | Match W-L | Game W-L |
+|---:|---|---:|---:|
+| 1 | TEAM LIQUID ID | 12-4 | 26-11 |
+| 2 | NAVI | 12-4 | 25-12 |
+| 3 | ALTER EGO ESPORTS | 10-6 | 23-13 |
+| 4 | BIGETRON BY VIT | 10-6 | 21-18 |
+| 5 | EVOS | 8-8 | 19-21 |
+| 6 | ONIC | 7-9 | 19-21 |
+| 7 | DEWA UNITED | 5-11 | 14-25 |
+| 8 | RRQ HOSHI | 4-12 | 14-27 |
+| 9 | GEEK FAM | 4-12 | 13-26 |
+
+Cross-checked against the official MPL Indonesia Season 18 standings (id-mpl.com / Liquipedia) and the canonical database snapshot `mpl-s18-db-20c5ea2c51f3`.
 
 ## How to add a series (workflow)
 Follow this checklist to add a new series with full provenance:
