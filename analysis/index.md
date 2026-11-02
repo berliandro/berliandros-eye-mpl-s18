@@ -9,8 +9,8 @@
 - Fully caption-aligned sources: **26/27**; one partial source (`src-s18-w09d02`) is explicitly not citation-ready.
 - Database winner orientation: repaired **21/72** rows; **0/72** row-score mismatches remain.
 - Pilot series: **3** — 1036, 1037, 1107.
-- Evidence: **8 segments / 18 observations / 3 insights / 1 audit**.
-- Visual review: **6 used frames** (5 gameplay + 1 post-game context), **1 rejected promo**, **1 failed frame**.
+- Evidence ledger: **8 segments / 24 observations / 6 insights / 2 audits**. The original three-series pilot contributes 18 observations / 3 insights / 1 audit; the player-stat extension adds 6 observations / 3 insights / 1 audit.
+- Legacy screenshot history: **6 previously usable/context frames**, **1 rejected promo**, **1 failed capture**. These old visual verdicts are not DeepSeek reviews and must be re-reviewed by the DeepSeek vision workflow before being counted as current visual proof.
 - Full-season coverage: **no**.
 
 ## Start here
@@ -20,6 +20,7 @@
 3. [`reports/database-inventory.md`](reports/database-inventory.md) — DB coverage, joins, and the post-migration `matches.winner` semantics.
 4. [`reports/pilot-quality-report.md`](reports/pilot-quality-report.md) — pilot coverage, validation results, gaps.
 5. [`coaching/pilot-coaching-brief.md`](coaching/pilot-coaching-brief.md) — the three practical prep points.
+6. [`../docs/goals/active/mpl-s18-visual-proof-deepseek-handoff.md`](../docs/goals/active/mpl-s18-visual-proof-deepseek-handoff.md) — the screenshot-only visual-proof backlog and DeepSeek reviewer contract.
 
 ## Pilot series
 
