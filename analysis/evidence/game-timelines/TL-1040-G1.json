@@ -1,0 +1,87 @@
+{
+  "schema_version": 1,
+  "timeline_id": "TL-1040-G1",
+  "series_id": "1040",
+  "game_no": 1,
+  "source_id": "src-s18-w01d02",
+  "video_id": "tpgvzhEO1Qc",
+  "broadcast_date": "2026-08-15",
+  "game_boundary_status": "heuristic",
+  "boundary_verified_by": "transcript_boundary_detection (line 10853, 24067s)",
+  "db_snapshot_id": "mpl-s18-db-20c5ea2c51f3",
+  "db_snapshot_sha256": "20c5ea2c51f30d1a24cd2ce6927f0d182b47f951ebd8209f1aaef429941cf2ef",
+  "generated_at": "2026-11-02T23:00:00+00:00",
+  "generator_version": "manual-curation-v1",
+  "events": [
+    {
+      "event_id": "EVT-1040-G1-SOURCE-MAP",
+      "event_type": "other",
+      "category": "other",
+      "subject": {"team": "EVOS", "player": null, "hero": null, "side": null},
+      "start_seconds": 24067.0,
+      "end_seconds": 24074.0,
+      "game_clock": null,
+      "confidence": "med",
+      "evidence_type": "commentator_interpretation",
+      "transcript_evidence": {
+        "source_id": "src-s18-w01d02",
+        "line_start": 10853,
+        "line_end": 10854,
+        "text": "melakukan drafik antara EVOS dan juga / Navi. Navi Nation ready. EVOS ready.",
+        "text_sha256": null,
+        "timestamp_start": 24067.0,
+        "timestamp_end": 24074.0,
+        "timestamp_link": "https://youtu.be/tpgvzhEO1Qc?t=24067",
+        "timestamp_provenance": "youtube-auto-caption-alignment-v1",
+        "alignment_version": "youtube-auto-caption-alignment-v1"
+      },
+      "db_evidence": null,
+      "visual_evidence": null,
+      "uncertainty": "Caster announces draft between EVOS and NAVI, mapping it to series 1040. This is a draft announcement, not a full series boundary proof. The series boundary (24067s) is boundary-verified at medium confidence.",
+      "alternative_interpretation": "The draft announcement may precede the actual series start by several minutes.",
+      "counterexample_refs": [],
+      "related_event_ids": ["EVT-1040-G1-RESULT"]
+    },
+    {
+      "event_id": "EVT-1040-G1-RESULT",
+      "event_type": "closing",
+      "category": "macro",
+      "subject": {"team": "NAVI", "player": null, "hero": null, "side": "red"},
+      "start_seconds": null,
+      "end_seconds": null,
+      "game_clock": "10:56",
+      "confidence": "high",
+      "evidence_type": "database_record",
+      "transcript_evidence": null,
+      "db_evidence": [
+        {
+          "query_id": "Q-GAMES",
+          "description": "Per-game duration, winner, side and map mode for series 1040.",
+          "sql": "select game_no, team_a, team_b, winner, duration_sec, team_a_side, team_b_side, map_mode from games where match_detail_id = :match_detail_id order by game_no",
+          "params": {"match_detail_id": "1040"},
+          "snapshot_id": "mpl-s18-db-20c5ea2c51f3",
+          "snapshot_sha256": "20c5ea2c51f30d1a24cd2ce6927f0d182b47f951ebd8209f1aaef429941cf2ef",
+          "rows": [{"game_no": 1, "team_a": "EVOS", "team_b": "NAVI", "winner": "team_b", "duration_sec": 656, "team_a_side": "blue", "team_b_side": "red", "map_mode": "Broken Walls"}],
+          "row_count": 1,
+          "provenance": "source-reported API detail; winner uses games.team_a/team_b orientation"
+        },
+        {
+          "query_id": "Q-TEAM-GAMES",
+          "description": "Per-team per-game scoreboard aggregates for series 1040.",
+          "sql": "select game_no, team, opponent, kills, deaths, assists, gold, tower_damage, duration_sec, win from team_games where match_detail_id = :match_detail_id order by game_no, team",
+          "params": {"match_detail_id": "1040"},
+          "snapshot_id": "mpl-s18-db-20c5ea2c51f3",
+          "snapshot_sha256": "20c5ea2c51f30d1a24cd2ce6927f0d182b47f951ebd8209f1aaef429941cf2ef",
+          "rows": [{"game_no": 1, "team": "EVOS", "opponent": "NAVI", "kills": 2, "deaths": 7, "assists": 3, "gold": 30017, "tower_damage": 0, "duration_sec": 656, "win": 0}, {"game_no": 1, "team": "NAVI", "opponent": "EVOS", "kills": 7, "deaths": 2, "assists": 6, "gold": 38168, "tower_damage": 29195, "duration_sec": 656, "win": 1}],
+          "row_count": 2,
+          "provenance": "deterministic aggregate from ten player rows; not an official tournament table"
+        }
+      ],
+      "visual_evidence": null,
+      "uncertainty": "Game result is source-reported from the canonical DB. NAVI won in 10:56 with 7-2 kills and 29,195 tower damage. EVOS had 0 tower damage. Series boundary is boundary-verified at 24067s (medium confidence). No visual verification performed.",
+      "alternative_interpretation": "The stomp may reflect EVOS errors, draft matchup, or execution rather than NAVI dominance.",
+      "counterexample_refs": [],
+      "related_event_ids": ["EVT-1040-G1-SOURCE-MAP"]
+    }
+  ]
+}

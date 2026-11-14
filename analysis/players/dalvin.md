@@ -75,6 +75,18 @@ Source: `src-s18-w05d03` (verified YouTube video `YPbOKyQltIo`). Broadcast times
 | SANZ | ONIC | 17 | 5.88 |
 | Killuaa | ONIC | 18 | 5.63 |
 
+## Transcript observations (accepted)
+
+<!-- transcript-routing:start -->
+Accepted, source-linked observations. Caster claims are commentary, not proof of an in-game event.
+
+- `TOBS-src-s18-w03d02-1055-g1-009` · match 1055 · 03:49:12 · *observation* — Caster observation: Rendy is too far to contest turtle, so Alter Ego takes it; Nino's magic is rejected and Dalvin also uses rapid boots. ([match](../matches/1055-ae-vs-evos.md), [source](https://youtu.be/FDioYoG4ads?t=13752))
+- `TOBS-src-s18-w03d02-1055-g1-010` · match 1055 · 03:50:36 · *observation* — Caster observation: Alter Ego leverages multiple won lanes without losses, secures purple buff, Dalvin survives; Trinity DAR is completedâ€”'perfect turtle' for Alter Ego. ([match](../matches/1055-ae-vs-evos.md), [source](https://youtu.be/FDioYoG4ads?t=13836))
+<!-- transcript-routing:end -->
+
+
+
+
 ## References
 
 - Database snapshot `mpl-s18-db-20c5ea2c51f3`

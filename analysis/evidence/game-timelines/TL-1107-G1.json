@@ -1,0 +1,174 @@
+{
+  "schema_version": 1,
+  "timeline_id": "TL-1107-G1",
+  "series_id": "1107",
+  "game_no": 1,
+  "source_id": "src-s18-w09d03",
+  "video_id": "hY0Upem95uo",
+  "broadcast_date": "2026-10-18",
+  "game_boundary_status": "heuristic",
+  "boundary_verified_by": "transcript_boundary_detection (schedule_order_heuristic + caster intro at line 9584)",
+  "db_snapshot_id": "mpl-s18-db-20c5ea2c51f3",
+  "db_snapshot_sha256": "20c5ea2c51f30d1a24cd2ce6927f0d182b47f951ebd8209f1aaef429941cf2ef",
+  "generated_at": "2026-11-02T21:30:00+00:00",
+  "generator_version": "manual-curation-v1",
+  "events": [
+    {
+      "event_id": "EVT-1107-G1-ROTATION",
+      "event_type": "rotation",
+      "category": "rotation",
+      "subject": {"team": "TLID", "player": null, "hero": "Drichel", "side": "blue"},
+      "start_seconds": 24828.0,
+      "end_seconds": 24850.0,
+      "game_clock": null,
+      "confidence": "med",
+      "evidence_type": "commentator_interpretation",
+      "transcript_evidence": {
+        "source_id": "src-s18-w09d03",
+        "line_start": 9584,
+        "line_end": 9589,
+        "text": "early rotasi ke arah Aran. Wah, kembali / lagi ya poin pentingnya ada di Aran / untuk batasi map control. / Yap, memaksimalkan unico, Lione dan juga / Drichel untuk meng-counter gameplay ONIC / nih. Siapa yang lebih agresif berarti",
+        "text_sha256": null,
+        "timestamp_start": 24828.0,
+        "timestamp_end": 24850.0,
+        "timestamp_link": "https://youtu.be/hY0Upem95uo?t=24828",
+        "timestamp_provenance": "youtube-auto-caption-alignment-v1",
+        "alignment_version": "youtube-auto-caption-alignment-v1"
+      },
+      "db_evidence": [
+        {
+          "query_id": "Q-GAME-PICKS",
+          "description": "Liquipedia lane-order picks for series 1107.",
+          "sql": "select game_no, team, slot, lane, hero, player from game_picks where match_detail_id = :match_detail_id order by game_no, team, slot",
+          "params": {"match_detail_id": "1107"},
+          "snapshot_id": "mpl-s18-db-20c5ea2c51f3",
+          "snapshot_sha256": "20c5ea2c51f30d1a24cd2ce6927f0d182b47f951ebd8209f1aaef429941cf2ef",
+          "rows": [{"game_no": 1, "team": "TLID", "slot": 3, "lane": "MID", "hero": "Zhuxin", "player": "Drichel"}, {"game_no": 1, "team": "TLID", "slot": 2, "lane": "JUNGLE", "hero": "Aulus", "player": "Kevinn"}],
+          "row_count": 2,
+          "provenance": "Liquipedia draft slot order; slot is lane order, not pick order"
+        }
+      ],
+      "visual_evidence": [
+        {
+          "frame_id": "VF-1107-early",
+          "capture_status": "succeeded",
+          "review_status": "not-reviewed",
+          "reviewer": null,
+          "disposition": "pending",
+          "image_sha256": "507c1963f8bf14c78a68971900f205427cf12f1a42b8e60616f4cb66d16fe25a",
+          "sidecar_path": "analysis/cache/video-frames/src-s18-w09d03/src-s18-w09d03_at_070450_000_p000.json",
+          "observation": "Game clock 5:08; TLID 14.0K vs ONIC 13.1K; top-lane fight.",
+          "uncertainty": "Single still frame; cannot prove the full rotation sequence. Frame is captured, not DeepSeek-reviewed."
+        }
+      ],
+      "uncertainty": "The caster highlights early rotations toward Aran to limit ONIC's map control. The reviewed frame shows TLID with a 0.9k gold lead at 5:08. The series boundary (23893s) is heuristic. No visual confirmation of the full rotation was performed.",
+      "alternative_interpretation": "The lead may come from a fight, a wave, or an objective trade rather than the rotations themselves. The 'Aran' reference is not joined to a database handle.",
+      "counterexample_refs": ["OBS-1107-COUNTER"],
+      "related_event_ids": ["EVT-1107-G1-TURTLE", "EVT-1107-G1-RESULT"]
+    },
+    {
+      "event_id": "EVT-1107-G1-TURTLE",
+      "event_type": "objective_contest",
+      "category": "objective",
+      "subject": {"team": "TLID", "player": null, "hero": null, "side": "blue"},
+      "start_seconds": 25560.0,
+      "end_seconds": 25570.0,
+      "game_clock": "5:27",
+      "confidence": "med",
+      "evidence_type": "commentator_interpretation",
+      "transcript_evidence": {
+        "source_id": "src-s18-w09d03",
+        "line_start": 9941,
+        "line_end": 9946,
+        "text": "Iya ya, rotasi cepat ya, empat agility / Rapid Boots. / Iya. Ngincer healing turtle menangin / dulu earlynya menangin healing / turtle-nya. Jadi power snowball dari / nolanya bisa dikatakan mati.",
+        "text_sha256": null,
+        "timestamp_start": 25560.0,
+        "timestamp_end": 25570.0,
+        "timestamp_link": "https://youtu.be/hY0Upem95uo?t=25560",
+        "timestamp_provenance": "youtube-auto-caption-alignment-v1",
+        "alignment_version": "youtube-auto-caption-alignment-v1"
+      },
+      "db_evidence": null,
+      "visual_evidence": [
+        {
+          "frame_id": "VF-1107-item",
+          "capture_status": "succeeded",
+          "review_status": "not-reviewed",
+          "reviewer": null,
+          "disposition": "pending",
+          "image_sha256": "2c0e202b27f14ac8a46f1cf5a68a62a7282e6f364bb02fe07855db07644118e8",
+          "sidecar_path": "analysis/cache/video-frames/src-s18-w09d03/src-s18-w09d03_at_070510_000_p000.json",
+          "observation": "Game clock 5:27; TLID 15.3K vs ONIC 13.6K; 'FIRST ITEM PRIORITY DRICHEL' overlay.",
+          "uncertainty": "Single still frame; cannot prove the Turtle sequence. Frame is captured, not DeepSeek-reviewed."
+        },
+        {
+          "frame_id": "VF-1107-070620",
+          "capture_status": "succeeded",
+          "review_status": "not-reviewed",
+          "reviewer": null,
+          "disposition": "rejected",
+          "image_sha256": "436f85b73ec5be43bb6437ee45de6a764649ece0d61b5daf68d1a8ac75b2ad78",
+          "sidecar_path": "analysis/cache/video-frames/src-s18-w09d03/src-s18-w09d03_at_070620_000_p000.json",
+          "observation": "YouTube Premium promotional overlay, not gameplay. Rejected.",
+          "uncertainty": "Rejected; not used as evidence."
+        }
+      ],
+      "uncertainty": "The caster links TLID's Rapid Boots rotations to contesting the healing Turtle and shutting down ONIC's snowball. The reviewed frame shows TLID with a 1.7k gold lead at 5:27. The database has no per-game objective counts. No visual confirmation of the Turtle secure was performed.",
+      "alternative_interpretation": "Tower damage is an outcome, not a causal measure. TLID also lost games with substantial tower damage. The '40 LORD KILL' banner at 12:58 is a season milestone, not a current objective.",
+      "counterexample_refs": ["OBS-1107-COUNTER"],
+      "related_event_ids": ["EVT-1107-G1-ROTATION", "EVT-1107-G1-RESULT"]
+    },
+    {
+      "event_id": "EVT-1107-G1-RESULT",
+      "event_type": "closing",
+      "category": "macro",
+      "subject": {"team": "TLID", "player": null, "hero": null, "side": "blue"},
+      "start_seconds": null,
+      "end_seconds": null,
+      "game_clock": "14:47",
+      "confidence": "high",
+      "evidence_type": "database_record",
+      "transcript_evidence": {
+        "source_id": "src-s18-w09d03",
+        "line_start": 11191,
+        "line_end": 11193,
+        "text": "Team Liquid regular-season champion after a 2-0 yang solid over Onic",
+        "text_sha256": null,
+        "timestamp_start": 28002.0,
+        "timestamp_end": 28010.0,
+        "timestamp_link": "https://youtu.be/hY0Upem95uo?t=28002",
+        "timestamp_provenance": "youtube-auto-caption-alignment-v1",
+        "alignment_version": "youtube-auto-caption-alignment-v1"
+      },
+      "db_evidence": [
+        {
+          "query_id": "Q-GAMES",
+          "description": "Per-game duration, winner, side and map mode for series 1107.",
+          "sql": "select game_no, team_a, team_b, winner, duration_sec, team_a_side, team_b_side, map_mode from games where match_detail_id = :match_detail_id order by game_no",
+          "params": {"match_detail_id": "1107"},
+          "snapshot_id": "mpl-s18-db-20c5ea2c51f3",
+          "snapshot_sha256": "20c5ea2c51f30d1a24cd2ce6927f0d182b47f951ebd8209f1aaef429941cf2ef",
+          "rows": [{"game_no": 1, "team_a": "TLID", "team_b": "ONIC", "winner": "team_a", "duration_sec": 887, "team_a_side": "blue", "team_b_side": "red", "map_mode": "Healing Turtle"}, {"game_no": 2, "team_a": "TLID", "team_b": "ONIC", "winner": "team_a", "duration_sec": 745, "team_a_side": "blue", "team_b_side": "red", "map_mode": "Healing Turtle"}],
+          "row_count": 2,
+          "provenance": "source-reported API detail; winner uses games.team_a/team_b orientation"
+        },
+        {
+          "query_id": "Q-TEAM-GAMES",
+          "description": "Per-team per-game scoreboard aggregates for series 1107.",
+          "sql": "select game_no, team, opponent, kills, deaths, assists, gold, tower_damage, duration_sec, win from team_games where match_detail_id = :match_detail_id order by game_no, team",
+          "params": {"match_detail_id": "1107"},
+          "snapshot_id": "mpl-s18-db-20c5ea2c51f3",
+          "snapshot_sha256": "20c5ea2c51f30d1a24cd2ce6927f0d182b47f951ebd8209f1aaef429941cf2ef",
+          "rows": [{"game_no": 1, "team": "TLID", "opponent": "ONIC", "kills": 14, "deaths": 3, "assists": 39, "gold": 49124, "tower_damage": 32659, "duration_sec": 887, "win": 1}, {"game_no": 1, "team": "ONIC", "opponent": "TLID", "kills": 3, "deaths": 14, "assists": 10, "gold": 39093, "tower_damage": 1902, "duration_sec": 887, "win": 0}],
+          "row_count": 2,
+          "provenance": "deterministic aggregate from ten player rows; not an official tournament table"
+        }
+      ],
+      "visual_evidence": null,
+      "uncertainty": "Game result is source-reported from the canonical DB. The caster calls TLID regular-season champion after a 2-0 over ONIC. The series boundary is heuristic (23893s). No visual verification was performed.",
+      "alternative_interpretation": "The fast win (14:47, 12:25) may reflect ONIC errors or draft matchup rather than TLID's rotations alone.",
+      "counterexample_refs": ["OBS-1107-COUNTER"],
+      "related_event_ids": ["EVT-1107-G1-ROTATION", "EVT-1107-G1-TURTLE"]
+    }
+  ]
+}

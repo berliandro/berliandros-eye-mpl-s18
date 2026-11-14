@@ -1,0 +1,87 @@
+{
+  "schema_version": 1,
+  "timeline_id": "TL-1039-G1",
+  "series_id": "1039",
+  "game_no": 1,
+  "source_id": "src-s18-w01d02",
+  "video_id": "tpgvzhEO1Qc",
+  "broadcast_date": "2026-08-15",
+  "game_boundary_status": "heuristic",
+  "boundary_verified_by": "transcript_boundary_detection (line 5192, 11946s)",
+  "db_snapshot_id": "mpl-s18-db-20c5ea2c51f3",
+  "db_snapshot_sha256": "20c5ea2c51f30d1a24cd2ce6927f0d182b47f951ebd8209f1aaef429941cf2ef",
+  "generated_at": "2026-11-02T22:30:00+00:00",
+  "generator_version": "manual-curation-v1",
+  "events": [
+    {
+      "event_id": "EVT-1039-G1-SOURCE-MAP",
+      "event_type": "other",
+      "category": "other",
+      "subject": {"team": "DEWA", "player": null, "hero": null, "side": null},
+      "start_seconds": 11946.0,
+      "end_seconds": 11952.0,
+      "game_clock": null,
+      "confidence": "med",
+      "evidence_type": "commentator_interpretation",
+      "transcript_evidence": {
+        "source_id": "src-s18-w01d02",
+        "line_start": 5192,
+        "line_end": 5193,
+        "text": "Yeay. Ini dia match kedua kita antara / Dewa dan juga RRQ. Yehe. Menyambut",
+        "text_sha256": null,
+        "timestamp_start": 11946.0,
+        "timestamp_end": 11952.0,
+        "timestamp_link": "https://youtu.be/tpgvzhEO1Qc?t=11946",
+        "timestamp_provenance": "youtube-auto-caption-alignment-v1",
+        "alignment_version": "youtube-auto-caption-alignment-v1"
+      },
+      "db_evidence": null,
+      "visual_evidence": null,
+      "uncertainty": "Caster introduces the second W1D2 match as Dewa vs RRQ, mapping it to series 1039. This is commentary, not proof of the full game sequence. The series boundary (11946s) is boundary-verified at medium confidence.",
+      "alternative_interpretation": "The caster may be introducing the match out of order.",
+      "counterexample_refs": [],
+      "related_event_ids": ["EVT-1039-G1-RESULT"]
+    },
+    {
+      "event_id": "EVT-1039-G1-RESULT",
+      "event_type": "closing",
+      "category": "macro",
+      "subject": {"team": "RRQ", "player": null, "hero": null, "side": "red"},
+      "start_seconds": null,
+      "end_seconds": null,
+      "game_clock": "14:02",
+      "confidence": "high",
+      "evidence_type": "database_record",
+      "transcript_evidence": null,
+      "db_evidence": [
+        {
+          "query_id": "Q-GAMES",
+          "description": "Per-game duration, winner, side and map mode for series 1039.",
+          "sql": "select game_no, team_a, team_b, winner, duration_sec, team_a_side, team_b_side, map_mode from games where match_detail_id = :match_detail_id order by game_no",
+          "params": {"match_detail_id": "1039"},
+          "snapshot_id": "mpl-s18-db-20c5ea2c51f3",
+          "snapshot_sha256": "20c5ea2c51f30d1a24cd2ce6927f0d182b47f951ebd8209f1aaef429941cf2ef",
+          "rows": [{"game_no": 1, "team_a": "DEWA", "team_b": "RRQ", "winner": "team_b", "duration_sec": 842, "team_a_side": "blue", "team_b_side": "red", "map_mode": "Broken Walls"}],
+          "row_count": 1,
+          "provenance": "source-reported API detail; winner uses games.team_a/team_b orientation"
+        },
+        {
+          "query_id": "Q-TEAM-GAMES",
+          "description": "Per-team per-game scoreboard aggregates for series 1039.",
+          "sql": "select game_no, team, opponent, kills, deaths, assists, gold, tower_damage, duration_sec, win from team_games where match_detail_id = :match_detail_id order by game_no, team",
+          "params": {"match_detail_id": "1039"},
+          "snapshot_id": "mpl-s18-db-20c5ea2c51f3",
+          "snapshot_sha256": "20c5ea2c51f30d1a24cd2ce6927f0d182b47f951ebd8209f1aaef429941cf2ef",
+          "rows": [{"game_no": 1, "team": "DEWA", "opponent": "RRQ", "kills": 1, "deaths": 10, "assists": 2, "gold": 34991, "tower_damage": 2907, "duration_sec": 842, "win": 0}, {"game_no": 1, "team": "RRQ", "opponent": "DEWA", "kills": 10, "deaths": 1, "assists": 8, "gold": 49785, "tower_damage": 43506, "duration_sec": 842, "win": 1}],
+          "row_count": 2,
+          "provenance": "deterministic aggregate from ten player rows; not an official tournament table"
+        }
+      ],
+      "visual_evidence": null,
+      "uncertainty": "Game result is source-reported from the canonical DB. RRQ won in 14:02 with 10-1 kills and 43,506 tower damage. Series boundary is boundary-verified at 11946s (medium confidence). No visual verification performed.",
+      "alternative_interpretation": "The stomp may reflect DEWA errors, draft matchup, or execution rather than RRQ dominance.",
+      "counterexample_refs": [],
+      "related_event_ids": ["EVT-1039-G1-SOURCE-MAP"]
+    }
+  ]
+}

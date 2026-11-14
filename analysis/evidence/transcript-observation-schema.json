@@ -1,0 +1,357 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://berliandros-eye.local/schemas/transcript-observation-v1.json",
+  "title": "MPL S18 transcript staging ledger record",
+  "description": "JSONL record for a transcript-specific staging ledger. Staging records are validated before consolidation into the canonical evidence/Markdown layer. Raw transcripts and the canonical database are never modified by this format.",
+  "oneOf": [
+    { "$ref": "#/$defs/observation" },
+    { "$ref": "#/$defs/proposal" },
+    { "$ref": "#/$defs/unresolved" },
+    { "$ref": "#/$defs/run_manifest" }
+  ],
+  "$defs": {
+    "sha256": {
+      "type": "string",
+      "pattern": "^[0-9a-f]{64}$"
+    },
+    "source_id": {
+      "type": "string",
+      "pattern": "^src-s18-w[0-9]{2}d[0-9]{2}$"
+    },
+    "database_ref": {
+      "type": "object",
+      "required": [
+        "query_id",
+        "sql",
+        "params",
+        "fields",
+        "provenance",
+        "snapshot_id",
+        "snapshot_sha256",
+        "rows",
+        "row_count"
+      ],
+      "properties": {
+        "query_id": { "type": "string", "minLength": 1 },
+        "sql": { "type": "string", "minLength": 1 },
+        "params": { "type": "object" },
+        "fields": {
+          "type": "array",
+          "items": { "type": "string" }
+        },
+        "provenance": { "type": "string", "minLength": 1 },
+        "snapshot_id": { "type": "string", "minLength": 1 },
+        "snapshot_sha256": { "$ref": "#/$defs/sha256" },
+        "rows": {
+          "type": "array",
+          "items": { "type": "object" }
+        },
+        "row_count": { "type": "integer", "minimum": 0 },
+        "truncated": { "type": "boolean" },
+        "note": { "type": ["string", "null"] }
+      },
+      "additionalProperties": false
+    },
+    "extraction": {
+      "type": "object",
+      "required": [
+        "run_id",
+        "model",
+        "provider",
+        "prompt_version",
+        "extracted_at"
+      ],
+      "properties": {
+        "run_id": { "type": "string", "minLength": 1 },
+        "model": { "type": "string", "minLength": 1 },
+        "provider": { "type": "string", "minLength": 1 },
+        "prompt_version": { "type": "string", "minLength": 1 },
+        "extracted_at": { "type": "string", "format": "date-time" },
+        "token_usage": {
+          "type": ["object", "null"],
+          "properties": {
+            "prompt_tokens": { "type": "integer", "minimum": 0 },
+            "completion_tokens": { "type": "integer", "minimum": 0 },
+            "total_tokens": { "type": "integer", "minimum": 0 }
+          },
+          "additionalProperties": false
+        }
+      },
+      "additionalProperties": false
+    },
+    "entities": {
+      "type": "object",
+      "required": ["players", "teams", "heroes", "maps", "matches"],
+      "properties": {
+        "players": {
+          "type": "array",
+          "items": { "type": "string" },
+          "uniqueItems": true
+        },
+        "teams": {
+          "type": "array",
+          "items": { "type": "string" },
+          "uniqueItems": true
+        },
+        "heroes": {
+          "type": "array",
+          "items": { "type": "string" },
+          "uniqueItems": true
+        },
+        "maps": {
+          "type": "array",
+          "items": { "type": "string" },
+          "uniqueItems": true
+        },
+        "matches": {
+          "type": "array",
+          "items": { "type": "string" },
+          "uniqueItems": true
+        }
+      },
+      "additionalProperties": false
+    },
+    "observation": {
+      "type": "object",
+      "required": [
+        "record_type",
+        "schema_version",
+        "observation_id",
+        "source_id",
+        "segment_id",
+        "raw_line_start",
+        "raw_line_end",
+        "cue_start",
+        "cue_end",
+        "timestamp_provenance",
+        "timestamp_link",
+        "speaker",
+        "speaker_basis",
+        "segment_type",
+        "quote",
+        "quote_sha256",
+        "claim",
+        "claim_type",
+        "topic",
+        "entities",
+        "destination",
+        "status",
+        "confidence",
+        "database_refs",
+        "visual_refs",
+        "notes",
+        "extraction",
+        "created_at"
+      ],
+      "properties": {
+        "record_type": { "const": "observation" },
+        "schema_version": { "const": 1 },
+        "observation_id": {
+          "type": "string",
+          "pattern": "^TOBS-"
+        },
+        "source_id": { "$ref": "#/$defs/source_id" },
+        "segment_id": { "type": "string", "minLength": 1 },
+        "raw_line_start": { "type": "integer", "minimum": 1 },
+        "raw_line_end": { "type": "integer", "minimum": 1 },
+        "cue_start": { "type": ["number", "null"], "minimum": 0 },
+        "cue_end": { "type": ["number", "null"], "minimum": 0 },
+        "timestamp_provenance": {
+          "enum": ["youtube-auto-caption-alignment-v1", "none"]
+        },
+        "timestamp_link": {
+          "type": ["string", "null"],
+          "pattern": "^https://youtu\\.be/"
+        },
+        "speaker": { "type": ["string", "null"] },
+        "speaker_basis": {
+          "enum": ["unavailable", "explicit", "inferred"]
+        },
+        "segment_type": {
+          "enum": [
+            "pre_match",
+            "draft",
+            "gameplay",
+            "post_match",
+            "interview",
+            "analysis",
+            "ad",
+            "intro",
+            "outro",
+            "unknown"
+          ]
+        },
+        "quote": { "type": "string", "minLength": 1 },
+        "quote_sha256": { "$ref": "#/$defs/sha256" },
+        "claim": { "type": "string", "minLength": 1 },
+        "claim_type": {
+          "enum": ["commentary", "observation", "statistic", "inference"]
+        },
+        "topic": {
+          "enum": [
+            "player",
+            "team",
+            "hero",
+            "draft",
+            "macro",
+            "micro",
+            "objective",
+            "map",
+            "patch",
+            "meta",
+            "other"
+          ]
+        },
+        "entities": { "$ref": "#/$defs/entities" },
+        "destination": { "type": "string", "minLength": 1 },
+        "cross_destinations": {
+          "type": "array",
+          "items": { "type": "string", "minLength": 1 },
+          "uniqueItems": true
+        },
+        "proposed_category": { "type": ["string", "null"] },
+        "status": {
+          "enum": ["accepted", "needs_review", "rejected", "duplicate"]
+        },
+        "confidence": { "enum": ["low", "medium", "high"] },
+        "duplicate_of": { "type": ["string", "null"] },
+        "database_refs": {
+          "type": "array",
+          "items": { "$ref": "#/$defs/database_ref" }
+        },
+        "visual_refs": {
+          "type": "array",
+          "items": { "type": "string" }
+        },
+        "notes": { "type": "string" },
+        "extraction": { "$ref": "#/$defs/extraction" },
+        "created_at": { "type": "string", "format": "date-time" }
+      },
+      "additionalProperties": false
+    },
+    "proposal": {
+      "type": "object",
+      "required": [
+        "record_type",
+        "schema_version",
+        "proposal_id",
+        "proposed_path",
+        "reason",
+        "example_observation_ids",
+        "source_ids",
+        "status",
+        "created_at"
+      ],
+      "properties": {
+        "record_type": { "const": "proposal" },
+        "schema_version": { "const": 1 },
+        "proposal_id": { "type": "string", "pattern": "^TPROP-" },
+        "proposed_path": { "type": "string", "minLength": 1 },
+        "reason": { "type": "string", "minLength": 1 },
+        "example_observation_ids": {
+          "type": "array",
+          "items": { "type": "string" },
+          "minItems": 1
+        },
+        "source_ids": {
+          "type": "array",
+          "items": { "$ref": "#/$defs/source_id" },
+          "minItems": 1
+        },
+        "status": { "enum": ["proposed", "accepted", "rejected"] },
+        "created_at": { "type": "string", "format": "date-time" }
+      },
+      "additionalProperties": false
+    },
+    "unresolved": {
+      "type": "object",
+      "required": [
+        "record_type",
+        "schema_version",
+        "unresolved_id",
+        "kind",
+        "surface_form",
+        "context",
+        "source_id",
+        "segment_id",
+        "candidates",
+        "status",
+        "resolution",
+        "created_at"
+      ],
+      "properties": {
+        "record_type": { "const": "unresolved" },
+        "schema_version": { "const": 1 },
+        "unresolved_id": { "type": "string", "pattern": "^TUNRES-" },
+        "kind": {
+          "enum": ["player", "team", "hero", "map", "match", "term"]
+        },
+        "surface_form": { "type": "string", "minLength": 1 },
+        "context": { "type": "string", "minLength": 1 },
+        "source_id": { "$ref": "#/$defs/source_id" },
+        "segment_id": { "type": "string", "minLength": 1 },
+        "candidates": {
+          "type": "array",
+          "items": { "type": "string" }
+        },
+        "status": { "enum": ["open", "resolved", "rejected"] },
+        "resolution": { "type": ["string", "null"] },
+        "created_at": { "type": "string", "format": "date-time" }
+      },
+      "additionalProperties": false
+    },
+    "run_manifest": {
+      "type": "object",
+      "required": [
+        "record_type",
+        "schema_version",
+        "run_id",
+        "source_id",
+        "model",
+        "provider",
+        "prompt_version",
+        "started_at",
+        "finished_at",
+        "token_usage",
+        "counts",
+        "errors"
+      ],
+      "properties": {
+        "record_type": { "const": "run" },
+        "schema_version": { "const": 1 },
+        "run_id": { "type": "string", "minLength": 1 },
+        "source_id": { "$ref": "#/$defs/source_id" },
+        "model": { "type": "string", "minLength": 1 },
+        "provider": { "type": "string", "minLength": 1 },
+        "prompt_version": { "type": "string", "minLength": 1 },
+        "started_at": { "type": "string", "format": "date-time" },
+        "finished_at": { "type": ["string", "null"], "format": "date-time" },
+        "token_usage": {
+          "type": "object",
+          "properties": {
+            "prompt_tokens": { "type": "integer", "minimum": 0 },
+            "completion_tokens": { "type": "integer", "minimum": 0 },
+            "total_tokens": { "type": "integer", "minimum": 0 }
+          },
+          "additionalProperties": false
+        },
+        "counts": {
+          "type": "object",
+          "required": ["observations", "proposals", "unresolved", "errors"],
+          "properties": {
+            "observations": { "type": "integer", "minimum": 0 },
+            "proposals": { "type": "integer", "minimum": 0 },
+            "unresolved": { "type": "integer", "minimum": 0 },
+            "errors": { "type": "integer", "minimum": 0 }
+          },
+          "additionalProperties": false
+        },
+        "errors": {
+          "type": "array",
+          "items": { "type": "string" }
+        }
+      },
+      "additionalProperties": false
+    }
+  }
+}

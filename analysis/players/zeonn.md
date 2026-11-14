@@ -148,6 +148,19 @@ Derived from `game_players` + `team_games` (37 games):
 | EMANN | BIGETRON BY VIT | 39 | 4.38 |
 | Dingarai | ALTER EGO ESPORTS | 36 | 4.33 |
 
+## Transcript observations (accepted)
+
+<!-- transcript-routing:start -->
+Accepted, source-linked observations. Caster claims are commentary, not proof of an in-game event.
+
+- `TOBS-1057-G1-008` · match 1057 · 00:53:38 · *observation* — The caster calls a double kill on Kar and notes Zeon created strong momentum. ([match](../matches/1057-navi-vs-onic.md), [source](https://youtu.be/3bAUu2t3FGI?t=3218))
+- `TOBS-1100-G1-02` · match 1100 · 00:45:07 · *commentary* — Caster lists Navi's starting lineup: Cars Josua in mid, Jiz as roamer, and Zeon in gold lane. ([match](../matches/1100-rrq-vs-navi.md), [source](https://youtu.be/-QC1gIugHrM?t=2707))
+- `TOBS-1100-G1-07` · match 1100 · 01:01:13 · *observation* — RRQ secures first turtle: Joshua takes over while Zeon opens vision; Navi loses the objective. ([match](../matches/1100-rrq-vs-navi.md), [source](https://youtu.be/-QC1gIugHrM?t=3673))
+<!-- transcript-routing:end -->
+
+
+
+
 ## References
 
 - Database snapshot `mpl-s18-db-20c5ea2c51f3`

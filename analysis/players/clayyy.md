@@ -103,6 +103,19 @@ Derived from `game_players` + `team_games` (4 games):
 
 > **Note:** First-blood and first-objective (Turtle/Lord) tracking are not available in the database. These metrics are derived from scoreboard aggregates, not objective-level data.
 
+## Transcript observations (accepted)
+
+<!-- transcript-routing:start -->
+Accepted, source-linked observations. Caster claims are commentary, not proof of an in-game event.
+
+- `TOBS-1065-G1-006` · match 1065 · 00:42:57 · *observation* — The broadcast records Navi securing the second turtle without any trade from RRQ after Clay is eliminated. ([match](../matches/1065-rrq-vs-navi.md), [source](https://youtu.be/nu3RfzQdsec?t=2577))
+- `TOBS-1065-G1-007` · match 1065 · 00:44:10 · *commentary* — The casters say Joshua's early pressure and gold lead make the lane feel like a different era for Clay. ([match](../matches/1065-rrq-vs-navi.md), [source](https://youtu.be/nu3RfzQdsec?t=2650))
+- `TOBS-1071-G1-002` · match 1071 · 03:26:15 · *commentary* — AE lineup features Joshua, Demonkite and Clay; caster also notes Excellent 99 and Arthur among the picks. ([match](../matches/1071-ae-vs-rrq.md), [source](https://youtu.be/ykgecDVRvlI?t=12375))
+<!-- transcript-routing:end -->
+
+
+
+
 ## References
 
 - Database snapshot `mpl-s18-db-20c5ea2c51f3`

@@ -155,6 +155,22 @@ Derived from `game_players` + `team_games` (36 games):
 | SHOGUN | BIGETRON BY VIT | 39 | 3.28 |
 | LUTPI | ONIC | 40 | 2.66 |
 
+## Transcript observations (accepted)
+
+<!-- transcript-routing:start -->
+Accepted, source-linked observations. Caster claims are commentary, not proof of an in-game event.
+
+- `TOBS-src-s18-w03d02-1055-g1-006` · match 1055 · 03:46:49 · *observation* — Caster observation: gold gap jumps to ~1500 from exp/gold difference; Riza falls mid; Nino controls roughly half the map. ([match](../matches/1055-ae-vs-evos.md), [source](https://youtu.be/FDioYoG4ads?t=13609))
+- `TOBS-src-s18-w03d02-1055-g1-009` · match 1055 · 03:49:12 · *observation* — Caster observation: Rendy is too far to contest turtle, so Alter Ego takes it; Nino's magic is rejected and Dalvin also uses rapid boots. ([match](../matches/1055-ae-vs-evos.md), [source](https://youtu.be/FDioYoG4ads?t=13752))
+- `TOBS-src-s18-w03d02-1055-g1-016` · match 1055 · 03:55:38 · *observation* — Caster observes only resources being traded; Nino's Hilda all-in uses all resources but does not swing the fight. ([match](../matches/1055-ae-vs-evos.md), [source](https://youtu.be/FDioYoG4ads?t=14138))
+- `TOBS-1071-G1-003` · match 1071 · 03:31:45 · *commentary* — AE must win the XP lane and deny Nino setup; once Nino gets free, his rotations are dangerous. ([match](../matches/1071-ae-vs-rrq.md), [source](https://youtu.be/ykgecDVRvlI?t=12705))
+- `TOBS-1074-G1-002` · match 1074 · 03:31:03 · *commentary* — AE lineup includes Nino, Avandir, Dolvin and Alexander for the series against ONIC. ([match](../matches/1074-onic-vs-ae.md), [source](https://youtu.be/YPbOKyQltIo?t=12663))
+- `TOBS-1081-G1-005` · match 1081 · 00:50:18 · *observation* — Nino scores first blood solo kill. ([match](../matches/1081-dewa-vs-ae.md), [source](https://youtu.be/K30JsmMhQ4Q?t=3018))
+<!-- transcript-routing:end -->
+
+
+
+
 ## References
 
 - Database snapshot `mpl-s18-db-20c5ea2c51f3`

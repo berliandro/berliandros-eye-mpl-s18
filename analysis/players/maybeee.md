@@ -153,6 +153,19 @@ Derived from `game_players` + `team_games` (39 games):
 | ERLAN | EVOS | 40 | 4.57 |
 | EMANN | BIGETRON BY VIT | 39 | 4.38 |
 
+## Transcript observations (accepted)
+
+<!-- transcript-routing:start -->
+Accepted, source-linked observations. Caster claims are commentary, not proof of an in-game event.
+
+- `TOBS-1039-G1-016` · match 1039 · 03:56:41 · *commentary* — Caster describes Maybe falling and RRQ securing kills as they move to close game 1. ([match](../matches/1039-dewa-vs-rrq.md), [source](https://youtu.be/tpgvzhEO1Qc?t=14201))
+- `TOBS-1045-G1-001` · match 1045 · 03:27:13 · *commentary* — DEWA's lineup: K in experience, Kain jungle/mid, Octa roam, and maybe as gold laner for game 1. ([match](../matches/1045-dewa-vs-btr.md), [source](https://youtu.be/O1vhySUmgj0?t=12433))
+- `TOBS-1102-G1-06` · match 1102 · 01:03:04 · *observation* — Dewa secures first blood via Hazel mid; Maybe narrowly escapes. ([match](../matches/1102-dewa-vs-onic.md), [source](https://youtu.be/b9SktblDNuc?t=3784))
+<!-- transcript-routing:end -->
+
+
+
+
 ## References
 
 - Database snapshot `mpl-s18-db-20c5ea2c51f3`

@@ -134,6 +134,15 @@ Derived from `game_players` + `team_games` (18 games):
 | KEVIN | TEAM LIQUID ID | 37 | 4.29 |
 | Affan | ALTER EGO ESPORTS | 36 | 4.18 |
 
+## Transcript observations (accepted)
+
+<!-- transcript-routing:start -->
+Accepted, source-linked observations. Caster claims are commentary, not proof of an in-game event.
+
+- `TOBS-1071-G1-002` · match 1071 · 03:26:15 · *commentary* — AE lineup features Joshua, Demonkite and Clay; caster also notes Excellent 99 and Arthur among the picks. ([match](../matches/1071-ae-vs-rrq.md), [source](https://youtu.be/ykgecDVRvlI?t=12375))
+<!-- transcript-routing:end -->
+
+
 ## References
 
 - Database snapshot `mpl-s18-db-20c5ea2c51f3`

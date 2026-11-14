@@ -1,0 +1,62 @@
+{
+  "job_id": "extraction-pilot-1036-v3",
+  "created_at": "2026-11-02T10:59:04+00:00",
+  "updated_at": "2026-11-02T10:59:04Z",
+  "chunks": {
+    "CHUNK-8700da44c239": {
+      "chunk_id": "CHUNK-8700da44c239",
+      "source_id": "src-s18-w01d01",
+      "start_line": 1015,
+      "end_line": 1021,
+      "status": "completed",
+      "model_used": "mock",
+      "prompt_version": null,
+      "schema_version": 1,
+      "source_hash": null,
+      "alignment_hash": null,
+      "started_at": "2026-11-02T10:59:04Z",
+      "completed_at": "2026-11-02T10:59:04Z",
+      "error_message": null,
+      "observation_ids": [
+        "OBS-EXTRACT-1036-DRAFT"
+      ],
+      "retry_count": 0
+    },
+    "CHUNK-efa8af111358": {
+      "chunk_id": "CHUNK-efa8af111358",
+      "source_id": "src-s18-w01d01",
+      "start_line": 1529,
+      "end_line": 1535,
+      "status": "completed",
+      "model_used": "mock",
+      "prompt_version": null,
+      "schema_version": 1,
+      "source_hash": null,
+      "alignment_hash": null,
+      "started_at": "2026-11-02T10:59:04Z",
+      "completed_at": "2026-11-02T10:59:04Z",
+      "error_message": null,
+      "observation_ids": [
+        "OBS-EXTRACT-1036-LORD"
+      ],
+      "retry_count": 0
+    },
+    "CHUNK-6b0398a18be6": {
+      "chunk_id": "CHUNK-6b0398a18be6",
+      "source_id": "src-s18-w01d01",
+      "start_line": 100,
+      "end_line": 105,
+      "status": "failed",
+      "model_used": "mock",
+      "prompt_version": null,
+      "schema_version": 1,
+      "source_hash": null,
+      "alignment_hash": null,
+      "started_at": "2026-11-02T10:59:04Z",
+      "completed_at": "2026-11-02T10:59:04Z",
+      "error_message": "JSON parse error: Expecting value: line 1 column 1 (char 0)",
+      "observation_ids": [],
+      "retry_count": 0
+    }
+  }
+}

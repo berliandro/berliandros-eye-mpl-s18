@@ -134,5 +134,21 @@
     "status": "succeeded",
     "frame_path": "analysis/cache/video-frames/live-smoke/src-s18-w01d01/src-s18-w01d01_at_041405_000_p000.png",
     "output_sha256": "a22f665dbf56de858046d226795e5bee29a648403492114db9fbf443b3151b02"
+  },
+  "deepseek_review": {
+    "reviewer": "deepseek",
+    "ledger": "analysis/evidence/deepseek-visual-reviews.json",
+    "plan": "analysis/evidence/visual-review-plan.json",
+    "report": "analysis/reports/visual-proof-deepseek-review.md",
+    "note": "Additive second-stage review. Historical reviewer labels and dispositions in 'frames' are unchanged and are not relabelled as DeepSeek reviews.",
+    "pass": 1,
+    "frames_reviewed": 53,
+    "boundaries_reviewed": 11,
+    "promoted_to_visually_verified": 0,
+    "reviewed_at": "2026-11-02T13:10:31.339361+00:00",
+    "models": [
+      "deepseek-v4.1-flash",
+      "deepseek-v4.1-flash-free"
+    ]
   }
 }

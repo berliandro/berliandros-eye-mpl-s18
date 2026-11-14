@@ -157,6 +157,21 @@ Derived from `game_players` + `team_games` (35 games):
 | ERLAN | EVOS | 40 | 4.57 |
 | EMANN | BIGETRON BY VIT | 39 | 4.38 |
 
+## Transcript observations (accepted)
+
+<!-- transcript-routing:start -->
+Accepted, source-linked observations. Caster claims are commentary, not proof of an in-game event.
+
+- `TOBS-1071-G1-002` · match 1071 · 03:26:15 · *commentary* — AE lineup features Joshua, Demonkite and Clay; caster also notes Excellent 99 and Arthur among the picks. ([match](../matches/1071-ae-vs-rrq.md), [source](https://youtu.be/ykgecDVRvlI?t=12375))
+- `TOBS-1071-G1-004` · match 1071 · 03:30:16 · *commentary* — Caster notes Moskov supports Arthur, who can carry into late game. ([match](../matches/1071-ae-vs-rrq.md), [source](https://youtu.be/ykgecDVRvlI?t=12616))
+- `TOBS-1087-G1-005` · match 1087 · 03:57:54 · *observation* — The caster reports RRQ accelerated to secure the first turtle; Arthur got a double kill but was stunned by Moreno. ([match](../matches/1087-btr-vs-rrq.md), [source](https://youtu.be/px_HftyZBxo?t=14274))
+- `TOBS-1098-G1-006` · match 1098 · 05:19:32 · *observation* — The caster calls the turtle perfect and notes Arthur uses retribution to secure it. ([match](../matches/1098-rrq-vs-onic.md), [source](https://youtu.be/jz3rH4xDoak?t=19172))
+- `TOBS-1098-G1-008` · match 1098 · 05:20:12 · *observation* — The caster says RRQ lost Arthur but traded for the turtle. ([match](../matches/1098-rrq-vs-onic.md), [source](https://youtu.be/jz3rH4xDoak?t=19212))
+<!-- transcript-routing:end -->
+
+
+
+
 ## References
 
 - Database snapshot `mpl-s18-db-20c5ea2c51f3`

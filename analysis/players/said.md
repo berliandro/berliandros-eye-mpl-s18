@@ -156,6 +156,18 @@ Derived from `game_players` + `team_games` (39 games):
 | EgaTzy | EVOS | 12 | 3.68 |
 | LYONI | TEAM LIQUID ID | 37 | 3.60 |
 
+## Transcript observations (accepted)
+
+<!-- transcript-routing:start -->
+Accepted, source-linked observations. Caster claims are commentary, not proof of an in-game event.
+
+- `TOBS-1036-G1-014` · match 1036 · 00:58:04 · *commentary* — The caster says Mueza blocked Said's ultimate and EVOS had follow-up damage because 'the Lord is in hand'. ([match](../matches/1036-evoss-vs-rrq.md), [source](https://youtu.be/40fehk2f4_E?t=3484))
+- `TOBS-1100-G1-01` · match 1100 · 00:44:21 · *commentary* — Caster lists RRQ's starting lineup: Joshua in XP, Favian in jungle, with Hajirin, Said and Dynamic 2, plus a gold laner. ([match](../matches/1100-rrq-vs-navi.md), [source](https://youtu.be/-QC1gIugHrM?t=2661))
+<!-- transcript-routing:end -->
+
+
+
+
 ## References
 
 - Database snapshot `mpl-s18-db-20c5ea2c51f3`

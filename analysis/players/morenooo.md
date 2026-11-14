@@ -151,6 +151,20 @@ Derived from `game_players` + `team_games` (39 games):
 | Killuaa | ONIC | 18 | 5.63 |
 | OCTA | DEWA UNITED | 39 | 5.13 |
 
+## Transcript observations (accepted)
+
+<!-- transcript-routing:start -->
+Accepted, source-linked observations. Caster claims are commentary, not proof of an in-game event.
+
+- `TOBS-1052-G1-004` · match 1052 · 00:48:40 · *observation* — The caster says Moreno secured first blood for BTR and BTR took the second turtle. ([match](../matches/1052-navi-vs-btr.md), [source](https://youtu.be/9c2wPhSYTGA?t=2920))
+- `TOBS-1080-G1-006` · match 1080 · 06:51:43 · *observation* — Liquid forces Moreno out, costing Bigetron turtle and purple buff. ([match](../matches/1080-tlid-vs-btr.md), [source](https://youtu.be/5tOPeDiETK0?t=24703))
+- `TOBS-1087-G1-004` · match 1087 · 03:56:23 · *commentary* — The caster notes Moreno plays aggressively early, chunking half health despite holy healing. ([match](../matches/1087-btr-vs-rrq.md), [source](https://youtu.be/px_HftyZBxo?t=14183))
+- `TOBS-1087-G1-005` · match 1087 · 03:57:54 · *observation* — The caster reports RRQ accelerated to secure the first turtle; Arthur got a double kill but was stunned by Moreno. ([match](../matches/1087-btr-vs-rrq.md), [source](https://youtu.be/px_HftyZBxo?t=14274))
+<!-- transcript-routing:end -->
+
+
+
+
 ## References
 
 - Database snapshot `mpl-s18-db-20c5ea2c51f3`

@@ -164,6 +164,20 @@ Derived from `game_players` + `team_games` (35 games):
 | Nino | ALTER EGO ESPORTS | 36 | 3.53 |
 | SHOGUN | BIGETRON BY VIT | 39 | 3.28 |
 
+## Transcript observations (accepted)
+
+<!-- transcript-routing:start -->
+Accepted, source-linked observations. Caster claims are commentary, not proof of an in-game event.
+
+- `TOBS-src-s18-w03d02-1055-g1-008` · match 1055 · 03:48:55 · *observation* — Caster observation: Alexander makes a well-timed sacrifice; EVOS trades on bottom/top lanes and Rendy is far from a safe position. ([match](../matches/1055-ae-vs-evos.md), [source](https://youtu.be/FDioYoG4ads?t=13735))
+- `TOBS-src-s18-w03d02-1055-g1-009` · match 1055 · 03:49:12 · *observation* — Caster observation: Rendy is too far to contest turtle, so Alter Ego takes it; Nino's magic is rejected and Dalvin also uses rapid boots. ([match](../matches/1055-ae-vs-evos.md), [source](https://youtu.be/FDioYoG4ads?t=13752))
+- `TOBS-src-s18-w03d02-1055-g1-012` · match 1055 · 03:53:57 · *observation* — Caster says AE knows how to execute a free Lord in a 4v5, with EVOS missing Rendy/frontline. ([match](../matches/1055-ae-vs-evos.md), [source](https://youtu.be/FDioYoG4ads?t=14037))
+- `TOBS-src-s18-w03d02-1055-g1-020` · match 1055 · 03:29:04 · *statistic* — Database fact: game 1 AE won in 26:35 (1595s) on Dangerous Grass with AE blue/EVOS red; game 2 AE won in 17:22 (1042s) on Expanding Rivers. ([match](../matches/1055-ae-vs-evos.md), [source](https://youtu.be/FDioYoG4ads?t=12544))
+<!-- transcript-routing:end -->
+
+
+
+
 ## References
 
 - Database snapshot `mpl-s18-db-20c5ea2c51f3`

@@ -143,6 +143,18 @@ Derived from `game_players` + `team_games` (23 games):
 | KEVIN | TEAM LIQUID ID | 37 | 4.29 |
 | Affan | ALTER EGO ESPORTS | 36 | 4.18 |
 
+## Transcript observations (accepted)
+
+<!-- transcript-routing:start -->
+Accepted, source-linked observations. Caster claims are commentary, not proof of an in-game event.
+
+- `TOBS-1098-G1-005` · match 1098 · 05:15:18 · *commentary* — The caster says the turtle setup is starting and Favian is one step closer. ([match](../matches/1098-rrq-vs-onic.md), [source](https://youtu.be/jz3rH4xDoak?t=18918))
+- `TOBS-1100-G1-01` · match 1100 · 00:44:21 · *commentary* — Caster lists RRQ's starting lineup: Joshua in XP, Favian in jungle, with Hajirin, Said and Dynamic 2, plus a gold laner. ([match](../matches/1100-rrq-vs-navi.md), [source](https://youtu.be/-QC1gIugHrM?t=2661))
+<!-- transcript-routing:end -->
+
+
+
+
 ## References
 
 - Database snapshot `mpl-s18-db-20c5ea2c51f3`

@@ -156,6 +156,18 @@ Derived from `game_players` + `team_games` (35 games):
 | SANZ | ONIC | 17 | 5.88 |
 | Killuaa | ONIC | 18 | 5.63 |
 
+## Transcript observations (accepted)
+
+<!-- transcript-routing:start -->
+Accepted, source-linked observations. Caster claims are commentary, not proof of an in-game event.
+
+- `TOBS-src-s18-w03d02-1055-g1-006` · match 1055 · 03:46:49 · *observation* — Caster observation: gold gap jumps to ~1500 from exp/gold difference; Riza falls mid; Nino controls roughly half the map. ([match](../matches/1055-ae-vs-evos.md), [source](https://youtu.be/FDioYoG4ads?t=13609))
+- `TOBS-src-s18-w03d02-1055-g1-020` · match 1055 · 03:29:04 · *statistic* — Database fact: game 1 AE won in 26:35 (1595s) on Dangerous Grass with AE blue/EVOS red; game 2 AE won in 17:22 (1042s) on Expanding Rivers. ([match](../matches/1055-ae-vs-evos.md), [source](https://youtu.be/FDioYoG4ads?t=12544))
+<!-- transcript-routing:end -->
+
+
+
+
 ## References
 
 - Database snapshot `mpl-s18-db-20c5ea2c51f3`

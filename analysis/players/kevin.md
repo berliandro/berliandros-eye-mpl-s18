@@ -124,6 +124,21 @@ No verifiable transcript mentions were found for this player across all 22 valid
 
 > **Note:** Low-profile players and substitutes may not be mentioned by name in broadcast commentary. This is a data limitation, not a performance assessment.
 
+## Transcript observations (accepted)
+
+<!-- transcript-routing:start -->
+Accepted, source-linked observations. Caster claims are commentary, not proof of an in-game event.
+
+- `TOBS-1041-G1-005` · match 1041 · 00:39:37 · *observation* — First blood goes to Kevin (TLID) with a traded kill for DEWA; TLID also secures the first turtle. ([match](../matches/1041-tlid-vs-dewa.md), [source](https://youtu.be/X1yGjaXTbww?t=2377))
+- `TOBS-1080-G1-010` · match 1080 · 07:00:46 · *observation* — Kevin loses three players; Liquid secures game 1. ([match](../matches/1080-tlid-vs-btr.md), [source](https://youtu.be/5tOPeDiETK0?t=25246))
+- `TOBS-1107-G1-12` · match 1107 · 07:14:05 · *observation* — Caster describes a 3v5 situation where ONIC fails to secure a kill on Kevin because he is too tanky. ([match](../matches/1107-onic-vs-tlid.md), [source](https://youtu.be/hY0Upem95uo?t=26045))
+- `TOBS-1107-G1-19` · match 1107 · 07:03:53 · *observation* — Caster says Kyoy used Golden Hour defensively while Kevin nearly got kicked down but stayed brave. ([match](../matches/1107-onic-vs-tlid.md), [source](https://youtu.be/hY0Upem95uo?t=25433))
+- `TOBS-1107-G1-20` · match 1107 · 07:04:34 · *observation* — Caster reports a re-engaged fight where Lutfi has no way home, Kevin's damage is too high, and Lyoni saves Kevin. ([match](../matches/1107-onic-vs-tlid.md), [source](https://youtu.be/hY0Upem95uo?t=25474))
+<!-- transcript-routing:end -->
+
+
+
+
 ## References
 
 - Database snapshot `mpl-s18-db-20c5ea2c51f3`

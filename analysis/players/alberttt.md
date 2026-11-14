@@ -150,6 +150,20 @@ Derived from `game_players` + `team_games` (35 games):
 | Affan | ALTER EGO ESPORTS | 36 | 4.18 |
 | NNAEL | BIGETRON BY VIT | 39 | 4.10 |
 
+## Transcript observations (accepted)
+
+<!-- transcript-routing:start -->
+Accepted, source-linked observations. Caster claims are commentary, not proof of an in-game event.
+
+- `TOBS-1036-G1-006` · match 1036 · 00:49:04 · *observation* — The broadcast records first blood going to Albert (EVOS) after an unexpected flicker caught Hajirin. ([match](../matches/1036-evoss-vs-rrq.md), [source](https://youtu.be/40fehk2f4_E?t=2944))
+- `TOBS-src-s18-w03d02-1055-g1-005` · match 1055 · 03:46:00 · *observation* — Caster observes Albert stepping forward into a fight around Golden Hour; Avada saves the R of D and the fight continues. ([match](../matches/1055-ae-vs-evos.md), [source](https://youtu.be/FDioYoG4ads?t=13560))
+- `TOBS-src-s18-w03d02-1055-g1-020` · match 1055 · 03:29:04 · *statistic* — Database fact: game 1 AE won in 26:35 (1595s) on Dangerous Grass with AE blue/EVOS red; game 2 AE won in 17:22 (1042s) on Expanding Rivers. ([match](../matches/1055-ae-vs-evos.md), [source](https://youtu.be/FDioYoG4ads?t=12544))
+- `TOBS-1060-G1-006` · match 1060 · 00:44:10 · *observation* — The broadcast notes Cars already has two kills, one on Albert and one on Hazel. ([match](../matches/1060-navi-vs-dewa.md), [source](https://youtu.be/W-LSKxUkUi4?t=2650))
+<!-- transcript-routing:end -->
+
+
+
+
 ## References
 
 - Database snapshot `mpl-s18-db-20c5ea2c51f3`

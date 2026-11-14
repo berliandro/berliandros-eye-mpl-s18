@@ -1,0 +1,105 @@
+{
+  "schema_version": 1,
+  "timeline_id": "TL-1036-G2",
+  "series_id": "1036",
+  "game_no": 2,
+  "source_id": "src-s18-w01d01",
+  "video_id": "40fehk2f4_E",
+  "broadcast_date": "2026-08-14",
+  "game_boundary_status": "unresolved",
+  "boundary_verified_by": null,
+  "db_snapshot_id": "mpl-s18-db-20c5ea2c51f3",
+  "db_snapshot_sha256": "20c5ea2c51f30d1a24cd2ce6927f0d182b47f951ebd8209f1aaef429941cf2ef",
+  "generated_at": "2026-11-02T23:55:00+00:00",
+  "generator_version": "manual-curation-v1",
+  "events": [
+    {
+      "event_id": "EVT-1036-G2-RESULT",
+      "event_type": "closing",
+      "category": "macro",
+      "subject": {
+        "team": "EVOS",
+        "player": null,
+        "hero": null,
+        "side": "red"
+      },
+      "start_seconds": null,
+      "end_seconds": null,
+      "game_clock": "24:40",
+      "confidence": "high",
+      "evidence_type": "database_record",
+      "transcript_evidence": null,
+      "db_evidence": [
+        {
+          "query_id": "Q-GAMES",
+          "description": "Per-game duration, winner, side and map mode for series 1036 game 2.",
+          "sql": "select game_no, team_a, team_b, winner, duration_sec, team_a_side, team_b_side, map_mode from games where match_detail_id = :match_detail_id order by game_no",
+          "params": {
+            "match_detail_id": "1036"
+          },
+          "snapshot_id": "mpl-s18-db-20c5ea2c51f3",
+          "snapshot_sha256": "20c5ea2c51f30d1a24cd2ce6927f0d182b47f951ebd8209f1aaef429941cf2ef",
+          "rows": [
+            {
+              "game_no": 2,
+              "team_a": "RRQ",
+              "team_b": "EVOS",
+              "winner": "team_b",
+              "duration_sec": 1480,
+              "team_a_side": "blue",
+              "team_b_side": "red",
+              "map_mode": "Flying Cloud"
+            }
+          ],
+          "row_count": 1,
+          "provenance": "source-reported API detail; winner uses games.team_a/team_b orientation"
+        },
+        {
+          "query_id": "Q-TEAM-GAMES",
+          "description": "Per-team per-game scoreboard aggregates for series 1036 game 2.",
+          "sql": "select game_no, team, opponent, kills, deaths, assists, gold, tower_damage, duration_sec, win from team_games where match_detail_id = :match_detail_id order by game_no, team",
+          "params": {
+            "match_detail_id": "1036"
+          },
+          "snapshot_id": "mpl-s18-db-20c5ea2c51f3",
+          "snapshot_sha256": "20c5ea2c51f30d1a24cd2ce6927f0d182b47f951ebd8209f1aaef429941cf2ef",
+          "rows": [
+            {
+              "game_no": 2,
+              "team": "EVOS",
+              "opponent": "RRQ",
+              "kills": 9,
+              "deaths": 9,
+              "assists": 20,
+              "gold": 77639,
+              "tower_damage": 28036,
+              "duration_sec": 1480,
+              "win": 1
+            },
+            {
+              "game_no": 2,
+              "team": "RRQ",
+              "opponent": "EVOS",
+              "kills": 9,
+              "deaths": 9,
+              "assists": 25,
+              "gold": 75090,
+              "tower_damage": 0,
+              "duration_sec": 1480,
+              "win": 0
+            }
+          ],
+          "row_count": 2,
+          "provenance": "deterministic aggregate from ten player rows; not an official tournament table"
+        }
+      ],
+      "visual_evidence": null,
+      "uncertainty": "Game 2 result is source-reported from the canonical DB. EVOS won in 24:40 with 9-9 kills. Series boundary is UNRESOLVED; no transcript timestamp may be attached to this game. No visual verification performed. No transcript timestamps attached.",
+      "alternative_interpretation": "The result may reflect opponent errors, draft matchup, or execution variance rather than EVOS dominance.",
+      "counterexample_refs": [],
+      "related_event_ids": [
+        "EVT-1036-G1-RESULT"
+      ]
+    }
+  ]
+}

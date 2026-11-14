@@ -6,12 +6,77 @@
 
 > **Database orientation note:** in the repaired `matches` table this series is stored as AE/NAVI, 2-0, with `matches.winner = 'team_a'` (AE). The schedule row is NAVI/AE, 0-2, with `schedule_all.winner = 'team_b'` (also AE). Both tables agree on the named winner; side tokens differ because team order differs. See `OBS-LINEAGE-WINNER`.
 
+<!-- db-evidence:start -->
 ## Game-level database context
 
-| Game | Winner | Duration | Map mode | Side (blue/red) | Per-game VOD | Series MVP |
-|---:|---|---:|---|---|---|---|
-| 1 | AE | 22:42 | Dangerous Grass | AE blue / NAVI red | https://www.youtube.com/watch?v=CGCbVSueZ7c | Yazukee |
-| 2 | AE | 11:27 | Flying Cloud | NAVI blue / AE red | https://www.youtube.com/watch?v=Ap4igKgFkwU | Yazukee |
+Database snapshot `mpl-s18-db-20c5ea2c51f3` · SHA-256 `20c5ea2c51f30d1a24cd2ce6927f0d182b47f951ebd8209f1aaef429941cf2ef`. Queries: `Q-MATCH-RESULT`, `Q-GAMES`, `Q-TEAM-GAMES`, `Q-MATCH-PLAYER-LINES`, `Q-GAME-PICKS`, `Q-GAME-BANS` (see `analysis/evidence/query-catalog.json`). These are source-reported scoreboard values, not official tournament tables.
+
+**Series MVP (Liquipedia):** Yazukee.
+
+### Game 1 — AE win · 22:42 · Dangerous Grass
+
+Sides: AE blue / NAVI red · [VOD](https://www.youtube.com/watch?v=CGCbVSueZ7c)
+
+| Team | K | D | A | Gold | Hero damage | Tower damage |
+|---|---:|---:|---:|---:|---:|---:|
+| AE | 21 | 16 | 53 | 72,200 | 294,598 | 20,158 |
+| NAVI | 16 | 21 | 48 | 70,169 | 297,169 | 33,132 |
+
+| Team | Player | Lane | Hero | K/D/A | KDA | Gold | Hero damage | Tower damage |
+|---|---|---|---|---:|---:|---:|---:|---:|
+| AE | Nino | EXP | Esmeralda | 4/1/9 | 13.0 | 12,643 | 56,555 | 235 |
+| AE | Arfy | GOLD | Moskov | 5/3/8 | 4.33 | 17,003 | 76,572 | 13,962 |
+| AE | Yazukee | JUNGLE | Paquito | 8/5/8 | 3.2 | 16,514 | 70,062 | 1,700 |
+| AE | Hijumee | MID | Kimmy | 3/2/13 | 8.0 | 14,492 | 77,300 | 4,261 |
+| AE | alekk | ROAM | Atlas | 1/5/15 | 3.2 | 11,548 | 14,109 | 0 |
+| NAVI | Karss | EXP | Barats | 1/5/10 | 2.2 | 10,227 | 33,071 | 366 |
+| NAVI | Zeonn | GOLD | Claude | 7/3/5 | 4.0 | 17,250 | 83,591 | 29,129 |
+| NAVI | Andoryuuu | JUNGLE | Hirara | 5/5/8 | 2.6 | 17,103 | 72,065 | 961 |
+| NAVI | Jiizee | MID | Lylia | 2/4/14 | 4.0 | 13,837 | 82,448 | 1,080 |
+| NAVI | Aprho | ROAM | Valentina | 1/4/11 | 3.0 | 11,752 | 25,994 | 1,596 |
+
+**Picks**
+
+- AE: Nino (EXP, Esmeralda), Yazukee (JUNGLE, Paquito), Hijumee (MID, Kimmy), Arfy (GOLD, Moskov), alekk (ROAM, Atlas)
+- NAVI: Karss (EXP, Barats), Andoryuuu (JUNGLE, Hirara), Jiizee (MID, Lylia), Zeonn (GOLD, Claude), Aprho (ROAM, Valentina)
+
+**Bans:** A — Phoveus, Marcel, Kaja, Belerick, Mathilda · B — Freya, Fanny, Melissa, Uranus, Alice
+
+### Game 2 — AE win · 11:27 · Flying Cloud
+
+Sides: NAVI blue / AE red · [VOD](https://www.youtube.com/watch?v=Ap4igKgFkwU)
+
+| Team | K | D | A | Gold | Hero damage | Tower damage |
+|---|---:|---:|---:|---:|---:|---:|
+| NAVI | 3 | 11 | 6 | 30,952 | 94,065 | 10,237 |
+| AE | 11 | 3 | 29 | 40,327 | 160,801 | 29,278 |
+
+| Team | Player | Lane | Hero | K/D/A | KDA | Gold | Hero damage | Tower damage |
+|---|---|---|---|---:|---:|---:|---:|---:|
+| NAVI | Karss | EXP | Barats | 0/3/1 | 0.33 | 4,816 | 16,989 | 0 |
+| NAVI | Zeonn | GOLD | Brody | 2/1/1 | 3.0 | 8,065 | 14,481 | 6,657 |
+| NAVI | Andoryuuu | JUNGLE | Paquito | 1/3/1 | 0.67 | 7,411 | 15,454 | 3,580 |
+| NAVI | Jiizee | MID | Eudora | 0/1/2 | 2.0 | 5,648 | 35,158 | 0 |
+| NAVI | Aprho | ROAM | Chou | 0/3/1 | 0.33 | 5,012 | 11,983 | 0 |
+| AE | Nino | EXP | Carmilla | 2/1/6 | 8.0 | 6,670 | 11,845 | 1,228 |
+| AE | Arfy | GOLD | Melissa | 4/0/5 | 9.0 | 10,132 | 57,348 | 24,665 |
+| AE | Yazukee | JUNGLE | Hirara | 3/1/2 | 5.0 | 9,356 | 28,380 | 0 |
+| AE | Hijumee | MID | Cecilion | 0/0/9 | 9.0 | 6,988 | 48,271 | 2,544 |
+| AE | alekk | ROAM | Belerick | 2/1/7 | 9.0 | 7,181 | 14,957 | 841 |
+
+**Picks**
+
+- NAVI: Karss (EXP, Barats), Andoryuuu (JUNGLE, Paquito), Jiizee (MID, Eudora), Zeonn (GOLD, Brody), Aprho (ROAM, Chou)
+- AE: Nino (EXP, Carmilla), Yazukee (JUNGLE, Hirara), Hijumee (MID, Cecilion), Arfy (GOLD, Melissa), alekk (ROAM, Belerick)
+
+**Bans:** A — Fanny, Marcel, Uranus, Alice, Sora · B — Freya, Atlas, Esmeralda, Mathilda, Rafaela
+
+Draft labels A/B are source draft order; picks are lane-order, not pick order.
+
+**Transcript coverage:** none. This series is database-only; no broadcast quote, timestamp, or caster claim is made.
+
+**Database limits:** no per-game objective counts, gold/damage timelines, vision, communications, or intent.
+<!-- db-evidence:end -->
 
 ## Timeline and evidence
 

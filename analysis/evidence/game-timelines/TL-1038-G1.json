@@ -1,0 +1,87 @@
+{
+  "schema_version": 1,
+  "timeline_id": "TL-1038-G1",
+  "series_id": "1038",
+  "game_no": 1,
+  "source_id": "src-s18-w01d02",
+  "video_id": "tpgvzhEO1Qc",
+  "broadcast_date": "2026-08-15",
+  "game_boundary_status": "heuristic",
+  "boundary_verified_by": "transcript_boundary_detection (lineup announcement at line 603, 1655s)",
+  "db_snapshot_id": "mpl-s18-db-20c5ea2c51f3",
+  "db_snapshot_sha256": "20c5ea2c51f30d1a24cd2ce6927f0d182b47f951ebd8209f1aaef429941cf2ef",
+  "generated_at": "2026-11-02T22:00:00+00:00",
+  "generator_version": "manual-curation-v1",
+  "events": [
+    {
+      "event_id": "EVT-1038-G1-SOURCE-MAP",
+      "event_type": "other",
+      "category": "other",
+      "subject": {"team": "GEEK", "player": null, "hero": null, "side": null},
+      "start_seconds": 1655.0,
+      "end_seconds": 1680.0,
+      "game_clock": null,
+      "confidence": "med",
+      "evidence_type": "commentator_interpretation",
+      "transcript_evidence": {
+        "source_id": "src-s18-w01d02",
+        "line_start": 603,
+        "line_end": 605,
+        "text": "kita langsung mulai di match pertama / kita dari line up tim yang akan / bertanding match pembuka kita ada Geek,",
+        "text_sha256": null,
+        "timestamp_start": 1655.0,
+        "timestamp_end": 1680.0,
+        "timestamp_link": "https://youtu.be/tpgvzhEO1Qc?t=1655",
+        "timestamp_provenance": "youtube-auto-caption-alignment-v1",
+        "alignment_version": "youtube-auto-caption-alignment-v1"
+      },
+      "db_evidence": null,
+      "visual_evidence": null,
+      "uncertainty": "Caster presents GEEK lineup for the opening match, mapping it to series 1038. This is a lineup announcement, not a series boundary proof. The series boundary (1655s) is heuristic (medium confidence).",
+      "alternative_interpretation": "The lineup announcement may precede the actual series start by several minutes.",
+      "counterexample_refs": [],
+      "related_event_ids": ["EVT-1038-G1-RESULT"]
+    },
+    {
+      "event_id": "EVT-1038-G1-RESULT",
+      "event_type": "closing",
+      "category": "macro",
+      "subject": {"team": "GEEK", "player": null, "hero": null, "side": "blue"},
+      "start_seconds": null,
+      "end_seconds": null,
+      "game_clock": "10:51",
+      "confidence": "high",
+      "evidence_type": "database_record",
+      "transcript_evidence": null,
+      "db_evidence": [
+        {
+          "query_id": "Q-GAMES",
+          "description": "Per-game duration, winner, side and map mode for series 1038.",
+          "sql": "select game_no, team_a, team_b, winner, duration_sec, team_a_side, team_b_side, map_mode from games where match_detail_id = :match_detail_id order by game_no",
+          "params": {"match_detail_id": "1038"},
+          "snapshot_id": "mpl-s18-db-20c5ea2c51f3",
+          "snapshot_sha256": "20c5ea2c51f30d1a24cd2ce6927f0d182b47f951ebd8209f1aaef429941cf2ef",
+          "rows": [{"game_no": 1, "team_a": "GEEK", "team_b": "TLID", "winner": "team_a", "duration_sec": 651, "team_a_side": "blue", "team_b_side": "red", "map_mode": "Expanding Rivers"}],
+          "row_count": 1,
+          "provenance": "source-reported API detail; winner uses games.team_a/team_b orientation"
+        },
+        {
+          "query_id": "Q-TEAM-GAMES",
+          "description": "Per-team per-game scoreboard aggregates for series 1038.",
+          "sql": "select game_no, team, opponent, kills, deaths, assists, gold, tower_damage, duration_sec, win from team_games where match_detail_id = :match_detail_id order by game_no, team",
+          "params": {"match_detail_id": "1038"},
+          "snapshot_id": "mpl-s18-db-20c5ea2c51f3",
+          "snapshot_sha256": "20c5ea2c51f30d1a24cd2ce6927f0d182b47f951ebd8209f1aaef429941cf2ef",
+          "rows": [{"game_no": 1, "team": "GEEK", "opponent": "TLID", "kills": 12, "deaths": 1, "assists": 10, "gold": 41324, "tower_damage": 44583, "duration_sec": 651, "win": 1}, {"game_no": 1, "team": "TLID", "opponent": "GEEK", "kills": 1, "deaths": 12, "assists": 0, "gold": 25512, "tower_damage": 0, "duration_sec": 651, "win": 0}],
+          "row_count": 2,
+          "provenance": "deterministic aggregate from ten player rows; not an official tournament table"
+        }
+      ],
+      "visual_evidence": null,
+      "uncertainty": "Game result is source-reported from the canonical DB. Series boundary is heuristic (1655s). No visual verification performed.",
+      "alternative_interpretation": "The fast win (10:51, 12-1 kills) may reflect TLID errors or draft matchup rather than GEEK's dominance.",
+      "counterexample_refs": [],
+      "related_event_ids": ["EVT-1038-G1-SOURCE-MAP"]
+    }
+  ]
+}

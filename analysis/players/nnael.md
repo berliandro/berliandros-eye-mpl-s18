@@ -153,6 +153,18 @@ Derived from `game_players` + `team_games` (39 games):
 | KEVIN | TEAM LIQUID ID | 37 | 4.29 |
 | Affan | ALTER EGO ESPORTS | 36 | 4.18 |
 
+## Transcript observations (accepted)
+
+<!-- transcript-routing:start -->
+Accepted, source-linked observations. Caster claims are commentary, not proof of an in-game event.
+
+- `TOBS-1050-G1-005` · match 1050 · 05:50:08 · *commentary* — Nnael attributes BTR's success to team connection and familiarity with their heroes. ([match](../matches/1050-onic-vs-btr.md), [source](https://youtu.be/C-H_iCLxtL8?t=21008))
+- `TOBS-1050-G1-007` · match 1050 · 05:51:07 · *commentary* — The caster says they will keep watching Nnael's performance. ([match](../matches/1050-onic-vs-btr.md), [source](https://youtu.be/C-H_iCLxtL8?t=21067))
+<!-- transcript-routing:end -->
+
+
+
+
 ## References
 
 - Database snapshot `mpl-s18-db-20c5ea2c51f3`

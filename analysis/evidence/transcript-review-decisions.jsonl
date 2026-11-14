@@ -1,0 +1,208 @@
+{"observation_id": "TOBS-1036-G1-001", "decision": "reject", "reason": "Quote only says map is Broken Wall; claim adds unsupported roamer suitability.", "merge_into": null, "confidence": "medium"}
+{"observation_id": "TOBS-1036-G1-004", "decision": "reject", "reason": "Quote omits RRQ teamfight strength added in claim.", "merge_into": null, "confidence": "medium"}
+{"observation_id": "TOBS-1036-G1-005", "decision": "reject", "reason": "Quote omits RRQ teamfight reliance added in claim.", "merge_into": null, "confidence": "medium"}
+{"observation_id": "TOBS-1036-G1-007", "decision": "reject", "reason": "Quote only mentions flicker frequency; harder-to-predict engages added.", "merge_into": null, "confidence": "medium"}
+{"observation_id": "TOBS-1036-G1-008", "decision": "accept", "reason": "Quote supports EVOS players joining teamfights including Paquito/midlaner.", "merge_into": null, "confidence": "medium"}
+{"observation_id": "TOBS-1036-G1-009", "decision": "reject", "reason": "Quote only says valuable kill; forcing Joshua/Demonkite retreat added.", "merge_into": null, "confidence": "medium"}
+{"observation_id": "TOBS-1036-G1-010", "decision": "reject", "reason": "Quote does not name Kadita/Tigreal or midlane defense.", "merge_into": null, "confidence": "medium"}
+{"observation_id": "TOBS-1036-G1-011", "decision": "accept", "reason": "Quote supports front-to-back framing with Joshua as main target.", "merge_into": null, "confidence": "medium"}
+{"observation_id": "TOBS-1036-G1-013", "decision": "reject", "reason": "Quote omits Drian flicker mentioned in claim.", "merge_into": null, "confidence": "medium"}
+{"observation_id": "TOBS-1036-G1-016", "decision": "accept", "reason": "Quote supports Lord arrival.", "merge_into": null, "confidence": "medium"}
+{"observation_id": "TOBS-1036-G1-017", "decision": "accept", "reason": "Quote supports RRQ cannot freely open teamfights due to purify timer.", "merge_into": null, "confidence": "medium"}
+{"observation_id": "TOBS-1036-G1-018", "decision": "reject", "reason": "Quote omits Tigreal moment uncertainty added in claim.", "merge_into": null, "confidence": "medium"}
+{"observation_id": "TOBS-1036-G1-022", "decision": "accept", "reason": "Quote supports physical-defense shredder and front play.", "merge_into": null, "confidence": "medium"}
+{"observation_id": "TOBS-1036-G1-023", "decision": "reject", "reason": "Quote only says last attempt; lacks clear power added.", "merge_into": null, "confidence": "medium"}
+{"observation_id": "TOBS-1036-G1-024", "decision": "accept", "reason": "Quote supports Eudora out-trapping Kadita.", "merge_into": null, "confidence": "medium"}
+{"observation_id": "TOBS-1036-G1-025", "decision": "accept", "reason": "Quote supports Esmeralda meeting Dyrroth and Paquito.", "merge_into": null, "confidence": "medium"}
+{"observation_id": "TOBS-1036-G1-026", "decision": "reject", "reason": "Quote does not support quality-doubt or physical-damage priority claims.", "merge_into": null, "confidence": "medium"}
+{"observation_id": "TOBS-1036-G1-027", "decision": "accept", "reason": "Statistic matches database schedule row.", "merge_into": null, "confidence": "high"}
+{"observation_id": "TOBS-1036-G1-028", "decision": "accept", "reason": "Statistic matches database game rows.", "merge_into": null, "confidence": "high"}
+{"observation_id": "TOBS-1039-G1-003", "decision": "accept", "reason": "Quote supports Uranus/Minotaur backup for aggressive Harith.", "merge_into": null, "confidence": "medium"}
+{"observation_id": "TOBS-1039-G1-004", "decision": "accept", "reason": "Quote supports cited ~6% early-game winning-timing edge as caster commentary.", "merge_into": null, "confidence": "low"}
+{"observation_id": "TOBS-1039-G1-006", "decision": "accept", "reason": "Quote supports denying Paquito level 4.", "merge_into": null, "confidence": "medium"}
+{"observation_id": "TOBS-1039-G1-007", "decision": "accept", "reason": "Quote supports three early kills and improvement over previous day.", "merge_into": null, "confidence": "medium"}
+{"observation_id": "TOBS-1039-G1-008", "decision": "accept", "reason": "Quote supports snowball and trio-mid functioning.", "merge_into": null, "confidence": "medium"}
+{"observation_id": "TOBS-1039-G1-011", "decision": "accept", "reason": "Quote supports turtle setup with mid-tower damage.", "merge_into": null, "confidence": "medium"}
+{"observation_id": "TOBS-1039-G1-013", "decision": "reject", "reason": "Quote omits gold gap growth added in claim.", "merge_into": null, "confidence": "medium"}
+{"observation_id": "TOBS-1039-G1-015", "decision": "accept", "reason": "Quote supports kill and wave clear.", "merge_into": null, "confidence": "medium"}
+{"observation_id": "TOBS-1039-G1-016", "decision": "accept", "reason": "Quote supports Maybe falling and RRQ securing kills.", "merge_into": null, "confidence": "medium"}
+{"observation_id": "TOBS-1039-G1-017", "decision": "accept", "reason": "Quote supports one-day evaluation paying off and Dewa still off.", "merge_into": null, "confidence": "medium"}
+{"observation_id": "TOBS-1039-G1-019", "decision": "accept", "reason": "Quote supports collapsed early concept with 59%.", "merge_into": null, "confidence": "low"}
+{"observation_id": "TOBS-1039-G1-021", "decision": "accept", "reason": "Statistic matches database game row.", "merge_into": null, "confidence": "high"}
+{"observation_id": "TOBS-1041-G1-002", "decision": "reject", "reason": "Quote omits turtle/tempo objective added in claim.", "merge_into": null, "confidence": "medium"}
+{"observation_id": "TOBS-1041-G1-003", "decision": "reject", "reason": "Quote omits scaling-answer framing added in claim.", "merge_into": null, "confidence": "medium"}
+{"observation_id": "TOBS-1041-G1-004", "decision": "accept", "reason": "Quote supports early setup around first turtle and Dewa opening damage.", "merge_into": null, "confidence": "medium"}
+{"observation_id": "TOBS-1041-G1-006", "decision": "reject", "reason": "Quote does not mention Kevin or Phoenix dive.", "merge_into": null, "confidence": "medium"}
+{"observation_id": "TOBS-1041-G1-007", "decision": "accept", "reason": "Quote supports avoiding low-value fights and next turtle contest.", "merge_into": null, "confidence": "medium"}
+{"observation_id": "TOBS-1041-G1-010", "decision": "accept", "reason": "Quote supports final fight around Lord area ending in shutdown.", "merge_into": null, "confidence": "medium"}
+{"observation_id": "TOBS-1041-G1-012", "decision": "accept", "reason": "Statistic matches database game rows.", "merge_into": null, "confidence": "high"}
+{"observation_id": "TOBS-1045-G1-001", "decision": "accept", "reason": "Quote supports DEWA lineup roles.", "merge_into": null, "confidence": "medium"}
+{"observation_id": "TOBS-1045-G1-002", "decision": "accept", "reason": "Quote supports Novaria/Barats/Freya bans and Paquito cut.", "merge_into": null, "confidence": "medium"}
+{"observation_id": "TOBS-1045-G1-003", "decision": "reject", "reason": "Quote does not mention Melissa as ban/priority.", "merge_into": null, "confidence": "medium"}
+{"observation_id": "TOBS-1045-G1-007", "decision": "accept", "reason": "Quote supports turtle sharing helping Ling.", "merge_into": null, "confidence": "medium"}
+{"observation_id": "TOBS-1045-G1-008", "decision": "accept", "reason": "Quote supports Brody strong at level 4.", "merge_into": null, "confidence": "medium"}
+{"observation_id": "TOBS-1045-G1-009", "decision": "accept", "reason": "Quote supports BTR forcing fights toward gold lane.", "merge_into": null, "confidence": "medium"}
+{"observation_id": "TOBS-1045-G1-012", "decision": "accept", "reason": "Statistic matches database game rows.", "merge_into": null, "confidence": "high"}
+{"observation_id": "TOBS-1047-G1-001", "decision": "accept", "reason": "Quote supports K as strong late-game anchor.", "merge_into": null, "confidence": "medium"}
+{"observation_id": "TOBS-1047-G1-002", "decision": "accept", "reason": "Quote supports choosing between Melissa and Hirara.", "merge_into": null, "confidence": "medium"}
+{"observation_id": "TOBS-1047-G1-004", "decision": "reject", "reason": "Quote omits Lord objective added in claim.", "merge_into": null, "confidence": "medium"}
+{"observation_id": "TOBS-1047-G1-005", "decision": "reject", "reason": "Quote omits level-4 claim added.", "merge_into": null, "confidence": "medium"}
+{"observation_id": "TOBS-1047-G1-007", "decision": "reject", "reason": "Quote omits heavy crowd-control claim added.", "merge_into": null, "confidence": "medium"}
+{"observation_id": "TOBS-1047-G1-009", "decision": "accept", "reason": "Quote supports GEEK lacking solutions/teamfight capability.", "merge_into": null, "confidence": "medium"}
+{"observation_id": "TOBS-1047-G1-012", "decision": "accept", "reason": "Statistic matches database game rows.", "merge_into": null, "confidence": "high"}
+{"observation_id": "TOBS-1050-G1-001", "decision": "reject", "reason": "Scream matches no canonical player, hero, or team; the claim cannot be resolved safely.", "merge_into": null, "confidence": "high"}
+{"observation_id": "TOBS-1050-G1-003", "decision": "accept", "reason": "Quote supports exhausting wins over ONIC and BTR.", "merge_into": null, "confidence": "medium"}
+{"observation_id": "TOBS-1050-G1-004", "decision": "accept", "reason": "Quote supports both hungry and ONIC kryptonite metaphor.", "merge_into": null, "confidence": "medium"}
+{"observation_id": "TOBS-1050-G1-006", "decision": "accept", "reason": "Quote supports coaching changes less important than execution.", "merge_into": null, "confidence": "medium"}
+{"observation_id": "TOBS-1050-G1-007", "decision": "accept", "reason": "NIL is an ASR form of NNAEL; NNAEL is in player_season_stats (BTR), no NIL player exists.", "merge_into": null, "confidence": "high"}
+{"observation_id": "TOBS-1052-G1-001", "decision": "reject", "reason": "Quote omits early mid rotation and turtle contest additions.", "merge_into": null, "confidence": "medium"}
+{"observation_id": "TOBS-1052-G1-002", "decision": "accept", "reason": "Quote supports Andorus starting from Lava Golem.", "merge_into": null, "confidence": "medium"}
+{"observation_id": "TOBS-1052-G1-007", "decision": "accept", "reason": "Quote supports second-turtle success and no-tank framing.", "merge_into": null, "confidence": "medium"}
+{"observation_id": "TOBS-1052-G1-008", "decision": "accept", "reason": "Quote supports turret pressure and Lord push.", "merge_into": null, "confidence": "medium"}
+{"observation_id": "TOBS-1052-G1-009", "decision": "accept", "reason": "Quote supports Lord arrival and BTR securing game 1.", "merge_into": null, "confidence": "medium"}
+{"observation_id": "TOBS-1052-G1-010", "decision": "reject", "reason": "Quote omits gold-lead-never-dropped addition.", "merge_into": null, "confidence": "medium"}
+{"observation_id": "TOBS-1052-G1-012", "decision": "accept", "reason": "Statistic matches database game rows.", "merge_into": null, "confidence": "high"}
+{"observation_id": "TOBS-src-s18-w03d02-1055-g1-001", "decision": "reject", "reason": "Quote does not support Fanny/AFan naming or event-fact framing.", "merge_into": null, "confidence": "medium"}
+{"observation_id": "TOBS-src-s18-w03d02-1055-g1-002", "decision": "reject", "reason": "Quote only gives Albert totals; Sky/Trinity carry framing added.", "merge_into": null, "confidence": "medium"}
+{"observation_id": "TOBS-src-s18-w03d02-1055-g1-003", "decision": "reject", "reason": "Quote does not support draft-trade hero list.", "merge_into": null, "confidence": "medium"}
+{"observation_id": "TOBS-src-s18-w03d02-1055-g1-007", "decision": "accept", "reason": "Quote supports Badang front hold and calm gold lane.", "merge_into": null, "confidence": "medium"}
+{"observation_id": "TOBS-src-s18-w03d02-1055-g1-008", "decision": "accept", "reason": "Quote supports Alexander sacrifice and EVOS trades.", "merge_into": null, "confidence": "medium"}
+{"observation_id": "TOBS-src-s18-w03d02-1055-g1-010", "decision": "accept", "reason": "Quote supports AE leveraging lanes, purple buff, Trinity DAR.", "merge_into": null, "confidence": "medium"}
+{"observation_id": "TOBS-src-s18-w03d02-1055-g1-013", "decision": "accept", "reason": "Quote supports snowball, farming space loss, Wei hit, ~3000 gold.", "merge_into": null, "confidence": "medium"}
+{"observation_id": "TOBS-src-s18-w03d02-1055-g1-015", "decision": "accept", "reason": "Quote supports Moskov/Lilia defenders and ~10k gold.", "merge_into": null, "confidence": "medium"}
+{"observation_id": "TOBS-src-s18-w03d02-1055-g1-017", "decision": "accept", "reason": "Quote supports EVOS not passive and ~3000 gold lead.", "merge_into": null, "confidence": "medium"}
+{"observation_id": "TOBS-src-s18-w03d02-1055-g1-018", "decision": "reject", "reason": "Quote does not support item/armor claims for Nino.", "merge_into": null, "confidence": "medium"}
+{"observation_id": "TOBS-src-s18-w03d02-1055-g1-019", "decision": "accept", "reason": "Statistic matches database schedule row.", "merge_into": null, "confidence": "high"}
+{"observation_id": "TOBS-1057-G1-001", "decision": "accept", "reason": "Quote supports Sora/Mia combo-wombo suggestion.", "merge_into": null, "confidence": "medium"}
+{"observation_id": "TOBS-1057-G1-002", "decision": "accept", "reason": "Quote supports two purify spells.", "merge_into": null, "confidence": "medium"}
+{"observation_id": "TOBS-1057-G1-004", "decision": "accept", "reason": "Quote supports steal praise and Selena objective help.", "merge_into": null, "confidence": "medium"}
+{"observation_id": "TOBS-1057-G1-005", "decision": "accept", "reason": "Quote supports setup around next turtle.", "merge_into": null, "confidence": "medium"}
+{"observation_id": "TOBS-1057-G1-009", "decision": "accept", "reason": "Quote supports NAVI momentum and Afro cutting off.", "merge_into": null, "confidence": "medium"}
+{"observation_id": "TOBS-1057-G1-010", "decision": "accept", "reason": "Quote supports NAVI securing game 1 with mature draft.", "merge_into": null, "confidence": "medium"}
+{"observation_id": "TOBS-1057-G1-012", "decision": "accept", "reason": "Statistic matches database game rows.", "merge_into": null, "confidence": "high"}
+{"observation_id": "TOBS-1060-G1-002", "decision": "reject", "reason": "Quote omits Melissa availability added in claim.", "merge_into": null, "confidence": "medium"}
+{"observation_id": "TOBS-1060-G1-003", "decision": "reject", "reason": "Quote does not mention Selena ban.", "merge_into": null, "confidence": "medium"}
+{"observation_id": "TOBS-1060-G1-004", "decision": "reject", "reason": "Quote does not support Farsa/Cloud/Melissa framing.", "merge_into": null, "confidence": "medium"}
+{"observation_id": "TOBS-1060-G1-005", "decision": "reject", "reason": "Quote omits two-large-ultimates addition.", "merge_into": null, "confidence": "medium"}
+{"observation_id": "TOBS-1060-G1-008", "decision": "accept", "reason": "Quote supports Paquito clearing/rotating faster than Hirara.", "merge_into": null, "confidence": "medium"}
+{"observation_id": "TOBS-1060-G1-011", "decision": "accept", "reason": "Statistic matches database game rows.", "merge_into": null, "confidence": "high"}
+{"observation_id": "TOBS-1062-G1-001", "decision": "accept", "reason": "Quote supports Selena season hunter discussion.", "merge_into": null, "confidence": "medium"}
+{"observation_id": "TOBS-1062-G1-006", "decision": "accept", "reason": "Quote supports Dewa controlling base turrets.", "merge_into": null, "confidence": "medium"}
+{"observation_id": "TOBS-1062-G1-007", "decision": "accept", "reason": "Quote supports Dewa ending before minute 15.", "merge_into": null, "confidence": "medium"}
+{"observation_id": "TOBS-1062-G1-008", "decision": "accept", "reason": "Quote supports inactive Skypierce stacks and gold lead.", "merge_into": null, "confidence": "medium"}
+{"observation_id": "TOBS-1062-G1-009", "decision": "accept", "reason": "Quote supports one-sided game 1.", "merge_into": null, "confidence": "medium"}
+{"observation_id": "TOBS-1062-G1-011", "decision": "accept", "reason": "Statistic matches database game rows.", "merge_into": null, "confidence": "high"}
+{"observation_id": "TOBS-1065-G1-002", "decision": "reject", "reason": "Quote omits Navi Frea/Rafaela/Angela answer claim.", "merge_into": null, "confidence": "medium"}
+{"observation_id": "TOBS-1065-G1-003", "decision": "reject", "reason": "Quote does not support returning to comfort heroes.", "merge_into": null, "confidence": "medium"}
+{"observation_id": "TOBS-1065-G1-004", "decision": "accept", "reason": "Quote supports Parsa/Paquito combo and Paquito power.", "merge_into": null, "confidence": "medium"}
+{"observation_id": "TOBS-1065-G1-007", "decision": "accept", "reason": "Quote supports Joshua pressure and gold lead.", "merge_into": null, "confidence": "medium"}
+{"observation_id": "TOBS-1065-G1-008", "decision": "accept", "reason": "Quote supports two eliminations and middle turret.", "merge_into": null, "confidence": "medium"}
+{"observation_id": "TOBS-1065-G1-011", "decision": "accept", "reason": "Statistic matches database game rows.", "merge_into": null, "confidence": "high"}
+{"observation_id": "TOBS-1069-G1-001", "decision": "accept", "reason": "Quote supports series introduction ONIC vs GEEK.", "merge_into": null, "confidence": "medium"}
+{"observation_id": "TOBS-1069-G1-004", "decision": "accept", "reason": "Quote supports Fanny/Melissa trapping on Dangerous Grass.", "merge_into": null, "confidence": "medium"}
+{"observation_id": "TOBS-1069-G1-006", "decision": "accept", "reason": "Quote supports maximizing winning condition and avoiding overcommit.", "merge_into": null, "confidence": "medium"}
+{"observation_id": "TOBS-1069-G1-007", "decision": "accept", "reason": "Quote supports improving Lord contest and not clustering.", "merge_into": null, "confidence": "medium"}
+{"observation_id": "TOBS-1069-G1-008", "decision": "accept", "reason": "Quote supports first turtle Flicker cost and Ele without flicker.", "merge_into": null, "confidence": "medium"}
+{"observation_id": "TOBS-1069-G1-011", "decision": "accept", "reason": "Quote supports ONIC grouping and GEEK losses.", "merge_into": null, "confidence": "medium"}
+{"observation_id": "TOBS-1069-G1-013", "decision": "accept", "reason": "Statistic matches database game rows.", "merge_into": null, "confidence": "high"}
+{"observation_id": "TOBS-1071-G1-001", "decision": "accept", "reason": "Quote supports series introduction AE vs RRQ.", "merge_into": null, "confidence": "medium"}
+{"observation_id": "TOBS-1071-G1-002", "decision": "accept", "reason": "Quote supports AE lineup and Excellent 99/Arthur mention.", "merge_into": null, "confidence": "medium"}
+{"observation_id": "TOBS-1071-G1-004", "decision": "accept", "reason": "Quote supports Moskov supporting Arthur late game.", "merge_into": null, "confidence": "medium"}
+{"observation_id": "TOBS-1071-G1-006", "decision": "accept", "reason": "Quote supports shift to continuous teamfight/sustain with Rafaela.", "merge_into": null, "confidence": "medium"}
+{"observation_id": "TOBS-1071-G1-009", "decision": "accept", "reason": "Quote supports fast but neat and closing games.", "merge_into": null, "confidence": "medium"}
+{"observation_id": "TOBS-1071-G1-011", "decision": "accept", "reason": "Statistic matches database game rows.", "merge_into": null, "confidence": "high"}
+{"observation_id": "TOBS-1074-G1-001", "decision": "accept", "reason": "Quote supports series introduction ONIC vs AE.", "merge_into": null, "confidence": "medium"}
+{"observation_id": "TOBS-1074-G1-002", "decision": "accept", "reason": "Quote supports AE lineup.", "merge_into": null, "confidence": "medium"}
+{"observation_id": "TOBS-1074-G1-003", "decision": "accept", "reason": "Quote supports ONIC lineup.", "merge_into": null, "confidence": "medium"}
+{"observation_id": "TOBS-1074-G1-006", "decision": "accept", "reason": "Quote supports Melissa XP deficit.", "merge_into": null, "confidence": "medium"}
+{"observation_id": "TOBS-1074-G1-009", "decision": "accept", "reason": "Quote supports ONIC caught in bad position.", "merge_into": null, "confidence": "medium"}
+{"observation_id": "TOBS-1074-G1-011", "decision": "accept", "reason": "Statistic matches database game rows.", "merge_into": null, "confidence": "high"}
+{"observation_id": "TOBS-1076-G1-002", "decision": "accept", "reason": "Quote supports all-K-nickname roster.", "merge_into": null, "confidence": "medium"}
+{"observation_id": "TOBS-1076-G1-005", "decision": "accept", "reason": "Quote supports Paquito jungle consideration.", "merge_into": null, "confidence": "medium"}
+{"observation_id": "TOBS-1076-G1-006", "decision": "accept", "reason": "Quote supports league heroes with Carmilla.", "merge_into": null, "confidence": "medium"}
+{"observation_id": "TOBS-1076-G1-007", "decision": "accept", "reason": "Quote supports patch tank jungler reactivation.", "merge_into": null, "confidence": "medium"}
+{"observation_id": "TOBS-1076-G1-008", "decision": "accept", "reason": "Quote supports early skirmish kill/survival.", "merge_into": null, "confidence": "medium"}
+{"observation_id": "TOBS-1076-G1-010", "decision": "accept", "reason": "Quote supports Kyoy targeting Kaboy and shut down.", "merge_into": null, "confidence": "medium"}
+{"observation_id": "TOBS-1076-G1-012", "decision": "accept", "reason": "Statistic matches database game rows.", "merge_into": null, "confidence": "high"}
+{"observation_id": "TOBS-1080-G1-001", "decision": "reject", "reason": "Quote omits Aran/Shogun lane claim.", "merge_into": null, "confidence": "medium"}
+{"observation_id": "TOBS-1080-G1-003", "decision": "reject", "reason": "Quote omits answering Liquid early game addition.", "merge_into": null, "confidence": "medium"}
+{"observation_id": "TOBS-1080-G1-004", "decision": "accept", "reason": "Quote supports Frea/Uranus/Minotaur targeting Aran.", "merge_into": null, "confidence": "medium"}
+{"observation_id": "TOBS-1080-G1-005", "decision": "accept", "reason": "Quote supports Obsidia contested priority.", "merge_into": null, "confidence": "medium"}
+{"observation_id": "TOBS-1080-G1-008", "decision": "accept", "reason": "Quote supports Liquid kills from top and disengage.", "merge_into": null, "confidence": "medium"}
+{"observation_id": "TOBS-1080-G1-009", "decision": "accept", "reason": "Quote supports turret dive and turtle-to-Lord conversion.", "merge_into": null, "confidence": "medium"}
+{"observation_id": "TOBS-1080-G1-012", "decision": "accept", "reason": "Statistic matches database game rows.", "merge_into": null, "confidence": "high"}
+{"observation_id": "TOBS-1081-G1-001", "decision": "reject", "reason": "Quote does not support patch-read strategies.", "merge_into": null, "confidence": "medium"}
+{"observation_id": "TOBS-1081-G1-002", "decision": "reject", "reason": "Quote does not support young/hot claim.", "merge_into": null, "confidence": "medium"}
+{"observation_id": "TOBS-1081-G1-003", "decision": "reject", "reason": "Quote omits Hilda/late-game insurance addition.", "merge_into": null, "confidence": "medium"}
+{"observation_id": "TOBS-1081-G1-007", "decision": "accept", "reason": "Quote supports turtle contest Shin vs Hazel and Barats caution.", "merge_into": null, "confidence": "medium"}
+{"observation_id": "TOBS-1081-G1-008", "decision": "accept", "reason": "Quote supports Mino neutralizing AO.", "merge_into": null, "confidence": "medium"}
+{"observation_id": "TOBS-1081-G1-010", "decision": "accept", "reason": "Quote supports prolonged teamfight and resurrection.", "merge_into": null, "confidence": "medium"}
+{"observation_id": "TOBS-1081-G1-012", "decision": "accept", "reason": "Statistic matches database game rows.", "merge_into": null, "confidence": "high"}
+{"observation_id": "TOBS-1084-G1-002", "decision": "accept", "reason": "Quote supports healing turtle targeting strongest tower.", "merge_into": null, "confidence": "medium"}
+{"observation_id": "TOBS-1084-G1-003", "decision": "accept", "reason": "Quote supports Bruno freezing and turtle-to-tower push.", "merge_into": null, "confidence": "medium"}
+{"observation_id": "TOBS-1084-G1-005", "decision": "reject", "reason": "Quote omits macro/counter-initiation addition.", "merge_into": null, "confidence": "medium"}
+{"observation_id": "TOBS-1084-G1-007", "decision": "accept", "reason": "Quote supports Eman losing early skirmish to Arlott/Shogun.", "merge_into": null, "confidence": "medium"}
+{"observation_id": "TOBS-1084-G1-008", "decision": "reject", "reason": "Quote omits Glue leaving addition.", "merge_into": null, "confidence": "medium"}
+{"observation_id": "TOBS-1084-G1-010", "decision": "accept", "reason": "Quote supports kill on Nail and BTR counterattack.", "merge_into": null, "confidence": "medium"}
+{"observation_id": "TOBS-1084-G1-012", "decision": "accept", "reason": "Statistic matches database game rows.", "merge_into": null, "confidence": "high"}
+{"observation_id": "TOBS-1087-G1-003", "decision": "accept", "reason": "Quote supports Paquito clearing and chunking Aulus.", "merge_into": null, "confidence": "medium"}
+{"observation_id": "TOBS-1087-G1-004", "decision": "accept", "reason": "Quote supports Moreno aggressive early play.", "merge_into": null, "confidence": "medium"}
+{"observation_id": "TOBS-1087-G1-007", "decision": "accept", "reason": "Quote supports BTR 5v5 teamfight issue.", "merge_into": null, "confidence": "medium"}
+{"observation_id": "TOBS-1087-G1-008", "decision": "accept", "reason": "Quote supports RRQ committing off one kill.", "merge_into": null, "confidence": "medium"}
+{"observation_id": "TOBS-1087-G1-009", "decision": "accept", "reason": "Quote supports Lord charging bottom.", "merge_into": null, "confidence": "medium"}
+{"observation_id": "TOBS-1087-G1-011", "decision": "accept", "reason": "Statistic matches database schedule row.", "merge_into": null, "confidence": "high"}
+{"observation_id": "TOBS-1087-G1-012", "decision": "accept", "reason": "Statistic matches database game rows.", "merge_into": null, "confidence": "high"}
+{"observation_id": "TOBS-1091-G1-001", "decision": "accept", "reason": "Quote supports Joshua winstreak with room to develop.", "merge_into": null, "confidence": "medium"}
+{"observation_id": "TOBS-1091-G1-003", "decision": "accept", "reason": "Quote supports Cecilion as power pick question.", "merge_into": null, "confidence": "medium"}
+{"observation_id": "TOBS-1091-G1-004", "decision": "accept", "reason": "Quote supports ONIC home team first selection higher winrate.", "merge_into": null, "confidence": "medium"}
+{"observation_id": "TOBS-1091-G1-006", "decision": "accept", "reason": "Quote supports Joshua dangerous if unchecked.", "merge_into": null, "confidence": "medium"}
+{"observation_id": "TOBS-1091-G1-008", "decision": "accept", "reason": "Quote supports Nolan/Paquito top jungle heroes.", "merge_into": null, "confidence": "medium"}
+{"observation_id": "TOBS-1068-G1-002", "decision": "accept", "reason": "Quote supports DEWA picking immunity heroes.", "merge_into": null, "confidence": "medium"}
+{"observation_id": "TOBS-1068-G1-003", "decision": "accept", "reason": "Quote supports nothing stopping DEWA draft.", "merge_into": null, "confidence": "medium"}
+{"observation_id": "TOBS-1068-G1-004", "decision": "accept", "reason": "Quote supports turtle positioning for Hazel safety.", "merge_into": null, "confidence": "medium"}
+{"observation_id": "TOBS-1068-G1-007", "decision": "accept", "reason": "Quote supports Lord not also giving many kills.", "merge_into": null, "confidence": "medium"}
+{"observation_id": "TOBS-1068-G1-009", "decision": "reject", "reason": "Quote omits Hazel one-HP survival addition.", "merge_into": null, "confidence": "medium"}
+{"observation_id": "TOBS-1068-G1-010", "decision": "accept", "reason": "Quote supports clean quick win for Dewa.", "merge_into": null, "confidence": "medium"}
+{"observation_id": "TOBS-1068-G1-012", "decision": "accept", "reason": "Statistic matches database game row.", "merge_into": null, "confidence": "high"}
+{"observation_id": "TOBS-1094-G1-001", "decision": "reject", "reason": "Quote omits broadcast-focus-on-game addition.", "merge_into": null, "confidence": "medium"}
+{"observation_id": "TOBS-1094-G1-002", "decision": "accept", "reason": "Quote supports Erlan playing fighter with Frea/Cici.", "merge_into": null, "confidence": "medium"}
+{"observation_id": "TOBS-1094-G1-005", "decision": "accept", "reason": "Quote supports aggressiveness from laning to turtle/teamfights.", "merge_into": null, "confidence": "medium"}
+{"observation_id": "TOBS-1094-G1-007", "decision": "accept", "reason": "Quote supports turtle closing difficulty.", "merge_into": null, "confidence": "medium"}
+{"observation_id": "TOBS-1094-G1-009", "decision": "accept", "reason": "Quote supports wanting Erlan to play fighter.", "merge_into": null, "confidence": "medium"}
+{"observation_id": "TOBS-1094-G1-010", "decision": "accept", "reason": "Quote supports EVOS plan hold vs ONIC pressure.", "merge_into": null, "confidence": "medium"}
+{"observation_id": "TOBS-1094-G1-012", "decision": "accept", "reason": "Statistic matches database game rows.", "merge_into": null, "confidence": "high"}
+{"observation_id": "TOBS-1098-G1-001", "decision": "accept", "reason": "Quote supports life-or-death decider framing.", "merge_into": null, "confidence": "medium"}
+{"observation_id": "TOBS-1098-G1-002", "decision": "accept", "reason": "Quote supports Lutpi early game good.", "merge_into": null, "confidence": "medium"}
+{"observation_id": "TOBS-1098-G1-003", "decision": "accept", "reason": "Quote supports ONIC game-3 win scenario.", "merge_into": null, "confidence": "medium"}
+{"observation_id": "TOBS-1098-G1-004", "decision": "accept", "reason": "Quote supports ONIC two mids damage power.", "merge_into": null, "confidence": "medium"}
+{"observation_id": "TOBS-1098-G1-005", "decision": "accept", "reason": "Quote supports turtle setup and Favian closer.", "merge_into": null, "confidence": "medium"}
+{"observation_id": "TOBS-1098-G1-009", "decision": "accept", "reason": "Quote supports mid turret danger if unchecked.", "merge_into": null, "confidence": "medium"}
+{"observation_id": "TOBS-1098-G1-012", "decision": "accept", "reason": "Statistic matches database game rows.", "merge_into": null, "confidence": "high"}
+{"observation_id": "TOBS-1100-G1-03", "decision": "reject", "reason": "Quote too short to support specific Kalea buff numbers.", "merge_into": null, "confidence": "medium"}
+{"observation_id": "TOBS-1100-G1-04", "decision": "reject", "reason": "Quote only mentions Kirara/Aulus nerfs; Leomord/Suyou priority added.", "merge_into": null, "confidence": "medium"}
+{"observation_id": "TOBS-1100-G1-05", "decision": "reject", "reason": "Quote too short to support Hayabusa rotation advice.", "merge_into": null, "confidence": "medium"}
+{"observation_id": "TOBS-1100-G1-07", "decision": "accept", "reason": "Quote supports RRQ securing first turtle and Navi losing objective.", "merge_into": null, "confidence": "medium"}
+{"observation_id": "TOBS-1100-G1-08", "decision": "accept", "reason": "Quote supports missing first turtle disadvantage.", "merge_into": null, "confidence": "medium"}
+{"observation_id": "TOBS-1100-G1-10", "decision": "reject", "reason": "Quote omits big-early-leads addition.", "merge_into": null, "confidence": "medium"}
+{"observation_id": "TOBS-1100-G1-13", "decision": "accept", "reason": "Statistic matches database game rows.", "merge_into": null, "confidence": "high"}
+{"observation_id": "TOBS-1102-G1-01", "decision": "reject", "reason": "Quote too short to support full lineup claim.", "merge_into": null, "confidence": "medium"}
+{"observation_id": "TOBS-1102-G1-02", "decision": "reject", "reason": "Quote too short to support full lineup claim.", "merge_into": null, "confidence": "medium"}
+{"observation_id": "TOBS-1102-G1-04", "decision": "reject", "reason": "Quote too short to support Kalea debut/buff claim.", "merge_into": null, "confidence": "medium"}
+{"observation_id": "TOBS-1102-G1-05", "decision": "reject", "reason": "Quote too short to support true-damage build claim.", "merge_into": null, "confidence": "medium"}
+{"observation_id": "TOBS-1102-G1-09", "decision": "reject", "reason": "Quote too short to support Kin solo kill/top-held claim.", "merge_into": null, "confidence": "medium"}
+{"observation_id": "TOBS-1102-G1-10", "decision": "reject", "reason": "Quote too short to support map-dark/perfect-turtle claim.", "merge_into": null, "confidence": "medium"}
+{"observation_id": "TOBS-1102-G1-12", "decision": "accept", "reason": "Statistic matches database game rows.", "merge_into": null, "confidence": "high"}
+{"observation_id": "TOBS-1107-G1-03", "decision": "accept", "reason": "Quote supports balanced gold and farming danger.", "merge_into": null, "confidence": "medium"}
+{"observation_id": "TOBS-1107-G1-08", "decision": "accept", "reason": "Quote supports Lord marching without Holy Defense.", "merge_into": null, "confidence": "medium"}
+{"observation_id": "TOBS-1107-G1-09", "decision": "accept", "reason": "Quote supports TLID maximizing healing Turtle.", "merge_into": null, "confidence": "medium"}
+{"observation_id": "TOBS-1107-G1-10", "decision": "accept", "reason": "Quote supports outer middle turret destroyed and Kelra trade fail.", "merge_into": null, "confidence": "medium"}
+{"observation_id": "TOBS-1107-G1-11", "decision": "accept", "reason": "Quote supports minute-ten mid base turret damage.", "merge_into": null, "confidence": "medium"}
+{"observation_id": "TOBS-1107-G1-13", "decision": "accept", "reason": "Quote supports TLID structured emblem/build/plan.", "merge_into": null, "confidence": "medium"}
+{"observation_id": "TOBS-1107-G1-15", "decision": "accept", "reason": "Aran resolved as TLID EXP player in player_season_stats; no hero named Aran exists.", "merge_into": null, "confidence": "high"}
+{"observation_id": "TOBS-1107-G1-16", "decision": "accept", "reason": "Quote supports Lunox catchability comparison.", "merge_into": null, "confidence": "medium"}
+{"observation_id": "TOBS-1107-G1-17", "decision": "accept", "reason": "Quote supports Marcel 67% over 27 picks as caster stat.", "merge_into": null, "confidence": "medium"}
+{"observation_id": "TOBS-1107-G1-18", "decision": "accept", "reason": "Quote supports hardpick evaluation and ONIC early risk.", "merge_into": null, "confidence": "medium"}
+{"observation_id": "TOBS-1107-G1-19", "decision": "accept", "reason": "Quote supports Kyoy Golden Hour and Kevin bravery.", "merge_into": null, "confidence": "medium"}
+{"observation_id": "TOBS-1107-G1-20", "decision": "accept", "reason": "Quote supports re-engaged fight and Lyoni saving Kevin.", "merge_into": null, "confidence": "medium"}
+{"observation_id": "TOBS-1107-G1-21", "decision": "accept", "reason": "Quote supports TLID holding in base turret.", "merge_into": null, "confidence": "medium"}
+{"observation_id": "TOBS-1107-G1-23", "decision": "accept", "reason": "Statistic matches database schedule row.", "merge_into": null, "confidence": "high"}

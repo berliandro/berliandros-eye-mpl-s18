@@ -1,0 +1,129 @@
+{
+  "schema_version": 1,
+  "generated_at": "2026-11-14T15:24:37+00:00",
+  "authority": "transcript-observations",
+  "summary": {
+    "transcript_observation_files": 27,
+    "transcript_segment_files": 27,
+    "transcript_rows": 368,
+    "transcript_statuses": {
+      "rejected": 50,
+      "accepted": 313,
+      "resolved": 5
+    },
+    "transcript_id_variants": 21,
+    "transcript_id_variants_accepted": 17,
+    "pilot_rows": 234,
+    "pilot_record_types": {
+      "segment": 8,
+      "observation": 85,
+      "insight": 73,
+      "audit": 68
+    },
+    "pilot_scope_matches": [
+      "1036",
+      "1037",
+      "1107"
+    ]
+  },
+  "stores": {
+    "canonical_database": {
+      "path": "data/mpl_id_s18.db",
+      "sha256": "20c5ea2c51f30d1a24cd2ce6927f0d182b47f951ebd8209f1aaef429941cf2ef",
+      "status": "canonical",
+      "scope": "72 completed series, 174 games, source-reported scoreboard and schedule data"
+    },
+    "transcript_observations": {
+      "paths": [
+        "analysis/evidence/transcript-observations/"
+      ],
+      "files": 27,
+      "rows": 368,
+      "status_counts": {
+        "rejected": 50,
+        "accepted": 313,
+        "resolved": 5
+      },
+      "manifest_sha256": "25ab8b9f7f2f4e8ee44a5cccdf4d6f3b1be3a56aa11de40e70e58144fe92a674",
+      "status": "canonical",
+      "scope": "27 sources; atomic quote-level broadcast observations"
+    },
+    "transcript_segments": {
+      "paths": [
+        "analysis/evidence/transcript-segments/"
+      ],
+      "files": 27,
+      "rows": 3010,
+      "manifest_sha256": "d6fade088d8f82ad5ecc9a92617878851e926328954d0d3e07aad7e45867ed72",
+      "status": "canonical",
+      "scope": "27 bounded segment ledgers with raw line and cue ranges"
+    },
+    "pilot_ledger": {
+      "path": "analysis/evidence/pilot-ledger.jsonl",
+      "rows": 234,
+      "record_types": {
+        "segment": 8,
+        "observation": 85,
+        "insight": 73,
+        "audit": 68
+      },
+      "sha256": "f4c8bfe0e1475c5daf2de816861f267afcf5f86b1167ff47efaea51847ef04f6",
+      "status": "frozen_legacy",
+      "scope": "3 pilot series (1036, 1037, 1107); claim-level observations, insights and audits",
+      "superseded_for": "new broadcast observations",
+      "still_authoritative_for": [
+        "pilot insight and audit records INS-*, AUD-*",
+        "1037 semantic evidence, which has no transcript source",
+        "the 8 pilot segments and their visual/database references"
+      ]
+    },
+    "visual_reviews": {
+      "path": "analysis/evidence/deepseek-visual-reviews.json",
+      "sha256": "58d33d2293d516197e492c954b097a5fe710ca8f53f37eccfca20c61b1479b19",
+      "status": "canonical_for_visual_claims",
+      "scope": "DeepSeek-only frame and boundary reviews; 0 visually verified"
+    }
+  },
+  "id_conventions": {
+    "canonical_observation": "^TOBS-<match_id>-G<game_no>-<sequence>$",
+    "known_variant": "^TOBS-src-s18-w<week>d<day>-<match_id>-g1-<sequence>$",
+    "known_variant_count": 21,
+    "known_variant_ids": [
+      "TOBS-src-s18-w03d02-1055-g1-001",
+      "TOBS-src-s18-w03d02-1055-g1-002",
+      "TOBS-src-s18-w03d02-1055-g1-003",
+      "TOBS-src-s18-w03d02-1055-g1-004",
+      "TOBS-src-s18-w03d02-1055-g1-005",
+      "TOBS-src-s18-w03d02-1055-g1-006",
+      "TOBS-src-s18-w03d02-1055-g1-007",
+      "TOBS-src-s18-w03d02-1055-g1-008",
+      "TOBS-src-s18-w03d02-1055-g1-009",
+      "TOBS-src-s18-w03d02-1055-g1-010",
+      "TOBS-src-s18-w03d02-1055-g1-011",
+      "TOBS-src-s18-w03d02-1055-g1-012",
+      "TOBS-src-s18-w03d02-1055-g1-013",
+      "TOBS-src-s18-w03d02-1055-g1-014",
+      "TOBS-src-s18-w03d02-1055-g1-015",
+      "TOBS-src-s18-w03d02-1055-g1-016",
+      "TOBS-src-s18-w03d02-1055-g1-017",
+      "TOBS-src-s18-w03d02-1055-g1-018",
+      "TOBS-src-s18-w03d02-1055-g1-019",
+      "TOBS-src-s18-w03d02-1055-g1-020",
+      "TOBS-src-s18-w03d02-1055-g1-021"
+    ],
+    "pilot_claim_ids": "^OBS-<match_id>-<label>$",
+    "policy": "Do not rename existing IDs. The variant is schema-valid (prefix TOBS-) and is referenced from Markdown; new records must use the canonical form."
+  },
+  "reconciliation": {
+    "duplicate_record_ids": [],
+    "decision": "Staging transcript ledgers are the canonical store for new broadcast observations. The pilot ledger is frozen and remains authoritative only for the 3 pilot analyses and for 1037, which has no transcript source.",
+    "alias_policy": "No automatic aliasing: pilot observations are claim-level and transcript observations are quote-level, so a one-to-one alias would be false precision. References stay store-qualified."
+  },
+  "rules": [
+    "New transcript observations go to analysis/evidence/transcript-observations/ and must pass tools/validate_transcript_ledger.py.",
+    "Never append new records to analysis/evidence/pilot-ledger.jsonl.",
+    "Cite pilot records as pilot-store records; cite transcript records by TOBS id.",
+    "Statistics always come from tools/stats_query.py with query_id and snapshot hash.",
+    "Visual claims come only from the DeepSeek visual ledger and require a same-frame literal 00:00."
+  ]
+}

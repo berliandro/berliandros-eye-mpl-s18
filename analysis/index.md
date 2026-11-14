@@ -9,17 +9,42 @@
 - Fully caption-aligned sources: **26/27**; one partial source (`src-s18-w09d02`) is explicitly not citation-ready.
 - Database winner orientation: repaired **21/72** rows; **0/72** row-score mismatches remain.
 - Pilot series: **3** — 1036, 1037, 1107.
-- Evidence: **8 segments / 18 observations / 3 insights / 1 audit**.
-- Visual review: **6 used frames** (5 gameplay + 1 post-game context), **1 rejected promo**, **1 failed frame**.
-- Full-season coverage: **no**.
+- Transcript store: **27 segment ledgers / 368 observation records** (313 accepted, 50 rejected, 5 resolved), canonical.
+- Legacy pilot store: **234 frozen records** (85 observations, 73 insights, 68 audits, 8 segments); see `reports/evidence-store.md`.
+- Match evidence: **72/72** reports carry a database block; **27** have transcript coverage (24 complete, 3 partial), **45** are DB-only.
+- Synthesis: **9/9** team profiles, **21** hero pages, **6/6** strategy pages, plus the season hero and league meta reports.
+- Coaching: **9** team briefs and **1** head-coach brief in `coaching/`.
+- Visual review: **0 boundaries visually verified**; 966 frame reviews and 62 boundary reviews (41 context-only, 20 rejected, 1 inconclusive, 10 waived).
+- Semantic coverage: **27/72 transcript-backed**; the coaching product is complete at the database + transcript evidence level, with objective and visual limits documented.
+
+## Transcript knowledge pipeline
+
+- Status: **27/27 source ledgers validated**; 363 observations extracted, 313 accepted and consolidated, 0 left for review, 50 rejected, 3 sources marked partial.
+- Coverage: [`reports/transcript-pipeline/coverage.md`](reports/transcript-pipeline/coverage.md)
+- Team notes: [`teams/`](teams/)
+- Hero notes: [`heroes/`](heroes/)
+- Strategy notes: [`strategy/`](strategy/)
+- Spec: `../docs/goals/active/revised_transcript_workflow.md`
+- Completed goal: `../docs/goals/finished/mpl-s18-transcript-knowledge-goal.md`
+- Canonical store manifest: [`evidence/canonical-store.json`](evidence/canonical-store.json)
+- Store reconciliation: [`reports/evidence-store.md`](reports/evidence-store.md)
+- Coverage matrix: [`reports/coverage-matrix.md`](reports/coverage-matrix.md)
+- Staging schema: [`evidence/transcript-observation-schema.json`](evidence/transcript-observation-schema.json)
+- Validator: [`../tools/validate_transcript_ledger.py`](../tools/validate_transcript_ledger.py)
+- Read-only stats bridge: [`../tools/stats_query.py`](../tools/stats_query.py)
+- Segment ledgers: `evidence/transcript-segments/`
+- Observation ledgers: `evidence/transcript-observations/`
+- Run reports: `reports/transcript-pipeline/`
 
 ## Start here
 
-1. [`README.md`](README.md) — scope, safety, reproduction commands.
-2. [`reports/corpus-inventory.md`](reports/corpus-inventory.md) — what was imported, timestamp/video coverage, parsing risks.
-3. [`reports/database-inventory.md`](reports/database-inventory.md) — DB coverage, joins, and the post-migration `matches.winner` semantics.
-4. [`reports/pilot-quality-report.md`](reports/pilot-quality-report.md) — pilot coverage, validation results, gaps.
-5. [`coaching/pilot-coaching-brief.md`](coaching/pilot-coaching-brief.md) — the three practical prep points.
+1. [`reports/coverage-matrix.md`](reports/coverage-matrix.md) — canonical coverage: 72/72 match evidence, transcript split, visual status, page inventory.
+2. [`reports/league-meta.md`](reports/league-meta.md) — season interpretation: tiers, side/map, hero meta, player production, limits.
+3. [`coaching/head-coach-brief.md`](coaching/head-coach-brief.md) — the overall coaching product; team briefs live in [`coaching/teams/`](coaching/teams/).
+4. [`README.md`](README.md) — scope, safety, reproduction commands.
+5. [`reports/corpus-inventory.md`](reports/corpus-inventory.md) — what was imported, timestamp/video coverage, parsing risks.
+6. [`reports/database-inventory.md`](reports/database-inventory.md) — DB coverage, joins, and the post-migration `matches.winner` semantics.
+7. [`reports/evidence-store.md`](reports/evidence-store.md) — canonical vs frozen stores and the rules for new evidence.
 
 ## Pilot series
 
@@ -99,7 +124,8 @@
 
 - [`reports/audit-INS-1037-LATE-SWING.md`](reports/audit-INS-1037-LATE-SWING.md) — verdict **partially supported**. Quote/timestamp validation, DB checks, counterexamples, actual frame review and limitations.
 - [`reports/phase0-mistake-audit.md`](reports/phase0-mistake-audit.md) — Phase 0 mistake audit and fixes.
-- [`reports/unvalidated-sources.md`](reports/unvalidated-sources.md) — 5 sources that could not be auto-validated and require manual review.
+- [`reports/unvalidated-sources.md`](reports/unvalidated-sources.md) — 4 sources that could not be auto-validated; DeepSeek visual review status.
+- [`reports/visual-proof-deepseek-review.md`](reports/visual-proof-deepseek-review.md) - DeepSeek visual review passes 1–2: 113 frames, 31 boundaries, 18 rejected candidates, 0 promoted.
 - [`reports/coverage-summary.md`](reports/coverage-summary.md) — current coverage state of the semantic analysis.
 - [`reports/player-matched-comparisons.md`](reports/player-matched-comparisons.md) — database-backed matched comparisons for player-level insights.
 - [`players/`](players/) — 66 player dossiers (one per player). See `analysis/players/` for the full list.
@@ -108,7 +134,8 @@
 
 ## Evidence and reproducibility
 
-- [`evidence/pilot-ledger.jsonl`](evidence/pilot-ledger.jsonl) — canonical short-excerpt evidence.
+- [`evidence/pilot-ledger.jsonl`](evidence/pilot-ledger.jsonl) — frozen pilot claim store (85 observations, 73 insights, 68 audits); not canonical for new observations.
+- [`evidence/canonical-store.json`](evidence/canonical-store.json) — canonical store manifest with hashes, counts and rules.
 - [`evidence/evidence-schema.json`](evidence/evidence-schema.json) — versioned JSON Schema.
 - [`evidence/query-catalog.json`](evidence/query-catalog.json) — every SQL query, parameters and provenance.
 - [`evidence/database-snapshot-manifest.json`](evidence/database-snapshot-manifest.json) — DB fingerprint, coverage and lineage.
@@ -127,7 +154,7 @@
 
 ## Coverage warning
 
-Only 3 series have curated semantic insights. Twenty-six sources are alignment-ready, but alignment readiness is not semantic analysis. The remaining source days are **unprocessed**, not “empty” or “irrelevant”. Do not read this pilot as a season-level finding.
+All 72 series have database evidence. Only 27 have transcript coverage; 45 are DB-only and cannot support quote or timestamp claims. Alignment readiness is not semantic analysis. Do not read the 27-series transcript layer as a season-level conclusion without checking the counterexamples and limits on each synthesis page.
 
 ## Player index
 

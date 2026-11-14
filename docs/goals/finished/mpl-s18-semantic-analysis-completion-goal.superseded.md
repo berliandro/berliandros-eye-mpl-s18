@@ -1,3 +1,12 @@
+> **Status: SUPERSEDED — NOT COMPLETED (2026-11-07).**
+>
+> The transcript-analysis scope is replaced by
+> `docs/goals/active/revised_transcript_workflow.md` and
+> `docs/goals/active/mpl-s18-transcript-knowledge-goal.md`.
+> Visual proof remains in `docs/goals/active/mpl-s18-visual-proof-deepseek-handoff.md`.
+> Do not execute Phases 3–5 from this file as the active plan; keep it as a
+> historical baseline only.
+
 # Goal: Complete Berliandro's Eye MPL ID S18 Semantic Coaching Intelligence
 
 ## Mission
@@ -249,7 +258,7 @@ The previous audit found `analysis/evidence/game-offsets.json` contained 72 sche
 
 - Every evidence event resolves to its exact underlying source span/query/frame and verified series/game association.
 - No timestamp-backed event can point to an unverified game boundary.
-- A visual capture is never automatically treated as a verified gameplay fact. Until the second-stage DeepSeek review is complete, visual-dependent claims remain pending/quarantined and are listed in `docs/goals/active/mpl-s18-visual-proof-deepseek-handoff.md`. No human reviewer is part of this workflow.
+- A visual capture is never automatically treated as a verified gameplay fact. DeepSeek visual review pass 1 is complete (53 frames, 11 boundaries; 0 promotions), but 20 non-null boundary candidates and 18 null offsets remain pending. Visual-dependent claims remain pending/quarantined and are listed in `docs/goals/active/mpl-s18-visual-proof-deepseek-handoff.md` §8.4. No human reviewer is part of this workflow.
 - Re-running ingestion/build does not duplicate evidence or alter raw sources.
 
 ---

@@ -151,6 +151,18 @@ Derived from `game_players` + `team_games` (28 games):
 | EgaTzy | EVOS | 12 | 3.68 |
 | LYONI | TEAM LIQUID ID | 37 | 3.60 |
 
+## Transcript observations (accepted)
+
+<!-- transcript-routing:start -->
+Accepted, source-linked observations. Caster claims are commentary, not proof of an in-game event.
+
+- `TOBS-1036-G1-014` · match 1036 · 00:58:04 · *commentary* — The caster says Mueza blocked Said's ultimate and EVOS had follow-up damage because 'the Lord is in hand'. ([match](../matches/1036-evoss-vs-rrq.md), [source](https://youtu.be/40fehk2f4_E?t=3484))
+- `TOBS-src-s18-w03d02-1055-g1-020` · match 1055 · 03:29:04 · *statistic* — Database fact: game 1 AE won in 26:35 (1595s) on Dangerous Grass with AE blue/EVOS red; game 2 AE won in 17:22 (1042s) on Expanding Rivers. ([match](../matches/1055-ae-vs-evos.md), [source](https://youtu.be/FDioYoG4ads?t=12544))
+<!-- transcript-routing:end -->
+
+
+
+
 ## References
 
 - Database snapshot `mpl-s18-db-20c5ea2c51f3`

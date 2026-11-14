@@ -267,6 +267,270 @@
         "liq_mvp"
       ],
       "provenance": "source-reported Liquipedia series MVP"
+    },
+    "Q-TEAM-SEASON": {
+      "description": "Season aggregate for one team, matching either the short team code or display name.",
+      "sql": "select team, games, wins, losses, kills, deaths, assists, gold, hero_damage, damage_taken, tower_damage, kda, win_rate, avg_gold, avg_duration_sec, team_name, team_slug from team_season_stats where upper(team) = upper(:team) or upper(team_name) = upper(:team)",
+      "params": {},
+      "fields": [
+        "team",
+        "games",
+        "wins",
+        "losses",
+        "kills",
+        "deaths",
+        "assists",
+        "gold",
+        "hero_damage",
+        "damage_taken",
+        "tower_damage",
+        "kda",
+        "win_rate",
+        "avg_gold",
+        "avg_duration_sec",
+        "team_name",
+        "team_slug"
+      ],
+      "provenance": "source-reported app aggregate; team code and display name are both matched"
+    },
+    "Q-HERO-SEASON": {
+      "description": "Season pick/ban/win aggregate for one hero.",
+      "sql": "select hero, pick, ban, win, win_rate from hero_stats where upper(hero) = upper(:hero)",
+      "params": {},
+      "fields": [
+        "hero",
+        "pick",
+        "ban",
+        "win",
+        "win_rate"
+      ],
+      "provenance": "source-reported app aggregate"
+    },
+    "Q-GAME-PLAYERS": {
+      "description": "Per-player scoreboard and item/talent JSON for one game.",
+      "sql": "select match_detail_id, game_no, team, player, lane, hero, kills, deaths, assists, kda, gold, gold_per_min, hero_damage, damage_taken, tower_damage, emblem, items_json, talents_json, lane_source from game_players where match_detail_id = :match_detail_id and game_no = :game_no order by team, player",
+      "params": {},
+      "fields": [
+        "match_detail_id",
+        "game_no",
+        "team",
+        "player",
+        "lane",
+        "hero",
+        "kills",
+        "deaths",
+        "assists",
+        "kda",
+        "gold",
+        "gold_per_min",
+        "hero_damage",
+        "damage_taken",
+        "tower_damage",
+        "emblem",
+        "items_json",
+        "talents_json",
+        "lane_source"
+      ],
+      "provenance": "source-reported scoreboard; items/talents as stored"
+    },
+    "Q-SCHEDULE": {
+      "description": "All 72 completed S18 schedule rows, in schedule orientation.",
+      "sql": "select match_detail_id, team_a, team_b, score_a, score_b, winner, iso_date from schedule_all where status = 'completed' order by match_detail_id",
+      "params": {},
+      "fields": [
+        "match_detail_id",
+        "team_a",
+        "team_b",
+        "score_a",
+        "score_b",
+        "winner",
+        "iso_date"
+      ],
+      "provenance": "source-reported schedule; winner is in schedule row orientation"
+    },
+    "Q-ALL-GAMES": {
+      "description": "Every game in the season with winner, duration, sides, map mode and VOD link.",
+      "sql": "select match_detail_id, game_no, team_a, team_b, winner, duration_sec, team_a_side, team_b_side, map_mode, vod_url from games order by match_detail_id, game_no",
+      "params": {},
+      "fields": [
+        "match_detail_id",
+        "game_no",
+        "team_a",
+        "team_b",
+        "winner",
+        "duration_sec",
+        "team_a_side",
+        "team_b_side",
+        "map_mode",
+        "vod_url"
+      ],
+      "provenance": "source-reported API detail; winner uses games.team_a/team_b orientation"
+    },
+    "Q-ALL-TEAM-GAMES": {
+      "description": "Every team-game aggregate in the season.",
+      "sql": "select match_detail_id, game_no, team, opponent, kills, deaths, assists, gold, hero_damage, damage_taken, tower_damage, kda, win, map_mode, duration_sec from team_games order by match_detail_id, game_no, team",
+      "params": {},
+      "fields": [
+        "match_detail_id",
+        "game_no",
+        "team",
+        "opponent",
+        "kills",
+        "deaths",
+        "assists",
+        "gold",
+        "hero_damage",
+        "damage_taken",
+        "tower_damage",
+        "kda",
+        "win",
+        "map_mode",
+        "duration_sec"
+      ],
+      "provenance": "deterministic aggregate from ten player rows; not an official tournament table"
+    },
+    "Q-ALL-PLAYER-GAMES": {
+      "description": "Compact per-player per-game scoreboard for the whole season, without item or talent URLs.",
+      "sql": "select match_detail_id, game_no, team, player, lane, hero, kills, deaths, assists, kda, gold, gold_per_min, hero_damage, damage_taken, tower_damage from game_players order by match_detail_id, game_no, team, lane",
+      "params": {},
+      "fields": [
+        "match_detail_id",
+        "game_no",
+        "team",
+        "player",
+        "lane",
+        "hero",
+        "kills",
+        "deaths",
+        "assists",
+        "kda",
+        "gold",
+        "gold_per_min",
+        "hero_damage",
+        "damage_taken",
+        "tower_damage"
+      ],
+      "provenance": "source-reported scoreboard; item/talent JSON deliberately excluded"
+    },
+    "Q-MATCH-PLAYER-LINES": {
+      "description": "Compact per-player scoreboard lines for one series, without item or talent URLs.",
+      "sql": "select game_no, team, player, lane, hero, kills, deaths, assists, kda, gold, gold_per_min, hero_damage, damage_taken, tower_damage from game_players where match_detail_id = :match_detail_id order by game_no, team, lane",
+      "params": {},
+      "fields": [
+        "game_no",
+        "team",
+        "player",
+        "lane",
+        "hero",
+        "kills",
+        "deaths",
+        "assists",
+        "kda",
+        "gold",
+        "gold_per_min",
+        "hero_damage",
+        "damage_taken",
+        "tower_damage"
+      ],
+      "provenance": "source-reported scoreboard; item/talent JSON deliberately excluded"
+    },
+    "Q-ALL-PICKS": {
+      "description": "Every draft pick in the season.",
+      "sql": "select match_detail_id, game_no, team, side, slot, lane, hero, player from game_picks order by match_detail_id, game_no, team, slot",
+      "params": {},
+      "fields": [
+        "match_detail_id",
+        "game_no",
+        "team",
+        "side",
+        "slot",
+        "lane",
+        "hero",
+        "player"
+      ],
+      "provenance": "Liquipedia lane-order picks; slot is lane order, not pick order"
+    },
+    "Q-ALL-BANS": {
+      "description": "Every draft ban in the season.",
+      "sql": "select match_detail_id, game_no, side, hero, ban_order from game_bans order by match_detail_id, game_no, side, ban_order",
+      "params": {},
+      "fields": [
+        "match_detail_id",
+        "game_no",
+        "side",
+        "hero",
+        "ban_order"
+      ],
+      "provenance": "Liquipedia ordered bans where available; two games have nine valid bans"
+    },
+    "Q-ALL-TEAM-SEASON": {
+      "description": "Season aggregate for every team.",
+      "sql": "select team, games, wins, losses, kills, deaths, assists, gold, hero_damage, damage_taken, tower_damage, kda, win_rate, avg_gold, avg_duration_sec, team_name, team_slug from team_season_stats order by wins desc, team",
+      "params": {},
+      "fields": [
+        "team",
+        "games",
+        "wins",
+        "losses",
+        "kills",
+        "deaths",
+        "assists",
+        "gold",
+        "hero_damage",
+        "damage_taken",
+        "tower_damage",
+        "kda",
+        "win_rate",
+        "avg_gold",
+        "avg_duration_sec",
+        "team_name",
+        "team_slug"
+      ],
+      "provenance": "source-reported app aggregate; team code and display name are both matched"
+    },
+    "Q-ALL-PLAYER-SEASON": {
+      "description": "Season aggregate for every player.",
+      "sql": "select player, team, team_slug, lane, total_games, total_kills, avg_kills, total_deaths, avg_deaths, total_assists, avg_assists, avg_kda, kill_participation from player_season_stats order by team, lane, player",
+      "params": {},
+      "fields": [
+        "player",
+        "team",
+        "team_slug",
+        "lane",
+        "total_games",
+        "total_kills",
+        "avg_kills",
+        "total_deaths",
+        "avg_deaths",
+        "total_assists",
+        "avg_assists",
+        "avg_kda",
+        "kill_participation"
+      ],
+      "provenance": "source-reported app aggregate; player names stored uppercase"
+    },
+    "Q-ALL-HERO-STATS": {
+      "description": "Season pick/ban/win aggregate for every hero.",
+      "sql": "select hero, pick, ban, win, win_rate from hero_stats order by pick desc, ban desc, hero",
+      "params": {},
+      "fields": [
+        "hero",
+        "pick",
+        "ban",
+        "win",
+        "win_rate"
+      ],
+      "provenance": "source-reported app aggregate"
+    },
+    "Q-ALL-MATCH-DETAIL": {
+      "description": "Series MVP for every completed match.",
+      "sql": "select match_detail_id, liq_mvp from matches order by match_detail_id",
+      "params": {},
+      "fields": [
+        "match_detail_id",
+        "liq_mvp"
+      ],
+      "provenance": "Liquipedia series MVP as stored; not a per-game award"
     }
   }
 }

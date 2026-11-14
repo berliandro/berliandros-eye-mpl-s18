@@ -156,6 +156,18 @@ Derived from `game_players` + `team_games` (40 games):
 | EMANN | BIGETRON BY VIT | 39 | 4.38 |
 | Dingarai | ALTER EGO ESPORTS | 36 | 4.33 |
 
+## Transcript observations (accepted)
+
+<!-- transcript-routing:start -->
+Accepted, source-linked observations. Caster claims are commentary, not proof of an in-game event.
+
+- `TOBS-1074-G1-008` · match 1074 · 03:47:48 · *observation* — First turtle is secured by AE, allowing Kelra to farm safely. ([match](../matches/1074-onic-vs-ae.md), [source](https://youtu.be/YPbOKyQltIo?t=13668))
+- `TOBS-1107-G1-10` · match 1107 · 07:04:59 · *observation* — Caster reports the outer middle turret is destroyed while Kelra's attempted trade fails and top lane is also open. ([match](../matches/1107-onic-vs-tlid.md), [source](https://youtu.be/hY0Upem95uo?t=25499))
+<!-- transcript-routing:end -->
+
+
+
+
 ## References
 
 - Database snapshot `mpl-s18-db-20c5ea2c51f3`

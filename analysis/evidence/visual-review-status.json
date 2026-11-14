@@ -1,0 +1,3497 @@
+{
+  "schema_version": 1,
+  "generated_at": "2026-11-04T23:21:22.021344+00:00",
+  "description": "Derived reconciliation of game-offsets.json against the DeepSeek visual-review ledger. This file makes rejections and unpromoted reviews visible without silently changing canonical offset statuses.",
+  "game_offsets_path": "analysis/evidence/game-offsets.json",
+  "game_offsets_sha256": "c4070fa5c520f9d2d98d1d533e1d2849402d43476664faf537b2c3efa9e84c16",
+  "ledger_path": "analysis/evidence/deepseek-visual-reviews.json",
+  "ledger_sha256": "58d33d2293d516197e492c954b097a5fe710ca8f53f37eccfca20c61b1479b19",
+  "reviewer": "deepseek",
+  "no_human_review": true,
+  "summary": {
+    "series_total": 72,
+    "visually_verified": 0,
+    "rejected": 20,
+    "context_only": 41,
+    "inconclusive": 1,
+    "no_candidate_waiver": 10,
+    "not_reviewed": 0,
+    "frame_reviews": 966,
+    "boundary_reviews": 62
+  },
+  "rejected_candidates": [
+    {
+      "match_detail_id": "1044",
+      "source_id": "src-s18-w02d01",
+      "team_a": "TLID",
+      "team_b": "NAVI",
+      "start_seconds": 300,
+      "offset_status": "pending_validation",
+      "visual_status": "rejected",
+      "deepseek_disposition": "rejected",
+      "candidate_start_seconds": 300,
+      "frame_group": "G-P2-1044-300",
+      "frame_ids": [
+        "DF2-w02d01-296",
+        "DF2-w02d01-301",
+        "DF2-w02d01-307"
+      ],
+      "frame_sha256": [
+        "756091697fc6cb8af3b4288b051b6f0826ebdcd0e0ca4ec777f0cf5948e5c493",
+        "2db25d2e99e485979e6ace3fc9975b8896290186dc9dc98ceddf29a244461311",
+        "335c06431028baf72a7c491182085d3f4cef18d8206ddea7095c7b574746d2e6"
+      ],
+      "status_effect": "candidate_rejected",
+      "evidence": "Broadcast rundown overlay: 'REGULAR SEASON / MINGGU 2 | HARI 1' with MPL ID S18 branding and a three-person caster panel. A small video window plays a promo clip of a retro television set with a person on screen and burned-in subtitles. A two-panel scoreboard sits at right: 'MATCH 9 | BO3' with two "
+    },
+    {
+      "match_detail_id": "1046",
+      "source_id": "src-s18-w02d02",
+      "team_a": "TLID",
+      "team_b": "EVOS",
+      "start_seconds": 300,
+      "offset_status": "pending_validation",
+      "visual_status": "rejected",
+      "deepseek_disposition": "rejected",
+      "candidate_start_seconds": 300,
+      "frame_group": "G-P2-1046-300",
+      "frame_ids": [
+        "DF2-w02d02-296",
+        "DF2-w02d02-301",
+        "DF2-w02d02-306"
+      ],
+      "frame_sha256": [
+        "8a34b1fb5dd92e1421740cf879b14c70230a0c54a504dca6a4e28e061b554cb3",
+        "ff5e9eeadecd7126f4688670d8e61832124f3cab9b35739640f2a819e8ae6bf7",
+        "fa30565772031ebaf95ac6dfe24111179032faa4c87e75c96b211c9b15a1c0f7"
+      ],
+      "status_effect": "candidate_rejected",
+      "evidence": "Pre-match countdown over a sponsor-branded feature clip. A person is shown on a retro television with a subtitle. The highlighted side-rail fixture is MATCH 11 | BO3 at 14:15 WIB with a 0 VS 0 score; the large countdown reads 09:27. No series number, draft screen, or in-game HUD is visible. Same pre"
+    },
+    {
+      "match_detail_id": "1049",
+      "source_id": "src-s18-w02d03",
+      "team_a": "DEWA",
+      "team_b": "AE",
+      "start_seconds": 300,
+      "offset_status": "pending_validation",
+      "visual_status": "rejected",
+      "deepseek_disposition": "rejected",
+      "candidate_start_seconds": 300,
+      "frame_group": "G-P2-1049-300",
+      "frame_ids": [
+        "DF2-w02d03-296",
+        "DF2-w02d03-302",
+        "DF2-w02d03-307"
+      ],
+      "frame_sha256": [
+        "8ffe3ac7cf611664f3cb51b4b9a606f26d235f30774a2fded680e01665962269",
+        "d768d16ae3704870dd18760b4029646bb738c9d9a7fa891b514b565207d76255",
+        "51b7ceec6d4cf9376cef384abfde3314d447d05cc78ef497d0d7e6d49af4731c"
+      ],
+      "status_effect": "candidate_rejected",
+      "evidence": "Pre-match broadcast with a player-feature video; the match-14 card shows DEWA vs Alter Ego at 0-0 with a 14:15 WIB start, while a large 09:32 countdown is displayed. No series number, draft, or gameplay is shown. The same pre-match show continues with a close-up player feature and an audience-commen"
+    },
+    {
+      "match_detail_id": "1054",
+      "source_id": "src-s18-w03d02",
+      "team_a": "TLID",
+      "team_b": "ONIC",
+      "start_seconds": 300,
+      "offset_status": "pending_validation",
+      "visual_status": "rejected",
+      "deepseek_disposition": "rejected",
+      "candidate_start_seconds": 300,
+      "frame_group": "G-P2-1054-300",
+      "frame_ids": [
+        "DF2-w03d02-296",
+        "DF2-w03d02-302",
+        "DF2-w03d02-307"
+      ],
+      "frame_sha256": [
+        "305d0c09b2d54d869be35afc66d05d4aff74f0ce0c1301e00e06e0228a49fd24",
+        "0eadad3be8d21cb0c34ce01f0c07db73d2ac3491658c595a9a667f5dd42de74f",
+        "a58abb88056729757da23964c8769af08f94a2a76b47516c4685a71f8ce841c4"
+      ],
+      "status_effect": "candidate_rejected",
+      "evidence": "Pre-match broadcast layout: the left inset is a dark orange gameplay/highlight scene under an AQUA smart home logo; the right panel shows three casters, a three-match schedule with 0-0 scores, a large countdown 10:19, and an audience comment reading 'ayo onic'. No draft screen, no 00:00 game clock, "
+    },
+    {
+      "match_detail_id": "1070",
+      "source_id": "src-s18-w05d02",
+      "team_a": "TLID",
+      "team_b": "BTR",
+      "start_seconds": 300,
+      "offset_status": "pending_validation",
+      "visual_status": "rejected",
+      "deepseek_disposition": "rejected",
+      "candidate_start_seconds": 300,
+      "frame_group": "G-P2-1070-300",
+      "frame_ids": [
+        "DF2-w05d02-296",
+        "DF2-w05d02-301",
+        "DF2-w05d02-306"
+      ],
+      "frame_sha256": [
+        "6b9328b2797701e3907cdf04f1ff3e5841815e42091036de4d30647dcb23a75f",
+        "d20c6960071ff06a050579f2fdc2f216d83a112832c79f62f0459745886ccd82",
+        "8479ada86938fc01037163dce8e87bfa11d0f4e3018cb22d40c03846439b60ae"
+      ],
+      "status_effect": "candidate_rejected",
+      "evidence": "Pre-match broadcast screen with a large 12:34 timer, three casters, and a schedule listing Match 35/36/37 at 0-0. The center is a gameplay-effects clip labeled 'TAMPILAN EFEK VISUAL'. No TLID, BTR, '1070', draft, or in-game clock is visible. Same pre-match broadcast screen with a 12:29 timer and the"
+    },
+    {
+      "match_detail_id": "1072",
+      "source_id": "src-s18-w05d02",
+      "team_a": "NAVI",
+      "team_b": "EVOS",
+      "start_seconds": 18108.4,
+      "offset_status": "detected_pending_review",
+      "visual_status": "rejected",
+      "deepseek_disposition": "rejected",
+      "candidate_start_seconds": 18108.4,
+      "frame_group": "G-P3-1072-18108",
+      "frame_ids": [
+        "DF3-w05d02-18104",
+        "DF3-w05d02-18109",
+        "DF3-w05d02-18114",
+        "DF3-w05d02-18139"
+      ],
+      "frame_sha256": [
+        "2e3b76a20bef222eb49cd0bef5a17a318eac781ce42a9a2cbba3db8d67a96d2c",
+        "19de707cbe4a5717711d56ca6e43807f8b59248d13d2cbb60cf562ffa3dc36f1",
+        "439550a3e8a94e76b48741ef5b990f3436112703e52cba43871d91e5aac6a66a",
+        "1048626203c68ee78c7c0ea21fab7da9e056c49234b12a6dc57068a496f97b28"
+      ],
+      "status_effect": "candidate_rejected",
+      "evidence": "Wide studio shot of a three-person analyst desk; top-left overlay shows a 2-0 score with NAVI/EVOS logos, 'GAME 2' and 'BEST OF 3'; the monitor is dark with a subtitle; no game clock or 00:00. Same analyst desk; the monitor shows a landscape image; the top-left overlay remains 2-0 with NAVI/EVOS log"
+    },
+    {
+      "match_detail_id": "1073",
+      "source_id": "src-s18-w05d03",
+      "team_a": "GEEK",
+      "team_b": "TLID",
+      "start_seconds": 300,
+      "offset_status": "pending_validation",
+      "visual_status": "rejected",
+      "deepseek_disposition": "rejected",
+      "candidate_start_seconds": 300,
+      "frame_group": "G-P2-1073-300",
+      "frame_ids": [
+        "DF2-w05d03-296",
+        "DF2-w05d03-302",
+        "DF2-w05d03-307"
+      ],
+      "frame_sha256": [
+        "33d7dd9051112d383b8149b7ff84738d173b7e3d122926736c2edfe44485bd9c",
+        "d4a448af2dfe582a5040b5011c6124e24cd61b10c6d4423e025ccc695048fdee",
+        "bab6c300b78e2a20cec0a91d5cf453718e9976b35e66484e3d14336eadc0d65a"
+      ],
+      "status_effect": "candidate_rejected",
+      "evidence": "Pre-match broadcast overlay with a 10:06 countdown; the video pane shows a visual-effects preview labeled TAMPILAN EFEK VISUAL, while the schedule panel lists Match 38, GEEK vs TLID, 0-0 at 14:15 WIB. Pre-match countdown overlay at 10:00 over an effects clip labeled EFEK SKILL COMMANDER; the Match 3"
+    },
+    {
+      "match_detail_id": "1076",
+      "source_id": "src-s18-w06d01",
+      "team_a": "ONIC",
+      "team_b": "GEEK",
+      "start_seconds": 2425,
+      "offset_status": "detected_pending_review",
+      "visual_status": "rejected",
+      "deepseek_disposition": "rejected",
+      "candidate_start_seconds": 2425,
+      "frame_group": "G-W06-2425",
+      "frame_ids": [
+        "DF-W06-2424",
+        "DF-W06-2426",
+        "DF-W06-2428"
+      ],
+      "frame_sha256": [
+        "b94c3aea99fb7cf4df84f6eb7154d9bd5dda49fe60dc765927a3bd073aae7e0b",
+        "5f9b73aa130bc7d0217cebbd329598b190089f289f24c5027a50b161a7969674",
+        "bd6a164b9e210eef4c7f0fe81387013545f298b11e0c1cadbd0410591d09d0b5"
+      ],
+      "status_effect": "candidate_rejected",
+      "evidence": "Full-screen KLASEMEN standings graphic with REGULAR SEASON MINGGU 6 - HARI 1. It shows nine ranked teams and standings columns; no team-vs-team matchup, match clock, or match-start indicator is visible. Same full-screen KLASEMEN standings table, labeled REGULAR SEASON MINGGU 6 - HARI 1, listing nine"
+    },
+    {
+      "match_detail_id": "1077",
+      "source_id": "src-s18-w06d01",
+      "team_a": "DEWA",
+      "team_b": "EVOS",
+      "start_seconds": 2425,
+      "offset_status": "detected_pending_review",
+      "visual_status": "rejected",
+      "deepseek_disposition": "rejected",
+      "candidate_start_seconds": 2425,
+      "frame_group": "G-W06-2425",
+      "frame_ids": [
+        "DF-W06-2424",
+        "DF-W06-2426",
+        "DF-W06-2428"
+      ],
+      "frame_sha256": [
+        "b94c3aea99fb7cf4df84f6eb7154d9bd5dda49fe60dc765927a3bd073aae7e0b",
+        "5f9b73aa130bc7d0217cebbd329598b190089f289f24c5027a50b161a7969674",
+        "bd6a164b9e210eef4c7f0fe81387013545f298b11e0c1cadbd0410591d09d0b5"
+      ],
+      "status_effect": "candidate_rejected",
+      "evidence": "Full-screen KLASEMEN standings graphic with REGULAR SEASON MINGGU 6 - HARI 1. It shows nine ranked teams and standings columns; no team-vs-team matchup, match clock, or match-start indicator is visible. Same full-screen KLASEMEN standings table, labeled REGULAR SEASON MINGGU 6 - HARI 1, listing nine"
+    },
+    {
+      "match_detail_id": "1075",
+      "source_id": "src-s18-w06d01",
+      "team_a": "RRQ",
+      "team_b": "DEWA",
+      "start_seconds": 2425,
+      "offset_status": "detected_pending_review",
+      "visual_status": "rejected",
+      "deepseek_disposition": "rejected",
+      "candidate_start_seconds": 2425,
+      "frame_group": "G-W06-2425",
+      "frame_ids": [
+        "DF-W06-2424",
+        "DF-W06-2426",
+        "DF-W06-2428"
+      ],
+      "frame_sha256": [
+        "b94c3aea99fb7cf4df84f6eb7154d9bd5dda49fe60dc765927a3bd073aae7e0b",
+        "5f9b73aa130bc7d0217cebbd329598b190089f289f24c5027a50b161a7969674",
+        "bd6a164b9e210eef4c7f0fe81387013545f298b11e0c1cadbd0410591d09d0b5"
+      ],
+      "status_effect": "candidate_rejected",
+      "evidence": "Full-screen KLASEMEN standings graphic with REGULAR SEASON MINGGU 6 - HARI 1. It shows nine ranked teams and standings columns; no team-vs-team matchup, match clock, or match-start indicator is visible. Same full-screen KLASEMEN standings table, labeled REGULAR SEASON MINGGU 6 - HARI 1, listing nine"
+    },
+    {
+      "match_detail_id": "1079",
+      "source_id": "src-s18-w06d02",
+      "team_a": "RRQ",
+      "team_b": "AE",
+      "start_seconds": 1660.8,
+      "offset_status": "detected_pending_review",
+      "visual_status": "rejected",
+      "deepseek_disposition": "rejected",
+      "candidate_start_seconds": 1660.8,
+      "frame_group": "G-P3-1079-1660",
+      "frame_ids": [
+        "DF3-w06d02-1656",
+        "DF3-w06d02-1663",
+        "DF3-w06d02-1668",
+        "DF3-w06d02-1691",
+        "DF3-w06d02-1721"
+      ],
+      "frame_sha256": [
+        "4c19e8beb799605ea455e974c0fc87bc294ba124d9fe60af60d54c099794e998",
+        "cf222107f174317633d9a3afcc8d50f24a2b80a043b49cbd9ec561a22896644c",
+        "141522572cdb27b197d7fe8611187c2b54fdc84263351b2a029de4c0a53af609",
+        "121276c17cce0a8d9fb91e1568b67456cd63e49607d9e46b8f0c0b9de58b8372",
+        "23e51b498e3a3f310f4c4b34f98a5addc7f96b46b3176ed7f6add87fdd91ce65"
+      ],
+      "status_effect": "candidate_rejected",
+      "evidence": "Full-frame rundown graphic 'JADWAL HARI INI' listing three BO3 series for the day; middle row shows the RRQ vs AE pairing (Match 44) with 0 - 0 series scores and a 17:15 WIB time slot. No in-game scoreboard or game clock anywhere on screen. Same recurring rundown graphic, identical layout and conten"
+    },
+    {
+      "match_detail_id": "1082",
+      "source_id": "src-s18-w06d03",
+      "team_a": "BTR",
+      "team_b": "ONIC",
+      "start_seconds": 17077,
+      "offset_status": "detected_pending_review",
+      "visual_status": "rejected",
+      "deepseek_disposition": "rejected",
+      "candidate_start_seconds": 17077,
+      "frame_group": "G-P2-1082-17077",
+      "frame_ids": [
+        "DF2-w06d03-17074",
+        "DF2-w06d03-17079",
+        "DF2-w06d03-17084"
+      ],
+      "frame_sha256": [
+        "80d3f008d225d22df19a10dc34cffcbc2945ec1fd6014908004c4a4f2da2de5d",
+        "62e00c45a179e88987629c34bd77f5007127d831acc790c4379def02b0a77094",
+        "80fabc9af89276599655d3cab2a63c55aad3bafd77d4315977ca3a270efa8349"
+      ],
+      "status_effect": "candidate_rejected",
+      "evidence": "Live gameplay from a third-person MOBA spectator view mid-fight near the river; the HUD is fully populated with hero levels, health bars and item/KDA side panels. Top overlay shows ONIC on the left and BTR on the right with gold totals 35.4K vs 26.1K and a running game clock of 10:39 with a '2' game"
+    },
+    {
+      "match_detail_id": "1086",
+      "source_id": "src-s18-w07d02",
+      "team_a": "AE",
+      "team_b": "NAVI",
+      "start_seconds": null,
+      "offset_status": "pending_validation",
+      "visual_status": "rejected",
+      "deepseek_disposition": "rejected",
+      "candidate_start_seconds": null,
+      "frame_group": "G-W07D02-31920",
+      "frame_ids": [
+        "DF-W07D2-31919",
+        "DF-W07D2-31921",
+        "DF-W07D2-31923"
+      ],
+      "frame_sha256": [
+        "95e21abb4ab49edbbf8073558e929bb224c4611ffebdee74a52561041a1584d9",
+        "0fefa7afefd2c2bf48f51511516859c9fd8388a1e63b24df0f6ee2acf8b16c1a",
+        "0881ee8748a546f5d682c0e8564c407876bb758732f6e900d8b0ac02b4c92fb1"
+      ],
+      "status_effect": "candidate_rejected",
+      "evidence": "Studio desk segment with three presenters. The top-left scoreboard visibly shows GEEK 2, DEWA 1, with M53 / GAME 3 and BEST OF 3. The lower third reads QUALIFIED TO PLAYOFFS. Player controls are visible. No AE or NAVI branding is visible. Same studio desk segment with three presenters. The top-left "
+    },
+    {
+      "match_detail_id": "1089",
+      "source_id": "src-s18-w07d03",
+      "team_a": "AE",
+      "team_b": "TLID",
+      "start_seconds": 300,
+      "offset_status": "pending_validation",
+      "visual_status": "rejected",
+      "deepseek_disposition": "rejected",
+      "candidate_start_seconds": 300,
+      "frame_group": "G-P2-1089-300",
+      "frame_ids": [
+        "DF2-w07d03-296",
+        "DF2-w07d03-301",
+        "DF2-w07d03-306"
+      ],
+      "frame_sha256": [
+        "7374ee101773b28d9b7d2ff13489d01f21d9ead22c147faef8c2e69817b269c8",
+        "03a042387cb706a7b8a9daf4117ea50474f4c30e29194114bb875cc2a16c9aa8",
+        "fe5601df785e546325ab068205e966b9f409bdc3338a96cd9dbd59c858c463b5"
+      ],
+      "status_effect": "candidate_rejected",
+      "evidence": "Pre-match broadcast countdown screen. A dark fantasy anime promo fills the video panel; three casters are shown above the right-side match list. The highlighted top card is AE vs TLID at 0 VS 0, while the timer reads 19:08 and no draft or gameplay HUD is visible. Same pre-match countdown overlay. Th"
+    },
+    {
+      "match_detail_id": "1090",
+      "source_id": "src-s18-w07d03",
+      "team_a": "RRQ",
+      "team_b": "EVOS",
+      "start_seconds": 12178,
+      "offset_status": "detected_pending_review",
+      "visual_status": "rejected",
+      "deepseek_disposition": "rejected",
+      "candidate_start_seconds": 12178,
+      "frame_group": "G-P2-1090-12178",
+      "frame_ids": [
+        "DF2-w07d03-12174",
+        "DF2-w07d03-12179",
+        "DF2-w07d03-12184"
+      ],
+      "frame_sha256": [
+        "14ded314ec208f18fd387813d8641beabadf59c29b51ee105a31e84b2fbfd785",
+        "ac249d32c17eeaeffadc9b1244809013e40acd2e29707ed91bde49e6f92edf8c",
+        "7fbc4babf7825daeaeebd5a29ee9d4bd0eb1e1357862c5147ee8dac4afd19567"
+      ],
+      "status_effect": "candidate_rejected",
+      "evidence": "Crowd scene with fans in red and black/white jerseys cheering in front of dark curtains; a centered white advertising overlay with a red header and blue footer banner covers the middle of the frame. No team names, scoreboard, match label, or game clock are visible. Crowd scene filmed from a low angl"
+    },
+    {
+      "match_detail_id": "1095",
+      "source_id": "src-s18-w08d02",
+      "team_a": "RRQ",
+      "team_b": "TLID",
+      "start_seconds": 1882,
+      "offset_status": "detected_pending_review",
+      "visual_status": "rejected",
+      "deepseek_disposition": "rejected",
+      "candidate_start_seconds": 1882,
+      "frame_group": "G-P2-1095-1882",
+      "frame_ids": [
+        "DF2-w08d02-1879",
+        "DF2-w08d02-1884",
+        "DF2-w08d02-1889"
+      ],
+      "frame_sha256": [
+        "a1cc3fb662efdaf137a36c65be33d842c73634d3866b931cb894ab90aea0e7b5",
+        "459cb4fd045fe0d48c9abc58fe32c247fcff2da9e311674f83deae7bae28d2c3",
+        "3fc256d9f3afd9c9204c521ec28bb3c957e9c5acd83512f470ed17eb73adcdbd"
+      ],
+      "status_effect": "candidate_rejected",
+      "evidence": "League standings screen headed KLASEMEN, showing nine ranked teams and league-table columns MATCH POINT, MATCH W-L, NET GAME WIN, and GAME W-L. TEAM LIQUID ID appears at rank 2 and RRQ HOSHI at rank 8, but there is no match pairing, series number, game score, draft, or in-game clock. A YouTube playe"
+    },
+    {
+      "match_detail_id": "1096",
+      "source_id": "src-s18-w08d02",
+      "team_a": "DEWA",
+      "team_b": "NAVI",
+      "start_seconds": 1884,
+      "offset_status": "detected_pending_review",
+      "visual_status": "rejected",
+      "deepseek_disposition": "rejected",
+      "candidate_start_seconds": 1884,
+      "frame_group": "G-P2-1096-1884",
+      "frame_ids": [
+        "DF2-w08d02-1880",
+        "DF2-w08d02-1886",
+        "DF2-w08d02-1890"
+      ],
+      "frame_sha256": [
+        "a9dc1689a68bf2ae51abc4e69dbb95694c1930b144484474f58e7605cafd36c8",
+        "63574e481e729ad55b99881e277ce86418ac2f610312ce6f0093a29bc92f53e1",
+        "27bc11550772dcdfac57506577e40a58086a9ea9028ab0343c2937d93eed66b0"
+      ],
+      "status_effect": "candidate_rejected",
+      "evidence": "Full-screen league standings table ('KLASEMEN') for a regular-season week, with nine teams ranked in a table. No match-up header, no series number, no scoreboard, no clock/countdown, no draft screen. NAVI is row 1 and DEWA UNITED is row 7; they appear only as separate ranked entries. Near-identical "
+    },
+    {
+      "match_detail_id": "1097",
+      "source_id": "src-s18-w08d03",
+      "team_a": "EVOS",
+      "team_b": "GEEK",
+      "start_seconds": 2052,
+      "offset_status": "detected_pending_review",
+      "visual_status": "rejected",
+      "deepseek_disposition": "rejected",
+      "candidate_start_seconds": 2052,
+      "frame_group": "G-P2-1097-2052",
+      "frame_ids": [
+        "DF2-w08d03-2048",
+        "DF2-w08d03-2054",
+        "DF2-w08d03-2059"
+      ],
+      "frame_sha256": [
+        "f05f8c8938630bba25ee869004a74a152aeb1b3e67d19c3700ee9b312b98c15f",
+        "a4a8b1bb926e4ad5b93d0be64922680c8dab473d1c8d48abd66125a45fd00990",
+        "094a0498222bda6758cee19aad7bd4a4228e49a4e9063cc9d071e5f371058b49"
+      ],
+      "status_effect": "candidate_rejected",
+      "evidence": "Frame 1 shows a full-screen league standings table headed 'KLASEMEN' with 'REGULAR SEASON' and 'MINGGU 8 - HARI 3' on the right; MPL ID and 'NEVER GIVE UP THIS GAME' logos sit in the top corners. Nine teams are ranked with columns POS / TEAM / MATCH POINT / MATCH W-L / NET GAME WIN / GAME W-L; EVOS "
+    },
+    {
+      "match_detail_id": "1103",
+      "source_id": "src-s18-w09d02",
+      "team_a": "BTR",
+      "team_b": "EVOS",
+      "start_seconds": 2429,
+      "offset_status": "detected_pending_review",
+      "visual_status": "rejected",
+      "deepseek_disposition": "rejected",
+      "candidate_start_seconds": 2429,
+      "frame_group": "G-P2-1103-2429",
+      "frame_ids": [
+        "DF2-w09d02-2425",
+        "DF2-w09d02-2431",
+        "DF2-w09d02-2435"
+      ],
+      "frame_sha256": [
+        "f2f33f662fd561b7eeb24db9a6680c42a36a36747f8f9de32a70d20bb426624e",
+        "565e397b81638bfb8d9b06a22670ac2ae190a9048cb8b0875c84a1b88b71bacc",
+        "2f8796098c3704d622a81356f44bbf2340d0ef8901ea8827b493a259b85d4c7f"
+      ],
+      "status_effect": "candidate_rejected",
+      "evidence": "Full-screen MPL ID league standings table on a light gray/green background with red and blue ribbon banner. Left column shows POS 1-9 with green (top) and red (bottom) markers. No match series header, no team-vs-team pairing, no scoreboard, no draft, no game clock. Identical standings table to the p"
+    },
+    {
+      "match_detail_id": "1105",
+      "source_id": "src-s18-w09d03",
+      "team_a": "EVOS",
+      "team_b": "AE",
+      "start_seconds": 300,
+      "offset_status": "pending_validation",
+      "visual_status": "rejected",
+      "deepseek_disposition": "rejected",
+      "candidate_start_seconds": 300,
+      "frame_group": "G-1105-300",
+      "frame_ids": [
+        "DF-1105-296",
+        "DF-1105-300",
+        "DF-1105-304"
+      ],
+      "frame_sha256": [
+        "98e00875da8230eac2dc0141bd0990069221148cd6c20e477f2a135422e2009f",
+        "77631a661b14d0eb0607d1ed3528889bde93181d768f03dc049c0e64ef8b21b4",
+        "ef5117c4e432e2ec4fd86a890f1e6ae01fa1ef8ce2ad5869097b124f696038db"
+      ],
+      "status_effect": "candidate_rejected",
+      "evidence": "Pre-show broadcast screen: 'REGULAR SEASON MINGGU 9 | HARI 3' header, caster panel, a right-side schedule of three BO3 matches at 14:15/17:15/20:15 WIB, a large countdown 27:49, and a Magic Chess Go Go promo in the main video area. No in-game clock or match-start overlay; match-70 team names are log"
+    }
+  ],
+  "context_only": [
+    {
+      "match_detail_id": "1036",
+      "source_id": "src-s18-w01d01",
+      "team_a": "EVOS",
+      "team_b": "RRQ",
+      "start_seconds": 1303,
+      "offset_status": "detected_pending_review",
+      "visual_status": "context-only",
+      "deepseek_disposition": "context-only",
+      "candidate_start_seconds": 1303,
+      "frame_group": "G-1036-1303",
+      "frame_ids": [
+        "DF-1036-1300",
+        "DF-1036-1304",
+        "DF-1036-1308"
+      ],
+      "frame_sha256": [
+        "f8ce25491bb9910810842d9c3596e6b78e062cb448509fbb85adecb8ad7efe8f",
+        "f9a3efc2f6b40561cdf334f78c5398baada8b6e272f840447c1c02d4a086c183",
+        "270681a61dbafe8bb17108328066f5e59b5d633da9e35c993348d6089f04d9b4"
+      ],
+      "status_effect": "partial_context_only",
+      "evidence": "Three analysts sit behind a branded desk; the rear screen shows abstract and animal-head artwork. The desk monitor is black with a single horizontal dash. No legible EVOS/RRQ names or logos, match label, clock, or draft panel are visible. Same three-person analyst desk and rear screen. The desk moni"
+    },
+    {
+      "match_detail_id": "1037",
+      "source_id": "src-s18-w01d01",
+      "team_a": "NAVI",
+      "team_b": "AE",
+      "start_seconds": 12675.0,
+      "offset_status": "detected_pending_review",
+      "visual_status": "context-only",
+      "deepseek_disposition": "context-only",
+      "candidate_start_seconds": 12675.0,
+      "frame_group": "G-P3-1037-12675",
+      "frame_ids": [
+        "DF3-w01d01-12672",
+        "DF3-w01d01-12677",
+        "DF3-w01d01-12682",
+        "DF3-w01d01-12707"
+      ],
+      "frame_sha256": [
+        "7f452a940201c91d5aec341037bfe1f87a277d32d90d7def20e0ce16d305d3ad",
+        "3532fb98d3b2faae17e854ea33e92a4a329ac293e146aa8985d9275497a3f74f",
+        "fa57c925d1c2f608fc26086604a657b110c6165bab46e247a2aad944729845f7",
+        "bd0c85dc2251a74686e3c4adcb0e2fd4ce7b4653119f749452b52f2155fb2c34"
+      ],
+      "status_effect": "partial_context_only",
+      "evidence": "Wide studio shot of a three-person analyst desk; scoreboard shows NAVI 0–AE 0, GAME 1, BEST OF 3, and a DRAFT PICK IN 08:39 countdown. The inset TV shows hands holding a phone. No 00:00 game clock is visible. Same analyst desk and NAVI 0–AE 0 / GAME 1 scoreboard; the DRAFT PICK IN timer reads 08:34."
+    },
+    {
+      "match_detail_id": "1038",
+      "source_id": "src-s18-w01d02",
+      "team_a": "TLID",
+      "team_b": "GEEK",
+      "start_seconds": 1655,
+      "offset_status": "boundary_verified",
+      "visual_status": "context-only",
+      "deepseek_disposition": "context-only",
+      "candidate_start_seconds": 1655.0,
+      "frame_group": "G-P3-1038-FEED",
+      "frame_ids": [
+        "DF3-w01d02-2402",
+        "DF3-w01d02-2602",
+        "DF3-w01d02-2701",
+        "DF3-w01d02-2719"
+      ],
+      "frame_sha256": [
+        "e956b64c4ebc333cab55b9f5c53c58ab24b65c2d53748b9160e9f9234e172630",
+        "42ea589fb28094d5a2ac137fc5e72764b3d991e94d3d2797f4f240788614d37d",
+        "d6ca350d70aaccf934345735ae1959d12d156b5f75a69172b7312c3bbf2eddb6",
+        "1dcbd708a692e800cfb66c91c094679ac0e2446137c12ecd37dfaaff0f5296ba"
+      ],
+      "status_effect": "partial_context_only",
+      "evidence": "Draft/analysis graphic over a player cam; headers read Erpang on the left and Honjaw on the right, with ten player cards; no scoreboard, match label, game clock, 00:00, or 1655s marker. Analysis comparison screen with five top and five bottom player cams; TL and GEEK logos flank zeroed stat bars; vi"
+    },
+    {
+      "match_detail_id": "1039",
+      "source_id": "src-s18-w01d02",
+      "team_a": "DEWA",
+      "team_b": "RRQ",
+      "start_seconds": 11946,
+      "offset_status": "boundary_verified",
+      "visual_status": "context-only",
+      "deepseek_disposition": "context-only",
+      "candidate_start_seconds": 11946.0,
+      "frame_group": "G-P3-1039-FEED",
+      "frame_ids": [
+        "DF3-w01d02-12301",
+        "DF3-w01d02-12501",
+        "DF3-w01d02-12602",
+        "DF3-w01d02-12644"
+      ],
+      "frame_sha256": [
+        "2b0e7bf20c99c1123eb8569d6b22e05cc3a33ecfa20295df0c7a87b27e3601fb",
+        "41f90f14481275c39d361ba487dd6307e4ccdf09e10f1242bd0a9476cf7502d8",
+        "c65a2833aab30124997358486f93546f5f776a9180f26a4b8f3b607b8e87eccf",
+        "d22bca7fc51afd84e80b8f3eb45830aea46cdf9d1ddc666754797bf7e1b1089b"
+      ],
+      "status_effect": "partial_context_only",
+      "evidence": "In-game observer feed for DEWA vs RRQ. Top-center game clock reads 04:38, not 00:00; scoreboard 2-0; kill feed banner 'HAS SLAIN'; team side panels show DEWA (left) and RRQ (right). No 00:00 appears anywhere in the frame, so DEWA/RRQ are not paired with a 00:00 game clock. Wide venue/stage shot with"
+    },
+    {
+      "match_detail_id": "1040",
+      "source_id": "src-s18-w01d02",
+      "team_a": "EVOS",
+      "team_b": "NAVI",
+      "start_seconds": 24067,
+      "offset_status": "boundary_verified",
+      "visual_status": "context-only",
+      "deepseek_disposition": "context-only",
+      "candidate_start_seconds": 24067.0,
+      "frame_group": "G-P3-1040-FEED",
+      "frame_ids": [
+        "DF3-w01d02-24082",
+        "DF3-w01d02-24121",
+        "DF3-w01d02-24202",
+        "DF3-w01d02-24215"
+      ],
+      "frame_sha256": [
+        "3ac943744a9098a4fd01e9d80636a562637dea64134e3327e333003347769575",
+        "c84d89ff68310107316cca2235d6696e22c56eaead82a2b9b1ca7786c7516c41",
+        "7f7e8e862080ab1471493e02b8f9bc2e9201c7b98093ce8c9418cc439ffca3e6",
+        "0b36cc7a65033cea657f1a9fd4833349298e09c2e354fe72af751df3d2546688"
+      ],
+      "status_effect": "partial_context_only",
+      "evidence": "In-game top-down gameplay feed with no broadcast HUD or clock; EVOS and NAVI player nameplates are visible. No team scoreboard, match label, or 00:00 is visible. Broadcast HUD at 01:01 with EVOS on the left and NAVI on the right; score counters read 0-0 and gold reads 2.9K vs 2.8K. A SEASON 10 heade"
+    },
+    {
+      "match_detail_id": "1041",
+      "source_id": "src-s18-w01d03",
+      "team_a": "TLID",
+      "team_b": "DEWA",
+      "start_seconds": 1198,
+      "offset_status": "boundary_verified",
+      "visual_status": "context-only",
+      "deepseek_disposition": "context-only",
+      "candidate_start_seconds": 1198.0,
+      "frame_group": "G-P3-1041-FEED",
+      "frame_ids": [
+        "DF3-w01d03-2101",
+        "DF3-w01d03-2251",
+        "DF3-w01d03-2301",
+        "DF3-w01d03-2329"
+      ],
+      "frame_sha256": [
+        "44aa235368183fd93403607cfe5861c96953e2c975eec7e7ac826bb09ba3fb6d",
+        "55fa87b3862fc2942095d17d670a1edf852e400e4a2616cd1dac9946e44753fb",
+        "b6562c4f6073239bb24839378ca22fc4ea7d5d792c265ca4eba61ddc5bbe2ce0",
+        "c0b729a1db597c02f3b010303b7521ebb776fccad3a2a62e01b2e079633884f1"
+      ],
+      "status_effect": "partial_context_only",
+      "evidence": "Draft/analysis frame with caster labels Honjaw and Coach Right, DRAFT IDENTITY and DRAFT DNA graphics, and player-cam panels; no game HUD, scoreboard, or clock is visible. In-game feed at 00:46 with TLID left and DEWA right; the top-right label reads Season 18 Match 5 - Game 1. An EMBLEM lower-third"
+    },
+    {
+      "match_detail_id": "1042",
+      "source_id": "src-s18-w01d03",
+      "team_a": "BTR",
+      "team_b": "GEEK",
+      "start_seconds": 10608,
+      "offset_status": "detected_pending_review",
+      "visual_status": "context-only",
+      "deepseek_disposition": "context-only",
+      "candidate_start_seconds": 10608,
+      "frame_group": "G-P2-1042-10608",
+      "frame_ids": [
+        "DF2-w01d03-10604",
+        "DF2-w01d03-10609",
+        "DF2-w01d03-10614"
+      ],
+      "frame_sha256": [
+        "0ecea64b77d6aea0327e117e425967696c23b98a4f704d8f8774df2a81e7cb0c",
+        "72ed85258110d0f452c1908ddeef22383af98d342e31608fa10ea0579b02022a",
+        "09201bc3e82c3ce85bab5fe5b5446ca8b76ed9faa60c8d2d47bd15370ec15505"
+      ],
+      "status_effect": "partial_context_only",
+      "evidence": "Broadcast overlay above a venue interview: host with microphone standing beside two players in red VITALITY jerseys, seated staff behind. Top-left scoreboard shows VITALITY vs GEEK at 0-0, with a draft-pick countdown of 10:31. Backdrop shows MPL S18 branding, VITALITY logo, and AQUA sponsor mark. Lo"
+    },
+    {
+      "match_detail_id": "1045",
+      "source_id": "src-s18-w02d01",
+      "team_a": "BTR",
+      "team_b": "DEWA",
+      "start_seconds": 12126,
+      "offset_status": "boundary_verified",
+      "visual_status": "context-only",
+      "deepseek_disposition": "context-only",
+      "candidate_start_seconds": 12126.0,
+      "frame_group": "G-P3-1045-FEED",
+      "frame_ids": [
+        "DF3-w02d01-12701",
+        "DF3-w02d01-12901",
+        "DF3-w02d01-13001",
+        "DF3-w02d01-13101"
+      ],
+      "frame_sha256": [
+        "ef52f1e4ee3c7faa31a49aa16e6ac07f0857f895887baa505303e57b17980bab",
+        "e12c901899431fd7b674e56c7d8da9b2b96088a3c23b4642ea94b1b5448c06df",
+        "edb95aff854c11e12c67fa13ddb6f6ff50d1642847e76417377185599cad0e01",
+        "98a0a471d8a927f85db1726b18d7e5adbc4427ea7f401116c2cd4fbf0d7cbdbc"
+      ],
+      "status_effect": "partial_context_only",
+      "evidence": "Broadcast close-up with a 0-0 Vitality vs Dewa scoreboard labelled MD1 - Game 1, Best of 3, plus a Top 5 Jungler GPM graphic; no game clock or countdown in frame. Stage/player-cam shot with draft board; the center lower third shows Dewa against BTR under Match 10 - Game 1, no numeric score or timer."
+    },
+    {
+      "match_detail_id": "1047",
+      "source_id": "src-s18-w02d02",
+      "team_a": "NAVI",
+      "team_b": "GEEK",
+      "start_seconds": 11886,
+      "offset_status": "boundary_verified",
+      "visual_status": "context-only",
+      "deepseek_disposition": "context-only",
+      "candidate_start_seconds": 11886.0,
+      "frame_group": "G-P3-1047-FEED",
+      "frame_ids": [
+        "DF3-w02d02-12352",
+        "DF3-w02d02-12401",
+        "DF3-w02d02-12501",
+        "DF3-w02d02-12551"
+      ],
+      "frame_sha256": [
+        "17bcde733111f84142fcbc0ee2193a10ea762f0ad6bf1505f80f0752beea2a5c",
+        "16d334419e38087719674f01dac648a0c76b0d2a9a48a28105dac179a83b632a",
+        "fd874c5d55762848bfff71ce9c90a6e55fa0727461de11c4aee7fe4062af0696",
+        "9d5fa7137681b9c6b650d0fedcaf4b86933d6660369ce999235e87ddc4cc7311"
+      ],
+      "status_effect": "partial_context_only",
+      "evidence": "Player portrait against a pale logo backdrop; the player wears a NAVI jersey and a red vertical name banner is visible. No match HUD, scoreboard, or clock. Stage introduction showing five NAVI players beneath a hanging NAVI banner and a large screen. No match HUD, scoreboard, or clock is visible. Pl"
+    },
+    {
+      "match_detail_id": "1050",
+      "source_id": "src-s18-w02d03",
+      "team_a": "ONIC",
+      "team_b": "BTR",
+      "start_seconds": 20963,
+      "offset_status": "boundary_verified",
+      "visual_status": "context-only",
+      "deepseek_disposition": "context-only",
+      "candidate_start_seconds": 20963.0,
+      "frame_group": "G-P3-1050-FEED2",
+      "frame_ids": [
+        "DF3-w02d03-21302",
+        "DF3-w02d03-21902",
+        "DF3-w02d03-22202",
+        "DF3-w02d03-22502"
+      ],
+      "frame_sha256": [
+        "e346e0c62a2aafb82d8c36c6119cd5db376267644069c5510c470dae0ce40428",
+        "add382c9a118dbb0a77194e7aa771df0fc8103952d6ad9bbf954524b9d6bc9d1",
+        "6352bd1a861d1b2b22e92e230cad3d68160911bb9ff0717eb98d9b977f30127c",
+        "6119158927af56248b063b58f39dd4f964eedc9a65f6f01742745a60cef06f7f"
+      ],
+      "status_effect": "partial_context_only",
+      "evidence": "Studio scoreboard frame with casters and a stylized map/item-card graphic. Large countdown reads 19:23. Highlighted Match 16 is GEEK 0 vs 0 EVOS at 20:15 WIB. No ONIC, BTR, or 00:00 is visible. Studio scoreboard frame with casters over a dark in-game arena/map view. Large countdown reads 09:23. High"
+    },
+    {
+      "match_detail_id": "1051",
+      "source_id": "src-s18-w02d03",
+      "team_a": "GEEK",
+      "team_b": "EVOS",
+      "start_seconds": 22773,
+      "offset_status": "detected_pending_review",
+      "visual_status": "context-only",
+      "deepseek_disposition": "context-only",
+      "candidate_start_seconds": 22773,
+      "frame_group": "G-P2-1051-22773",
+      "frame_ids": [
+        "DF2-w02d03-22769",
+        "DF2-w02d03-22774",
+        "DF2-w02d03-22779"
+      ],
+      "frame_sha256": [
+        "c460e9a9fdf4b6b752ca515791c8d750770555644bbb1b53a662b20ad1db7442",
+        "741166e4b21f2eb9b1965066e9d8d67f5ff0f05458ed35859adb0dbc0befda44",
+        "0a6a3c667f99a1c692037be50853146901a708d19e87bf2a23493c60e972f248"
+      ],
+      "status_effect": "partial_context_only",
+      "evidence": "On-stage female host with a handheld mic in front of a large 'THIS' backdrop; the top-left overlay reads GEEK 0 vs 0 EVOS, BEST OF 3, with DRAFT PICK IN 13:16, and the lower ticker headlines GEEK VS EVOS. Wide stage shot of the same host holding a mic; the overlay still shows GEEK 0 vs 0 EVOS, BEST "
+    },
+    {
+      "match_detail_id": "1052",
+      "source_id": "src-s18-w03d01",
+      "team_a": "BTR",
+      "team_b": "NAVI",
+      "start_seconds": 2666,
+      "offset_status": "boundary_verified",
+      "visual_status": "context-only",
+      "deepseek_disposition": "context-only",
+      "candidate_start_seconds": 2666.0,
+      "frame_group": "G-P3-1052-FEED",
+      "frame_ids": [
+        "DF3-w03d01-2681",
+        "DF3-w03d01-2721",
+        "DF3-w03d01-2761",
+        "DF3-w03d01-2801",
+        "DF3-w03d01-2841"
+      ],
+      "frame_sha256": [
+        "5dfc32273fc8a837d760019132ae42608081d95a707239531d17f93e0b071446",
+        "785748d1894c5781a536b9c0af39833a9abff4a1d79265cc770a2cafe905836b",
+        "cc9f0b7fd1594fdba7a70dba5556b9d38de293d394db6a23e643c0943d1b1781",
+        "a4e59df3ed9ed4e30c84659fd811fb20db437a8f330c66af159c1c61fd48a0c7",
+        "d356f49fce4d23e08fe0bb55a738f1e631c5819762c87268fd236541061d57ca"
+      ],
+      "status_effect": "partial_context_only",
+      "evidence": "Split-screen live lane view rather than the main broadcast scoreboard. Left panel labels NAVI Andoryuu at level 1; right panel labels BTR Nnael at level 1. Infinix boards and a central MPL crest are visible. No game clock, scoreboard, series score, or 00:00 appears. Main broadcast spectator scoreboa"
+    },
+    {
+      "match_detail_id": "1053",
+      "source_id": "src-s18-w03d01",
+      "team_a": "DEWA",
+      "team_b": "GEEK",
+      "start_seconds": 12043,
+      "offset_status": "boundary_verified",
+      "visual_status": "context-only",
+      "deepseek_disposition": "context-only",
+      "candidate_start_seconds": 12043.0,
+      "frame_group": "G-P3-1053-FEED",
+      "frame_ids": [
+        "DF3-w03d01-12802",
+        "DF3-w03d01-12901",
+        "DF3-w03d01-13001",
+        "DF3-w03d01-13101",
+        "DF3-w03d01-13201"
+      ],
+      "frame_sha256": [
+        "ead07d223f9ef96dbed448c7629f31adf72a6de5db91382d0a4d0f2fbe8a5e92",
+        "a24b772d763f5d143232ae4e1c3e4874345808596f6ef580673b6e96ef6e05cb",
+        "9cbfc5441bdccf6abe9804a01b9bc05c0443dbcab3f97db2c81603fdf5e2b4b5",
+        "8adc9b83d9e127e456d5760581403d0d813577539aeb3209f86dbaedf97913ad",
+        "3b7c95b97c1f6926c824e4532445bf95b00490068101ec5817d869d640500a87"
+      ],
+      "status_effect": "partial_context_only",
+      "evidence": "Close-up of a seated player with headset; top-left pre-game scoreboard shows a 0-0 series score, GAME 1, and BEST OF 3. No game clock or countdown is visible; team names are not rendered, only logos. Crowd shot with two handwritten fan signs; the same top-left 0-0 pre-game scoreboard is present. DEW"
+    },
+    {
+      "match_detail_id": "1055",
+      "source_id": "src-s18-w03d02",
+      "team_a": "AE",
+      "team_b": "EVOS",
+      "start_seconds": 12108,
+      "offset_status": "boundary_verified",
+      "visual_status": "context-only",
+      "deepseek_disposition": "context-only",
+      "candidate_start_seconds": 12108.0,
+      "frame_group": "G-P3-1055-FEED2",
+      "frame_ids": [
+        "DF3-w03d02-13001",
+        "DF3-w03d02-13401",
+        "DF3-w03d02-13601",
+        "DF3-w03d02-13802"
+      ],
+      "frame_sha256": [
+        "ae732a76d6f69bc0d23be56cc513a317ffd48e99ab681bced62b65997fc3d6c8",
+        "6de7436278f39765af1e064bef56a062b23e1d86ca1a534ec11be22ba9b46146",
+        "d7c4d18f6fb00fabae5ac22f2abf2b38bf17e49059bd9f19237f3505e0f40d35",
+        "26efd231a589d1b8c45b480a772aeea63d1078565155e393093db2b44036296d"
+      ],
+      "status_effect": "partial_context_only",
+      "evidence": "Stage/player-camera segment with an AE vs EVOS lower-third matchup graphic; no game HUD, game clock, or 00:00 is visible. Animated trophy-and-flags tournament bumper with VOD controls; no teams, match label, or game clock is visible. Full-screen AE vs EVOS gameplay with a 3–0 scoreboard and 03:28 ga"
+    },
+    {
+      "match_detail_id": "1056",
+      "source_id": "src-s18-w03d02",
+      "team_a": "RRQ",
+      "team_b": "BTR",
+      "start_seconds": 15232,
+      "offset_status": "detected_pending_review",
+      "visual_status": "context-only",
+      "deepseek_disposition": "context-only",
+      "candidate_start_seconds": 15232,
+      "frame_group": "G-P2-1056-15232",
+      "frame_ids": [
+        "DF2-w03d02-15228",
+        "DF2-w03d02-15233",
+        "DF2-w03d02-15238"
+      ],
+      "frame_sha256": [
+        "7dedd8b944946c96caa396e709ffe324fae6e6b24b19f811e2ac52c24ad994e2",
+        "06efe2766227e7f36dde9459da39a5ffac511329425cf94648552accd6abba49",
+        "b680ffb230c0c9b75756bbea7f649a8418846de043b441d8b366c4196ab1bb74"
+      ],
+      "status_effect": "partial_context_only",
+      "evidence": "Wide shot of a three-person analyst desk in front of an MPL ID Season 18 stage backdrop. The top-left scorebug shows 1 vs 0 with team crests, 'GAME 1', and 'VS BEST OF 3'. The scrolling lower third names Match 3 and RRQ (0) vs (0) BTR. There is no draft screen, gameplay HUD, game clock, or countdown"
+    },
+    {
+      "match_detail_id": "1057",
+      "source_id": "src-s18-w03d03",
+      "team_a": "NAVI",
+      "team_b": "ONIC",
+      "start_seconds": 2340,
+      "offset_status": "boundary_verified",
+      "visual_status": "context-only",
+      "deepseek_disposition": "context-only",
+      "candidate_start_seconds": 2340.0,
+      "frame_group": "G-P3-1057-FEED",
+      "frame_ids": [
+        "DF3-w03d03-2452",
+        "DF3-w03d03-2551",
+        "DF3-w03d03-2651",
+        "DF3-w03d03-2752",
+        "DF3-w03d03-2851"
+      ],
+      "frame_sha256": [
+        "74c4d01327607fffea7b36c29ec7372a4ea9a71f41d6f17f143639d8934aac50",
+        "593b164abafe85445cef9673983c1dc8b975256e8650b87e4f95e83f112da905",
+        "af5ee31283bf8dab57d5abac621e1e8db0e3e8c020d424a2aa0401edb0727029",
+        "140dc04a30f1b396b5948b45e9b3b9cfe13f19a1e9158acab19e56add5f45204",
+        "f35f58a36752afbb5842886507787b5ae91e6f25f48bbb4fa9d01cf4142e7d01"
+      ],
+      "status_effect": "partial_context_only",
+      "evidence": "In-game Mobile Legends game feed at 02:05 with NAVI and ONIC top bars; early river/jungle skirmish; no 00:00 clock. In-game game feed at 03:45 with NAVI/ONIC; mid-jungle stun fight and player cams; no 00:00 clock. In-game game feed at 05:25 with an item-build overlay and mid-lane fight; NAVI/ONIC; n"
+    },
+    {
+      "match_detail_id": "1059",
+      "source_id": "src-s18-w03d03",
+      "team_a": "TLID",
+      "team_b": "AE",
+      "start_seconds": 22502,
+      "offset_status": "boundary_verified",
+      "visual_status": "context-only",
+      "deepseek_disposition": "context-only",
+      "candidate_start_seconds": 22502.0,
+      "frame_group": "G-P3-1059-FEED",
+      "frame_ids": [
+        "DF3-w03d03-23202",
+        "DF3-w03d03-23401",
+        "DF3-w03d03-23602",
+        "DF3-w03d03-23701",
+        "DF3-w03d03-23735"
+      ],
+      "frame_sha256": [
+        "4280e5050ae36c599a3742628d40b3903e07140b3ded669351bdecdab1c5f270",
+        "3872ce27e3770d38bab8562a8da6eebb99fb8da11ab4c50c6795d62d3051cd5e",
+        "e8bd50c0d4d64b3297c65d10a2da2d13f7d90ae3f7e7648b79abd2f3b16f33ff",
+        "45f643f4e31b834d709817965407737c2c9cd284ef7d56936bff84036593b43e",
+        "5635463faf134fe7200d3beee22f9e98d06c28cff13b7b054d66e78366d4fbc3"
+      ],
+      "status_effect": "partial_context_only",
+      "evidence": "Stage scene with several people in dark jerseys before a large LED screen. The top-left overlay shows 0-0, a left shield logo, VS, BEST OF 1, and an AE logo on the right. No game HUD or clock is visible. Close-up of a seated player wearing a headset in a gaming chair. The same top-left 0-0 overlay w"
+    },
+    {
+      "match_detail_id": "1060",
+      "source_id": "src-s18-w04d01",
+      "team_a": "NAVI",
+      "team_b": "DEWA",
+      "start_seconds": 1638,
+      "offset_status": "boundary_verified",
+      "visual_status": "context-only",
+      "deepseek_disposition": "context-only",
+      "candidate_start_seconds": 1638.0,
+      "frame_group": "G-P3-1060-FEED",
+      "frame_ids": [
+        "DF3-w04d01-1901",
+        "DF3-w04d01-2301",
+        "DF3-w04d01-2501",
+        "DF3-w04d01-2601"
+      ],
+      "frame_sha256": [
+        "66b75f515c7868e80024022b0f0293487113a3e86b6536be198d6f982b3e1913",
+        "08978194382fc665c88bb653d322ddd6acf963bfd8817e0c2acbcf2db138d415",
+        "31dfdf8108a4d90ef736df3dde93c015da3814729cfad07043c0d738c1e7c21e",
+        "3e4580696857da308f96fd515e14ed6bea009f4d47a5884f50c3737d7aa01ab3"
+      ],
+      "status_effect": "partial_context_only",
+      "evidence": "Pre-game stage/player-cam frame. The top-left overlay shows a 0-0 series score, GAME 1 and BEST OF 3 between team logos; the two zeros are scores, and no game clock or countdown is visible. Draft-room screen headed DRAFT IDENTITY with DRAFT DNA comparison panels, two five-player lineups and coaches;"
+    },
+    {
+      "match_detail_id": "1062",
+      "source_id": "src-s18-w04d02",
+      "team_a": "DEWA",
+      "team_b": "ONIC",
+      "start_seconds": 2460,
+      "offset_status": "boundary_verified",
+      "visual_status": "context-only",
+      "deepseek_disposition": "context-only",
+      "candidate_start_seconds": 2460,
+      "frame_group": "G-1062-2460",
+      "frame_ids": [
+        "DF-1062-2456",
+        "DF-1062-2460",
+        "DF-1062-2464"
+      ],
+      "frame_sha256": [
+        "d2c306c5a6f1ac89df1b187d16796553b237cf45e58f91faf8b1d57a1e218117",
+        "184bc13e99df3b7ee506b0ebe9ede9533d3f0a34b4fb4cdadeef702b02dea645",
+        "ad4e328ba66733b2ffd54eff1893843794faf78c89103fc2b3e0411eb682f02a"
+      ],
+      "status_effect": "partial_context_only",
+      "evidence": "Circular MPL ID Season 18 East logo animation on a pale background; no map, team names, match label, clock, scoreboard, or draft panel. Isometric overhead map view with repeated Infinix sponsor banners; no HUD, team names, match label, clock, scoreboard, or draft panel. In-game top-down HUD near gam"
+    },
+    {
+      "match_detail_id": "1065",
+      "source_id": "src-s18-w04d03",
+      "team_a": "RRQ",
+      "team_b": "NAVI",
+      "start_seconds": 1938,
+      "offset_status": "boundary_verified",
+      "visual_status": "context-only",
+      "deepseek_disposition": "context-only",
+      "candidate_start_seconds": 1938.0,
+      "frame_group": "G-P3-1065-FEED",
+      "frame_ids": [
+        "DF3-w04d03-2002",
+        "DF3-w04d03-2101",
+        "DF3-w04d03-2202",
+        "DF3-w04d03-2301",
+        "DF3-w04d03-2451"
+      ],
+      "frame_sha256": [
+        "481836abbede949a6cf0dd9f468ab12bac1bad6bf628dc87a10a7cbff703221e",
+        "641ec27ddade11d0fc68d45743977244952b8f78b6ec0bf8b6446913fca71c2c",
+        "d57f2fae9b1bcf113e8d8bebbc343ea7bcdc37a006df4d491223125d555696a3",
+        "82896ebfa311863ed66860829b841f856b8cc1fbd4960553c0b21645da28a69d",
+        "280378623dd336852b62a5dba821a191555556aa07277949a2a112025533d209"
+      ],
+      "status_effect": "partial_context_only",
+      "evidence": "Player-cam shot with a team lower third; RRO and NAVI appear with logos, but no game clock or 00:00 is shown. Player cam with a FANDOM WAR poll showing 309-151 and a MATCH 3 - GAME 1 lower third; no game clock or 00:00 appears. Audience shot behind a DRAFT IDENTITY / DRAFT DNA overlay; team sides ap"
+    },
+    {
+      "match_detail_id": "1067",
+      "source_id": "src-s18-w04d03",
+      "team_a": "BTR",
+      "team_b": "AE",
+      "start_seconds": 22586,
+      "offset_status": "detected_pending_review",
+      "visual_status": "context-only",
+      "deepseek_disposition": "context-only",
+      "candidate_start_seconds": 22586,
+      "frame_group": "G-P2-1067-22586",
+      "frame_ids": [
+        "DF2-w04d03-22582",
+        "DF2-w04d03-22588",
+        "DF2-w04d03-22592"
+      ],
+      "frame_sha256": [
+        "245869f10a50751f727c7757a9cc16afccada5c2e534b9a4f4243336339ce18b",
+        "95f59a252d5c773a2e9520ad67d0f1fc7f029e7782f610232e99299ec1a6425a",
+        "33c71dd352b9bb3730771c978db98a1b8665833a0dd9afc4fc8e8f7bb3fa33fb"
+      ],
+      "status_effect": "partial_context_only",
+      "evidence": "Player-camera interview-style shot of a man speaking at a microphone. The lower third labels BTR vs AE, and the right-side score bug shows 0 VS 0. YouTube controls show a VOD timer of 6:16:22 / 8:05:25. No draft, gameplay, game clock, or series number is visible. Full-screen promo graphic headed TWO"
+    },
+    {
+      "match_detail_id": "1069",
+      "source_id": "src-s18-w05d01",
+      "team_a": "GEEK",
+      "team_b": "ONIC",
+      "start_seconds": 1745,
+      "offset_status": "boundary_verified",
+      "visual_status": "context-only",
+      "deepseek_disposition": "context-only",
+      "candidate_start_seconds": 1745.0,
+      "frame_group": "G-P3-1069-FEED",
+      "frame_ids": [
+        "DF3-w05d01-2102",
+        "DF3-w05d01-2701",
+        "DF3-w05d01-3001",
+        "DF3-w05d01-3201"
+      ],
+      "frame_sha256": [
+        "55bc1b39f941ad45db997b68b0220a91ddca121b153c3b94ff03408802f34d31",
+        "e9b4ca5a40b589f6f9b290515510b9afd12922e4a9165da37d853cd596534b5a",
+        "31a916aa15b92f844979ba4ff33679c4077f99b61d19d2e1ec34b7148028b14e",
+        "f63db452e6412f19305778d3d1924ef92706613ab74b7884836fdb18fc873eae"
+      ],
+      "status_effect": "partial_context_only",
+      "evidence": "Close-up of a player holding a phone, with an Infinix/IndiHome sponsor card; no match label, team pairing, scoreboard, or clock is visible. Player close-up beneath a scoreboard showing GEEK 0-0 ONIC, labeled GAME 1 and BEST OF 3; no game clock or countdown is visible. Audience wide shot with a draft"
+    },
+    {
+      "match_detail_id": "1071",
+      "source_id": "src-s18-w05d02",
+      "team_a": "AE",
+      "team_b": "RRQ",
+      "start_seconds": 11653,
+      "offset_status": "boundary_verified",
+      "visual_status": "context-only",
+      "deepseek_disposition": "context-only",
+      "candidate_start_seconds": 11653.0,
+      "frame_group": "G-P3-1071-FEED",
+      "frame_ids": [
+        "DF3-w05d02-11801",
+        "DF3-w05d02-12101",
+        "DF3-w05d02-12301",
+        "DF3-w05d02-12501"
+      ],
+      "frame_sha256": [
+        "9b262709d79ffcbab8455ac80aa588577577dac82646b84c697b7e553422be32",
+        "206c292462b669939faf2377128ea83135525bc51e253de2dd0fe3781f506b8d",
+        "72ba87798681bcca2f1e9f5e64846730da408c124b8bf961739d5eef55ca9afb",
+        "91c94161b528a94b61e5e9ba81a4259c289bf3c3dc6d8b39de29636069e17f42"
+      ],
+      "status_effect": "partial_context_only",
+      "evidence": "Close-up of a seated player during the draft phase; the score bug shows 0-0 with a 15:29 draft-pick countdown and no game clock. Wide stage shot of three desk talents; the score bug remains 0-0 with a 10:29 draft-pick countdown and no game clock. Stage desk shot with a lower-third banner and player-"
+    },
+    {
+      "match_detail_id": "1074",
+      "source_id": "src-s18-w05d03",
+      "team_a": "ONIC",
+      "team_b": "AE",
+      "start_seconds": 12328,
+      "offset_status": "boundary_verified",
+      "visual_status": "context-only",
+      "deepseek_disposition": "context-only",
+      "candidate_start_seconds": 12328.0,
+      "frame_group": "G-P3-1074-FEED",
+      "frame_ids": [
+        "DF3-w05d03-13001",
+        "DF3-w05d03-13151",
+        "DF3-w05d03-13301",
+        "DF3-w05d03-13451",
+        "DF3-w05d03-13551"
+      ],
+      "frame_sha256": [
+        "79da13d1fdd1771aad6fe11df40eff941088cb3aead8b9a5d3be15c25162496c",
+        "e418b3c388d8940db2fe572bce1a8794083ce429a773d4d7813e41069ecf1288",
+        "9218af9a7f0773a017979d263eeb159ea8f8872a70a82f8c7bcfedb34f4caffd",
+        "a1b17e1d31ac53a0d7362ffad7fda10c2bdd1ceedbd31d98b35caca532678d98",
+        "fa2eea7490273b67f3d4aa97bf149a8b20c018aed5f1a2bb28d14a5c52f8fafb"
+      ],
+      "status_effect": "partial_context_only",
+      "evidence": "Stage/player-walkout shot with two seated players wearing headsets and one standing player in a red 'Poco Good Day' jersey. No match HUD, scoreboard, match label, or clock is visible. Draft-analysis video frame showing a Carmilla pick explanation and an ONIC-vs-AE draft board with player cams and Yo"
+    },
+    {
+      "match_detail_id": "1078",
+      "source_id": "src-s18-w06d02",
+      "team_a": "GEEK",
+      "team_b": "NAVI",
+      "start_seconds": 1461,
+      "offset_status": "detected_pending_review",
+      "visual_status": "context-only",
+      "deepseek_disposition": "context-only",
+      "candidate_start_seconds": 1461,
+      "frame_group": "G-P2-1078-1461",
+      "frame_ids": [
+        "DF2-w06d02-1458",
+        "DF2-w06d02-1463",
+        "DF2-w06d02-1467"
+      ],
+      "frame_sha256": [
+        "fc2beaf6c7f0fb90ce90c1f64056d8e0cc0f4278fc477aeaba63f7e93d7439c1",
+        "8093efc1edc14400d12c5f2f0f048384ab0baa0404ae4ee75333a56dd97faa2e",
+        "dd2dd668c46bac347c016737ef27b7d8dc1dec875351fbe7af48aa6c8df3502d"
+      ],
+      "status_effect": "partial_context_only",
+      "evidence": "Pre-match interview set: seated NAVI-jersey players, a standing player holding a mic, and a female host with a mic. The white scoreboard reads MATCH 3 - GAME 1, 0 VS 0, BEST OF 3, 14:58; no draft or game clock is shown. Same pre-match interview segment; the host gestures with papers while the standi"
+    },
+    {
+      "match_detail_id": "1080",
+      "source_id": "src-s18-w06d02",
+      "team_a": "BTR",
+      "team_b": "TLID",
+      "start_seconds": 23717,
+      "offset_status": "boundary_verified",
+      "visual_status": "context-only",
+      "deepseek_disposition": "context-only",
+      "candidate_start_seconds": 23717.0,
+      "frame_group": "G-P3-1080-FEED",
+      "frame_ids": [
+        "DF3-w06d02-23901",
+        "DF3-w06d02-24101",
+        "DF3-w06d02-24201",
+        "DF3-w06d02-24401"
+      ],
+      "frame_sha256": [
+        "a584710f883f0d9ff9ee6c1334fec6f06a69e5a143b88b612ddef73e9d634670",
+        "bdea424672d21dd740b5dc0b8396c6c7b2abaa7fc71881067da171f34e0ff750",
+        "c6c7a7a240f4b9762c63b18516adf83cea56c0779823639b1437b1014ea4c485",
+        "5752e10172faddf0937fa41ed12eca5708566bf567469c970913e31a6b9241e9"
+      ],
+      "status_effect": "partial_context_only",
+      "evidence": "Pre-game/draft segment with split player cams for NNAEL and KEVIN. Top HUD shows VITALITY against an illegible opponent, 0-0, M5 - GAME 1, VS BEST OF 3, and a draft-pick countdown of 03:19. No 00:00 game clock. Draft-phase frame with a player cam and pick panel. TLID and BTR are paired in the lower "
+    },
+    {
+      "match_detail_id": "1081",
+      "source_id": "src-s18-w06d03",
+      "team_a": "AE",
+      "team_b": "DEWA",
+      "start_seconds": 1800,
+      "offset_status": "boundary_verified",
+      "visual_status": "context-only",
+      "deepseek_disposition": "context-only",
+      "candidate_start_seconds": 1800.0,
+      "frame_group": "G-P3-1081-FEED",
+      "frame_ids": [
+        "DF3-w06d03-2301",
+        "DF3-w06d03-2702",
+        "DF3-w06d03-2901",
+        "DF3-w06d03-3052"
+      ],
+      "frame_sha256": [
+        "0173e9cbd613625b3c030982fc0cd66c5c8bff94ae8f5260eaa7bfa9c5e36aee",
+        "2123389d99dd50bbc538af63cf238b5fc8f2db7f3c8c2eaedb9f55280de9bf56",
+        "e5ca1a33dfd40c41d8a399918d6db6d48518baa80d1a30456af121b9557417d1",
+        "537b25fa7bb359594231783e7999f3dce0be98ed99fe8d3b058e38d26ce0f3e2"
+      ],
+      "status_effect": "partial_context_only",
+      "evidence": "Stage walk-in with players in front of a large screen and audience. The top overlay shows ALTER EGO vs DEWA UNITED at 0-0 for M46 GAME 1, BEST OF 3, with a 02:22 DRAFT PICK IN countdown; no game clock or 00:00 is visible. Draft-analysis screen with a player cam. The bottom draft strip shows DEWA and"
+    },
+    {
+      "match_detail_id": "1083",
+      "source_id": "src-s18-w06d03",
+      "team_a": "EVOS",
+      "team_b": "TLID",
+      "start_seconds": 24416.2,
+      "offset_status": "detected_pending_review",
+      "visual_status": "context-only",
+      "deepseek_disposition": "context-only",
+      "candidate_start_seconds": 24416.2,
+      "frame_group": "G-P3-1083-24416",
+      "frame_ids": [
+        "DF3-w06d03-24412",
+        "DF3-w06d03-24418",
+        "DF3-w06d03-24423",
+        "DF3-w06d03-24447"
+      ],
+      "frame_sha256": [
+        "c62336058431977c1e3e83d005cc79fa3f075e67e73458aecb44b47ebc9f6ae3",
+        "95ae72ac5e143e8bf9e084dd5be6fbf6ef983bc818055165f6ab80136a0d49ea",
+        "b110c1f171899586caa3f12a3c0d9e97866c115437ef24c1cff2fb0ab5ae207c",
+        "9ea8356b43c33d9841acba99964fdcc35e792557c15292c7e7cc1f4ed6de8ab7"
+      ],
+      "status_effect": "partial_context_only",
+      "evidence": "Circular MPL ID Season 18 league/transition graphic with mirrored background text; no teams, match number, scoreboard, or game clock. In-game MLBB frame with a 00:15 timer; EVOS player labels appear on the blue side, while the opposing names are visible without a legible TLID label. In-game MLBB fra"
+    },
+    {
+      "match_detail_id": "1084",
+      "source_id": "src-s18-w07d01",
+      "team_a": "GEEK",
+      "team_b": "BTR",
+      "start_seconds": 2043,
+      "offset_status": "boundary_verified",
+      "visual_status": "context-only",
+      "deepseek_disposition": "context-only",
+      "candidate_start_seconds": 2043,
+      "frame_group": "G-W07D01-2040",
+      "frame_ids": [
+        "DF-W07D1-2038",
+        "DF-W07D1-2041",
+        "DF-W07D1-2043"
+      ],
+      "frame_sha256": [
+        "6e25e08757bacdf95a5873c2fde402ee0fcdb2aa6f27a2cadd445c92d60d9c1e",
+        "f4547a4586b8ea1c86c5d2fbd5c03e49e75af6856f020b10aa86a4a8cef0e7c2",
+        "30b1fb785c1ec01a9d2571268be07d26b6418ee1f831a32a3c4020b588a3e07c"
+      ],
+      "status_effect": "partial_context_only",
+      "evidence": "Broadcast overlay shows a match scoreboard labeled M49 GAME 1, BEST OF 3, with 0 vs 0 and team logos on either side of 'VS'; the clock reads 15:56 in a blue box labeled 'DRAFT PICK IN'. The visible team logos are a toothed/animal-like emblem (left) and a red dragon-like emblem (right); the left name"
+    },
+    {
+      "match_detail_id": "1085",
+      "source_id": "src-s18-w07d01",
+      "team_a": "DEWA",
+      "team_b": "TLID",
+      "start_seconds": 12883.0,
+      "offset_status": "detected_pending_review",
+      "visual_status": "context-only",
+      "deepseek_disposition": "context-only",
+      "candidate_start_seconds": 12883.0,
+      "frame_group": "G-P3-1085-12883",
+      "frame_ids": [
+        "DF3-w07d01-12879",
+        "DF3-w07d01-12884",
+        "DF3-w07d01-12889",
+        "DF3-w07d01-12914",
+        "DF3-w07d01-12945"
+      ],
+      "frame_sha256": [
+        "79fb386bb4e24cb23beac796006d4e426083e06902e14f0a1d0850374837969e",
+        "89f36c3bc4e382f6e75ba9d29ac607b0d1d50f513d24caca084238afbc218e2c",
+        "f5909e09d3735f230e8bc591ab90fba5bb1a3736387eed1fe6d34ac3ff270a82",
+        "daca78578351c9d2487f6067fa9c5e6b690470a1caa7f7b3175fb1a8d0f4eb8f",
+        "30a630abf62940cbdbbb2647496dd0a92cbd069056898b160ba2abddb715c2fa"
+      ],
+      "status_effect": "partial_context_only",
+      "evidence": "Backstage/player-room wide shot: a host in a white top holds a mic at left; seated players in batik shirts behind. Wall art shows the MPL ID S18 logo and a large horse-head crest. No scoreboard overlay, no clock, no DEWA marking. Same room, host centered holding mic. Top-left scoreboard overlay show"
+    },
+    {
+      "match_detail_id": "1087",
+      "source_id": "src-s18-w07d02",
+      "team_a": "BTR",
+      "team_b": "RRQ",
+      "start_seconds": 13276.0,
+      "offset_status": "detected_pending_review",
+      "visual_status": "context-only",
+      "deepseek_disposition": "context-only",
+      "candidate_start_seconds": 13276.0,
+      "frame_group": "G-P3-1087-13276",
+      "frame_ids": [
+        "DF3-w07d02-13273",
+        "DF3-w07d02-13278",
+        "DF3-w07d02-13283",
+        "DF3-w07d02-13308"
+      ],
+      "frame_sha256": [
+        "35465e574082147a1290ef97e15cd18086ea876470ab2f1a12ca091b5a8e7fe5",
+        "108e6239c8fd532b89d9618747ac1e21002489484d1718d2ae11bc512bcc708b",
+        "e6aa13261ea53b6939a5c55582d0f6dd135b6398742ccdb39388c78343e0af94",
+        "07ba166097ee73a5735c30f062e256d22f0a9d5e016671f5cea40f3e74fe2066"
+      ],
+      "status_effect": "partial_context_only",
+      "evidence": "Broadcast desk/analyst stage with three commentators seated; no team-vs-team scoreboard or game clock; large screen behind them shows MPL ID S18 branding and a hero artwork. Abstract red/blue/yellow gradient transition or wipe background with three small blue squares on the left; no legible text, lo"
+    },
+    {
+      "match_detail_id": "1088",
+      "source_id": "src-s18-w07d02",
+      "team_a": "GEEK",
+      "team_b": "DEWA",
+      "start_seconds": 23569.0,
+      "offset_status": "detected_pending_review",
+      "visual_status": "context-only",
+      "deepseek_disposition": "context-only",
+      "candidate_start_seconds": 23569.0,
+      "frame_group": "G-P3-1088-23569",
+      "frame_ids": [
+        "DF3-w07d02-23565",
+        "DF3-w07d02-23570",
+        "DF3-w07d02-23575",
+        "DF3-w07d02-23600"
+      ],
+      "frame_sha256": [
+        "20d375acdcc0913d1c38416ac90294a409b352399ce9324b2684b96a7839e7d6",
+        "a98dd2c05823ace9f3ec948dfc2edfc94a4d1a9d460c2d475051c0552162754b",
+        "7d167cc2f7be49412cc253ff004fb25d9db1be456553218df687d8da262d9ec8",
+        "6d7b212857c6596e8199a26d56b29b7b56cff40f09ff4ed82729eaa8467c9ea0"
+      ],
+      "status_effect": "partial_context_only",
+      "evidence": "Studio analyst desk with three commentators. The top scoreboard shows GEEK 0-0 DEWA United. No match label or game clock/countdown is visible; the two zeros are scores, not 00:00. GEEK vs DEWA is visible, but not with a 00:00 clock. Analyst desk with GEEK 0-0 DEWA United. Overlay reads MSS - GAME 1,"
+    },
+    {
+      "match_detail_id": "1091",
+      "source_id": "src-s18-w07d03",
+      "team_a": "ONIC",
+      "team_b": "NAVI",
+      "start_seconds": 22942,
+      "offset_status": "boundary_verified",
+      "visual_status": "context-only",
+      "deepseek_disposition": "context-only",
+      "candidate_start_seconds": 22942.0,
+      "frame_group": "G-P3-1091-FEED",
+      "frame_ids": [
+        "DF3-w07d03-23501",
+        "DF3-w07d03-23801",
+        "DF3-w07d03-24101",
+        "DF3-w07d03-24301",
+        "DF3-w07d03-24501"
+      ],
+      "frame_sha256": [
+        "32d33ec2ad198e8c860079839cbb7d90b1c23980b87f7c75183a3abf028d421f",
+        "12ec0af76e08e87a5bdb0dcb3b49dc87f32c38ef398fa05a8649a288f389d870",
+        "cd84094c933f1ad369f5eba1e1d7ea3460fbe0ac5b84a7c1e8ef89e0c8ffeb38",
+        "41c692b0876d4ff6f873b868dc024ba9874840ecc2f974dc37e3889dfc9d6f70",
+        "7512e4d0c3fe1e89e16ab9f21ad0daedc991a0af4f7d8974513d6d0de0a02692"
+      ],
+      "status_effect": "partial_context_only",
+      "evidence": "Pre-match studio segment with two presenters; overlay shows 0-0, M56 - GAME 1, BEST OF 3, and a DRAFT PICK IN 12:26 countdown; ONIC and NAVI appear in the lower ticker; no 00:00 game clock. Three-person analyst desk on stage; overlay repeats 0-0, M56 - GAME 1, BEST OF 3, and DRAFT PICK IN 07:26; ONI"
+    },
+    {
+      "match_detail_id": "1068",
+      "source_id": "src-s18-w08d01",
+      "team_a": "EVOS",
+      "team_b": "DEWA",
+      "start_seconds": 2969,
+      "offset_status": "boundary_verified",
+      "visual_status": "context-only",
+      "deepseek_disposition": "context-only",
+      "candidate_start_seconds": 2969.0,
+      "frame_group": "G-P3-1068-FEED",
+      "frame_ids": [
+        "DF3-w08d01-3002",
+        "DF3-w08d01-3302",
+        "DF3-w08d01-3452",
+        "DF3-w08d01-3602"
+      ],
+      "frame_sha256": [
+        "6dddf3dbec9eac7eab59c4c7971741db206679479f014d0b0009beb5b25a4b57",
+        "97504bc392f421c5c496c38c1d9b1a12e53ac5a320413782b8ee95f45bcc3f67",
+        "c8d46a46c2b72f75990483b9b1d645e9980ce7a41ddfc0d77c9da317496aed93",
+        "44d0d36ae2c67d991313bab78e3d68fb3bbc0220d2edb712bce4982adc546b4a"
+      ],
+      "status_effect": "partial_context_only",
+      "evidence": "Top-down live game feed with EVOS on the left and DEWA on the right; the game clock reads 00:58. Heroes are active in the river/jungle area near the large pit. No 00:00 clock or draft/lobby view is present. Live game feed at 05:58; EVOS and DEWA are on the HUD, heroes are fighting in a river/jungle "
+    },
+    {
+      "match_detail_id": "1094",
+      "source_id": "src-s18-w08d02",
+      "team_a": "EVOS",
+      "team_b": "ONIC",
+      "start_seconds": 1585,
+      "offset_status": "detected_pending_review",
+      "visual_status": "context-only",
+      "deepseek_disposition": "context-only",
+      "candidate_start_seconds": 1585,
+      "frame_group": "G-1094-1585",
+      "frame_ids": [
+        "DF-1094-1581",
+        "DF-1094-1585",
+        "DF-1094-1589"
+      ],
+      "frame_sha256": [
+        "52725cdddccd5f9ab44ffd0b2a4fdfa66aa706dc6c14544c06fce1891e70df2a",
+        "89f62165f439e256ee2fc3661db4de925763289b746bdc896af6545be302902d",
+        "684621603087188b9cff094ddf347f825a56bb60416788b48fefc390f8c89156"
+      ],
+      "status_effect": "partial_context_only",
+      "evidence": "One-man interview shot in front of a sponsor wall. The top scoreboard shows M59 - GAME 1, 0 VS 0, BEST OF 3, with two unlabeled team logos. No draft countdown or readable team names are visible. Two-person interview at the same sponsor wall. The scoreboard shows M59 - GAME 1, 0 VS 0, BEST OF 3, and "
+    },
+    {
+      "match_detail_id": "1098",
+      "source_id": "src-s18-w08d03",
+      "team_a": "RRQ",
+      "team_b": "ONIC",
+      "start_seconds": 17865,
+      "offset_status": "boundary_verified",
+      "visual_status": "context-only",
+      "deepseek_disposition": "context-only",
+      "candidate_start_seconds": 17865.0,
+      "frame_group": "G-P3-1098-FEED",
+      "frame_ids": [
+        "DF3-w08d03-18101",
+        "DF3-w08d03-18701",
+        "DF3-w08d03-18901",
+        "DF3-w08d03-19101"
+      ],
+      "frame_sha256": [
+        "efd8db469ef49e41fc47e7341cd98698da35152dfcaa03b645804f82001a3e32",
+        "4cf300fa0c3709f7f6d2400efc8386370d7a37cd9e4b53652b4e5e364db9892d",
+        "13b0c8986661b5a385933e223e8a8a84873ae9cb587f3de69ca2029399d17886",
+        "0048a8d5e35e98d9aff1649521489c9e44fe1687911be326184bc1d5a716f2c5"
+      ],
+      "status_effect": "partial_context_only",
+      "evidence": "Stage host with a handheld mic; the broadcast scoreboard shows RRQ 1-1 ONIC, M6 Game 3, Best of 3, and a 04:28 draft-pick countdown. No in-game HUD, no game clock, and no 00:00. Close-up of a phone held over a player's lap showing the hero-selection/draft screen; lower-third DRAFT IDENTITY/DRAFT DNA"
+    },
+    {
+      "match_detail_id": "1100",
+      "source_id": "src-s18-w09d01",
+      "team_a": "NAVI",
+      "team_b": "RRQ",
+      "start_seconds": 2650,
+      "offset_status": "boundary_verified",
+      "visual_status": "context-only",
+      "deepseek_disposition": "context-only",
+      "candidate_start_seconds": 2650.0,
+      "frame_group": "G-P3-1100-FEED",
+      "frame_ids": [
+        "DF3-w09d01-2902",
+        "DF3-w09d01-3001",
+        "DF3-w09d01-3102",
+        "DF3-w09d01-3202",
+        "DF3-w09d01-3402"
+      ],
+      "frame_sha256": [
+        "6e7a3e089ba04e43e04557ecd66cd71a0c0a250304223e2ea19532efa27e580a",
+        "7c60882942cbd88a11937046b8bac6fb6ea341d4952e9b0b2974e30102cca34e",
+        "5f4ba8bd4b660e7725c7e0dad3521c33ea4c0b01910e84567d3f7e8db723d8ba",
+        "cf651b97c219e67fb0609707f377bda2ad199018814b869dc10cfda7267e8a76",
+        "d6970049a2e85d109c718b0252bba3de18e1aa0889690f41654aaeb70ac90d2c"
+      ],
+      "status_effect": "partial_context_only",
+      "evidence": "Patch-notes graphic with hero cards for Aulus, Hirara, Fudora, and Rafaela; no gameplay HUD or game clock. A bottom-right strip shows 0 VS 0 beside a gold league-style badge and an orange RRQ logo. NAVI appears only in the footer award text. Player close-up in a headset. Top-left scorebug shows 0 VS"
+    },
+    {
+      "match_detail_id": "1101",
+      "source_id": "src-s18-w09d01",
+      "team_a": "GEEK",
+      "team_b": "AE",
+      "start_seconds": 12798.0,
+      "offset_status": "detected_pending_review",
+      "visual_status": "context-only",
+      "deepseek_disposition": "context-only",
+      "candidate_start_seconds": 12798.0,
+      "frame_group": "G-P3-1101-12798",
+      "frame_ids": [
+        "DF3-w09d01-12794",
+        "DF3-w09d01-12799",
+        "DF3-w09d01-12804",
+        "DF3-w09d01-12829",
+        "DF3-w09d01-12859"
+      ],
+      "frame_sha256": [
+        "0be6c6d9f6a0c6a0b3922ba026b67be2599626c2dadfb49530925299a9a05b5e",
+        "c9dc09fc1128a8eee7d2fe25c495cc01c6ea59485f65b44bda3d9d032aa26af2",
+        "b1e6c63bab19bc57fbbedb57b2b918c215142b996e810e8c5d460dfbed10ff0f",
+        "aa8f3ac9c550e3e1c52d45a1c17aaf1d01c23b5b39b7a695a20e5f28e1ded8a0",
+        "0dd2f4777c0955b4b1f0434657869cb95f1ee301cfa82e8f4e380733820ec992"
+      ],
+      "status_effect": "partial_context_only",
+      "evidence": "Webcam interview in a room; MPL lower-third shows GEEK and AE at 0 VS 0 with a small studio-panel inset. No game clock or 00:00 is visible. Same webcam interview and MPL overlay; GEEK and AE remain at 0 VS 0, with a studio-panel inset. No game clock or 00:00 is visible. Webcam interview continues; M"
+    },
+    {
+      "match_detail_id": "1102",
+      "source_id": "src-s18-w09d02",
+      "team_a": "ONIC",
+      "team_b": "DEWA",
+      "start_seconds": 2354,
+      "offset_status": "detected_pending_review",
+      "visual_status": "context-only",
+      "deepseek_disposition": "context-only",
+      "candidate_start_seconds": 2354,
+      "frame_group": "G-P2-1102-2354",
+      "frame_ids": [
+        "DF2-w09d02-2350",
+        "DF2-w09d02-2355",
+        "DF2-w09d02-2360"
+      ],
+      "frame_sha256": [
+        "f8bdd5ebf80e6bf36d2f59ed1b6e24f2baadb660b814e6e9222895c49d89b77f",
+        "1dda6468a31ea432510f65cc78693e39f763bc4b005d42b4cf7aad96f7e20b3a",
+        "5a86627e366f879b4efdd13a46f1371dfa12df9a99768e5c6e19bf204787efc8"
+      ],
+      "status_effect": "partial_context_only",
+      "evidence": "Wide stage shot of three commentators seated behind a white desk labeled GT50 Pro; the overhead scoreboard shows 0-0, VS, BEST OF 3 and a green draft countdown, while the desk monitor shows a Pesta Rank graphic. No players, draft screen, or in-game HUD is visible. Same desk setup and 0-0 BEST OF 3 o"
+    },
+    {
+      "match_detail_id": "1106",
+      "source_id": "src-s18-w09d03",
+      "team_a": "NAVI",
+      "team_b": "BTR",
+      "start_seconds": 13093,
+      "offset_status": "boundary_verified",
+      "visual_status": "context-only",
+      "deepseek_disposition": "context-only",
+      "candidate_start_seconds": 13093,
+      "frame_group": "G-1106-13093",
+      "frame_ids": [
+        "DF-1106-13089",
+        "DF-1106-13093",
+        "DF-1106-13097"
+      ],
+      "frame_sha256": [
+        "a4982bd7dfc4169757c4b28a1afdcf14aea4752e09ebe83ec1132c5038f3dc0b",
+        "5b0bdc189ef234f25a6e919750adbd35225bbe744998ef1b1c2895c543873428",
+        "7bc6ef8ab7f4e5b493edd7e7f6151c8d52fc42849e3e936dcb70192886018564"
+      ],
+      "status_effect": "partial_context_only",
+      "evidence": "Upper-left broadcast overlay reads M71 - GAME 1, with NAVI 0 vs 0 VITALITY and BEST OF 3; the countdown box reads DRAFT PICK IN 14:58. Two players in NAVI and TEAM VITALITY jerseys stand with a host holding a microphone. No gameplay is shown. Same broadcast overlay: M71 - GAME 1, NAVI 0 vs 0 VITALIT"
+    },
+    {
+      "match_detail_id": "1107",
+      "source_id": "src-s18-w09d03",
+      "team_a": "ONIC",
+      "team_b": "TLID",
+      "start_seconds": 23893,
+      "offset_status": "boundary_verified",
+      "visual_status": "context-only",
+      "deepseek_disposition": "context-only",
+      "candidate_start_seconds": 23893,
+      "frame_group": "G-1107-23893",
+      "frame_ids": [
+        "DF-1107-23889",
+        "DF-1107-23893",
+        "DF-1107-23897"
+      ],
+      "frame_sha256": [
+        "c86e13a9c951f1ba74563e486b22923a7e57d04b672b63e9dab17db706c2d8f4",
+        "5c63ecea3ab8e907f6e3fb83003987f19b8ff8b00b7e5d7e56d17a471c8209e1",
+        "e98507b14810e5048027b3299d93ea52028ffd4fae6f4c17f65139f7c7c33ec6"
+      ],
+      "status_effect": "partial_context_only",
+      "evidence": "Crowd shot with broadcast overlay in the upper-left corner. The overlay shows an unlabeled white logo on black at left, a score of 0, 'VS', a score of 0, 'BEST OF 3', 'M72 GAME 1', and a green 'DRAFT PICK IN 16:06' countdown panel. A 'ROAD TO SURABAYA' logo appears top-right. No team names are legib"
+    }
+  ],
+  "inconclusive": [
+    {
+      "match_detail_id": "1048",
+      "source_id": "src-s18-w02d02",
+      "team_a": "ONIC",
+      "team_b": "RRQ",
+      "start_seconds": 23266,
+      "offset_status": "detected_pending_review",
+      "visual_status": "inconclusive",
+      "deepseek_disposition": "inconclusive",
+      "candidate_start_seconds": 23266,
+      "frame_group": "G-P2-1048-23266",
+      "frame_ids": [
+        "DF2-w02d02-23262",
+        "DF2-w02d02-23268",
+        "DF2-w02d02-23273"
+      ],
+      "frame_sha256": [
+        "e0163b0ad314aa4edfa1b9bdc9c534ca027f678310ac757ef666c3f5ef950ca4",
+        "edebf9cbe7b5293ca0a166847a7bf129bb072675f3b56f4a4665ffc4e52d7c59",
+        "3064c2a0b4b4dda6b3c074f017fca9e27d6a4b28584ed561e739844e2bf93acb"
+      ],
+      "status_effect": "no_change",
+      "evidence": "Wide shot of a three-person analyst desk; the center analyst wears sunglasses and touches his face. The top-left HUD shows 0–0, 'M3 - GAME 1', 'VS', 'BEST OF 3', and 'DRAFT PICK IN 03:52'. Only two small crest logos appear; no team names are legible. The desk monitor shows a hand holding a phone. No"
+    }
+  ],
+  "no_candidate_waivers": [
+    {
+      "match_detail_id": "1043",
+      "source_id": "src-s18-w01d03",
+      "team_a": "AE",
+      "team_b": "ONIC",
+      "start_seconds": null,
+      "offset_status": "pending_validation",
+      "visual_status": "no_candidate_waiver",
+      "deepseek_disposition": "inconclusive",
+      "candidate_start_seconds": null,
+      "frame_group": null,
+      "frame_ids": [],
+      "frame_sha256": [],
+      "status_effect": null,
+      "evidence": "No team-paired series cue found in the timed captions; no screenshot target was added. The offset remains null and must not be cited with a timestamp."
+    },
+    {
+      "match_detail_id": "1058",
+      "source_id": "src-s18-w03d03",
+      "team_a": "GEEK",
+      "team_b": "RRQ",
+      "start_seconds": null,
+      "offset_status": "pending_validation",
+      "visual_status": "no_candidate_waiver",
+      "deepseek_disposition": "inconclusive",
+      "candidate_start_seconds": null,
+      "frame_group": null,
+      "frame_ids": [],
+      "frame_sha256": [],
+      "status_effect": null,
+      "evidence": "No team-paired series cue found in the timed captions; no screenshot target was added. The offset remains null and must not be cited with a timestamp."
+    },
+    {
+      "match_detail_id": "1061",
+      "source_id": "src-s18-w04d01",
+      "team_a": "TLID",
+      "team_b": "RRQ",
+      "start_seconds": null,
+      "offset_status": "pending_validation",
+      "visual_status": "no_candidate_waiver",
+      "deepseek_disposition": "inconclusive",
+      "candidate_start_seconds": null,
+      "frame_group": null,
+      "frame_ids": [],
+      "frame_sha256": [],
+      "status_effect": null,
+      "evidence": "No team-paired series cue found in the timed captions; no screenshot target was added. The offset remains null and must not be cited with a timestamp."
+    },
+    {
+      "match_detail_id": "1063",
+      "source_id": "src-s18-w04d02",
+      "team_a": "EVOS",
+      "team_b": "BTR",
+      "start_seconds": null,
+      "offset_status": "pending_validation",
+      "visual_status": "no_candidate_waiver",
+      "deepseek_disposition": "inconclusive",
+      "candidate_start_seconds": null,
+      "frame_group": null,
+      "frame_ids": [],
+      "frame_sha256": [],
+      "status_effect": null,
+      "evidence": "No team-paired series cue found in the timed captions; no screenshot target was added. The offset remains null and must not be cited with a timestamp."
+    },
+    {
+      "match_detail_id": "1064",
+      "source_id": "src-s18-w04d02",
+      "team_a": "AE",
+      "team_b": "GEEK",
+      "start_seconds": null,
+      "offset_status": "pending_validation",
+      "visual_status": "no_candidate_waiver",
+      "deepseek_disposition": "inconclusive",
+      "candidate_start_seconds": null,
+      "frame_group": null,
+      "frame_ids": [],
+      "frame_sha256": [],
+      "status_effect": null,
+      "evidence": "No team-paired series cue found in the timed captions; no screenshot target was added. The offset remains null and must not be cited with a timestamp."
+    },
+    {
+      "match_detail_id": "1066",
+      "source_id": "src-s18-w04d03",
+      "team_a": "ONIC",
+      "team_b": "EVOS",
+      "start_seconds": null,
+      "offset_status": "pending_validation",
+      "visual_status": "no_candidate_waiver",
+      "deepseek_disposition": "inconclusive",
+      "candidate_start_seconds": null,
+      "frame_group": null,
+      "frame_ids": [],
+      "frame_sha256": [],
+      "status_effect": null,
+      "evidence": "No team-paired series cue found in the timed captions; no screenshot target was added. The offset remains null and must not be cited with a timestamp."
+    },
+    {
+      "match_detail_id": "1092",
+      "source_id": "src-s18-w08d01",
+      "team_a": "AE",
+      "team_b": "BTR",
+      "start_seconds": null,
+      "offset_status": "pending_validation",
+      "visual_status": "no_candidate_waiver",
+      "deepseek_disposition": "inconclusive",
+      "candidate_start_seconds": null,
+      "frame_group": null,
+      "frame_ids": [],
+      "frame_sha256": [],
+      "status_effect": null,
+      "evidence": "No team-paired series cue found in the timed captions; no screenshot target was added. The offset remains null and must not be cited with a timestamp."
+    },
+    {
+      "match_detail_id": "1093",
+      "source_id": "src-s18-w08d01",
+      "team_a": "NAVI",
+      "team_b": "TLID",
+      "start_seconds": null,
+      "offset_status": "pending_validation",
+      "visual_status": "no_candidate_waiver",
+      "deepseek_disposition": "inconclusive",
+      "candidate_start_seconds": null,
+      "frame_group": null,
+      "frame_ids": [],
+      "frame_sha256": [],
+      "status_effect": null,
+      "evidence": "No team-paired series cue found in the timed captions; no screenshot target was added. The offset remains null and must not be cited with a timestamp."
+    },
+    {
+      "match_detail_id": "1099",
+      "source_id": "src-s18-w08d03",
+      "team_a": "DEWA",
+      "team_b": "BTR",
+      "start_seconds": null,
+      "offset_status": "pending_validation",
+      "visual_status": "no_candidate_waiver",
+      "deepseek_disposition": "inconclusive",
+      "candidate_start_seconds": null,
+      "frame_group": null,
+      "frame_ids": [],
+      "frame_sha256": [],
+      "status_effect": null,
+      "evidence": "No team-paired series cue found in the timed captions; no screenshot target was added. The offset remains null and must not be cited with a timestamp."
+    },
+    {
+      "match_detail_id": "1104",
+      "source_id": "src-s18-w09d02",
+      "team_a": "RRQ",
+      "team_b": "GEEK",
+      "start_seconds": null,
+      "offset_status": "pending_validation",
+      "visual_status": "no_candidate_waiver",
+      "deepseek_disposition": "inconclusive",
+      "candidate_start_seconds": null,
+      "frame_group": null,
+      "frame_ids": [],
+      "frame_sha256": [],
+      "status_effect": null,
+      "evidence": "No team-paired series cue found in the timed captions; no screenshot target was added. The offset remains null and must not be cited with a timestamp."
+    }
+  ],
+  "not_reviewed": [],
+  "series": [
+    {
+      "match_detail_id": "1036",
+      "source_id": "src-s18-w01d01",
+      "team_a": "EVOS",
+      "team_b": "RRQ",
+      "start_seconds": 1303,
+      "offset_status": "detected_pending_review",
+      "visual_status": "context-only",
+      "deepseek_disposition": "context-only",
+      "candidate_start_seconds": 1303,
+      "frame_group": "G-1036-1303",
+      "frame_ids": [
+        "DF-1036-1300",
+        "DF-1036-1304",
+        "DF-1036-1308"
+      ],
+      "frame_sha256": [
+        "f8ce25491bb9910810842d9c3596e6b78e062cb448509fbb85adecb8ad7efe8f",
+        "f9a3efc2f6b40561cdf334f78c5398baada8b6e272f840447c1c02d4a086c183",
+        "270681a61dbafe8bb17108328066f5e59b5d633da9e35c993348d6089f04d9b4"
+      ],
+      "status_effect": "partial_context_only",
+      "evidence": "Three analysts sit behind a branded desk; the rear screen shows abstract and animal-head artwork. The desk monitor is black with a single horizontal dash. No legible EVOS/RRQ names or logos, match label, clock, or draft panel are visible. Same three-person analyst desk and rear screen. The desk moni"
+    },
+    {
+      "match_detail_id": "1037",
+      "source_id": "src-s18-w01d01",
+      "team_a": "NAVI",
+      "team_b": "AE",
+      "start_seconds": 12675.0,
+      "offset_status": "detected_pending_review",
+      "visual_status": "context-only",
+      "deepseek_disposition": "context-only",
+      "candidate_start_seconds": 12675.0,
+      "frame_group": "G-P3-1037-12675",
+      "frame_ids": [
+        "DF3-w01d01-12672",
+        "DF3-w01d01-12677",
+        "DF3-w01d01-12682",
+        "DF3-w01d01-12707"
+      ],
+      "frame_sha256": [
+        "7f452a940201c91d5aec341037bfe1f87a277d32d90d7def20e0ce16d305d3ad",
+        "3532fb98d3b2faae17e854ea33e92a4a329ac293e146aa8985d9275497a3f74f",
+        "fa57c925d1c2f608fc26086604a657b110c6165bab46e247a2aad944729845f7",
+        "bd0c85dc2251a74686e3c4adcb0e2fd4ce7b4653119f749452b52f2155fb2c34"
+      ],
+      "status_effect": "partial_context_only",
+      "evidence": "Wide studio shot of a three-person analyst desk; scoreboard shows NAVI 0–AE 0, GAME 1, BEST OF 3, and a DRAFT PICK IN 08:39 countdown. The inset TV shows hands holding a phone. No 00:00 game clock is visible. Same analyst desk and NAVI 0–AE 0 / GAME 1 scoreboard; the DRAFT PICK IN timer reads 08:34."
+    },
+    {
+      "match_detail_id": "1038",
+      "source_id": "src-s18-w01d02",
+      "team_a": "TLID",
+      "team_b": "GEEK",
+      "start_seconds": 1655,
+      "offset_status": "boundary_verified",
+      "visual_status": "context-only",
+      "deepseek_disposition": "context-only",
+      "candidate_start_seconds": 1655.0,
+      "frame_group": "G-P3-1038-FEED",
+      "frame_ids": [
+        "DF3-w01d02-2402",
+        "DF3-w01d02-2602",
+        "DF3-w01d02-2701",
+        "DF3-w01d02-2719"
+      ],
+      "frame_sha256": [
+        "e956b64c4ebc333cab55b9f5c53c58ab24b65c2d53748b9160e9f9234e172630",
+        "42ea589fb28094d5a2ac137fc5e72764b3d991e94d3d2797f4f240788614d37d",
+        "d6ca350d70aaccf934345735ae1959d12d156b5f75a69172b7312c3bbf2eddb6",
+        "1dcbd708a692e800cfb66c91c094679ac0e2446137c12ecd37dfaaff0f5296ba"
+      ],
+      "status_effect": "partial_context_only",
+      "evidence": "Draft/analysis graphic over a player cam; headers read Erpang on the left and Honjaw on the right, with ten player cards; no scoreboard, match label, game clock, 00:00, or 1655s marker. Analysis comparison screen with five top and five bottom player cams; TL and GEEK logos flank zeroed stat bars; vi"
+    },
+    {
+      "match_detail_id": "1039",
+      "source_id": "src-s18-w01d02",
+      "team_a": "DEWA",
+      "team_b": "RRQ",
+      "start_seconds": 11946,
+      "offset_status": "boundary_verified",
+      "visual_status": "context-only",
+      "deepseek_disposition": "context-only",
+      "candidate_start_seconds": 11946.0,
+      "frame_group": "G-P3-1039-FEED",
+      "frame_ids": [
+        "DF3-w01d02-12301",
+        "DF3-w01d02-12501",
+        "DF3-w01d02-12602",
+        "DF3-w01d02-12644"
+      ],
+      "frame_sha256": [
+        "2b0e7bf20c99c1123eb8569d6b22e05cc3a33ecfa20295df0c7a87b27e3601fb",
+        "41f90f14481275c39d361ba487dd6307e4ccdf09e10f1242bd0a9476cf7502d8",
+        "c65a2833aab30124997358486f93546f5f776a9180f26a4b8f3b607b8e87eccf",
+        "d22bca7fc51afd84e80b8f3eb45830aea46cdf9d1ddc666754797bf7e1b1089b"
+      ],
+      "status_effect": "partial_context_only",
+      "evidence": "In-game observer feed for DEWA vs RRQ. Top-center game clock reads 04:38, not 00:00; scoreboard 2-0; kill feed banner 'HAS SLAIN'; team side panels show DEWA (left) and RRQ (right). No 00:00 appears anywhere in the frame, so DEWA/RRQ are not paired with a 00:00 game clock. Wide venue/stage shot with"
+    },
+    {
+      "match_detail_id": "1040",
+      "source_id": "src-s18-w01d02",
+      "team_a": "EVOS",
+      "team_b": "NAVI",
+      "start_seconds": 24067,
+      "offset_status": "boundary_verified",
+      "visual_status": "context-only",
+      "deepseek_disposition": "context-only",
+      "candidate_start_seconds": 24067.0,
+      "frame_group": "G-P3-1040-FEED",
+      "frame_ids": [
+        "DF3-w01d02-24082",
+        "DF3-w01d02-24121",
+        "DF3-w01d02-24202",
+        "DF3-w01d02-24215"
+      ],
+      "frame_sha256": [
+        "3ac943744a9098a4fd01e9d80636a562637dea64134e3327e333003347769575",
+        "c84d89ff68310107316cca2235d6696e22c56eaead82a2b9b1ca7786c7516c41",
+        "7f7e8e862080ab1471493e02b8f9bc2e9201c7b98093ce8c9418cc439ffca3e6",
+        "0b36cc7a65033cea657f1a9fd4833349298e09c2e354fe72af751df3d2546688"
+      ],
+      "status_effect": "partial_context_only",
+      "evidence": "In-game top-down gameplay feed with no broadcast HUD or clock; EVOS and NAVI player nameplates are visible. No team scoreboard, match label, or 00:00 is visible. Broadcast HUD at 01:01 with EVOS on the left and NAVI on the right; score counters read 0-0 and gold reads 2.9K vs 2.8K. A SEASON 10 heade"
+    },
+    {
+      "match_detail_id": "1041",
+      "source_id": "src-s18-w01d03",
+      "team_a": "TLID",
+      "team_b": "DEWA",
+      "start_seconds": 1198,
+      "offset_status": "boundary_verified",
+      "visual_status": "context-only",
+      "deepseek_disposition": "context-only",
+      "candidate_start_seconds": 1198.0,
+      "frame_group": "G-P3-1041-FEED",
+      "frame_ids": [
+        "DF3-w01d03-2101",
+        "DF3-w01d03-2251",
+        "DF3-w01d03-2301",
+        "DF3-w01d03-2329"
+      ],
+      "frame_sha256": [
+        "44aa235368183fd93403607cfe5861c96953e2c975eec7e7ac826bb09ba3fb6d",
+        "55fa87b3862fc2942095d17d670a1edf852e400e4a2616cd1dac9946e44753fb",
+        "b6562c4f6073239bb24839378ca22fc4ea7d5d792c265ca4eba61ddc5bbe2ce0",
+        "c0b729a1db597c02f3b010303b7521ebb776fccad3a2a62e01b2e079633884f1"
+      ],
+      "status_effect": "partial_context_only",
+      "evidence": "Draft/analysis frame with caster labels Honjaw and Coach Right, DRAFT IDENTITY and DRAFT DNA graphics, and player-cam panels; no game HUD, scoreboard, or clock is visible. In-game feed at 00:46 with TLID left and DEWA right; the top-right label reads Season 18 Match 5 - Game 1. An EMBLEM lower-third"
+    },
+    {
+      "match_detail_id": "1042",
+      "source_id": "src-s18-w01d03",
+      "team_a": "BTR",
+      "team_b": "GEEK",
+      "start_seconds": 10608,
+      "offset_status": "detected_pending_review",
+      "visual_status": "context-only",
+      "deepseek_disposition": "context-only",
+      "candidate_start_seconds": 10608,
+      "frame_group": "G-P2-1042-10608",
+      "frame_ids": [
+        "DF2-w01d03-10604",
+        "DF2-w01d03-10609",
+        "DF2-w01d03-10614"
+      ],
+      "frame_sha256": [
+        "0ecea64b77d6aea0327e117e425967696c23b98a4f704d8f8774df2a81e7cb0c",
+        "72ed85258110d0f452c1908ddeef22383af98d342e31608fa10ea0579b02022a",
+        "09201bc3e82c3ce85bab5fe5b5446ca8b76ed9faa60c8d2d47bd15370ec15505"
+      ],
+      "status_effect": "partial_context_only",
+      "evidence": "Broadcast overlay above a venue interview: host with microphone standing beside two players in red VITALITY jerseys, seated staff behind. Top-left scoreboard shows VITALITY vs GEEK at 0-0, with a draft-pick countdown of 10:31. Backdrop shows MPL S18 branding, VITALITY logo, and AQUA sponsor mark. Lo"
+    },
+    {
+      "match_detail_id": "1043",
+      "source_id": "src-s18-w01d03",
+      "team_a": "AE",
+      "team_b": "ONIC",
+      "start_seconds": null,
+      "offset_status": "pending_validation",
+      "visual_status": "no_candidate_waiver",
+      "deepseek_disposition": "inconclusive",
+      "candidate_start_seconds": null,
+      "frame_group": null,
+      "frame_ids": [],
+      "frame_sha256": [],
+      "status_effect": null,
+      "evidence": "No team-paired series cue found in the timed captions; no screenshot target was added. The offset remains null and must not be cited with a timestamp."
+    },
+    {
+      "match_detail_id": "1044",
+      "source_id": "src-s18-w02d01",
+      "team_a": "TLID",
+      "team_b": "NAVI",
+      "start_seconds": 300,
+      "offset_status": "pending_validation",
+      "visual_status": "rejected",
+      "deepseek_disposition": "rejected",
+      "candidate_start_seconds": 300,
+      "frame_group": "G-P2-1044-300",
+      "frame_ids": [
+        "DF2-w02d01-296",
+        "DF2-w02d01-301",
+        "DF2-w02d01-307"
+      ],
+      "frame_sha256": [
+        "756091697fc6cb8af3b4288b051b6f0826ebdcd0e0ca4ec777f0cf5948e5c493",
+        "2db25d2e99e485979e6ace3fc9975b8896290186dc9dc98ceddf29a244461311",
+        "335c06431028baf72a7c491182085d3f4cef18d8206ddea7095c7b574746d2e6"
+      ],
+      "status_effect": "candidate_rejected",
+      "evidence": "Broadcast rundown overlay: 'REGULAR SEASON / MINGGU 2 | HARI 1' with MPL ID S18 branding and a three-person caster panel. A small video window plays a promo clip of a retro television set with a person on screen and burned-in subtitles. A two-panel scoreboard sits at right: 'MATCH 9 | BO3' with two "
+    },
+    {
+      "match_detail_id": "1045",
+      "source_id": "src-s18-w02d01",
+      "team_a": "BTR",
+      "team_b": "DEWA",
+      "start_seconds": 12126,
+      "offset_status": "boundary_verified",
+      "visual_status": "context-only",
+      "deepseek_disposition": "context-only",
+      "candidate_start_seconds": 12126.0,
+      "frame_group": "G-P3-1045-FEED",
+      "frame_ids": [
+        "DF3-w02d01-12701",
+        "DF3-w02d01-12901",
+        "DF3-w02d01-13001",
+        "DF3-w02d01-13101"
+      ],
+      "frame_sha256": [
+        "ef52f1e4ee3c7faa31a49aa16e6ac07f0857f895887baa505303e57b17980bab",
+        "e12c901899431fd7b674e56c7d8da9b2b96088a3c23b4642ea94b1b5448c06df",
+        "edb95aff854c11e12c67fa13ddb6f6ff50d1642847e76417377185599cad0e01",
+        "98a0a471d8a927f85db1726b18d7e5adbc4427ea7f401116c2cd4fbf0d7cbdbc"
+      ],
+      "status_effect": "partial_context_only",
+      "evidence": "Broadcast close-up with a 0-0 Vitality vs Dewa scoreboard labelled MD1 - Game 1, Best of 3, plus a Top 5 Jungler GPM graphic; no game clock or countdown in frame. Stage/player-cam shot with draft board; the center lower third shows Dewa against BTR under Match 10 - Game 1, no numeric score or timer."
+    },
+    {
+      "match_detail_id": "1046",
+      "source_id": "src-s18-w02d02",
+      "team_a": "TLID",
+      "team_b": "EVOS",
+      "start_seconds": 300,
+      "offset_status": "pending_validation",
+      "visual_status": "rejected",
+      "deepseek_disposition": "rejected",
+      "candidate_start_seconds": 300,
+      "frame_group": "G-P2-1046-300",
+      "frame_ids": [
+        "DF2-w02d02-296",
+        "DF2-w02d02-301",
+        "DF2-w02d02-306"
+      ],
+      "frame_sha256": [
+        "8a34b1fb5dd92e1421740cf879b14c70230a0c54a504dca6a4e28e061b554cb3",
+        "ff5e9eeadecd7126f4688670d8e61832124f3cab9b35739640f2a819e8ae6bf7",
+        "fa30565772031ebaf95ac6dfe24111179032faa4c87e75c96b211c9b15a1c0f7"
+      ],
+      "status_effect": "candidate_rejected",
+      "evidence": "Pre-match countdown over a sponsor-branded feature clip. A person is shown on a retro television with a subtitle. The highlighted side-rail fixture is MATCH 11 | BO3 at 14:15 WIB with a 0 VS 0 score; the large countdown reads 09:27. No series number, draft screen, or in-game HUD is visible. Same pre"
+    },
+    {
+      "match_detail_id": "1047",
+      "source_id": "src-s18-w02d02",
+      "team_a": "NAVI",
+      "team_b": "GEEK",
+      "start_seconds": 11886,
+      "offset_status": "boundary_verified",
+      "visual_status": "context-only",
+      "deepseek_disposition": "context-only",
+      "candidate_start_seconds": 11886.0,
+      "frame_group": "G-P3-1047-FEED",
+      "frame_ids": [
+        "DF3-w02d02-12352",
+        "DF3-w02d02-12401",
+        "DF3-w02d02-12501",
+        "DF3-w02d02-12551"
+      ],
+      "frame_sha256": [
+        "17bcde733111f84142fcbc0ee2193a10ea762f0ad6bf1505f80f0752beea2a5c",
+        "16d334419e38087719674f01dac648a0c76b0d2a9a48a28105dac179a83b632a",
+        "fd874c5d55762848bfff71ce9c90a6e55fa0727461de11c4aee7fe4062af0696",
+        "9d5fa7137681b9c6b650d0fedcaf4b86933d6660369ce999235e87ddc4cc7311"
+      ],
+      "status_effect": "partial_context_only",
+      "evidence": "Player portrait against a pale logo backdrop; the player wears a NAVI jersey and a red vertical name banner is visible. No match HUD, scoreboard, or clock. Stage introduction showing five NAVI players beneath a hanging NAVI banner and a large screen. No match HUD, scoreboard, or clock is visible. Pl"
+    },
+    {
+      "match_detail_id": "1048",
+      "source_id": "src-s18-w02d02",
+      "team_a": "ONIC",
+      "team_b": "RRQ",
+      "start_seconds": 23266,
+      "offset_status": "detected_pending_review",
+      "visual_status": "inconclusive",
+      "deepseek_disposition": "inconclusive",
+      "candidate_start_seconds": 23266,
+      "frame_group": "G-P2-1048-23266",
+      "frame_ids": [
+        "DF2-w02d02-23262",
+        "DF2-w02d02-23268",
+        "DF2-w02d02-23273"
+      ],
+      "frame_sha256": [
+        "e0163b0ad314aa4edfa1b9bdc9c534ca027f678310ac757ef666c3f5ef950ca4",
+        "edebf9cbe7b5293ca0a166847a7bf129bb072675f3b56f4a4665ffc4e52d7c59",
+        "3064c2a0b4b4dda6b3c074f017fca9e27d6a4b28584ed561e739844e2bf93acb"
+      ],
+      "status_effect": "no_change",
+      "evidence": "Wide shot of a three-person analyst desk; the center analyst wears sunglasses and touches his face. The top-left HUD shows 0–0, 'M3 - GAME 1', 'VS', 'BEST OF 3', and 'DRAFT PICK IN 03:52'. Only two small crest logos appear; no team names are legible. The desk monitor shows a hand holding a phone. No"
+    },
+    {
+      "match_detail_id": "1049",
+      "source_id": "src-s18-w02d03",
+      "team_a": "DEWA",
+      "team_b": "AE",
+      "start_seconds": 300,
+      "offset_status": "pending_validation",
+      "visual_status": "rejected",
+      "deepseek_disposition": "rejected",
+      "candidate_start_seconds": 300,
+      "frame_group": "G-P2-1049-300",
+      "frame_ids": [
+        "DF2-w02d03-296",
+        "DF2-w02d03-302",
+        "DF2-w02d03-307"
+      ],
+      "frame_sha256": [
+        "8ffe3ac7cf611664f3cb51b4b9a606f26d235f30774a2fded680e01665962269",
+        "d768d16ae3704870dd18760b4029646bb738c9d9a7fa891b514b565207d76255",
+        "51b7ceec6d4cf9376cef384abfde3314d447d05cc78ef497d0d7e6d49af4731c"
+      ],
+      "status_effect": "candidate_rejected",
+      "evidence": "Pre-match broadcast with a player-feature video; the match-14 card shows DEWA vs Alter Ego at 0-0 with a 14:15 WIB start, while a large 09:32 countdown is displayed. No series number, draft, or gameplay is shown. The same pre-match show continues with a close-up player feature and an audience-commen"
+    },
+    {
+      "match_detail_id": "1050",
+      "source_id": "src-s18-w02d03",
+      "team_a": "ONIC",
+      "team_b": "BTR",
+      "start_seconds": 20963,
+      "offset_status": "boundary_verified",
+      "visual_status": "context-only",
+      "deepseek_disposition": "context-only",
+      "candidate_start_seconds": 20963.0,
+      "frame_group": "G-P3-1050-FEED2",
+      "frame_ids": [
+        "DF3-w02d03-21302",
+        "DF3-w02d03-21902",
+        "DF3-w02d03-22202",
+        "DF3-w02d03-22502"
+      ],
+      "frame_sha256": [
+        "e346e0c62a2aafb82d8c36c6119cd5db376267644069c5510c470dae0ce40428",
+        "add382c9a118dbb0a77194e7aa771df0fc8103952d6ad9bbf954524b9d6bc9d1",
+        "6352bd1a861d1b2b22e92e230cad3d68160911bb9ff0717eb98d9b977f30127c",
+        "6119158927af56248b063b58f39dd4f964eedc9a65f6f01742745a60cef06f7f"
+      ],
+      "status_effect": "partial_context_only",
+      "evidence": "Studio scoreboard frame with casters and a stylized map/item-card graphic. Large countdown reads 19:23. Highlighted Match 16 is GEEK 0 vs 0 EVOS at 20:15 WIB. No ONIC, BTR, or 00:00 is visible. Studio scoreboard frame with casters over a dark in-game arena/map view. Large countdown reads 09:23. High"
+    },
+    {
+      "match_detail_id": "1051",
+      "source_id": "src-s18-w02d03",
+      "team_a": "GEEK",
+      "team_b": "EVOS",
+      "start_seconds": 22773,
+      "offset_status": "detected_pending_review",
+      "visual_status": "context-only",
+      "deepseek_disposition": "context-only",
+      "candidate_start_seconds": 22773,
+      "frame_group": "G-P2-1051-22773",
+      "frame_ids": [
+        "DF2-w02d03-22769",
+        "DF2-w02d03-22774",
+        "DF2-w02d03-22779"
+      ],
+      "frame_sha256": [
+        "c460e9a9fdf4b6b752ca515791c8d750770555644bbb1b53a662b20ad1db7442",
+        "741166e4b21f2eb9b1965066e9d8d67f5ff0f05458ed35859adb0dbc0befda44",
+        "0a6a3c667f99a1c692037be50853146901a708d19e87bf2a23493c60e972f248"
+      ],
+      "status_effect": "partial_context_only",
+      "evidence": "On-stage female host with a handheld mic in front of a large 'THIS' backdrop; the top-left overlay reads GEEK 0 vs 0 EVOS, BEST OF 3, with DRAFT PICK IN 13:16, and the lower ticker headlines GEEK VS EVOS. Wide stage shot of the same host holding a mic; the overlay still shows GEEK 0 vs 0 EVOS, BEST "
+    },
+    {
+      "match_detail_id": "1052",
+      "source_id": "src-s18-w03d01",
+      "team_a": "BTR",
+      "team_b": "NAVI",
+      "start_seconds": 2666,
+      "offset_status": "boundary_verified",
+      "visual_status": "context-only",
+      "deepseek_disposition": "context-only",
+      "candidate_start_seconds": 2666.0,
+      "frame_group": "G-P3-1052-FEED",
+      "frame_ids": [
+        "DF3-w03d01-2681",
+        "DF3-w03d01-2721",
+        "DF3-w03d01-2761",
+        "DF3-w03d01-2801",
+        "DF3-w03d01-2841"
+      ],
+      "frame_sha256": [
+        "5dfc32273fc8a837d760019132ae42608081d95a707239531d17f93e0b071446",
+        "785748d1894c5781a536b9c0af39833a9abff4a1d79265cc770a2cafe905836b",
+        "cc9f0b7fd1594fdba7a70dba5556b9d38de293d394db6a23e643c0943d1b1781",
+        "a4e59df3ed9ed4e30c84659fd811fb20db437a8f330c66af159c1c61fd48a0c7",
+        "d356f49fce4d23e08fe0bb55a738f1e631c5819762c87268fd236541061d57ca"
+      ],
+      "status_effect": "partial_context_only",
+      "evidence": "Split-screen live lane view rather than the main broadcast scoreboard. Left panel labels NAVI Andoryuu at level 1; right panel labels BTR Nnael at level 1. Infinix boards and a central MPL crest are visible. No game clock, scoreboard, series score, or 00:00 appears. Main broadcast spectator scoreboa"
+    },
+    {
+      "match_detail_id": "1053",
+      "source_id": "src-s18-w03d01",
+      "team_a": "DEWA",
+      "team_b": "GEEK",
+      "start_seconds": 12043,
+      "offset_status": "boundary_verified",
+      "visual_status": "context-only",
+      "deepseek_disposition": "context-only",
+      "candidate_start_seconds": 12043.0,
+      "frame_group": "G-P3-1053-FEED",
+      "frame_ids": [
+        "DF3-w03d01-12802",
+        "DF3-w03d01-12901",
+        "DF3-w03d01-13001",
+        "DF3-w03d01-13101",
+        "DF3-w03d01-13201"
+      ],
+      "frame_sha256": [
+        "ead07d223f9ef96dbed448c7629f31adf72a6de5db91382d0a4d0f2fbe8a5e92",
+        "a24b772d763f5d143232ae4e1c3e4874345808596f6ef580673b6e96ef6e05cb",
+        "9cbfc5441bdccf6abe9804a01b9bc05c0443dbcab3f97db2c81603fdf5e2b4b5",
+        "8adc9b83d9e127e456d5760581403d0d813577539aeb3209f86dbaedf97913ad",
+        "3b7c95b97c1f6926c824e4532445bf95b00490068101ec5817d869d640500a87"
+      ],
+      "status_effect": "partial_context_only",
+      "evidence": "Close-up of a seated player with headset; top-left pre-game scoreboard shows a 0-0 series score, GAME 1, and BEST OF 3. No game clock or countdown is visible; team names are not rendered, only logos. Crowd shot with two handwritten fan signs; the same top-left 0-0 pre-game scoreboard is present. DEW"
+    },
+    {
+      "match_detail_id": "1054",
+      "source_id": "src-s18-w03d02",
+      "team_a": "TLID",
+      "team_b": "ONIC",
+      "start_seconds": 300,
+      "offset_status": "pending_validation",
+      "visual_status": "rejected",
+      "deepseek_disposition": "rejected",
+      "candidate_start_seconds": 300,
+      "frame_group": "G-P2-1054-300",
+      "frame_ids": [
+        "DF2-w03d02-296",
+        "DF2-w03d02-302",
+        "DF2-w03d02-307"
+      ],
+      "frame_sha256": [
+        "305d0c09b2d54d869be35afc66d05d4aff74f0ce0c1301e00e06e0228a49fd24",
+        "0eadad3be8d21cb0c34ce01f0c07db73d2ac3491658c595a9a667f5dd42de74f",
+        "a58abb88056729757da23964c8769af08f94a2a76b47516c4685a71f8ce841c4"
+      ],
+      "status_effect": "candidate_rejected",
+      "evidence": "Pre-match broadcast layout: the left inset is a dark orange gameplay/highlight scene under an AQUA smart home logo; the right panel shows three casters, a three-match schedule with 0-0 scores, a large countdown 10:19, and an audience comment reading 'ayo onic'. No draft screen, no 00:00 game clock, "
+    },
+    {
+      "match_detail_id": "1055",
+      "source_id": "src-s18-w03d02",
+      "team_a": "AE",
+      "team_b": "EVOS",
+      "start_seconds": 12108,
+      "offset_status": "boundary_verified",
+      "visual_status": "context-only",
+      "deepseek_disposition": "context-only",
+      "candidate_start_seconds": 12108.0,
+      "frame_group": "G-P3-1055-FEED2",
+      "frame_ids": [
+        "DF3-w03d02-13001",
+        "DF3-w03d02-13401",
+        "DF3-w03d02-13601",
+        "DF3-w03d02-13802"
+      ],
+      "frame_sha256": [
+        "ae732a76d6f69bc0d23be56cc513a317ffd48e99ab681bced62b65997fc3d6c8",
+        "6de7436278f39765af1e064bef56a062b23e1d86ca1a534ec11be22ba9b46146",
+        "d7c4d18f6fb00fabae5ac22f2abf2b38bf17e49059bd9f19237f3505e0f40d35",
+        "26efd231a589d1b8c45b480a772aeea63d1078565155e393093db2b44036296d"
+      ],
+      "status_effect": "partial_context_only",
+      "evidence": "Stage/player-camera segment with an AE vs EVOS lower-third matchup graphic; no game HUD, game clock, or 00:00 is visible. Animated trophy-and-flags tournament bumper with VOD controls; no teams, match label, or game clock is visible. Full-screen AE vs EVOS gameplay with a 3–0 scoreboard and 03:28 ga"
+    },
+    {
+      "match_detail_id": "1056",
+      "source_id": "src-s18-w03d02",
+      "team_a": "RRQ",
+      "team_b": "BTR",
+      "start_seconds": 15232,
+      "offset_status": "detected_pending_review",
+      "visual_status": "context-only",
+      "deepseek_disposition": "context-only",
+      "candidate_start_seconds": 15232,
+      "frame_group": "G-P2-1056-15232",
+      "frame_ids": [
+        "DF2-w03d02-15228",
+        "DF2-w03d02-15233",
+        "DF2-w03d02-15238"
+      ],
+      "frame_sha256": [
+        "7dedd8b944946c96caa396e709ffe324fae6e6b24b19f811e2ac52c24ad994e2",
+        "06efe2766227e7f36dde9459da39a5ffac511329425cf94648552accd6abba49",
+        "b680ffb230c0c9b75756bbea7f649a8418846de043b441d8b366c4196ab1bb74"
+      ],
+      "status_effect": "partial_context_only",
+      "evidence": "Wide shot of a three-person analyst desk in front of an MPL ID Season 18 stage backdrop. The top-left scorebug shows 1 vs 0 with team crests, 'GAME 1', and 'VS BEST OF 3'. The scrolling lower third names Match 3 and RRQ (0) vs (0) BTR. There is no draft screen, gameplay HUD, game clock, or countdown"
+    },
+    {
+      "match_detail_id": "1057",
+      "source_id": "src-s18-w03d03",
+      "team_a": "NAVI",
+      "team_b": "ONIC",
+      "start_seconds": 2340,
+      "offset_status": "boundary_verified",
+      "visual_status": "context-only",
+      "deepseek_disposition": "context-only",
+      "candidate_start_seconds": 2340.0,
+      "frame_group": "G-P3-1057-FEED",
+      "frame_ids": [
+        "DF3-w03d03-2452",
+        "DF3-w03d03-2551",
+        "DF3-w03d03-2651",
+        "DF3-w03d03-2752",
+        "DF3-w03d03-2851"
+      ],
+      "frame_sha256": [
+        "74c4d01327607fffea7b36c29ec7372a4ea9a71f41d6f17f143639d8934aac50",
+        "593b164abafe85445cef9673983c1dc8b975256e8650b87e4f95e83f112da905",
+        "af5ee31283bf8dab57d5abac621e1e8db0e3e8c020d424a2aa0401edb0727029",
+        "140dc04a30f1b396b5948b45e9b3b9cfe13f19a1e9158acab19e56add5f45204",
+        "f35f58a36752afbb5842886507787b5ae91e6f25f48bbb4fa9d01cf4142e7d01"
+      ],
+      "status_effect": "partial_context_only",
+      "evidence": "In-game Mobile Legends game feed at 02:05 with NAVI and ONIC top bars; early river/jungle skirmish; no 00:00 clock. In-game game feed at 03:45 with NAVI/ONIC; mid-jungle stun fight and player cams; no 00:00 clock. In-game game feed at 05:25 with an item-build overlay and mid-lane fight; NAVI/ONIC; n"
+    },
+    {
+      "match_detail_id": "1058",
+      "source_id": "src-s18-w03d03",
+      "team_a": "GEEK",
+      "team_b": "RRQ",
+      "start_seconds": null,
+      "offset_status": "pending_validation",
+      "visual_status": "no_candidate_waiver",
+      "deepseek_disposition": "inconclusive",
+      "candidate_start_seconds": null,
+      "frame_group": null,
+      "frame_ids": [],
+      "frame_sha256": [],
+      "status_effect": null,
+      "evidence": "No team-paired series cue found in the timed captions; no screenshot target was added. The offset remains null and must not be cited with a timestamp."
+    },
+    {
+      "match_detail_id": "1059",
+      "source_id": "src-s18-w03d03",
+      "team_a": "TLID",
+      "team_b": "AE",
+      "start_seconds": 22502,
+      "offset_status": "boundary_verified",
+      "visual_status": "context-only",
+      "deepseek_disposition": "context-only",
+      "candidate_start_seconds": 22502.0,
+      "frame_group": "G-P3-1059-FEED",
+      "frame_ids": [
+        "DF3-w03d03-23202",
+        "DF3-w03d03-23401",
+        "DF3-w03d03-23602",
+        "DF3-w03d03-23701",
+        "DF3-w03d03-23735"
+      ],
+      "frame_sha256": [
+        "4280e5050ae36c599a3742628d40b3903e07140b3ded669351bdecdab1c5f270",
+        "3872ce27e3770d38bab8562a8da6eebb99fb8da11ab4c50c6795d62d3051cd5e",
+        "e8bd50c0d4d64b3297c65d10a2da2d13f7d90ae3f7e7648b79abd2f3b16f33ff",
+        "45f643f4e31b834d709817965407737c2c9cd284ef7d56936bff84036593b43e",
+        "5635463faf134fe7200d3beee22f9e98d06c28cff13b7b054d66e78366d4fbc3"
+      ],
+      "status_effect": "partial_context_only",
+      "evidence": "Stage scene with several people in dark jerseys before a large LED screen. The top-left overlay shows 0-0, a left shield logo, VS, BEST OF 1, and an AE logo on the right. No game HUD or clock is visible. Close-up of a seated player wearing a headset in a gaming chair. The same top-left 0-0 overlay w"
+    },
+    {
+      "match_detail_id": "1060",
+      "source_id": "src-s18-w04d01",
+      "team_a": "NAVI",
+      "team_b": "DEWA",
+      "start_seconds": 1638,
+      "offset_status": "boundary_verified",
+      "visual_status": "context-only",
+      "deepseek_disposition": "context-only",
+      "candidate_start_seconds": 1638.0,
+      "frame_group": "G-P3-1060-FEED",
+      "frame_ids": [
+        "DF3-w04d01-1901",
+        "DF3-w04d01-2301",
+        "DF3-w04d01-2501",
+        "DF3-w04d01-2601"
+      ],
+      "frame_sha256": [
+        "66b75f515c7868e80024022b0f0293487113a3e86b6536be198d6f982b3e1913",
+        "08978194382fc665c88bb653d322ddd6acf963bfd8817e0c2acbcf2db138d415",
+        "31dfdf8108a4d90ef736df3dde93c015da3814729cfad07043c0d738c1e7c21e",
+        "3e4580696857da308f96fd515e14ed6bea009f4d47a5884f50c3737d7aa01ab3"
+      ],
+      "status_effect": "partial_context_only",
+      "evidence": "Pre-game stage/player-cam frame. The top-left overlay shows a 0-0 series score, GAME 1 and BEST OF 3 between team logos; the two zeros are scores, and no game clock or countdown is visible. Draft-room screen headed DRAFT IDENTITY with DRAFT DNA comparison panels, two five-player lineups and coaches;"
+    },
+    {
+      "match_detail_id": "1061",
+      "source_id": "src-s18-w04d01",
+      "team_a": "TLID",
+      "team_b": "RRQ",
+      "start_seconds": null,
+      "offset_status": "pending_validation",
+      "visual_status": "no_candidate_waiver",
+      "deepseek_disposition": "inconclusive",
+      "candidate_start_seconds": null,
+      "frame_group": null,
+      "frame_ids": [],
+      "frame_sha256": [],
+      "status_effect": null,
+      "evidence": "No team-paired series cue found in the timed captions; no screenshot target was added. The offset remains null and must not be cited with a timestamp."
+    },
+    {
+      "match_detail_id": "1062",
+      "source_id": "src-s18-w04d02",
+      "team_a": "DEWA",
+      "team_b": "ONIC",
+      "start_seconds": 2460,
+      "offset_status": "boundary_verified",
+      "visual_status": "context-only",
+      "deepseek_disposition": "context-only",
+      "candidate_start_seconds": 2460,
+      "frame_group": "G-1062-2460",
+      "frame_ids": [
+        "DF-1062-2456",
+        "DF-1062-2460",
+        "DF-1062-2464"
+      ],
+      "frame_sha256": [
+        "d2c306c5a6f1ac89df1b187d16796553b237cf45e58f91faf8b1d57a1e218117",
+        "184bc13e99df3b7ee506b0ebe9ede9533d3f0a34b4fb4cdadeef702b02dea645",
+        "ad4e328ba66733b2ffd54eff1893843794faf78c89103fc2b3e0411eb682f02a"
+      ],
+      "status_effect": "partial_context_only",
+      "evidence": "Circular MPL ID Season 18 East logo animation on a pale background; no map, team names, match label, clock, scoreboard, or draft panel. Isometric overhead map view with repeated Infinix sponsor banners; no HUD, team names, match label, clock, scoreboard, or draft panel. In-game top-down HUD near gam"
+    },
+    {
+      "match_detail_id": "1063",
+      "source_id": "src-s18-w04d02",
+      "team_a": "EVOS",
+      "team_b": "BTR",
+      "start_seconds": null,
+      "offset_status": "pending_validation",
+      "visual_status": "no_candidate_waiver",
+      "deepseek_disposition": "inconclusive",
+      "candidate_start_seconds": null,
+      "frame_group": null,
+      "frame_ids": [],
+      "frame_sha256": [],
+      "status_effect": null,
+      "evidence": "No team-paired series cue found in the timed captions; no screenshot target was added. The offset remains null and must not be cited with a timestamp."
+    },
+    {
+      "match_detail_id": "1064",
+      "source_id": "src-s18-w04d02",
+      "team_a": "AE",
+      "team_b": "GEEK",
+      "start_seconds": null,
+      "offset_status": "pending_validation",
+      "visual_status": "no_candidate_waiver",
+      "deepseek_disposition": "inconclusive",
+      "candidate_start_seconds": null,
+      "frame_group": null,
+      "frame_ids": [],
+      "frame_sha256": [],
+      "status_effect": null,
+      "evidence": "No team-paired series cue found in the timed captions; no screenshot target was added. The offset remains null and must not be cited with a timestamp."
+    },
+    {
+      "match_detail_id": "1065",
+      "source_id": "src-s18-w04d03",
+      "team_a": "RRQ",
+      "team_b": "NAVI",
+      "start_seconds": 1938,
+      "offset_status": "boundary_verified",
+      "visual_status": "context-only",
+      "deepseek_disposition": "context-only",
+      "candidate_start_seconds": 1938.0,
+      "frame_group": "G-P3-1065-FEED",
+      "frame_ids": [
+        "DF3-w04d03-2002",
+        "DF3-w04d03-2101",
+        "DF3-w04d03-2202",
+        "DF3-w04d03-2301",
+        "DF3-w04d03-2451"
+      ],
+      "frame_sha256": [
+        "481836abbede949a6cf0dd9f468ab12bac1bad6bf628dc87a10a7cbff703221e",
+        "641ec27ddade11d0fc68d45743977244952b8f78b6ec0bf8b6446913fca71c2c",
+        "d57f2fae9b1bcf113e8d8bebbc343ea7bcdc37a006df4d491223125d555696a3",
+        "82896ebfa311863ed66860829b841f856b8cc1fbd4960553c0b21645da28a69d",
+        "280378623dd336852b62a5dba821a191555556aa07277949a2a112025533d209"
+      ],
+      "status_effect": "partial_context_only",
+      "evidence": "Player-cam shot with a team lower third; RRO and NAVI appear with logos, but no game clock or 00:00 is shown. Player cam with a FANDOM WAR poll showing 309-151 and a MATCH 3 - GAME 1 lower third; no game clock or 00:00 appears. Audience shot behind a DRAFT IDENTITY / DRAFT DNA overlay; team sides ap"
+    },
+    {
+      "match_detail_id": "1066",
+      "source_id": "src-s18-w04d03",
+      "team_a": "ONIC",
+      "team_b": "EVOS",
+      "start_seconds": null,
+      "offset_status": "pending_validation",
+      "visual_status": "no_candidate_waiver",
+      "deepseek_disposition": "inconclusive",
+      "candidate_start_seconds": null,
+      "frame_group": null,
+      "frame_ids": [],
+      "frame_sha256": [],
+      "status_effect": null,
+      "evidence": "No team-paired series cue found in the timed captions; no screenshot target was added. The offset remains null and must not be cited with a timestamp."
+    },
+    {
+      "match_detail_id": "1067",
+      "source_id": "src-s18-w04d03",
+      "team_a": "BTR",
+      "team_b": "AE",
+      "start_seconds": 22586,
+      "offset_status": "detected_pending_review",
+      "visual_status": "context-only",
+      "deepseek_disposition": "context-only",
+      "candidate_start_seconds": 22586,
+      "frame_group": "G-P2-1067-22586",
+      "frame_ids": [
+        "DF2-w04d03-22582",
+        "DF2-w04d03-22588",
+        "DF2-w04d03-22592"
+      ],
+      "frame_sha256": [
+        "245869f10a50751f727c7757a9cc16afccada5c2e534b9a4f4243336339ce18b",
+        "95f59a252d5c773a2e9520ad67d0f1fc7f029e7782f610232e99299ec1a6425a",
+        "33c71dd352b9bb3730771c978db98a1b8665833a0dd9afc4fc8e8f7bb3fa33fb"
+      ],
+      "status_effect": "partial_context_only",
+      "evidence": "Player-camera interview-style shot of a man speaking at a microphone. The lower third labels BTR vs AE, and the right-side score bug shows 0 VS 0. YouTube controls show a VOD timer of 6:16:22 / 8:05:25. No draft, gameplay, game clock, or series number is visible. Full-screen promo graphic headed TWO"
+    },
+    {
+      "match_detail_id": "1069",
+      "source_id": "src-s18-w05d01",
+      "team_a": "GEEK",
+      "team_b": "ONIC",
+      "start_seconds": 1745,
+      "offset_status": "boundary_verified",
+      "visual_status": "context-only",
+      "deepseek_disposition": "context-only",
+      "candidate_start_seconds": 1745.0,
+      "frame_group": "G-P3-1069-FEED",
+      "frame_ids": [
+        "DF3-w05d01-2102",
+        "DF3-w05d01-2701",
+        "DF3-w05d01-3001",
+        "DF3-w05d01-3201"
+      ],
+      "frame_sha256": [
+        "55bc1b39f941ad45db997b68b0220a91ddca121b153c3b94ff03408802f34d31",
+        "e9b4ca5a40b589f6f9b290515510b9afd12922e4a9165da37d853cd596534b5a",
+        "31a916aa15b92f844979ba4ff33679c4077f99b61d19d2e1ec34b7148028b14e",
+        "f63db452e6412f19305778d3d1924ef92706613ab74b7884836fdb18fc873eae"
+      ],
+      "status_effect": "partial_context_only",
+      "evidence": "Close-up of a player holding a phone, with an Infinix/IndiHome sponsor card; no match label, team pairing, scoreboard, or clock is visible. Player close-up beneath a scoreboard showing GEEK 0-0 ONIC, labeled GAME 1 and BEST OF 3; no game clock or countdown is visible. Audience wide shot with a draft"
+    },
+    {
+      "match_detail_id": "1070",
+      "source_id": "src-s18-w05d02",
+      "team_a": "TLID",
+      "team_b": "BTR",
+      "start_seconds": 300,
+      "offset_status": "pending_validation",
+      "visual_status": "rejected",
+      "deepseek_disposition": "rejected",
+      "candidate_start_seconds": 300,
+      "frame_group": "G-P2-1070-300",
+      "frame_ids": [
+        "DF2-w05d02-296",
+        "DF2-w05d02-301",
+        "DF2-w05d02-306"
+      ],
+      "frame_sha256": [
+        "6b9328b2797701e3907cdf04f1ff3e5841815e42091036de4d30647dcb23a75f",
+        "d20c6960071ff06a050579f2fdc2f216d83a112832c79f62f0459745886ccd82",
+        "8479ada86938fc01037163dce8e87bfa11d0f4e3018cb22d40c03846439b60ae"
+      ],
+      "status_effect": "candidate_rejected",
+      "evidence": "Pre-match broadcast screen with a large 12:34 timer, three casters, and a schedule listing Match 35/36/37 at 0-0. The center is a gameplay-effects clip labeled 'TAMPILAN EFEK VISUAL'. No TLID, BTR, '1070', draft, or in-game clock is visible. Same pre-match broadcast screen with a 12:29 timer and the"
+    },
+    {
+      "match_detail_id": "1071",
+      "source_id": "src-s18-w05d02",
+      "team_a": "AE",
+      "team_b": "RRQ",
+      "start_seconds": 11653,
+      "offset_status": "boundary_verified",
+      "visual_status": "context-only",
+      "deepseek_disposition": "context-only",
+      "candidate_start_seconds": 11653.0,
+      "frame_group": "G-P3-1071-FEED",
+      "frame_ids": [
+        "DF3-w05d02-11801",
+        "DF3-w05d02-12101",
+        "DF3-w05d02-12301",
+        "DF3-w05d02-12501"
+      ],
+      "frame_sha256": [
+        "9b262709d79ffcbab8455ac80aa588577577dac82646b84c697b7e553422be32",
+        "206c292462b669939faf2377128ea83135525bc51e253de2dd0fe3781f506b8d",
+        "72ba87798681bcca2f1e9f5e64846730da408c124b8bf961739d5eef55ca9afb",
+        "91c94161b528a94b61e5e9ba81a4259c289bf3c3dc6d8b39de29636069e17f42"
+      ],
+      "status_effect": "partial_context_only",
+      "evidence": "Close-up of a seated player during the draft phase; the score bug shows 0-0 with a 15:29 draft-pick countdown and no game clock. Wide stage shot of three desk talents; the score bug remains 0-0 with a 10:29 draft-pick countdown and no game clock. Stage desk shot with a lower-third banner and player-"
+    },
+    {
+      "match_detail_id": "1072",
+      "source_id": "src-s18-w05d02",
+      "team_a": "NAVI",
+      "team_b": "EVOS",
+      "start_seconds": 18108.4,
+      "offset_status": "detected_pending_review",
+      "visual_status": "rejected",
+      "deepseek_disposition": "rejected",
+      "candidate_start_seconds": 18108.4,
+      "frame_group": "G-P3-1072-18108",
+      "frame_ids": [
+        "DF3-w05d02-18104",
+        "DF3-w05d02-18109",
+        "DF3-w05d02-18114",
+        "DF3-w05d02-18139"
+      ],
+      "frame_sha256": [
+        "2e3b76a20bef222eb49cd0bef5a17a318eac781ce42a9a2cbba3db8d67a96d2c",
+        "19de707cbe4a5717711d56ca6e43807f8b59248d13d2cbb60cf562ffa3dc36f1",
+        "439550a3e8a94e76b48741ef5b990f3436112703e52cba43871d91e5aac6a66a",
+        "1048626203c68ee78c7c0ea21fab7da9e056c49234b12a6dc57068a496f97b28"
+      ],
+      "status_effect": "candidate_rejected",
+      "evidence": "Wide studio shot of a three-person analyst desk; top-left overlay shows a 2-0 score with NAVI/EVOS logos, 'GAME 2' and 'BEST OF 3'; the monitor is dark with a subtitle; no game clock or 00:00. Same analyst desk; the monitor shows a landscape image; the top-left overlay remains 2-0 with NAVI/EVOS log"
+    },
+    {
+      "match_detail_id": "1073",
+      "source_id": "src-s18-w05d03",
+      "team_a": "GEEK",
+      "team_b": "TLID",
+      "start_seconds": 300,
+      "offset_status": "pending_validation",
+      "visual_status": "rejected",
+      "deepseek_disposition": "rejected",
+      "candidate_start_seconds": 300,
+      "frame_group": "G-P2-1073-300",
+      "frame_ids": [
+        "DF2-w05d03-296",
+        "DF2-w05d03-302",
+        "DF2-w05d03-307"
+      ],
+      "frame_sha256": [
+        "33d7dd9051112d383b8149b7ff84738d173b7e3d122926736c2edfe44485bd9c",
+        "d4a448af2dfe582a5040b5011c6124e24cd61b10c6d4423e025ccc695048fdee",
+        "bab6c300b78e2a20cec0a91d5cf453718e9976b35e66484e3d14336eadc0d65a"
+      ],
+      "status_effect": "candidate_rejected",
+      "evidence": "Pre-match broadcast overlay with a 10:06 countdown; the video pane shows a visual-effects preview labeled TAMPILAN EFEK VISUAL, while the schedule panel lists Match 38, GEEK vs TLID, 0-0 at 14:15 WIB. Pre-match countdown overlay at 10:00 over an effects clip labeled EFEK SKILL COMMANDER; the Match 3"
+    },
+    {
+      "match_detail_id": "1074",
+      "source_id": "src-s18-w05d03",
+      "team_a": "ONIC",
+      "team_b": "AE",
+      "start_seconds": 12328,
+      "offset_status": "boundary_verified",
+      "visual_status": "context-only",
+      "deepseek_disposition": "context-only",
+      "candidate_start_seconds": 12328.0,
+      "frame_group": "G-P3-1074-FEED",
+      "frame_ids": [
+        "DF3-w05d03-13001",
+        "DF3-w05d03-13151",
+        "DF3-w05d03-13301",
+        "DF3-w05d03-13451",
+        "DF3-w05d03-13551"
+      ],
+      "frame_sha256": [
+        "79da13d1fdd1771aad6fe11df40eff941088cb3aead8b9a5d3be15c25162496c",
+        "e418b3c388d8940db2fe572bce1a8794083ce429a773d4d7813e41069ecf1288",
+        "9218af9a7f0773a017979d263eeb159ea8f8872a70a82f8c7bcfedb34f4caffd",
+        "a1b17e1d31ac53a0d7362ffad7fda10c2bdd1ceedbd31d98b35caca532678d98",
+        "fa2eea7490273b67f3d4aa97bf149a8b20c018aed5f1a2bb28d14a5c52f8fafb"
+      ],
+      "status_effect": "partial_context_only",
+      "evidence": "Stage/player-walkout shot with two seated players wearing headsets and one standing player in a red 'Poco Good Day' jersey. No match HUD, scoreboard, match label, or clock is visible. Draft-analysis video frame showing a Carmilla pick explanation and an ONIC-vs-AE draft board with player cams and Yo"
+    },
+    {
+      "match_detail_id": "1076",
+      "source_id": "src-s18-w06d01",
+      "team_a": "ONIC",
+      "team_b": "GEEK",
+      "start_seconds": 2425,
+      "offset_status": "detected_pending_review",
+      "visual_status": "rejected",
+      "deepseek_disposition": "rejected",
+      "candidate_start_seconds": 2425,
+      "frame_group": "G-W06-2425",
+      "frame_ids": [
+        "DF-W06-2424",
+        "DF-W06-2426",
+        "DF-W06-2428"
+      ],
+      "frame_sha256": [
+        "b94c3aea99fb7cf4df84f6eb7154d9bd5dda49fe60dc765927a3bd073aae7e0b",
+        "5f9b73aa130bc7d0217cebbd329598b190089f289f24c5027a50b161a7969674",
+        "bd6a164b9e210eef4c7f0fe81387013545f298b11e0c1cadbd0410591d09d0b5"
+      ],
+      "status_effect": "candidate_rejected",
+      "evidence": "Full-screen KLASEMEN standings graphic with REGULAR SEASON MINGGU 6 - HARI 1. It shows nine ranked teams and standings columns; no team-vs-team matchup, match clock, or match-start indicator is visible. Same full-screen KLASEMEN standings table, labeled REGULAR SEASON MINGGU 6 - HARI 1, listing nine"
+    },
+    {
+      "match_detail_id": "1077",
+      "source_id": "src-s18-w06d01",
+      "team_a": "DEWA",
+      "team_b": "EVOS",
+      "start_seconds": 2425,
+      "offset_status": "detected_pending_review",
+      "visual_status": "rejected",
+      "deepseek_disposition": "rejected",
+      "candidate_start_seconds": 2425,
+      "frame_group": "G-W06-2425",
+      "frame_ids": [
+        "DF-W06-2424",
+        "DF-W06-2426",
+        "DF-W06-2428"
+      ],
+      "frame_sha256": [
+        "b94c3aea99fb7cf4df84f6eb7154d9bd5dda49fe60dc765927a3bd073aae7e0b",
+        "5f9b73aa130bc7d0217cebbd329598b190089f289f24c5027a50b161a7969674",
+        "bd6a164b9e210eef4c7f0fe81387013545f298b11e0c1cadbd0410591d09d0b5"
+      ],
+      "status_effect": "candidate_rejected",
+      "evidence": "Full-screen KLASEMEN standings graphic with REGULAR SEASON MINGGU 6 - HARI 1. It shows nine ranked teams and standings columns; no team-vs-team matchup, match clock, or match-start indicator is visible. Same full-screen KLASEMEN standings table, labeled REGULAR SEASON MINGGU 6 - HARI 1, listing nine"
+    },
+    {
+      "match_detail_id": "1075",
+      "source_id": "src-s18-w06d01",
+      "team_a": "RRQ",
+      "team_b": "DEWA",
+      "start_seconds": 2425,
+      "offset_status": "detected_pending_review",
+      "visual_status": "rejected",
+      "deepseek_disposition": "rejected",
+      "candidate_start_seconds": 2425,
+      "frame_group": "G-W06-2425",
+      "frame_ids": [
+        "DF-W06-2424",
+        "DF-W06-2426",
+        "DF-W06-2428"
+      ],
+      "frame_sha256": [
+        "b94c3aea99fb7cf4df84f6eb7154d9bd5dda49fe60dc765927a3bd073aae7e0b",
+        "5f9b73aa130bc7d0217cebbd329598b190089f289f24c5027a50b161a7969674",
+        "bd6a164b9e210eef4c7f0fe81387013545f298b11e0c1cadbd0410591d09d0b5"
+      ],
+      "status_effect": "candidate_rejected",
+      "evidence": "Full-screen KLASEMEN standings graphic with REGULAR SEASON MINGGU 6 - HARI 1. It shows nine ranked teams and standings columns; no team-vs-team matchup, match clock, or match-start indicator is visible. Same full-screen KLASEMEN standings table, labeled REGULAR SEASON MINGGU 6 - HARI 1, listing nine"
+    },
+    {
+      "match_detail_id": "1078",
+      "source_id": "src-s18-w06d02",
+      "team_a": "GEEK",
+      "team_b": "NAVI",
+      "start_seconds": 1461,
+      "offset_status": "detected_pending_review",
+      "visual_status": "context-only",
+      "deepseek_disposition": "context-only",
+      "candidate_start_seconds": 1461,
+      "frame_group": "G-P2-1078-1461",
+      "frame_ids": [
+        "DF2-w06d02-1458",
+        "DF2-w06d02-1463",
+        "DF2-w06d02-1467"
+      ],
+      "frame_sha256": [
+        "fc2beaf6c7f0fb90ce90c1f64056d8e0cc0f4278fc477aeaba63f7e93d7439c1",
+        "8093efc1edc14400d12c5f2f0f048384ab0baa0404ae4ee75333a56dd97faa2e",
+        "dd2dd668c46bac347c016737ef27b7d8dc1dec875351fbe7af48aa6c8df3502d"
+      ],
+      "status_effect": "partial_context_only",
+      "evidence": "Pre-match interview set: seated NAVI-jersey players, a standing player holding a mic, and a female host with a mic. The white scoreboard reads MATCH 3 - GAME 1, 0 VS 0, BEST OF 3, 14:58; no draft or game clock is shown. Same pre-match interview segment; the host gestures with papers while the standi"
+    },
+    {
+      "match_detail_id": "1079",
+      "source_id": "src-s18-w06d02",
+      "team_a": "RRQ",
+      "team_b": "AE",
+      "start_seconds": 1660.8,
+      "offset_status": "detected_pending_review",
+      "visual_status": "rejected",
+      "deepseek_disposition": "rejected",
+      "candidate_start_seconds": 1660.8,
+      "frame_group": "G-P3-1079-1660",
+      "frame_ids": [
+        "DF3-w06d02-1656",
+        "DF3-w06d02-1663",
+        "DF3-w06d02-1668",
+        "DF3-w06d02-1691",
+        "DF3-w06d02-1721"
+      ],
+      "frame_sha256": [
+        "4c19e8beb799605ea455e974c0fc87bc294ba124d9fe60af60d54c099794e998",
+        "cf222107f174317633d9a3afcc8d50f24a2b80a043b49cbd9ec561a22896644c",
+        "141522572cdb27b197d7fe8611187c2b54fdc84263351b2a029de4c0a53af609",
+        "121276c17cce0a8d9fb91e1568b67456cd63e49607d9e46b8f0c0b9de58b8372",
+        "23e51b498e3a3f310f4c4b34f98a5addc7f96b46b3176ed7f6add87fdd91ce65"
+      ],
+      "status_effect": "candidate_rejected",
+      "evidence": "Full-frame rundown graphic 'JADWAL HARI INI' listing three BO3 series for the day; middle row shows the RRQ vs AE pairing (Match 44) with 0 - 0 series scores and a 17:15 WIB time slot. No in-game scoreboard or game clock anywhere on screen. Same recurring rundown graphic, identical layout and conten"
+    },
+    {
+      "match_detail_id": "1080",
+      "source_id": "src-s18-w06d02",
+      "team_a": "BTR",
+      "team_b": "TLID",
+      "start_seconds": 23717,
+      "offset_status": "boundary_verified",
+      "visual_status": "context-only",
+      "deepseek_disposition": "context-only",
+      "candidate_start_seconds": 23717.0,
+      "frame_group": "G-P3-1080-FEED",
+      "frame_ids": [
+        "DF3-w06d02-23901",
+        "DF3-w06d02-24101",
+        "DF3-w06d02-24201",
+        "DF3-w06d02-24401"
+      ],
+      "frame_sha256": [
+        "a584710f883f0d9ff9ee6c1334fec6f06a69e5a143b88b612ddef73e9d634670",
+        "bdea424672d21dd740b5dc0b8396c6c7b2abaa7fc71881067da171f34e0ff750",
+        "c6c7a7a240f4b9762c63b18516adf83cea56c0779823639b1437b1014ea4c485",
+        "5752e10172faddf0937fa41ed12eca5708566bf567469c970913e31a6b9241e9"
+      ],
+      "status_effect": "partial_context_only",
+      "evidence": "Pre-game/draft segment with split player cams for NNAEL and KEVIN. Top HUD shows VITALITY against an illegible opponent, 0-0, M5 - GAME 1, VS BEST OF 3, and a draft-pick countdown of 03:19. No 00:00 game clock. Draft-phase frame with a player cam and pick panel. TLID and BTR are paired in the lower "
+    },
+    {
+      "match_detail_id": "1081",
+      "source_id": "src-s18-w06d03",
+      "team_a": "AE",
+      "team_b": "DEWA",
+      "start_seconds": 1800,
+      "offset_status": "boundary_verified",
+      "visual_status": "context-only",
+      "deepseek_disposition": "context-only",
+      "candidate_start_seconds": 1800.0,
+      "frame_group": "G-P3-1081-FEED",
+      "frame_ids": [
+        "DF3-w06d03-2301",
+        "DF3-w06d03-2702",
+        "DF3-w06d03-2901",
+        "DF3-w06d03-3052"
+      ],
+      "frame_sha256": [
+        "0173e9cbd613625b3c030982fc0cd66c5c8bff94ae8f5260eaa7bfa9c5e36aee",
+        "2123389d99dd50bbc538af63cf238b5fc8f2db7f3c8c2eaedb9f55280de9bf56",
+        "e5ca1a33dfd40c41d8a399918d6db6d48518baa80d1a30456af121b9557417d1",
+        "537b25fa7bb359594231783e7999f3dce0be98ed99fe8d3b058e38d26ce0f3e2"
+      ],
+      "status_effect": "partial_context_only",
+      "evidence": "Stage walk-in with players in front of a large screen and audience. The top overlay shows ALTER EGO vs DEWA UNITED at 0-0 for M46 GAME 1, BEST OF 3, with a 02:22 DRAFT PICK IN countdown; no game clock or 00:00 is visible. Draft-analysis screen with a player cam. The bottom draft strip shows DEWA and"
+    },
+    {
+      "match_detail_id": "1082",
+      "source_id": "src-s18-w06d03",
+      "team_a": "BTR",
+      "team_b": "ONIC",
+      "start_seconds": 17077,
+      "offset_status": "detected_pending_review",
+      "visual_status": "rejected",
+      "deepseek_disposition": "rejected",
+      "candidate_start_seconds": 17077,
+      "frame_group": "G-P2-1082-17077",
+      "frame_ids": [
+        "DF2-w06d03-17074",
+        "DF2-w06d03-17079",
+        "DF2-w06d03-17084"
+      ],
+      "frame_sha256": [
+        "80d3f008d225d22df19a10dc34cffcbc2945ec1fd6014908004c4a4f2da2de5d",
+        "62e00c45a179e88987629c34bd77f5007127d831acc790c4379def02b0a77094",
+        "80fabc9af89276599655d3cab2a63c55aad3bafd77d4315977ca3a270efa8349"
+      ],
+      "status_effect": "candidate_rejected",
+      "evidence": "Live gameplay from a third-person MOBA spectator view mid-fight near the river; the HUD is fully populated with hero levels, health bars and item/KDA side panels. Top overlay shows ONIC on the left and BTR on the right with gold totals 35.4K vs 26.1K and a running game clock of 10:39 with a '2' game"
+    },
+    {
+      "match_detail_id": "1083",
+      "source_id": "src-s18-w06d03",
+      "team_a": "EVOS",
+      "team_b": "TLID",
+      "start_seconds": 24416.2,
+      "offset_status": "detected_pending_review",
+      "visual_status": "context-only",
+      "deepseek_disposition": "context-only",
+      "candidate_start_seconds": 24416.2,
+      "frame_group": "G-P3-1083-24416",
+      "frame_ids": [
+        "DF3-w06d03-24412",
+        "DF3-w06d03-24418",
+        "DF3-w06d03-24423",
+        "DF3-w06d03-24447"
+      ],
+      "frame_sha256": [
+        "c62336058431977c1e3e83d005cc79fa3f075e67e73458aecb44b47ebc9f6ae3",
+        "95ae72ac5e143e8bf9e084dd5be6fbf6ef983bc818055165f6ab80136a0d49ea",
+        "b110c1f171899586caa3f12a3c0d9e97866c115437ef24c1cff2fb0ab5ae207c",
+        "9ea8356b43c33d9841acba99964fdcc35e792557c15292c7e7cc1f4ed6de8ab7"
+      ],
+      "status_effect": "partial_context_only",
+      "evidence": "Circular MPL ID Season 18 league/transition graphic with mirrored background text; no teams, match number, scoreboard, or game clock. In-game MLBB frame with a 00:15 timer; EVOS player labels appear on the blue side, while the opposing names are visible without a legible TLID label. In-game MLBB fra"
+    },
+    {
+      "match_detail_id": "1084",
+      "source_id": "src-s18-w07d01",
+      "team_a": "GEEK",
+      "team_b": "BTR",
+      "start_seconds": 2043,
+      "offset_status": "boundary_verified",
+      "visual_status": "context-only",
+      "deepseek_disposition": "context-only",
+      "candidate_start_seconds": 2043,
+      "frame_group": "G-W07D01-2040",
+      "frame_ids": [
+        "DF-W07D1-2038",
+        "DF-W07D1-2041",
+        "DF-W07D1-2043"
+      ],
+      "frame_sha256": [
+        "6e25e08757bacdf95a5873c2fde402ee0fcdb2aa6f27a2cadd445c92d60d9c1e",
+        "f4547a4586b8ea1c86c5d2fbd5c03e49e75af6856f020b10aa86a4a8cef0e7c2",
+        "30b1fb785c1ec01a9d2571268be07d26b6418ee1f831a32a3c4020b588a3e07c"
+      ],
+      "status_effect": "partial_context_only",
+      "evidence": "Broadcast overlay shows a match scoreboard labeled M49 GAME 1, BEST OF 3, with 0 vs 0 and team logos on either side of 'VS'; the clock reads 15:56 in a blue box labeled 'DRAFT PICK IN'. The visible team logos are a toothed/animal-like emblem (left) and a red dragon-like emblem (right); the left name"
+    },
+    {
+      "match_detail_id": "1085",
+      "source_id": "src-s18-w07d01",
+      "team_a": "DEWA",
+      "team_b": "TLID",
+      "start_seconds": 12883.0,
+      "offset_status": "detected_pending_review",
+      "visual_status": "context-only",
+      "deepseek_disposition": "context-only",
+      "candidate_start_seconds": 12883.0,
+      "frame_group": "G-P3-1085-12883",
+      "frame_ids": [
+        "DF3-w07d01-12879",
+        "DF3-w07d01-12884",
+        "DF3-w07d01-12889",
+        "DF3-w07d01-12914",
+        "DF3-w07d01-12945"
+      ],
+      "frame_sha256": [
+        "79fb386bb4e24cb23beac796006d4e426083e06902e14f0a1d0850374837969e",
+        "89f36c3bc4e382f6e75ba9d29ac607b0d1d50f513d24caca084238afbc218e2c",
+        "f5909e09d3735f230e8bc591ab90fba5bb1a3736387eed1fe6d34ac3ff270a82",
+        "daca78578351c9d2487f6067fa9c5e6b690470a1caa7f7b3175fb1a8d0f4eb8f",
+        "30a630abf62940cbdbbb2647496dd0a92cbd069056898b160ba2abddb715c2fa"
+      ],
+      "status_effect": "partial_context_only",
+      "evidence": "Backstage/player-room wide shot: a host in a white top holds a mic at left; seated players in batik shirts behind. Wall art shows the MPL ID S18 logo and a large horse-head crest. No scoreboard overlay, no clock, no DEWA marking. Same room, host centered holding mic. Top-left scoreboard overlay show"
+    },
+    {
+      "match_detail_id": "1086",
+      "source_id": "src-s18-w07d02",
+      "team_a": "AE",
+      "team_b": "NAVI",
+      "start_seconds": null,
+      "offset_status": "pending_validation",
+      "visual_status": "rejected",
+      "deepseek_disposition": "rejected",
+      "candidate_start_seconds": null,
+      "frame_group": "G-W07D02-31920",
+      "frame_ids": [
+        "DF-W07D2-31919",
+        "DF-W07D2-31921",
+        "DF-W07D2-31923"
+      ],
+      "frame_sha256": [
+        "95e21abb4ab49edbbf8073558e929bb224c4611ffebdee74a52561041a1584d9",
+        "0fefa7afefd2c2bf48f51511516859c9fd8388a1e63b24df0f6ee2acf8b16c1a",
+        "0881ee8748a546f5d682c0e8564c407876bb758732f6e900d8b0ac02b4c92fb1"
+      ],
+      "status_effect": "candidate_rejected",
+      "evidence": "Studio desk segment with three presenters. The top-left scoreboard visibly shows GEEK 2, DEWA 1, with M53 / GAME 3 and BEST OF 3. The lower third reads QUALIFIED TO PLAYOFFS. Player controls are visible. No AE or NAVI branding is visible. Same studio desk segment with three presenters. The top-left "
+    },
+    {
+      "match_detail_id": "1087",
+      "source_id": "src-s18-w07d02",
+      "team_a": "BTR",
+      "team_b": "RRQ",
+      "start_seconds": 13276.0,
+      "offset_status": "detected_pending_review",
+      "visual_status": "context-only",
+      "deepseek_disposition": "context-only",
+      "candidate_start_seconds": 13276.0,
+      "frame_group": "G-P3-1087-13276",
+      "frame_ids": [
+        "DF3-w07d02-13273",
+        "DF3-w07d02-13278",
+        "DF3-w07d02-13283",
+        "DF3-w07d02-13308"
+      ],
+      "frame_sha256": [
+        "35465e574082147a1290ef97e15cd18086ea876470ab2f1a12ca091b5a8e7fe5",
+        "108e6239c8fd532b89d9618747ac1e21002489484d1718d2ae11bc512bcc708b",
+        "e6aa13261ea53b6939a5c55582d0f6dd135b6398742ccdb39388c78343e0af94",
+        "07ba166097ee73a5735c30f062e256d22f0a9d5e016671f5cea40f3e74fe2066"
+      ],
+      "status_effect": "partial_context_only",
+      "evidence": "Broadcast desk/analyst stage with three commentators seated; no team-vs-team scoreboard or game clock; large screen behind them shows MPL ID S18 branding and a hero artwork. Abstract red/blue/yellow gradient transition or wipe background with three small blue squares on the left; no legible text, lo"
+    },
+    {
+      "match_detail_id": "1088",
+      "source_id": "src-s18-w07d02",
+      "team_a": "GEEK",
+      "team_b": "DEWA",
+      "start_seconds": 23569.0,
+      "offset_status": "detected_pending_review",
+      "visual_status": "context-only",
+      "deepseek_disposition": "context-only",
+      "candidate_start_seconds": 23569.0,
+      "frame_group": "G-P3-1088-23569",
+      "frame_ids": [
+        "DF3-w07d02-23565",
+        "DF3-w07d02-23570",
+        "DF3-w07d02-23575",
+        "DF3-w07d02-23600"
+      ],
+      "frame_sha256": [
+        "20d375acdcc0913d1c38416ac90294a409b352399ce9324b2684b96a7839e7d6",
+        "a98dd2c05823ace9f3ec948dfc2edfc94a4d1a9d460c2d475051c0552162754b",
+        "7d167cc2f7be49412cc253ff004fb25d9db1be456553218df687d8da262d9ec8",
+        "6d7b212857c6596e8199a26d56b29b7b56cff40f09ff4ed82729eaa8467c9ea0"
+      ],
+      "status_effect": "partial_context_only",
+      "evidence": "Studio analyst desk with three commentators. The top scoreboard shows GEEK 0-0 DEWA United. No match label or game clock/countdown is visible; the two zeros are scores, not 00:00. GEEK vs DEWA is visible, but not with a 00:00 clock. Analyst desk with GEEK 0-0 DEWA United. Overlay reads MSS - GAME 1,"
+    },
+    {
+      "match_detail_id": "1089",
+      "source_id": "src-s18-w07d03",
+      "team_a": "AE",
+      "team_b": "TLID",
+      "start_seconds": 300,
+      "offset_status": "pending_validation",
+      "visual_status": "rejected",
+      "deepseek_disposition": "rejected",
+      "candidate_start_seconds": 300,
+      "frame_group": "G-P2-1089-300",
+      "frame_ids": [
+        "DF2-w07d03-296",
+        "DF2-w07d03-301",
+        "DF2-w07d03-306"
+      ],
+      "frame_sha256": [
+        "7374ee101773b28d9b7d2ff13489d01f21d9ead22c147faef8c2e69817b269c8",
+        "03a042387cb706a7b8a9daf4117ea50474f4c30e29194114bb875cc2a16c9aa8",
+        "fe5601df785e546325ab068205e966b9f409bdc3338a96cd9dbd59c858c463b5"
+      ],
+      "status_effect": "candidate_rejected",
+      "evidence": "Pre-match broadcast countdown screen. A dark fantasy anime promo fills the video panel; three casters are shown above the right-side match list. The highlighted top card is AE vs TLID at 0 VS 0, while the timer reads 19:08 and no draft or gameplay HUD is visible. Same pre-match countdown overlay. Th"
+    },
+    {
+      "match_detail_id": "1090",
+      "source_id": "src-s18-w07d03",
+      "team_a": "RRQ",
+      "team_b": "EVOS",
+      "start_seconds": 12178,
+      "offset_status": "detected_pending_review",
+      "visual_status": "rejected",
+      "deepseek_disposition": "rejected",
+      "candidate_start_seconds": 12178,
+      "frame_group": "G-P2-1090-12178",
+      "frame_ids": [
+        "DF2-w07d03-12174",
+        "DF2-w07d03-12179",
+        "DF2-w07d03-12184"
+      ],
+      "frame_sha256": [
+        "14ded314ec208f18fd387813d8641beabadf59c29b51ee105a31e84b2fbfd785",
+        "ac249d32c17eeaeffadc9b1244809013e40acd2e29707ed91bde49e6f92edf8c",
+        "7fbc4babf7825daeaeebd5a29ee9d4bd0eb1e1357862c5147ee8dac4afd19567"
+      ],
+      "status_effect": "candidate_rejected",
+      "evidence": "Crowd scene with fans in red and black/white jerseys cheering in front of dark curtains; a centered white advertising overlay with a red header and blue footer banner covers the middle of the frame. No team names, scoreboard, match label, or game clock are visible. Crowd scene filmed from a low angl"
+    },
+    {
+      "match_detail_id": "1091",
+      "source_id": "src-s18-w07d03",
+      "team_a": "ONIC",
+      "team_b": "NAVI",
+      "start_seconds": 22942,
+      "offset_status": "boundary_verified",
+      "visual_status": "context-only",
+      "deepseek_disposition": "context-only",
+      "candidate_start_seconds": 22942.0,
+      "frame_group": "G-P3-1091-FEED",
+      "frame_ids": [
+        "DF3-w07d03-23501",
+        "DF3-w07d03-23801",
+        "DF3-w07d03-24101",
+        "DF3-w07d03-24301",
+        "DF3-w07d03-24501"
+      ],
+      "frame_sha256": [
+        "32d33ec2ad198e8c860079839cbb7d90b1c23980b87f7c75183a3abf028d421f",
+        "12ec0af76e08e87a5bdb0dcb3b49dc87f32c38ef398fa05a8649a288f389d870",
+        "cd84094c933f1ad369f5eba1e1d7ea3460fbe0ac5b84a7c1e8ef89e0c8ffeb38",
+        "41c692b0876d4ff6f873b868dc024ba9874840ecc2f974dc37e3889dfc9d6f70",
+        "7512e4d0c3fe1e89e16ab9f21ad0daedc991a0af4f7d8974513d6d0de0a02692"
+      ],
+      "status_effect": "partial_context_only",
+      "evidence": "Pre-match studio segment with two presenters; overlay shows 0-0, M56 - GAME 1, BEST OF 3, and a DRAFT PICK IN 12:26 countdown; ONIC and NAVI appear in the lower ticker; no 00:00 game clock. Three-person analyst desk on stage; overlay repeats 0-0, M56 - GAME 1, BEST OF 3, and DRAFT PICK IN 07:26; ONI"
+    },
+    {
+      "match_detail_id": "1068",
+      "source_id": "src-s18-w08d01",
+      "team_a": "EVOS",
+      "team_b": "DEWA",
+      "start_seconds": 2969,
+      "offset_status": "boundary_verified",
+      "visual_status": "context-only",
+      "deepseek_disposition": "context-only",
+      "candidate_start_seconds": 2969.0,
+      "frame_group": "G-P3-1068-FEED",
+      "frame_ids": [
+        "DF3-w08d01-3002",
+        "DF3-w08d01-3302",
+        "DF3-w08d01-3452",
+        "DF3-w08d01-3602"
+      ],
+      "frame_sha256": [
+        "6dddf3dbec9eac7eab59c4c7971741db206679479f014d0b0009beb5b25a4b57",
+        "97504bc392f421c5c496c38c1d9b1a12e53ac5a320413782b8ee95f45bcc3f67",
+        "c8d46a46c2b72f75990483b9b1d645e9980ce7a41ddfc0d77c9da317496aed93",
+        "44d0d36ae2c67d991313bab78e3d68fb3bbc0220d2edb712bce4982adc546b4a"
+      ],
+      "status_effect": "partial_context_only",
+      "evidence": "Top-down live game feed with EVOS on the left and DEWA on the right; the game clock reads 00:58. Heroes are active in the river/jungle area near the large pit. No 00:00 clock or draft/lobby view is present. Live game feed at 05:58; EVOS and DEWA are on the HUD, heroes are fighting in a river/jungle "
+    },
+    {
+      "match_detail_id": "1092",
+      "source_id": "src-s18-w08d01",
+      "team_a": "AE",
+      "team_b": "BTR",
+      "start_seconds": null,
+      "offset_status": "pending_validation",
+      "visual_status": "no_candidate_waiver",
+      "deepseek_disposition": "inconclusive",
+      "candidate_start_seconds": null,
+      "frame_group": null,
+      "frame_ids": [],
+      "frame_sha256": [],
+      "status_effect": null,
+      "evidence": "No team-paired series cue found in the timed captions; no screenshot target was added. The offset remains null and must not be cited with a timestamp."
+    },
+    {
+      "match_detail_id": "1093",
+      "source_id": "src-s18-w08d01",
+      "team_a": "NAVI",
+      "team_b": "TLID",
+      "start_seconds": null,
+      "offset_status": "pending_validation",
+      "visual_status": "no_candidate_waiver",
+      "deepseek_disposition": "inconclusive",
+      "candidate_start_seconds": null,
+      "frame_group": null,
+      "frame_ids": [],
+      "frame_sha256": [],
+      "status_effect": null,
+      "evidence": "No team-paired series cue found in the timed captions; no screenshot target was added. The offset remains null and must not be cited with a timestamp."
+    },
+    {
+      "match_detail_id": "1094",
+      "source_id": "src-s18-w08d02",
+      "team_a": "EVOS",
+      "team_b": "ONIC",
+      "start_seconds": 1585,
+      "offset_status": "detected_pending_review",
+      "visual_status": "context-only",
+      "deepseek_disposition": "context-only",
+      "candidate_start_seconds": 1585,
+      "frame_group": "G-1094-1585",
+      "frame_ids": [
+        "DF-1094-1581",
+        "DF-1094-1585",
+        "DF-1094-1589"
+      ],
+      "frame_sha256": [
+        "52725cdddccd5f9ab44ffd0b2a4fdfa66aa706dc6c14544c06fce1891e70df2a",
+        "89f62165f439e256ee2fc3661db4de925763289b746bdc896af6545be302902d",
+        "684621603087188b9cff094ddf347f825a56bb60416788b48fefc390f8c89156"
+      ],
+      "status_effect": "partial_context_only",
+      "evidence": "One-man interview shot in front of a sponsor wall. The top scoreboard shows M59 - GAME 1, 0 VS 0, BEST OF 3, with two unlabeled team logos. No draft countdown or readable team names are visible. Two-person interview at the same sponsor wall. The scoreboard shows M59 - GAME 1, 0 VS 0, BEST OF 3, and "
+    },
+    {
+      "match_detail_id": "1095",
+      "source_id": "src-s18-w08d02",
+      "team_a": "RRQ",
+      "team_b": "TLID",
+      "start_seconds": 1882,
+      "offset_status": "detected_pending_review",
+      "visual_status": "rejected",
+      "deepseek_disposition": "rejected",
+      "candidate_start_seconds": 1882,
+      "frame_group": "G-P2-1095-1882",
+      "frame_ids": [
+        "DF2-w08d02-1879",
+        "DF2-w08d02-1884",
+        "DF2-w08d02-1889"
+      ],
+      "frame_sha256": [
+        "a1cc3fb662efdaf137a36c65be33d842c73634d3866b931cb894ab90aea0e7b5",
+        "459cb4fd045fe0d48c9abc58fe32c247fcff2da9e311674f83deae7bae28d2c3",
+        "3fc256d9f3afd9c9204c521ec28bb3c957e9c5acd83512f470ed17eb73adcdbd"
+      ],
+      "status_effect": "candidate_rejected",
+      "evidence": "League standings screen headed KLASEMEN, showing nine ranked teams and league-table columns MATCH POINT, MATCH W-L, NET GAME WIN, and GAME W-L. TEAM LIQUID ID appears at rank 2 and RRQ HOSHI at rank 8, but there is no match pairing, series number, game score, draft, or in-game clock. A YouTube playe"
+    },
+    {
+      "match_detail_id": "1096",
+      "source_id": "src-s18-w08d02",
+      "team_a": "DEWA",
+      "team_b": "NAVI",
+      "start_seconds": 1884,
+      "offset_status": "detected_pending_review",
+      "visual_status": "rejected",
+      "deepseek_disposition": "rejected",
+      "candidate_start_seconds": 1884,
+      "frame_group": "G-P2-1096-1884",
+      "frame_ids": [
+        "DF2-w08d02-1880",
+        "DF2-w08d02-1886",
+        "DF2-w08d02-1890"
+      ],
+      "frame_sha256": [
+        "a9dc1689a68bf2ae51abc4e69dbb95694c1930b144484474f58e7605cafd36c8",
+        "63574e481e729ad55b99881e277ce86418ac2f610312ce6f0093a29bc92f53e1",
+        "27bc11550772dcdfac57506577e40a58086a9ea9028ab0343c2937d93eed66b0"
+      ],
+      "status_effect": "candidate_rejected",
+      "evidence": "Full-screen league standings table ('KLASEMEN') for a regular-season week, with nine teams ranked in a table. No match-up header, no series number, no scoreboard, no clock/countdown, no draft screen. NAVI is row 1 and DEWA UNITED is row 7; they appear only as separate ranked entries. Near-identical "
+    },
+    {
+      "match_detail_id": "1097",
+      "source_id": "src-s18-w08d03",
+      "team_a": "EVOS",
+      "team_b": "GEEK",
+      "start_seconds": 2052,
+      "offset_status": "detected_pending_review",
+      "visual_status": "rejected",
+      "deepseek_disposition": "rejected",
+      "candidate_start_seconds": 2052,
+      "frame_group": "G-P2-1097-2052",
+      "frame_ids": [
+        "DF2-w08d03-2048",
+        "DF2-w08d03-2054",
+        "DF2-w08d03-2059"
+      ],
+      "frame_sha256": [
+        "f05f8c8938630bba25ee869004a74a152aeb1b3e67d19c3700ee9b312b98c15f",
+        "a4a8b1bb926e4ad5b93d0be64922680c8dab473d1c8d48abd66125a45fd00990",
+        "094a0498222bda6758cee19aad7bd4a4228e49a4e9063cc9d071e5f371058b49"
+      ],
+      "status_effect": "candidate_rejected",
+      "evidence": "Frame 1 shows a full-screen league standings table headed 'KLASEMEN' with 'REGULAR SEASON' and 'MINGGU 8 - HARI 3' on the right; MPL ID and 'NEVER GIVE UP THIS GAME' logos sit in the top corners. Nine teams are ranked with columns POS / TEAM / MATCH POINT / MATCH W-L / NET GAME WIN / GAME W-L; EVOS "
+    },
+    {
+      "match_detail_id": "1098",
+      "source_id": "src-s18-w08d03",
+      "team_a": "RRQ",
+      "team_b": "ONIC",
+      "start_seconds": 17865,
+      "offset_status": "boundary_verified",
+      "visual_status": "context-only",
+      "deepseek_disposition": "context-only",
+      "candidate_start_seconds": 17865.0,
+      "frame_group": "G-P3-1098-FEED",
+      "frame_ids": [
+        "DF3-w08d03-18101",
+        "DF3-w08d03-18701",
+        "DF3-w08d03-18901",
+        "DF3-w08d03-19101"
+      ],
+      "frame_sha256": [
+        "efd8db469ef49e41fc47e7341cd98698da35152dfcaa03b645804f82001a3e32",
+        "4cf300fa0c3709f7f6d2400efc8386370d7a37cd9e4b53652b4e5e364db9892d",
+        "13b0c8986661b5a385933e223e8a8a84873ae9cb587f3de69ca2029399d17886",
+        "0048a8d5e35e98d9aff1649521489c9e44fe1687911be326184bc1d5a716f2c5"
+      ],
+      "status_effect": "partial_context_only",
+      "evidence": "Stage host with a handheld mic; the broadcast scoreboard shows RRQ 1-1 ONIC, M6 Game 3, Best of 3, and a 04:28 draft-pick countdown. No in-game HUD, no game clock, and no 00:00. Close-up of a phone held over a player's lap showing the hero-selection/draft screen; lower-third DRAFT IDENTITY/DRAFT DNA"
+    },
+    {
+      "match_detail_id": "1099",
+      "source_id": "src-s18-w08d03",
+      "team_a": "DEWA",
+      "team_b": "BTR",
+      "start_seconds": null,
+      "offset_status": "pending_validation",
+      "visual_status": "no_candidate_waiver",
+      "deepseek_disposition": "inconclusive",
+      "candidate_start_seconds": null,
+      "frame_group": null,
+      "frame_ids": [],
+      "frame_sha256": [],
+      "status_effect": null,
+      "evidence": "No team-paired series cue found in the timed captions; no screenshot target was added. The offset remains null and must not be cited with a timestamp."
+    },
+    {
+      "match_detail_id": "1100",
+      "source_id": "src-s18-w09d01",
+      "team_a": "NAVI",
+      "team_b": "RRQ",
+      "start_seconds": 2650,
+      "offset_status": "boundary_verified",
+      "visual_status": "context-only",
+      "deepseek_disposition": "context-only",
+      "candidate_start_seconds": 2650.0,
+      "frame_group": "G-P3-1100-FEED",
+      "frame_ids": [
+        "DF3-w09d01-2902",
+        "DF3-w09d01-3001",
+        "DF3-w09d01-3102",
+        "DF3-w09d01-3202",
+        "DF3-w09d01-3402"
+      ],
+      "frame_sha256": [
+        "6e7a3e089ba04e43e04557ecd66cd71a0c0a250304223e2ea19532efa27e580a",
+        "7c60882942cbd88a11937046b8bac6fb6ea341d4952e9b0b2974e30102cca34e",
+        "5f4ba8bd4b660e7725c7e0dad3521c33ea4c0b01910e84567d3f7e8db723d8ba",
+        "cf651b97c219e67fb0609707f377bda2ad199018814b869dc10cfda7267e8a76",
+        "d6970049a2e85d109c718b0252bba3de18e1aa0889690f41654aaeb70ac90d2c"
+      ],
+      "status_effect": "partial_context_only",
+      "evidence": "Patch-notes graphic with hero cards for Aulus, Hirara, Fudora, and Rafaela; no gameplay HUD or game clock. A bottom-right strip shows 0 VS 0 beside a gold league-style badge and an orange RRQ logo. NAVI appears only in the footer award text. Player close-up in a headset. Top-left scorebug shows 0 VS"
+    },
+    {
+      "match_detail_id": "1101",
+      "source_id": "src-s18-w09d01",
+      "team_a": "GEEK",
+      "team_b": "AE",
+      "start_seconds": 12798.0,
+      "offset_status": "detected_pending_review",
+      "visual_status": "context-only",
+      "deepseek_disposition": "context-only",
+      "candidate_start_seconds": 12798.0,
+      "frame_group": "G-P3-1101-12798",
+      "frame_ids": [
+        "DF3-w09d01-12794",
+        "DF3-w09d01-12799",
+        "DF3-w09d01-12804",
+        "DF3-w09d01-12829",
+        "DF3-w09d01-12859"
+      ],
+      "frame_sha256": [
+        "0be6c6d9f6a0c6a0b3922ba026b67be2599626c2dadfb49530925299a9a05b5e",
+        "c9dc09fc1128a8eee7d2fe25c495cc01c6ea59485f65b44bda3d9d032aa26af2",
+        "b1e6c63bab19bc57fbbedb57b2b918c215142b996e810e8c5d460dfbed10ff0f",
+        "aa8f3ac9c550e3e1c52d45a1c17aaf1d01c23b5b39b7a695a20e5f28e1ded8a0",
+        "0dd2f4777c0955b4b1f0434657869cb95f1ee301cfa82e8f4e380733820ec992"
+      ],
+      "status_effect": "partial_context_only",
+      "evidence": "Webcam interview in a room; MPL lower-third shows GEEK and AE at 0 VS 0 with a small studio-panel inset. No game clock or 00:00 is visible. Same webcam interview and MPL overlay; GEEK and AE remain at 0 VS 0, with a studio-panel inset. No game clock or 00:00 is visible. Webcam interview continues; M"
+    },
+    {
+      "match_detail_id": "1102",
+      "source_id": "src-s18-w09d02",
+      "team_a": "ONIC",
+      "team_b": "DEWA",
+      "start_seconds": 2354,
+      "offset_status": "detected_pending_review",
+      "visual_status": "context-only",
+      "deepseek_disposition": "context-only",
+      "candidate_start_seconds": 2354,
+      "frame_group": "G-P2-1102-2354",
+      "frame_ids": [
+        "DF2-w09d02-2350",
+        "DF2-w09d02-2355",
+        "DF2-w09d02-2360"
+      ],
+      "frame_sha256": [
+        "f8bdd5ebf80e6bf36d2f59ed1b6e24f2baadb660b814e6e9222895c49d89b77f",
+        "1dda6468a31ea432510f65cc78693e39f763bc4b005d42b4cf7aad96f7e20b3a",
+        "5a86627e366f879b4efdd13a46f1371dfa12df9a99768e5c6e19bf204787efc8"
+      ],
+      "status_effect": "partial_context_only",
+      "evidence": "Wide stage shot of three commentators seated behind a white desk labeled GT50 Pro; the overhead scoreboard shows 0-0, VS, BEST OF 3 and a green draft countdown, while the desk monitor shows a Pesta Rank graphic. No players, draft screen, or in-game HUD is visible. Same desk setup and 0-0 BEST OF 3 o"
+    },
+    {
+      "match_detail_id": "1103",
+      "source_id": "src-s18-w09d02",
+      "team_a": "BTR",
+      "team_b": "EVOS",
+      "start_seconds": 2429,
+      "offset_status": "detected_pending_review",
+      "visual_status": "rejected",
+      "deepseek_disposition": "rejected",
+      "candidate_start_seconds": 2429,
+      "frame_group": "G-P2-1103-2429",
+      "frame_ids": [
+        "DF2-w09d02-2425",
+        "DF2-w09d02-2431",
+        "DF2-w09d02-2435"
+      ],
+      "frame_sha256": [
+        "f2f33f662fd561b7eeb24db9a6680c42a36a36747f8f9de32a70d20bb426624e",
+        "565e397b81638bfb8d9b06a22670ac2ae190a9048cb8b0875c84a1b88b71bacc",
+        "2f8796098c3704d622a81356f44bbf2340d0ef8901ea8827b493a259b85d4c7f"
+      ],
+      "status_effect": "candidate_rejected",
+      "evidence": "Full-screen MPL ID league standings table on a light gray/green background with red and blue ribbon banner. Left column shows POS 1-9 with green (top) and red (bottom) markers. No match series header, no team-vs-team pairing, no scoreboard, no draft, no game clock. Identical standings table to the p"
+    },
+    {
+      "match_detail_id": "1104",
+      "source_id": "src-s18-w09d02",
+      "team_a": "RRQ",
+      "team_b": "GEEK",
+      "start_seconds": null,
+      "offset_status": "pending_validation",
+      "visual_status": "no_candidate_waiver",
+      "deepseek_disposition": "inconclusive",
+      "candidate_start_seconds": null,
+      "frame_group": null,
+      "frame_ids": [],
+      "frame_sha256": [],
+      "status_effect": null,
+      "evidence": "No team-paired series cue found in the timed captions; no screenshot target was added. The offset remains null and must not be cited with a timestamp."
+    },
+    {
+      "match_detail_id": "1105",
+      "source_id": "src-s18-w09d03",
+      "team_a": "EVOS",
+      "team_b": "AE",
+      "start_seconds": 300,
+      "offset_status": "pending_validation",
+      "visual_status": "rejected",
+      "deepseek_disposition": "rejected",
+      "candidate_start_seconds": 300,
+      "frame_group": "G-1105-300",
+      "frame_ids": [
+        "DF-1105-296",
+        "DF-1105-300",
+        "DF-1105-304"
+      ],
+      "frame_sha256": [
+        "98e00875da8230eac2dc0141bd0990069221148cd6c20e477f2a135422e2009f",
+        "77631a661b14d0eb0607d1ed3528889bde93181d768f03dc049c0e64ef8b21b4",
+        "ef5117c4e432e2ec4fd86a890f1e6ae01fa1ef8ce2ad5869097b124f696038db"
+      ],
+      "status_effect": "candidate_rejected",
+      "evidence": "Pre-show broadcast screen: 'REGULAR SEASON MINGGU 9 | HARI 3' header, caster panel, a right-side schedule of three BO3 matches at 14:15/17:15/20:15 WIB, a large countdown 27:49, and a Magic Chess Go Go promo in the main video area. No in-game clock or match-start overlay; match-70 team names are log"
+    },
+    {
+      "match_detail_id": "1106",
+      "source_id": "src-s18-w09d03",
+      "team_a": "NAVI",
+      "team_b": "BTR",
+      "start_seconds": 13093,
+      "offset_status": "boundary_verified",
+      "visual_status": "context-only",
+      "deepseek_disposition": "context-only",
+      "candidate_start_seconds": 13093,
+      "frame_group": "G-1106-13093",
+      "frame_ids": [
+        "DF-1106-13089",
+        "DF-1106-13093",
+        "DF-1106-13097"
+      ],
+      "frame_sha256": [
+        "a4982bd7dfc4169757c4b28a1afdcf14aea4752e09ebe83ec1132c5038f3dc0b",
+        "5b0bdc189ef234f25a6e919750adbd35225bbe744998ef1b1c2895c543873428",
+        "7bc6ef8ab7f4e5b493edd7e7f6151c8d52fc42849e3e936dcb70192886018564"
+      ],
+      "status_effect": "partial_context_only",
+      "evidence": "Upper-left broadcast overlay reads M71 - GAME 1, with NAVI 0 vs 0 VITALITY and BEST OF 3; the countdown box reads DRAFT PICK IN 14:58. Two players in NAVI and TEAM VITALITY jerseys stand with a host holding a microphone. No gameplay is shown. Same broadcast overlay: M71 - GAME 1, NAVI 0 vs 0 VITALIT"
+    },
+    {
+      "match_detail_id": "1107",
+      "source_id": "src-s18-w09d03",
+      "team_a": "ONIC",
+      "team_b": "TLID",
+      "start_seconds": 23893,
+      "offset_status": "boundary_verified",
+      "visual_status": "context-only",
+      "deepseek_disposition": "context-only",
+      "candidate_start_seconds": 23893,
+      "frame_group": "G-1107-23893",
+      "frame_ids": [
+        "DF-1107-23889",
+        "DF-1107-23893",
+        "DF-1107-23897"
+      ],
+      "frame_sha256": [
+        "c86e13a9c951f1ba74563e486b22923a7e57d04b672b63e9dab17db706c2d8f4",
+        "5c63ecea3ab8e907f6e3fb83003987f19b8ff8b00b7e5d7e56d17a471c8209e1",
+        "e98507b14810e5048027b3299d93ea52028ffd4fae6f4c17f65139f7c7c33ec6"
+      ],
+      "status_effect": "partial_context_only",
+      "evidence": "Crowd shot with broadcast overlay in the upper-left corner. The overlay shows an unlabeled white logo on black at left, a score of 0, 'VS', a score of 0, 'BEST OF 3', 'M72 GAME 1', and a green 'DRAFT PICK IN 16:06' countdown panel. A 'ROAD TO SURABAYA' logo appears top-right. No team names are legib"
+    }
+  ]
+}

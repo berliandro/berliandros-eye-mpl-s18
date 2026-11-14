@@ -107,6 +107,21 @@ Derived from `game_players` + `team_games` (5 games):
 
 > **Note:** First-blood and first-objective (Turtle/Lord) tracking are not available in the database. These metrics are derived from scoreboard aggregates, not objective-level data.
 
+## Transcript observations (accepted)
+
+<!-- transcript-routing:start -->
+Accepted, source-linked observations. Caster claims are commentary, not proof of an in-game event.
+
+- `TOBS-1069-G1-002` · match 1069 · 00:39:08 · *commentary* — ONIC moves Samuel, previously a roamer, to mid lane for this series; caster frames it as a new concept from coach Cew/Baloiski. ([match](../matches/1069-geek-vs-onic.md), [source](https://youtu.be/TeegcSSZJbI?t=2348))
+- `TOBS-1069-G1-003` · match 1069 · 00:40:53 · *commentary* — Caster describes Samuel's roamer style as initiation-heavy with strong river rotations. ([match](../matches/1069-geek-vs-onic.md), [source](https://youtu.be/TeegcSSZJbI?t=2453))
+- `TOBS-1069-G1-005` · match 1069 · 00:42:32 · *commentary* — Caster states GEEK must play aggressively and deny ONIC river control, especially with Samuel and Kibo as resources. ([match](../matches/1069-geek-vs-onic.md), [source](https://youtu.be/TeegcSSZJbI?t=2552))
+- `TOBS-1074-G1-003` · match 1074 · 03:31:52 · *commentary* — ONIC lineup includes Lutfy, Samuel, Kyoo, Robert and Ka. ([match](../matches/1074-onic-vs-ae.md), [source](https://youtu.be/YPbOKyQltIo?t=12712))
+- `TOBS-1091-G1-007` · match 1091 · 06:34:13 · *commentary* — The caster notes Navi's midlane changes from Samuel to Kilua. ([match](../matches/1091-onic-vs-navi.md), [source](https://youtu.be/S7ugRA3UMjo?t=23653))
+<!-- transcript-routing:end -->
+
+
+
+
 ## References
 
 - Database snapshot `mpl-s18-db-20c5ea2c51f3`

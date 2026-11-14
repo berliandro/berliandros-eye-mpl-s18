@@ -11,7 +11,7 @@
 | Series | Date | Source | Video | Selection reason |
 |---|---|---|---|---|
 | 1036 EVOS 2–0 RRQ | 2026-08-14 | `src-s18-w01d01` | `40fehk2f4_E` | first series of the season; explicit draft commentary |
-| 1037 NAVI 0–2 AE | 2026-08-14 | `src-s18-w01d01` | `40fehk2f4_E` | same broadcast, contrasting close late game; visually reviewable |
+| 1037 NAVI 0–2 AE | 2026-08-14 | `src-s18-w01d01` | `40fehk2f4_E` | same broadcast, contrasting close late game; DeepSeek-reviewed (frame-level claim context-only) |
 | 1107 ONIC 0–2 TLID | 2026-10-18 | `src-s18-w09d03` | `hY0Upem95uo` | final series, title-deciding context; objective/map-control commentary |
 
 The two pilot sources were selected because their exact transcript lines align one-to-one with the official YouTube timed captions, and their video identities were verified by title/week/day/channel metadata. The wider local resolution pass now verifies all 27 official videos; 26 sources have full-line caption timing, and one remains partial.
@@ -26,7 +26,7 @@ The two pilot sources were selected because their exact transcript lines align o
 - Pilot evidence: **8 segments**, **18 observations**, **3 insights**, **1 audit**.
 - Quote validation: **8/8** stored segments match the source line span exactly after newline normalization; **0** quote mismatches.
 - Database references: every observation’s query is re-executed by the validator; **0** reproducibility errors.
-- Visual review: **6** used frames, **1** rejected promotional overlay, **1** failed frame; **3** series-level frames / **2** contact sheets.
+- Visual review: historical `visual-review.json` has **6** used frames, **1** rejected promotional overlay, **1** failed frame. DeepSeek pass 1 re-reviewed the eight pilot targets: **2 used**, **4 context-only**, **2 rejected**; the "AE AFFAN ... HAS SLAIN" and base-defense claims are not literally visible. See `visual-proof-deepseek-review.md`.
 - Live video smoke test: **PASS** at requested 04:14:05 on `40fehk2f4_E` (actual 04:14:06.521), frame 669,722 bytes.
 
 ## Evidence inventory
@@ -51,7 +51,7 @@ The two pilot sources were selected because their exact transcript lines align o
 - No claim that a draft “caused” a win, that a team has a repeatable season-long trait, or that a player communicated/intended anything.
 - No objective counts: the database has no per-game Lord/Turtle/Tower counts. Transcript mentions are commentary.
 - No reaction-time, hidden-vision or mechanical-execution claims.
-- No full-season semantic analysis. Twenty-six sources are alignment-ready, but only 3/72 series have curated semantic insights.
+- Full-season report coverage: 72/72 series have curated reports. 3 series have transcript-verified pilot evidence (1036, 1037, 1107). 25 series are source-mapped with boundary-verified transcript quotes. 44 series are DB-only. 22 of 27 sources are boundary-verified; 4 remain unvalidated; 1 is quarantined. See `analysis/reports/coverage-summary.md` for the reconciled single-source-of-truth counts.
 - No claim that unprocessed series are uninformative. They are simply not analyzed semantically yet.
 - No timestamp citations from the partial source `src-s18-w09d02`; its 37 unmatched short lines remain explicitly unaligned.
 
@@ -70,7 +70,7 @@ Deterministic analysis suite (`python tools/verify_analysis.py`, local corpus re
 - `test_transcript_import.py`: **4/4**
 - `test_transcript_evidence.py`: **10/10**
 - `test_video_frames.py`: **7/7**
-- ledger validation: **PASS** (8 segments / 18 observations / 3 insights / 1 audit)
+- ledger validation: **PASS** (8 segments / 85 observations / 73 insights / 68 audits) — counts reflect the expanded ledger, not just the 3-series pilot.
 - source/corpus boundary check: **PASS** (27/27 source paths, hashes; raw/cache ignored)
 - inventory regeneration: **PASS**
 

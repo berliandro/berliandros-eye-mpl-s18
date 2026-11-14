@@ -1,5 +1,9 @@
 # Agent instructions
 
+## Project skill
+
+Before substantial work, load the `mpls18-coaching-analyst` skill with the `skill` tool. It routes to transcript, visual-proof, and data/tool references.
+
 ## Goal workflow (docs/goals)
 
 - Goals are tracked as Markdown files under `docs/goals/`.

@@ -153,6 +153,19 @@ Derived from `game_players` + `team_games` (37 games):
 | SANZ | ONIC | 17 | 5.88 |
 | Killuaa | ONIC | 18 | 5.63 |
 
+## Transcript observations (accepted)
+
+<!-- transcript-routing:start -->
+Accepted, source-linked observations. Caster claims are commentary, not proof of an in-game event.
+
+- `TOBS-1036-G1-006` · match 1036 · 00:49:04 · *observation* — The broadcast records first blood going to Albert (EVOS) after an unexpected flicker caught Hajirin. ([match](../matches/1036-evoss-vs-rrq.md), [source](https://youtu.be/40fehk2f4_E?t=2944))
+- `TOBS-1036-G1-024` · match 1036 · 01:05:14 · *commentary* — The caster says Eudora out-traps Kadita, implying RRQ's Kadita pick was less impactful. ([match](../matches/1036-evoss-vs-rrq.md), [source](https://youtu.be/40fehk2f4_E?t=3914))
+- `TOBS-1100-G1-01` · match 1100 · 00:44:21 · *commentary* — Caster lists RRQ's starting lineup: Joshua in XP, Favian in jungle, with Hajirin, Said and Dynamic 2, plus a gold laner. ([match](../matches/1100-rrq-vs-navi.md), [source](https://youtu.be/-QC1gIugHrM?t=2661))
+<!-- transcript-routing:end -->
+
+
+
+
 ## References
 
 - Database snapshot `mpl-s18-db-20c5ea2c51f3`

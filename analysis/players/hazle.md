@@ -154,6 +154,22 @@ Derived from `game_players` + `team_games` (30 games):
 | KEVIN | TEAM LIQUID ID | 37 | 4.29 |
 | Affan | ALTER EGO ESPORTS | 36 | 4.18 |
 
+## Transcript observations (accepted)
+
+<!-- transcript-routing:start -->
+Accepted, source-linked observations. Caster claims are commentary, not proof of an in-game event.
+
+- `TOBS-1060-G1-006` · match 1060 · 00:44:10 · *observation* — The broadcast notes Cars already has two kills, one on Albert and one on Hazel. ([match](../matches/1060-navi-vs-dewa.md), [source](https://youtu.be/W-LSKxUkUi4?t=2650))
+- `TOBS-1062-G1-005` · match 1062 · 00:48:24 · *observation* — The broadcast records a double kill for Hazel and notes Skypearce stacks reaching 40. ([match](../matches/1062-dewa-vs-onic.md), [source](https://youtu.be/-M1_bwTRlHk?t=2904))
+- `TOBS-1081-G1-006` · match 1081 · 00:50:39 · *observation* — Hazel gets two kills in the first minute. ([match](../matches/1081-dewa-vs-ae.md), [source](https://youtu.be/K30JsmMhQ4Q?t=3039))
+- `TOBS-1081-G1-007` · match 1081 · 00:51:16 · *observation* — Turtle contest: Shin vs Hazel; Barats makes Hazel cautious. ([match](../matches/1081-dewa-vs-ae.md), [source](https://youtu.be/K30JsmMhQ4Q?t=3076))
+- `TOBS-1068-G1-004` · match 1068 · 00:51:33 · *commentary* — The caster says the teams stayed around the turtle so Hazel could return safely. ([match](../matches/1068-evos-vs-dewa.md), [source](https://youtu.be/7Fk2t0Kc9-Q?t=3093))
+- `TOBS-1102-G1-06` · match 1102 · 01:03:04 · *observation* — Dewa secures first blood via Hazel mid; Maybe narrowly escapes. ([match](../matches/1102-dewa-vs-onic.md), [source](https://youtu.be/b9SktblDNuc?t=3784))
+<!-- transcript-routing:end -->
+
+
+
+
 ## References
 
 - Database snapshot `mpl-s18-db-20c5ea2c51f3`

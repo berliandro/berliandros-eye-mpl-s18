@@ -1,0 +1,129 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://berliandros-eye.local/schemas/game-evidence-timeline-v1.json",
+  "title": "Berliandro's Eye game-level evidence timeline",
+  "description": "Atomic, falsifiable game-level evidence events linking broadcast transcripts, verified VODs, canonical DB records, and reviewed visual evidence. Short excerpts only; raw corpus stays local.",
+  "type": "object",
+  "required": ["schema_version", "timeline_id", "series_id", "game_no", "source_id", "video_id", "events", "generated_at"],
+  "properties": {
+    "schema_version": { "const": 1 },
+    "timeline_id": { "type": "string", "pattern": "^TL-[A-Z0-9-]+$", "minLength": 1 },
+    "series_id": { "type": "string", "pattern": "^\\d{4}$", "minLength": 1 },
+    "game_no": { "type": "integer", "minimum": 1, "maximum": 5 },
+    "source_id": { "type": "string", "pattern": "^src-s18-w\\d{2}d\\d{2}$", "minLength": 1 },
+    "video_id": { "type": "string", "pattern": "^[A-Za-z0-9_-]{11}$", "minLength": 11, "maxLength": 11 },
+    "broadcast_date": { "type": "string", "format": "date" },
+    "game_boundary_status": {
+      "enum": ["verified", "heuristic", "unresolved", "quarantined"],
+      "description": "verified = independently confirmed series+game boundary; heuristic = candidate only; unresolved = not yet determined; quarantined = explicitly excluded from citations"
+    },
+    "boundary_verified_by": { "type": ["string", "null"], "description": "Method or tool that verified the boundary (e.g., transcript_boundary, visual_review, schedule_heuristic)" },
+    "db_snapshot_id": { "type": "string", "minLength": 1 },
+    "db_snapshot_sha256": { "type": "string", "pattern": "^[0-9a-f]{64}$" },
+    "generated_at": { "type": "string", "format": "date-time" },
+    "generator_version": { "type": "string", "minLength": 1 },
+    "events": {
+      "type": "array",
+      "items": { "$ref": "#/$defs/event" }
+    }
+  },
+  "additionalProperties": false,
+  "$defs": {
+    "event": {
+      "type": "object",
+      "required": ["event_id", "event_type", "category", "start_seconds", "end_seconds", "confidence", "evidence_type", "uncertainty"],
+      "properties": {
+        "event_id": { "type": "string", "pattern": "^EVT-[A-Z0-9-]+$", "minLength": 1 },
+        "event_type": {
+          "enum": ["draft_pick", "draft_ban", "lane_pressure", "rotation", "gank", "counter_gank", "objective_setup", "objective_contest", "objective_secure", "objective_deny", "objective_trade", "turret_pressure", "wave_management", "teamfight_initiation", "teamfight_target", "peel", "spacing", "disengage", "flank", "follow_up", "positioning", "mechanical_execution", "mistake", "outplay", "survivability", "power_spike", "base_defense", "siege", "comeback", "throw", "closing", "failure_to_convert", "macro_decision", "meso_execution", "micro_execution", "other"],
+          "description": "Atomic, falsifiable event type"
+        },
+        "category": {
+          "enum": ["draft", "lane", "rotation", "objective", "structure", "teamfight", "positioning", "mechanics", "economy", "macro", "meso", "micro", "other"],
+          "description": "High-level category for filtering and reporting"
+        },
+        "subject": {
+          "type": "object",
+          "properties": {
+            "team": { "type": ["string", "null"] },
+            "player": { "type": ["string", "null"] },
+            "hero": { "type": ["string", "null"] },
+            "side": { "type": ["string", "null"], "enum": ["blue", "red", null] }
+          },
+          "additionalProperties": false
+        },
+        "start_seconds": { "type": ["number", "null"], "minimum": 0, "description": "Start time in VOD seconds (cue-time, not frame-accurate). Null for database-only events." },
+        "end_seconds": { "type": ["number", "null"], "minimum": 0, "description": "End time in VOD seconds (cue-time, not frame-accurate). Null for database-only events." },
+        "game_clock": { "type": ["string", "null"], "description": "In-game clock if visible in footage (e.g., '21:08')" },
+        "confidence": { "enum": ["high", "med", "low"] },
+        "evidence_type": {
+          "enum": ["transcript_statement", "commentator_interpretation", "database_record", "derived_stat", "gameplay_observation", "analytical_inference", "combined"],
+          "description": "What kind of evidence supports this event"
+        },
+        "transcript_evidence": {
+          "type": ["object", "null"],
+          "properties": {
+            "source_id": { "type": "string", "pattern": "^src-s18-w\\d{2}d\\d{2}$" },
+            "line_start": { "type": "integer", "minimum": 1 },
+            "line_end": { "type": "integer", "minimum": 1 },
+            "text": { "type": "string", "minLength": 1 },
+            "text_sha256": { "type": ["string", "null"], "pattern": "^[0-9a-f]{64}$" },
+            "timestamp_start": { "type": "number", "minimum": 0 },
+            "timestamp_end": { "type": "number", "minimum": 0 },
+            "timestamp_link": { "type": "string", "pattern": "^https://youtu\\.be/" },
+            "timestamp_provenance": { "type": "string", "minLength": 1 },
+            "alignment_version": { "type": "string", "minLength": 1 }
+          },
+          "additionalProperties": false
+        },
+        "db_evidence": {
+          "type": ["array", "null"],
+          "items": {
+            "type": "object",
+            "required": ["query_id", "snapshot_id", "snapshot_sha256"],
+            "properties": {
+              "query_id": { "type": "string", "minLength": 1 },
+              "description": { "type": "string" },
+              "sql": { "type": "string" },
+              "params": { "type": "object" },
+              "snapshot_id": { "type": "string", "minLength": 1 },
+              "snapshot_sha256": { "type": "string", "pattern": "^[0-9a-f]{64}$" },
+              "rows": { "type": "array", "items": { "type": "object" } },
+              "row_count": { "type": "integer", "minimum": 0 },
+              "provenance": { "type": "string" }
+            },
+            "additionalProperties": true
+          }
+        },
+        "visual_evidence": {
+          "type": ["array", "null"],
+          "items": {
+            "type": "object",
+            "required": ["frame_id", "capture_status"],
+            "properties": {
+              "frame_id": { "type": "string", "minLength": 1 },
+              "frame_path": { "type": "string" },
+              "requested_seconds": { "type": "number", "minimum": 0 },
+              "actual_seconds": { "type": "number", "minimum": 0 },
+              "timestamp_link": { "type": "string" },
+              "capture_status": { "enum": ["succeeded", "failed"] },
+              "review_status": { "enum": ["not-reviewed", "reviewed"] },
+              "reviewer": { "type": ["string", "null"] },
+              "disposition": { "enum": ["used", "rejected", "context-only", "inconclusive", "pending"] },
+              "image_sha256": { "type": "string", "pattern": "^[0-9a-f]{64}$" },
+              "sidecar_path": { "type": "string" },
+              "observation": { "type": "string" },
+              "uncertainty": { "type": "string" }
+            },
+            "additionalProperties": true
+          }
+        },
+        "uncertainty": { "type": "string", "minLength": 1 },
+        "alternative_interpretation": { "type": "string" },
+        "counterexample_refs": { "type": "array", "items": { "type": "string" } },
+        "related_event_ids": { "type": "array", "items": { "type": "string" } }
+      },
+      "additionalProperties": false
+    }
+  }
+}

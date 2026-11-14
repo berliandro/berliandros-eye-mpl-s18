@@ -1,0 +1,55 @@
+name: Semantic Analysis Validation
+
+on:
+  push:
+    branches: [main, 'semantic/**']
+  pull_request:
+    branches: [main]
+
+jobs:
+  semantic-check:
+    name: Semantic Analysis Check
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: Install dependencies
+        run: pip install jsonschema
+
+      - name: Run CI semantic validation
+        run: python tools/ci_semantic_check.py
+
+      - name: Validate DeepSeek visual reviews
+        run: python tools/validate_visual_reviews.py --ci
+
+      - name: Run visual review adversarial tests
+        run: python -m pytest tools/test_visual_review_integrity.py -v || python tools/test_visual_review_integrity.py
+
+      - name: Run adversarial boundary tests
+        run: python -m pytest tools/test_adversarial_boundaries.py -v || python tools/test_adversarial_boundaries.py
+
+      - name: Run transcript evidence tests
+        run: python -m pytest tools/test_transcript_evidence.py -v || python tools/test_transcript_evidence.py
+
+      - name: Run analysis inventory check
+        run: python tools/analysis_inventory.py
+
+      - name: Verify game offsets
+        run: python tools/validate_game_offsets.py
+
+      - name: Check for raw corpus in Git
+        run: |
+          if git ls-files | grep -q "raw-transcripts"; then
+            echo "ERROR: Raw transcripts found in Git"
+            exit 1
+          fi
+          echo "No raw transcripts in Git"
+
+      - name: Check git diff
+        run: git diff --check

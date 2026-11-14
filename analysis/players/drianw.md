@@ -111,6 +111,15 @@ Derived from `game_players` + `team_games` (5 games):
 
 > **Note:** First-blood and first-objective (Turtle/Lord) tracking are not available in the database. These metrics are derived from scoreboard aggregates, not objective-level data.
 
+## Transcript observations (accepted)
+
+<!-- transcript-routing:start -->
+Accepted, source-linked observations. Caster claims are commentary, not proof of an in-game event.
+
+- `TOBS-1036-G1-024` · match 1036 · 01:05:14 · *commentary* — The caster says Eudora out-traps Kadita, implying RRQ's Kadita pick was less impactful. ([match](../matches/1036-evoss-vs-rrq.md), [source](https://youtu.be/40fehk2f4_E?t=3914))
+<!-- transcript-routing:end -->
+
+
 ## References
 
 - Database snapshot `mpl-s18-db-20c5ea2c51f3`

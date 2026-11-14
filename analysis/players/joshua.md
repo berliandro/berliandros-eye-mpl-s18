@@ -161,6 +161,27 @@ Derived from `game_players` + `team_games` (41 games):
 | Nino | ALTER EGO ESPORTS | 36 | 3.53 |
 | SHOGUN | BIGETRON BY VIT | 39 | 3.28 |
 
+## Transcript observations (accepted)
+
+<!-- transcript-routing:start -->
+Accepted, source-linked observations. Caster claims are commentary, not proof of an in-game event.
+
+- `TOBS-1036-G1-011` · match 1036 · 00:54:54 · *commentary* — The caster frames EVOS as playing front-to-back with Joshua (RRQ Esmeralda) as the main target. ([match](../matches/1036-evoss-vs-rrq.md), [source](https://youtu.be/40fehk2f4_E?t=3294))
+- `TOBS-1036-G1-017` · match 1036 · 00:55:27 · *commentary* — The caster says RRQ cannot freely open teamfights because Joshua's purify timer matters. ([match](../matches/1036-evoss-vs-rrq.md), [source](https://youtu.be/40fehk2f4_E?t=3327))
+- `TOBS-1036-G1-025` · match 1036 · 01:05:29 · *commentary* — The caster notes RRQ's Esmeralda ran into EVOS's Dyrroth and Paquito, a difficult matchup. ([match](../matches/1036-evoss-vs-rrq.md), [source](https://youtu.be/40fehk2f4_E?t=3929))
+- `TOBS-1065-G1-007` · match 1065 · 00:44:10 · *commentary* — The casters say Joshua's early pressure and gold lead make the lane feel like a different era for Clay. ([match](../matches/1065-rrq-vs-navi.md), [source](https://youtu.be/nu3RfzQdsec?t=2650))
+- `TOBS-1071-G1-002` · match 1071 · 03:26:15 · *commentary* — AE lineup features Joshua, Demonkite and Clay; caster also notes Excellent 99 and Arthur among the picks. ([match](../matches/1071-ae-vs-rrq.md), [source](https://youtu.be/ykgecDVRvlI?t=12375))
+- `TOBS-1091-G1-001` · match 1091 · 06:30:01 · *commentary* — The caster notes Joshua is on a winstreak yet still has room to develop further. ([match](../matches/1091-onic-vs-navi.md), [source](https://youtu.be/S7ugRA3UMjo?t=23401))
+- `TOBS-1091-G1-002` · match 1091 · 06:35:02 · *commentary* — The caster notes AE banned three of Joshua's heroes, including Paquito and Nolan, in games 2 and 3. ([match](../matches/1091-onic-vs-navi.md), [source](https://youtu.be/S7ugRA3UMjo?t=23702))
+- `TOBS-1091-G1-006` · match 1091 · 06:38:27 · *commentary* — The caster says if Joshua is left unchecked he becomes dangerous. ([match](../matches/1091-onic-vs-navi.md), [source](https://youtu.be/S7ugRA3UMjo?t=23907))
+- `TOBS-1100-G1-01` · match 1100 · 00:44:21 · *commentary* — Caster lists RRQ's starting lineup: Joshua in XP, Favian in jungle, with Hajirin, Said and Dynamic 2, plus a gold laner. ([match](../matches/1100-rrq-vs-navi.md), [source](https://youtu.be/-QC1gIugHrM?t=2661))
+- `TOBS-1100-G1-07` · match 1100 · 01:01:13 · *observation* — RRQ secures first turtle: Joshua takes over while Zeon opens vision; Navi loses the objective. ([match](../matches/1100-rrq-vs-navi.md), [source](https://youtu.be/-QC1gIugHrM?t=3673))
+- `TOBS-1100-G1-11` · match 1100 · 01:12:56 · *commentary* — Caster calls game one for RRQ. ([match](../matches/1100-rrq-vs-navi.md), [source](https://youtu.be/-QC1gIugHrM?t=4376))
+<!-- transcript-routing:end -->
+
+
+
+
 ## References
 
 - Database snapshot `mpl-s18-db-20c5ea2c51f3`

@@ -1,0 +1,141 @@
+{
+  "schema_version": 1,
+  "timeline_id": "TL-1062-G1",
+  "series_id": "1062",
+  "game_no": 1,
+  "source_id": "src-s18-w04d02",
+  "video_id": "-M1_bwTRlHk",
+  "broadcast_date": "2026-09-05",
+  "game_boundary_status": "heuristic",
+  "boundary_verified_by": "transcript_boundary_detection (verified boundary)",
+  "db_snapshot_id": "mpl-s18-db-20c5ea2c51f3",
+  "db_snapshot_sha256": "20c5ea2c51f30d1a24cd2ce6927f0d182b47f951ebd8209f1aaef429941cf2ef",
+  "generated_at": "2026-11-02T23:50:00+00:00",
+  "generator_version": "manual-curation-v1",
+  "events": [
+    {
+      "event_id": "EVT-1062-G1-SOURCE-MAP",
+      "event_type": "other",
+      "category": "other",
+      "subject": {
+        "team": "DEWA",
+        "player": null,
+        "hero": null,
+        "side": "blue"
+      },
+      "start_seconds": 2460,
+      "end_seconds": 2465.0,
+      "game_clock": null,
+      "confidence": "med",
+      "evidence_type": "commentator_interpretation",
+      "transcript_evidence": {
+        "source_id": "src-s18-w04d02",
+        "line_start": 908,
+        "line_end": 909,
+        "text": "match pertama ya. Dewa United versus",
+        "text_sha256": null,
+        "timestamp_start": 2460.0,
+        "timestamp_end": 2465.0,
+        "timestamp_link": "https://youtu.be/-M1_bwTRlHk?t=2460",
+        "timestamp_provenance": "youtube-auto-caption-alignment-v1",
+        "alignment_version": "youtube-auto-caption-alignment-v1"
+      },
+      "db_evidence": null,
+      "visual_evidence": null,
+      "uncertainty": "Caster introduces the match, mapping it to series 1062. This is commentary, not proof of the full game sequence. Series boundary is boundary-verified at 2460s (medium confidence). Boundary verified against timed caption line 908 (raw line 908); medium confidence.",
+      "alternative_interpretation": "The caster may be introducing the match out of order or referring to a different series.",
+      "counterexample_refs": [],
+      "related_event_ids": [
+        "EVT-1062-G1-RESULT"
+      ]
+    },
+    {
+      "event_id": "EVT-1062-G1-RESULT",
+      "event_type": "closing",
+      "category": "macro",
+      "subject": {
+        "team": "DEWA",
+        "player": null,
+        "hero": null,
+        "side": "blue"
+      },
+      "start_seconds": null,
+      "end_seconds": null,
+      "game_clock": "13:45",
+      "confidence": "high",
+      "evidence_type": "database_record",
+      "transcript_evidence": null,
+      "db_evidence": [
+        {
+          "query_id": "Q-GAMES",
+          "description": "Per-game duration, winner, side and map mode for series 1062.",
+          "sql": "select game_no, team_a, team_b, winner, duration_sec, team_a_side, team_b_side, map_mode from games where match_detail_id = :match_detail_id order by game_no",
+          "params": {
+            "match_detail_id": "1062"
+          },
+          "snapshot_id": "mpl-s18-db-20c5ea2c51f3",
+          "snapshot_sha256": "20c5ea2c51f30d1a24cd2ce6927f0d182b47f951ebd8209f1aaef429941cf2ef",
+          "rows": [
+            {
+              "game_no": 1,
+              "team_a": "DEWA",
+              "team_b": "ONIC",
+              "winner": "team_a",
+              "duration_sec": 825,
+              "team_a_side": "blue",
+              "team_b_side": "red",
+              "map_mode": "Broken Walls"
+            }
+          ],
+          "row_count": 1,
+          "provenance": "source-reported API detail; winner uses games.team_a/team_b orientation"
+        },
+        {
+          "query_id": "Q-TEAM-GAMES",
+          "description": "Per-team per-game scoreboard aggregates for series 1062.",
+          "sql": "select game_no, team, opponent, kills, deaths, assists, gold, tower_damage, duration_sec, win from team_games where match_detail_id = :match_detail_id order by game_no, team",
+          "params": {
+            "match_detail_id": "1062"
+          },
+          "snapshot_id": "mpl-s18-db-20c5ea2c51f3",
+          "snapshot_sha256": "20c5ea2c51f30d1a24cd2ce6927f0d182b47f951ebd8209f1aaef429941cf2ef",
+          "rows": [
+            {
+              "game_no": 1,
+              "team": "DEWA",
+              "opponent": "ONIC",
+              "kills": 13,
+              "deaths": 0,
+              "assists": 33,
+              "gold": 48219,
+              "tower_damage": 38473,
+              "duration_sec": 825,
+              "win": 1
+            },
+            {
+              "game_no": 1,
+              "team": "ONIC",
+              "opponent": "DEWA",
+              "kills": 0,
+              "deaths": 13,
+              "assists": 0,
+              "gold": 33662,
+              "tower_damage": 0,
+              "duration_sec": 825,
+              "win": 0
+            }
+          ],
+          "row_count": 2,
+          "provenance": "deterministic aggregate from ten player rows; not an official tournament table"
+        }
+      ],
+      "visual_evidence": null,
+      "uncertainty": "Game result is source-reported from the canonical DB. DEWA won in 13:45 with 13-0 kills. Series boundary is boundary-verified at 2460s (medium confidence). No visual verification performed.",
+      "alternative_interpretation": "The result may reflect opponent errors, draft matchup, or execution variance rather than DEWA dominance.",
+      "counterexample_refs": [],
+      "related_event_ids": [
+        "EVT-1062-G1-SOURCE-MAP"
+      ]
+    }
+  ]
+}

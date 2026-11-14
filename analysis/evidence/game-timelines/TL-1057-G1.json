@@ -1,0 +1,141 @@
+{
+  "schema_version": 1,
+  "timeline_id": "TL-1057-G1",
+  "series_id": "1057",
+  "game_no": 1,
+  "source_id": "src-s18-w03d03",
+  "video_id": "3bAUu2t3FGI",
+  "broadcast_date": "2026-08-30",
+  "game_boundary_status": "heuristic",
+  "boundary_verified_by": "transcript_boundary_detection (verified boundary)",
+  "db_snapshot_id": "mpl-s18-db-20c5ea2c51f3",
+  "db_snapshot_sha256": "20c5ea2c51f30d1a24cd2ce6927f0d182b47f951ebd8209f1aaef429941cf2ef",
+  "generated_at": "2026-11-02T23:50:00+00:00",
+  "generator_version": "manual-curation-v1",
+  "events": [
+    {
+      "event_id": "EVT-1057-G1-SOURCE-MAP",
+      "event_type": "other",
+      "category": "other",
+      "subject": {
+        "team": "NAVI",
+        "player": null,
+        "hero": null,
+        "side": "blue"
+      },
+      "start_seconds": 2340,
+      "end_seconds": 2345.0,
+      "game_clock": null,
+      "confidence": "med",
+      "evidence_type": "commentator_interpretation",
+      "transcript_evidence": {
+        "source_id": "src-s18-w03d03",
+        "line_start": 764,
+        "line_end": 765,
+        "text": "begitu berarti match pertama di hari",
+        "text_sha256": null,
+        "timestamp_start": 2340.0,
+        "timestamp_end": 2345.0,
+        "timestamp_link": "https://youtu.be/3bAUu2t3FGI?t=2340",
+        "timestamp_provenance": "youtube-auto-caption-alignment-v1",
+        "alignment_version": "youtube-auto-caption-alignment-v1"
+      },
+      "db_evidence": null,
+      "visual_evidence": null,
+      "uncertainty": "Caster introduces the match, mapping it to series 1057. This is commentary, not proof of the full game sequence. Series boundary is boundary-verified at 2340s (medium confidence). Boundary verified against timed caption line 764 (raw line 764); medium confidence. Corrected from wrong heuristic 30145s.",
+      "alternative_interpretation": "The caster may be introducing the match out of order or referring to a different series.",
+      "counterexample_refs": [],
+      "related_event_ids": [
+        "EVT-1057-G1-RESULT"
+      ]
+    },
+    {
+      "event_id": "EVT-1057-G1-RESULT",
+      "event_type": "closing",
+      "category": "macro",
+      "subject": {
+        "team": "NAVI",
+        "player": null,
+        "hero": null,
+        "side": "blue"
+      },
+      "start_seconds": null,
+      "end_seconds": null,
+      "game_clock": "24:12",
+      "confidence": "high",
+      "evidence_type": "database_record",
+      "transcript_evidence": null,
+      "db_evidence": [
+        {
+          "query_id": "Q-GAMES",
+          "description": "Per-game duration, winner, side and map mode for series 1057.",
+          "sql": "select game_no, team_a, team_b, winner, duration_sec, team_a_side, team_b_side, map_mode from games where match_detail_id = :match_detail_id order by game_no",
+          "params": {
+            "match_detail_id": "1057"
+          },
+          "snapshot_id": "mpl-s18-db-20c5ea2c51f3",
+          "snapshot_sha256": "20c5ea2c51f30d1a24cd2ce6927f0d182b47f951ebd8209f1aaef429941cf2ef",
+          "rows": [
+            {
+              "game_no": 1,
+              "team_a": "NAVI",
+              "team_b": "ONIC",
+              "winner": "team_a",
+              "duration_sec": 1452,
+              "team_a_side": "blue",
+              "team_b_side": "red",
+              "map_mode": "Flying Cloud"
+            }
+          ],
+          "row_count": 1,
+          "provenance": "source-reported API detail; winner uses games.team_a/team_b orientation"
+        },
+        {
+          "query_id": "Q-TEAM-GAMES",
+          "description": "Per-team per-game scoreboard aggregates for series 1057.",
+          "sql": "select game_no, team, opponent, kills, deaths, assists, gold, tower_damage, duration_sec, win from team_games where match_detail_id = :match_detail_id order by game_no, team",
+          "params": {
+            "match_detail_id": "1057"
+          },
+          "snapshot_id": "mpl-s18-db-20c5ea2c51f3",
+          "snapshot_sha256": "20c5ea2c51f30d1a24cd2ce6927f0d182b47f951ebd8209f1aaef429941cf2ef",
+          "rows": [
+            {
+              "game_no": 1,
+              "team": "NAVI",
+              "opponent": "ONIC",
+              "kills": 13,
+              "deaths": 6,
+              "assists": 34,
+              "gold": 72488,
+              "tower_damage": 23611,
+              "duration_sec": 1452,
+              "win": 1
+            },
+            {
+              "game_no": 1,
+              "team": "ONIC",
+              "opponent": "NAVI",
+              "kills": 6,
+              "deaths": 13,
+              "assists": 12,
+              "gold": 70401,
+              "tower_damage": 19514,
+              "duration_sec": 1452,
+              "win": 0
+            }
+          ],
+          "row_count": 2,
+          "provenance": "deterministic aggregate from ten player rows; not an official tournament table"
+        }
+      ],
+      "visual_evidence": null,
+      "uncertainty": "Game result is source-reported from the canonical DB. NAVI won in 24:12 with 13-6 kills. Series boundary is boundary-verified at 2340s (medium confidence). No visual verification performed.",
+      "alternative_interpretation": "The result may reflect opponent errors, draft matchup, or execution variance rather than NAVI dominance.",
+      "counterexample_refs": [],
+      "related_event_ids": [
+        "EVT-1057-G1-SOURCE-MAP"
+      ]
+    }
+  ]
+}

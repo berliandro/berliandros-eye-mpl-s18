@@ -1,0 +1,23 @@
+{
+  "job_id": "extraction-pilot-1036-v2",
+  "source_id": "src-s18-w01d01",
+  "series": "1036",
+  "game": 1,
+  "chunks_processed": 3,
+  "chunks_completed": 3,
+  "chunks_failed": 0,
+  "chunks_quarantined": 0,
+  "observations_extracted": 3,
+  "job_state": {
+    "job_id": "extraction-pilot-1036-v2",
+    "total_chunks": 3,
+    "statuses": {
+      "completed": 3
+    },
+    "pending": 0,
+    "completed": 3,
+    "failed": 0,
+    "quarantined": 0
+  },
+  "status": "completed"
+}

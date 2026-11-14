@@ -1,0 +1,39 @@
+{
+  "schema_version": 1,
+  "generated_at": "2026-11-02T12:21:38.583471+00:00",
+  "reviewer": "deepseek",
+  "model": "deepseek-v4.1-flash",
+  "provider": "opencode-go",
+  "api_base": "http://127.0.0.1:28894",
+  "transport": "opencode-session",
+  "session_id": "ses_e63cace87ffe4OqOLpQqj8eP8t",
+  "key_source": "opencode-session",
+  "status": "passed",
+  "image_path": "analysis/cache/visual-reviews/smoke-test.png",
+  "image_sha256": "6796e7ba5440e2b5f52c2a0ca56ce9313441c0ef2bde9cc1bca3518e876ee59b",
+  "api_request_id": "msg_19c3532c8001n9cycSmaAp45J4",
+  "usage": {
+    "prompt_tokens": 2700,
+    "completion_tokens": 90,
+    "total_tokens": 2790,
+    "reasoning_tokens": 184,
+    "cache_read": 0,
+    "cache_write": 0
+  },
+  "checks": {
+    "text_deepseek_vision": true,
+    "text_smoke_test_4729": true,
+    "shape_orange": true,
+    "shape_bottom_right": true
+  },
+  "observation": "The circular shape is orange and positioned in the bottom-right area of the image, contradicting the text label claiming it is at the top left.",
+  "shape_color": "orange",
+  "shape_position": "bottom right",
+  "text_lines": [
+    "DEEPSEEK VISION",
+    "SMOKE TEST 4729",
+    "TOP LEFT ORANGE CIRCLE"
+  ],
+  "raw_response_path": "analysis/cache/visual-reviews/smoke-20261102T122134Z.json",
+  "raw_response_sha256": "70257b6936e8ce8ec4c2a90747907249ae4684a47fab87d352769e59815cb9fd"
+}

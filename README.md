@@ -8,7 +8,7 @@ live from the mlbbhub API when online.
 
 ## Semantic coaching pilot
 
-A separate, auditable transcript/database pilot lives in [`analysis/`](analysis/README.md). It imports the local nine-week transcript corpus, verifies hashes, derives timestamps for verified videos, captures gameplay frames with sidecar provenance, and publishes three evidence-backed series reports plus one skeptical audit. Current coverage is **2/27 broadcast days and 3/72 series** — not full-season semantic analysis. Raw transcripts and screenshots stay local and Git-ignored.
+A separate, auditable transcript/database layer lives in [`analysis/`](analysis/README.md). It imports the local nine-week transcript corpus, verifies hashes, derives timestamps for verified videos, captures gameplay frames with sidecar provenance, and publishes a full-season database evidence pass plus transcript-backed coaching analysis. Current coverage: **27/27 sources validated, 72/72 match reports with database evidence, 27 transcript-covered series (24 complete, 3 partial), 45 DB-only series, and 313 accepted observations.** The coaching product is 9 team briefs plus one head-coach brief; visual proof remains unresolved (0 same-frame `00:00` boundaries). Raw transcripts and screenshots stay local and Git-ignored. Start at [`analysis/reports/coverage-matrix.md`](analysis/reports/coverage-matrix.md).
 
 ## Screenshots
 

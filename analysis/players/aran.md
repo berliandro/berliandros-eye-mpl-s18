@@ -152,6 +152,20 @@ Derived from `game_players` + `team_games` (37 games):
 | SHOGUN | BIGETRON BY VIT | 39 | 3.28 |
 | LUTPI | ONIC | 40 | 2.66 |
 
+## Transcript observations (accepted)
+
+<!-- transcript-routing:start -->
+Accepted, source-linked observations. Caster claims are commentary, not proof of an in-game event.
+
+- `TOBS-1041-G1-009` · match 1041 · 00:43:31 · *observation* — A large teamfight led by Aran's Barats yields many kills and a gold lead for TLID. ([match](../matches/1041-tlid-vs-dewa.md), [source](https://youtu.be/X1yGjaXTbww?t=2611))
+- `TOBS-1080-G1-004` · match 1080 · 06:41:37 · *commentary* — Liquid answers with Frea, Uranus, Minotaur targeting Aran. ([match](../matches/1080-tlid-vs-btr.md), [source](https://youtu.be/5tOPeDiETK0?t=24097))
+- `TOBS-1107-G1-01` · match 1107 · 06:53:45 · *commentary* — Caster says TLID should maximize early rotations toward Aran to limit ONIC's map control, naming Unico, Lyoni and Drichel as counterplay pieces. ([match](../matches/1107-onic-vs-tlid.md), [source](https://youtu.be/hY0Upem95uo?t=24825))
+- `TOBS-1107-G1-15` · match 1107 · 06:53:01 · *commentary* — Caster says XP remains a priority, especially since the opponent Lutfi is not an easy opponent, naming Aran. ([match](../matches/1107-onic-vs-tlid.md), [source](https://youtu.be/hY0Upem95uo?t=24781))
+<!-- transcript-routing:end -->
+
+
+
+
 ## References
 
 - Database snapshot `mpl-s18-db-20c5ea2c51f3`

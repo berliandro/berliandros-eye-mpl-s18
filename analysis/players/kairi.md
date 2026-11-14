@@ -154,6 +154,17 @@ Derived from `game_players` + `team_games` (40 games):
 | Affan | ALTER EGO ESPORTS | 36 | 4.18 |
 | NNAEL | BIGETRON BY VIT | 39 | 4.10 |
 
+## Transcript observations (accepted)
+
+<!-- transcript-routing:start -->
+Accepted, source-linked observations. Caster claims are commentary, not proof of an in-game event.
+
+- `TOBS-1102-G1-07` · match 1102 · 01:04:02 · *observation* — Dewa secures first healing turtle after Kairi falls; early game favors Dewa. ([match](../matches/1102-dewa-vs-onic.md), [source](https://youtu.be/b9SktblDNuc?t=3842))
+<!-- transcript-routing:end -->
+
+
+
+
 ## References
 
 - Database snapshot `mpl-s18-db-20c5ea2c51f3`

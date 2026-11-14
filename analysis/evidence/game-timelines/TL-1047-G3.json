@@ -1,0 +1,105 @@
+{
+  "schema_version": 1,
+  "timeline_id": "TL-1047-G3",
+  "series_id": "1047",
+  "game_no": 3,
+  "source_id": "src-s18-w02d02",
+  "video_id": "QsOUpAE-Jd8",
+  "broadcast_date": "2026-08-22",
+  "game_boundary_status": "heuristic",
+  "boundary_verified_by": "transcript_boundary_detection",
+  "db_snapshot_id": "mpl-s18-db-20c5ea2c51f3",
+  "db_snapshot_sha256": "20c5ea2c51f30d1a24cd2ce6927f0d182b47f951ebd8209f1aaef429941cf2ef",
+  "generated_at": "2026-11-02T23:55:00+00:00",
+  "generator_version": "manual-curation-v1",
+  "events": [
+    {
+      "event_id": "EVT-1047-G3-RESULT",
+      "event_type": "closing",
+      "category": "macro",
+      "subject": {
+        "team": "NAVI",
+        "player": null,
+        "hero": null,
+        "side": "blue"
+      },
+      "start_seconds": null,
+      "end_seconds": null,
+      "game_clock": "18:17",
+      "confidence": "high",
+      "evidence_type": "database_record",
+      "transcript_evidence": null,
+      "db_evidence": [
+        {
+          "query_id": "Q-GAMES",
+          "description": "Per-game duration, winner, side and map mode for series 1047 game 3.",
+          "sql": "select game_no, team_a, team_b, winner, duration_sec, team_a_side, team_b_side, map_mode from games where match_detail_id = :match_detail_id order by game_no",
+          "params": {
+            "match_detail_id": "1047"
+          },
+          "snapshot_id": "mpl-s18-db-20c5ea2c51f3",
+          "snapshot_sha256": "20c5ea2c51f30d1a24cd2ce6927f0d182b47f951ebd8209f1aaef429941cf2ef",
+          "rows": [
+            {
+              "game_no": 3,
+              "team_a": "NAVI",
+              "team_b": "GEEK",
+              "winner": "team_a",
+              "duration_sec": 1097,
+              "team_a_side": "blue",
+              "team_b_side": "red",
+              "map_mode": "Broken Walls"
+            }
+          ],
+          "row_count": 1,
+          "provenance": "source-reported API detail; winner uses games.team_a/team_b orientation"
+        },
+        {
+          "query_id": "Q-TEAM-GAMES",
+          "description": "Per-team per-game scoreboard aggregates for series 1047 game 3.",
+          "sql": "select game_no, team, opponent, kills, deaths, assists, gold, tower_damage, duration_sec, win from team_games where match_detail_id = :match_detail_id order by game_no, team",
+          "params": {
+            "match_detail_id": "1047"
+          },
+          "snapshot_id": "mpl-s18-db-20c5ea2c51f3",
+          "snapshot_sha256": "20c5ea2c51f30d1a24cd2ce6927f0d182b47f951ebd8209f1aaef429941cf2ef",
+          "rows": [
+            {
+              "game_no": 3,
+              "team": "GEEK",
+              "opponent": "NAVI",
+              "kills": 6,
+              "deaths": 11,
+              "assists": 16,
+              "gold": 49977,
+              "tower_damage": 18212,
+              "duration_sec": 1097,
+              "win": 0
+            },
+            {
+              "game_no": 3,
+              "team": "NAVI",
+              "opponent": "GEEK",
+              "kills": 11,
+              "deaths": 6,
+              "assists": 32,
+              "gold": 58378,
+              "tower_damage": 25195,
+              "duration_sec": 1097,
+              "win": 1
+            }
+          ],
+          "row_count": 2,
+          "provenance": "deterministic aggregate from ten player rows; not an official tournament table"
+        }
+      ],
+      "visual_evidence": null,
+      "uncertainty": "Game 3 result is source-reported from the canonical DB. NAVI won in 18:17 with 11-6 kills. Series boundary is boundary-verified at series level (medium confidence); game 3 start time within the series is not independently verified. No visual verification performed. No transcript timestamps attached.",
+      "alternative_interpretation": "The result may reflect opponent errors, draft matchup, or execution variance rather than NAVI dominance.",
+      "counterexample_refs": [],
+      "related_event_ids": [
+        "EVT-1047-G1-RESULT"
+      ]
+    }
+  ]
+}

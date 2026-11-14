@@ -1,0 +1,39 @@
+{
+  "schema_version": 1,
+  "generated_at": "2026-11-04T22:17:53.475519+00:00",
+  "reviewer": "deepseek",
+  "model": "deepseek-v4.1-flash",
+  "provider": "opencode-go",
+  "api_base": "http://127.0.0.1:28894",
+  "transport": "opencode-session",
+  "session_id": "ses_e575c47d9ffeiYFRK6rcg0tE9L",
+  "key_source": "opencode-session",
+  "status": "passed",
+  "image_path": "analysis/cache/visual-reviews/smoke-test.png",
+  "image_sha256": "6796e7ba5440e2b5f52c2a0ca56ce9313441c0ef2bde9cc1bca3518e876ee59b",
+  "api_request_id": "msg_1a8a3b868001SNur9ln6htKlOx",
+  "usage": {
+    "prompt_tokens": 2823,
+    "completion_tokens": 97,
+    "total_tokens": 2920,
+    "reasoning_tokens": 429,
+    "cache_read": 0,
+    "cache_write": 0
+  },
+  "checks": {
+    "text_deepseek_vision": true,
+    "text_smoke_test_4729": true,
+    "shape_orange": true,
+    "shape_bottom_right": true
+  },
+  "observation": "The image shows three lines of white/orange text on a dark background inside a teal border, plus a solid orange circle in the lower-right area. The text label claims the circle is top left, but the visible circle is actually in the bottom-right corner.",
+  "shape_color": "orange",
+  "shape_position": "bottom right",
+  "text_lines": [
+    "DEEPSEEK VISION",
+    "SMOKE TEST 4729",
+    "TOP LEFT ORANGE CIRCLE"
+  ],
+  "raw_response_path": "analysis/cache/visual-reviews/smoke-20261104T221744Z.json",
+  "raw_response_sha256": "27e3a3d11e542f0ee2554c584f7d16184f752de54925693d2c248b1747faad4d"
+}

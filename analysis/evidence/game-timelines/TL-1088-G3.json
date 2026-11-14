@@ -1,0 +1,105 @@
+{
+  "schema_version": 1,
+  "timeline_id": "TL-1088-G3",
+  "series_id": "1088",
+  "game_no": 3,
+  "source_id": "src-s18-w07d02",
+  "video_id": "px_HftyZBxo",
+  "broadcast_date": "2026-10-03",
+  "game_boundary_status": "unresolved",
+  "boundary_verified_by": null,
+  "db_snapshot_id": "mpl-s18-db-20c5ea2c51f3",
+  "db_snapshot_sha256": "20c5ea2c51f30d1a24cd2ce6927f0d182b47f951ebd8209f1aaef429941cf2ef",
+  "generated_at": "2026-11-02T23:55:00+00:00",
+  "generator_version": "manual-curation-v1",
+  "events": [
+    {
+      "event_id": "EVT-1088-G3-RESULT",
+      "event_type": "closing",
+      "category": "macro",
+      "subject": {
+        "team": "GEEK",
+        "player": null,
+        "hero": null,
+        "side": "red"
+      },
+      "start_seconds": null,
+      "end_seconds": null,
+      "game_clock": "14:15",
+      "confidence": "high",
+      "evidence_type": "database_record",
+      "transcript_evidence": null,
+      "db_evidence": [
+        {
+          "query_id": "Q-GAMES",
+          "description": "Per-game duration, winner, side and map mode for series 1088 game 3.",
+          "sql": "select game_no, team_a, team_b, winner, duration_sec, team_a_side, team_b_side, map_mode from games where match_detail_id = :match_detail_id order by game_no",
+          "params": {
+            "match_detail_id": "1088"
+          },
+          "snapshot_id": "mpl-s18-db-20c5ea2c51f3",
+          "snapshot_sha256": "20c5ea2c51f30d1a24cd2ce6927f0d182b47f951ebd8209f1aaef429941cf2ef",
+          "rows": [
+            {
+              "game_no": 3,
+              "team_a": "DEWA",
+              "team_b": "GEEK",
+              "winner": "team_b",
+              "duration_sec": 855,
+              "team_a_side": "blue",
+              "team_b_side": "red",
+              "map_mode": "Revealing Wisps"
+            }
+          ],
+          "row_count": 1,
+          "provenance": "source-reported API detail; winner uses games.team_a/team_b orientation"
+        },
+        {
+          "query_id": "Q-TEAM-GAMES",
+          "description": "Per-team per-game scoreboard aggregates for series 1088 game 3.",
+          "sql": "select game_no, team, opponent, kills, deaths, assists, gold, tower_damage, duration_sec, win from team_games where match_detail_id = :match_detail_id order by game_no, team",
+          "params": {
+            "match_detail_id": "1088"
+          },
+          "snapshot_id": "mpl-s18-db-20c5ea2c51f3",
+          "snapshot_sha256": "20c5ea2c51f30d1a24cd2ce6927f0d182b47f951ebd8209f1aaef429941cf2ef",
+          "rows": [
+            {
+              "game_no": 3,
+              "team": "DEWA",
+              "opponent": "GEEK",
+              "kills": 2,
+              "deaths": 10,
+              "assists": 5,
+              "gold": 35311,
+              "tower_damage": 1029,
+              "duration_sec": 855,
+              "win": 0
+            },
+            {
+              "game_no": 3,
+              "team": "GEEK",
+              "opponent": "DEWA",
+              "kills": 10,
+              "deaths": 2,
+              "assists": 31,
+              "gold": 48930,
+              "tower_damage": 42392,
+              "duration_sec": 855,
+              "win": 1
+            }
+          ],
+          "row_count": 2,
+          "provenance": "deterministic aggregate from ten player rows; not an official tournament table"
+        }
+      ],
+      "visual_evidence": null,
+      "uncertainty": "Game 3 result is source-reported from the canonical DB. GEEK won in 14:15 with 10-2 kills. Series boundary is UNRESOLVED; no transcript timestamp may be attached to this game. No visual verification performed. No transcript timestamps attached.",
+      "alternative_interpretation": "The result may reflect opponent errors, draft matchup, or execution variance rather than GEEK dominance.",
+      "counterexample_refs": [],
+      "related_event_ids": [
+        "EVT-1088-G1-RESULT"
+      ]
+    }
+  ]
+}

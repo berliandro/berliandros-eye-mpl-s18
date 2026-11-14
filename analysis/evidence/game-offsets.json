@@ -35,21 +35,23 @@
           "team_a": "NAVI",
           "team_b": "AE",
           "game_no": 1,
-          "start_seconds": null,
+          "start_seconds": 12675.0,
           "end_seconds": null,
           "confidence": "low",
           "provenance": {
-            "method": "schedule_order_heuristic",
+            "method": "transcript_boundary_detection",
             "source": "D:\\! Coding\\~ shit projects\\mpls18\\data\\csv\\schedule_all.csv",
             "broadcast_date": "2026-08-14",
             "scheduled_start": "2026-08-14T18:00:00+07:00",
-            "note": "Heuristic initial placement; requires validation against transcript/boundaries/frames"
+            "note": "Pass-3 candidate cue: caster announces match kedua, followed by Navi/Alter Ego discussion. Candidate only; not visually promoted.",
+            "boundary_line": 5091,
+            "boundary_text": "Ini dia match kedua kita ya teman-teman."
           },
           "verified_by": null,
-          "status": "pending_validation"
+          "status": "detected_pending_review"
         }
       ],
-      "validation_status": "pending"
+      "validation_status": "candidate_detected"
     },
     "src-s18-w01d02": {
       "video_id": "tpgvzhEO1Qc",
@@ -120,7 +122,7 @@
           "status": "boundary_verified"
         }
       ],
-      "validation_status": "pending"
+      "validation_status": "boundary_verified"
     },
     "src-s18-w01d03": {
       "video_id": "X1yGjaXTbww",
@@ -189,7 +191,7 @@
           "status": "pending_validation"
         }
       ],
-      "validation_status": "pending"
+      "validation_status": "partial"
     },
     "src-s18-w02d01": {
       "video_id": "O1vhySUmgj0",
@@ -237,7 +239,7 @@
           "status": "boundary_verified"
         }
       ],
-      "validation_status": "pending"
+      "validation_status": "partial"
     },
     "src-s18-w02d02": {
       "video_id": "QsOUpAE-Jd8",
@@ -306,7 +308,7 @@
           "status": "detected_pending_review"
         }
       ],
-      "validation_status": "pending"
+      "validation_status": "partial"
     },
     "src-s18-w02d03": {
       "video_id": "C-H_iCLxtL8",
@@ -375,7 +377,7 @@
           "status": "detected_pending_review"
         }
       ],
-      "validation_status": "pending"
+      "validation_status": "partial"
     },
     "src-s18-w03d01": {
       "video_id": "9c2wPhSYTGA",
@@ -425,7 +427,7 @@
           "status": "boundary_verified"
         }
       ],
-      "validation_status": "pending"
+      "validation_status": "boundary_verified"
     },
     "src-s18-w03d02": {
       "video_id": "FDioYoG4ads",
@@ -494,7 +496,7 @@
           "status": "detected_pending_review"
         }
       ],
-      "validation_status": "pending"
+      "validation_status": "partial"
     },
     "src-s18-w03d03": {
       "video_id": "3bAUu2t3FGI",
@@ -507,7 +509,7 @@
           "team_a": "NAVI",
           "team_b": "ONIC",
           "game_no": 1,
-          "start_seconds": 30145,
+          "start_seconds": 2340,
           "end_seconds": null,
           "confidence": "med",
           "provenance": {
@@ -515,12 +517,12 @@
             "source": "D:\\! Coding\\~ shit projects\\mpls18\\data\\csv\\schedule_all.csv",
             "broadcast_date": "2026-08-30",
             "scheduled_start": "2026-08-30T14:00:00+07:00",
-            "note": "Heuristic initial placement; requires validation against transcript/boundaries/frames",
-            "boundary_line": 11775,
-            "boundary_text": "Navi, Onic EVOS dan juga ada BTR Alter"
+            "note": "Boundary verified against timed caption line 764 (raw line 764); medium confidence. Corrected from wrong heuristic 30145s.",
+            "boundary_line": 764,
+            "boundary_text": "begitu berarti match pertama di hari"
           },
           "verified_by": null,
-          "status": "detected_pending_review"
+          "status": "boundary_verified"
         },
         {
           "series_index": 1,
@@ -528,20 +530,20 @@
           "team_a": "GEEK",
           "team_b": "RRQ",
           "game_no": 1,
-          "start_seconds": 1122,
+          "start_seconds": null,
           "end_seconds": null,
-          "confidence": "med",
+          "confidence": "low",
           "provenance": {
             "method": "transcript_boundary_detection",
             "source": "D:\\! Coding\\~ shit projects\\mpls18\\data\\csv\\schedule_all.csv",
             "broadcast_date": "2026-08-30",
             "scheduled_start": "2026-08-30T17:00:00+07:00",
-            "note": "Heuristic initial placement; requires validation against transcript/boundaries/frames",
+            "note": "Quarantined: heuristic offset violated chronological order within broadcast. Requires manual boundary review.",
             "boundary_line": 128,
             "boundary_text": "GeekF versus RRQ dan di match terakhir"
           },
           "verified_by": null,
-          "status": "detected_pending_review"
+          "status": "pending_validation"
         },
         {
           "series_index": 2,
@@ -565,7 +567,7 @@
           "status": "boundary_verified"
         }
       ],
-      "validation_status": "pending"
+      "validation_status": "partial"
     },
     "src-s18-w04d01": {
       "video_id": "W-LSKxUkUi4",
@@ -613,7 +615,7 @@
           "status": "pending_validation"
         }
       ],
-      "validation_status": "pending"
+      "validation_status": "partial"
     },
     "src-s18-w04d02": {
       "video_id": "-M1_bwTRlHk",
@@ -680,7 +682,7 @@
           "status": "pending_validation"
         }
       ],
-      "validation_status": "pending"
+      "validation_status": "partial"
     },
     "src-s18-w04d03": {
       "video_id": "nu3RfzQdsec",
@@ -693,7 +695,7 @@
           "team_a": "RRQ",
           "team_b": "NAVI",
           "game_no": 1,
-          "start_seconds": 26175,
+          "start_seconds": 1938,
           "end_seconds": null,
           "confidence": "med",
           "provenance": {
@@ -701,9 +703,9 @@
             "source": "D:\\! Coding\\~ shit projects\\mpls18\\data\\csv\\schedule_all.csv",
             "broadcast_date": "2026-09-06",
             "scheduled_start": "2026-09-06T14:00:00+07:00",
-            "note": "Boundary verified against timed caption line 9983 (raw line 9983); medium confidence.",
-            "boundary_line": 9983,
-            "boundary_text": "dari match yang pertama ya antara Navi"
+            "note": "Boundary verified against timed caption line 604 (raw line 604); medium confidence. Corrected from wrong heuristic 26175s.",
+            "boundary_line": 604,
+            "boundary_text": "Jovi Joshua Navi. Joki Joshua RRQ"
           },
           "verified_by": null,
           "status": "boundary_verified"
@@ -714,20 +716,20 @@
           "team_a": "ONIC",
           "team_b": "EVOS",
           "game_no": 1,
-          "start_seconds": 12822,
+          "start_seconds": null,
           "end_seconds": null,
-          "confidence": "med",
+          "confidence": "low",
           "provenance": {
             "method": "transcript_boundary_detection",
             "source": "D:\\! Coding\\~ shit projects\\mpls18\\data\\csv\\schedule_all.csv",
             "broadcast_date": "2026-09-06",
             "scheduled_start": "2026-09-06T17:00:00+07:00",
-            "note": "Heuristic initial placement; requires validation against transcript/boundaries/frames",
+            "note": "Quarantined: heuristic offset violated chronological order within broadcast. Requires manual boundary review.",
             "boundary_line": 4777,
             "boundary_text": "langsung saja EVOS dan juga Sonic Arena"
           },
           "verified_by": null,
-          "status": "detected_pending_review"
+          "status": "pending_validation"
         },
         {
           "series_index": 2,
@@ -751,7 +753,7 @@
           "status": "detected_pending_review"
         }
       ],
-      "validation_status": "pending"
+      "validation_status": "partial"
     },
     "src-s18-w05d01": {
       "video_id": "TeegcSSZJbI",
@@ -780,7 +782,7 @@
           "status": "boundary_verified"
         }
       ],
-      "validation_status": "pending"
+      "validation_status": "boundary_verified"
     },
     "src-s18-w05d02": {
       "video_id": "ykgecDVRvlI",
@@ -833,23 +835,23 @@
           "team_a": "NAVI",
           "team_b": "EVOS",
           "game_no": 1,
-          "start_seconds": 1550,
+          "start_seconds": 18108.4,
           "end_seconds": null,
-          "confidence": "med",
+          "confidence": "low",
           "provenance": {
             "method": "transcript_boundary_detection",
             "source": "D:\\! Coding\\~ shit projects\\mpls18\\data\\csv\\schedule_all.csv",
             "broadcast_date": "2026-09-12",
             "scheduled_start": "2026-09-12T20:00:00+07:00",
-            "note": "Heuristic initial placement; requires validation against transcript/boundaries/frames",
-            "boundary_line": 358,
-            "boundary_text": "eh first EVOS menang 21 atas Navi. Nah,"
+            "note": "P3 candidate cue: caster says the third match is next; NAVI vs EVOS.",
+            "boundary_line": 7764,
+            "boundary_text": "match yang ketiga nanti"
           },
           "verified_by": null,
           "status": "detected_pending_review"
         }
       ],
-      "validation_status": "pending"
+      "validation_status": "partial"
     },
     "src-s18-w05d03": {
       "video_id": "YPbOKyQltIo",
@@ -897,7 +899,7 @@
           "status": "boundary_verified"
         }
       ],
-      "validation_status": "pending"
+      "validation_status": "partial"
     },
     "src-s18-w06d01": {
       "video_id": "wRRWT8fO_h0",
@@ -968,7 +970,7 @@
           "status": "detected_pending_review"
         }
       ],
-      "validation_status": "pending"
+      "validation_status": "candidate_detected"
     },
     "src-s18-w06d02": {
       "video_id": "5tOPeDiETK0",
@@ -1002,18 +1004,20 @@
           "team_a": "RRQ",
           "team_b": "AE",
           "game_no": 1,
-          "start_seconds": null,
+          "start_seconds": 1660.8,
           "end_seconds": null,
           "confidence": "low",
           "provenance": {
-            "method": "schedule_order_heuristic",
+            "method": "transcript_boundary_detection",
             "source": "D:\\! Coding\\~ shit projects\\mpls18\\data\\csv\\schedule_all.csv",
             "broadcast_date": "2026-09-19",
             "scheduled_start": "2026-09-19T17:00:00+07:00",
-            "note": "Heuristic initial placement; requires validation against transcript/boundaries/frames"
+            "note": "P3 candidate cue: caster explicitly says match kedua has RRQ vs Alter Ego.",
+            "boundary_line": 450,
+            "boundary_text": "Iya betul. Dan match kedua ada RQ"
           },
           "verified_by": null,
-          "status": "pending_validation"
+          "status": "detected_pending_review"
         },
         {
           "series_index": 2,
@@ -1037,7 +1041,7 @@
           "status": "boundary_verified"
         }
       ],
-      "validation_status": "pending"
+      "validation_status": "partial"
     },
     "src-s18-w06d03": {
       "video_id": "K30JsmMhQ4Q",
@@ -1092,21 +1096,23 @@
           "team_a": "EVOS",
           "team_b": "TLID",
           "game_no": 1,
-          "start_seconds": null,
+          "start_seconds": 24416.2,
           "end_seconds": null,
           "confidence": "low",
           "provenance": {
-            "method": "schedule_order_heuristic",
+            "method": "transcript_boundary_detection",
             "source": "D:\\! Coding\\~ shit projects\\mpls18\\data\\csv\\schedule_all.csv",
             "broadcast_date": "2026-09-20",
             "scheduled_start": "2026-09-20T20:00:00+07:00",
-            "note": "Heuristic initial placement; requires validation against transcript/boundaries/frames"
+            "note": "P3 candidate cue: caster moves to match ketiga game pertama; EVOS vs TLID.",
+            "boundary_line": 9897,
+            "boundary_text": "menuju ke match yang ketiga game yang"
           },
           "verified_by": null,
-          "status": "pending_validation"
+          "status": "detected_pending_review"
         }
       ],
-      "validation_status": "pending"
+      "validation_status": "partial"
     },
     "src-s18-w07d01": {
       "video_id": "Nd_s3qCnRPY",
@@ -1119,7 +1125,7 @@
           "team_a": "GEEK",
           "team_b": "BTR",
           "game_no": 1,
-          "start_seconds": 2686,
+          "start_seconds": 2043,
           "end_seconds": null,
           "confidence": "med",
           "provenance": {
@@ -1127,9 +1133,9 @@
             "source": "D:\\! Coding\\~ shit projects\\mpls18\\data\\csv\\schedule_all.csv",
             "broadcast_date": "2026-10-02",
             "scheduled_start": "2026-10-02T15:00:00+07:00",
-            "note": "Boundary verified against timed caption line 694 (raw line 694); medium confidence. Quote is a lineup announcement, not full intro.",
-            "boundary_line": 694,
-            "boundary_text": "line up dari match pertama di minggu"
+            "note": "Boundary verified at 2043s (raw line 346): caster introduces GEEK vs BTR as match 1. Corrected from lineup announcement at 2686s.",
+            "boundary_line": 346,
+            "boundary_text": "karena hari ini match akan dibuka oleh"
           },
           "verified_by": null,
           "status": "boundary_verified"
@@ -1140,21 +1146,23 @@
           "team_a": "DEWA",
           "team_b": "TLID",
           "game_no": 1,
-          "start_seconds": null,
+          "start_seconds": 12883.0,
           "end_seconds": null,
           "confidence": "low",
           "provenance": {
-            "method": "schedule_order_heuristic",
+            "method": "transcript_boundary_detection",
             "source": "D:\\! Coding\\~ shit projects\\mpls18\\data\\csv\\schedule_all.csv",
             "broadcast_date": "2026-10-02",
             "scheduled_start": "2026-10-02T18:00:00+07:00",
-            "note": "Heuristic initial placement; requires validation against transcript/boundaries/frames"
+            "note": "Pass-3 candidate cue: Team Liquid player-room interview, followed at 12963s by 'hari ini kan bakal lawan Dewa'. Candidate only; not visually promoted.",
+            "boundary_line": 5505,
+            "boundary_text": "Langsung saja ini tim Liquid Indonesia."
           },
           "verified_by": null,
-          "status": "pending_validation"
+          "status": "detected_pending_review"
         }
       ],
-      "validation_status": "pending"
+      "validation_status": "partial"
     },
     "src-s18-w07d02": {
       "video_id": "px_HftyZBxo",
@@ -1167,20 +1175,20 @@
           "team_a": "AE",
           "team_b": "NAVI",
           "game_no": 1,
-          "start_seconds": 31928,
+          "start_seconds": null,
           "end_seconds": null,
-          "confidence": "med",
+          "confidence": "low",
           "provenance": {
             "method": "transcript_boundary_detection",
             "source": "D:\\! Coding\\~ shit projects\\mpls18\\data\\csv\\schedule_all.csv",
             "broadcast_date": "2026-10-03",
             "scheduled_start": "2026-10-03T14:00:00+07:00",
-            "note": "Heuristic initial placement; requires validation against transcript/boundaries/frames",
+            "note": "P3 correction: the 31928s candidate is M53 GAME 3 GEEK 2-1 DEWA (series 1088), not AE vs NAVI. Candidate rejected; no valid 1086 start found. Nulled to preserve chronological ordering; see visual-review-status.json.",
             "boundary_line": 15302,
             "boundary_text": "tiba-tiba tiba-tiba Navi AE bisa charge"
           },
           "verified_by": null,
-          "status": "detected_pending_review"
+          "status": "pending_validation"
         },
         {
           "series_index": 1,
@@ -1188,18 +1196,20 @@
           "team_a": "BTR",
           "team_b": "RRQ",
           "game_no": 1,
-          "start_seconds": null,
+          "start_seconds": 13276.0,
           "end_seconds": null,
           "confidence": "low",
           "provenance": {
-            "method": "schedule_order_heuristic",
+            "method": "transcript_boundary_detection",
             "source": "D:\\! Coding\\~ shit projects\\mpls18\\data\\csv\\schedule_all.csv",
             "broadcast_date": "2026-10-03",
             "scheduled_start": "2026-10-03T17:00:00+07:00",
-            "note": "Heuristic initial placement; requires validation against transcript/boundaries/frames"
+            "note": "Pass-3 candidate cue: caster explicitly places RRQ in match kedua; followed by RRQ/Bigetron welcomes. Candidate only; not visually promoted.",
+            "boundary_line": 5945,
+            "boundary_text": "diturunkan karena di match kedua RRQ"
           },
           "verified_by": null,
-          "status": "pending_validation"
+          "status": "detected_pending_review"
         },
         {
           "series_index": 2,
@@ -1207,23 +1217,23 @@
           "team_a": "GEEK",
           "team_b": "DEWA",
           "game_no": 1,
-          "start_seconds": 28564,
+          "start_seconds": 23569.0,
           "end_seconds": null,
-          "confidence": "med",
+          "confidence": "low",
           "provenance": {
             "method": "transcript_boundary_detection",
             "source": "D:\\! Coding\\~ shit projects\\mpls18\\data\\csv\\schedule_all.csv",
             "broadcast_date": "2026-10-03",
             "scheduled_start": "2026-10-03T20:00:00+07:00",
-            "note": "Heuristic initial placement; requires validation against transcript/boundaries/frames",
-            "boundary_line": 13561,
-            "boundary_text": "dari Geek Farm dan Dewa mereka harus"
+            "note": "Pass-3 candidate cue: caster explicitly calls match ketiga while introducing Geek Fam vs Dewa. Candidate only; not visually promoted.",
+            "boundary_line": 10892,
+            "boundary_text": "poin segalanya di sini di match ketiga"
           },
           "verified_by": null,
           "status": "detected_pending_review"
         }
       ],
-      "validation_status": "pending"
+      "validation_status": "candidate_detected"
     },
     "src-s18-w07d03": {
       "video_id": "S7ugRA3UMjo",
@@ -1292,7 +1302,7 @@
           "status": "boundary_verified"
         }
       ],
-      "validation_status": "pending"
+      "validation_status": "partial"
     },
     "src-s18-w08d01": {
       "video_id": "7Fk2t0Kc9-Q",
@@ -1359,7 +1369,7 @@
           "status": "pending_validation"
         }
       ],
-      "validation_status": "pending"
+      "validation_status": "partial"
     },
     "src-s18-w08d02": {
       "video_id": "VWScHYPW7Qc",
@@ -1430,7 +1440,7 @@
           "status": "detected_pending_review"
         }
       ],
-      "validation_status": "pending"
+      "validation_status": "candidate_detected"
     },
     "src-s18-w08d03": {
       "video_id": "jz3rH4xDoak",
@@ -1499,7 +1509,7 @@
           "status": "pending_validation"
         }
       ],
-      "validation_status": "pending"
+      "validation_status": "partial"
     },
     "src-s18-w09d01": {
       "video_id": "-QC1gIugHrM",
@@ -1533,21 +1543,23 @@
           "team_a": "GEEK",
           "team_b": "AE",
           "game_no": 1,
-          "start_seconds": null,
+          "start_seconds": 12798.0,
           "end_seconds": null,
           "confidence": "low",
           "provenance": {
-            "method": "schedule_order_heuristic",
+            "method": "transcript_boundary_detection",
             "source": "D:\\! Coding\\~ shit projects\\mpls18\\data\\csv\\schedule_all.csv",
             "broadcast_date": "2026-10-16",
             "scheduled_start": "2026-10-16T18:00:00+07:00",
-            "note": "Heuristic initial placement; requires validation against transcript/boundaries/frames"
+            "note": "P3 candidate cue: pre-match interview explicitly discusses match kedua; GEEK vs AE.",
+            "boundary_line": 5104,
+            "boundary_text": "Tapi Konavari untuk skema di match kedua"
           },
           "verified_by": null,
-          "status": "pending_validation"
+          "status": "detected_pending_review"
         }
       ],
-      "validation_status": "pending"
+      "validation_status": "partial"
     },
     "src-s18-w09d02": {
       "video_id": "b9SktblDNuc",
@@ -1616,7 +1628,7 @@
           "status": "pending_validation"
         }
       ],
-      "validation_status": "pending"
+      "validation_status": "candidate_detected"
     },
     "src-s18-w09d03": {
       "video_id": "hY0Upem95uo",
@@ -1685,7 +1697,7 @@
           "status": "boundary_verified"
         }
       ],
-      "validation_status": "pending"
+      "validation_status": "partial"
     }
   }
 }
