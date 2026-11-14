@@ -1,0 +1,434 @@
+{
+  "schema_version": 1,
+  "experiment": "deepseek-v4.1-flash-free vs longcat-2.5-free visual review",
+  "date": "2026-11-14",
+  "method": "12 frames, identical prompt, four read-only subagents (two batches per model), no paid model calls, no promotion.",
+  "models": {
+    "deepseek_free": "opencode/deepseek-v4.1-flash-free#max",
+    "longcat_free": "opencode-go/longcat-2.5-free"
+  },
+  "scoreboard": {
+    "json_valid": {
+      "deepseek_free": "12/12",
+      "longcat_free": "12/12"
+    },
+    "clean_game_clock_exact": {
+      "deepseek_free": "2/3",
+      "longcat_free": "3/3",
+      "frames": [
+        "DF-1062-2464",
+        "VF-1037-base",
+        "VF-1107-early"
+      ]
+    },
+    "countdown_or_overlay_exact": {
+      "deepseek_free": "6/6",
+      "longcat_free": "6/6"
+    },
+    "false_literal_00_00": {
+      "deepseek_free": "0/12",
+      "longcat_free": "0/12"
+    },
+    "false_same_frame_pairing": {
+      "deepseek_free": "0/12",
+      "longcat_free": "0/12"
+    },
+    "team_reads": {
+      "deepseek_free": {
+        "exact": 9,
+        "partial": 2,
+        "wrong": 1,
+        "wrong_example": "GEEK read as BTR on M49"
+      },
+      "longcat_free": {
+        "exact": 8,
+        "partial": 3,
+        "wrong": 1,
+        "wrong_example": "AE read as RE on 21:08 frame"
+      }
+    }
+  },
+  "verdict": "LongCat is usable as a free second opinion, not as the sole visual-proof reviewer. Both models were safe on this sample (0 false 00:00, 0 false pairing) and both returned valid JSON. LongCat read all three clean game clocks exactly; DeepSeek Free missed one (21:06 vs 21:08). But LongCat misread a blurred clock as 06:26 with high confidence and misread AE as RE; DeepSeek Free misread GEEK as BTR. No frame contains a real 00:00, so neither model's recall for the actual gate is tested.",
+  "limits": [
+    "No positive 00:00 frame exists in the corpus; this tests specificity, not recall.",
+    "12 frames is a small sample; 12301 is blurred and excluded from clock scoring.",
+    "Subagent read-tool image handling may differ from the canonical API attachment path.",
+    "The paid DeepSeek ledger mislabels 12301 as DEWA/RRQ/04:38; the pixels show RRQ/EVOS at ~04:24."
+  ],
+  "frames": [
+    {
+      "frame_id": "DF-1062-2464",
+      "expected": {
+        "clock": "00:19",
+        "countdown": "none",
+        "teams": [
+          "ONIC",
+          "DEWA"
+        ],
+        "note": "clean in-game HUD"
+      },
+      "deepseek_free": {
+        "clock": "00:19",
+        "countdown": "none",
+        "teams": [],
+        "literal_00_00": false,
+        "pairing": false,
+        "json": true
+      },
+      "longcat_free": {
+        "clock": "00:19",
+        "countdown": "none",
+        "teams": [
+          "DEWA",
+          "ONIC"
+        ],
+        "literal_00_00": false,
+        "pairing": false,
+        "json": true
+      }
+    },
+    {
+      "frame_id": "VF-1037-base",
+      "expected": {
+        "clock": "21:08",
+        "countdown": "none",
+        "teams": [
+          "AE",
+          "NAVI"
+        ],
+        "note": "pixel-verified clock"
+      },
+      "deepseek_free": {
+        "clock": "21:06",
+        "countdown": "none",
+        "teams": [
+          "AE",
+          "NAVI"
+        ],
+        "literal_00_00": false,
+        "pairing": false,
+        "json": true
+      },
+      "longcat_free": {
+        "clock": "21:08",
+        "countdown": "none",
+        "teams": [
+          "RE",
+          "NAVI"
+        ],
+        "literal_00_00": false,
+        "pairing": false,
+        "json": true
+      }
+    },
+    {
+      "frame_id": "VF-1107-early",
+      "expected": {
+        "clock": "05:08",
+        "countdown": "none",
+        "teams": [
+          "TLID",
+          "ONIC"
+        ],
+        "note": "pixel-verified clock"
+      },
+      "deepseek_free": {
+        "clock": "05:08",
+        "countdown": "none",
+        "teams": [
+          "TLID",
+          "ONIC"
+        ],
+        "literal_00_00": false,
+        "pairing": false,
+        "json": true
+      },
+      "longcat_free": {
+        "clock": "05:08",
+        "countdown": "none",
+        "teams": [
+          "TLID",
+          "ONIC"
+        ],
+        "literal_00_00": false,
+        "pairing": false,
+        "json": true
+      }
+    },
+    {
+      "frame_id": "VF-1037-replay",
+      "expected": {
+        "clock": "none",
+        "countdown": "none",
+        "teams": [],
+        "note": "replay banner; no team tags or clock"
+      },
+      "deepseek_free": {
+        "clock": "none",
+        "countdown": "none",
+        "teams": [],
+        "literal_00_00": false,
+        "pairing": false,
+        "json": true
+      },
+      "longcat_free": {
+        "clock": "none",
+        "countdown": "none",
+        "teams": [
+          "NAVI"
+        ],
+        "literal_00_00": false,
+        "pairing": false,
+        "json": true
+      }
+    },
+    {
+      "frame_id": "DF-W07D1-2038",
+      "expected": {
+        "clock": "none",
+        "countdown": "DRAFT PICK IN 15:56",
+        "teams": [
+          "GEEK",
+          "VITALITY"
+        ],
+        "note": "pre-match stage; logos legible"
+      },
+      "deepseek_free": {
+        "clock": "none",
+        "countdown": "DRAFT PICK IN 15:56",
+        "teams": [
+          "BTR",
+          "VITALITY"
+        ],
+        "literal_00_00": false,
+        "pairing": false,
+        "json": true
+      },
+      "longcat_free": {
+        "clock": "none",
+        "countdown": "DRAFT PICK IN 15:56",
+        "teams": [
+          "GEEK",
+          "VITALITY"
+        ],
+        "literal_00_00": false,
+        "pairing": false,
+        "json": true
+      }
+    },
+    {
+      "frame_id": "DF-ALBERTTT-DRAFT",
+      "expected": {
+        "clock": "none",
+        "countdown": "none",
+        "teams": [],
+        "note": "produced draft-analysis graphic"
+      },
+      "deepseek_free": {
+        "clock": "none",
+        "countdown": "none",
+        "teams": [],
+        "literal_00_00": false,
+        "pairing": false,
+        "json": true
+      },
+      "longcat_free": {
+        "clock": "none",
+        "countdown": "none",
+        "teams": [],
+        "literal_00_00": false,
+        "pairing": false,
+        "json": true
+      }
+    },
+    {
+      "frame_id": "DF3-w09d03-24946",
+      "expected": {
+        "clock": "none",
+        "countdown": "6:55:46 / 8:27:13",
+        "teams": [
+          "TLID",
+          "ONIC"
+        ],
+        "note": "paused VOD player-cam"
+      },
+      "deepseek_free": {
+        "clock": "none",
+        "countdown": "6:55:46 / 8:27:13",
+        "teams": [
+          "TLID",
+          "ONIC"
+        ],
+        "literal_00_00": false,
+        "pairing": false,
+        "json": true
+      },
+      "longcat_free": {
+        "clock": "none",
+        "countdown": "6:55:46 / 8:27:13",
+        "teams": [
+          "TLID",
+          "ONIC"
+        ],
+        "literal_00_00": false,
+        "pairing": false,
+        "json": true
+      }
+    },
+    {
+      "frame_id": "DF2-w01d03-10609",
+      "expected": {
+        "clock": "none",
+        "countdown": "DRAFT PICK IN 10:26",
+        "teams": [
+          "VITALITY",
+          "GEEK"
+        ],
+        "note": "backstage b-roll with scoreboard overlay"
+      },
+      "deepseek_free": {
+        "clock": "none",
+        "countdown": "DRAFT PICK IN 10:26",
+        "teams": [
+          "VITALITY",
+          "GEEK"
+        ],
+        "literal_00_00": false,
+        "pairing": false,
+        "json": true
+      },
+      "longcat_free": {
+        "clock": "none",
+        "countdown": "DRAFT PICK IN 10:26",
+        "teams": [
+          "VITALITY",
+          "GEEK",
+          "ONIC"
+        ],
+        "literal_00_00": false,
+        "pairing": false,
+        "json": true
+      }
+    },
+    {
+      "frame_id": "DF-1084-CROP",
+      "expected": {
+        "clock": "none",
+        "countdown": "DRAFT PICK IN 15:51",
+        "teams": [
+          "GEEK",
+          "VITALITY"
+        ],
+        "note": "scoreboard crop"
+      },
+      "deepseek_free": {
+        "clock": "none",
+        "countdown": "DRAFT PICK IN: 15:51",
+        "teams": [
+          "GEEK",
+          "VITALITY"
+        ],
+        "literal_00_00": false,
+        "pairing": false,
+        "json": true
+      },
+      "longcat_free": {
+        "clock": "none",
+        "countdown": "DRAFT PICK IN: 15:51",
+        "teams": [
+          "GEEK",
+          "VITALITY"
+        ],
+        "literal_00_00": false,
+        "pairing": false,
+        "json": true
+      }
+    },
+    {
+      "frame_id": "DF2-w02d02-23262",
+      "expected": {
+        "clock": "none",
+        "countdown": "DRAFT PICK IN 03:52",
+        "teams": [],
+        "note": "analyst desk"
+      },
+      "deepseek_free": {
+        "clock": "none",
+        "countdown": "DRAFT PICK IN 03:52",
+        "teams": [],
+        "literal_00_00": false,
+        "pairing": false,
+        "json": true
+      },
+      "longcat_free": {
+        "clock": "none",
+        "countdown": "DRAFTPICK IN 03:52",
+        "teams": [],
+        "literal_00_00": false,
+        "pairing": false,
+        "json": true
+      }
+    },
+    {
+      "frame_id": "DF-1094-1585",
+      "expected": {
+        "clock": "none",
+        "countdown": "DRAFT PICK IN 17:00",
+        "teams": [],
+        "note": "interview; current-match logos only, next-match ticker is DEWA/NAVI"
+      },
+      "deepseek_free": {
+        "clock": "none",
+        "countdown": "DRAFT PICK IN 17:00",
+        "teams": [],
+        "literal_00_00": false,
+        "pairing": false,
+        "json": true
+      },
+      "longcat_free": {
+        "clock": "none",
+        "countdown": "DRAFT PICK IN 17:00",
+        "teams": [
+          "DEWA",
+          "NAVI"
+        ],
+        "literal_00_00": false,
+        "pairing": false,
+        "json": true
+      }
+    },
+    {
+      "frame_id": "DF3-w01d02-12301",
+      "expected": {
+        "clock": "ambiguous (~04:24, blurred)",
+        "countdown": "none",
+        "teams": [
+          "RRQ",
+          "EVOS"
+        ],
+        "note": "replay of match 1; paid ledger mislabels it DEWA/RRQ/04:38; excluded from clock scoring"
+      },
+      "deepseek_free": {
+        "clock": "04:31",
+        "countdown": "none",
+        "teams": [
+          "EVOS"
+        ],
+        "literal_00_00": false,
+        "pairing": false,
+        "json": true
+      },
+      "longcat_free": {
+        "clock": "06:26",
+        "countdown": "none",
+        "teams": [
+          "RRQ",
+          "EVOS"
+        ],
+        "literal_00_00": false,
+        "pairing": false,
+        "json": true
+      }
+    }
+  ]
+}
