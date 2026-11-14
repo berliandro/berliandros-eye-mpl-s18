@@ -1,0 +1,52 @@
+{
+  "schema_version": 1,
+  "date": "2026-11-14",
+  "source_class": "games.vod_url (official per-game VODs)",
+  "provenance": "Q-ALL-GAMES, snapshot mpl-s18-db-20c5ea2c51f3",
+  "counts": {
+    "games": 174,
+    "with_vod": 173,
+    "unique_video_ids": 172,
+    "distinct_from_27_broadcast_sources": 171
+  },
+  "samples": [
+    {
+      "match_detail_id": "1036",
+      "game_no": 1,
+      "video_id": "SuqcHmHNTos",
+      "title": "EVOS vs RRQ | Regular Season Week 1 Day 1 | Game 1 | #MPLIDS18",
+      "video_duration_s": 1923,
+      "first_visible_hud_video_s": 435,
+      "game_clock": "00:21",
+      "teams_visible": [
+        "EVOS",
+        "RRQ"
+      ],
+      "literal_00_00": false,
+      "same_frame_pairing": false,
+      "reviewer": "opencode/deepseek-v4.1-flash-free#max",
+      "review_note": "DeepSeek Free confirmed 00:21 and EVOS/RRQ; no 00:00.",
+      "frame_cache_path": "analysis/cache/game-vods/frames/1036-g1-first-hud-435.jpg",
+      "frame_sha256": "4a16ebc17b8ec067dc6d3390b0490d81bf10fd99fa5e8e1a5563d3d3964ed14b"
+    },
+    {
+      "match_detail_id": "1036",
+      "game_no": 2,
+      "video_id": "7D7HZLDDKew",
+      "title": "EVOS vs RRQ | Regular Season Week 1 Day 1 | Game 2 | #MPLIDS18",
+      "video_duration_s": 3368,
+      "sampled_hud_video_s": 535,
+      "game_clock": "00:42",
+      "teams_visible": [
+        "EVOS",
+        "RRQ"
+      ],
+      "literal_00_00": false,
+      "same_frame_pairing": false,
+      "note": "Pre-game/intro through at least 510s; at 535s the HUD is already 00:42.",
+      "reviewer": "pixel check (frame captured via canvas); no promotion"
+    }
+  ],
+  "conclusion": "The per-game VODs are separate official videos, but the sampled cuts still begin after 00:00. First HUDs were 00:21 (1036 G1) and 00:42 (1036 G2). No literal 00:00 was found; the visual gate stays unmet and no boundary is promoted.",
+  "next_step": "If pursued, sweep the 172 per-game VODs for a first HUD at 00:00. A single clean 00:00 frame with both teams would be the unblock."
+}

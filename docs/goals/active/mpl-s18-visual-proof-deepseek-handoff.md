@@ -448,3 +448,16 @@ Re-audited the full DeepSeek ledger (966 frames, 62 boundary reviews) for any ov
 Two frames contain the string `00:00` in free text, but both are explicit negations: `DF3-w09d03-24946` says "No 00:00 game clock appears anywhere", and `DF3-w01d02-12301` says the clock "reads 04:38, not 00:00". They are not evidence.
 
 **Result:** no boundary can be promoted. The gate stays unmet; the standard is unchanged. This is an evidence-backed blocker, not missing work.
+
+### 8.28 Per-game VOD source check (2026-11-14)
+
+The games table has **173 VOD links / 172 unique videos**, almost all different from the 27 broadcast sources. These are official per-game cuts, so they were checked as a possible source of a real `00:00`.
+
+- **1036 G1** (`SuqcHmHNTos`, 32:03): player cams and draft; the first visible HUD is at video **435s = 00:21**, teams EVOS/RRQ. DeepSeek V4.1 Flash Free confirmed `00:21`, EVOS/RRQ, `literal_00_00=false`.
+- **1036 G2** (`7D7HZLDDKew`, 56:08): pre-game/intro through at least 510s; at video **535s the HUD is already 00:42**. Preceding sampled frames are pre-game/intro.
+
+No literal `00:00` was found in the sampled per-game VODs. They are a cleaner source but still cut in after the clock starts, matching the broadcast behavior. Gate stays unmet; no promotion.
+
+Evidence: `analysis/evidence/per-game-vod-check.json`; frame SHA-256 `4a16ebc17b8ec067dc6d3390b0490d81bf10fd99fa5e8e1a5563d3d3964ed14b` (frame is local cache only).
+
+Next step if pursued: sweep the 172 per-game VODs for a first HUD at `00:00`. One clean frame with both teams would unblock.
