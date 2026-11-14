@@ -31,6 +31,8 @@ This report is the single source of truth for coverage. Older coverage summaries
 - **DB-only:** no transcript source exists for that series; the block is the evidence.
 - **Transcript:** a validated source ledger exists and the report carries accepted observations; `partial` means the source window is not full gameplay.
 
+**Pilot store note:** 1036, 1037 and 1107 also have claim-level records in the frozen pilot ledger (`analysis/evidence/pilot-ledger.jsonl`). 1037 has **no transcript source**; its pilot observations are the only semantic evidence for that series. See `analysis/reports/evidence-store.md`.
+
 ## Per-series coverage
 
 | Match | Date | Series | Score | Games | Transcript | Visual | DB block | Status |

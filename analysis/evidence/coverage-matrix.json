@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "generated_at": "2026-11-14T15:42:16+00:00",
+  "generated_at": "2026-11-14T15:44:09+00:00",
   "description": "Canonical coverage matrix for MPL ID S18. Joins the database snapshot, transcript plan and ledgers, visual status, and page inventory.",
   "snapshot_id": "mpl-s18-db-20c5ea2c51f3",
   "snapshot_sha256": "20c5ea2c51f30d1a24cd2ce6927f0d182b47f951ebd8209f1aaef429941cf2ef",
@@ -45,6 +45,7 @@
     "transcript_accepted": 313,
     "transcript_rejected": 50,
     "transcript_resolved": 5,
+    "pilot_series": 3,
     "pilot_store": {
       "segment": 8,
       "observation": 85,
