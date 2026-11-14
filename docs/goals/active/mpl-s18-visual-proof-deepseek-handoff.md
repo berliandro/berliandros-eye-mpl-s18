@@ -127,7 +127,7 @@ Passes 1–2 only completed the review of existing candidates. The visual-proof 
 - `tools/test_visual_review_integrity.py` — adversarial validator tests
 - `tools/audit_visual_evidence.py` — frame-cache audit
 - `analysis/reports/unvalidated-sources.md` — unvalidated sources
-- `analysis/reports/coverage-summary.md` — current coverage state
+- `analysis/reports/coverage-matrix.md` — canonical coverage (supersedes `coverage-summary.md`)
 
 ## 8. DeepSeek review results (2026-11-02)
 

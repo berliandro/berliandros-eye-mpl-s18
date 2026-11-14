@@ -126,7 +126,7 @@
 - [`reports/phase0-mistake-audit.md`](reports/phase0-mistake-audit.md) — Phase 0 mistake audit and fixes.
 - [`reports/unvalidated-sources.md`](reports/unvalidated-sources.md) — 4 sources that could not be auto-validated; DeepSeek visual review status.
 - [`reports/visual-proof-deepseek-review.md`](reports/visual-proof-deepseek-review.md) - DeepSeek visual review passes 1–2: 113 frames, 31 boundaries, 18 rejected candidates, 0 promoted.
-- [`reports/coverage-summary.md`](reports/coverage-summary.md) — current coverage state of the semantic analysis.
+- [`reports/coverage-summary.md`](reports/coverage-summary.md) — historical pre-transcript coverage; superseded by the canonical matrix.
 - [`reports/player-matched-comparisons.md`](reports/player-matched-comparisons.md) — database-backed matched comparisons for player-level insights.
 - [`players/`](players/) — 66 player dossiers (one per player). See `analysis/players/` for the full list.
 - [`reports/counter-analysis-pilot.md`](reports/counter-analysis-pilot.md) — antithesis/counter-analysis of the three pilot insights.

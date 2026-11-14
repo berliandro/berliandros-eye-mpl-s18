@@ -1,8 +1,6 @@
 # MPL S18 Transcript Knowledge Pipeline — Execution Spec
 
-**Status:** proposed. Supersedes the transcript-analysis portions of
-`docs/goals/active/mpl-s18-semantic-analysis-completion-goal.md`. Visual proof
-remains separate.
+**Status:** completed 2026-11-13. The non-goals below applied to this pipeline only; the coaching layer is delivered separately in `analysis/coaching/`. Visual proof remains separate and incomplete. Superseded as a working spec by the delivered coaching product.
 
 **Objective:** turn the 27 existing Indonesian S18 transcripts into validated,
 source-linked observations and consolidate them into the existing Markdown at low
