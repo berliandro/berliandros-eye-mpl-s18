@@ -601,3 +601,4 @@ dialog::backdrop{background:rgba(6,8,7,.72)}
 .sb-duo .sb-team.pk-b{box-shadow:none;border-color:rgba(56,189,248,.55);border-left:3px solid rgba(56,189,248,.9)}
 .sb-duo .sb-team.pk-r{box-shadow:none;border-color:rgba(248,113,113,.55);border-left:3px solid rgba(248,113,113,.9)}
 .sb-duo .sb-team.pk-b .sb-thead,.sb-duo .sb-team.pk-r .sb-thead{background:rgba(255,255,255,.02)}.sb-duo .sb-team.flip{border-left-width:1px;border-right-width:3px}
+a.pl,a.lrow{color:inherit;text-decoration:none}

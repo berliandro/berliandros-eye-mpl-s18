@@ -213,7 +213,7 @@ out.push(`<div class="pin"><div class="lscroll"><div class="lhead"><span></span>
 +r.map(o=>{const an=PMof(o);
 const wr=an&&an.decided?Math.round(an.winRate*100)+'%':'—';
 const imp=an?Math.round(an.impact):'—';
-return `<div class="lrow" data-p="${esc(o.player)}" role="link" tabindex="0" aria-label="Open ${esc(o.player)} profile">${ppic(o.player)}<span><b>${esc(o.player)}</b></span><span class="c-team"><img class="tlogo" src="${TICON(o.team)}" alt="" loading="lazy" ${IMG_HIDE}> <span class="mono">${esc(o.team)}</span></span><span class="mono c-lane">${esc(o.lane||'—')}</span><span class="mono c-gp">${o.gp}</span><span class="mono">${o.avgkda.toFixed(2)}</span><span class="mono c-kda3">${o.k}/${o.d}/${o.a}</span><span class="mono c-gpm">${o.avgg.toFixed(0)}</span><span class="mono c-wr">${wr}</span><span class="mono c-imp">${imp}</span></div>`;}).join('')+`</div></div>`);}
+return `<a class="lrow" href="#view=player&player=${encodeURIComponent(o.player)}" data-p="${esc(o.player)}" aria-label="Open ${esc(o.player)} profile">${ppic(o.player)}<span><b>${esc(o.player)}</b></span><span class="c-team"><img class="tlogo" src="${TICON(o.team)}" alt="" loading="lazy" ${IMG_HIDE}> <span class="mono">${esc(o.team)}</span></span><span class="mono c-lane">${esc(o.lane||'—')}</span><span class="mono c-gp">${o.gp}</span><span class="mono">${o.avgkda.toFixed(2)}</span><span class="mono c-kda3">${o.k}/${o.d}/${o.a}</span><span class="mono c-gpm">${o.avgg.toFixed(0)}</span><span class="mono c-wr">${wr}</span><span class="mono c-imp">${imp}</span></a>`;}).join('')+`</div></div>`);}
 else{
 const PM={};(anPart('AN').players||[]).forEach(p=>{PM[String(p.player).toLowerCase()]=p;});
 out.push(`<div class="pl-legend" role="note"><span><b>DMG</b> damage share</span><span><b>KP</b> kill participation</span><span><b>GLD</b> gold share</span><span><b>TWR</b> tower share</span><span><b>KDA</b> kills+assists ÷ deaths</span><span class="lg-note">weights 30/20/15/10/15/−10<i class="lg-line" aria-hidden="true"></i>ring = 50th · outward is better · DEATHS inverted</span></div>`);
@@ -225,13 +225,13 @@ const bar=(v,label,inv)=>{const q=inv?100-v:v;const cls=q>=50?'hi':'';const full
 const radar=an?radarSVG(an):'';
 const heroes=(DATA.hero_pool[o.player]||[]).slice(0,3).map(h=>esc(h[0])).join(' · ');
 const cardAria=an?`Open ${o.player} — ${o.team} ${o.lane||'unknown lane'}. Lane impact ${Math.round(an.impact)} of 100, ${Math.round(an.winRate*100)}% win rate over ${o.gp} games. Percentiles: damage ${pcv(an.pct.damageShare)}, kill participation ${pcv(an.pct.kp)}, gold ${pcv(an.pct.goldShare)}, tower ${pcv(an.pct.towerShare)}, KDA ${pcv(an.pct.kda)}, deaths ${pcv(an.pct.deathShare)} where lower is better.`:`Open ${o.player} — ${o.team} ${o.lane||'unknown lane'}, ${o.gp} games, no percentile data.`;
-out.push(`<div class="pin pl" style="--index:${i}${TCOL(o.team)?`;--ctc:${TCOL(o.team).soft}`:';--ctc:rgba(242,241,236,.42)'}" data-p="${esc(o.player)}" role="link" tabindex="0" aria-label="${esc(cardAria)}">
+out.push(`<a class="pin pl" href="#view=player&player=${encodeURIComponent(o.player)}" style="--index:${i}${TCOL(o.team)?`;--ctc:${TCOL(o.team).soft}`:';--ctc:rgba(242,241,236,.42)'}" data-p="${esc(o.player)}" aria-label="${esc(cardAria)}">
 <div class="pl-head">${ppic(o.player)}<div class="pl-id"><b>${esc(o.player)}</b><span>${TICON(o.team)?`<img class="tlogo" src="${esc(TICON(o.team))}" alt="" loading="lazy" ${IMG_HIDE}>`:''}${esc(o.team)} · ${esc(o.lane||'—')}</span></div></div>
 <div class="pl-score${an&&an.small?' small':''}"><b>${an?Math.round(an.impact):'—'}</b><span class="pl-lab">Lane impact<em>${o.gp} GP</em></span></div>
 <p class="pl-sub">${an?Math.round(an.winRate*100)+'% WR':'— WR'} · ${o.avgkda.toFixed(2)} KDA · ${o.avgg.toFixed(0)} GPM</p>
 ${radar}
 <div class="pl-foot"><span class="pl-heroes">${heroes||'—'}</span><svg class="pl-go" viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></div>
-</div>`);});}}
+</a>`);});}}
 if(S.view==='matches'){let ms=DATA.schedule.slice().sort((a,b)=>(a.iso_datetime||'').localeCompare(b.iso_datetime||''));
 if(S.team)ms=ms.filter(m=>m.team_a===S.team||m.team_b===S.team);
 if(S.q)ms=ms.filter(m=>(m.team_a+' '+m.team_b+' '+m.date).toLowerCase().includes(S.q));
