@@ -96,11 +96,11 @@ with sync_playwright() as pw:
 
     # opened scoreboard: first completed match card
     # (wait for the live-data dialog body: player rows present)
-    btn = pg.query_selector('.mpin [data-m]')
+    btn = pg.query_selector('.mpin[data-m]')
     if btn:
         btn.click()
         pg.wait_for_function(
-            "document.querySelectorAll('#db .sb-p').length > 0",
+            "document.querySelectorAll('#db .sb-table').length > 0",
             timeout=30000)
         shot(pg, '05-scoreboard.png')
         pg.keyboard.press('Escape')

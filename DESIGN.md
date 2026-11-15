@@ -195,9 +195,18 @@ rule. Cards sit in an auto-fill grid at 250px minimum, four across at 1440. The 
 1.55fr / 1fr; the season page uses the same split for standings and the race, with the playoff panel
 stacked beneath.
 
+Beneath the player hero the two columns are independent stacks, never grid rows: the wide column
+carries hero pool, KDA trend, sides and opponent record; the narrow column carries derived stats,
+recent games and items. Cards follow their column down, so a short card never leaves a card-shaped
+hole under its neighbour. Only the ragged end of the shorter column is allowed, and the closing
+definitions run full width under both.
+
 Teams opens with a nine-row league board, then nine club dossiers. The top three in competition order
 open; the other six collapse to their identity strip. The dossier uses 1.06fr / 1fr — roster and
 tendencies in the left stack, draft, map record and head-to-head in the right.
+
+Matches opens on the latest week; earlier weeks are one-line summaries. The scoreboard is two tables,
+not two stacks of rows; the playoffs are the bracket first and the scheduled series second.
 
 Spacing runs 8 / 14 / 18 / 24. Inside a panel 18–20px; between panels 18px.
 
@@ -255,9 +264,19 @@ Outward is better on every axis; deaths is inverted and the legend says so. The 
 One plate, nine rows. The sort is the page's argument: **Rating** leads, **Standings** is the league's
 own order — playoff seeding while the bracket is live, then final placement once the grand final
 reaches four wins, with 5–6 alphabetical. A **Δ** column appears only when the two orders disagree;
-when they agree, the note says so. Columns: Pts, series, games, game win% (95% CI), rating (95% CI),
-SOS, Form5, blue/red, gold diff. Below 760 the table becomes a nine-row club index (rank, crest, code,
-name, series, rating, chevron) so a phone never scrolls a thirteen-column table sideways.
+when they agree, the foot line says so. The active sort's column header is the only chalk header.
+
+Columns: rank, club, rating, Pts, series, games, win%, SOS, Form5, gold diff. Rating is the row's one
+figure, 16px display, with its interval as a 9.5px mono annotation on the same baseline and no
+parentheses; win% carries its interval the same way. Every other cell is 11.5px and SOS is pewter.
+Side records (blue / red) live in the dossier and in Prep, not on the board.
+
+The bar carries one state line rather than a count: "Model rating order" by default, "League order ·
+playoff seeding" when flipped. The foot is one sentence — Δ's definition, or "Model and league agree:
+no club moves." — above a **How the board is built** disclosure holding the seeding rules, the rating
+formula, the SOS definition and the side-record pointer; the disclosure prints open. Below 760 the
+table becomes a nine-row club index (rank, crest, code, name, series, rating, chevron) so a phone
+never scrolls a ten-column table sideways.
 
 ### Club Dossier (signature)
 A native `<details>` per club. The summary is the identity strip: a 3px crest edge, 76px crest, team
@@ -269,12 +288,32 @@ first bans, pockets, HHI), map record at n≥5, and a 4×2 head-to-head. Actions
 link. The player profile keeps the one true glass band; nine 22px blurs would be a performance and
 world violation.
 
+### Match Card + Week Group (signature)
+The latest week opens; earlier weeks are one-line summary bars. The card is the control: no separate
+button, no internal id, no “COMPLETED”; the winner is weight, the series MVP is named, and the date is
+one short voice. “Open scoreboard” is a hint inside the card; the whole card is a `role=button` control
+with Enter/Space. Below 640 the week collapses to one column and the list drops the 640px floor so the
+chevron stays on screen.
+
+### Scoreboard Table (signature)
+Two tables, not mirrored row stacks: **Player / K/D/A / KDA / Gold / GPM / DMG / TAKEN**, tabular and
+right-aligned, with a build row of emblem, talents and items per player. The series score is the
+dialog title; **Series MVP (Liquipedia)** is the subtitle and **Game MVP (KDA heuristic)** sits in the
+game header. Bans keep draft order with hero art; the side is a 3px edge plus a labelled Blue/Red
+chip; the VOD is a chalk pill at 44px on touch. The dialog title is `h2`, each game `h3`.
+
+### Playoff Bracket (signature)
+The bracket is the playoffs page. Undecided slots name their feed (“Winner QF1”, “Loser UF”), never a
+bare TBD; the scheduled series sit below it. A team filter dims the other routes and says the bracket
+is league-wide, rather than leaving a count that contradicts the drawing.
+
 ### Print
 The same markup on paper: white plates, black ink, seams at `#bbb`, chrome removed, ghosts hidden,
 charts re-stroked in grey and black, the tile grid collapsed to four columns. Cards print three across
-with the radar capped at 200px. The Teams sheet prints the board as a table and every dossier open:
-closed `<details>` are forced open, ghost wordmarks and actions removed. `verify.py` plus a
-print-emulation check keep it honest.
+with the radar capped at 200px. The Teams sheet prints the board as a table, with its method paragraph
+open and its summary hidden, and every dossier open: closed `<details>` are forced open, ghost
+wordmarks and actions removed. The Matches sheet opens every
+week group and prints the cards three across. `verify.py` plus a print-emulation check keep it honest.
 
 ## Do's and Don'ts
 
@@ -285,6 +324,8 @@ print-emulation check keep it honest.
 - **Do** sample team colour from the crest and clamp it for the ground.
 - **Do** give each entity one tab: Overview is the season, Teams the clubs, Players the people,
   Matches the series, Stats the record, Analytics the models, Prep the plan.
+- **Do** make the card the control and name the series before the controls.
+- **Do** distinguish Series MVP (Liquipedia) from Game MVP (KDA heuristic) wherever both are shown.
 - **Do** print the same markup, not a second layout.
 
 ### Don't:

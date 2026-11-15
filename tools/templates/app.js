@@ -160,6 +160,8 @@ const y=window.scrollY,hdr=document.querySelector('header');
 if(window.innerWidth>640||!hdr){if(hdr)hdr.classList.remove('navhide');}
 else if(y>lastY&&y>160){hdr.classList.add('navhide');}else if(y<lastY){hdr.classList.remove('navhide');}
 lastY=y;});},{passive:true});
+window.addEventListener('beforeprint',()=>{document.querySelectorAll('details.tm-method:not([open])').forEach(d=>{d.open=true;d.dataset.printed='1';});});
+window.addEventListener('afterprint',()=>{document.querySelectorAll('details.tm-method[data-printed]').forEach(d=>{d.open=false;delete d.dataset.printed;});});
 dlg.addEventListener('close',()=>{dnav=[];document.body.style.overflow='';if(lastFocus)lastFocus.focus();});
 dlg.addEventListener('click',e=>{if(e.target===dlg)dlg.close();});
 const dlg2El=document.getElementById('dlg2');if(dlg2El){dlg2El.addEventListener('click',e=>{if(e.target===dlg2El)dlg2El.close();});dlg2El.addEventListener('close',()=>{document.body.style.overflow='';});}
@@ -234,6 +236,10 @@ return '#'+hp.toString();}
 function syncUrl(){try{const url=stateUrl();const key=S.view+'|'+(S.player||'');
 if(LASTKEY!==null&&key!==LASTKEY)history.pushState(null,'',url);else history.replaceState(null,'',url);
 LASTKEY=key;}catch(e){}}
+function isoDate(iso){const m=/^(\d{4})-(\d{2})-(\d{2})/.exec(String(iso||''));return m?{y:+m[1],m:+m[2],d:+m[3]}:null;}
+function shortDate(iso,year){const x=isoDate(iso);return x?`${x.d} ${MON[x.m-1]}${year?' '+x.y:''}`:'';}
+function weekKey(iso){const x=isoDate(iso);if(!x)return '';const d=new Date(Date.UTC(x.y,x.m-1,x.d));const day=(d.getUTCDay()+6)%7;d.setUTCDate(d.getUTCDate()-day);return d.toISOString().slice(0,10);}
+function weekLabel(key){const x=isoDate(key);if(!x)return '';const a=new Date(Date.UTC(x.y,x.m-1,x.d)),b=new Date(a);b.setUTCDate(a.getUTCDate()+6);const same=a.getUTCMonth()===b.getUTCMonth();return same?`${a.getUTCDate()}–${b.getUTCDate()} ${MON[b.getUTCMonth()]} ${b.getUTCFullYear()}`:`${a.getUTCDate()} ${MON[a.getUTCMonth()]}–${b.getUTCDate()} ${MON[b.getUTCMonth()]} ${b.getUTCFullYear()}`;}
 function render(){const out=[];
 const beforeCards=snapshotCards();
 document.querySelectorAll('[data-view]').forEach(b=>{const on=b.dataset.view===(S.view==='player'?'players':S.view);if(on)b.setAttribute('aria-current','page');else b.removeAttribute('aria-current');});
@@ -281,44 +287,64 @@ out.push(`<a class="pin pl" href="#view=player&player=${encodeURIComponent(o.pla
 ${radar}
 <div class="pl-foot"><span class="pl-heroes">${heroes||'—'}</span><svg class="pl-go" viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></div>
 </a>`);});}}
-if(S.view==='matches'){let ms=DATA.schedule.slice().sort((a,b)=>(a.iso_datetime||'').localeCompare(b.iso_datetime||''));
+if(S.view==='matches'){
+let ms=DATA.schedule.slice().sort((a,b)=>(a.iso_datetime||'').localeCompare(b.iso_datetime||''));
 if(S.team)ms=ms.filter(m=>m.team_a===S.team||m.team_b===S.team);
 if(S.q)ms=ms.filter(m=>(m.team_a+' '+m.team_b+' '+m.date).toLowerCase().includes(S.q));
 const isPO=m=>String(m.schedule_id||m.match_id||'').indexOf('playoffs')>-1||(m.team_a==='TBD'&&m.team_b==='TBD');
-const secHead=(title,n)=>`<div class="pin" style="grid-column:1/-1"><div class="body"><div class="phasebar"><div><div class="kicker">Phase</div><h3 style="margin:.25em 0">${title} (${n})</h3></div>${phaseCtl}</div></div></div>`;
-const secCards=list=>list.map(m=>{const done=m.match_detail_id&&m.status==='completed';
-const gmvp=mvpById[String(m.match_detail_id)]||'';
-return `<div class="pin mpin"><div class="body"><div class="kicker">${esc(m.date||'')} · ${esc(m.status||'')}</div><div class="mteams"><div class="mt"><img src="${TICON(m.team_a)}" alt="" loading="lazy" ${IMG_HIDE}><span>${esc(m.team_a)}</span></div><div class="score">${esc(m.score_a??'–')} : ${esc(m.score_b??'–')}</div><div class="mt"><img src="${TICON(m.team_b)}" alt="" loading="lazy" ${IMG_HIDE}><span>${esc(m.team_b)}</span></div></div>${gmvp?`<div class="mmvp-grid">MVP · <b>${esc(gmvp)}</b></div>`:''}<div class="mmeta"><span class="tag">${done?('Detail #'+esc(m.match_detail_id)):esc(m.status||'upcoming')}</span></div></div><div class="actions">${done?`<button class="primary" data-m="${esc(m.match_detail_id)}">Scoreboard</button>`:`<button class="ghost" disabled>Soon</button>`}</div></div>`;}).join('');
 const regAll=ms.filter(m=>!isPO(m)),poAll=ms.filter(isPO);
-const reg=regAll.slice(0,S.mlimit),po=poAll.slice(0,S.plimit);
-out.push(viewHead('Matches',(S.phase==='po'?poAll.length:regAll.length)+' series · '+(S.phase==='po'?'playoffs':'regular season')));
-const pbtn=(k,label,n)=>`<button data-phase="${k}" aria-pressed="${S.phase===k?'true':'false'}">${label} (${n})</button>`;
-const phaseCtl=`<div class="seg" role="group" aria-label="Phase">${pbtn('reg','Regular Season',regAll.length)}${pbtn('po','Playoffs',poAll.length)}</div>`;
+const poKnown=poAll.filter(m=>m.team_a!=='TBD'&&m.team_b!=='TBD');
 const mvpById=Object.fromEntries((DATA.matches||[]).map(m=>[String(m.match_detail_id),m.liq_mvp||'']));
-const mrow=m=>{const done=m.match_detail_id&&m.status==='completed';
+const roundById=Object.fromEntries((((DATA.playoffs||{}).matches)||[]).map(m=>[String(m.match_id||''),m.round||'']));
+const roundOf=m=>roundById[String(m.schedule_id||m.match_id||'')]||'';
+const matchTime=m=>m.time||((/T(\d{2}:\d{2})/.exec(String(m.iso_datetime||''))||[])[1])||'';
+const phaseCtl=`<div class="seg" role="group" aria-label="Phase">${[['reg','Regular Season',regAll.length],['po','Playoffs',poAll.length]].map(([k,l,n])=>`<button data-phase="${k}" aria-pressed="${S.phase===k?'true':'false'}">${l} (${n})</button>`).join('')}</div>`;
+const secHead=(title,n)=>`<div class="pin" style="grid-column:1/-1"><div class="body"><div class="phasebar"><div><div class="kicker">Phase</div><h2 style="margin:.25em 0">${title} (${n})</h2></div>${phaseCtl}</div></div></div>`;
+const subHead=(title,n)=>`<div class="pin" style="grid-column:1/-1"><div class="body"><div class="phasebar"><div><h2 style="margin:.25em 0">${title} (${n})</h2></div></div></div></div>`;
+const cardTeam=(n,w,done)=>`<div class="mt${done?(w?' mwin':' mlose'):''}"><img src="${TICON(n)}" alt="" loading="lazy" ${IMG_HIDE}><span>${esc(n)}</span></div>`;
+const mcard=m=>{const done=m.match_detail_id&&m.status==='completed';
 const aWins=(+m.score_a)>(+m.score_b),bWins=(+m.score_b)>(+m.score_a);
-const mlbl=done?`Open scoreboard: ${m.team_a} ${m.score_a??'–'}–${m.score_b??'–'} ${m.team_b}, ${m.iso_date||m.date||''}`:'';
-return `<div class="mrow"${done?` data-m="${esc(m.match_detail_id)}" role="button" tabindex="0" aria-label="${esc(mlbl)}"`:''}><span class="mdate hide-m">${esc(m.iso_date||m.date||'')}</span>`
-+`<span class="mfix"><img src="${TICON(m.team_a)}" alt="" loading="lazy" ${IMG_HIDE}><span class="mt ${done?(aWins?'mwin':'mlose'):''}">${esc(m.team_a)}</span><span class="msc">${esc(m.score_a??'–')} : ${esc(m.score_b??'–')}</span><span class="mt ${done?(bWins?'mwin':'mlose'):''}">${esc(m.team_b)}</span><img src="${TICON(m.team_b)}" alt="" loading="lazy" ${IMG_HIDE}></span>`
-+`<span class="hide-m"><span class="tag">${esc(m.status||'')}</span></span>`
+const gmvp=mvpById[String(m.match_detail_id)]||'';const rnd=roundOf(m);
+const dstr=shortDate(m.iso_date,true)||m.date||'';
+const mlbl=done?`Open scoreboard: ${m.team_a} ${m.score_a??'–'}–${m.score_b??'–'} ${m.team_b}, ${dstr}`:'';
+return `<div class="pin mpin"${done?` data-m="${esc(m.match_detail_id)}" role="button" tabindex="0" aria-label="${esc(mlbl)}"`:''}><div class="body">
+<div class="mcard-top"><span class="mdate">${esc(dstr)}</span>${rnd?`<span class="tag">${esc(rnd)}</span>`:''}</div>
+<div class="mteams">${cardTeam(m.team_a,aWins,done)}<div class="score${done?'':' vs'}">${done?`${esc(m.score_a??'–')} : ${esc(m.score_b??'–')}`:'vs'}</div>${cardTeam(m.team_b,bWins,done)}</div>
+${gmvp?`<div class="mmvp-grid"><span>Series MVP (Liquipedia)</span><b>${esc(gmvp)}</b></div>`:''}
+<div class="mcard-foot">${done?`<span class="mopen">Open scoreboard <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>`:`<span class="mnote">${esc(matchTime(m)||'Time TBD')}</span>`}</div>
+</div></div>`;};
+const mrow=(m,reg)=>{const done=m.match_detail_id&&m.status==='completed';
+const aWins=(+m.score_a)>(+m.score_b),bWins=(+m.score_b)>(+m.score_a);
+const mlbl=done?`Open scoreboard: ${m.team_a} ${m.score_a??'–'}–${m.score_b??'–'} ${m.team_b}, ${shortDate(m.iso_date,true)||m.date||''}`:'';
+const rnd=roundOf(m);
+const status=reg?'':(rnd?`<span class="tag">${esc(rnd)}</span>`:`<span class="tag">${esc(m.status==='upcoming'?(matchTime(m)||'Scheduled'):(matchTime(m)||'TBD'))}</span>`);
+return `<div class="mrow${reg?' reg':''}"${done?` data-m="${esc(m.match_detail_id)}" role="button" tabindex="0" aria-label="${esc(mlbl)}"`:''}><span class="mdate hide-m">${esc(shortDate(m.iso_date)||m.date||'')}</span>`
++`<span class="mfix"><img src="${TICON(m.team_a)}" alt="" loading="lazy" ${IMG_HIDE}><span class="mt ${done?(aWins?'mwin':'mlose'):''}">${esc(m.team_a)}</span><span class="msc">${done?`${esc(m.score_a??'–')} : ${esc(m.score_b??'–')}`:'vs'}</span><span class="mt ${done?(bWins?'mwin':'mlose'):''}">${esc(m.team_b)}</span><img src="${TICON(m.team_b)}" alt="" loading="lazy" ${IMG_HIDE}></span>`
++`${reg?'':`<span class="hide-m">${status}</span>`}`
 +`<span class="mmvp hide-m">${esc(mvpById[String(m.match_detail_id)]||'—')}</span>`
 +`<span class="mgo">${done?'›':''}</span></div>`;};
+out.push(viewHead('Matches',(S.phase==='po'?poAll.length:regAll.length)+' series'));
+out.push(secHead(S.phase==='po'?'Playoffs':'Regular Season',S.phase==='po'?poAll.length:regAll.length));
+const wmap={};regAll.forEach(m=>{const k=weekKey(m.iso_date);(wmap[k]=wmap[k]||[]).push(m);});
+const wkeys=Object.keys(wmap).sort().reverse();
+const openW=wkeys[0]||'';
+const weekSum=k=>`<summary><span class="mweek-t">Week of ${esc(weekLabel(k))}</span><span class="mweek-n">${(wmap[k]||[]).length} series</span><svg class="mweek-chev" viewBox="0 0 24 24" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg></summary>`;
 if(S.layout==='list'){
-const mfoot=(secKey,shown,total)=>shown<total?`<button class="mfoot" data-more="24" data-sec="${secKey}"><span>Show more</span><span class="mono">showing ${shown} of ${total}</span></button>`:'';
-const ptitle=S.phase==='po'?'Playoffs':'Regular Season';
-out.push(`<div class="pin"><div class="body phasebar"><div><div class="kicker">Phase</div><h3 style="margin:.25em 0">${ptitle}</h3></div>${phaseCtl}</div></div>`);
-let mh=`<div class="pin"><div class="lscroll"><div class="mhead"><span>Date</span><span>Match</span><span>Status</span><span>MVP</span><span></span></div>`;
-if(S.phase==='po'){if(poAll.length)mh+=po.map(mrow).join('')+mfoot('po',po.length,poAll.length);}
-else{if(regAll.length)mh+=reg.map(mrow).join('')+mfoot('reg',reg.length,regAll.length);}
-mh+=`</div></div>`;
-out.push(mh);
-if(S.phase==='po')out.push(bracketHTML());}
-else{
-if(S.phase==='po'){out.push(secHead('Playoffs — TBD',po.length)+secCards(po));
-if(poAll.length>S.plimit)out.push(`<div class="pin" style="grid-column:1/-1"><div class="body" style="text-align:center"><p>Showing ${S.plimit} of ${poAll.length} playoff matches</p><div class="actions"><button class="primary" data-more="24" data-sec="po">Show more</button></div></div></div>`);
-out.push(bracketHTML());}
-else{out.push(secHead('Regular Season',regAll.length)+secCards(reg));
-if(regAll.length>S.mlimit)out.push(`<div class="pin" style="grid-column:1/-1"><div class="body" style="text-align:center"><p>Showing ${S.mlimit} of ${regAll.length} regular-season matches</p><div class="actions"><button class="primary" data-more="24">Show more</button></div></div></div>`);}}}
+  if(S.phase==='po'){
+    out.push(bracketHTML());
+    if(poKnown.length)out.push(`<div class="pin" style="grid-column:1/-1"><div class="lscroll"><div class="mhead"><span>Date</span><span>Match</span><span>Round</span><span>Series MVP</span><span></span></div>${poKnown.map(m=>mrow(m,false)).join('')}</div></div>`);
+  }else{
+    out.push(`<div class="pin" style="grid-column:1/-1"><div class="lscroll"><div class="mhead reg"><span>Date</span><span>Match</span><span>Series MVP</span><span></span></div>${wkeys.map(k=>`<details class="mweek-list" ${k===openW?'open':''}>${weekSum(k)}${wmap[k].map(m=>mrow(m,true)).join('')}</details>`).join('')}</div></div>`);
+  }
+}else{
+  if(S.phase==='po'){
+    out.push(bracketHTML());
+    if(poKnown.length)out.push(subHead('Scheduled series',poKnown.length)+`<div class="mgrid mgrid-sched">${poKnown.map(mcard).join('')}</div>`);
+  }else{
+    out.push(wkeys.map(k=>`<details class="mweek" ${k===openW?'open':''}>${weekSum(k)}<div class="mgrid">${wmap[k].map(mcard).join('')}</div></details>`).join(''));
+  }
+}
+}
 if(S.view==='stats'){
 out.push(viewHead('Stats','Series MVPs and hero meta'));
 const sbtn=(k,label)=>`<button data-stat="${k}" aria-pressed="${S.stat===k?'true':'false'}">${label}</button>`;
@@ -445,7 +471,7 @@ out.push('<section class="subpanel" role="tabpanel" id="an-panel" aria-labelledb
 }
 board.innerHTML=out.join('')||'';animateCards(beforeCards);emptyEl.hidden=out.length>0;const nCards=board.querySelectorAll('.pl').length||board.querySelectorAll('.lrow').length;
 const shownRows=board.querySelectorAll('.pl,.lrow,.mrow,.mpin').length;
-const emptyish=(S.view==='players'||S.view==='matches')&&shownRows===0;emptyEl.hidden=!emptyish;if(emptyish)emptyEl.textContent=S.view==='players'?'No players match these filters.':'No matches match these filters.';countEl.textContent=viewCount();
+const emptyish=(S.view==='players'||S.view==='matches')&&shownRows===0;emptyEl.hidden=!emptyish;if(emptyish)emptyEl.textContent=S.view==='players'?'No players match these filters.':(S.phase==='po'?'No playoff series match this filter. The league bracket above is dimmed, not filtered.':'No matches match these filters.');countEl.textContent=viewCount();
 const fnEl=document.getElementById('filterN');if(fnEl){const n=filterCount();fnEl.textContent=n;fnEl.hidden=!n;}
 board.querySelectorAll('.pin').forEach(p=>io.observe(p));
 board.querySelectorAll('[data-p]').forEach(b=>b.onclick=e=>{if(b.tagName==='A'){if(e.ctrlKey||e.metaKey||e.shiftKey||e.altKey)return;e.preventDefault();}showP(b.dataset.p);});
@@ -465,7 +491,7 @@ if(S.view==='player'){
 const ovb=document.getElementById('ovPick');if(ovb)ovb.onclick=openOvSel;
 board.querySelectorAll('.lrow[data-p]').forEach(r=>{r.style.cursor='pointer';});
 board.querySelectorAll('[data-m]').forEach(b=>b.onclick=()=>showM(b.dataset.m));
-board.querySelectorAll('.mrow[data-m]').forEach(r=>r.addEventListener('keydown',e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();showM(r.dataset.m);}}));
+board.querySelectorAll('.mrow[data-m],.mpin[data-m]').forEach(r=>r.addEventListener('keydown',e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();showM(r.dataset.m);}}));
 board.querySelectorAll('[data-ovhero]').forEach(b=>b.onclick=()=>(b.dataset.scope==='global'?stHeroDrill:ovHeroDrill)(b.dataset.ovhero));
 board.querySelectorAll('[data-ovemb]').forEach(b=>b.onclick=()=>(b.dataset.scope==='global'?stEmbDrill:ovEmbDrill)(b.dataset.ovemb));
 board.querySelectorAll('[data-ovtal]').forEach(b=>b.onclick=()=>(b.dataset.scope==='global'?stTalDrill:ovTalDrill)(b.dataset.ovtal));
@@ -488,9 +514,10 @@ if(S.view==='overview')return '';
 if(S.view==='teams')return TEAMS.length+' teams';
 if(S.view==='players'){const n=board.querySelectorAll('.pl,.lrow').length;return n+(n===1?' player':' players');}
 if(S.view==='matches'){
- const shown=board.querySelectorAll('.mrow,.mpin').length;
- const total=(DATA.schedule||[]).filter(m=>{const po=String(m.schedule_id||'').indexOf('playoffs')>-1;return (S.phase==='po'?po:!po)&&m.status==='completed';}).length;
- return shown+(shown<total?' of '+total:'')+' matches';}
+ let ms=(DATA.schedule||[]).filter(m=>{const po=String(m.schedule_id||m.match_id||'').indexOf('playoffs')>-1||(m.team_a==='TBD'&&m.team_b==='TBD');return S.phase==='po'?po:!po;});
+ if(S.team)ms=ms.filter(m=>m.team_a===S.team||m.team_b===S.team);
+ if(S.q)ms=ms.filter(m=>(m.team_a+' '+m.team_b+' '+m.date).toLowerCase().includes(S.q));
+ return ms.length+(ms.length===1?' match':' matches');}
 if(S.view==='stats')return S.stat==='heroes'?(DATA.heroes||[]).filter(h=>(+h.pick||0)+(+h.ban||0)>0).length+' heroes':(DATA.matches||[]).filter(m=>m.liq_mvp).length+' MVP awards';
 if(S.view==='analytics')return anPart('AN').players.length+' players';
 if(S.view==='prep')return PREP?'1 report':'';
@@ -861,7 +888,10 @@ function bandRow(label,s){
   if(!s||!s.n)return `<tr><th>${label}</th><td colspan="7" class="na">No games</td></tr>`;
   const pct=v=>v==null?'—':Math.round(v*100)+'%';
   return `<tr><th>${label}</th><td>${s.n}</td><td class="sid">${s.w}–${s.l}</td><td>${s.kda.toFixed(2)}</td><td class="sid">${s.k.toFixed(1)} / ${s.d.toFixed(1)} / ${s.a.toFixed(1)}</td><td>${Math.round(s.gpm)}</td><td>${pct(s.kp)}</td><td>${pct(s.dmg)}</td></tr>`;}
-function playerDeepHTML(name){
+/* The four deep cards, returned one by one so the profile can pack them into
+   two independent columns instead of coupling them into grid rows that leave
+   card-sized holes under the shorter one. */
+function playerDeepCards(name){
 const rows=ovRows(name);
 const sides={};rows.forEach(x=>{const sd=(x.info.side||'').toLowerCase()||'unknown';(sides[sd]=sides[sd]||{w:0,n:0}).n++;if(x.info.won===true)sides[sd].w++;});
 const sideTbl=Object.entries(sides).map(([sd,o])=>`<tr><td style="text-transform:capitalize">${esc(sd)} side</td><td>${o.n}</td><td>${o.n?Math.round(o.w/o.n*100):0}%</td></tr>`).join('')||'<tr><td colspan="3">No games</td></tr>';
@@ -873,14 +903,12 @@ const embHtml=topEntries(useCounts.emb,7).map(([id,c])=>embBadge(id,c)).join('')
 const talHtml=topEntries(useCounts.tal,8).map(([id,c])=>talBadge(id,c)).join('');
 const trend=trendChart(rows.map(x=>{const k=x.r.kills??x.r.kill??0,d=x.r.deaths??x.r.death??0,a=x.r.assists??x.r.assist??0;const v=(k+a)/Math.max(1,d);
   return {v:v,date:x.info.date||'',opp:x.info.opp||'',hero:x.r.hero||'',kda:v.toFixed(2),won:x.info.won};}));
-return `<div class="pp-grid">
-<section class="pp-block"><h2>KDA trend<span>${rows.length} games</span></h2>${trend}</section>
-<section class="pp-block"><h2>Sides<span>games</span></h2><div class="sc"><table><thead><tr><th>Side</th><th>GP</th><th>Win%</th></tr></thead><tbody>${sideTbl}</tbody></table></div></section>
-</div>
-<div class="pp-grid">
-<section class="pp-block"><h2>Record by opponent<span>${Object.keys(opps).length}</span></h2><div class="sc"><table><thead><tr><th>Opponent</th><th>GP</th><th>W–L</th></tr></thead><tbody>${oppTbl}</tbody></table></div></section>
-<section class="pp-block"><h2>Items and runes<span>most used</span></h2>${itemGrid}<div class="et-div"></div><div class="et-label">Emblems</div><div class="itemgrid">${embHtml||'<p class="pp-note">No emblem data.</p>'}</div><div class="et-div"></div><div class="et-label">Talents</div><div class="itemgrid">${talHtml||'<p class="pp-note">No talent data.</p>'}</div></section>
-</div>`;}
+return {
+  trend:`<section class="pp-block"><h2>KDA trend<span>${rows.length} games</span></h2>${trend}</section>`,
+  sides:`<section class="pp-block"><h2>Sides<span>games</span></h2><div class="sc"><table><thead><tr><th>Side</th><th>GP</th><th>Win%</th></tr></thead><tbody>${sideTbl}</tbody></table></div></section>`,
+  opponents:`<section class="pp-block"><h2>Record by opponent<span>${Object.keys(opps).length}</span></h2><div class="sc"><table><thead><tr><th>Opponent</th><th>GP</th><th>W–L</th></tr></thead><tbody>${oppTbl}</tbody></table></div></section>`,
+  items:`<section class="pp-block"><h2>Items and runes<span>most used</span></h2>${itemGrid}<div class="et-div"></div><div class="et-label">Emblems</div><div class="itemgrid">${embHtml||'<p class="pp-note">No emblem data.</p>'}</div><div class="et-div"></div><div class="et-label">Talents</div><div class="itemgrid">${talHtml||'<p class="pp-note">No talent data.</p>'}</div></section>`
+};}
 function radarSVG(an){
 const CX=120,CY=84,R=50;
 const axes=[['DMG',an.pct.damageShare],['KP',an.pct.kp],['GLD',an.pct.goldShare],['TWR',an.pct.towerShare],['KDA',an.pct.kda],['DEATH',1-an.pct.deathShare]];
@@ -1025,19 +1053,19 @@ function tmBoardHTML(comp,TM,rrank){
   const stand={};(DATA.standings||[]).forEach(s=>{stand[String(s.team_slug||'').toLowerCase()]=s;});
   const delta=t=>cr[t.team]-rr[t.team];
   const anyDelta=list.some(t=>delta(t)!==0);
+  const ci=(lo,hi)=>`<span class="tm-ci"><span class="sr-only">, 95% confidence interval </span>${lo}–${hi}</span>`;
   const rows=list.map(t=>{
     const s=stand[String(t.team).toLowerCase()]||{};
     const rank=mode==='standings'?cr[t.team]:rr[t.team];
     const dd=delta(t);
     return `<tr data-teamrow="${esc(t.team)}"><td class="sid">${rank}</td>
       <td><span class="tm-team"><img src="${esc(TICON(t.team))}" alt="" loading="lazy"><a href="#view=teams&team=${encodeURIComponent(t.team)}" data-teamjump="${esc(t.team)}"><b>${esc(t.team)}</b></a><span>${esc(t.team_name)}</span></span></td>
+      <td class="tm-rate"><b>${Math.round(t.rating)}</b>${ci(Math.round(t.ratingCI[0]),Math.round(t.ratingCI[1]))}</td>
       <td>${esc(s.match_point??'—')}</td><td>${t.seriesWins}–${t.seriesLosses}</td><td>${t.wins}–${t.losses}</td>
-      <td>${tmPct(t.winRate)}% <span class="an-pct">(${tmPct(t.winCI.lo)}–${tmPct(t.winCI.hi)})</span></td>
-      <td><b>${Math.round(t.rating)}</b> <span class="an-pct">(${Math.round(t.ratingCI[0])}–${Math.round(t.ratingCI[1])})</span></td>
-      <td>${Math.round(t.sos)||'—'}</td><td>${tmPct(t.form5Series)}%</td>
-      <td>${t.side.blue.w}–${t.side.blue.n-t.side.blue.w} / ${t.side.red.w}–${t.side.red.n-t.side.red.w}</td>
+      <td>${tmPct(t.winRate)}%${ci(tmPct(t.winCI.lo),tmPct(t.winCI.hi))}</td>
+      <td class="tm-ctx">${Math.round(t.sos)||'—'}</td><td>${tmPct(t.form5Series)}%</td>
       <td>${tmSigned(t.dominance.goldDiff)}</td>
-      ${mode==='rating'&&anyDelta?`<td class="tm-delta" title="Competition rank minus rating rank; + means the model ranks them higher">${dd>0?'+'+dd:dd<0?'−'+Math.abs(dd):'—'}</td>`:''}
+      ${anyDelta?`<td class="tm-delta" title="League rank minus model rank; a plus means the model rates the club higher">${dd>0?'+'+dd:dd<0?'−'+Math.abs(dd):'—'}</td>`:''}
     </tr>`;
   }).join('');
   const idx=list.map(t=>{
@@ -1045,12 +1073,21 @@ function tmBoardHTML(comp,TM,rrank){
     const rank=mode==='standings'?cr[t.team]:rr[t.team];
     return `<button type="button" class="tm-idx" data-teamjump="${esc(t.team)}"><span class="rk">${rank}</span><img src="${esc(TICON(t.team))}" alt="" loading="lazy"><span class="nm"><b>${esc(t.team)}</b><em>${esc(t.team_name)}</em></span><span class="rec">${esc(s.match_win??t.seriesWins)}–${esc(s.match_lose??t.seriesLosses)}</span><span class="rt">${Math.round(t.rating)}</span><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 6l6 6-6 6"/></svg></button>`;
   }).join('');
+  const basis=comp.done?'final placement':'playoff seeding';
+  const verdict=anyDelta
+    ?'Δ is the league’s rank minus the model’s: a plus means the model rates the club higher.'
+    :'Model and league agree: no club moves.';
+  const method=(comp.done
+      ?'Final placement: bracket 1–4, 5–6 alphabetical, 7–9 regular season.'
+      :'Seeding: 1–4 upper bracket, 5–6 lower bracket, 7–9 regular-season order. The bracket is decided at '+comp.target+' wins; until then the league’s order is seeding, not final placement.')
+    +' Rating = 1500 + 400·log10(Bradley-Terry strength), 1–1 prior, 100 bootstrap resamples; SOS is the mean fitted opponent rating.'
+    +' Series and games are wins–losses, win% and rating carry a 95% interval, and form reads the last five series left to right. Blue / red side records live in each club’s dossier.';
   return `<div class="pin tm-board" style="grid-column:1/-1"><div class="body">
-    <div class="tm-bar"><div><h2>League board</h2><p class="tm-count">${TM.teams.length} clubs · ${Math.round(TM.teams.reduce((a,t)=>a+t.series,0)/2)} series · ${comp.done?'final placement':'playoff seeding'}</p></div>
+    <div class="tm-bar"><div><h2>League board</h2><p class="tm-count">${mode==='rating'?'Model rating order':`League order · ${basis}`}</p></div>
       <div class="seg" role="group" aria-label="Team order"><button data-tmode="rating" aria-pressed="${mode==='rating'?'true':'false'}">Rating</button><button data-tmode="standings" aria-pressed="${mode==='standings'?'true':'false'}">Standings</button></div></div>
-    <div class="lscroll tm-scroll"><table class="tm-table" aria-label="Teams league board"><thead><tr><th>#</th><th>Team</th><th>Pts</th><th>Series W–L</th><th>Games W–L</th><th>Game win% (95% CI)</th><th>Rating (95% CI)</th><th>SOS</th><th>Form5</th><th>Blue / Red</th><th>Gold diff</th>${mode==='rating'&&anyDelta?'<th title="Competition rank minus rating rank; + means the model ranks them higher">Δ</th>':''}</tr></thead><tbody>${rows}</tbody></table></div>
+    <div class="lscroll tm-scroll"><table class="tm-table" aria-label="Teams league board"><thead><tr><th class="${mode==='standings'?'on':''}">#</th><th>Club</th><th class="${mode==='rating'?'on':''}">Rating (95% CI)</th><th>Pts</th><th>Series</th><th>Games</th><th>Win% (95% CI)</th><th>SOS</th><th>Form5</th><th>Gold diff</th>${anyDelta?'<th>Δ league−model</th>':''}</tr></thead><tbody>${rows}</tbody></table></div>
     <div class="tm-index">${idx}</div>
-    <p class="tm-note">${comp.done?'Final placement: bracket 1–4, 5–6 alphabetical, 7–9 regular season.':'Standings = playoff seeding while the bracket is live; the three non-qualified clubs follow the regular season. The bracket is decided at '+comp.target+' wins.'} Rating = 1500 + 400·log10(Bradley-Terry strength), 1–1 prior, 100 bootstrap resamples; SOS is the mean fitted opponent rating. Blue / red is game W-L by side.${mode==='rating'&&!anyDelta?' The model’s order currently matches the league’s: no club moves.':''}</p>
+    <div class="tm-foot"><p class="tm-note">${verdict}</p><details class="tm-method"><summary>How the board is built<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg></summary><p>${method}</p></details></div>
   </div></div>`;
 }
 function teamsViewHTML(){
@@ -1123,6 +1160,7 @@ function playerHTML(name){
     ${stat('Flex heroes',anp.flexHeroes)}
     ${stat('Damage / gold',anp.dpg.toFixed(2))}
     ${stat('Tower dmg / game',Math.round(anp.towerPerGame))}`:'';
+  const deep=playerDeepCards(disp);
   return `<div class="pp">
   <button class="pp-back" id="ppBack" type="button"><span aria-hidden="true">←</span> All players</button>
   <section class="pp-hero">
@@ -1143,42 +1181,49 @@ function playerHTML(name){
     </table></div></div>
   </section>
   <div class="pp-grid">
-    <section class="pp-block"><h2>Hero pool<span>${heroes.length} heroes</span></h2><div class="sc"><table>
-      <thead><tr><th>Hero</th><th>GP</th><th>AVG KDA</th><th>K/G</th><th>D/G</th><th>A/G</th><th>GPM</th></tr></thead>
-      <tbody>${hrows||'<tr><td colspan="7">No games</td></tr>'}</tbody>
-    </table></div>
-    <p class="pp-note">MANIAC / SAVAGE are not recorded in this snapshot: no official MPL ID source publishes kill-streak counts, and they are never estimated.</p></section>
+    <div class="pp-col">
+      <section class="pp-block"><h2>Hero pool<span>${heroes.length} heroes</span></h2><div class="sc"><table>
+        <thead><tr><th>Hero</th><th>GP</th><th>AVG KDA</th><th>K/G</th><th>D/G</th><th>A/G</th><th>GPM</th></tr></thead>
+        <tbody>${hrows||'<tr><td colspan="7">No games</td></tr>'}</tbody>
+      </table></div>
+      <p class="pp-note">MANIAC / SAVAGE are not recorded in this snapshot: no official MPL ID source publishes kill-streak counts, and they are never estimated.</p></section>
+      ${deep.trend}
+      ${deep.sides}
+      ${deep.opponents}
+    </div>
     <div class="pp-col">
       ${anp?`<section class="pp-block"><h2>Derived stats<span>season</span></h2><dl class="pp-stats">${extra}</dl><p class="pp-note">Close-game = final kill difference ≤5. Effective pool = heroes with ≥2 games and ≥50% WR. Comfort = usage × win rate. Flex = heroes played in two or more lanes. Damage/gold and tower damage are per-game averages. Definitions match the Analytics view.</p></section>`:''}
       <section class="pp-block"><h2>Recent games<span>last ${games.length}</span></h2><div class="pp-games">${grows||'<p class="pp-note">No games.</p>'}</div></section>
+      ${deep.items}
     </div>
   </div>
-  ${playerDeepHTML(disp)}
   <p class="pp-note">KDA = (kills + assists) ÷ deaths. The season row reuses the season-stat figure shown on Overview; Last 5 is derived from those five games in date order. Kill participation = (kills + assists) ÷ team kills. Damage share = hero damage ÷ team hero damage. Series W–L counts only series this player appeared in.</p>
 </div>`;}
 function durSec(s){const m=/(\d+):(\d+)/.exec(s||'');return m?(+m[1])*60+(+m[2]):0;}
 function normPl(r,sec){const kills=r.kill??r.kills??0,deaths=r.death??r.deaths??0,assists=r.assist??r.assists??0;
 const gpm=r.gold_per_min??((sec&&r.gold!=null)?Math.round(r.gold/(sec/60)):null);return Object.assign({},r,{kills,deaths,assists,gpm});}
 function aid(u,re){const m=re.exec(u||'');return m?m[1]:'';}
-function teamBlock(code,kills,plist,sec,side,flip,won){
+function teamBlock(code,kills,plist,sec,side,flip,won,gno){
 const A=window.ASSETS||{items:{},heroes:{},emblems:{},runes:{}};
+const sideName=String(side||'').toLowerCase()==='blue'?'Blue':(String(side||'').toLowerCase()==='red'?'Red':'');
 const pk=String(side||'').toLowerCase()==='blue'?'pk-b':(String(side||'').toLowerCase()==='red'?'pk-r':'');
 const prow=plist.map(r0=>{const r=normPl(r0,sec);
 const heroLocal=(r.hero&&A.heroes&&Object.prototype.hasOwnProperty.call(A.heroes,r.hero))?A.heroes[r.hero]:null;
 const heroRemote=(!heroLocal&&(r.hero_image||r.heroImage))||'';
 const heroSrc=heroLocal||heroRemote;
-const heroImg=heroSrc?`<img class="sb-hero" src="${esc(heroSrc)}" alt="${esc(r.hero||'')}" loading="lazy" onerror="this.style.visibility='hidden'">`:`<span class="sb-hero" style="display:inline-flex;align-items:center;justify-content:center;font:10px var(--font-mono);font-family:var(--font-mono);color:var(--muted)">${esc((r.hero||'?').slice(0,2))}</span>`;
+const heroImg=heroSrc?`<img class="sb-hero" src="${esc(heroSrc)}" alt="" loading="lazy" onerror="this.style.visibility='hidden'">`:`<span class="sb-hero sb-hero-fb" aria-hidden="true">${esc((r.hero||'?').slice(0,2))}</span>`;
 const embId=r.e||aid(r.emblem,/emblem\/(\d+)\.png/);
 const embSrc=(embId&&A.emblems&&A.emblems[embId])||r.emblem||'';
-const embSm=embSrc?`<img src="${esc(embSrc)}" alt="emblem" loading="lazy" style="width:20px;height:20px;border-radius:50%;border:1px solid var(--line)" onerror="this.remove()">`:'';
+const embSm=embSrc?`<img src="${esc(embSrc)}" alt="" loading="lazy" onerror="this.remove()">`:'';
 const talObjs=(r.t&&r.t.length)?r.t.map(id=>({id:id,url:null})):(r.talents||[]).map(u=>({id:aid(u,/rune\/(\d+)\.png/),url:u}));
 const tals=talObjs.map(o=>{const src=(o.id&&A.runes&&A.runes[o.id])||(o.url&&A.runes&&A.runes[o.url])||o.url;return src?`<img src="${esc(src)}" alt="" loading="lazy" onerror="this.remove()">`:'';}).join('');
 const itemObjs=(r.i&&r.i.length)?r.i.map(ref=>String(ref).indexOf('http')===0?{eq:null,url:ref}:{eq:ref,url:null}):(r.items||[]).map(u=>({eq:eqId(u)||null,url:u}));
-const items=itemObjs.map(o=>{const src=(o.eq&&A.items&&A.items[o.eq])||(o.url&&A.items&&A.items[o.url])||o.url;if(!src)return '';return `<img src="${esc(src)}" alt="item ${esc(o.eq||'')}" data-eq="${esc(o.eq||'')}" loading="lazy" onerror="imgSlot(this)">`;}).join('');
-return `<div class="sb-p">${heroImg}<div class="sb-id"><b>${esc(r.player)}</b><span>${esc(r.lane||'—')} · ${esc(r.hero||'')} · ${esc(r.kills)}/${esc(r.deaths)}/${esc(r.assists)} · KDA ${esc(r.kda)}</span></div>`
-+`<div class="sb-side">G ${esc(r.gold)}${r.gpm!=null?' ('+esc(r.gpm)+'/m)':''}<br>DMG ${esc(r.hero_damage??'–')}<br>TAKEN ${esc(r.damage_taken??'–')}</div>`
-+`<div class="sb-gear"><span class="sb-tal">${embSm}${tals}</span>${items?`<span class="sb-items">${items}</span>`:''}</div></div>`;}).join('');
-return `<div class="sb-team${flip?' flip':''}${pk?' '+pk:''}"><div class="sb-thead"><img src="${logoOf(code)}" alt="" ${IMG_HIDE}><b class="${won===true?'tw':won===false?'tl':''}">${esc(code)}</b><span class="k">${esc(kills)} kills</span></div>${prow}</div>`;}
+const items=itemObjs.map(o=>{const src=(o.eq&&A.items&&A.items[o.eq])||(o.url&&A.items&&A.items[o.url])||o.url;if(!src)return '';return `<img src="${esc(src)}" alt="" data-eq="${esc(o.eq||'')}" loading="lazy" onerror="imgSlot(this)">`;}).join('');
+const kda=(r.kda!=null&&r.kda!=='')?+r.kda:((+r.kills||0)+(+r.assists||0))/Math.max(1,+r.deaths||0);
+const gpm=(r.gpm!=null&&r.gpm!=='')?Math.round(+r.gpm):'—';
+return `<tr><th scope="row"><button type="button" class="sb-player" data-p="${esc(r.player)}">${heroImg}<span><b>${esc(r.player)}</b><em>${esc(r.lane||'—')} · ${esc(r.hero||'')}</em></span></button></th><td>${esc(r.kills)}/${esc(r.deaths)}/${esc(r.assists)}</td><td>${isFinite(kda)?kda.toFixed(2):'—'}</td><td>${esc(r.gold)}</td><td>${gpm}</td><td>${esc(r.hero_damage??'—')}</td><td>${esc(r.damage_taken??'—')}</td></tr>`
++`<tr class="sb-build"><td colspan="7"><span class="sb-buildlab">Build</span>${embSm}${tals}${items}</td></tr>`;}).join('');
+return `<div class="sb-team${flip?' flip':''}${pk?' '+pk:''}"><div class="sb-thead"><img src="${esc(logoOf(code))}" alt="" ${IMG_HIDE}><b class="${won===true?'tw':won===false?'tl':''}">${esc(code)}</b>${sideName?`<span class="sb-side-chip">${sideName} side</span>`:''}<span class="k">${esc(kills)} kills</span></div><div class="sb-tablewrap"><table class="sb-table"><caption class="sr-only">${esc(code)} player stats${gno?', Game '+esc(String(gno)):''}</caption><thead><tr><th scope="col">Player</th><th scope="col">K/D/A</th><th scope="col">KDA</th><th scope="col">Gold</th><th scope="col">GPM</th><th scope="col">DMG</th><th scope="col">TAKEN</th></tr></thead><tbody>${prow}</tbody></table></div></div>`;}
 function winName(g){return g.winner==='team_a'?g.team_a:(g.winner==='team_b'?g.team_b:(g.winner||''));}
 /* Playoff chances (1 series win = 1 point; every team plays exactly 16 series).
    Top 6 → playoffs ("% Playoff Chance"), top 2 → upper bracket ("% Upper
@@ -1822,8 +1867,8 @@ function bracketHTML(){
 const ms=((DATA.playoffs||{}).matches||[]);
 if(!ms.length)return '';
 const byRound={};ms.forEach(m=>{byRound[m.round]=m;});
-return `<div class="pin" style="grid-column:1/-1"><div class="body"><div class="phasebar"><div><div class="kicker">Playoffs</div><h3 style="margin:.25em 0">Bracket preview</h3></div></div>${bracketGrid(byRound)}</div></div>`;}
-const teamRow=(n,logo,sc,w)=>`<div class="brk-team${w?' w':''}"${n?` data-brkt="${esc(n)}"`:''}>${logo?`<img src="${esc(logo)}" alt="" loading="lazy" onerror="this.remove()">`:''}<span>${esc(n||'TBD')}</span><b>${esc(sc??'')}</b></div>`;
+return `<div class="pin" style="grid-column:1/-1"><div class="body"><div class="phasebar"><div><div class="kicker">Playoffs</div><h2 style="margin:.25em 0">Bracket</h2></div></div>${bracketGrid(byRound)}${S.team?`<p class="brk-note">League bracket; routes outside ${esc(S.team)} are dimmed.</p>`:''}</div></div>`;}
+const teamRow=(n,logo,sc,w)=>{const dim=S.team&&n&&String(n).toUpperCase()!==String(S.team).toUpperCase();return `<div class="brk-team${w?' w':''}${dim?' dim':''}"${n?` data-brkt="${esc(n)}"`:''}>${logo?`<img src="${esc(logo)}" alt="" loading="lazy" onerror="this.remove()">`:''}<span>${esc(n||'TBD')}</span><b>${esc(sc??'')}</b></div>`;};
 const ORD=['1st','2nd','3rd','4th','5th','6th'];
 /* Strict 2-3-2-1 bracket: QF seeds 3v6/4v5, SF seeds 1/2 await QF winners,
    lower slots stay TBD until results decide them. Seeds are pending (season
@@ -1833,18 +1878,20 @@ const BRK_COLS=[
   {rk:'Round 1 Match 1',label:'Upper Bracket QF · Match 1',seeds:[3,6]},
   {rk:'Round 1 Match 2',label:'Upper Bracket QF · Match 2',seeds:[4,5]}]},
  {h:'Semifinals',top:[
-  {rk:'Round 2 Match 1',label:'Upper Bracket SF · Match 1',seeds:[1,null]},
-  {rk:'Round 2 Match 2',label:'Upper Bracket SF · Match 2',seeds:[2,null]}],
-  bottom:[{rk:'Lower Bracket Semi Finals',label:'Lower Bracket SF',seeds:[null,null]}]},
- {h:'Finals',top:[{rk:'Upper Bracket Finals',label:'Upper Bracket Final',seeds:[null,null]}],
-  bottom:[{rk:'Lower Bracket Finals',label:'Lower Bracket Final',seeds:[null,null]}]},
- {h:'Grand Final',mid:[{rk:'Grand Finals',label:'Grand Final',seeds:[null,null]}]}];
+  {rk:'Round 2 Match 1',label:'Upper Bracket SF · Match 1',seeds:[1,null],feed:['','Winner QF1']},
+  {rk:'Round 2 Match 2',label:'Upper Bracket SF · Match 2',seeds:[2,null],feed:['','Winner QF2']}],
+  bottom:[{rk:'Lower Bracket Semi Finals',label:'Lower Bracket SF',seeds:[null,null],feed:['Loser SF1','Loser SF2']}]},
+ {h:'Finals',top:[{rk:'Upper Bracket Finals',label:'Upper Bracket Final',seeds:[null,null],feed:['Winner SF1','Winner SF2']}],
+  bottom:[{rk:'Lower Bracket Finals',label:'Lower Bracket Final',seeds:[null,null],feed:['Loser UF','Winner LBF']}]},
+ {h:'Grand Final',mid:[{rk:'Grand Finals',label:'Grand Final',seeds:[null,null],feed:['Winner UF','Winner LBF']}]}];
 const seedTooltip=n=>`<div class="brk-team seed" data-seed="${n}" tabindex="0"><span>TBD <span class="sn-sub">(${n})</span></span><span class="seedtip" role="tooltip"><span class="sdisc">${n}</span><span class="stext"><b>${ORD[n-1]} position</b><i>Regular season</i></span></span></div>`;
 const tbdRow=()=>`<div class="brk-team tbd"><span>TBD</span></div>`;
-const rowFor=(m,ab,seed)=>{const t=m?(ab==='a'?m.team_a:m.team_b):null;
+const rowFor=(m,ab,seed,feed)=>{const t=m?(ab==='a'?m.team_a:m.team_b):null;
 if(t&&t!=='TBD')return teamRow(t,m?(ab==='a'?m.team_a_logo:m.team_b_logo):null,m?(ab==='a'?m.score_a:m.score_b):null,m?(ab==='a'?m.winner==='team_a':m.winner==='team_b'):false);
-if(seed)return seedTooltip(seed);return tbdRow();};
-const matchCard=(slot,m)=>{const inner=!m?`<div class="brk-match brk-tbd"><span>TBD</span></div>`:`<div class="brk-match"><div class="brk-round">${esc(slot.label)}</div>${rowFor(m,'a',slot.seeds[0])}${rowFor(m,'b',slot.seeds[1])}<div class="brk-date">${esc(m.date||'')}</div></div>`;
+if(seed)return seedTooltip(seed);
+if(feed)return `<div class="brk-team tbd"><span>${esc(feed)}</span></div>`;
+return tbdRow();};
+const matchCard=(slot,m)=>{const inner=!m?`<div class="brk-match brk-tbd"><span>TBD</span></div>`:`<div class="brk-match"><div class="brk-round">${esc(slot.label)}</div>${rowFor(m,'a',slot.seeds[0],slot.feed&&slot.feed[0])}${rowFor(m,'b',slot.seeds[1],slot.feed&&slot.feed[1])}<div class="brk-date">${esc(shortDate(m.iso_date,true)||m.date||'')}</div></div>`;
 return inner.replace('brk-match','brk-match" data-brk="'+esc(slot.rk));};
 const colHTML=(c,byRound)=>`<div class="brk-col${c.bottom?' split':(c.mid?' center':'')}"><div class="brk-title">${c.h}</div>${(c.top||c.mid||[]).map(s=>matchCard(s,byRound[s.rk])).join('')}${c.bottom?'<div class="brk-gap"></div>'+c.bottom.map(s=>matchCard(s,byRound[s.rk])).join(''):''}</div>`;
 function bracketGrid(byRound){return `<div class="brk">${BRK_COLS.map(c=>colHTML(c,byRound)).join('')}</div>`;}
@@ -2001,31 +2048,43 @@ function gameSection(g,plistA,plistB,bansA,bansB,live,active){
 const sec=durSec(g.duration_str||g.duration);const dur=g.duration_str||g.duration||'';
 const wn=winName(g);const gm=gameMvp(plistA,plistB,wn);
 const wonA=wn?wn===g.team_a:null,wonB=wn?wn===g.team_b:null;
-const bans=(bansA.length||bansB.length)?`<div class="sb-bans"><span>BAN ${esc(g.team_a)}: ${bansA.map(esc).join(', ')||'–'}</span><span>BAN ${esc(g.team_b)}: ${bansB.map(esc).join(', ')||'–'}</span></div>`:'';
-return `<div class="sb-game" data-g="${esc(String(g.game_no))}"${active?'':' hidden'}>`
-+`<div class="sb-ghead"><h4>Game ${esc(String(g.game_no))}</h4><span>${esc(g.team_a)} ${esc(g.team_a_kills)} : ${esc(g.team_b_kills)} ${esc(g.team_b)} · ${esc(dur)}${g.map_mode?` · ${esc(g.map_mode)}`:''}${g.vod_url?` · <a href="${esc(g.vod_url)}" target="_blank" rel="noopener noreferrer">VOD</a>`:''}${wn?` · <b class="sb-win">${esc(wn)} won</b>`:''}${gm?` · <span class="gmvp">MVP ${esc(gm.player)}</span>`:''}</span></div>`
-+bans+`<div class="sb-duo">`+teamBlock(g.team_a,g.team_a_kills,plistA,sec,g.team_a_side,'',wonA)+teamBlock(g.team_b,g.team_b_kills,plistB,sec,g.team_b_side,'flip',wonB)+`</div></div>`;}
+const HC=((window.ASSETS||{}).heroes||{});
+const banChips=list=>list.map(h=>`<span class="sb-ban">${HC[h]?`<img src="${esc(HC[h])}" alt="" loading="lazy" onerror="this.remove()">`:''}${esc(h)}</span>`).join('')||'<span class="sb-na">–</span>';
+const bans=(bansA.length||bansB.length)?`<div class="sb-bans"><span class="sb-banline"><b>BAN ${esc(g.team_a)}</b>${banChips(bansA)}</span><span class="sb-banline"><b>BAN ${esc(g.team_b)}</b>${banChips(bansB)}</span></div>`:'';
+const n=esc(String(g.game_no));
+return `<div class="sb-game" id="sb-game-${n}" role="tabpanel" aria-labelledby="sb-tab-${n}" data-g="${n}"${active?'':' hidden'}>`
++`<div class="sb-ghead"><h3>Game ${n}</h3><span>${esc(g.team_a)} ${esc(g.team_a_kills)} : ${esc(g.team_b_kills)} ${esc(g.team_b)} · ${esc(dur)}${g.map_mode?` · ${esc(g.map_mode)}`:''}${g.vod_url?` · <a class="sb-vod" href="${esc(g.vod_url)}" target="_blank" rel="noopener noreferrer" aria-label="Watch the Game ${n} VOD">VOD</a>`:''}${wn?` · <b class="sb-win">${esc(wn)} won</b>`:''}${gm?` · <span class="gmvp">Game MVP (KDA heuristic): ${esc(gm.player)}</span>`:''}</span></div>`
++bans+`<div class="sb-duo">`+teamBlock(g.team_a,g.team_a_kills,plistA,sec,g.team_a_side,'',wonA,g.game_no)+teamBlock(g.team_b,g.team_b_kills,plistB,sec,g.team_b_side,'flip',wonB,g.game_no)+`</div></div>`;}
 function wireTabs(){const db=document.getElementById('db');
-db.querySelectorAll('[data-gtab]').forEach(b=>b.onclick=()=>selGame(b.dataset.gtab));}
+db.querySelectorAll('[data-gtab]').forEach(b=>b.onclick=()=>selGame(b.dataset.gtab));
+const tl=db.querySelector('.sb-tabs');
+if(tl)tl.onkeydown=e=>{
+  if(e.key!=='ArrowRight'&&e.key!=='ArrowLeft')return;
+  e.preventDefault();
+  const list=[...tl.querySelectorAll('[data-gtab]')];
+  let i=list.indexOf(document.activeElement);if(i<0)i=0;
+  i=(i+(e.key==='ArrowRight'?1:-1)+list.length)%list.length;
+  selGame(list[i].dataset.gtab);list[i].focus();
+};}
 function selGame(gno){const db=document.getElementById('db');if(!db||gno==null||gno==='')return;
-db.querySelectorAll('[data-gtab]').forEach(x=>x.setAttribute('aria-pressed',x.dataset.gtab===String(gno)?'true':'false'));
-db.querySelectorAll('.sb-game').forEach(s=>{s.hidden=s.dataset.g!==String(gno);});
-const tab=[...db.querySelectorAll('[data-gtab]')].find(x=>x.dataset.gtab===String(gno));
-const w=tab?tab.dataset.wtab:'';setMark(w&&markSrc(w)?{src:markSrc(w),side:tab.dataset.wside||'l'}:null);}
+db.querySelectorAll('[data-gtab]').forEach(x=>{const on=x.dataset.gtab===String(gno);x.setAttribute('aria-selected',on?'true':'false');x.tabIndex=on?0:-1;});
+db.querySelectorAll('.sb-game').forEach(s=>{const on=s.dataset.g===String(gno);s.hidden=!on;});}
 async function showM(id,opts){opts=opts||{};const wantGame=opts.game!=null?String(opts.game):null;
 const m=DATA.schedule.find(x=>String(x.match_detail_id)===String(id))||{};
 const gs=DATA.games.filter(g=>g.match_detail_id===id);
 const isActive=(g,i)=>wantGame!=null?String(g.game_no)===wantGame:i===0;
 const wtab=g=>{const w=winName(g)||'';return ` data-wtab="${esc(w)}" data-wside="${w?(w===g.team_a?'l':'r'):'l'}"`;};
-const tabs=gs.map((g,i)=>`<button data-gtab="${esc(String(g.game_no))}"${wtab(g)} aria-pressed="${isActive(g,i)?'true':'false'}">Game ${esc(String(g.game_no))}</button>`).join('');
-const body=`<div class="sb-tabs" role="group" aria-label="Games">${tabs}</div>`+gs.map((g,i)=>{
+const tabs=gs.map((g,i)=>{const on=isActive(g,i);return `<button role="tab" id="sb-tab-${esc(String(g.game_no))}" aria-controls="sb-game-${esc(String(g.game_no))}" aria-selected="${on?'true':'false'}" tabindex="${on?0:-1}" data-gtab="${esc(String(g.game_no))}"${wtab(g)}>Game ${esc(String(g.game_no))}</button>`;}).join('');
+const body=`<div class="sb-tabs" role="tablist" aria-label="Games">${tabs}</div>`+gs.map((g,i)=>{
 const pa=rows(id,g.game_no).filter(r=>r.team===g.team_a).sort((a,b)=>pickSlot(id,g.game_no,g.team_a,a.player)-pickSlot(id,g.game_no,g.team_a,b.player));
 const pb=rows(id,g.game_no).filter(r=>r.team===g.team_b).sort((a,b)=>pickSlot(id,g.game_no,g.team_b,a.player)-pickSlot(id,g.game_no,g.team_b,b.player));
 return gameSection(g,pa,pb,bansFor(id,g.game_no,'A'),bansFor(id,g.game_no,'B'),false,isActive(g,i));}).join('');
-const initG=wantGame!=null?(gs.find(g=>String(g.game_no)===wantGame)||{}):(gs[0]||{});
-const initW=winName(initG)||'';
-dSet(m.team_a+' vs '+m.team_b,'#'+id+' · '+(m.date||''),body,
-initW&&markSrc(initW)?{src:markSrc(initW),side:initW===m.team_a?'l':(initW===m.team_b?'r':'l')}:null);
+const mm=(DATA.matches||[]).find(x=>String(x.match_detail_id)===String(id))||{};
+const sa=m.score_a!=null?m.score_a:mm.score_a,sb=m.score_b!=null?m.score_b:mm.score_b;
+const title=(sa!=null&&sb!=null)?`${m.team_a} ${sa}–${sb} ${m.team_b}`:`${m.team_a} vs ${m.team_b}`;
+const smvp=(mm.liq_mvp||m.liq_mvp)?canonicalPlayer(mm.liq_mvp||m.liq_mvp):'';
+const sub=(smvp?`Series MVP (Liquipedia): ${smvp} · `:'')+(m.date||'');
+dSet(title,sub,body);
 // Completed series already carry picks, lanes and map mode from the ETL;
 // refetching would replace them with the API's lane-less rows.
 if(gs.length&&gs.every(g=>g.winner==='team_a'||g.winner==='team_b'))return;
@@ -2035,8 +2094,8 @@ const r=await fetch(HUB+'/match/'+encodeURIComponent(id),{signal:ctl.signal});
 clearTimeout(tmr);
 if(!r.ok)return;const d=await r.json();if(!d.games||!d.games.length)return;
 const firstGame=wantGame!=null?wantGame:String(d.games[0].game);
-const t2=d.games.map((g,i)=>`<button data-gtab="${esc(String(g.game))}" data-wtab="${esc(winName(g)||'')}" data-wside="${(winName(g)||'')===g.team_a?'l':'r'}" aria-pressed="${String(g.game)===String(firstGame)?'true':'false'}">Game ${esc(String(g.game))}</button>`).join('');
-const live=`<div class="sb-tabs" role="group" aria-label="Games">${t2}</div>`+d.games.map((g,i)=>{
+const t2=d.games.map((g,i)=>{const on=String(g.game)===String(firstGame);const w=winName(g)||'';return `<button role="tab" id="sb-tab-${esc(String(g.game))}" aria-controls="sb-game-${esc(String(g.game))}" aria-selected="${on?'true':'false'}" tabindex="${on?0:-1}" data-gtab="${esc(String(g.game))}" data-wtab="${esc(w)}" data-wside="${w===g.team_a?'l':'r'}">Game ${esc(String(g.game))}</button>`;}).join('');
+const live=`<div class="sb-tabs" role="tablist" aria-label="Games">${t2}</div>`+d.games.map((g,i)=>{
 const gg={game_no:g.game,team_a:g.team_a,team_b:g.team_b,team_a_kills:g.team_a_kills,team_b_kills:g.team_b_kills,winner:g.winner,duration:g.duration,team_a_side:g.team_a_side,team_b_side:g.team_b_side};
 const pa=(g.players||[]).filter(p=>p.team===g.team_a),pb=(g.players||[]).filter(p=>p.team===g.team_b);
 return gameSection(gg,pa,pb,g.bans_a||[],g.bans_b||[],true,String(g.game)===String(firstGame));}).join('');
@@ -2045,19 +2104,14 @@ if(dnav.length)dnav[dnav.length-1].h=live;
 wireTabs();
 }catch(e){}}
 let dnav=[];
-function markSrc(t){return TICON(t)||logoOf(t)||'';}
-function setMark(mark){const el=document.getElementById('dmark');if(!el)return;
-if(mark&&mark.src){if(el.getAttribute('src')!==mark.src)el.setAttribute('src',mark.src);el.className='dmark '+mark.side;el.hidden=false;}
-else{el.hidden=true;el.removeAttribute('src');}}
 function dShow(){const top=dnav[dnav.length-1];if(!top)return;
 document.getElementById('dt').textContent=top.t;
 document.getElementById('ds').textContent=top.s||'';
 document.getElementById('db').innerHTML=top.h;
 document.getElementById('dback').hidden=dnav.length<2;
-setMark(top.mark||null);
 wireTabs();}
-function dSet(t,s,h,mark){if(!dlg.open){dnav=[];lastFocus=document.activeElement;document.body.style.overflow='hidden';}
-dnav.push({t:t,s:s,h:h,mark:mark||null});dShow();if(!dlg.open)dlg.showModal();}
+function dSet(t,s,h){if(!dlg.open){dnav=[];lastFocus=document.activeElement;document.body.style.overflow='hidden';}
+dnav.push({t:t,s:s,h:h});dShow();if(!dlg.open)dlg.showModal();}
 function dBack(){if(dnav.length>1){dnav.pop();dShow();}}
 function openD(t,s,h){dSet(t,s,h);}
 document.getElementById('dback').onclick=()=>dBack();

@@ -25,13 +25,13 @@ A separate, auditable transcript/database layer lives in [`analysis/`](analysis/
 ### Players — lane impact, win rate and a six-axis percentile hexagon
 ![Players](github/assets/02-players.png)
 
-### Matches — full-width list with the series MVP per match
+### Matches — latest week first, grouped by week, the series MVP per row
 ![Matches list](github/assets/03-matches-list.png)
 
-### Matches — grid cards, same fixtures
+### Matches — week-grouped cards; the card is the target
 ![Matches grid](github/assets/04-matches-grid.png)
 
-### Scoreboard — mirrored blue/red panels, per-game lines, bans in draft order
+### Scoreboard — per-team stat tables, series score, both MVPs, bans in draft order
 ![Scoreboard](github/assets/05-scoreboard.png)
 
 ### Player profile — identity plate, glass season band, hero pool, derived stats
@@ -61,14 +61,16 @@ A separate, auditable transcript/database layer lives in [`analysis/`](analysis/
   hexagon** with the 50th-percentile ring; sub-five-game samples render dimmed. The whole card
   is the link; list view keeps the sortable table. Filter by team, lane, search text; sort by
   win rate / lane impact / KDA / kills / gold / games.
-- **Matches** — full-width list (date, crests, score, status, series MVP) and grid cards.
-  A Regular/Playoffs sub-tab switches phases; the regular phase is the fixture list, the
-  playoffs phase adds the **bracket preview** under the history. Completed cards open the
-  scoreboard. Team tables live on the Teams tab, not here.
-- **Scoreboard dialog** — mirrored blue/red panels with the side as a 3px edge, centered
-  header (score, duration, **map mode**, date), full-width **bans in draft order**,
-  lane-ordered player rows (EXP/JUNGLE/MID/GOLD/ROAM), a **per-game MVP** next to
-  “TEAM won”, and a **VOD deep link**.
+- **Matches** — the latest week opens first; fixtures are grouped by week, earlier weeks one
+  click away. The card is the target: no separate button, the winner is marked by weight, and
+  each series carries one date, one short score and one series-MVP label. A Regular/Playoffs
+  sub-tab switches phases; the playoffs phase is the **bracket** plus the scheduled series, and
+  a team filter dims the league bracket instead of contradicting the count.
+- **Scoreboard dialog** — the series score in the title, **Series MVP (Liquipedia)** in the
+  subtitle and **Game MVP (KDA heuristic)** in the game header; one table per team
+  (Player / K/D/A / KDA / Gold / GPM / DMG / TAKEN) with a build row, tabular figures and player
+  links; bans in draft order with hero art; a labelled side chip over the 3px edge; a chalk VOD
+  pill. The dialog title is `h2`, each game `h3`.
 - **Player profile** — a full page, not a dialog: cut-out portrait, oversized IGN, team and
   lane lockup, and a glass stat band split **season / last five games** (games, game W-L, KDA,
   K/D/A, GPM, kill participation, damage share). Below it: the hero pool table (GP, AVG KDA,
