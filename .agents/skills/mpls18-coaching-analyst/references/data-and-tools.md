@@ -37,7 +37,18 @@ Every result includes `query_id`, SQL, params, fields, provenance, `snapshot_id`
 
 Raw text has no timestamps or speaker labels. The timed JSON is a derived caption alignment; never describe it as frame-accurate. For unaligned lines use null cues and `timestamp_provenance: "none"`.
 
-The `ALL MPL TRANSCRIPT` download is not a replacement: 26 Indonesian S18 files with three vertical-only days, and the extracted text is lossy. Use the existing 27 raw + timed sources.
+The `ALL MPL TRANSCRIPT` download is not a replacement: 26 Indonesian S18 files with three vertical-only days, and the extracted text is lossy. Use the existing 27 raw + timed sources or the 107 official game-VOD transcripts.
+
+## Game-VOD layer
+
+- Manifest: `analysis/evidence/game-transcript-manifest.json`
+- Cache: `analysis/cache/game-transcripts/<video_id>.json`
+- Schema: `analysis/evidence/game-observation-schema.json`
+- Ledger: `analysis/evidence/game-observations/<match>.jsonl`
+- Validator: `tools/validate_game_observations.py`
+- Coverage: `tools/build_coverage_matrix.py` reports game-transcript availability, `GOBS-*` matches, and combined transcript evidence.
+
+The game-VOD layer is separate from the 27-source `TOBS-*` ledger. See `references/game-vod-transcripts.md`.
 
 ## Validation
 
@@ -47,9 +58,12 @@ python tools/ci_semantic_check.py
 python tools/validate_game_offsets.py
 python tools/transcript_coverage.py
 python tools/validate_transcript_ledger.py --ledger <ledger> --segments <segments>
+python tools/validate_game_observations.py
+python tools/build_match_evidence.py --check
+python tools/build_coverage_matrix.py
 ```
 
-`tools/verify.py` runs the application regression suite plus a narrow Ruff gate. If lint fails, run:
+`tools/verify.py` runs 28 suites (2026-11-15): application regression, lint, transcript ledger, game observations, and goal artifacts. If lint fails, run:
 
 ```text
 python -m ruff check tools --select F401,F841,E722,E9 --line-length 200
@@ -81,9 +95,11 @@ Default: write `C:\Users\nberl\AppData\Local\Temp\opencode\<task>.py`, run it, d
 ## Documentation sources of truth
 
 - Current project state: `analysis/index.md`
-- Transcript coverage: `analysis/reports/transcript-pipeline/coverage.md` and `analysis/evidence/transcript-pipeline-coverage.json`
+- Canonical coverage: `analysis/reports/coverage-matrix.md` and `analysis/evidence/coverage-matrix.json`
+- Broadcast transcript coverage: `analysis/reports/transcript-pipeline/coverage.md` and `analysis/evidence/transcript-pipeline-coverage.json`
+- Game-VOD transcript availability: `analysis/evidence/game-transcript-manifest.json`
 - Visual status: `analysis/evidence/visual-review-status.json` and the visual handoff
-- `analysis/reports/coverage-summary.md` is older; do not use it as the transcript pipeline source of truth without reconciling it.
+- `analysis/reports/coverage-summary.md` is historical; do not cite it for current coverage.
 
 ## Git and safety
 

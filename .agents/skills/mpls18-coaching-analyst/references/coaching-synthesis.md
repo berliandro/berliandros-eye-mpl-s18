@@ -4,17 +4,13 @@ Read when turning accepted observations into insights, team/player/hero analyses
 
 ## Current state
 
-Verify counts before quoting. As of 2026-11-14:
+Verify current counts in `analysis/reports/coverage-matrix.md`; do not quote stale numbers.
 
-- 72 match reports exist; 27 have transcript observations, 45 are DB-only.
-- 174 game timelines exist; 29 are boundary-verified, 145 DB-only.
-- 66 player dossiers; 24 carry the new transcript cross-files, about 28 have any transcript evidence.
-- 73 insights (70 player-level, 3 series-level) and 68 audits (67 player-level, 1 series-level).
-- Team/hero/strategy pages exist but are mostly cross-file indexes, not synthesized analyses.
-- One 3-series pilot coaching brief; no per-team briefs and no overall head-coach brief.
-- Visual proof: 0 boundaries `visually_verified`.
+- Match evidence is complete; broadcast transcript coverage is 27 sources; game-VOD coverage is tracked separately in the manifest and matrix.
+- Team, hero, strategy, and coaching pages exist; check the page before calling a topic analyzed.
+- Visual proof is separate and not verified.
 
-The big goal is **not complete** even though the transcript pipeline is. Do not confuse “313 accepted observations” with “full-season coaching intelligence.”
+Do not confuse accepted observations with full-season coaching intelligence, and do not claim transcript depth for a match whose `GOBS-*` or `TOBS-*` ledger is empty.
 
 ## Evidence rules
 
@@ -45,7 +41,7 @@ The big goal is **not complete** even though the transcript pipeline is. Do not 
 - Do not duplicate an existing insight or audit; update/version it instead.
 - Do not upgrade a verdict to make coverage look better.
 - Do not present a team/hero cross-file index as a finished analysis.
-- Do not claim full-season coverage while 45 matches remain DB-only.
+- Do not claim full-season transcript depth while matches lack extracted transcript observations.
 - Keep the coverage report honest about partial sources and visual gaps.
 
 ## Where to write

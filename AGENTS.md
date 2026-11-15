@@ -2,7 +2,7 @@
 
 ## Project skill
 
-Before substantial work, load the `mpls18-coaching-analyst` skill with the `skill` tool. It routes to transcript, visual-proof, and data/tool references.
+Before substantial work, load the `mpls18-coaching-analyst` skill with the `skill` tool. It routes to broadcast transcript, game-VOD, browser-capture, visual-proof, and data/tool references.
 
 ## Goal workflow (docs/goals)
 

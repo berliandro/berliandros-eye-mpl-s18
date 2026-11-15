@@ -1,6 +1,6 @@
 # Transcript pipeline reference
 
-Read when building, reviewing, routing, or validating transcript observations.
+Read when building, reviewing, routing, or validating **broadcast** transcript observations. For official per-game VOD transcripts and `GOBS-*` records, read `references/game-vod-transcripts.md` instead.
 
 ## Inputs
 
@@ -12,6 +12,8 @@ Read when building, reviewing, routing, or validating transcript observations.
 Raw `.txt` files have no native timestamps or speaker labels. Timestamps are a one-to-one caption alignment (`youtube-auto-caption-alignment-v1`), not frame-accurate metadata. `src-s18-w09d02` is partial; unaligned lines must use null cues and `timestamp_provenance: "none"`.
 
 The separate `ALL MPL TRANSCRIPT` download is not a complete replacement: 26 Indonesian S18 files with three vertical-only days, and its extracted text is lossy. Do not use it as source of truth.
+
+The 107 official game-VOD transcripts in `analysis/cache/game-transcripts/` are a separate, higher-fidelity source for the 45 missing matches. They do not enter this 27-source `TOBS-*` ledger; use `references/game-vod-transcripts.md`.
 
 ## Artifacts
 
@@ -101,7 +103,7 @@ Routing keeps the match report as primary destination and adds player/team/hero/
 - 0 accepted IDs missing from match reports
 - all accepted observations with at least one non-match destination
 
-Current state as of 2026-11-14: 27/27 ledgers, 363 observations, 313 accepted, 0 needs review, 50 rejected, 5 resolved unresolved refs, 3 partial sources, 979 cross-links across 60 pages. Verify with `tools/transcript_coverage.py`; do not quote stale counts.
+Current broadcast state: 27 source ledgers validated. Verify exact counts with `python tools/transcript_coverage.py` and `analysis/reports/transcript-pipeline/coverage.md`; do not quote stale numbers. Game-VOD coverage is separate in `analysis/evidence/game-transcript-manifest.json`.
 
 Partial sources: `src-s18-w02d03` (1050 intro/interview), `src-s18-w07d03` (1091 desk/draft), `src-s18-w08d02` (1094 desk/commentary). Retry with a different game window or explicitly keep partial.
 
