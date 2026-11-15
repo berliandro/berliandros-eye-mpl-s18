@@ -94,8 +94,8 @@ This alignment is not native transcript metadata and does not make timestamps fr
 - Captions are Indonesian auto-generated ASR: names, hero names and punctuation can be wrong; there are no speaker labels.
 - Some lines are music/noise tags (`[musik]`, `[berteriak]`, `[tertawa]`), not evidence of gameplay.
 - Line breaks split sentences; quotes must preserve the source line span.
-- 0/27 schedule VOD candidates still need metadata verification; candidate URLs are not citation authorities.
-- Broadcast dates and series IDs come from the canonical schedule. Exact in-video series/game offsets remain unverified unless independently established.
+- Schedule VOD candidate metadata verification: **27/27 complete**, **0/27 remaining** at the last recorded resolution pass. Candidate URLs are not citation authorities.
+- Broadcast dates and series IDs come from the canonical schedule. The structured offset manifest has child rows marked boundary_verified, but source-level validation is still pending for all 27 sources and those caption-derived statuses are not DeepSeek screenshot proof. Exact series/game boundaries remain eligible for visual verification; individual game boundaries require their own evidence.
 - The raw corpus is local-only. Committed reports contain only short pilot quotations; validators that need raw text are run in this local workspace and require the ignored corpus copy.
 
 ## Duplicate/suspicious files

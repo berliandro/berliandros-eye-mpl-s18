@@ -2,7 +2,7 @@
 
 This directory contains the first **traceable, transcript-powered** coaching pilot for Berliandro’s Eye. It is deliberately separate from the app and the canonical match database.
 
-**Status:** source resolution complete locally — **27/27** official videos metadata-verified, **26/27** fully caption-aligned, **1/27** partial and explicitly not citation-ready. The curated pilot covers 3 series with 18 observations, 3 insights and 1 audit. **Not** full-season semantic coverage.
+**Status:** source resolution complete locally — **27/27** official videos metadata-verified, **26/27** fully caption-aligned, **1/27** partial and explicitly not citation-ready. The original three-series semantic pilot contains 18 series observations, 3 series insights and 1 series audit. The canonical ledger also contains a player-stat extension (6 player observations, 3 player insights and 1 player audit), for combined totals of **24 observations / 6 insights / 2 audits** across 8 segments. **Not** full-season semantic coverage.
 
 ## What is here
 
@@ -16,17 +16,18 @@ This directory contains the first **traceable, transcript-powered** coaching pil
 | `reports/database-inventory.md` | DB coverage, post-migration lineage and join guidance |
 | `reports/pilot-quality-report.md` | pilot scope, coverage, validation results and gaps |
 | `reports/audit-INS-1037-LATE-SWING.md` | skeptical audit of the main ambiguous insight |
-| `matches/` | one report for each pilot series |
+| `matches/` | one report for each of the 72 regular-season series; semantic evidence depth varies and a report file does not imply semantic verification |
 | `players/` | one dossier for each of the 66 MPL ID S18 players || `coaching/pilot-coaching-brief.md` | practical prep questions/drills with evidence |
 | `evidence/evidence-schema.json` | versioned JSON Schema for ledger records |
-| `evidence/pilot-ledger.jsonl` | canonical pilot evidence (short excerpts only) |
+| `evidence/pilot-ledger.jsonl` | canonical series and player evidence ledger (short excerpts only; 8 segments / 24 observations / 6 insights / 2 audits) |
 | `evidence/query-catalog.json` | reproducible read-only SQL for every database reference |
 | `evidence/database-snapshot-manifest.json` | DB fingerprint, tables, coverage, lineage |
 | `evidence/audit-log.jsonl` | append-only audit record export |
-| `evidence/visual-review.json` | which frames were reviewed, used, rejected or failed |
+| `evidence/visual-review.json` | legacy screenshot capture/review history; old verdicts require independent DeepSeek re-review before being counted as current visual proof |
 | `evidence/timed-alignment.json` | derived caption alignment coverage |
 | `pilot/selection.json` | curated pilot claims/quotes; input to the deterministic builder |
 | `cache/` | **local-only, Git-ignored** timed captions, screenshots, contact sheets |
+| `../docs/goals/active/mpl-s18-visual-proof-deepseek-handoff.md` | complete screenshot-proof backlog, automated DeepSeek vision-review protocol, and acceptance criteria |
 
 ## Data safety
 
@@ -123,7 +124,7 @@ The apply command backs up the affected files, repairs `matches.winner` relative
 
 ## Next milestone
 
-Map each verified broadcast to series/game start offsets, expand the curated evidence sample beyond the three pilot series, and resolve or explicitly quarantine the 37 unmapped short lines in `src-s18-w09d02`. Only after quotation fidelity, timestamp/link integrity and audit quality hold across a stratified sample should all nine weeks be processed semantically.
+Reconcile the series/game offset manifest, generate a screenshot target inventory, and expand the curated evidence sample beyond the three pilot series. The second-stage DeepSeek vision workflow in `../docs/goals/active/mpl-s18-visual-proof-deepseek-handoff.md` owns all screenshot interpretation. Separately resolve or explicitly quarantine the 37 unmapped short lines in `src-s18-w09d02`; screenshot review does not repair transcript alignment or authorize timestamp citations for those lines. Only after quotation fidelity, timestamp/link integrity and audit quality hold across a stratified sample should all nine weeks be processed semantically.
 
 ## Final regular-season standings (source-reported, cross-checked)
 
@@ -147,9 +148,9 @@ Follow this checklist to add a new series with full provenance:
 1. **Resolve source**: Ensure the broadcast day is in `source-manifest.json` with verified `video_id` and `caption_alignment_status: verified` (non-quarantined). `src-s18-w09d02` is quarantined - do not cite.
 2. **Confirm citation-ready**: Check alignment coverage is full-line (no unmapped lines). Run `python tools/transcript_evidence.py build` to validate.
 3. **Map offsets**: Update `analysis/evidence/game-offsets.json` for the series with `start_seconds`, `confidence`, `method`, `provenance`. Run `python tools/validate_game_offsets.py`.
-4. **Detect boundaries**: Use `python tools/refine_game_offsets.py` or manual boundary detection with audit trail (caster transitions/scoreboard/series changes). Mark low confidence items for review.
+4. **Detect boundaries**: Use `python tools/refine_game_offsets.py` to generate candidates. Caption-derived candidates are not visual proof. Capture context screenshots and send them to the configured DeepSeek vision reviewer; keep inconclusive targets quarantined. Do not create a human-review queue.
 5. **Extract quotes**: Use `transcript_evidence.py` to find exact spans with `line_hint`. Only use fully aligned sources.
-6. **Add frames**: Use `tools/video_frames.py` with purpose, verdict (used/rejected), and rejection reason. Tie frames to observations/segments.
+6. **Add frames**: Use `tools/video_frames.py` to capture timestamped screenshots with sidecars and SHA-256 hashes. Submit the original screenshots (or ordered screenshot sequences) to DeepSeek; persist its structured verdict and link each accepted claim to the exact image hash. Capture success alone is not visual verification.
 7. **Cross-ref DB**: Link to `matches`, `games`, `team_games`, `schedule_all` with query provenance from `analysis/evidence/query-catalog.json`.
 8. **Audit**: For turning points, require supporting evidence (quote + context + DB state where possible). Follow existing audit structure.
 9. **Build & validate**: Run `python tools/transcript_evidence.py build --selection ...` and `python tools/transcript_evidence.py validate`. Run `python tools/verify_analysis.py`. No citations from quarantined/partial sources allowed.
