@@ -2,7 +2,7 @@
 
 This directory contains the first **traceable, transcript-powered** coaching pilot for Berliandro’s Eye. It is deliberately separate from the app and the canonical match database.
 
-**Status:** source resolution complete locally — **27/27** official videos metadata-verified, **26/27** fully caption-aligned, **1/27** partial and explicitly not citation-ready. The original three-series semantic pilot contains 18 series observations, 3 series insights and 1 series audit. The canonical ledger also contains a player-stat extension (6 player observations, 3 player insights and 1 player audit), for combined totals of **24 observations / 6 insights / 2 audits** across 8 segments. **Not** full-season semantic coverage.
+**Status:** source resolution complete locally — **27/27** official videos metadata-verified, **26/27** fully caption-aligned, **1/27** partial and explicitly not citation-ready. The delivered layer is the 27-source transcript store: **368 observation records (313 accepted, 50 rejected, 5 resolved)** across 27 segment ledgers, with **72/72** match reports carrying a database block and **27** adding transcript coverage (24 complete, 3 partial). The original three-series pilot and its player extension remain as a frozen store in `evidence/pilot-ledger.jsonl`. Visual proof is not delivered: **0** boundaries are `visually_verified`.
 
 ## What is here
 
@@ -17,9 +17,12 @@ This directory contains the first **traceable, transcript-powered** coaching pil
 | `reports/pilot-quality-report.md` | pilot scope, coverage, validation results and gaps |
 | `reports/audit-INS-1037-LATE-SWING.md` | skeptical audit of the main ambiguous insight |
 | `matches/` | one report for each of the 72 regular-season series; semantic evidence depth varies and a report file does not imply semantic verification |
-| `players/` | one dossier for each of the 66 MPL ID S18 players || `coaching/pilot-coaching-brief.md` | practical prep questions/drills with evidence |
+| `players/` | one dossier for each of the 66 MPL ID S18 players |
+| `coaching/pilot-coaching-brief.md` | practical prep questions/drills with evidence |
 | `evidence/evidence-schema.json` | versioned JSON Schema for ledger records |
-| `evidence/pilot-ledger.jsonl` | canonical series and player evidence ledger (short excerpts only; 8 segments / 24 observations / 6 insights / 2 audits) |
+| `evidence/pilot-ledger.jsonl` | frozen three-series pilot plus player extension (short excerpts only; 8 segments / 24 observations / 6 insights / 2 audits) |
+| `evidence/transcript-observations/` | canonical 27-source observation ledgers (368 records; validated by `tools/validate_transcript_ledger.py`) |
+| `evidence/canonical-store.json` | manifest for the canonical transcript store |
 | `evidence/query-catalog.json` | reproducible read-only SQL for every database reference |
 | `evidence/database-snapshot-manifest.json` | DB fingerprint, tables, coverage, lineage |
 | `evidence/audit-log.jsonl` | append-only audit record export |
