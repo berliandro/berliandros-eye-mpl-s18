@@ -461,3 +461,14 @@ No literal `00:00` was found in the sampled per-game VODs. They are a cleaner so
 Evidence: `analysis/evidence/per-game-vod-check.json`; frame SHA-256 `4a16ebc17b8ec067dc6d3390b0490d81bf10fd99fa5e8e1a5563d3d3964ed14b` (frame is local cache only).
 
 Next step if pursued: sweep the 172 per-game VODs for a first HUD at `00:00`. One clean frame with both teams would unblock.
+
+### 8.29 Frame-level check at the inferred zero (2026-11-15)
+
+Playwright MCP browser, 1036 G1 (`SuqcHmHNTos`). The game clock is `00:21` at video `435.0s`, so the inferred `00:00` is ~`414.0s`. Frames were captured at `413.0, 413.2, ..., 415.0` (0.2s steps) with the video paused:
+
+- `413.0–414.0s`: trophy/season-18 animation, no game HUD.
+- `414.2–415.0s`: blank transition then the Infinix sponsor card, no game HUD.
+
+No frame in the zero window shows a game clock or team pairing. The `00:00` occurs during the broadcast intro and is **not visible**. First visible HUD remains `00:21`. This is a frame-level confirmation of the blocker, not a promotion.
+
+Evidence: `analysis/cache/game-vods/frames/1036-g1-413-415-contact.png` (contact sheet) and `analysis/cache/game-vods/frames/1036-g1-mcp-435.png` (first HUD), local cache only.
