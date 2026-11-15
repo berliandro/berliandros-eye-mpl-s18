@@ -52,6 +52,7 @@ def main(argv: list[str] | None = None) -> int:
 
     errors: list[str] = []
     warnings: list[str] = []
+    unchecked: list[str] = []
     seen_ids: set[str] = set()
     total = 0
     for path in paths:
@@ -84,6 +85,12 @@ def main(argv: list[str] | None = None) -> int:
             if str(transcript_row["match_detail_id"]) != match_id or int(transcript_row["game_no"]) != game_no:
                 errors.append(f"{label}: manifest match/game mismatch for {video_id}")
             transcript_path = REPO / transcript_row["path"]
+            if not transcript_path.exists():
+                # Raw transcripts are local-only and Git-ignored, so a clean clone and CI
+                # cannot re-check the quote. Structure, IDs and manifest linkage still run;
+                # the missing source is reported, never treated as a passing check.
+                unchecked.append(f"{label}: local transcript cache absent ({transcript_row['path']})")
+                continue
             snippets = json.loads(transcript_path.read_text(encoding="utf-8"))["snippets"]
             joined = " ".join(str(s["text"]) for s in snippets)
             quote = str(row["quote"])
@@ -128,8 +135,10 @@ def main(argv: list[str] | None = None) -> int:
         "observations": total,
         "errors": len(errors),
         "warnings": len(warnings),
+        "unchecked": len(unchecked),
         "error_messages": errors,
         "warning_messages": warnings,
+        "unchecked_messages": unchecked[:5],
     }
     print(json.dumps(summary, indent=2))
     return 0 if not errors else 1

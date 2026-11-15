@@ -35,6 +35,11 @@ def check_file_exists(path, label):
     return True
 
 
+def sha256_text_lf(path):
+    """Hash a committed text file with LF endings so a CRLF checkout and CI agree."""
+    return hashlib.sha256(path.read_bytes().replace(b"\r\n", b"\n")).hexdigest()
+
+
 def check_json_valid(path, label):
     try:
         data = json.loads(path.read_text(encoding='utf-8'))
@@ -277,9 +282,9 @@ def check_visual_status():
         return
     offsets = REPO / "analysis" / "evidence" / "game-offsets.json"
     ledger = REPO / "analysis" / "evidence" / "deepseek-visual-reviews.json"
-    if offsets.exists() and data.get("game_offsets_sha256") != hashlib.sha256(offsets.read_bytes()).hexdigest():
+    if offsets.exists() and data.get("game_offsets_sha256") != sha256_text_lf(offsets):
         error("visual-review-status: game_offsets_sha256 is stale")
-    if ledger.exists() and data.get("ledger_sha256") != hashlib.sha256(ledger.read_bytes()).hexdigest():
+    if ledger.exists() and data.get("ledger_sha256") != sha256_text_lf(ledger):
         error("visual-review-status: ledger_sha256 is stale")
     rows = data.get("series", [])
     if len(rows) != 72:

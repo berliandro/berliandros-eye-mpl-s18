@@ -1,3 +1,19 @@
 # The generated single-file app must keep LF endings in the repository so a
 # fresh Linux checkout regenerates byte-identical output (parity gate).
 mpl_id_s18_dark.html text eol=lf
+
+# Match the Linux CI checkout everywhere: text files are LF in the index and in
+# every working tree, so committed hashes, the artifact and the verifiers see
+# the same bytes on Windows and on CI.
+* text=auto eol=lf
+
+*.png binary
+*.jpg binary
+*.jpeg binary
+*.webp binary
+*.gif binary
+*.ico binary
+*.woff binary
+*.woff2 binary
+*.db binary
+*.zip binary
