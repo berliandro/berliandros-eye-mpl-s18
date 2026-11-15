@@ -173,8 +173,10 @@ name.
 ## Layout
 
 A 1200px wrap on 1440, with a 220px rail (196px between 1180 and 1320) that owns navigation above
-1180. Below that the header's tabs return; below 640 the controls collapse into a bottom sheet behind
-a Filters pill, and a List/Grid toggle joins it in the header.
+1180. Below that the header's tabs return, in two rows of three below 640 so the current view is
+always on screen. On Players and Matches the controls collapse into a bottom sheet behind a Filters
+pill; the pill is not rendered on views with nothing to filter. A List/Grid toggle joins the header
+there, and Compact hides the radar and tightens the card to about 200px.
 
 Every view opens with a shared head: a 22px `h1` and a one-line lead, separated from the content by a
 rule. Cards sit in an auto-fill grid at 250px minimum, four across at 1440. The player profile uses
@@ -218,7 +220,8 @@ is the global 2px chalk ring at 2px offset.
 ### Navigation
 Rail at 220px with 10px mono section labels and a 40px row rhythm; the active row carries a raised
 surface and a 2px bar that turns the current team's crest colour on a player page. Header is sticky,
-opaque on mobile. Tabs scroll in one row below 640 with a fade at the edge.
+opaque on mobile. The six tabs sit in a 3×2 grid below 640, the active one marked with a raised
+surface, chalk text and a 2px rule; the header slides away on scroll down and returns on scroll up.
 
 ### Player Card (signature)
 278px, plate gradient, 2px crest edge, corner tick. Portrait 44px, IGN 17px, team · lane 11px
