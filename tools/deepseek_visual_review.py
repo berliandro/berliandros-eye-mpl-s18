@@ -112,6 +112,11 @@ def sha256_file(path: Path) -> str:
     return sha256_bytes(path.read_bytes())
 
 
+def sha256_text_lf(path: Path) -> str:
+    """Hash a committed JSON/text artifact with LF endings so every checkout agrees."""
+    return sha256_bytes(path.read_bytes().replace(b"\r\n", b"\n"))
+
+
 def atomic_write_json(path: Path, data: object) -> None:
     path.parent.mkdir(parents=True, exist_ok=True)
     tmp = path.with_suffix(path.suffix + ".tmp")
@@ -1243,7 +1248,7 @@ def run_review(args) -> int:
             "human_review": False,
             "key_source": key_source,
             "plan_path": rel(plan_path),
-            "plan_sha256": sha256_file(plan_path),
+            "plan_sha256": sha256_text_lf(plan_path),
             "smoke_test": smoke,
             "frames": frames_all,
             "api_calls": existing_calls + calls_all,
@@ -1279,7 +1284,7 @@ def run_review(args) -> int:
         "human_review": False,
         "key_source": key_source,
         "plan_path": rel(plan_path),
-        "plan_sha256": sha256_file(plan_path),
+        "plan_sha256": sha256_text_lf(plan_path),
         "smoke_test": smoke,
         "contract": {
             "reviewed_requires": "parsed DeepSeek API response for the exact screenshot hash",

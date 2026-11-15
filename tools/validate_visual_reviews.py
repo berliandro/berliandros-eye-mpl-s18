@@ -43,6 +43,11 @@ def sha256_file(path: Path) -> str:
     return hashlib.sha256(path.read_bytes()).hexdigest()
 
 
+def sha256_text_lf(path: Path) -> str:
+    """Hash a committed text artifact with LF endings so every checkout agrees."""
+    return hashlib.sha256(path.read_bytes().replace(b"\r\n", b"\n")).hexdigest()
+
+
 def is_hex64(value) -> bool:
     return isinstance(value, str) and bool(HEX64.match(value))
 
@@ -344,7 +349,7 @@ def main(argv: list[str] | None = None) -> int:
     # The ledger embeds its smoke record; the standalone file is the reproducible source.
     if ledger.get("smoke_test", {}).get("image_sha256") != smoke.get("image_sha256"):
         errors.append("ledger smoke_test does not match the standalone smoke record")
-    if ledger.get("plan_sha256") and ledger.get("plan_sha256") != sha256_file(plan_path):
+    if ledger.get("plan_sha256") and ledger.get("plan_sha256") != sha256_text_lf(plan_path):
         errors.append("ledger plan_sha256 does not match the current visual-review-plan.json")
     if smoke.get("model") not in (ledger.get("models_used") or []):
         errors.append("smoke-test model is not listed in ledger.models_used")

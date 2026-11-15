@@ -15,7 +15,7 @@
   "human_review": false,
   "key_source": "opencode-session",
   "plan_path": "analysis\\evidence\\visual-review-plan.json",
-  "plan_sha256": "4f59891085ffd7faeb1f1728a7e4c3bb2c2013916c1e066a826a5ab25cd30ba1",
+  "plan_sha256": "6654ebd6818db99412af363e94df16c10efa22a3a412faa0ea8fba801a359188",
   "smoke_test": {
     "schema_version": 1,
     "generated_at": "2026-11-02T23:04:46.227524+00:00",
