@@ -44,7 +44,7 @@ python -m unittest tools/test_stats_query.py
 
 ## Still blocked (honest limits)
 
-- **Visual proof:** no same-frame literal `00:00` exists in the reviewed broadcasts; per-game VODs also cut in after zero (first HUD `00:21` in 1036 G1, `00:42` in 1036 G2). Do not promote; the standard is unchanged.
+- **Visual proof:** no same-frame literal `00:00` exists in the reviewed broadcasts; per-game VODs also cut in after zero (first HUD `00:21` in 1036 G1, `00:42` in 1036 G2); a frame-level check of 413.0-415.0s found only the trophy/sponsor intro, no HUD. Do not promote; the standard is unchanged.
 - **Objectives:** the database has no Lord/Turtle/tower-event counts. Objective analysis is transcript-attributed or a review protocol.
 - **Patch meta:** no patch/version field. Calendar splits are not patch splits.
 - **Transcript coverage:** 1037 is the pilot with 6 accepted game-VOD observations. The other 44 matches are fetched but not extracted yet. No match is blocked. The 27-source observation ledger is unchanged.
