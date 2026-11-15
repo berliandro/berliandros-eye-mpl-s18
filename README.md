@@ -38,11 +38,15 @@ A separate, auditable transcript/database layer lives in [`analysis/`](analysis/
 
 ## Features
 
-- **Overview** — pick any player: tiles (games, avg KDA, game/match W-L + WR, avg game
-  time, kill participation), KDA-trend chart, hero pool with win rates, side splits,
-  top items, emblems & talents, record by opponent, series MVPs, full game log.
-- **Players** — grid/list cards with photos, KDA, GPM, hero pools; filter by team,
-  lane, search text; sort by KDA / games / kills.
+- **Overview** — season front page: the latest completed series as a plate (both teams, score,
+  series MVP, one click to the scoreboard), a one-line season count, final standings that keep
+  official Match W-L and Game W-L separate, the series-MVP race, and the last six results.
+  Every block routes somewhere; nothing on it is a dead end.
+- **Players** — grid cards built on the profile's grammar: cut-out, IGN, team · lane, a
+  four-number row (GP, KDA, GPM, WR) and a five-bar **lane-percentile strip** (damage share,
+  kill participation, gold share, tower share, KDA) with the value on hover; sub-five-game
+  samples render dimmed. The whole card is the link; list view keeps the sortable table.
+  Filter by team, lane, search text; sort by KDA / kills / gold / games.
 - **Matches** — full-width frosted list (date, logos, score, status, series MVP) and
   grid cards (also showing series MVP). A Regular/Playoffs sub-tab switches phases.
   Regular phase shows the **standings board** and **team profiles** (games, W-L,
@@ -53,9 +57,16 @@ A separate, auditable transcript/database layer lives in [`analysis/`](analysis/
   centered header (score, duration, **map mode**, date), full-width **bans in draft
   order**, lane-ordered player rows (EXP/JUNGLE/MID/GOLD/ROAM), a **per-game MVP
   pill** next to “TEAM won”, and a **VOD deep link**.
-- **Player dialog** — per-hero table: GP, AVG KDA (`00.00`), AVG K, AVG D, AVG A,
-  MANIAC, SAVAGE, GPM, plus close-game WR, effective pool, comfort/flex, damage per
-  gold, tower damage per game, an opponent split, and hero-fit vs the league.
+- **Player profile** — a full page, not a dialog: cut-out portrait, oversized IGN, team and
+  lane lockup, and a glass stat band split **season / last five games** (games, game W-L, KDA,
+  K/D/A, GPM, kill participation, damage share). Below it: the hero pool table (GP, AVG KDA,
+  per-game K/D/A, MANIAC, SAVAGE, GPM), a lane-normalised profile (close-game WR, effective
+  pool, comfort/flex, damage per gold, tower damage per game), the last eight games with result
+  pills, the KDA-trend chart, side splits, record by opponent, and top items, emblems and
+  talents with drill-downs. Every number keeps its `n` or its reason.
+- **Shell** — a left rail carries the six views at 1180px and wider, with inline SVG icons, the
+  active view marked by a 2px accent bar, and live counts for players and series; below that
+  width it falls back to the top tabs. The player profile hides the header entirely.
 - **Stats** — sub-tabbed dashboard: **Series MVP** (race leaderboard + history) and
   **Heroes** (highlight tiles + sortable pick/ban/win table with **role, lane and
   damage-type columns** and share bars).
@@ -131,6 +142,7 @@ A separate, auditable transcript/database layer lives in [`analysis/`](analysis/
 | `tools/fetch_hero_classes.py` | Build `hero_classes.json` from Liquipedia hero infoboxes (role, lane, specialties) |
 | `tools/aggregate_teams.py` | Rebuild `team_games` / `team_season_stats` from player rows (no network) |
 | `tools/gen_dark.py` | Build: CSV + assets → `mpl_id_s18_dark.html` |
+| `tools/derive_team_colors.py` | Derive each team's accent from its logo (lightness-clamped) → `data/global/team_colors.json` |
 | `tools/fetch_assets.py` | Download every referenced hero/item asset (`--check-only`, `--live`) |
 | `tools/check.py` | Regression suite (incl. STRICT asset coverage + JS syntax gate) |
 | `tools/verify.py` | Standard verification: all unit suites + `check.py` + parity gate |
@@ -155,7 +167,7 @@ A separate, auditable transcript/database layer lives in [`analysis/`](analysis/
 | `tools/test_config.py` | Season-config schema tests |
 | `data/season.json` | Validated season rules (teams, slots, priors, endpoints, cache schema 4) |
 | `data/registry.json` | Season registry — every season-aware tool resolves paths through it |
-| `data/global/` | Season-independent metadata: `aliases.json` (player/team/lane identity), `item_classes.json`, `hero_classes.json` |
+| `data/global/` | Season-independent metadata: `aliases.json` (player/team/lane identity), `item_classes.json`, `hero_classes.json`, `team_colors.json` (derived logo accents) |
 | `tools/season.py` | Registry resolver (`legacy` and `season-dir` layouts) |
 | `tools/check_parity.py` | Regen parity gate |
 | `tools/shots.py` | README screenshots per the shooting spec below (Playwright + system Chrome) |

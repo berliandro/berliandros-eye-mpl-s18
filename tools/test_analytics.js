@@ -139,15 +139,22 @@ close(by.P2.pct.kda, 1, 1e-12, 'L1 MID KDA percentile 1');
 close(by.P4.pct.kda, 0, 1e-12, 'L1 MID KDA percentile 0');
 close(by.P1.pct.gpm, 0.5, 1e-12, 'L1 equal GPM percentiles tie at 0.5');
 
-// Impact is exactly the documented weighted sum of percentiles.
+// Impact is the documented weighted sum of percentiles, normalised onto 0-100 and clamped.
+const IMPACT_POS = Object.keys(IMPACT_WEIGHTS).reduce((s, k) => s + Math.max(0, IMPACT_WEIGHTS[k]), 0);
+const IMPACT_NEG = Object.keys(IMPACT_WEIGHTS).reduce((s, k) => s + Math.min(0, IMPACT_WEIGHTS[k]), 0);
+const IMPACT_RANGE = IMPACT_POS - IMPACT_NEG;
 A.players.forEach(p => {
-  const expected = 100 * (IMPACT_WEIGHTS.damageShare * p.pct.damageShare +
+  const raw = IMPACT_WEIGHTS.damageShare * p.pct.damageShare +
     IMPACT_WEIGHTS.kp * p.pct.kp + IMPACT_WEIGHTS.goldShare * p.pct.goldShare +
-    IMPACT_WEIGHTS.towerShare * p.pct.towerShare + IMPACT_WEIGHTS.deathShare * p.pct.deathShare);
+    IMPACT_WEIGHTS.towerShare * p.pct.towerShare + IMPACT_WEIGHTS.kda * p.pct.kda +
+    IMPACT_WEIGHTS.deathShare * p.pct.deathShare;
+  const expected = Math.max(0, Math.min(100, 100 * (raw - IMPACT_NEG) / IMPACT_RANGE));
   close(p.impact, expected, 1e-9, 'I1 impact formula ' + p.player);
 });
+eq(IMPACT_POS >= 0.9 - 1e-12, true, 'I1 positive weights reach the 0.90 ceiling');
+eq(Math.abs(IMPACT_RANGE - 1) < 1e-12, true, 'I1 impact range covers exactly 0-1');
 eq(A.players[0].impact >= A.players[A.players.length - 1].impact, true, 'I1 descending impact');
-eq(JSON.stringify(A.weights), JSON.stringify({ damageShare: 0.35, kp: 0.25, goldShare: 0.20, towerShare: 0.10, deathShare: -0.10 }), 'I1 weights pinned');
+eq(JSON.stringify(A.weights), JSON.stringify({ damageShare: 0.30, kp: 0.20, goldShare: 0.15, towerShare: 0.10, kda: 0.15, deathShare: -0.10 }), 'I1 weights pinned');
 
 // Canonicalisation and date ordering.
 {
