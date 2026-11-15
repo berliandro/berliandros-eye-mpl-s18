@@ -4,6 +4,7 @@ skips) when a runtime or suite is missing. No network access required.
 Usage: python tools/verify.py
 Exit 0 = all suites pass.
 """
+import os
 import shutil
 import subprocess
 import sys
@@ -66,6 +67,11 @@ for name, cmd, runtime in STEPS:
         diagnostics = (r.stdout + "\\n" + r.stderr).strip().splitlines()
         for line in diagnostics[-80:]:
             print("    ! " + line)
+        # Annotations survive where job logs are not downloadable, so the failing
+        # suite and its first diagnostic are visible from the check-run API.
+        if os.environ.get("GITHUB_ACTIONS") == "true":
+            first = next((line.strip() for line in diagnostics if line.strip()), "no output")
+            print(f"::error title=verify: {name}::{first[:800]}")
         results.append((name, False))
     else:
         results.append((name, True))
