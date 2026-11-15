@@ -1162,7 +1162,7 @@ function viewCount(){
 if(S.view==='overview')return '';
 if(S.view==='players'){const n=board.querySelectorAll('.pl,.lrow').length;return n+(n===1?' player':' players');}
 if(S.view==='matches')return board.querySelectorAll('.mrow,.mpin').length+' matches';
-if(S.view==='stats')return S.stat==='heroes'?(DATA.heroes||[]).length+' heroes':(DATA.matches||[]).filter(m=>m.liq_mvp).length+' MVP awards';
+if(S.view==='stats')return S.stat==='heroes'?(DATA.heroes||[]).filter(h=>(+h.pick||0)+(+h.ban||0)>0).length+' heroes':(DATA.matches||[]).filter(m=>m.liq_mvp).length+' MVP awards';
 if(S.view==='analytics')return anPart('AN').players.length+' players';
 if(S.view==='prep')return PREP?'1 report':'';
 return '';}
