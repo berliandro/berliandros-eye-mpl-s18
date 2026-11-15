@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "generated_at": "2026-11-15T01:55:13+00:00",
+  "generated_at": "2026-11-15T03:20:02+00:00",
   "description": "Indonesian auto-caption fetch for game VODs missing from the 27-source transcript plan.",
   "source": "youtube-transcript-api (vendored in get-youtube-transcript)",
   "games_total": 107,
@@ -1212,69 +1212,104 @@
       "game_no": 2,
       "video_id": "VgpaT2KJERQ",
       "url": "https://www.youtube.com/watch?v=VgpaT2KJERQ",
-      "status": "error",
-      "error": "IpBlocked: \nCould not retrieve a transcript for the video https://www.youtube.com/watch?v=VgpaT2KJERQ! This is most likely caused by:\n\nYouTube is blocking requests from your IP. This usually is due to one of the following reasons:\n- You have done too many requests and your IP has been blocked by YouTube\n- You are doing requests from an IP belonging to a cloud provider (like AWS, Google Cloud Platform, Azure, etc.). Unfortunately, most IPs from cloud providers are blocked by YouTube.\n\nWays to work around this are explained in the \"Working around IP bans\" section of the README (https://github.com/jdepoix/youtube-transcript-api?tab=readme-ov-file#working-around-ip-bans-requestblocked-or-ipblocked-exception).\n\n\nIf you are sure that the described cause is not responsible for this error and that a transcript should be retrievable, please create an issue at https://github.com/jdepoix/youtube-transcript-api/issues. Please add which version of youtube_transcript_api you are using and provide the information needed to replicate the error. Also make sure that there are no open issues which already describe your problem!"
+      "status": "ok",
+      "language": "id",
+      "source": "invidious",
+      "snippet_count": 1248,
+      "start_s": 0.0,
+      "end_s": 1945.72,
+      "path": "analysis/cache/game-transcripts/VgpaT2KJERQ.json"
     },
     {
       "match_detail_id": "1104",
       "game_no": 3,
       "video_id": "IhPtDaOsShg",
       "url": "https://www.youtube.com/watch?v=IhPtDaOsShg",
-      "status": "error",
-      "error": "IpBlocked: \nCould not retrieve a transcript for the video https://www.youtube.com/watch?v=IhPtDaOsShg! This is most likely caused by:\n\nYouTube is blocking requests from your IP. This usually is due to one of the following reasons:\n- You have done too many requests and your IP has been blocked by YouTube\n- You are doing requests from an IP belonging to a cloud provider (like AWS, Google Cloud Platform, Azure, etc.). Unfortunately, most IPs from cloud providers are blocked by YouTube.\n\nWays to work around this are explained in the \"Working around IP bans\" section of the README (https://github.com/jdepoix/youtube-transcript-api?tab=readme-ov-file#working-around-ip-bans-requestblocked-or-ipblocked-exception).\n\n\nIf you are sure that the described cause is not responsible for this error and that a transcript should be retrievable, please create an issue at https://github.com/jdepoix/youtube-transcript-api/issues. Please add which version of youtube_transcript_api you are using and provide the information needed to replicate the error. Also make sure that there are no open issues which already describe your problem!"
+      "status": "ok",
+      "language": "id",
+      "source": "invidious",
+      "snippet_count": 1099,
+      "start_s": 0.0,
+      "end_s": 2026.16,
+      "path": "analysis/cache/game-transcripts/IhPtDaOsShg.json"
     },
     {
       "match_detail_id": "1105",
       "game_no": 1,
       "video_id": "ep-EjdUPQ7s",
       "url": "https://www.youtube.com/watch?v=ep-EjdUPQ7s",
-      "status": "error",
-      "error": "IpBlocked: \nCould not retrieve a transcript for the video https://www.youtube.com/watch?v=ep-EjdUPQ7s! This is most likely caused by:\n\nYouTube is blocking requests from your IP. This usually is due to one of the following reasons:\n- You have done too many requests and your IP has been blocked by YouTube\n- You are doing requests from an IP belonging to a cloud provider (like AWS, Google Cloud Platform, Azure, etc.). Unfortunately, most IPs from cloud providers are blocked by YouTube.\n\nWays to work around this are explained in the \"Working around IP bans\" section of the README (https://github.com/jdepoix/youtube-transcript-api?tab=readme-ov-file#working-around-ip-bans-requestblocked-or-ipblocked-exception).\n\n\nIf you are sure that the described cause is not responsible for this error and that a transcript should be retrievable, please create an issue at https://github.com/jdepoix/youtube-transcript-api/issues. Please add which version of youtube_transcript_api you are using and provide the information needed to replicate the error. Also make sure that there are no open issues which already describe your problem!"
+      "status": "ok",
+      "language": "id",
+      "source": "invidious",
+      "snippet_count": 908,
+      "start_s": 0.28,
+      "end_s": 1763.919,
+      "path": "analysis/cache/game-transcripts/ep-EjdUPQ7s.json"
     },
     {
       "match_detail_id": "1105",
       "game_no": 2,
       "video_id": "dGNxqTm6MQg",
       "url": "https://www.youtube.com/watch?v=dGNxqTm6MQg",
-      "status": "error",
-      "error": "IpBlocked: \nCould not retrieve a transcript for the video https://www.youtube.com/watch?v=dGNxqTm6MQg! This is most likely caused by:\n\nYouTube is blocking requests from your IP. This usually is due to one of the following reasons:\n- You have done too many requests and your IP has been blocked by YouTube\n- You are doing requests from an IP belonging to a cloud provider (like AWS, Google Cloud Platform, Azure, etc.). Unfortunately, most IPs from cloud providers are blocked by YouTube.\n\nWays to work around this are explained in the \"Working around IP bans\" section of the README (https://github.com/jdepoix/youtube-transcript-api?tab=readme-ov-file#working-around-ip-bans-requestblocked-or-ipblocked-exception).\n\n\nIf you are sure that the described cause is not responsible for this error and that a transcript should be retrievable, please create an issue at https://github.com/jdepoix/youtube-transcript-api/issues. Please add which version of youtube_transcript_api you are using and provide the information needed to replicate the error. Also make sure that there are no open issues which already describe your problem!"
+      "status": "ok",
+      "language": "id",
+      "source": "invidious",
+      "snippet_count": 1068,
+      "start_s": 0.0,
+      "end_s": 1803.48,
+      "path": "analysis/cache/game-transcripts/dGNxqTm6MQg.json"
     },
     {
       "match_detail_id": "1105",
       "game_no": 3,
       "video_id": "7Y3lC7XSfVs",
       "url": "https://www.youtube.com/watch?v=7Y3lC7XSfVs",
-      "status": "error",
-      "error": "IpBlocked: \nCould not retrieve a transcript for the video https://www.youtube.com/watch?v=7Y3lC7XSfVs! This is most likely caused by:\n\nYouTube is blocking requests from your IP. This usually is due to one of the following reasons:\n- You have done too many requests and your IP has been blocked by YouTube\n- You are doing requests from an IP belonging to a cloud provider (like AWS, Google Cloud Platform, Azure, etc.). Unfortunately, most IPs from cloud providers are blocked by YouTube.\n\nWays to work around this are explained in the \"Working around IP bans\" section of the README (https://github.com/jdepoix/youtube-transcript-api?tab=readme-ov-file#working-around-ip-bans-requestblocked-or-ipblocked-exception).\n\n\nIf you are sure that the described cause is not responsible for this error and that a transcript should be retrievable, please create an issue at https://github.com/jdepoix/youtube-transcript-api/issues. Please add which version of youtube_transcript_api you are using and provide the information needed to replicate the error. Also make sure that there are no open issues which already describe your problem!"
+      "status": "ok",
+      "language": "id",
+      "source": "invidious",
+      "snippet_count": 1584,
+      "start_s": 0.28,
+      "end_s": 2682.32,
+      "path": "analysis/cache/game-transcripts/7Y3lC7XSfVs.json"
     },
     {
       "match_detail_id": "1106",
       "game_no": 1,
       "video_id": "g6zbw9yE254",
       "url": "https://www.youtube.com/watch?v=g6zbw9yE254",
-      "status": "error",
-      "error": "IpBlocked: \nCould not retrieve a transcript for the video https://www.youtube.com/watch?v=g6zbw9yE254! This is most likely caused by:\n\nYouTube is blocking requests from your IP. This usually is due to one of the following reasons:\n- You have done too many requests and your IP has been blocked by YouTube\n- You are doing requests from an IP belonging to a cloud provider (like AWS, Google Cloud Platform, Azure, etc.). Unfortunately, most IPs from cloud providers are blocked by YouTube.\n\nWays to work around this are explained in the \"Working around IP bans\" section of the README (https://github.com/jdepoix/youtube-transcript-api?tab=readme-ov-file#working-around-ip-bans-requestblocked-or-ipblocked-exception).\n\n\nIf you are sure that the described cause is not responsible for this error and that a transcript should be retrievable, please create an issue at https://github.com/jdepoix/youtube-transcript-api/issues. Please add which version of youtube_transcript_api you are using and provide the information needed to replicate the error. Also make sure that there are no open issues which already describe your problem!"
+      "status": "ok",
+      "language": "id",
+      "source": "invidious",
+      "snippet_count": 956,
+      "start_s": 0.32,
+      "end_s": 1667.36,
+      "path": "analysis/cache/game-transcripts/g6zbw9yE254.json"
     },
     {
       "match_detail_id": "1106",
       "game_no": 2,
       "video_id": "ZBONqmVxYkM",
       "url": "https://www.youtube.com/watch?v=ZBONqmVxYkM",
-      "status": "error",
-      "error": "IpBlocked: \nCould not retrieve a transcript for the video https://www.youtube.com/watch?v=ZBONqmVxYkM! This is most likely caused by:\n\nYouTube is blocking requests from your IP. This usually is due to one of the following reasons:\n- You have done too many requests and your IP has been blocked by YouTube\n- You are doing requests from an IP belonging to a cloud provider (like AWS, Google Cloud Platform, Azure, etc.). Unfortunately, most IPs from cloud providers are blocked by YouTube.\n\nWays to work around this are explained in the \"Working around IP bans\" section of the README (https://github.com/jdepoix/youtube-transcript-api?tab=readme-ov-file#working-around-ip-bans-requestblocked-or-ipblocked-exception).\n\n\nIf you are sure that the described cause is not responsible for this error and that a transcript should be retrievable, please create an issue at https://github.com/jdepoix/youtube-transcript-api/issues. Please add which version of youtube_transcript_api you are using and provide the information needed to replicate the error. Also make sure that there are no open issues which already describe your problem!"
+      "status": "ok",
+      "language": "id",
+      "source": "invidious",
+      "snippet_count": 1918,
+      "start_s": 0.0,
+      "end_s": 3388.409,
+      "path": "analysis/cache/game-transcripts/ZBONqmVxYkM.json"
     }
   ],
   "summary": {
     "games_total": 107,
-    "games_ok": 100,
-    "games_error": 7,
+    "games_ok": 107,
+    "games_error": 0,
     "languages": {
-      "id": 100
+      "id": 107
     },
     "matches_total": 45,
-    "matches_full": 42,
-    "matches_partial": 1,
-    "matches_none": 2,
+    "matches_full": 45,
+    "matches_partial": 0,
+    "matches_none": 0,
     "full_match_ids": [
       "1037",
       "1038",
@@ -1317,14 +1352,12 @@
       "1097",
       "1099",
       "1101",
-      "1103"
-    ],
-    "partial_match_ids": [
-      "1104"
-    ],
-    "none_match_ids": [
+      "1103",
+      "1104",
       "1105",
       "1106"
-    ]
+    ],
+    "partial_match_ids": [],
+    "none_match_ids": []
   }
 }

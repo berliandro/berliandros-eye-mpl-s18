@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "generated_at": "2026-11-15T02:04:57+00:00",
+  "generated_at": "2026-11-15T03:20:21+00:00",
   "description": "Canonical coverage matrix for MPL ID S18. Joins the database snapshot, transcript plan and ledgers, visual status, and page inventory.",
   "snapshot_id": "mpl-s18-db-20c5ea2c51f3",
   "snapshot_sha256": "20c5ea2c51f30d1a24cd2ce6927f0d182b47f951ebd8209f1aaef429941cf2ef",
@@ -17,6 +17,9 @@
     "transcript_complete": 24,
     "transcript_partial": 3,
     "db_only_matches": 45,
+    "game_observation_matches": 1,
+    "game_observations_accepted": 6,
+    "combined_transcript_matches": 28,
     "evidence_complete": 72,
     "evidence_incomplete": 0,
     "games_total": 174,
@@ -42,11 +45,11 @@
     "team_briefs": 9,
     "head_coach_brief": true,
     "game_transcript_games_total": 107,
-    "game_transcript_games_ok": 100,
+    "game_transcript_games_ok": 107,
     "game_transcript_matches_total": 45,
-    "game_transcript_matches_full": 42,
-    "game_transcript_matches_partial": 1,
-    "game_transcript_matches_none": 2,
+    "game_transcript_matches_full": 45,
+    "game_transcript_matches_partial": 0,
+    "game_transcript_matches_none": 0,
     "transcript_rows": 368,
     "transcript_accepted": 313,
     "transcript_rejected": 50,
@@ -80,7 +83,8 @@
         "section_present": true
       },
       "visual_status": "context-only",
-      "evidence_status": "transcript+db"
+      "evidence_status": "transcript+db",
+      "game_observations_accepted": 0
     },
     {
       "match_detail_id": "1037",
@@ -100,7 +104,8 @@
         "section_present": false
       },
       "visual_status": "context-only",
-      "evidence_status": "db-only"
+      "evidence_status": "game-transcript+db",
+      "game_observations_accepted": 6
     },
     {
       "match_detail_id": "1038",
@@ -120,7 +125,8 @@
         "section_present": false
       },
       "visual_status": "context-only",
-      "evidence_status": "db-only"
+      "evidence_status": "db-only",
+      "game_observations_accepted": 0
     },
     {
       "match_detail_id": "1039",
@@ -140,7 +146,8 @@
         "section_present": true
       },
       "visual_status": "context-only",
-      "evidence_status": "transcript+db"
+      "evidence_status": "transcript+db",
+      "game_observations_accepted": 0
     },
     {
       "match_detail_id": "1040",
@@ -160,7 +167,8 @@
         "section_present": false
       },
       "visual_status": "context-only",
-      "evidence_status": "db-only"
+      "evidence_status": "db-only",
+      "game_observations_accepted": 0
     },
     {
       "match_detail_id": "1041",
@@ -180,7 +188,8 @@
         "section_present": true
       },
       "visual_status": "context-only",
-      "evidence_status": "transcript+db"
+      "evidence_status": "transcript+db",
+      "game_observations_accepted": 0
     },
     {
       "match_detail_id": "1042",
@@ -200,7 +209,8 @@
         "section_present": false
       },
       "visual_status": "context-only",
-      "evidence_status": "db-only"
+      "evidence_status": "db-only",
+      "game_observations_accepted": 0
     },
     {
       "match_detail_id": "1043",
@@ -220,7 +230,8 @@
         "section_present": false
       },
       "visual_status": "no_candidate_waiver",
-      "evidence_status": "db-only"
+      "evidence_status": "db-only",
+      "game_observations_accepted": 0
     },
     {
       "match_detail_id": "1044",
@@ -240,7 +251,8 @@
         "section_present": false
       },
       "visual_status": "rejected",
-      "evidence_status": "db-only"
+      "evidence_status": "db-only",
+      "game_observations_accepted": 0
     },
     {
       "match_detail_id": "1045",
@@ -260,7 +272,8 @@
         "section_present": true
       },
       "visual_status": "context-only",
-      "evidence_status": "transcript+db"
+      "evidence_status": "transcript+db",
+      "game_observations_accepted": 0
     },
     {
       "match_detail_id": "1046",
@@ -280,7 +293,8 @@
         "section_present": false
       },
       "visual_status": "rejected",
-      "evidence_status": "db-only"
+      "evidence_status": "db-only",
+      "game_observations_accepted": 0
     },
     {
       "match_detail_id": "1047",
@@ -300,7 +314,8 @@
         "section_present": true
       },
       "visual_status": "context-only",
-      "evidence_status": "transcript+db"
+      "evidence_status": "transcript+db",
+      "game_observations_accepted": 0
     },
     {
       "match_detail_id": "1048",
@@ -320,7 +335,8 @@
         "section_present": false
       },
       "visual_status": "inconclusive",
-      "evidence_status": "db-only"
+      "evidence_status": "db-only",
+      "game_observations_accepted": 0
     },
     {
       "match_detail_id": "1049",
@@ -340,7 +356,8 @@
         "section_present": false
       },
       "visual_status": "rejected",
-      "evidence_status": "db-only"
+      "evidence_status": "db-only",
+      "game_observations_accepted": 0
     },
     {
       "match_detail_id": "1050",
@@ -360,7 +377,8 @@
         "section_present": true
       },
       "visual_status": "context-only",
-      "evidence_status": "transcript+db"
+      "evidence_status": "transcript+db",
+      "game_observations_accepted": 0
     },
     {
       "match_detail_id": "1051",
@@ -380,7 +398,8 @@
         "section_present": false
       },
       "visual_status": "context-only",
-      "evidence_status": "db-only"
+      "evidence_status": "db-only",
+      "game_observations_accepted": 0
     },
     {
       "match_detail_id": "1052",
@@ -400,7 +419,8 @@
         "section_present": true
       },
       "visual_status": "context-only",
-      "evidence_status": "transcript+db"
+      "evidence_status": "transcript+db",
+      "game_observations_accepted": 0
     },
     {
       "match_detail_id": "1053",
@@ -420,7 +440,8 @@
         "section_present": false
       },
       "visual_status": "context-only",
-      "evidence_status": "db-only"
+      "evidence_status": "db-only",
+      "game_observations_accepted": 0
     },
     {
       "match_detail_id": "1054",
@@ -440,7 +461,8 @@
         "section_present": false
       },
       "visual_status": "rejected",
-      "evidence_status": "db-only"
+      "evidence_status": "db-only",
+      "game_observations_accepted": 0
     },
     {
       "match_detail_id": "1055",
@@ -460,7 +482,8 @@
         "section_present": true
       },
       "visual_status": "context-only",
-      "evidence_status": "transcript+db"
+      "evidence_status": "transcript+db",
+      "game_observations_accepted": 0
     },
     {
       "match_detail_id": "1056",
@@ -480,7 +503,8 @@
         "section_present": false
       },
       "visual_status": "context-only",
-      "evidence_status": "db-only"
+      "evidence_status": "db-only",
+      "game_observations_accepted": 0
     },
     {
       "match_detail_id": "1057",
@@ -500,7 +524,8 @@
         "section_present": true
       },
       "visual_status": "context-only",
-      "evidence_status": "transcript+db"
+      "evidence_status": "transcript+db",
+      "game_observations_accepted": 0
     },
     {
       "match_detail_id": "1058",
@@ -520,7 +545,8 @@
         "section_present": false
       },
       "visual_status": "no_candidate_waiver",
-      "evidence_status": "db-only"
+      "evidence_status": "db-only",
+      "game_observations_accepted": 0
     },
     {
       "match_detail_id": "1059",
@@ -540,7 +566,8 @@
         "section_present": false
       },
       "visual_status": "context-only",
-      "evidence_status": "db-only"
+      "evidence_status": "db-only",
+      "game_observations_accepted": 0
     },
     {
       "match_detail_id": "1060",
@@ -560,7 +587,8 @@
         "section_present": true
       },
       "visual_status": "context-only",
-      "evidence_status": "transcript+db"
+      "evidence_status": "transcript+db",
+      "game_observations_accepted": 0
     },
     {
       "match_detail_id": "1061",
@@ -580,7 +608,8 @@
         "section_present": false
       },
       "visual_status": "no_candidate_waiver",
-      "evidence_status": "db-only"
+      "evidence_status": "db-only",
+      "game_observations_accepted": 0
     },
     {
       "match_detail_id": "1062",
@@ -600,7 +629,8 @@
         "section_present": true
       },
       "visual_status": "context-only",
-      "evidence_status": "transcript+db"
+      "evidence_status": "transcript+db",
+      "game_observations_accepted": 0
     },
     {
       "match_detail_id": "1063",
@@ -620,7 +650,8 @@
         "section_present": false
       },
       "visual_status": "no_candidate_waiver",
-      "evidence_status": "db-only"
+      "evidence_status": "db-only",
+      "game_observations_accepted": 0
     },
     {
       "match_detail_id": "1064",
@@ -640,7 +671,8 @@
         "section_present": false
       },
       "visual_status": "no_candidate_waiver",
-      "evidence_status": "db-only"
+      "evidence_status": "db-only",
+      "game_observations_accepted": 0
     },
     {
       "match_detail_id": "1065",
@@ -660,7 +692,8 @@
         "section_present": true
       },
       "visual_status": "context-only",
-      "evidence_status": "transcript+db"
+      "evidence_status": "transcript+db",
+      "game_observations_accepted": 0
     },
     {
       "match_detail_id": "1066",
@@ -680,7 +713,8 @@
         "section_present": false
       },
       "visual_status": "no_candidate_waiver",
-      "evidence_status": "db-only"
+      "evidence_status": "db-only",
+      "game_observations_accepted": 0
     },
     {
       "match_detail_id": "1067",
@@ -700,7 +734,8 @@
         "section_present": false
       },
       "visual_status": "context-only",
-      "evidence_status": "db-only"
+      "evidence_status": "db-only",
+      "game_observations_accepted": 0
     },
     {
       "match_detail_id": "1068",
@@ -720,7 +755,8 @@
         "section_present": true
       },
       "visual_status": "context-only",
-      "evidence_status": "transcript+db"
+      "evidence_status": "transcript+db",
+      "game_observations_accepted": 0
     },
     {
       "match_detail_id": "1069",
@@ -740,7 +776,8 @@
         "section_present": true
       },
       "visual_status": "context-only",
-      "evidence_status": "transcript+db"
+      "evidence_status": "transcript+db",
+      "game_observations_accepted": 0
     },
     {
       "match_detail_id": "1070",
@@ -760,7 +797,8 @@
         "section_present": false
       },
       "visual_status": "rejected",
-      "evidence_status": "db-only"
+      "evidence_status": "db-only",
+      "game_observations_accepted": 0
     },
     {
       "match_detail_id": "1071",
@@ -780,7 +818,8 @@
         "section_present": true
       },
       "visual_status": "context-only",
-      "evidence_status": "transcript+db"
+      "evidence_status": "transcript+db",
+      "game_observations_accepted": 0
     },
     {
       "match_detail_id": "1072",
@@ -800,7 +839,8 @@
         "section_present": false
       },
       "visual_status": "rejected",
-      "evidence_status": "db-only"
+      "evidence_status": "db-only",
+      "game_observations_accepted": 0
     },
     {
       "match_detail_id": "1073",
@@ -820,7 +860,8 @@
         "section_present": false
       },
       "visual_status": "rejected",
-      "evidence_status": "db-only"
+      "evidence_status": "db-only",
+      "game_observations_accepted": 0
     },
     {
       "match_detail_id": "1074",
@@ -840,7 +881,8 @@
         "section_present": true
       },
       "visual_status": "context-only",
-      "evidence_status": "transcript+db"
+      "evidence_status": "transcript+db",
+      "game_observations_accepted": 0
     },
     {
       "match_detail_id": "1075",
@@ -860,7 +902,8 @@
         "section_present": false
       },
       "visual_status": "rejected",
-      "evidence_status": "db-only"
+      "evidence_status": "db-only",
+      "game_observations_accepted": 0
     },
     {
       "match_detail_id": "1076",
@@ -880,7 +923,8 @@
         "section_present": true
       },
       "visual_status": "rejected",
-      "evidence_status": "transcript+db"
+      "evidence_status": "transcript+db",
+      "game_observations_accepted": 0
     },
     {
       "match_detail_id": "1077",
@@ -900,7 +944,8 @@
         "section_present": false
       },
       "visual_status": "rejected",
-      "evidence_status": "db-only"
+      "evidence_status": "db-only",
+      "game_observations_accepted": 0
     },
     {
       "match_detail_id": "1078",
@@ -920,7 +965,8 @@
         "section_present": false
       },
       "visual_status": "context-only",
-      "evidence_status": "db-only"
+      "evidence_status": "db-only",
+      "game_observations_accepted": 0
     },
     {
       "match_detail_id": "1079",
@@ -940,7 +986,8 @@
         "section_present": false
       },
       "visual_status": "rejected",
-      "evidence_status": "db-only"
+      "evidence_status": "db-only",
+      "game_observations_accepted": 0
     },
     {
       "match_detail_id": "1080",
@@ -960,7 +1007,8 @@
         "section_present": true
       },
       "visual_status": "context-only",
-      "evidence_status": "transcript+db"
+      "evidence_status": "transcript+db",
+      "game_observations_accepted": 0
     },
     {
       "match_detail_id": "1081",
@@ -980,7 +1028,8 @@
         "section_present": true
       },
       "visual_status": "context-only",
-      "evidence_status": "transcript+db"
+      "evidence_status": "transcript+db",
+      "game_observations_accepted": 0
     },
     {
       "match_detail_id": "1082",
@@ -1000,7 +1049,8 @@
         "section_present": false
       },
       "visual_status": "rejected",
-      "evidence_status": "db-only"
+      "evidence_status": "db-only",
+      "game_observations_accepted": 0
     },
     {
       "match_detail_id": "1083",
@@ -1020,7 +1070,8 @@
         "section_present": false
       },
       "visual_status": "context-only",
-      "evidence_status": "db-only"
+      "evidence_status": "db-only",
+      "game_observations_accepted": 0
     },
     {
       "match_detail_id": "1084",
@@ -1040,7 +1091,8 @@
         "section_present": true
       },
       "visual_status": "context-only",
-      "evidence_status": "transcript+db"
+      "evidence_status": "transcript+db",
+      "game_observations_accepted": 0
     },
     {
       "match_detail_id": "1085",
@@ -1060,7 +1112,8 @@
         "section_present": false
       },
       "visual_status": "context-only",
-      "evidence_status": "db-only"
+      "evidence_status": "db-only",
+      "game_observations_accepted": 0
     },
     {
       "match_detail_id": "1086",
@@ -1080,7 +1133,8 @@
         "section_present": false
       },
       "visual_status": "rejected",
-      "evidence_status": "db-only"
+      "evidence_status": "db-only",
+      "game_observations_accepted": 0
     },
     {
       "match_detail_id": "1087",
@@ -1100,7 +1154,8 @@
         "section_present": true
       },
       "visual_status": "context-only",
-      "evidence_status": "transcript+db"
+      "evidence_status": "transcript+db",
+      "game_observations_accepted": 0
     },
     {
       "match_detail_id": "1088",
@@ -1120,7 +1175,8 @@
         "section_present": false
       },
       "visual_status": "context-only",
-      "evidence_status": "db-only"
+      "evidence_status": "db-only",
+      "game_observations_accepted": 0
     },
     {
       "match_detail_id": "1089",
@@ -1140,7 +1196,8 @@
         "section_present": false
       },
       "visual_status": "rejected",
-      "evidence_status": "db-only"
+      "evidence_status": "db-only",
+      "game_observations_accepted": 0
     },
     {
       "match_detail_id": "1090",
@@ -1160,7 +1217,8 @@
         "section_present": false
       },
       "visual_status": "rejected",
-      "evidence_status": "db-only"
+      "evidence_status": "db-only",
+      "game_observations_accepted": 0
     },
     {
       "match_detail_id": "1091",
@@ -1180,7 +1238,8 @@
         "section_present": true
       },
       "visual_status": "context-only",
-      "evidence_status": "transcript+db"
+      "evidence_status": "transcript+db",
+      "game_observations_accepted": 0
     },
     {
       "match_detail_id": "1092",
@@ -1200,7 +1259,8 @@
         "section_present": false
       },
       "visual_status": "no_candidate_waiver",
-      "evidence_status": "db-only"
+      "evidence_status": "db-only",
+      "game_observations_accepted": 0
     },
     {
       "match_detail_id": "1093",
@@ -1220,7 +1280,8 @@
         "section_present": false
       },
       "visual_status": "no_candidate_waiver",
-      "evidence_status": "db-only"
+      "evidence_status": "db-only",
+      "game_observations_accepted": 0
     },
     {
       "match_detail_id": "1094",
@@ -1240,7 +1301,8 @@
         "section_present": true
       },
       "visual_status": "context-only",
-      "evidence_status": "transcript+db"
+      "evidence_status": "transcript+db",
+      "game_observations_accepted": 0
     },
     {
       "match_detail_id": "1095",
@@ -1260,7 +1322,8 @@
         "section_present": false
       },
       "visual_status": "rejected",
-      "evidence_status": "db-only"
+      "evidence_status": "db-only",
+      "game_observations_accepted": 0
     },
     {
       "match_detail_id": "1096",
@@ -1280,7 +1343,8 @@
         "section_present": false
       },
       "visual_status": "rejected",
-      "evidence_status": "db-only"
+      "evidence_status": "db-only",
+      "game_observations_accepted": 0
     },
     {
       "match_detail_id": "1097",
@@ -1300,7 +1364,8 @@
         "section_present": false
       },
       "visual_status": "rejected",
-      "evidence_status": "db-only"
+      "evidence_status": "db-only",
+      "game_observations_accepted": 0
     },
     {
       "match_detail_id": "1098",
@@ -1320,7 +1385,8 @@
         "section_present": true
       },
       "visual_status": "context-only",
-      "evidence_status": "transcript+db"
+      "evidence_status": "transcript+db",
+      "game_observations_accepted": 0
     },
     {
       "match_detail_id": "1099",
@@ -1340,7 +1406,8 @@
         "section_present": false
       },
       "visual_status": "no_candidate_waiver",
-      "evidence_status": "db-only"
+      "evidence_status": "db-only",
+      "game_observations_accepted": 0
     },
     {
       "match_detail_id": "1100",
@@ -1360,7 +1427,8 @@
         "section_present": true
       },
       "visual_status": "context-only",
-      "evidence_status": "transcript+db"
+      "evidence_status": "transcript+db",
+      "game_observations_accepted": 0
     },
     {
       "match_detail_id": "1101",
@@ -1380,7 +1448,8 @@
         "section_present": false
       },
       "visual_status": "context-only",
-      "evidence_status": "db-only"
+      "evidence_status": "db-only",
+      "game_observations_accepted": 0
     },
     {
       "match_detail_id": "1102",
@@ -1400,7 +1469,8 @@
         "section_present": true
       },
       "visual_status": "context-only",
-      "evidence_status": "transcript+db"
+      "evidence_status": "transcript+db",
+      "game_observations_accepted": 0
     },
     {
       "match_detail_id": "1103",
@@ -1420,7 +1490,8 @@
         "section_present": false
       },
       "visual_status": "rejected",
-      "evidence_status": "db-only"
+      "evidence_status": "db-only",
+      "game_observations_accepted": 0
     },
     {
       "match_detail_id": "1104",
@@ -1440,7 +1511,8 @@
         "section_present": false
       },
       "visual_status": "no_candidate_waiver",
-      "evidence_status": "db-only"
+      "evidence_status": "db-only",
+      "game_observations_accepted": 0
     },
     {
       "match_detail_id": "1105",
@@ -1460,7 +1532,8 @@
         "section_present": false
       },
       "visual_status": "rejected",
-      "evidence_status": "db-only"
+      "evidence_status": "db-only",
+      "game_observations_accepted": 0
     },
     {
       "match_detail_id": "1106",
@@ -1480,7 +1553,8 @@
         "section_present": false
       },
       "visual_status": "context-only",
-      "evidence_status": "db-only"
+      "evidence_status": "db-only",
+      "game_observations_accepted": 0
     },
     {
       "match_detail_id": "1107",
@@ -1500,7 +1574,8 @@
         "section_present": true
       },
       "visual_status": "context-only",
-      "evidence_status": "transcript+db"
+      "evidence_status": "transcript+db",
+      "game_observations_accepted": 0
     }
   ],
   "teams": [

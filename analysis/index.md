@@ -15,8 +15,8 @@
 - Synthesis: **9/9** team profiles, **94** hero pages, **6/6** strategy pages, plus the season hero and league meta reports.
 - Coaching: **9** team briefs and **1** head-coach brief in `coaching/`.
 - Visual review: **0 boundaries visually verified**; 966 frame reviews and 62 boundary reviews (41 context-only, 20 rejected, 1 inconclusive, 10 waived).
-- Semantic coverage: **27/72 broadcast-source transcript-backed**; game transcripts are now available for **42 of the 45 DB-only matches** (extraction pending).
-- Game transcript availability: **100/107 games fetched** (42/45 matches full, 1 partial, 2 IP-blocked); source availability only, not accepted observations. Manifest: [`evidence/game-transcript-manifest.json`](evidence/game-transcript-manifest.json).
+- Semantic coverage: **27/72 broadcast-source transcript-backed**; game transcripts are now available for **all 45 DB-only matches** (107/107 games, all Indonesian); the **1037 pilot** has 6 accepted game-VOD observations, bringing combined transcript evidence to **28/72**.
+- Game transcript availability: **107/107 games fetched** (45/45 matches full, all Indonesian); source availability, not accepted observations (except the 1037 pilot). Manifest: [`evidence/game-transcript-manifest.json`](evidence/game-transcript-manifest.json).
 
 ## Transcript knowledge pipeline
 

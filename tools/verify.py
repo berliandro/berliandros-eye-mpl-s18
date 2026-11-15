@@ -36,6 +36,7 @@ STEPS = [
     ("season config (node)", ["node", str(BASE / "test_config.js")], "node"),
     ("transcript ledger validator", [sys.executable, str(BASE / "test_transcript_ledger.py")], None),
     ("read-only stats bridge", [sys.executable, str(BASE / "test_stats_query.py")], None),
+    ("game transcript observations", [sys.executable, str(BASE / "validate_game_observations.py")], None),
     ("goal artifacts (coverage, synthesis, briefs)", [sys.executable, str(BASE / "test_goal_artifacts.py")], None),
     ("ruff lint (pip install ruff if missing)", [sys.executable, "-m", "ruff", "check", "tools/",
      "--select", "F401,F841,E722,E9", "--line-length", "200"], None),

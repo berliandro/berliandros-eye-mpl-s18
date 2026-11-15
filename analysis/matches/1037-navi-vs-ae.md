@@ -73,10 +73,27 @@ Sides: NAVI blue / AE red · [VOD](https://www.youtube.com/watch?v=Ap4igKgFkwU)
 
 Draft labels A/B are source draft order; picks are lane-order, not pick order.
 
-**Transcript coverage:** none. This series is database-only; no broadcast quote, timestamp, or caster claim is made.
+**Transcript coverage:** no broadcast-source ledger; 6 accepted game-VOD observations are carried below. They come from the official per-game transcript, not the 27-source broadcast ledger.
 
 **Database limits:** no per-game objective counts, gold/damage timelines, vision, communications, or intent.
 <!-- db-evidence:end -->
+
+## Game transcript evidence (per-game VODs)
+
+Six accepted observations from the official game-VOD transcripts (`src-game-CGCbVSueZ7c`, `src-game-Ap4igKgFkwU`; Indonesian auto-captions). These are separate from the 27-source broadcast ledger. Quotes are exact; timestamps are caption-aligned, not frame-accurate.
+
+| Game | Time | ID | Type | Supported reading |
+|---:|---|---|---|---|
+| 1 | 00:09:12 | `GOBS-1037-G1-001` | observation | Caster reports a NAVI Turtle and two kills. |
+| 1 | 00:20:03 | `GOBS-1037-G1-003` | commentary | Caster says NAVI had greater control around the Lord. |
+| 1 | 00:20:32 | `GOBS-1037-G1-002` | observation | Caster says AE got two eliminations but still had zero objectives. |
+| 1 | 00:24:32 | `GOBS-1037-G1-004` | commentary | Caster says AE defended the top-lane Lord push very well. |
+| 2 | 00:03:45 | `GOBS-1037-G2-001` | commentary | Caster frames the matchup as a clash of draft identities. |
+| 2 | 00:09:21 | `GOBS-1037-G2-002` | observation | Caster reports Andoryuu killed Alexander and was left at half HP, so NAVI could not contest the Turtle. |
+
+Ledger: `analysis/evidence/game-observations/1037.jsonl`; validator: `tools/validate_game_observations.py` (0 errors, 0 warnings). These observations are not yet routed to team/hero pages.
+
+**Limits.** Indonesian auto-captions; no speaker labels; ASR names (e.g. "Andoriu", "Alterigo") are normalized only where the mapping is clear. The game clock is caption time, not the broadcast clock.
 
 ## Timeline and evidence
 

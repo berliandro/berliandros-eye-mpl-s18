@@ -12,6 +12,8 @@ This report is the single source of truth for coverage. Older coverage summaries
 | Database evidence blocks | 72 |
 | Match evidence complete | 72 / 72 |
 | Transcript-covered series | 27 (complete 24, partial 3) |
+| Game-VOD observation matches | 1 (6 accepted observations) |
+| Combined transcript evidence | 28 / 72 |
 | DB-only series (no transcript) | 45 |
 | Games | 174 |
 | Games with VOD | 173 |
@@ -24,13 +26,14 @@ This report is the single source of truth for coverage. Older coverage summaries
 | Heroes: pages / picked / with synthesis | 94 / 91 / 94 |
 | Strategy pages: total / with synthesis | 6 / 6 |
 | Team briefs / head-coach brief | 9 / yes |
-| Game transcripts available (not observations) | 100/107 games; 42/45 matches full |
+| Game transcripts available (not observations) | 107/107 games; 45/45 matches full |
 
 ## Definitions
 
 - **Match evidence pass:** the report exists and contains the deterministic database block (result, games, team totals, player lines, draft). Transcript coverage is reported separately and never implied.
 - **DB-only:** no transcript source exists for that series; the block is the evidence.
 - **Transcript:** a validated source ledger exists and the report carries accepted observations; `partial` means the source window is not full gameplay.
+- **Game-VOD observation:** an accepted observation in `analysis/evidence/game-observations/`, extracted from an official per-game transcript and kept separate from the 27-source ledger.
 
 **Pilot store note:** 1036, 1037 and 1107 also have claim-level records in the frozen pilot ledger (`analysis/evidence/pilot-ledger.jsonl`). 1037 has **no transcript source**; its pilot observations are the only semantic evidence for that series. See `analysis/reports/evidence-store.md`.
 
@@ -41,7 +44,7 @@ This report is the single source of truth for coverage. Older coverage summaries
 | Match | Date | Series | Score | Games | Transcript | Visual | DB block | Status |
 |---:|---|---|---|---:|---|---|---|---|
 | 1036 | 2026-08-14 | EVOS vs RRQ | 2-0 | 2 | src-s18-w01d01 (complete) | context-only | yes | transcript+db |
-| 1037 | 2026-08-14 | NAVI vs AE | 0-2 | 2 | none | context-only | yes | db-only |
+| 1037 | 2026-08-14 | NAVI vs AE | 0-2 | 2 | game-VOD (6) | context-only | yes | game-transcript+db |
 | 1038 | 2026-08-15 | TLID vs GEEK | 2-1 | 3 | none | context-only | yes | db-only |
 | 1039 | 2026-08-15 | DEWA vs RRQ | 1-2 | 3 | src-s18-w01d02 (complete) | context-only | yes | transcript+db |
 | 1040 | 2026-08-15 | EVOS vs NAVI | 1-2 | 3 | none | context-only | yes | db-only |

@@ -29,8 +29,10 @@ class GoalArtifactsTest(unittest.TestCase):
         reports = sorted(MATCHES.glob("*.md"))
         with_transcript = [p for p in reports if "## Validated transcript observations" in p.read_text(encoding="utf-8")]
         without = [p for p in reports if "**Transcript coverage:** none." in p.read_text(encoding="utf-8")]
+        game_vod = [p for p in reports if "accepted game-VOD observations" in p.read_text(encoding="utf-8")]
         self.assertEqual(len(with_transcript), 27)
-        self.assertEqual(len(without), 45)
+        self.assertEqual(len(without), 44)
+        self.assertEqual(len(game_vod), 1)
 
     def test_team_profiles_and_briefs(self):
         self.assertEqual(len(sorted(TEAMS.glob("*.md"))), 9)

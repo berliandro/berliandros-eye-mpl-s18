@@ -103,6 +103,16 @@ def main() -> int:
     plan_by_source = {str(item["source_id"]): item for item in plan_sources}
     visual_by_match = load_visual_by_match()
     obs_rows, accepted_by_match = load_transcript_observations(plan_by_source)
+    game_obs_by_match: dict[str, int] = defaultdict(int)
+    game_obs_dir = EVIDENCE / "game-observations"
+    if game_obs_dir.is_dir():
+        for ledger in sorted(game_obs_dir.glob("*.jsonl")):
+            for line in ledger.read_text(encoding="utf-8").splitlines():
+                if not line.strip():
+                    continue
+                row = json.loads(line)
+                if row.get("status") == "accepted":
+                    game_obs_by_match[str(row.get("match_detail_id"))] += 1
     obs_status = Counter(str(row.get("status")) for row in obs_rows)
     entities = {"players": set(), "teams": set(), "heroes": set()}
     for row in obs_rows:
@@ -126,8 +136,11 @@ def main() -> int:
         games_for_match = games_by_match.get(match_id, [])
         has_db = DB_MARKER in text
         has_transcript = TRANSCRIPT_MARKER in text
+        game_accepted = game_obs_by_match.get(match_id, 0)
         if planned and has_transcript and has_db:
             evidence_status = "transcript+db"
+        elif game_accepted and has_db:
+            evidence_status = "game-transcript+db"
         elif has_db:
             evidence_status = "db-only"
         else:
@@ -151,6 +164,7 @@ def main() -> int:
             },
             "visual_status": vrow.get("visual_status", "not_reviewed"),
             "evidence_status": evidence_status,
+            "game_observations_accepted": game_accepted,
         })
 
     team_pages = sorted((REPO / "analysis" / "teams").glob("*.md"))
@@ -202,8 +216,14 @@ def main() -> int:
         "transcript_complete": sum(1 for m in matches if m["transcript"]["status"] == "complete"),
         "transcript_partial": sum(1 for m in matches if m["transcript"]["status"] == "partial"),
         "db_only_matches": sum(1 for m in matches if not m["transcript"]["covered"]),
-        "evidence_complete": sum(1 for m in matches if m["evidence_status"] in {"transcript+db", "db-only"}),
-        "evidence_incomplete": sum(1 for m in matches if m["evidence_status"] == "incomplete"),
+        "game_observation_matches": sum(1 for m in matches if m["game_observations_accepted"] > 0),
+        "game_observations_accepted": sum(m["game_observations_accepted"] for m in matches),
+        "combined_transcript_matches": sum(
+            1 for m in matches
+            if m["transcript"]["covered"] or m["game_observations_accepted"] > 0
+        ),
+        "evidence_complete": sum(1 for m in matches if m["evidence_status"] in {"transcript+db", "db-only", "game-transcript+db"}),
+        "evidence_incomplete": sum(1 for m in matches if m["evidence_status"] not in {"transcript+db", "db-only", "game-transcript+db"}),
         "games_total": len(games.rows),
         "games_with_vod": sum(1 for g in games.rows if g.get("vod_url")),
         "games_with_map_mode": sum(1 for g in games.rows if g.get("map_mode")),
@@ -226,6 +246,12 @@ def main() -> int:
         "strategy_with_synthesis": sum(1 for page in strategy_pages if page_marker(page, STRATEGY_MARKER)),
         "team_briefs": len(briefs),
         "head_coach_brief": head_coach.is_file(),
+        "game_transcript_games_total": 0,
+        "game_transcript_games_ok": 0,
+        "game_transcript_matches_total": 0,
+        "game_transcript_matches_full": 0,
+        "game_transcript_matches_partial": 0,
+        "game_transcript_matches_none": 0,
         "transcript_rows": len(obs_rows),
         "transcript_accepted": obs_status.get("accepted", 0),
         "transcript_rejected": obs_status.get("rejected", 0),
@@ -235,6 +261,18 @@ def main() -> int:
         "teams_in_transcript": len(entities["teams"]),
         "heroes_in_transcript": len(entities["heroes"]),
     }
+
+    game_tx_path = EVIDENCE / "game-transcript-manifest.json"
+    if game_tx_path.is_file():
+        gt = load_json(game_tx_path).get("summary", {})
+        summary.update({
+            "game_transcript_games_total": gt.get("games_total", 0),
+            "game_transcript_games_ok": gt.get("games_ok", 0),
+            "game_transcript_matches_total": gt.get("matches_total", 0),
+            "game_transcript_matches_full": gt.get("matches_full", 0),
+            "game_transcript_matches_partial": gt.get("matches_partial", 0),
+            "game_transcript_matches_none": gt.get("matches_none", 0),
+        })
 
     payload = {
         "schema_version": 1,
@@ -269,6 +307,8 @@ def main() -> int:
         f"| Database evidence blocks | {summary['db_evidence_blocks']} |",
         f"| Match evidence complete | {summary['evidence_complete']} / {summary['matches_total']} |",
         f"| Transcript-covered series | {summary['transcript_matches']} (complete {summary['transcript_complete']}, partial {summary['transcript_partial']}) |",
+        f"| Game-VOD observation matches | {summary['game_observation_matches']} ({summary['game_observations_accepted']} accepted observations) |",
+        f"| Combined transcript evidence | {summary['combined_transcript_matches']} / {summary['matches_total']} |",
         f"| DB-only series (no transcript) | {summary['db_only_matches']} |",
         f"| Games | {summary['games_total']} |",
         f"| Games with VOD | {summary['games_with_vod']} |",
@@ -281,14 +321,18 @@ def main() -> int:
         f"| Heroes: pages / picked / with synthesis | {summary['hero_pages']} / {summary['heroes_picked']} / {summary['heroes_with_synthesis']} |",
         f"| Strategy pages: total / with synthesis | {summary['strategy_pages']} / {summary['strategy_with_synthesis']} |",
         f"| Team briefs / head-coach brief | {summary['team_briefs']} / {'yes' if summary['head_coach_brief'] else 'no'} |",
+        f"| Game transcripts available (not observations) | {summary['game_transcript_games_ok']}/{summary['game_transcript_games_total']} games; {summary['game_transcript_matches_full']}/{summary['game_transcript_matches_total']} matches full |",
         "",
         "## Definitions",
         "",
         "- **Match evidence pass:** the report exists and contains the deterministic database block (result, games, team totals, player lines, draft). Transcript coverage is reported separately and never implied.",
         "- **DB-only:** no transcript source exists for that series; the block is the evidence.",
         "- **Transcript:** a validated source ledger exists and the report carries accepted observations; `partial` means the source window is not full gameplay.",
+        "- **Game-VOD observation:** an accepted observation in `analysis/evidence/game-observations/`, extracted from an official per-game transcript and kept separate from the 27-source ledger.",
         "",
         "**Pilot store note:** 1036, 1037 and 1107 also have claim-level records in the frozen pilot ledger (`analysis/evidence/pilot-ledger.jsonl`). 1037 has **no transcript source**; its pilot observations are the only semantic evidence for that series. See `analysis/reports/evidence-store.md`.",
+        "",
+        "**Game transcript note:** the 100 fetched game transcripts are source availability, not accepted observations. The 27-source observation ledger is unchanged. See `analysis/evidence/game-transcript-manifest.json`.",
         "",
         "## Per-series coverage",
         "",
@@ -299,6 +343,8 @@ def main() -> int:
         transcript = m["transcript"]
         if transcript["covered"]:
             transcript_label = f"{transcript['source_id']} ({transcript['status']})"
+        elif m["game_observations_accepted"]:
+            transcript_label = f"game-VOD ({m['game_observations_accepted']})"
         else:
             transcript_label = "none"
         lines.append(

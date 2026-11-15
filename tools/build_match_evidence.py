@@ -81,6 +81,7 @@ def render_block(
     mvp: str | None,
     plan: dict[str, Any] | None,
     accepted: int,
+    game_accepted: int,
     snapshot_id: str,
     snapshot_sha: str,
 ) -> str:
@@ -181,6 +182,11 @@ def render_block(
             f"**Transcript coverage:** `{source_id}` ({status}); {accepted} accepted observations are carried in this report. "
             "Caster statements are commentary or observation, not database facts."
         )
+    elif game_accepted:
+        lines.append(
+            f"**Transcript coverage:** no broadcast-source ledger; {game_accepted} accepted game-VOD observations are carried below. "
+            "They come from the official per-game transcript, not the 27-source broadcast ledger."
+        )
     else:
         lines.append(
             "**Transcript coverage:** none. This series is database-only; no broadcast quote, timestamp, or caster claim is made."
@@ -236,6 +242,14 @@ def main(argv: list[str] | None = None) -> int:
                 if row.get("status") == "accepted":
                     accepted_by_match[str(item["match_detail_id"])] += 1
 
+    game_obs_by_match: dict[str, int] = defaultdict(int)
+    game_obs_dir = REPO / "analysis" / "evidence" / "game-observations"
+    if game_obs_dir.is_dir():
+        for ledger in game_obs_dir.glob("*.jsonl"):
+            for row in read_jsonl(ledger):
+                if row.get("status") == "accepted":
+                    game_obs_by_match[str(row["match_detail_id"])] += 1
+
     games_by_match = group_by(games_rows, "match_detail_id")
     teams_by_match = group_by(team_rows, "match_detail_id")
     picks_by_match = group_by(picks_rows, "match_detail_id")
@@ -262,6 +276,7 @@ def main(argv: list[str] | None = None) -> int:
             mvp=mvp_by_match.get(match_id),
             plan=plan_by_match.get(match_id),
             accepted=accepted_by_match.get(match_id, 0),
+            game_accepted=game_obs_by_match.get(match_id, 0),
             snapshot_id=schedule.snapshot_id,
             snapshot_sha=schedule.snapshot_sha256,
         )
