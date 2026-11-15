@@ -78,6 +78,7 @@ sortEl=document.getElementById('sort'),laneEl=document.getElementById('lane'),co
 chips=document.getElementById('chips'),dlg=document.getElementById('dlg');
 let lastFocus=null;
 const esc=s=>String(s??'').replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+function viewHead(title,lead){return `<div class="vh"><h1>${esc(title)}</h1><p>${esc(lead)}</p></div>`;}
 TEAMS.forEach(t=>{const b=document.createElement('button');b.textContent=t;b.setAttribute('aria-pressed','false');
 b.onclick=()=>{S.team=S.team===t?'':t;[...chips.children].forEach(x=>x.setAttribute('aria-pressed',x.textContent===S.team?'true':'false'));render();};chips.appendChild(b);});
 function setFilters(open){const f=document.getElementById('filters');if(!f)return;f.classList.toggle('open',open);document.body.classList.toggle('fopen',open);const b=document.getElementById('filterBtn');if(b)b.setAttribute('aria-expanded',open?'true':'false');}
@@ -125,7 +126,9 @@ const y=window.scrollY,hdr=document.querySelector('header');
 if(window.innerWidth>640||!hdr){if(hdr)hdr.classList.remove('navhide');}
 else if(y>lastY&&y>160){hdr.classList.add('navhide');}else if(y<lastY){hdr.classList.remove('navhide');}
 lastY=y;});},{passive:true});
-dlg.addEventListener('close',()=>{dnav=[];if(lastFocus)lastFocus.focus();});
+dlg.addEventListener('close',()=>{dnav=[];document.body.style.overflow='';if(lastFocus)lastFocus.focus();});
+dlg.addEventListener('click',e=>{if(e.target===dlg)dlg.close();});
+const dlg2El=document.getElementById('dlg2');if(dlg2El){dlg2El.addEventListener('click',e=>{if(e.target===dlg2El)dlg2El.close();});dlg2El.addEventListener('close',()=>{document.body.style.overflow='';});}
 function agg(){const m={};const num=v=>{const n=+v;return isFinite(n)?n:0;};DATA.players.forEach(r=>{(m[r.player]=m[r.player]||{player:r.player,team:r.team,gp:0,k:0,d:0,a:0,gpm:0,hs:new Set()});
 const o=m[r.player];o.gp++;o.k+=num(r.kills);o.d+=num(r.deaths);o.a+=num(r.assists);o.gpm+=num(r.gold_per_min);o.hs.add(r.hero);});
 const seas=Object.fromEntries(DATA.season.map(s=>[String(s.player||'').toLowerCase(),s]));
@@ -150,7 +153,42 @@ show('sortBox',v==='players');
 show('laneBox',v==='players');
 show('layoutSeg',v==='players'||v==='matches');
 const dens=document.getElementById('density');if(dens)dens.hidden=(v==='overview');}
+/* ---------- live instrument: FLIP reorder + portrait parallax ---------- */
+const RMQ=window.matchMedia('(prefers-reduced-motion: reduce)');
+let MOTION=!RMQ.matches;
+try{RMQ.addEventListener('change',e=>{MOTION=!e.matches;if(!MOTION)clearPar();});}catch(e){}
+function snapshotCards(){
+  const m=new Map();
+  if(!MOTION||S.view!=='players')return m;
+  document.querySelectorAll('.pl').forEach(el=>{m.set(el.dataset.p,el.getBoundingClientRect());});
+  return m;}
+function animateCards(before){
+  if(!MOTION)return;
+  const vh=window.innerHeight;
+  document.querySelectorAll('.pl').forEach(el=>{
+    const r=el.getBoundingClientRect();
+    if(r.bottom<0||r.top>vh)return;
+    const b=before.get(el.dataset.p);
+    if(!b){el.classList.add('new');return;}
+    const dx=b.left-r.left,dy=b.top-r.top;
+    if(Math.abs(dx)<1&&Math.abs(dy)<1)return;
+    el.animate([{transform:`translate(${dx.toFixed(1)}px,${dy.toFixed(1)}px)`},{transform:'none'}],
+      {duration:380,easing:'cubic-bezier(.2,.8,.2,1)'});
+  });}
+let parCard=null;
+function clearPar(){if(parCard){const i=parCard.querySelector('.ppic');if(i)i.style.transform='';parCard=null;}}
+document.addEventListener('pointermove',e=>{
+  if(!MOTION||S.view!=='players')return;
+  const card=e.target&&e.target.closest?e.target.closest('.pl'):null;
+  if(card!==parCard){clearPar();parCard=card;}
+  if(!card)return;
+  const img=card.querySelector('.ppic');if(!img)return;
+  const r=card.getBoundingClientRect();
+  const dx=((e.clientX-r.left)/r.width-.5)*6,dy=((e.clientY-r.top)/r.height-.5)*6;
+  img.style.transform=`translate(${dx.toFixed(2)}px,${dy.toFixed(2)}px) scale(1.06)`;
+},{passive:true});
 function render(){const out=[];
+const beforeCards=snapshotCards();
 document.querySelectorAll('[data-view]').forEach(b=>b.setAttribute('aria-selected',b.dataset.view===(S.view==='player'?'players':S.view)?'true':'false'));
 syncControls();
 board.classList.toggle('list',S.layout==='list');
@@ -169,6 +207,7 @@ const PMof=o=>PM[String(canonicalPlayer(o.player)).toLowerCase()]||null;
 if(S.sort==='wr')r.sort((a,b)=>{const A=PMof(a)||{},B=PMof(b)||{};return (B.winRate||0)-(A.winRate||0)||(B.decided||0)-(A.decided||0)||a.player.localeCompare(b.player);});
 else if(S.sort==='impact')r.sort((a,b)=>((PMof(b)||{}).impact||0)-((PMof(a)||{}).impact||0)||a.player.localeCompare(b.player));
 else{const k={kda:'avgkda',kills:'k',goldmin:'avgg',games:'gp'}[S.sort];r.sort((a,b)=>b[k]-a[k]);}
+out.push(viewHead('Players',r.length+' players · lane-adjusted impact · '+S.sort.replace('wr','win rate')));
 if(S.view==='players'&&S.layout==='list'){
 out.push(`<div class="pin"><div class="lscroll"><div class="lhead"><span></span><span>Player</span><span>Team</span><span>Lane</span><span>GP</span><span>KDA</span><span>K / D / A</span><span>Gold/min</span><span>WR</span><span>Impact</span></div>`
 +r.map(o=>{const an=PMof(o);
@@ -185,7 +224,8 @@ const ordn=n=>{const suf=['th','st','nd','rd'],v=n%100;return n+(suf[(v-20)%10]|
 const bar=(v,label,inv)=>{const q=inv?100-v:v;const cls=q>=50?'hi':'';const full={DMG:'Damage share',KP:'Kill participation',GLD:'Gold share',TWR:'Tower share'}[label]||label;const txt=q<=0?`${full}, lowest in lane`:q>=100?`${full}, highest in lane`:`${full}, ${ordn(q)} percentile in lane`;return `<span class="pb" role="img" aria-label="${txt}" title="${txt}"><i class="${cls}" style="height:${Math.max(3,Math.round(q*0.42))}px"></i><em aria-hidden="true">${label}</em></span>`;};
 const radar=an?radarSVG(an):'';
 const heroes=(DATA.hero_pool[o.player]||[]).slice(0,3).map(h=>esc(h[0])).join(' · ');
-out.push(`<div class="pin pl" style="--index:${i}${TCOL(o.team)?`;--ctc:${TCOL(o.team).soft}`:';--ctc:rgba(242,241,236,.42)'}" data-p="${esc(o.player)}" role="link" tabindex="0" aria-label="Open ${esc(o.player)} profile">
+const cardAria=an?`Open ${o.player} — ${o.team} ${o.lane||'unknown lane'}. Lane impact ${Math.round(an.impact)} of 100, ${Math.round(an.winRate*100)}% win rate over ${o.gp} games. Percentiles: damage ${pcv(an.pct.damageShare)}, kill participation ${pcv(an.pct.kp)}, gold ${pcv(an.pct.goldShare)}, tower ${pcv(an.pct.towerShare)}, KDA ${pcv(an.pct.kda)}, deaths ${pcv(an.pct.deathShare)} where lower is better.`:`Open ${o.player} — ${o.team} ${o.lane||'unknown lane'}, ${o.gp} games, no percentile data.`;
+out.push(`<div class="pin pl" style="--index:${i}${TCOL(o.team)?`;--ctc:${TCOL(o.team).soft}`:';--ctc:rgba(242,241,236,.42)'}" data-p="${esc(o.player)}" role="link" tabindex="0" aria-label="${esc(cardAria)}">
 <div class="pl-head">${ppic(o.player)}<div class="pl-id"><b>${esc(o.player)}</b><span>${TICON(o.team)?`<img class="tlogo" src="${esc(TICON(o.team))}" alt="" loading="lazy" ${IMG_HIDE}>`:''}${esc(o.team)} · ${esc(o.lane||'—')}</span></div></div>
 <div class="pl-score${an&&an.small?' small':''}"><b>${an?Math.round(an.impact):'—'}</b><span class="pl-lab">Lane impact<em>${o.gp} GP</em></span></div>
 <p class="pl-sub">${an?Math.round(an.winRate*100)+'% WR':'— WR'} · ${o.avgkda.toFixed(2)} KDA · ${o.avgg.toFixed(0)} GPM</p>
@@ -196,12 +236,13 @@ if(S.view==='matches'){let ms=DATA.schedule.slice().sort((a,b)=>(a.iso_datetime|
 if(S.team)ms=ms.filter(m=>m.team_a===S.team||m.team_b===S.team);
 if(S.q)ms=ms.filter(m=>(m.team_a+' '+m.team_b+' '+m.date).toLowerCase().includes(S.q));
 const isPO=m=>String(m.schedule_id||m.match_id||'').indexOf('playoffs')>-1||(m.team_a==='TBD'&&m.team_b==='TBD');
-const secHead=(title,n)=>`<div class="pin" style="grid-column:1/-1"><div class="body"><div class="phasebar"><div><div class="kicker">Bracket</div><h3 style="margin:.25em 0">${title} (${n})</h3></div>${phaseCtl}</div></div></div>`;
+const secHead=(title,n)=>`<div class="pin" style="grid-column:1/-1"><div class="body"><div class="phasebar"><div><div class="kicker">Phase</div><h3 style="margin:.25em 0">${title} (${n})</h3></div>${phaseCtl}</div></div></div>`;
 const secCards=list=>list.map(m=>{const done=m.match_detail_id&&m.status==='completed';
 const gmvp=mvpById[String(m.match_detail_id)]||'';
 return `<div class="pin mpin"><div class="body"><div class="kicker">${esc(m.date||'')} · ${esc(m.status||'')}</div><div class="mteams"><div class="mt"><img src="${TICON(m.team_a)}" alt="" loading="lazy" ${IMG_HIDE}><span>${esc(m.team_a)}</span></div><div class="score">${esc(m.score_a??'–')} : ${esc(m.score_b??'–')}</div><div class="mt"><img src="${TICON(m.team_b)}" alt="" loading="lazy" ${IMG_HIDE}><span>${esc(m.team_b)}</span></div></div>${gmvp?`<div class="mmvp-grid">MVP · <b>${esc(gmvp)}</b></div>`:''}<div class="mmeta"><span class="tag">${done?('Detail #'+esc(m.match_detail_id)):esc(m.status||'upcoming')}</span></div></div><div class="actions">${done?`<button class="primary" data-m="${esc(m.match_detail_id)}">Scoreboard</button>`:`<button class="ghost" disabled>Soon</button>`}</div></div>`;}).join('');
 const regAll=ms.filter(m=>!isPO(m)),poAll=ms.filter(isPO);
 const reg=regAll.slice(0,S.mlimit),po=poAll.slice(0,S.plimit);
+out.push(viewHead('Matches',(S.phase==='po'?poAll.length:regAll.length)+' series · '+(S.phase==='po'?'playoffs':'regular season')));
 const pbtn=(k,label,n)=>`<button data-phase="${k}" aria-pressed="${S.phase===k?'true':'false'}">${label} (${n})</button>`;
 const phaseCtl=`<div class="seg" role="group" aria-label="Phase">${pbtn('reg','Regular Season',regAll.length)}${pbtn('po','Playoffs',poAll.length)}</div>`;
 const mvpById=Object.fromEntries((DATA.matches||[]).map(m=>[String(m.match_detail_id),m.liq_mvp||'']));
@@ -215,21 +256,22 @@ return `<div class="mrow"${done?' data-m="'+esc(m.match_detail_id)+'"':''}><span
 if(S.layout==='list'){
 const mfoot=(secKey,shown,total)=>shown<total?`<button class="mfoot" data-more="24" data-sec="${secKey}"><span>Show more</span><span class="mono">showing ${shown} of ${total}</span></button>`:'';
 const ptitle=S.phase==='po'?'Playoffs':'Regular Season';
-out.push(`<div class="pin"><div class="body phasebar"><div><div class="kicker">Matches</div><h3 style="margin:.25em 0">${ptitle}</h3></div>${phaseCtl}</div></div>`);
-out.push(S.phase==='po'?finalBoard():standBoard());
+out.push(`<div class="pin"><div class="body phasebar"><div><div class="kicker">Phase</div><h3 style="margin:.25em 0">${ptitle}</h3></div>${phaseCtl}</div></div>`);
+const boardHTML=S.phase==='po'?finalBoard():standBoard();
 let mh=`<div class="pin"><div class="lscroll"><div class="mhead"><span>Date</span><span>Match</span><span>Status</span><span>MVP</span><span></span></div>`;
 if(S.phase==='po'){if(poAll.length)mh+=po.map(mrow).join('')+mfoot('po',po.length,poAll.length);}
 else{if(regAll.length)mh+=reg.map(mrow).join('')+mfoot('reg',reg.length,regAll.length);}
 mh+=`</div></div>`;
-out.push(mh);
+out.push(mh);out.push(boardHTML);
 if(S.phase==='po')out.push(bracketHTML());}
 else{
 if(S.phase==='po'){out.push(secHead('Playoffs — TBD',po.length)+finalBoard()+secCards(po));
 if(poAll.length>S.plimit)out.push(`<div class="pin" style="grid-column:1/-1"><div class="body" style="text-align:center"><p>Showing ${S.plimit} of ${poAll.length} playoff matches</p><div class="actions"><button class="primary" data-more="24" data-sec="po">Show more</button></div></div></div>`);
 out.push(bracketHTML());}
-else{out.push(secHead('Regular Season',reg.length)+standBoard()+teamBoard()+secCards(reg));
+else{out.push(secHead('Regular Season',reg.length)+secCards(reg)+standBoard()+teamBoard());
 if(regAll.length>S.mlimit)out.push(`<div class="pin" style="grid-column:1/-1"><div class="body" style="text-align:center"><p>Showing ${S.mlimit} of ${regAll.length} regular-season matches</p><div class="actions"><button class="primary" data-more="24">Show more</button></div></div></div>`);}}}
 if(S.view==='stats'){
+out.push(viewHead('Stats','Series MVPs and hero meta'));
 const sbtn=(k,label)=>`<button data-stat="${k}" aria-pressed="${S.stat===k?'true':'false'}">${label}</button>`;
 out.push(`<div class="pin" style="grid-column:1/-1"><div class="body phasebar"><div><div class="kicker">Statistics</div><h3 style="margin:.25em 0">${S.stat==='heroes'?'Heroes':'Series MVP'}</h3></div><div class="seg" role="group" aria-label="Stats">${sbtn('mvp','Series MVP')}${sbtn('heroes','Heroes')}</div></div></div>`);
 if(S.stat==='heroes'){
@@ -265,6 +307,7 @@ const histBase=[...mvps].sort((a,b)=>String(a.iso_datetime||'').localeCompare(St
 const hist=S.tsort.t==='hist'?srt(histBase,m=>S.tsort.k==='match'?(m.team_a+' '+m.team_b):S.tsort.k==='mvp'?canonicalPlayer(m.liq_mvp):(m.iso_datetime||''),true):histBase;
 out.push(`<div class="pin"><div class="body"><div class="kicker">History</div><h3 style="margin:.25em 0">Series MVPs</h3><div class="lscroll"><table style="min-width:520px"><tr>${th('hist','date','Date')}${th('hist','match','Match')}${th('hist','mvp','MVP')}</tr>${hist.map(m=>{const c=canonicalPlayer(m.liq_mvp);return `<tr><td>${esc(m.iso_date||m.date||'')}</td><td>${esc(m.team_a)} ${esc(m.score_a??'')}:${esc(m.score_b??'')} ${esc(m.team_b)}</td><td>${esc(c)}${c!==m.liq_mvp?` <span style="font-family:var(--font-mono);font-size:10.5px;color:var(--muted)">(as ${esc(m.liq_mvp)})</span>`:''}</td></tr>`;}).join('')}</table></div></div></div>`);}}
 if(S.view==='prep'){
+out.push(viewHead('Prep','One opponent, one page'));
 const TM=anPart('TM'),AN=anPart('AN'),DM=anPart('DM');
 const codes=TM.teams.map(t=>t.team).sort();
 const oppCode=codes.includes(S.prepOpp)?S.prepOpp:(codes[0]||'');
@@ -311,6 +354,7 @@ out.push(`<div class="pin" style="grid-column:1/-1"><div class="body"><div class
 }
 }
 if(S.view==='analytics'){
+out.push(viewHead('Analytics','Player impact, team strength, draft'));
 const dateByMid={};(DATA.schedule||[]).forEach(m=>{dateByMid[String(m.match_detail_id)]=m.iso_date||m.date||'';});
 const dateOf=m=>dateByMid[String(m)]||'';
 const part=k=>{if(ANA[k])return ANA[k];if(k==='AN'){const twr={};(DATA.team_games||[]).forEach(r=>{const x=twr[r.team]=twr[r.team]||{n:0,w:0};x.n++;if(r.win===1)x.w++;});Object.keys(twr).forEach(t=>{twr[t]=twr[t].n?twr[t].w/twr[t].n:0;});ANA[k]=buildPlayerMetrics(DATA.players,DATA.games,DATA.team_games,window.HERO_CLASSES||{},{canon:canonicalPlayer,dateOf,teamWinRate:twr});}if(k==='TM')ANA[k]=buildTeamMetrics(DATA.team_games||[],DATA.team_season||[],DATA.games||[],{dateOf,bootstraps:100,seed:7});if(k==='DM')ANA[k]=buildDraftMetrics(DATA.picks||[],DATA.bans||[],DATA.games||[],window.HERO_CLASSES||{},{minPair:3,dateOf});return ANA[k];};
@@ -353,7 +397,7 @@ out.push(`<div class="pin" style="grid-column:1/-1"><div class="body"><div class
 out.push(`<div class="pin" style="grid-column:1/-1"><div class="body"><div class="kicker">Team draft fingerprints · HHI = pick concentration</div><div class="lscroll"><table style="min-width:1120px"><tr><th>Team</th><th>Picks</th><th>Unique</th><th>HHI</th><th>Top picks</th><th>Top bans</th><th>First ban (blue)</th><th>First ban (red)</th><th>Pocket picks</th></tr>${DM.teams.map(t=>`<tr><td><b>${esc(t.team)}</b></td><td>${t.picks}</td><td>${Object.keys(t.heroes).length}</td><td>${t.hhi.toFixed(2)}</td><td>${t.topPicks.map(p=>`${esc(p.hero)}×${p.n}`).join(', ')}</td><td>${t.topBans.map(p=>`${esc(p.hero)}×${p.n}`).join(', ')}</td><td>${t.firstBanBlue.map(p=>`${esc(p.hero)}×${p.n}`).join(', ')||'—'}</td><td>${t.firstBanRed.map(p=>`${esc(p.hero)}×${p.n}`).join(', ')||'—'}</td><td>${t.pocketPicks.length?t.pocketPicks.map(p=>`${esc(p.hero)}×${p.n}`).join(', '):'—'}</td></tr>`).join('')}</table></div><p class="an-pct" style="margin:.6em 0 0">HHI is the sum of squared pick shares; higher means a more concentrated pool. Pocket picks require n≥3 and a team share at least twice the league share.</p></div></div>`);
 }
 }
-board.innerHTML=out.join('')||'';emptyEl.hidden=out.length>0;const nCards=board.querySelectorAll('.pl').length||board.querySelectorAll('.lrow').length;countEl.textContent=S.view==='overview'?'':(S.view==='players'?nCards+(nCards===1?' player':' players'):out.length+(out.length===1?' pin':' pins'));
+board.innerHTML=out.join('')||'';animateCards(beforeCards);emptyEl.hidden=out.length>0;const nCards=board.querySelectorAll('.pl').length||board.querySelectorAll('.lrow').length;countEl.textContent=S.view==='overview'?'':(S.view==='players'?nCards+(nCards===1?' player':' players'):S.view==='matches'?(board.querySelectorAll('.mrow,.mpin').length+' matches'):out.length+(out.length===1?' pin':' pins'));
 const fnEl=document.getElementById('filterN');if(fnEl){const n=filterCount();fnEl.textContent=n;fnEl.hidden=!n;}
 board.querySelectorAll('.pin').forEach(p=>io.observe(p));
 board.querySelectorAll('[data-p]').forEach(b=>b.onclick=()=>showP(b.dataset.p));
@@ -387,7 +431,26 @@ if(S.view==='matches')hp.set('phase',S.phase);
 if(S.view==='stats')hp.set('stat',S.stat);
 if(S.view==='players'&&S.q)hp.set('q',S.q);if(S.view==='matches'&&S.team)hp.set('filterTeam',S.team);history.replaceState(null,'','#'+hp.toString());}catch(e){}
 board.querySelectorAll('[data-ts]').forEach(b=>b.onclick=()=>{const [t,k]=b.dataset.ts.split(':');const str=k==='hero'||k==='player'||k==='team'||k==='match'||k==='mvp'||k==='date';if(S.tsort.t===t&&S.tsort.k===k)S.tsort.d*=-1;else S.tsort={t,k,d:str?1:-1};render();});
-wireCharts();wireBracket();}
+function upgradeSegs(){
+document.querySelectorAll('.seg').forEach(seg=>{
+  if(!seg.querySelector('[data-stat],[data-antab]'))return;
+  const btns=[...seg.querySelectorAll('button')];
+  if(btns.length<2)return;
+  seg.setAttribute('role','tablist');
+  btns.forEach(b=>{b.setAttribute('role','tab');b.setAttribute('aria-selected',b.getAttribute('aria-pressed')==='true'?'true':'false');});
+  seg.onkeydown=e=>{
+    if(e.key!=='ArrowRight'&&e.key!=='ArrowLeft')return;
+    e.preventDefault();
+    const list=[...seg.querySelectorAll('button')];
+    let i=list.indexOf(document.activeElement);
+    if(i<0)i=0;
+    i=(i+(e.key==='ArrowRight'?1:-1)+list.length)%list.length;
+    const key=list[i].getAttribute('data-stat')||list[i].getAttribute('data-antab')||'';
+    list[i].click();
+    requestAnimationFrame(()=>{const n=document.querySelector('[data-stat="'+key+'"],[data-antab="'+key+'"]');if(n)n.focus();});
+  };
+});}
+wireCharts();wireBracket();upgradeSegs();}
 function normId(s){return String(s||'').toLowerCase().replace(/[^a-z0-9]/g,'');}
 function offOf(n){const m={};DATA.season.forEach(s=>{m[String(s.player||'').toLowerCase()]=s;});
 const GALIAS=(typeof window!=='undefined'&&window.ALIASES&&window.ALIASES.globalAlias)||{};
@@ -751,10 +814,10 @@ const poly=v=>axes.map((_,i)=>pt(i,v).map(n=>n.toFixed(1)).join(',')).join(' ');
 const clamp=v=>Math.max(0.05,Math.min(1,v));
 const val=axes.map(([,v],i)=>pt(i,clamp(v)).map(n=>n.toFixed(1)).join(',')).join(' ');
 const grid=axes.map((_,i)=>`<line x1="${CX}" y1="${CY}" x2="${pt(i,1)[0].toFixed(1)}" y2="${pt(i,1)[1].toFixed(1)}" class="rd-axis"/>`).join('');
-const lab=axes.map(([k,v],i)=>{const [x,y]=pt(i,1.42);const label=(k==='DEATH'?'DEATHS':k)+' '+Math.round(clamp(v)*100);return `<text x="${x.toFixed(1)}" y="${(y+3).toFixed(1)}" text-anchor="middle" class="rd-t">${label}</text>`;}).join('');
+const lab=axes.map(([k,v],i)=>{const [x,y]=pt(i,1.46);const label=(k==='DEATH'?'DEATHS':k)+' '+Math.round(clamp(v)*100);return `<text x="${x.toFixed(1)}" y="${(y+3).toFixed(1)}" text-anchor="middle" class="rd-t">${label}</text>`;}).join('');
 const dots=axes.map(([,v],i)=>{const [x,y]=pt(i,clamp(v));return `<circle cx="${x.toFixed(1)}" cy="${y.toFixed(1)}" r="1.7" class="rd-d"/>`;}).join('');
 const pct=v=>Math.round(clamp(v)*100);
-return `<div class="pl-radar"><svg viewBox="0 0 240 168" role="img" aria-label="Lane percentile shape — damage share ${pct(an.pct.damageShare)}, kill participation ${pct(an.pct.kp)}, gold share ${pct(an.pct.goldShare)}, tower share ${pct(an.pct.towerShare)}, KDA ${pct(an.pct.kda)}, deaths inverted ${pct(1-an.pct.deathShare)}"><polygon points="${poly(1)}" class="rd-grid"/><polygon points="${poly(0.5)}" class="rd-mid"/>${grid}<polygon points="${val}" class="rd-fill"/>${dots}${lab}</svg></div>`;}
+return `<div class="pl-radar"><svg viewBox="0 0 240 168" role="img" aria-label="Lane percentile shape — damage share ${pct(an.pct.damageShare)}, kill participation ${pct(an.pct.kp)}, gold share ${pct(an.pct.goldShare)}, tower share ${pct(an.pct.towerShare)}, KDA ${pct(an.pct.kda)}, deaths inverted ${pct(1-an.pct.deathShare)}"><g class="rd-plot"><polygon points="${poly(1)}" class="rd-grid"/><polygon points="${poly(0.5)}" class="rd-mid"/>${grid}<polygon points="${val}" class="rd-fill"/>${dots}</g>${lab}</svg></div>`;}
 function playerHTML(name){
   const rows=(DATA.players||[]).filter(r=>samePlayer(r.player,name));
   const g=agg().find(o=>samePlayer(o.player,name))||{};
@@ -1742,21 +1805,28 @@ document.getElementById('db').innerHTML=top.h;
 document.getElementById('dback').hidden=dnav.length<2;
 setMark(top.mark||null);
 wireTabs();}
-function dSet(t,s,h,mark){if(!dlg.open){dnav=[];lastFocus=document.activeElement;}
+function dSet(t,s,h,mark){if(!dlg.open){dnav=[];lastFocus=document.activeElement;document.body.style.overflow='hidden';}
 dnav.push({t:t,s:s,h:h,mark:mark||null});dShow();if(!dlg.open)dlg.showModal();}
 function dBack(){if(dnav.length>1){dnav.pop();dShow();}}
 function openD(t,s,h){dSet(t,s,h);}
 document.getElementById('dback').onclick=()=>dBack();
 document.addEventListener('keydown',e=>{if(e.key==='Escape'){const d2=document.getElementById('dlg2');if(d2&&d2.open)d2.close();else if(dlg.open)dlg.close();}});
 document.addEventListener('keydown',e=>{if(e.key!=='Tab')return;const d=[dlg,document.getElementById('dlg2')].find(x=>x&&x.open);if(!d)return;
-const f=[...d.querySelectorAll('button,input,select,[tabindex]')].filter(el=>!el.disabled&&el.offsetParent!==null);if(!f.length)return;
+const f=[...d.querySelectorAll('button,input,select,a[href],[tabindex]')].filter(el=>!el.disabled&&el.offsetParent!==null);if(!f.length)return;
 const first=f[0],last=f[f.length-1];
 if(e.shiftKey&&document.activeElement===first){e.preventDefault();last.focus();}
 else if(!e.shiftKey&&document.activeElement===last){e.preventDefault();first.focus();}});
 document.getElementById('dlg2').addEventListener('close',()=>{if(lastFocus)lastFocus.focus();});
+function palDefault(){
+  const res=[];
+  (anPart('AN').players||[]).slice(0,5).forEach(p=>res.push({t:'player',label:p.player,sub:(p.team||'')+' · '+(p.lane||'—')+' · impact '+Math.round(p.impact)}));
+  TEAMS.slice(0,3).forEach(t=>res.push({t:'team',label:t,sub:'Team'}));
+  DATA.schedule.filter(m=>m.status==='completed').slice(0,3).forEach(m=>res.push({t:'match',label:m.team_a+' vs '+m.team_b,sub:(m.iso_date||'')+' · '+(m.score_a??'-')+':'+(m.score_b??'-'),id:m.match_detail_id}));
+  return res;
+}
 function palRows(q){
   const s=String(q||'').toLowerCase().trim();
-  if(!s)return [];
+  if(!s)return palDefault();
   const seen={},res=[];
   const add=(t,label,sub,id)=>{const k=t+'|'+label;if(seen[k])return;seen[k]=1;res.push({t:t,label:label,sub:sub,id:id||''});};
   DATA.players.forEach(r=>{const c=canonicalPlayer(r.player);if(c.toLowerCase().includes(s))add('player',c,(r.team||'')+' · '+(r.lane||'—'));});
@@ -1767,13 +1837,39 @@ function palRows(q){
 }
 function palList(q){
   const rows=palRows(q);
-  return rows.map(r=>`<button type="button" class="palrow" data-pal="${r.t}" data-id="${esc(r.id)}" data-q="${esc(r.label)}"><b>${esc(r.label)}</b><span>${esc(r.sub)}</span></button>`).join('')||`<div class="an-pct" style="padding:8px 0">${q?'No matches.':'Type to search players, teams, heroes or matches.'}</div>`;
+  if(!rows.length)return `<div class="an-pct" style="padding:8px 0">No matches.</div>`;
+  return rows.map((r,i)=>`<button type="button" class="palrow${i===0?' active':''}" id="palrow-${i}" role="option" aria-selected="${i===0?'true':'false'}" data-pal="${r.t}" data-id="${esc(r.id)}" data-q="${esc(r.label)}"><b>${esc(r.label)}</b><span>${esc(r.sub)}</span></button>`).join('');
+}
+function palAct(el){
+  if(!el)return;
+  const t=el.dataset.pal,id=el.dataset.id,label=el.dataset.q;
+  dlg.close();
+  if(t==='player'){showP(label);}
+  else if(t==='team'){S.view='matches';S.team=label;render();}
+  else if(t==='hero'){stHeroDrill(label);}
+  else if(t==='match'&&id){showM(id);}
+}
+function palMove(dir){
+  const list=document.getElementById('paletteList');if(!list)return;
+  const rows=[...list.querySelectorAll('[data-pal]')];if(!rows.length)return;
+  let i=rows.findIndex(r=>r.classList.contains('active'));i=(i+dir+rows.length)%rows.length;
+  rows.forEach((r,j)=>{r.classList.toggle('active',j===i);r.setAttribute('aria-selected',j===i?'true':'false');});
+  rows[i].scrollIntoView({block:'nearest'});
+  const inp=document.getElementById('paletteQ');if(inp)inp.setAttribute('aria-activedescendant',rows[i].id);
 }
 function openPalette(){
-  openD('Search','Players · teams · heroes · matches',`<input id="paletteQ" type="search" placeholder="Search everything…" aria-label="Search everything" style="width:100%;background:var(--bg2);color:var(--ink);border:1px solid var(--line);border-radius:6px;padding:10px"><div id="paletteList" style="margin-top:10px">${palList('')}</div>`);
+  openD('Search','Players · teams · heroes · matches',`<input id="paletteQ" type="search" role="combobox" aria-expanded="true" aria-controls="paletteList" aria-autocomplete="list" placeholder="Search everything…" aria-label="Search everything" style="width:100%;background:var(--bg2);color:var(--ink);border:1px solid var(--line);border-radius:6px;padding:10px"><div id="paletteList" role="listbox" aria-label="Results" style="margin-top:10px">${palList('')}</div>`);
   const q=document.getElementById('paletteQ'),list=document.getElementById('paletteList');
-  if(q){q.focus();q.oninput=()=>{list.innerHTML=palList(q.value);};}
-  if(list)list.onclick=e=>{const b=e.target.closest('[data-pal]');if(!b)return;const t=b.dataset.pal,id=b.dataset.id,label=b.dataset.q;dlg.close();if(t==='player'){S.view='players';S.q=label.toLowerCase();render();}else if(t==='team'){S.view='matches';S.team=label;render();}else if(t==='hero'){stHeroDrill(label);}else if(t==='match'&&id){showM(id);}};
+  if(q){
+    q.focus();
+    q.oninput=()=>{list.innerHTML=palList(q.value);};
+    q.onkeydown=e=>{
+      if(e.key==='ArrowDown'){e.preventDefault();palMove(1);}
+      else if(e.key==='ArrowUp'){e.preventDefault();palMove(-1);}
+      else if(e.key==='Enter'){e.preventDefault();palAct(list.querySelector('[data-pal].active'));}
+    };
+  }
+  if(list)list.onclick=e=>{const b=e.target.closest('[data-pal]');if(b)palAct(b);};
 }
 document.addEventListener('keydown',e=>{if((e.ctrlKey||e.metaKey)&&String(e.key).toLowerCase()==='k'){e.preventDefault();openPalette();}});
 const palBtn=document.getElementById('paletteBtn');if(palBtn)palBtn.onclick=openPalette;

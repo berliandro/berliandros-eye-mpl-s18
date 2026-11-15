@@ -2,7 +2,7 @@
 
 A dark, minimalist, frosted-glass web app for exploring **MPL Indonesia Season 18**
 (regular season + playoffs): player stats, match scoreboards, standings, and series MVPs.
-Ships as a **single self-contained HTML file** (`mpl_id_s18_dark.html`) with all data
+Ships as **one HTML file plus the committed `assets/` folder** beside it (`mpl_id_s18_dark.html`); the data is embedded, artwork is referenced by relative path, and the pair
 and hero/item artwork embedded — it works offline from the snapshot and refreshes
 live from the mlbbhub API when online.
 

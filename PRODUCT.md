@@ -50,7 +50,7 @@ sample behind each one.
 - A season is nine weeks of regular-season play plus playoffs. Season 18 covers 72 completed
   series and 174 games across nine teams: 61 players with completed game rows, 93 heroes picked
   or banned, 114 item identifiers.
-- The app is opened as a self-contained HTML artifact (double-click, or served over HTTP) and
+- The app ships as one HTML file plus the committed `assets/` folder (double-click both, or serve the folder over HTTP), and
   refreshes from the mlbbhub API on demand; the committed snapshot renders instantly offline.
 - Builds run from committed SQLite/CSV through the Python tools in `tools/`. The artifact is
   generated from `tools/templates/{doc.html,style.css,app.js}` by `tools/gen_dark.py`, and
