@@ -268,7 +268,7 @@ else{
 if(S.phase==='po'){out.push(secHead('Playoffs — TBD',po.length)+finalBoard()+secCards(po));
 if(poAll.length>S.plimit)out.push(`<div class="pin" style="grid-column:1/-1"><div class="body" style="text-align:center"><p>Showing ${S.plimit} of ${poAll.length} playoff matches</p><div class="actions"><button class="primary" data-more="24" data-sec="po">Show more</button></div></div></div>`);
 out.push(bracketHTML());}
-else{out.push(secHead('Regular Season',reg.length)+secCards(reg)+standBoard()+teamBoard());
+else{out.push(secHead('Regular Season',regAll.length)+secCards(reg)+standBoard()+teamBoard());
 if(regAll.length>S.mlimit)out.push(`<div class="pin" style="grid-column:1/-1"><div class="body" style="text-align:center"><p>Showing ${S.mlimit} of ${regAll.length} regular-season matches</p><div class="actions"><button class="primary" data-more="24">Show more</button></div></div></div>`);}}}
 if(S.view==='stats'){
 out.push(viewHead('Stats','Series MVPs and hero meta'));
@@ -397,7 +397,9 @@ out.push(`<div class="pin" style="grid-column:1/-1"><div class="body"><div class
 out.push(`<div class="pin" style="grid-column:1/-1"><div class="body"><div class="kicker">Team draft fingerprints · HHI = pick concentration</div><div class="lscroll"><table style="min-width:1120px"><tr><th>Team</th><th>Picks</th><th>Unique</th><th>HHI</th><th>Top picks</th><th>Top bans</th><th>First ban (blue)</th><th>First ban (red)</th><th>Pocket picks</th></tr>${DM.teams.map(t=>`<tr><td><b>${esc(t.team)}</b></td><td>${t.picks}</td><td>${Object.keys(t.heroes).length}</td><td>${t.hhi.toFixed(2)}</td><td>${t.topPicks.map(p=>`${esc(p.hero)}×${p.n}`).join(', ')}</td><td>${t.topBans.map(p=>`${esc(p.hero)}×${p.n}`).join(', ')}</td><td>${t.firstBanBlue.map(p=>`${esc(p.hero)}×${p.n}`).join(', ')||'—'}</td><td>${t.firstBanRed.map(p=>`${esc(p.hero)}×${p.n}`).join(', ')||'—'}</td><td>${t.pocketPicks.length?t.pocketPicks.map(p=>`${esc(p.hero)}×${p.n}`).join(', '):'—'}</td></tr>`).join('')}</table></div><p class="an-pct" style="margin:.6em 0 0">HHI is the sum of squared pick shares; higher means a more concentrated pool. Pocket picks require n≥3 and a team share at least twice the league share.</p></div></div>`);
 }
 }
-board.innerHTML=out.join('')||'';animateCards(beforeCards);emptyEl.hidden=out.length>0;const nCards=board.querySelectorAll('.pl').length||board.querySelectorAll('.lrow').length;countEl.textContent=S.view==='overview'?'':(S.view==='players'?nCards+(nCards===1?' player':' players'):S.view==='matches'?(board.querySelectorAll('.mrow,.mpin').length+' matches'):out.length+(out.length===1?' pin':' pins'));
+board.innerHTML=out.join('')||'';animateCards(beforeCards);emptyEl.hidden=out.length>0;const nCards=board.querySelectorAll('.pl').length||board.querySelectorAll('.lrow').length;
+const shownRows=board.querySelectorAll('.pl,.lrow,.mrow,.mpin').length;
+const emptyish=(S.view==='players'||S.view==='matches')&&shownRows===0;emptyEl.hidden=!emptyish;if(emptyish)emptyEl.textContent=S.view==='players'?'No players match these filters.':'No matches match these filters.';countEl.textContent=viewCount();
 const fnEl=document.getElementById('filterN');if(fnEl){const n=filterCount();fnEl.textContent=n;fnEl.hidden=!n;}
 board.querySelectorAll('.pin').forEach(p=>io.observe(p));
 board.querySelectorAll('[data-p]').forEach(b=>b.onclick=()=>showP(b.dataset.p));
@@ -431,6 +433,14 @@ if(S.view==='matches')hp.set('phase',S.phase);
 if(S.view==='stats')hp.set('stat',S.stat);
 if(S.view==='players'&&S.q)hp.set('q',S.q);if(S.view==='matches'&&S.team)hp.set('filterTeam',S.team);history.replaceState(null,'','#'+hp.toString());}catch(e){}
 board.querySelectorAll('[data-ts]').forEach(b=>b.onclick=()=>{const [t,k]=b.dataset.ts.split(':');const str=k==='hero'||k==='player'||k==='team'||k==='match'||k==='mvp'||k==='date';if(S.tsort.t===t&&S.tsort.k===k)S.tsort.d*=-1;else S.tsort={t,k,d:str?1:-1};render();});
+function viewCount(){
+if(S.view==='overview')return '';
+if(S.view==='players'){const n=board.querySelectorAll('.pl,.lrow').length;return n+(n===1?' player':' players');}
+if(S.view==='matches')return board.querySelectorAll('.mrow,.mpin').length+' matches';
+if(S.view==='stats')return S.stat==='heroes'?(DATA.heroes||[]).length+' heroes':(DATA.matches||[]).filter(m=>m.liq_mvp).length+' MVP awards';
+if(S.view==='analytics')return agg().length+' players';
+if(S.view==='prep')return PREP?'1 report':'';
+return '';}
 function upgradeSegs(){
 document.querySelectorAll('.seg').forEach(seg=>{
   if(!seg.querySelector('[data-stat],[data-antab]'))return;
