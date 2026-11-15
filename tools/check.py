@@ -50,7 +50,7 @@ ok('data-phase' in html, "matches has Regular/Playoffs sub-tab")
 ok('phasebar' in html, "phase switcher folded into header bar")
 ok('data-stat' in html, "stats has Series MVP / Heroes sub-tabs")
 ok('bracketHTML' in html, "playoff bracket preview exists")
-ok('standBoard' in html, "standings board moved to matches")
+ok('tmBoardHTML' in html and 'tm-dossier' in html, "teams league board and club dossiers ship")
 ok('data-ts' in html, "statistic tables have sort controls")
 for needle in ('data-ovhero', 'data-ovemb', 'data-ovtal', 'data-ovopp', 'data-ovg', 'id="dback"', 'selGame', 'usageSummaryHTML', 'ovTalDrill'):
     ok(needle in html, f"overview drill-down contains {needle}")
@@ -319,7 +319,7 @@ for m in matches:
 ok(not bad,
    f"MVP canonical identity played in its series ({bad[:3] if bad else 'all ok'})")
 for needle in ('canonicalPlayer', 'PLAYER_ALIAS', 'playoffChance', 'TOTAL_TEAMS',
-               'UPPER_BRACKET_SLOTS', '% Playoff Chance', '% Upper Bracket',
+               'UPPER_BRACKET_SLOTS', 'tm-dossier', 'data-teamjump',
                'pin+.pin', 'brk-lines', 'lit-win', 'BRK_LOSS', 'BRK_COLS',
                'seedtip', 'data-seed', 'Quarterfinals', 'bracketGrid', 'matchCard',
                'svgOverlay', 'seedTooltip', 'BrkHover', 'activeSeedId',

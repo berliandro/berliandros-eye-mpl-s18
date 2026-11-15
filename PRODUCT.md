@@ -67,9 +67,10 @@ sample behind each one.
 ## Capabilities and Constraints
 
 Views: Overview (season front page: latest result, standings, MVP race, pending playoffs),
-Players (grid and list), Player profile (full page), Matches (list and grid, regular and playoffs,
-bracket preview), Stats (series-MVP race, hero dashboard), Analytics (players, teams, draft) and
-Prep (opponent scouting report). Cross-cutting: drill-down dialogs for hero, item, emblem,
+Teams (nine-club league board plus a season dossier per club), Players (grid and list), Player
+profile (full page), Matches (fixtures and scoreboard, list and grid, regular and playoffs, bracket
+preview), Stats (series-MVP race, hero dashboard), Analytics (player impact and draft) and Prep
+(opponent scouting report). Cross-cutting: drill-down dialogs for hero, item, emblem,
 talent, opponent and game; `Ctrl/⌘K` search; URL-permalink state; sortable columns; CSV and
 print/PDF export; versioned `localStorage` cache; live refresh that merges per match and never
 partially overwrites good records.
@@ -147,7 +148,7 @@ gameplay claims.
 
 ## Accessibility & Inclusion
 
-Current baseline: visible focus, a skip link, synchronised `aria-selected` on tabs, a focus trap
+Current baseline: visible focus, a skip link, nav landmarks with `aria-current`, a tablist/tabpanel model with roving tabindex, a focus trap
 in dialogs, a sticky first column and 34 px controls on mobile, a print stylesheet, and
 `aria-live` refresh status. The stated target goes further: contrast of at least 4.5:1, 44 px tap
 targets on touch, and full keyboard operation as a requirement rather than a nicety.

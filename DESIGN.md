@@ -89,6 +89,16 @@ components:
     textColor: "{colors.chalk}"
     rounded: "{rounded.xs}"
     padding: "9px 12px"
+  teams-board:
+    backgroundColor: "{colors.plate}"
+    textColor: "{colors.chalk}"
+    rounded: "{rounded.lg}"
+    padding: "18px"
+  club-dossier:
+    backgroundColor: "{colors.plate}"
+    textColor: "{colors.chalk}"
+    rounded: "{rounded.lg}"
+    padding: "24px 26px"
 ---
 
 # Design System: Berliandro's Eye
@@ -173,15 +183,21 @@ name.
 ## Layout
 
 A 1200px wrap on 1440, with a 220px rail (196px between 1180 and 1320) that owns navigation above
-1180. Below that the header's tabs return, in two rows of three below 640 so the current view is
-always on screen. On Players and Matches the controls collapse into a bottom sheet behind a Filters
-pill; the pill is not rendered on views with nothing to filter. A List/Grid toggle joins the header
-there, and Compact hides the radar and tightens the card to about 200px.
+1180. The rail groups **Board** (Overview, Teams, Players, Matches) and **Analysis** (Stats,
+Analytics, Prep), with mono counts on the first three. Below 1180 the header's tabs return; below 640
+they form a 4×2 grid with Prep spanning the last two cells, so the current view is always on screen.
+On Players and Matches the controls collapse into a bottom sheet behind a Filters pill; the pill is
+not rendered on views with nothing to filter. A List/Grid toggle joins the header there, and Compact
+hides the radar and tightens the card to about 200px.
 
 Every view opens with a shared head: a 22px `h1` and a one-line lead, separated from the content by a
 rule. Cards sit in an auto-fill grid at 250px minimum, four across at 1440. The player profile uses
 1.55fr / 1fr; the season page uses the same split for standings and the race, with the playoff panel
 stacked beneath.
+
+Teams opens with a nine-row league board, then nine club dossiers. The top three in competition order
+open; the other six collapse to their identity strip. The dossier uses 1.06fr / 1fr — roster and
+tendencies in the left stack, draft, map record and head-to-head in the right.
 
 Spacing runs 8 / 14 / 18 / 24. Inside a panel 18–20px; between panels 18px.
 
@@ -220,8 +236,9 @@ is the global 2px chalk ring at 2px offset.
 ### Navigation
 Rail at 220px with 10px mono section labels and a 40px row rhythm; the active row carries a raised
 surface and a 2px bar that turns the current team's crest colour on a player page. Header is sticky,
-opaque on mobile. The six tabs sit in a 3×2 grid below 640, the active one marked with a raised
-surface, chalk text and a 2px rule; the header slides away on scroll down and returns on scroll up.
+opaque on mobile. The seven tabs sit in a 4×2 grid below 640 — Prep spans the last two cells — and the
+active one is marked with a raised surface, chalk text and a 2px rule; the header slides away on
+scroll down and returns on scroll up.
 
 ### Player Card (signature)
 278px, plate gradient, 2px crest edge, corner tick. Portrait 44px, IGN 17px, team · lane 11px
@@ -234,10 +251,30 @@ dotted ring at 50%, 1px spokes, a value polygon at 13% chalk with a 1.4px stroke
 Outward is better on every axis; deaths is inverted and the legend says so. The whole card's
 `aria-label` carries the six values, so the shape is never colour- or sight-only.
 
+### Teams Board (signature)
+One plate, nine rows. The sort is the page's argument: **Rating** leads, **Standings** is the league's
+own order — playoff seeding while the bracket is live, then final placement once the grand final
+reaches four wins, with 5–6 alphabetical. A **Δ** column appears only when the two orders disagree;
+when they agree, the note says so. Columns: Pts, series, games, game win% (95% CI), rating (95% CI),
+SOS, Form5, blue/red, gold diff. Below 760 the table becomes a nine-row club index (rank, crest, code,
+name, series, rating, chevron) so a phone never scrolls a thirteen-column table sideways.
+
+### Club Dossier (signature)
+A native `<details>` per club. The summary is the identity strip: a 3px crest edge, 76px crest, team
+name at 50px, ghost code at 8% crest colour, official rank · series · games, and the model rating at
+28px. The body opens with a **frosted band** — seven cells, translucent fill and inset lip, no
+`backdrop-filter` — then two stacks. Left: roster (five lanes, portrait, GP, impact, KDA, WR) and
+tendencies (tempo, gold diff, blowout, G3, series close, five-dot form). Right: draft (picks, bans,
+first bans, pockets, HHI), map record at n≥5, and a 4×2 head-to-head. Actions: Prep vs, Matches, Copy
+link. The player profile keeps the one true glass band; nine 22px blurs would be a performance and
+world violation.
+
 ### Print
 The same markup on paper: white plates, black ink, seams at `#bbb`, chrome removed, ghosts hidden,
 charts re-stroked in grey and black, the tile grid collapsed to four columns. Cards print three across
-with the radar capped at 200px. `verify.py` plus a print-emulation check keep it honest.
+with the radar capped at 200px. The Teams sheet prints the board as a table and every dossier open:
+closed `<details>` are forced open, ghost wordmarks and actions removed. `verify.py` plus a
+print-emulation check keep it honest.
 
 ## Do's and Don'ts
 
@@ -246,6 +283,8 @@ with the radar capped at 200px. `verify.py` plus a print-emulation check keep it
 - **Do** lead each card with one figure at 22–24px and keep the rest at 12px or smaller.
 - **Do** draw the 50th percentile on any percentile chart and name the better direction.
 - **Do** sample team colour from the crest and clamp it for the ground.
+- **Do** give each entity one tab: Overview is the season, Teams the clubs, Players the people,
+  Matches the series, Stats the record, Analytics the models, Prep the plan.
 - **Do** print the same markup, not a second layout.
 
 ### Don't:

@@ -35,3 +35,32 @@ texts but clear." seed: none (pinned)
 
 FINISH: unreviewed and undocumented is unfinished; this build ends with the finish review, the
 verdict, DESIGN.md, and every shipping raster carrying its provenance
+
+## Teams direction contract
+
+Mode: Operate. Target: `mpl_id_s18_dark.html` (`#view=teams`). Audience: the fan scanning the
+league and the coach checking a club before Prep.
+
+THESIS: The league's table and the model's table are one plate; beneath it, nine club dossiers. The
+top three in competition order open, the rest collapse to their identity strip. It refuses the
+category default of a single flat team table with a logo column.
+
+OWN-WORLD: Instrument Panel plates; one 3px crest edge and an 8% crest ghost per club; a frosted
+seven-cell season band (translucent fill + inset lip, no `backdrop-filter`); mono chrome, tabular
+figures. The player profile keeps the one true glass band.
+
+STORY: In one screen the visitor knows who leads by rating and by the league's own order; one
+scroll later a club's roster, form, draft, maps and head-to-head are all present, with a direct
+door to Prep and to its matches.
+
+FIRST VIEWPORT: The view head, the nine-row league board (Rating default, Standings toggle, Δ only
+when the orders disagree), and the top of the first club's identity plate. At 390 the board becomes
+a nine-row club index and the first dossier begins below it.
+
+FORM: User-pinned composition (comparison table + nine stacked profiles) and pinned visual language
+(player profile). seed: none (pinned), quoting: "Both on one page … profiles for each team stacked
+below" and "I love this player profile look so much. The glass UI at the bottom, the big bold player
+image, the minimal texts but clear."
+
+FINISH: unreviewed and undocumented is unfinished; this build ends with the finish review, the
+verdict, DESIGN.md, and every shipping raster carrying its provenance
