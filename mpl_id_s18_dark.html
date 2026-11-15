@@ -324,7 +324,7 @@ body.pview main{padding-top:22px}
 .pp-band tbody td{font-family:var(--font-display);font-size:16px;font-weight:700;letter-spacing:-.015em;color:var(--ink)}
 .pp-band tbody tr:nth-child(2) td{color:#c9c5bc}
 .pp-band td.na{color:#6d6a62;font-weight:500;text-align:left}
-@media(max-width:760px){.pp-band{position:relative}.pp-band::after{content:"";position:absolute;right:0;top:0;bottom:0;width:44px;background:linear-gradient(90deg,rgba(14,14,13,0),rgba(14,14,13,.9));pointer-events:none}
+@media(max-width:760px){.pp-band{position:relative}.pp-band .sc{scrollbar-width:none}.pp-band .sc::-webkit-scrollbar{display:none}.pp-band::after{content:"";position:absolute;right:0;top:0;bottom:0;width:44px;background:linear-gradient(90deg,rgba(14,14,13,0),rgba(14,14,13,.9));pointer-events:none}
 .pp-block .sc{-webkit-mask-image:linear-gradient(90deg,#000 calc(100% - 24px),transparent);mask-image:linear-gradient(90deg,#000 calc(100% - 24px),transparent)}}
 .pp-band .sid{font-family:var(--font-mono);font-size:12px;font-weight:400;color:var(--muted);letter-spacing:0}
 .pp-grid{display:grid;grid-template-columns:1.55fr 1fr;gap:18px;align-items:start}
@@ -363,20 +363,20 @@ body.pview main{padding-top:22px}
   .pp .pp-block th:nth-child(6),.pp .pp-block td:nth-child(6),
   .pp .pp-block th:nth-child(7),.pp .pp-block td:nth-child(7),
   .pp .pp-block th:nth-child(8),.pp .pp-block td:nth-child(8){display:none}
-  .pp-art{height:320px;max-width:64%;opacity:1}
+  .pp-art{height:320px;max-width:64%;opacity:1;top:34px;bottom:auto}
   .pp-hero{min-height:460px}
   .pp-g{grid-template-columns:44px 1fr auto}
   .pp-g .h{display:none}
-  .pp-band table{min-width:0}
-  .pp-band th:nth-child(n+6),.pp-band td:nth-child(n+6){display:none}
-  .pp-band th:nth-child(3),.pp-band td:nth-child(3){display:none}
-  .pp-band::after{display:none}
+  .pp-band table{min-width:600px}
   .pp-band th,.pp-band td{padding:9px 6px}
   .pp-band th:first-child,.pp-band td:first-child{padding-left:14px}
   .pp-band .sid{font-size:11px}
 }
 @media(max-width:980px){
-  .pp-id::before{content:"";position:absolute;left:0;right:0;top:-40px;bottom:0;background:linear-gradient(180deg,rgba(15,15,14,0),rgba(15,15,14,.84) 52%);z-index:-1;pointer-events:none}
+  .pp-id::before{content:"";position:absolute;left:0;right:0;top:-40px;bottom:0;background:linear-gradient(90deg,rgba(15,15,14,.88) 0%,rgba(15,15,14,.7) 30%,rgba(15,15,14,0) 62%),linear-gradient(180deg,rgba(15,15,14,0) 40%,rgba(15,15,14,.45) 100%);-webkit-mask-image:linear-gradient(180deg,rgba(0,0,0,0),#000 34%);mask-image:linear-gradient(180deg,rgba(0,0,0,0),#000 34%);z-index:-1;pointer-events:none}
+}
+@media(max-width:620px){
+  .pp-id::before{top:0;background:linear-gradient(180deg,rgba(15,15,14,0),rgba(15,15,14,.62) 44%)}
 }
 
 /* ============ season overview ============ */
@@ -1891,7 +1891,7 @@ function tmBoardHTML(comp,TM,rrank){
       <div class="seg" role="group" aria-label="Team order"><button data-tmode="rating" aria-pressed="${mode==='rating'?'true':'false'}">Rating</button><button data-tmode="standings" aria-pressed="${mode==='standings'?'true':'false'}">Standings</button></div></div>
     <div class="lscroll tm-scroll"><table class="tm-table" aria-label="Teams league board"><thead><tr><th>#</th><th>Team</th><th>Pts</th><th>Series W–L</th><th>Games W–L</th><th>Game win% (95% CI)</th><th>Rating (95% CI)</th><th>SOS</th><th>Form5</th><th>Blue / Red</th><th>Gold diff</th>${mode==='rating'&&anyDelta?'<th title="Competition rank minus rating rank; + means the model ranks them higher">Δ</th>':''}</tr></thead><tbody>${rows}</tbody></table></div>
     <div class="tm-index">${idx}</div>
-    <p class="tm-note">${comp.done?'Final placement: bracket 1–4, 5–6 alphabetical, 7–9 regular season.':'Standings = playoff seeding while the bracket is live; the three non-qualified clubs follow the regular season. The bracket is decided at '+comp.target+' wins.'} Rating = 1500 + 400·log10(Bradley-Terry strength), 1–1 prior, 100 bootstrap resamples; SOS is the mean fitted opponent rating.${mode==='rating'&&!anyDelta?' The model’s order currently matches the league’s: no club moves.':''}</p>
+    <p class="tm-note">${comp.done?'Final placement: bracket 1–4, 5–6 alphabetical, 7–9 regular season.':'Standings = playoff seeding while the bracket is live; the three non-qualified clubs follow the regular season. The bracket is decided at '+comp.target+' wins.'} Rating = 1500 + 400·log10(Bradley-Terry strength), 1–1 prior, 100 bootstrap resamples; SOS is the mean fitted opponent rating. Blue / red is game W-L by side.${mode==='rating'&&!anyDelta?' The model’s order currently matches the league’s: no club moves.':''}</p>
   </div></div>`;
 }
 function teamsViewHTML(){
@@ -1905,7 +1905,7 @@ function teamsViewHTML(){
     const t=TM.teams.find(x=>x.team===code);if(!t)return '';
     return tmDossierHTML(code,i+1,t,(DM.teams||[]).find(x=>x.team===code),AN,TM,rrank,open.has(code),comp);
   }).join('');
-  return viewHead('Teams','Nine clubs, one season — the model’s table and the league’s')
+  return viewHead('Teams','Nine clubs, one season — the model’s table and the league’s own order')
     +tmBoardHTML(comp,TM,rrank)
     +`<div class="tm-dossiers">${dossiers}</div>`;
 }

@@ -1048,7 +1048,7 @@ function tmBoardHTML(comp,TM,rrank){
       <div class="seg" role="group" aria-label="Team order"><button data-tmode="rating" aria-pressed="${mode==='rating'?'true':'false'}">Rating</button><button data-tmode="standings" aria-pressed="${mode==='standings'?'true':'false'}">Standings</button></div></div>
     <div class="lscroll tm-scroll"><table class="tm-table" aria-label="Teams league board"><thead><tr><th>#</th><th>Team</th><th>Pts</th><th>Series W–L</th><th>Games W–L</th><th>Game win% (95% CI)</th><th>Rating (95% CI)</th><th>SOS</th><th>Form5</th><th>Blue / Red</th><th>Gold diff</th>${mode==='rating'&&anyDelta?'<th title="Competition rank minus rating rank; + means the model ranks them higher">Δ</th>':''}</tr></thead><tbody>${rows}</tbody></table></div>
     <div class="tm-index">${idx}</div>
-    <p class="tm-note">${comp.done?'Final placement: bracket 1–4, 5–6 alphabetical, 7–9 regular season.':'Standings = playoff seeding while the bracket is live; the three non-qualified clubs follow the regular season. The bracket is decided at '+comp.target+' wins.'} Rating = 1500 + 400·log10(Bradley-Terry strength), 1–1 prior, 100 bootstrap resamples; SOS is the mean fitted opponent rating.${mode==='rating'&&!anyDelta?' The model’s order currently matches the league’s: no club moves.':''}</p>
+    <p class="tm-note">${comp.done?'Final placement: bracket 1–4, 5–6 alphabetical, 7–9 regular season.':'Standings = playoff seeding while the bracket is live; the three non-qualified clubs follow the regular season. The bracket is decided at '+comp.target+' wins.'} Rating = 1500 + 400·log10(Bradley-Terry strength), 1–1 prior, 100 bootstrap resamples; SOS is the mean fitted opponent rating. Blue / red is game W-L by side.${mode==='rating'&&!anyDelta?' The model’s order currently matches the league’s: no club moves.':''}</p>
   </div></div>`;
 }
 function teamsViewHTML(){
@@ -1062,7 +1062,7 @@ function teamsViewHTML(){
     const t=TM.teams.find(x=>x.team===code);if(!t)return '';
     return tmDossierHTML(code,i+1,t,(DM.teams||[]).find(x=>x.team===code),AN,TM,rrank,open.has(code),comp);
   }).join('');
-  return viewHead('Teams','Nine clubs, one season — the model’s table and the league’s')
+  return viewHead('Teams','Nine clubs, one season — the model’s table and the league’s own order')
     +tmBoardHTML(comp,TM,rrank)
     +`<div class="tm-dossiers">${dossiers}</div>`;
 }
