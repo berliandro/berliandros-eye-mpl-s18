@@ -22,7 +22,13 @@ from dataclasses import dataclass
 from pathlib import Path
 from typing import Any
 
-import jsonschema
+try:
+    import jsonschema
+except ModuleNotFoundError as exc:  # dependency guard: fail clearly, never skip silently
+    raise SystemExit(
+        "validate_transcript_ledger: jsonschema is required for schema validation "
+        "(pip install jsonschema)."
+    ) from exc
 
 REPO = Path(__file__).resolve().parent.parent
 DEFAULT_SCHEMA = REPO / "analysis" / "evidence" / "transcript-observation-schema.json"
