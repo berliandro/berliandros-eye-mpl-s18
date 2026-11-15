@@ -12,10 +12,11 @@
 - Transcript store: **27 segment ledgers / 368 observation records** (313 accepted, 50 rejected, 5 resolved), canonical.
 - Legacy pilot store: **234 frozen records** (85 observations, 73 insights, 68 audits, 8 segments); see `reports/evidence-store.md`.
 - Match evidence: **72/72** reports carry a database block; **27** have transcript coverage (24 complete, 3 partial), **45** are DB-only.
-- Synthesis: **9/9** team profiles, **21** hero pages, **6/6** strategy pages, plus the season hero and league meta reports.
+- Synthesis: **9/9** team profiles, **94** hero pages, **6/6** strategy pages, plus the season hero and league meta reports.
 - Coaching: **9** team briefs and **1** head-coach brief in `coaching/`.
 - Visual review: **0 boundaries visually verified**; 966 frame reviews and 62 boundary reviews (41 context-only, 20 rejected, 1 inconclusive, 10 waived).
-- Semantic coverage: **27/72 transcript-backed**; the coaching product is complete at the database + transcript evidence level, with objective and visual limits documented.
+- Semantic coverage: **27/72 broadcast-source transcript-backed**; game transcripts are now available for **42 of the 45 DB-only matches** (extraction pending).
+- Game transcript availability: **100/107 games fetched** (42/45 matches full, 1 partial, 2 IP-blocked); source availability only, not accepted observations. Manifest: [`evidence/game-transcript-manifest.json`](evidence/game-transcript-manifest.json).
 
 ## Transcript knowledge pipeline
 

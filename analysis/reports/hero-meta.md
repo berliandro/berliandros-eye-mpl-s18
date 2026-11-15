@@ -55,4 +55,4 @@
 - Descriptive only; no causal identification.
 - No patch/version partition, so cross-month comparisons are not patch comparisons.
 - Small per-team samples; a 7–0 split is not a rule.
-- Hero pages exist for 21 heroes; the other picked heroes are covered by this report and the database queries only.
+- Hero pages now exist for all 94 pool heroes (including Lilia, transcript-only); this report remains the cross-hero view.

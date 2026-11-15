@@ -42,7 +42,7 @@ class GoalArtifactsTest(unittest.TestCase):
 
     def test_hero_profiles_and_strategy_analyses(self):
         hero_pages = sorted(HEROES.glob("*.md"))
-        self.assertEqual(len(hero_pages), 21)
+        self.assertEqual(len(hero_pages), 94)
         for page in hero_pages:
             self.assertIn("## Evidence-backed profile", page.read_text(encoding="utf-8"), page.name)
         strategy_pages = sorted(STRATEGY.glob("*.md"))
@@ -70,7 +70,7 @@ class GoalArtifactsTest(unittest.TestCase):
         self.assertEqual(summary["db_only_matches"], 45)
         self.assertEqual(summary["visual_verified"], 0)
         self.assertEqual(summary["teams_with_synthesis"], 9)
-        self.assertEqual(summary["heroes_with_synthesis"], 21)
+        self.assertEqual(summary["heroes_with_synthesis"], 94)
         self.assertEqual(summary["strategy_with_synthesis"], 6)
         self.assertEqual(summary["team_briefs"], 9)
         self.assertTrue(summary["head_coach_brief"])

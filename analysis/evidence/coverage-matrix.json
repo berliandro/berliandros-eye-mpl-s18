@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "generated_at": "2026-11-14T15:44:09+00:00",
+  "generated_at": "2026-11-15T02:04:57+00:00",
   "description": "Canonical coverage matrix for MPL ID S18. Joins the database snapshot, transcript plan and ledgers, visual status, and page inventory.",
   "snapshot_id": "mpl-s18-db-20c5ea2c51f3",
   "snapshot_sha256": "20c5ea2c51f30d1a24cd2ce6927f0d182b47f951ebd8209f1aaef429941cf2ef",
@@ -33,14 +33,20 @@
     "players_in_transcript": 33,
     "teams": 9,
     "teams_with_synthesis": 9,
-    "hero_pages": 21,
+    "hero_pages": 94,
     "database_heroes": 133,
     "heroes_picked": 91,
-    "heroes_with_synthesis": 21,
+    "heroes_with_synthesis": 94,
     "strategy_pages": 6,
     "strategy_with_synthesis": 6,
     "team_briefs": 9,
     "head_coach_brief": true,
+    "game_transcript_games_total": 107,
+    "game_transcript_games_ok": 100,
+    "game_transcript_matches_total": 45,
+    "game_transcript_matches_full": 42,
+    "game_transcript_matches_partial": 1,
+    "game_transcript_matches_none": 2,
     "transcript_rows": 368,
     "transcript_accepted": 313,
     "transcript_rejected": 50,
@@ -1582,6 +1588,46 @@
   ],
   "heroes": [
     {
+      "hero": "alice",
+      "page": "analysis/heroes/alice.md",
+      "picks": 35,
+      "bans": 19,
+      "win_rate": "54%",
+      "synthesis": true
+    },
+    {
+      "hero": "alpha",
+      "page": "analysis/heroes/alpha.md",
+      "picks": 16,
+      "bans": 5,
+      "win_rate": "56%",
+      "synthesis": true
+    },
+    {
+      "hero": "angela",
+      "page": "analysis/heroes/angela.md",
+      "picks": 3,
+      "bans": 3,
+      "win_rate": "0%",
+      "synthesis": true
+    },
+    {
+      "hero": "argus",
+      "page": "analysis/heroes/argus.md",
+      "picks": 2,
+      "bans": 0,
+      "win_rate": "0%",
+      "synthesis": true
+    },
+    {
+      "hero": "arlott",
+      "page": "analysis/heroes/arlott.md",
+      "picks": 11,
+      "bans": 25,
+      "win_rate": "45%",
+      "synthesis": true
+    },
+    {
       "hero": "atlas",
       "page": "analysis/heroes/atlas.md",
       "picks": 43,
@@ -1598,11 +1644,27 @@
       "synthesis": true
     },
     {
+      "hero": "badang",
+      "page": "analysis/heroes/badang.md",
+      "picks": 17,
+      "bans": 7,
+      "win_rate": "53%",
+      "synthesis": true
+    },
+    {
       "hero": "barats",
       "page": "analysis/heroes/barats.md",
       "picks": 39,
       "bans": 43,
       "win_rate": "46%",
+      "synthesis": true
+    },
+    {
+      "hero": "baxia",
+      "page": "analysis/heroes/baxia.md",
+      "picks": 0,
+      "bans": 1,
+      "win_rate": "0%",
       "synthesis": true
     },
     {
@@ -1614,11 +1676,107 @@
       "synthesis": true
     },
     {
+      "hero": "brody",
+      "page": "analysis/heroes/brody.md",
+      "picks": 28,
+      "bans": 13,
+      "win_rate": "29%",
+      "synthesis": true
+    },
+    {
+      "hero": "bruno",
+      "page": "analysis/heroes/bruno.md",
+      "picks": 3,
+      "bans": 1,
+      "win_rate": "67%",
+      "synthesis": true
+    },
+    {
+      "hero": "carmilla",
+      "page": "analysis/heroes/carmilla.md",
+      "picks": 39,
+      "bans": 64,
+      "win_rate": "56%",
+      "synthesis": true
+    },
+    {
+      "hero": "cecilion",
+      "page": "analysis/heroes/cecilion.md",
+      "picks": 15,
+      "bans": 7,
+      "win_rate": "67%",
+      "synthesis": true
+    },
+    {
+      "hero": "chip",
+      "page": "analysis/heroes/chip.md",
+      "picks": 7,
+      "bans": 22,
+      "win_rate": "14%",
+      "synthesis": true
+    },
+    {
+      "hero": "chou",
+      "page": "analysis/heroes/chou.md",
+      "picks": 14,
+      "bans": 7,
+      "win_rate": "29%",
+      "synthesis": true
+    },
+    {
+      "hero": "cici",
+      "page": "analysis/heroes/cici.md",
+      "picks": 40,
+      "bans": 17,
+      "win_rate": "53%",
+      "synthesis": true
+    },
+    {
+      "hero": "claude",
+      "page": "analysis/heroes/claude.md",
+      "picks": 60,
+      "bans": 10,
+      "win_rate": "52%",
+      "synthesis": true
+    },
+    {
+      "hero": "clint",
+      "page": "analysis/heroes/clint.md",
+      "picks": 7,
+      "bans": 0,
+      "win_rate": "43%",
+      "synthesis": true
+    },
+    {
       "hero": "dyrroth",
       "page": "analysis/heroes/dyrroth.md",
       "picks": 9,
       "bans": 3,
       "win_rate": "56%",
+      "synthesis": true
+    },
+    {
+      "hero": "edith",
+      "page": "analysis/heroes/edith.md",
+      "picks": 1,
+      "bans": 0,
+      "win_rate": "0%",
+      "synthesis": true
+    },
+    {
+      "hero": "esmeralda",
+      "page": "analysis/heroes/esmeralda.md",
+      "picks": 30,
+      "bans": 55,
+      "win_rate": "43%",
+      "synthesis": true
+    },
+    {
+      "hero": "estes",
+      "page": "analysis/heroes/estes.md",
+      "picks": 2,
+      "bans": 1,
+      "win_rate": "50%",
       "synthesis": true
     },
     {
@@ -1630,11 +1788,107 @@
       "synthesis": true
     },
     {
+      "hero": "fanny",
+      "page": "analysis/heroes/fanny.md",
+      "picks": 21,
+      "bans": 105,
+      "win_rate": "52%",
+      "synthesis": true
+    },
+    {
+      "hero": "faramis",
+      "page": "analysis/heroes/faramis.md",
+      "picks": 2,
+      "bans": 0,
+      "win_rate": "50%",
+      "synthesis": true
+    },
+    {
+      "hero": "fredrinn",
+      "page": "analysis/heroes/fredrinn.md",
+      "picks": 3,
+      "bans": 2,
+      "win_rate": "33%",
+      "synthesis": true
+    },
+    {
       "hero": "freya",
       "page": "analysis/heroes/freya.md",
       "picks": 42,
       "bans": 129,
       "win_rate": "52%",
+      "synthesis": true
+    },
+    {
+      "hero": "gatotkaca",
+      "page": "analysis/heroes/gatotkaca.md",
+      "picks": 27,
+      "bans": 11,
+      "win_rate": "59%",
+      "synthesis": true
+    },
+    {
+      "hero": "gloo",
+      "page": "analysis/heroes/gloo.md",
+      "picks": 37,
+      "bans": 41,
+      "win_rate": "57%",
+      "synthesis": true
+    },
+    {
+      "hero": "gord",
+      "page": "analysis/heroes/gord.md",
+      "picks": 0,
+      "bans": 1,
+      "win_rate": "0%",
+      "synthesis": true
+    },
+    {
+      "hero": "granger",
+      "page": "analysis/heroes/granger.md",
+      "picks": 1,
+      "bans": 0,
+      "win_rate": "0%",
+      "synthesis": true
+    },
+    {
+      "hero": "guinevere",
+      "page": "analysis/heroes/guinevere.md",
+      "picks": 3,
+      "bans": 6,
+      "win_rate": "67%",
+      "synthesis": true
+    },
+    {
+      "hero": "hanabi",
+      "page": "analysis/heroes/hanabi.md",
+      "picks": 4,
+      "bans": 3,
+      "win_rate": "50%",
+      "synthesis": true
+    },
+    {
+      "hero": "hanzo",
+      "page": "analysis/heroes/hanzo.md",
+      "picks": 4,
+      "bans": 3,
+      "win_rate": "50%",
+      "synthesis": true
+    },
+    {
+      "hero": "harith",
+      "page": "analysis/heroes/harith.md",
+      "picks": 2,
+      "bans": 0,
+      "win_rate": "0%",
+      "synthesis": true
+    },
+    {
+      "hero": "harley",
+      "page": "analysis/heroes/harley.md",
+      "picks": 18,
+      "bans": 12,
+      "win_rate": "33%",
       "synthesis": true
     },
     {
@@ -1654,11 +1908,123 @@
       "synthesis": true
     },
     {
+      "hero": "hirara",
+      "page": "analysis/heroes/hirara.md",
+      "picks": 84,
+      "bans": 80,
+      "win_rate": "54%",
+      "synthesis": true
+    },
+    {
+      "hero": "hylos",
+      "page": "analysis/heroes/hylos.md",
+      "picks": 20,
+      "bans": 3,
+      "win_rate": "45%",
+      "synthesis": true
+    },
+    {
+      "hero": "ixia",
+      "page": "analysis/heroes/ixia.md",
+      "picks": 1,
+      "bans": 0,
+      "win_rate": "100%",
+      "synthesis": true
+    },
+    {
+      "hero": "joy",
+      "page": "analysis/heroes/joy.md",
+      "picks": 2,
+      "bans": 0,
+      "win_rate": "0%",
+      "synthesis": true
+    },
+    {
+      "hero": "kadita",
+      "page": "analysis/heroes/kadita.md",
+      "picks": 2,
+      "bans": 0,
+      "win_rate": "0%",
+      "synthesis": true
+    },
+    {
+      "hero": "kagura",
+      "page": "analysis/heroes/kagura.md",
+      "picks": 1,
+      "bans": 0,
+      "win_rate": "100%",
+      "synthesis": true
+    },
+    {
+      "hero": "kaja",
+      "page": "analysis/heroes/kaja.md",
+      "picks": 3,
+      "bans": 10,
+      "win_rate": "33%",
+      "synthesis": true
+    },
+    {
+      "hero": "kalea",
+      "page": "analysis/heroes/kalea.md",
+      "picks": 13,
+      "bans": 7,
+      "win_rate": "54%",
+      "synthesis": true
+    },
+    {
+      "hero": "karrie",
+      "page": "analysis/heroes/karrie.md",
+      "picks": 2,
+      "bans": 0,
+      "win_rate": "0%",
+      "synthesis": true
+    },
+    {
+      "hero": "khaleed",
+      "page": "analysis/heroes/khaleed.md",
+      "picks": 2,
+      "bans": 0,
+      "win_rate": "50%",
+      "synthesis": true
+    },
+    {
+      "hero": "khufra",
+      "page": "analysis/heroes/khufra.md",
+      "picks": 2,
+      "bans": 0,
+      "win_rate": "0%",
+      "synthesis": true
+    },
+    {
       "hero": "kimmy",
       "page": "analysis/heroes/kimmy.md",
       "picks": 33,
       "bans": 11,
       "win_rate": "55%",
+      "synthesis": true
+    },
+    {
+      "hero": "lapu-lapu",
+      "page": "analysis/heroes/lapu-lapu.md",
+      "picks": 1,
+      "bans": 0,
+      "win_rate": "100%",
+      "synthesis": true
+    },
+    {
+      "hero": "leomord",
+      "page": "analysis/heroes/leomord.md",
+      "picks": 4,
+      "bans": 1,
+      "win_rate": "50%",
+      "synthesis": true
+    },
+    {
+      "hero": "lesley",
+      "page": "analysis/heroes/lesley.md",
+      "picks": 1,
+      "bans": 0,
+      "win_rate": "0%",
       "synthesis": true
     },
     {
@@ -1670,6 +2036,46 @@
       "synthesis": true
     },
     {
+      "hero": "ling",
+      "page": "analysis/heroes/ling.md",
+      "picks": 1,
+      "bans": 1,
+      "win_rate": "0%",
+      "synthesis": true
+    },
+    {
+      "hero": "lukas",
+      "page": "analysis/heroes/lukas.md",
+      "picks": 19,
+      "bans": 28,
+      "win_rate": "58%",
+      "synthesis": true
+    },
+    {
+      "hero": "lunox",
+      "page": "analysis/heroes/lunox.md",
+      "picks": 5,
+      "bans": 2,
+      "win_rate": "20%",
+      "synthesis": true
+    },
+    {
+      "hero": "luo-yi",
+      "page": "analysis/heroes/luo-yi.md",
+      "picks": null,
+      "bans": null,
+      "win_rate": null,
+      "synthesis": true
+    },
+    {
+      "hero": "lylia",
+      "page": "analysis/heroes/lylia.md",
+      "picks": 27,
+      "bans": 27,
+      "win_rate": "48%",
+      "synthesis": true
+    },
+    {
       "hero": "marcel",
       "page": "analysis/heroes/marcel.md",
       "picks": 29,
@@ -1678,11 +2084,51 @@
       "synthesis": true
     },
     {
+      "hero": "masha",
+      "page": "analysis/heroes/masha.md",
+      "picks": 13,
+      "bans": 61,
+      "win_rate": "31%",
+      "synthesis": true
+    },
+    {
+      "hero": "mathilda",
+      "page": "analysis/heroes/mathilda.md",
+      "picks": 22,
+      "bans": 51,
+      "win_rate": "50%",
+      "synthesis": true
+    },
+    {
       "hero": "melissa",
       "page": "analysis/heroes/melissa.md",
       "picks": 34,
       "bans": 53,
       "win_rate": "53%",
+      "synthesis": true
+    },
+    {
+      "hero": "minotaur",
+      "page": "analysis/heroes/minotaur.md",
+      "picks": 43,
+      "bans": 29,
+      "win_rate": "42%",
+      "synthesis": true
+    },
+    {
+      "hero": "minsitthar",
+      "page": "analysis/heroes/minsitthar.md",
+      "picks": 1,
+      "bans": 0,
+      "win_rate": "0%",
+      "synthesis": true
+    },
+    {
+      "hero": "miya",
+      "page": "analysis/heroes/miya.md",
+      "picks": 27,
+      "bans": 18,
+      "win_rate": "63%",
       "synthesis": true
     },
     {
@@ -1702,11 +2148,51 @@
       "synthesis": true
     },
     {
+      "hero": "novaria",
+      "page": "analysis/heroes/novaria.md",
+      "picks": 20,
+      "bans": 38,
+      "win_rate": "50%",
+      "synthesis": true
+    },
+    {
+      "hero": "obsidia",
+      "page": "analysis/heroes/obsidia.md",
+      "picks": 43,
+      "bans": 28,
+      "win_rate": "63%",
+      "synthesis": true
+    },
+    {
+      "hero": "odette",
+      "page": "analysis/heroes/odette.md",
+      "picks": 2,
+      "bans": 0,
+      "win_rate": "0%",
+      "synthesis": true
+    },
+    {
       "hero": "paquito",
       "page": "analysis/heroes/paquito.md",
       "picks": 87,
       "bans": 58,
       "win_rate": "45%",
+      "synthesis": true
+    },
+    {
+      "hero": "pharsa",
+      "page": "analysis/heroes/pharsa.md",
+      "picks": 6,
+      "bans": 0,
+      "win_rate": "33%",
+      "synthesis": true
+    },
+    {
+      "hero": "phoveus",
+      "page": "analysis/heroes/phoveus.md",
+      "picks": 15,
+      "bans": 20,
+      "win_rate": "53%",
       "synthesis": true
     },
     {
@@ -1718,11 +2204,51 @@
       "synthesis": true
     },
     {
+      "hero": "ruby",
+      "page": "analysis/heroes/ruby.md",
+      "picks": 14,
+      "bans": 8,
+      "win_rate": "50%",
+      "synthesis": true
+    },
+    {
+      "hero": "saber",
+      "page": "analysis/heroes/saber.md",
+      "picks": 6,
+      "bans": 4,
+      "win_rate": "67%",
+      "synthesis": true
+    },
+    {
       "hero": "selena",
       "page": "analysis/heroes/selena.md",
       "picks": 46,
       "bans": 48,
       "win_rate": "41%",
+      "synthesis": true
+    },
+    {
+      "hero": "sora",
+      "page": "analysis/heroes/sora.md",
+      "picks": 17,
+      "bans": 7,
+      "win_rate": "41%",
+      "synthesis": true
+    },
+    {
+      "hero": "suyou",
+      "page": "analysis/heroes/suyou.md",
+      "picks": 15,
+      "bans": 1,
+      "win_rate": "33%",
+      "synthesis": true
+    },
+    {
+      "hero": "terizla",
+      "page": "analysis/heroes/terizla.md",
+      "picks": 6,
+      "bans": 0,
+      "win_rate": "50%",
       "synthesis": true
     },
     {
@@ -1739,6 +2265,70 @@
       "picks": 49,
       "bans": 53,
       "win_rate": "47%",
+      "synthesis": true
+    },
+    {
+      "hero": "valentina",
+      "page": "analysis/heroes/valentina.md",
+      "picks": 42,
+      "bans": 24,
+      "win_rate": "36%",
+      "synthesis": true
+    },
+    {
+      "hero": "valir",
+      "page": "analysis/heroes/valir.md",
+      "picks": 3,
+      "bans": 0,
+      "win_rate": "67%",
+      "synthesis": true
+    },
+    {
+      "hero": "vexana",
+      "page": "analysis/heroes/vexana.md",
+      "picks": 2,
+      "bans": 5,
+      "win_rate": "50%",
+      "synthesis": true
+    },
+    {
+      "hero": "wanwan",
+      "page": "analysis/heroes/wanwan.md",
+      "picks": 2,
+      "bans": 1,
+      "win_rate": "50%",
+      "synthesis": true
+    },
+    {
+      "hero": "yi-sun-shin",
+      "page": "analysis/heroes/yi-sun-shin.md",
+      "picks": null,
+      "bans": null,
+      "win_rate": null,
+      "synthesis": true
+    },
+    {
+      "hero": "yu-zhong",
+      "page": "analysis/heroes/yu-zhong.md",
+      "picks": null,
+      "bans": null,
+      "win_rate": null,
+      "synthesis": true
+    },
+    {
+      "hero": "yve",
+      "page": "analysis/heroes/yve.md",
+      "picks": 6,
+      "bans": 0,
+      "win_rate": "67%",
+      "synthesis": true
+    },
+    {
+      "hero": "zetian",
+      "page": "analysis/heroes/zetian.md",
+      "picks": 18,
+      "bans": 14,
+      "win_rate": "72%",
       "synthesis": true
     },
     {

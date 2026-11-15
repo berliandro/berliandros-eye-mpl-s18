@@ -21,9 +21,10 @@ This report is the single source of truth for coverage. Older coverage summaries
 | Accepted transcript observations | 313 |
 | Players: dossiers / database / transcript mentions | 66 / 66 / 33 |
 | Teams: pages / with synthesis | 9 / 9 |
-| Heroes: pages / picked / with synthesis | 21 / 91 / 21 |
+| Heroes: pages / picked / with synthesis | 94 / 91 / 94 |
 | Strategy pages: total / with synthesis | 6 / 6 |
 | Team briefs / head-coach brief | 9 / yes |
+| Game transcripts available (not observations) | 100/107 games; 42/45 matches full |
 
 ## Definitions
 
@@ -32,6 +33,8 @@ This report is the single source of truth for coverage. Older coverage summaries
 - **Transcript:** a validated source ledger exists and the report carries accepted observations; `partial` means the source window is not full gameplay.
 
 **Pilot store note:** 1036, 1037 and 1107 also have claim-level records in the frozen pilot ledger (`analysis/evidence/pilot-ledger.jsonl`). 1037 has **no transcript source**; its pilot observations are the only semantic evidence for that series. See `analysis/reports/evidence-store.md`.
+
+**Game transcript note:** the 100 fetched game transcripts are source availability, not accepted observations. The 27-source observation ledger is unchanged. See `analysis/evidence/game-transcript-manifest.json`.
 
 ## Per-series coverage
 
@@ -128,26 +131,99 @@ This report is the single source of truth for coverage. Older coverage summaries
 
 | Hero | Picks | Bans | Win rate | Synthesis |
 |---|---:|---:|---:|---|
+| alice | 35 | 19 | 54% | yes |
+| alpha | 16 | 5 | 56% | yes |
+| angela | 3 | 3 | 0% | yes |
+| argus | 2 | 0 | 0% | yes |
+| arlott | 11 | 25 | 45% | yes |
 | atlas | 43 | 120 | 56% | yes |
 | aulus | 51 | 19 | 57% | yes |
+| badang | 17 | 7 | 53% | yes |
 | barats | 39 | 43 | 46% | yes |
+| baxia | 0 | 1 | 0% | yes |
 | belerick | 68 | 20 | 50% | yes |
+| brody | 28 | 13 | 29% | yes |
+| bruno | 3 | 1 | 67% | yes |
+| carmilla | 39 | 64 | 56% | yes |
+| cecilion | 15 | 7 | 67% | yes |
+| chip | 7 | 22 | 14% | yes |
+| chou | 14 | 7 | 29% | yes |
+| cici | 40 | 17 | 53% | yes |
+| claude | 60 | 10 | 52% | yes |
+| clint | 7 | 0 | 43% | yes |
 | dyrroth | 9 | 3 | 56% | yes |
+| edith | 1 | 0 | 0% | yes |
+| esmeralda | 30 | 55 | 43% | yes |
+| estes | 2 | 1 | 50% | yes |
 | eudora | 49 | 30 | 55% | yes |
+| fanny | 21 | 105 | 52% | yes |
+| faramis | 2 | 0 | 50% | yes |
+| fredrinn | 3 | 2 | 33% | yes |
 | freya | 42 | 129 | 52% | yes |
+| gatotkaca | 27 | 11 | 59% | yes |
+| gloo | 37 | 41 | 57% | yes |
+| gord | 0 | 1 | 0% | yes |
+| granger | 1 | 0 | 0% | yes |
+| guinevere | 3 | 6 | 67% | yes |
+| hanabi | 4 | 3 | 50% | yes |
+| hanzo | 4 | 3 | 50% | yes |
+| harith | 2 | 0 | 0% | yes |
+| harley | 18 | 12 | 33% | yes |
 | hayabusa | 6 | 3 | 33% | yes |
 | hilda | 3 | 0 | 100% | yes |
+| hirara | 84 | 80 | 54% | yes |
+| hylos | 20 | 3 | 45% | yes |
+| ixia | 1 | 0 | 100% | yes |
+| joy | 2 | 0 | 0% | yes |
+| kadita | 2 | 0 | 0% | yes |
+| kagura | 1 | 0 | 100% | yes |
+| kaja | 3 | 10 | 33% | yes |
+| kalea | 13 | 7 | 54% | yes |
+| karrie | 2 | 0 | 0% | yes |
+| khaleed | 2 | 0 | 50% | yes |
+| khufra | 2 | 0 | 0% | yes |
 | kimmy | 33 | 11 | 55% | yes |
+| lapu-lapu | 1 | 0 | 100% | yes |
+| leomord | 4 | 1 | 50% | yes |
+| lesley | 1 | 0 | 0% | yes |
 | lilia | None | None | None | yes |
+| ling | 1 | 1 | 0% | yes |
+| lukas | 19 | 28 | 58% | yes |
+| lunox | 5 | 2 | 20% | yes |
+| luo-yi | None | None | None | yes |
+| lylia | 27 | 27 | 48% | yes |
 | marcel | 29 | 84 | 66% | yes |
+| masha | 13 | 61 | 31% | yes |
+| mathilda | 22 | 51 | 50% | yes |
 | melissa | 34 | 53 | 53% | yes |
+| minotaur | 43 | 29 | 42% | yes |
+| minsitthar | 1 | 0 | 0% | yes |
+| miya | 27 | 18 | 63% | yes |
 | moskov | 32 | 14 | 53% | yes |
 | nolan | 54 | 45 | 59% | yes |
+| novaria | 20 | 38 | 50% | yes |
+| obsidia | 43 | 28 | 63% | yes |
+| odette | 2 | 0 | 0% | yes |
 | paquito | 87 | 58 | 45% | yes |
+| pharsa | 6 | 0 | 33% | yes |
+| phoveus | 15 | 20 | 53% | yes |
 | rafaela | 37 | 44 | 54% | yes |
+| ruby | 14 | 8 | 50% | yes |
+| saber | 6 | 4 | 67% | yes |
 | selena | 46 | 48 | 41% | yes |
+| sora | 17 | 7 | 41% | yes |
+| suyou | 15 | 1 | 33% | yes |
+| terizla | 6 | 0 | 50% | yes |
 | tigreal | 1 | 0 | 0% | yes |
 | uranus | 49 | 53 | 47% | yes |
+| valentina | 42 | 24 | 36% | yes |
+| valir | 3 | 0 | 67% | yes |
+| vexana | 2 | 5 | 50% | yes |
+| wanwan | 2 | 1 | 50% | yes |
+| yi-sun-shin | None | None | None | yes |
+| yu-zhong | None | None | None | yes |
+| yve | 6 | 0 | 67% | yes |
+| zetian | 18 | 14 | 72% | yes |
 | zhuxin | 47 | 43 | 51% | yes |
 
 ## Evidence stores
