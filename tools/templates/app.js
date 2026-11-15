@@ -297,7 +297,8 @@ const phaseCtl=`<div class="seg" role="group" aria-label="Phase">${pbtn('reg','R
 const mvpById=Object.fromEntries((DATA.matches||[]).map(m=>[String(m.match_detail_id),m.liq_mvp||'']));
 const mrow=m=>{const done=m.match_detail_id&&m.status==='completed';
 const aWins=(+m.score_a)>(+m.score_b),bWins=(+m.score_b)>(+m.score_a);
-return `<div class="mrow"${done?' data-m="'+esc(m.match_detail_id)+'"':''}><span class="mdate hide-m">${esc(m.iso_date||m.date||'')}</span>`
+const mlbl=done?`Open scoreboard: ${m.team_a} ${m.score_a??'–'}–${m.score_b??'–'} ${m.team_b}, ${m.iso_date||m.date||''}`:'';
+return `<div class="mrow"${done?` data-m="${esc(m.match_detail_id)}" role="button" tabindex="0" aria-label="${esc(mlbl)}"`:''}><span class="mdate hide-m">${esc(m.iso_date||m.date||'')}</span>`
 +`<span class="mfix"><img src="${TICON(m.team_a)}" alt="" loading="lazy" ${IMG_HIDE}><span class="mt ${done?(aWins?'mwin':'mlose'):''}">${esc(m.team_a)}</span><span class="msc">${esc(m.score_a??'–')} : ${esc(m.score_b??'–')}</span><span class="mt ${done?(bWins?'mwin':'mlose'):''}">${esc(m.team_b)}</span><img src="${TICON(m.team_b)}" alt="" loading="lazy" ${IMG_HIDE}></span>`
 +`<span class="hide-m"><span class="tag">${esc(m.status||'')}</span></span>`
 +`<span class="mmvp hide-m">${esc(mvpById[String(m.match_detail_id)]||'—')}</span>`
@@ -464,6 +465,7 @@ if(S.view==='player'){
 const ovb=document.getElementById('ovPick');if(ovb)ovb.onclick=openOvSel;
 board.querySelectorAll('.lrow[data-p]').forEach(r=>{r.style.cursor='pointer';});
 board.querySelectorAll('[data-m]').forEach(b=>b.onclick=()=>showM(b.dataset.m));
+board.querySelectorAll('.mrow[data-m]').forEach(r=>r.addEventListener('keydown',e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();showM(r.dataset.m);}}));
 board.querySelectorAll('[data-ovhero]').forEach(b=>b.onclick=()=>(b.dataset.scope==='global'?stHeroDrill:ovHeroDrill)(b.dataset.ovhero));
 board.querySelectorAll('[data-ovemb]').forEach(b=>b.onclick=()=>(b.dataset.scope==='global'?stEmbDrill:ovEmbDrill)(b.dataset.ovemb));
 board.querySelectorAll('[data-ovtal]').forEach(b=>b.onclick=()=>(b.dataset.scope==='global'?stTalDrill:ovTalDrill)(b.dataset.ovtal));
@@ -1174,7 +1176,7 @@ const tals=talObjs.map(o=>{const src=(o.id&&A.runes&&A.runes[o.id])||(o.url&&A.r
 const itemObjs=(r.i&&r.i.length)?r.i.map(ref=>String(ref).indexOf('http')===0?{eq:null,url:ref}:{eq:ref,url:null}):(r.items||[]).map(u=>({eq:eqId(u)||null,url:u}));
 const items=itemObjs.map(o=>{const src=(o.eq&&A.items&&A.items[o.eq])||(o.url&&A.items&&A.items[o.url])||o.url;if(!src)return '';return `<img src="${esc(src)}" alt="item ${esc(o.eq||'')}" data-eq="${esc(o.eq||'')}" loading="lazy" onerror="imgSlot(this)">`;}).join('');
 return `<div class="sb-p">${heroImg}<div class="sb-id"><b>${esc(r.player)}</b><span>${esc(r.lane||'—')} · ${esc(r.hero||'')} · ${esc(r.kills)}/${esc(r.deaths)}/${esc(r.assists)} · KDA ${esc(r.kda)}</span></div>`
-+`<div class="sb-side">G ${esc(r.gold)}${r.gpm!=null?' ('+esc(r.gpm)+'/m)':''}<br>DMG ${esc(r.hero_damage??'–')} · TAKEN ${esc(r.damage_taken??'–')}</div>`
++`<div class="sb-side">G ${esc(r.gold)}${r.gpm!=null?' ('+esc(r.gpm)+'/m)':''}<br>DMG ${esc(r.hero_damage??'–')}<br>TAKEN ${esc(r.damage_taken??'–')}</div>`
 +`<div class="sb-gear"><span class="sb-tal">${embSm}${tals}</span>${items?`<span class="sb-items">${items}</span>`:''}</div></div>`;}).join('');
 return `<div class="sb-team${flip?' flip':''}${pk?' '+pk:''}"><div class="sb-thead"><img src="${logoOf(code)}" alt="" ${IMG_HIDE}><b class="${won===true?'tw':won===false?'tl':''}">${esc(code)}</b><span class="k">${esc(kills)} kills</span></div>${prow}</div>`;}
 function winName(g){return g.winner==='team_a'?g.team_a:(g.winner==='team_b'?g.team_b:(g.winner||''));}
