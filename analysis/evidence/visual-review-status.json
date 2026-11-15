@@ -5,7 +5,7 @@
   "game_offsets_path": "analysis/evidence/game-offsets.json",
   "game_offsets_sha256": "d9e7bf398f533860d897deaadd544c337afc2ebd9b531afed95fecedd2ecba36",
   "ledger_path": "analysis/evidence/deepseek-visual-reviews.json",
-  "ledger_sha256": "f926dcef21c0364517cfb1a0b0e41556ddaa6236c2bbd5a1d34352833c75a981",
+  "ledger_sha256": "7240a7f35ec69fbccf864a937a8d09b2c0f10f3f0b9360de777736cdfa592f7b",
   "reviewer": "deepseek",
   "no_human_review": true,
   "summary": {
