@@ -10,8 +10,8 @@
 Usage: python tools/shots.py [--zoom]
   default: 2880x1800 CSS @ dsf 1 (native, spec-deviation — needs approval)
   --zoom:  the spec above (always use this for README)
-Output: github/assets/*.png (01-overview, 02-players, 03-matches-list,
-  04-matches-grid, 05-scoreboard, 06-player, 07-stats-mvp, 08-stats-heroes)
+Output: github/assets/*.png (01-overview, 09-teams, 10-teams-dossier, 02-players,
+  03-matches-list, 04-matches-grid, 05-scoreboard, 06-player, 07-stats-mvp, 08-stats-heroes)
 """
 import struct
 import sys
@@ -68,6 +68,16 @@ with sync_playwright() as pw:
 
     shot(pg, '01-overview.png')
 
+    pg.click('[data-view="teams"]')
+    pg.wait_for_function("document.querySelectorAll('.tm-dossier').length === 9", timeout=15000)
+    shot(pg, '09-teams.png')
+
+    pg.evaluate("document.getElementById('team-TLID').scrollIntoView({block:'start'})")
+    pg.wait_for_timeout(300)
+    pg.evaluate("window.scrollBy(0, -70)")
+    shot(pg, '10-teams-dossier.png')
+    pg.evaluate("window.scrollTo(0, 0)")
+
     pg.click('[data-view="players"]')
     shot(pg, '02-players.png')
 
@@ -96,17 +106,15 @@ with sync_playwright() as pw:
         pg.keyboard.press('Escape')
         pg.wait_for_timeout(400)
 
-    # opened player card
+    # full player profile page
     pg.click('[data-view="players"]')
-    prow = pg.query_selector('[data-p]')
+    prow = pg.query_selector('.pl[data-p]')
     if prow:
         prow.click()
         pg.wait_for_function(
-            "document.querySelectorAll('#db table tr').length > 1",
+            "document.querySelector('.pp-name') !== null",
             timeout=15000)
         shot(pg, '06-player.png')
-        pg.keyboard.press('Escape')
-        pg.wait_for_timeout(400)
 
     # stats revamp: MVP race + heroes table
     pg.click('[data-view="stats"]')

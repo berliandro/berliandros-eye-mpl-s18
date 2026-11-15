@@ -1,10 +1,11 @@
 # Berliandro's Eye - MPL ID Season 18
 
-A dark, minimalist, frosted-glass web app for exploring **MPL Indonesia Season 18**
-(regular season + playoffs): player stats, match scoreboards, standings, and series MVPs.
-Ships as **one HTML file plus the committed `assets/` folder** beside it (`mpl_id_s18_dark.html`); the data is embedded, artwork is referenced by relative path, and the pair
-and hero/item artwork embedded — it works offline from the snapshot and refreshes
-live from the mlbbhub API when online.
+A dark, plate-based instrument panel for exploring **MPL Indonesia Season 18**
+(regular season + playoffs): the season front page, nine club dossiers, player profiles,
+match scoreboards, the hero meta and a one-page opponent prep.
+Ships as **one HTML file plus the committed `assets/` folder** beside it (`mpl_id_s18_dark.html`);
+the data is embedded and artwork is referenced by relative path, so the pair works offline from the
+snapshot and refreshes live from the mlbbhub API when online.
 
 ## Semantic coaching pilot
 
@@ -12,25 +13,31 @@ A separate, auditable transcript/database layer lives in [`analysis/`](analysis/
 
 ## Screenshots
 
-### Overview — player deep dive (KDA trend, hero pool, win rates, items, game log)
+### Overview — season front page: latest result, final standings, MVP race, playoffs
 ![Overview](github/assets/01-overview.png)
 
-### Players — sortable cards with hero pools
+### Teams — the league board and nine club dossiers, rating first
+![Teams](github/assets/09-teams.png)
+
+### Teams — a club dossier: crest identity, frosted season band, roster, tendencies, draft, H2H
+![Teams dossier](github/assets/10-teams-dossier.png)
+
+### Players — lane impact, win rate and a six-axis percentile hexagon
 ![Players](github/assets/02-players.png)
 
-### Matches — full-width list layout with series MVP per match
+### Matches — full-width list with the series MVP per match
 ![Matches list](github/assets/03-matches-list.png)
 
-### Matches — grid layout with series MVP per card
+### Matches — grid cards, same fixtures
 ![Matches grid](github/assets/04-matches-grid.png)
 
-### Scoreboard — symmetrical 50/50 split, per-game MVP, first-pick glow
+### Scoreboard — mirrored blue/red panels, per-game lines, bans in draft order
 ![Scoreboard](github/assets/05-scoreboard.png)
 
-### Player card — per-hero AVG KDA / K / D / A, MANIAC, SAVAGE (🚧 under development)
-![Player card](github/assets/06-player.png)
+### Player profile — identity plate, glass season band, hero pool, derived stats
+![Player profile](github/assets/06-player.png)
 
-### Stats — Series MVP race leaderboard + history
+### Stats — Series MVP race and history
 ![Stats MVP](github/assets/07-stats-mvp.png)
 
 ### Stats — Heroes dashboard (highlights + sortable pick/ban/win table)
@@ -40,56 +47,60 @@ A separate, auditable transcript/database layer lives in [`analysis/`](analysis/
 
 - **Overview** — season front page: the latest completed series as a plate (both teams, score,
   series MVP, one click to the scoreboard), a one-line season count, final standings that keep
-  official Match W-L and Game W-L separate, the series-MVP race, and the last six results.
-  Every block routes somewhere; nothing on it is a dead end.
-- **Players** — grid cards built on the profile's grammar: cut-out, IGN, team · lane, a
-  four-number row (GP, KDA, GPM, WR) and a five-bar **lane-percentile strip** (damage share,
-  kill participation, gold share, tower share, KDA) with the value on hover; sub-five-game
-  samples render dimmed. The whole card is the link; list view keeps the sortable table.
-  Filter by team, lane, search text; sort by KDA / kills / gold / games.
-- **Matches** — full-width frosted list (date, logos, score, status, series MVP) and
-  grid cards (also showing series MVP). A Regular/Playoffs sub-tab switches phases.
-  Regular phase shows the **standings board** and **team profiles** (games, W-L,
-  KDA, avg gold, avg game) on top; Playoffs shows **final positions** plus a
-  **bracket preview** (Round 1 → Grand Final) under the history. Completed cards
-  open the scoreboard.
-- **Scoreboard dialog** — symmetrical 50/50 team split with first-pick blue/red glow,
-  centered header (score, duration, **map mode**, date), full-width **bans in draft
-  order**, lane-ordered player rows (EXP/JUNGLE/MID/GOLD/ROAM), a **per-game MVP
-  pill** next to “TEAM won”, and a **VOD deep link**.
+  official Match W-L and Game W-L separate and link to the club dossiers, the series-MVP race,
+  and the last six results. Every block routes somewhere; nothing on it is a dead end.
+- **Teams** — a nine-club league board and nine season dossiers. The board opens on the model's
+  **Rating** order with a **Standings** toggle and a **Δ** rank column when the two disagree; the
+  dossier opens with a crest identity plate and a frosted seven-cell band (series, games,
+  win%, rating with CIs, SOS, form, sides), then roster, tendencies, draft, map record at n≥5
+  and a 4×2 head-to-head. The top three in competition order are open, the other six one click
+  away. Dossiers follow the league: playoff seeds while the bracket is live; after the grand
+  final, bracket 1–4, then 5–6 alphabetical, then the non-qualified clubs.
+- **Players** — grid cards built on the profile's grammar: cut-out, IGN, team · lane, one
+  headline **lane impact**, a supporting row (win rate, KDA, GPM) and a **six-axis percentile
+  hexagon** with the 50th-percentile ring; sub-five-game samples render dimmed. The whole card
+  is the link; list view keeps the sortable table. Filter by team, lane, search text; sort by
+  win rate / lane impact / KDA / kills / gold / games.
+- **Matches** — full-width list (date, crests, score, status, series MVP) and grid cards.
+  A Regular/Playoffs sub-tab switches phases; the regular phase is the fixture list, the
+  playoffs phase adds the **bracket preview** under the history. Completed cards open the
+  scoreboard. Team tables live on the Teams tab, not here.
+- **Scoreboard dialog** — mirrored blue/red panels with the side as a 3px edge, centered
+  header (score, duration, **map mode**, date), full-width **bans in draft order**,
+  lane-ordered player rows (EXP/JUNGLE/MID/GOLD/ROAM), a **per-game MVP** next to
+  “TEAM won”, and a **VOD deep link**.
 - **Player profile** — a full page, not a dialog: cut-out portrait, oversized IGN, team and
   lane lockup, and a glass stat band split **season / last five games** (games, game W-L, KDA,
   K/D/A, GPM, kill participation, damage share). Below it: the hero pool table (GP, AVG KDA,
-  per-game K/D/A, MANIAC, SAVAGE, GPM), a lane-normalised profile (close-game WR, effective
-  pool, comfort/flex, damage per gold, tower damage per game), the last eight games with result
+  per-game K/D/A, GPM; MANIAC/SAVAGE are not in this snapshot and are omitted), a lane-normalised
+  profile (close-game WR, effective pool, comfort/flex, damage per gold, tower damage per game),
+  the last eight games with result
   pills, the KDA-trend chart, side splits, record by opponent, and top items, emblems and
   talents with drill-downs. Every number keeps its `n` or its reason.
-- **Shell** — a left rail carries the six views at 1180px and wider, with inline SVG icons, the
-  active view marked by a 2px accent bar, and live counts for players and series; below that
-  width it falls back to the top tabs. The player profile hides the header entirely.
+- **Shell** — a left rail groups **Board** (Overview, Teams, Players, Matches) and **Analysis**
+  (Stats, Analytics, Prep) at 1180px and wider, with inline SVG icons, live counts for clubs,
+  players and series, and one 2px accent bar. Below that width the seven tabs return, in a 4×2
+  grid on phones with Prep spanning the last two cells. The player profile hides the header.
 - **Stats** — sub-tabbed dashboard: **Series MVP** (race leaderboard + history) and
   **Heroes** (highlight tiles + sortable pick/ban/win table with **role, lane and
   damage-type columns** and share bars).
-- **Analytics — Players** — lane-normalised player impact (35% damage share, 25% kill
+- **Analytics — Impact** — lane-normalised player impact (35% damage share, 25% kill
   participation, 20% gold share, 10% tower share, −10% death share), shrunk toward
   the lane mean with a 5-game prior. Shows KDA/GPM/damage/KP percentiles, a 95%
   Wilson win-rate interval, form delta, and mutes rows under 5 games. The method
   and weights are printed in-product.
-- **Analytics — Teams** — Bradley-Terry ratings with paired-game bootstrap CIs,
-  strength of schedule, form (games and series), blue/red splits, tempo,
-  dominance, clutch (game 3 and series close), map records, and a head-to-head
-  game matrix. Game W-L and Series W-L are shown as separate, explicitly scoped
-  columns; the Standings view preserves the official Match W-L and Game W-L.
 - **Analytics — Draft** — hero pick/ban/WR with CIs and flex, same-team synergy,
-  opposing-pair counters, team fingerprints (top picks/bans, first-ban by side,
-  HHI, pocket picks), composition archetypes, map meta, and date-window meta
-  movement. Pair/counter deltas are labelled as descriptive proxies, not causal.
+  opposing-pair counters, composition archetypes, map meta, and date-window meta
+  movement. Pair/counter deltas are labelled as descriptive proxies, not causal. Team-level
+  draft fingerprints (top picks/bans, first-ban by side, HHI, pocket picks) live in the Teams
+  dossiers.
 - **Prep** — pick an opponent (and optionally our team) for a one-page scouting
   report: rating/form/side/tempo, likely picks and bans, a transparent ban ranking,
   player weaknesses/strengths, weak/strong maps, H2H and lane matchups; print/PDF,
   CSV, and a copyable permalink.
 - **Search + links** — `Ctrl/⌘K` palette across players, teams, heroes and matches;
-  view/analytics/prep state is written to the URL so links restore the report.
+  view/teams/analytics/prep state is written to the URL, so a club dossier, a filtered
+  match list and a prep report are all shareable.
 - **Tables and identity** — Every statistic column sorts ascending/descending with
   a minimalist ▲▼ indicator.
   MVP names from Liquipedia are normalized to one canonical player identity

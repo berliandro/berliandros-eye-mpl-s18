@@ -1328,7 +1328,10 @@ function viewCount(){
 if(S.view==='overview')return '';
 if(S.view==='teams')return TEAMS.length+' teams';
 if(S.view==='players'){const n=board.querySelectorAll('.pl,.lrow').length;return n+(n===1?' player':' players');}
-if(S.view==='matches')return board.querySelectorAll('.mrow,.mpin').length+' matches';
+if(S.view==='matches'){
+ const shown=board.querySelectorAll('.mrow,.mpin').length;
+ const total=(DATA.schedule||[]).filter(m=>{const po=String(m.schedule_id||'').indexOf('playoffs')>-1;return (S.phase==='po'?po:!po)&&m.status==='completed';}).length;
+ return shown+(shown<total?' of '+total:'')+' matches';}
 if(S.view==='stats')return S.stat==='heroes'?(DATA.heroes||[]).filter(h=>(+h.pick||0)+(+h.ban||0)>0).length+' heroes':(DATA.matches||[]).filter(m=>m.liq_mvp).length+' MVP awards';
 if(S.view==='analytics')return anPart('AN').players.length+' players';
 if(S.view==='prep')return PREP?'1 report':'';
@@ -1952,7 +1955,7 @@ function playerHTML(name){
     .sort((a,b)=>(matchOrder()[String(b.mid)]??-1)-(matchOrder()[String(a.mid)]??-1)).slice(0,8);
   const A=window.ASSETS||{heroes:{}};
   const anp=(anPart('AN').players||[]).find(x=>samePlayer(x.player,disp))||null;
-  const hrows=heroes.map(x=>`<tr><td><span class="hcell">${(A.heroes&&A.heroes[x.h])?`<img src="${esc(A.heroes[x.h])}" alt="" loading="lazy" onerror="this.remove()">`:''}${esc(x.h)}</span></td><td>${x.n}</td><td>${x.kda==null?'—':x.kda.toFixed(2)}</td><td>${x.k.toFixed(1)}</td><td>${x.d.toFixed(1)}</td><td>${x.a.toFixed(1)}</td><td>—</td><td>—</td><td>${x.gpm.toFixed(0)}</td></tr>`).join('');
+  const hrows=heroes.map(x=>`<tr><td><span class="hcell">${(A.heroes&&A.heroes[x.h])?`<img src="${esc(A.heroes[x.h])}" alt="" loading="lazy" onerror="this.remove()">`:''}${esc(x.h)}</span></td><td>${x.n}</td><td>${x.kda==null?'—':x.kda.toFixed(2)}</td><td>${x.k.toFixed(1)}</td><td>${x.d.toFixed(1)}</td><td>${x.a.toFixed(1)}</td><td>${x.gpm.toFixed(0)}</td></tr>`).join('');
   const grows=games.map(x=>`<div class="pp-g"><span class="d">${esc(String(x.d).slice(5))}</span><span class="o">${TICON(x.opp)?`<img src="${esc(TICON(x.opp))}" alt="" loading="lazy" ${IMG_HIDE}>`:''}<span>${esc(x.opp)}</span></span><span class="r"><span class="h">${(A.heroes&&A.heroes[x.hero])?`<img src="${esc(A.heroes[x.hero])}" alt="" loading="lazy" onerror="this.remove()">`:''}</span><span>${x.k}/${x.dth}/${x.a}</span><span class="${x.won?'w':'l'}">${x.won?'W':'L'}</span></span></div>`).join('');
   const stat=(k,v,sub)=>`<div><dt>${k}</dt><dd>${v}${sub?`<small>${sub}</small>`:''}</dd></div>`;
   const extra=anp?`${stat('Close-game WR',anp.close.n?Math.round(anp.close.winRate*100)+'%':'—',`${anp.close.wins}/${anp.close.n}`)}
@@ -1982,10 +1985,10 @@ function playerHTML(name){
   </section>
   <div class="pp-grid">
     <section class="pp-block"><h2>Hero pool<span>${heroes.length} heroes</span></h2><div class="sc"><table>
-      <thead><tr><th>Hero</th><th>GP</th><th>AVG KDA</th><th>K/G</th><th>D/G</th><th>A/G</th><th title="No official MPL ID source publishes kill-streak counts">MANIAC</th><th title="No official MPL ID source publishes kill-streak counts">SAVAGE</th><th>GPM</th></tr></thead>
-      <tbody>${hrows||'<tr><td colspan="9">No games</td></tr>'}</tbody>
+      <thead><tr><th>Hero</th><th>GP</th><th>AVG KDA</th><th>K/G</th><th>D/G</th><th>A/G</th><th>GPM</th></tr></thead>
+      <tbody>${hrows||'<tr><td colspan="7">No games</td></tr>'}</tbody>
     </table></div>
-    <p class="pp-note">MANIAC / SAVAGE are not shown: no official MPL ID source publishes kill-streak counts, and they are never estimated.</p></section>
+    <p class="pp-note">MANIAC / SAVAGE are not recorded in this snapshot: no official MPL ID source publishes kill-streak counts, and they are never estimated.</p></section>
     <div class="pp-col">
       ${anp?`<section class="pp-block"><h2>Derived stats<span>season</span></h2><dl class="pp-stats">${extra}</dl><p class="pp-note">Close-game = final kill difference ≤5. Effective pool = heroes with ≥2 games and ≥50% WR. Comfort = usage × win rate. Flex = heroes played in two or more lanes. Damage/gold and tower damage are per-game averages. Definitions match the Analytics view.</p></section>`:''}
       <section class="pp-block"><h2>Recent games<span>last ${games.length}</span></h2><div class="pp-games">${grows||'<p class="pp-note">No games.</p>'}</div></section>
