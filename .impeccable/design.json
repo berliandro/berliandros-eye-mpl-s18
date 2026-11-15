@@ -1,103 +1,119 @@
 {
   "schemaVersion": 2,
-  "generatedAt": "2026-11-15T08:52:41Z",
+  "generatedAt": "2026-11-15T12:55:40Z",
   "title": "Design System: Berliandro's Eye",
   "extensions": {
     "colorMeta": {
-      "kiln": {
+      "graphite": {
         "role": "neutral",
-        "displayName": "Kiln",
-        "canonical": "#131311",
-        "purpose": "Page ground: warm near-black.",
+        "displayName": "Graphite",
+        "canonical": "#101211",
+        "purpose": "The ground, lit from above.",
         "tonalRamp": [
-          "#272726",
-          "#454541",
-          "#64645d",
-          "#848477",
-          "#a0a096",
-          "#bbbbb5",
-          "#d6d6d4",
-          "#f2f2f2"
+          "#252726",
+          "#414643",
+          "#5c6561",
+          "#77847e",
+          "#95a09b",
+          "#b5bbb8",
+          "#d4d6d5",
+          "#f2f3f2"
         ]
       },
-      "basalt": {
+      "plate": {
         "role": "neutral",
-        "displayName": "Basalt",
-        "canonical": "#1a1a18",
-        "purpose": "Panels and cards, opaque.",
+        "displayName": "Plate",
+        "canonical": "#171a18",
+        "purpose": "Panel gradient end.",
         "tonalRamp": [
-          "#272726",
-          "#454542",
-          "#63635e",
-          "#828279",
-          "#9e9e97",
-          "#babab6",
-          "#d6d6d4",
-          "#f2f2f2"
+          "#252726",
+          "#414643",
+          "#5c655f",
+          "#77857b",
+          "#95a099",
+          "#b5bbb7",
+          "#d4d6d5",
+          "#f2f3f2"
         ]
       },
-      "salt": {
+      "plate-high": {
         "role": "neutral",
-        "displayName": "Salt",
-        "canonical": "#f2f1ec",
-        "purpose": "Primary text and the primary button fill.",
+        "displayName": "Plate High",
+        "canonical": "#1a1e1b",
+        "purpose": "Panel gradient start, under the inset highlight.",
         "tonalRamp": [
-          "#292824",
-          "#4a483d",
-          "#6e6953",
-          "#938c68",
-          "#aca68a",
-          "#c2beae",
-          "#d9d8d1",
-          "#f3f3f1"
+          "#252726",
+          "#414642",
+          "#5c665e",
+          "#76867a",
+          "#94a198",
+          "#b4bcb6",
+          "#d4d7d4",
+          "#f2f3f2"
+        ]
+      },
+      "chalk": {
+        "role": "neutral",
+        "displayName": "Chalk",
+        "canonical": "#eef1ee",
+        "purpose": "Primary text and primary button fill.",
+        "tonalRamp": [
+          "#252825",
+          "#404740",
+          "#5a675a",
+          "#738973",
+          "#92a492",
+          "#b3bdb3",
+          "#d3d7d3",
+          "#f2f3f2"
         ]
       },
       "pewter": {
         "role": "neutral",
         "displayName": "Pewter",
-        "canonical": "#a6a39b",
+        "canonical": "#9aa29c",
         "purpose": "Secondary text, headers, supporting figures.",
         "tonalRamp": [
-          "#272725",
-          "#454441",
-          "#65625c",
-          "#848177",
-          "#a09d96",
-          "#bbb9b5",
-          "#d6d6d4",
-          "#f3f2f2"
+          "#262726",
+          "#424543",
+          "#5e635f",
+          "#79827b",
+          "#979f99",
+          "#b6bab7",
+          "#d4d6d5",
+          "#f2f2f2"
         ]
       },
       "seam": {
         "role": "neutral",
         "displayName": "Seam",
-        "canonical": "#2b2b28",
+        "canonical": "#2a2f2c",
         "purpose": "Every hairline.",
         "tonalRamp": [
-          "#272726",
-          "#454542",
-          "#63635e",
-          "#82827a",
-          "#9e9e98",
-          "#babab6",
-          "#d6d6d4",
-          "#f2f2f2"
+          "#252726",
+          "#414543",
+          "#5d6460",
+          "#77847c",
+          "#96a09a",
+          "#b5bbb7",
+          "#d4d6d5",
+          "#f2f3f2"
         ]
       },
       "seam-lift": {
         "role": "neutral",
         "displayName": "Seam Lift",
-        "canonical": "#3d3d39",
-        "purpose": "A border lifting on hover.",
+        "canonical": "#3a423c",
+        "purpose": "A seam lifting on hover.",
         "tonalRamp": [
-          "#272726",
-          "#454542",
-          "#63635e",
-          "#82827a",
-          "#9e9e98",
-          "#babab6",
-          "#d6d6d4",
-          "#f2f2f2"
+          "#252726",
+          "#414642",
+          "#5c655e",
+          "#76857a",
+          "#95a198",
+          "#b5bbb6",
+          "#d4d7d4",
+          "#f2f3f2"
         ]
       },
       "signal-red": {
@@ -268,65 +284,60 @@
     }
   ],
   "narrative": {
-    "northStar": "The Tape Room",
-    "overview": "A dark room where broadcast tape and a match database are reviewed on the same desk. The walls are stone, not glass: the ground is a warm near-black, panels sit on it as flat slabs with a single hairline, and light is spent only where a number or a face needs to be read. Nothing shimmers, because a review room does not shimmer — the drama belongs to the footage, and the surface's job is to disappear behind it. The system serves two readers at one scale: a fan scanning sixty-one players, and a coach opening one of them to read a season's shape. Colour is information or it is absent — signal red for location and loss, pitch green for wins, and each team's crest colour sampled from its own logo.",
+    "northStar": "The Instrument Panel",
+    "overview": "A rack of instruments on a graphite desk, lit from above. Surfaces are plates with a 1px seam, an inset highlight along the top edge and a corner tick; nothing floats and nothing glows. Two readers share the rack: a fan scanning sixty-one players and a coach reading a season's shape. Colour is information or absent, and blue/red survives only where a game's side decides first pick.",
     "keyCharacteristics": [
-      "Kiln ground, salt type, seam hairlines; depth is tonal, never shadowed.",
-      "One headline figure per card; everything else supports at 12px or smaller.",
-      "Charts always draw their 50th percentile and say which direction is better.",
+      "Graphite ground, chalk type, seam hairlines; plates lifted by an inset highlight.",
+      "One headline figure per card; every other mark 12px or smaller.",
+      "Charts draw their 50th percentile and name the better direction.",
       "Mono is chrome — rail, tables, legends — never a card's voice."
     ],
     "rules": [
       {
         "name": "The One Signal Rule",
-        "body": "Red is used on ≤2% of a screen: the active rail tab and a loss. Anywhere else it must name a failure.",
+        "body": "Red is used on ≤2% of a screen: the active rail tab and a loss.",
         "section": "colors"
       },
       {
         "name": "The Crest Is Data Rule",
-        "body": "A team's colour is sampled from its logo and clamped, never chosen. A team with no saturated hue gets the neutral hairline.",
+        "body": "Team colour is sampled from the logo and clamped, never chosen.",
+        "section": "colors"
+      },
+      {
+        "name": "The Side Is an Exception Rule",
+        "body": "Blue and red appear only inside a game context, as an edge or labelled chip.",
         "section": "colors"
       },
       {
         "name": "The One Headline Rule",
-        "body": "A card carries exactly one figure at 22–24px. Everything else on it is 12px or smaller, and the second-largest mark is the name.",
+        "body": "A card carries exactly one figure at 22–24px.",
         "section": "typography"
       },
       {
         "name": "The Chrome-Only Mono Rule",
-        "body": "JetBrains Mono never appears inside a player card. It belongs to the rail, tables, legends and machine values.",
+        "body": "JetBrains Mono never appears inside a player card.",
         "section": "typography"
       },
       {
-        "name": "The Tabular Rule",
-        "body": "Every number that can change column is tabular. A figure that shifts the layout beside it is a defect.",
-        "section": "typography"
-      },
-      {
-        "name": "The Overlap-Only Glass Rule",
-        "body": "backdrop-filter is allowed only where a surface sits over imagery or scrolling content.",
-        "section": "elevation"
-      },
-      {
-        "name": "The Seam-First Rule",
-        "body": "Separate two surfaces with a 1px seam or a tone change. Never a shadow.",
+        "name": "The Lit-From-Above Rule",
+        "body": "One gradient from the top of the page; nothing is lit from below or from a colour.",
         "section": "elevation"
       }
     ],
     "dos": [
-      "Do lead every card with one figure at 22–24px and keep the rest at 12px or smaller.",
-      "Do draw the 50th percentile on any percentile chart, and name which direction is better.",
-      "Do sample team colour from the crest and clamp it for the dark ground.",
-      "Do keep numerals tabular and aligned to their column.",
-      "Do test 390 and 1440 before calling a surface finished."
+      "Do lead each view with an h1 and a one-line answer.",
+      "Do lead each card with one figure at 22–24px.",
+      "Do draw the 50th percentile on any percentile chart.",
+      "Do sample team colour from the crest.",
+      "Do print the same markup."
     ],
     "donts": [
       "Don't put JetBrains Mono inside a player card.",
-      "Don't leave a UA font on a control: inherit the UI face.",
-      "Don't blur a panel that sits on flat ground.",
-      "Don't fill a card or row with a team colour; the accent is a 2px edge or a tint.",
-      "Don't use signal red for anything that is not location or loss.",
-      "Don't invent a colour for a team whose crest has none."
+      "Don't leave a UA font on a control.",
+      "Don't blur or shadow a panel on flat ground.",
+      "Don't fill a card with a team colour.",
+      "Don't ignore prefers-reduced-motion.",
+      "Don't let a card's accessible name drop its numbers."
     ]
   }
 }
