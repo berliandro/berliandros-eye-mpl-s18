@@ -59,7 +59,7 @@ __CSS__</style>
 <button class="ghost" id="density" style="border:1px solid var(--line);background:transparent;color:var(--muted);border-radius:6px;padding:5px 10px;cursor:pointer">Compact</button>
 <button class="ghost" id="refresh" title="Re-fetch schedule, standings and player stats from the live API" style="border:1px solid var(--line);background:transparent;color:var(--muted);border-radius:6px;padding:5px 10px;cursor:pointer">Refresh</button>
 <span id="net" role="status" title="Network status" style="font-size:11px;border:1px solid var(--line);border-radius:9999px;padding:2px 9px;color:var(--muted)">online</span>
-<span id="upd" style="font-size:11px"></span>
+<span id="upd" style="font-size:11px"></span><span id="refbar" class="refbar" hidden aria-hidden="true"><i></i></span>
 <span id="count" role="status"></span><button class="fsheet-done" id="filterDone" type="button">Done</button></div></div></header>
 <main class="wrap"><div class="masonry" id="board"></div><div class="empty" id="empty" hidden>No pins match. Clear search or filters.</div></main>
 <dialog id="dlg" aria-labelledby="dt"><div class="dhead"><h2 id="dt"></h2><span id="ds" style="color:var(--muted)"></span><button id="dback" aria-label="Back to previous view" hidden style="margin-left:auto;background:transparent;border:1px solid var(--line);color:var(--ink);border-radius:6px;padding:8px 12px;cursor:pointer">← Back</button><button id="dx" aria-label="Close dialog" style="background:#f2f1ec;border:0;border-radius:6px;padding:8px 12px;cursor:pointer">Close</button></div><div class="dbody" id="db"></div></dialog>

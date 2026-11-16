@@ -18,6 +18,7 @@ STEPS = [
     ("probability engine", ["node", str(BASE / "test_chances.js")], "node"),
     ("analytics engine", ["node", str(BASE / "test_analytics.js")], "node"),
     ("snapshot derivation", ["node", str(BASE / "test_snapshot.js")], "node"),
+    ("season final", ["node", str(BASE / "test_season_final.js")], "node"),
     ("cross-view reconciliation", [sys.executable, str(BASE / "test_reconcile.py")], None),
     ("xss sink units", ["node", str(BASE / "test_xss.js")], "node"),
     ("transforms + fetch retry", ["node", str(BASE / "test_transforms.js")], "node"),

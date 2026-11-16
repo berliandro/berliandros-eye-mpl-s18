@@ -1,0 +1,475 @@
+{
+ "schema": 1,
+ "source": "Liquipedia Commons",
+ "license": "CC-BY-SA 3.0",
+ "retrieved": "2026-11-16",
+ "note": "Player portraits are stored at their Liquipedia Commons original resolution (500x500 PNG with a transparent background) where available. The app key may differ from the Liquipedia handle; file names follow the Liquipedia upload convention (team prefix + handle + season).",
+ "players": {
+  "Aboyy": {
+   "file": "GEEK_Aboy_S18.png",
+   "url": "https://liquipedia.net/commons/images/d/de/GEEK_Aboy_S18.png",
+   "season": "S18",
+   "width": 500,
+   "height": 500,
+   "sha256": "9c33bbb1760959ef01dc57cd43a07d7206dbbbedd4411b71bc6ed42b04d627d7"
+  },
+  "Alberttt": {
+   "file": "EVOS_Alberttt_S18.png",
+   "url": "https://liquipedia.net/commons/images/4/45/EVOS_Alberttt_S18.png",
+   "season": "S18",
+   "width": 500,
+   "height": 500,
+   "sha256": "2e1cfbc1193b5afad3fdb5521160ad3796b6d5b7e25924c763906b8bb8fe9c33"
+  },
+  "Andoryuuu": {
+   "file": "NAVI_Andoryuuu_S18.png",
+   "url": "https://liquipedia.net/commons/images/f/fe/NAVI_Andoryuuu_S18.png",
+   "season": "S18",
+   "width": 500,
+   "height": 500,
+   "sha256": "a411fabf03213c3c0a600baea117d33fc7eb34ac0ecbff0188ed254743ba0d4f"
+  },
+  "Aprho": {
+   "file": "NAVI_Aprho_S18.png",
+   "url": "https://liquipedia.net/commons/images/4/49/NAVI_Aprho_S18.png",
+   "season": "S18",
+   "width": 500,
+   "height": 500,
+   "sha256": "8bb12b9a00b127f5453d7df1f8ed3fc3181c40c227820dbe203df989cae74df4"
+  },
+  "Aran": {
+   "file": "TLID_Aran_S18.png",
+   "url": "https://liquipedia.net/commons/images/d/d1/TLID_Aran_S18.png",
+   "season": "S18",
+   "width": 500,
+   "height": 500,
+   "sha256": "6e8c1e244ddd05eb20eddbc9e6c0cf8ff677c0e41890c34d2e408205f039906d"
+  },
+  "Arfy": {
+   "file": "AE_Arfy_S18.png",
+   "url": "https://liquipedia.net/commons/images/f/f9/AE_Arfy_S18.png",
+   "season": "S18",
+   "width": 500,
+   "height": 500,
+   "sha256": "c35d7ea0aac9a78f8b0df1c1b7646d0c2da0dc01284bf936cada3c62b386fa8e"
+  },
+  "Arthur": {
+   "file": "RRQ_Arthur_S18.png",
+   "url": "https://liquipedia.net/commons/images/1/1e/RRQ_Arthur_S18.png",
+   "season": "S18",
+   "width": 500,
+   "height": 500,
+   "sha256": "b51e2a4c897ef025a21e9f9b0353779e39e55d362e89da66c1c3bf0a74769f9e"
+  },
+  "AudyTzy": {
+   "file": "GEEK_Audytzy_S18.png",
+   "url": "https://liquipedia.net/commons/images/0/0e/GEEK_Audytzy_S18.png",
+   "season": "S18",
+   "width": 500,
+   "height": 500,
+   "sha256": "44a94de1f4a133fe70cff1bf872704fa1b4aedd0be6b87a13e36b5ad21452ef6"
+  },
+  "Clayyy": {
+   "file": "RRQ_Clayy_S18.png",
+   "url": "https://liquipedia.net/commons/images/b/b6/RRQ_Clayy_S18.png",
+   "season": "S18",
+   "width": 500,
+   "height": 500,
+   "sha256": "c4503aa1e1c00e2bf5b6f6d64213586428aa63199876a0f974792698435e0596"
+  },
+  "Demonkite": {
+   "file": "RRQ_Demonkite_S18.png",
+   "url": "https://liquipedia.net/commons/images/d/dd/RRQ_Demonkite_S18.png",
+   "season": "S18",
+   "width": 500,
+   "height": 500,
+   "sha256": "9050cddd1cb0042365ac7188a46b20c6d4169eb3bdf391ec6df453d77b671fb2"
+  },
+  "DrianW": {
+   "file": null,
+   "status": "kept-192",
+   "reason": "no higher-resolution portrait on Liquipedia Commons",
+   "width": 192,
+   "height": 192,
+   "sha256": "bbdd4b457b5c0aa9102ad00c4626404fa1f18241d0401c6eded767936e72f129"
+  },
+  "Drichel": {
+   "file": "TLID_Drichel_S18.png",
+   "url": "https://liquipedia.net/commons/images/a/a7/TLID_Drichel_S18.png",
+   "season": "S18",
+   "width": 500,
+   "height": 500,
+   "sha256": "dffd1ce2ee5d02085468e0ee3030aca31e746c0859f45896c855558d8f9d3edc"
+  },
+  "EMANN": {
+   "file": "BTR_EMANN_S18.png",
+   "url": "https://liquipedia.net/commons/images/2/28/BTR_EMANN_S18.png",
+   "season": "S18",
+   "width": 500,
+   "height": 500,
+   "sha256": "caa9073b45f9d7e78775bddcaa3681d67389f3f162349c179c97cc2b8e3ae883"
+  },
+  "Erlan": {
+   "file": "EVOS_Erlan_S18.png",
+   "url": "https://liquipedia.net/commons/images/9/96/EVOS_Erlan_S18.png",
+   "season": "S18",
+   "width": 500,
+   "height": 500,
+   "sha256": "1b898235ec939bf5734c5732b66437f673286a2e5b6057df319f0aac9d99e23e"
+  },
+  "Excellent99": {
+   "file": null,
+   "status": "kept-192",
+   "reason": "no higher-resolution portrait on Liquipedia Commons",
+   "width": 192,
+   "height": 192,
+   "sha256": "20c7412eaf4c5e5d111a5d52ec5c7a844037cfc2ddae078a226962284bcded5e"
+  },
+  "Febriii": {
+   "file": null,
+   "status": "kept-192",
+   "reason": "no higher-resolution portrait on Liquipedia Commons",
+   "width": 192,
+   "height": 192,
+   "sha256": "f6dc75487ffd1a513286199b9e572cb558fd55f336ec0716f864172422cc1ef6"
+  },
+  "Finn": {
+   "file": "BTR_Finn_S18.png",
+   "url": "https://liquipedia.net/commons/images/1/1b/BTR_Finn_S18.png",
+   "season": "S18",
+   "width": 500,
+   "height": 500,
+   "sha256": "2e55e84f5387dffab18d0c3b7eea79eadc9973b9b3587d649e502c82130228a6"
+  },
+  "Frenzyy": {
+   "file": null,
+   "status": "kept-192",
+   "reason": "no higher-resolution portrait on Liquipedia Commons",
+   "width": 192,
+   "height": 192,
+   "sha256": "a8564a3adc4e4545a65b0e749ea887256f3f8718960a8b6af7f03a03ac664022"
+  },
+  "Habil": {
+   "file": null,
+   "status": "kept-192",
+   "reason": "no higher-resolution portrait on Liquipedia Commons",
+   "width": 192,
+   "height": 192,
+   "sha256": "af6333d5f5f1bdb5484787b51a543a00adb682a014a96c5e686aded549146270"
+  },
+  "Hajirin": {
+   "file": "RRQ_Rinz_S18.png",
+   "url": "https://liquipedia.net/commons/images/7/79/RRQ_Rinz_S18.png",
+   "season": "S18",
+   "width": 500,
+   "height": 500,
+   "sha256": "1e49c2da3fd45b6a1db9d44c5b3e0e3f935d6baa972eebd4b7d53df90b77755f"
+  },
+  "Hazle": {
+   "file": "DEWA_Hazle_S18.png",
+   "url": "https://liquipedia.net/commons/images/3/36/DEWA_Hazle_S18.png",
+   "season": "S18",
+   "width": 500,
+   "height": 500,
+   "sha256": "dc5800c8d16250817d061a1f8263126d83ce254ce6ea4381089d1b88db387f80"
+  },
+  "Hijumee": {
+   "file": "AE_Hijumee_S18.png",
+   "url": "https://liquipedia.net/commons/images/e/ee/AE_Hijumee_S18.png",
+   "season": "S18",
+   "width": 500,
+   "height": 500,
+   "sha256": "1314aa0e48fc86efa685796146393ad109eab09867a1b3a4b50ef8464b50b0a2"
+  },
+  "Itoshi Kesu": {
+   "file": "DEWA_Kesu_S18.png",
+   "url": "https://liquipedia.net/commons/images/0/05/DEWA_Kesu_S18.png",
+   "season": "S18",
+   "width": 500,
+   "height": 500,
+   "sha256": "4cbc3f98d16b1ae254cc296601f72b9582eff7256b45b359459f7475c5ad85ca"
+  },
+  "Jiizee": {
+   "file": "NAVI_Jiizee_S18.png",
+   "url": "https://liquipedia.net/commons/images/9/9f/NAVI_Jiizee_S18.png",
+   "season": "S18",
+   "width": 500,
+   "height": 500,
+   "sha256": "9801da237d617ddebcafeb3df840290b07d72176e481fe3095d7f5f5fb902bd1"
+  },
+  "Joshua": {
+   "file": "Lynchh_S18.png",
+   "url": "https://liquipedia.net/commons/images/e/e3/Lynchh_S18.png",
+   "season": "S18",
+   "width": 500,
+   "height": 500,
+   "sha256": "82fe18df4ed5df7db80e07b7e7515b3e21c63524242a929828d750513d14e981"
+  },
+  "Joshuaa": {
+   "file": "NAVI_Joshua_S18.png",
+   "url": "https://liquipedia.net/commons/images/6/69/NAVI_Joshua_S18.png",
+   "season": "S18",
+   "width": 500,
+   "height": 500,
+   "sha256": "de0096aaa441d4948a71bf2a8e7fdb21446406e4c0bc5eacf61e90d5081de76d"
+  },
+  "Kairi": {
+   "file": "ONIC_Kairi_S18.png",
+   "url": "https://liquipedia.net/commons/images/b/bb/ONIC_Kairi_S18.png",
+   "season": "S18",
+   "width": 500,
+   "height": 500,
+   "sha256": "617dd26a60463c2bddad1c79cfebec04d8fb56685a9229a99718cfd947c6b15a"
+  },
+  "Karss": {
+   "file": "NAVI_Karss_S18.png",
+   "url": "https://liquipedia.net/commons/images/f/f5/NAVI_Karss_S18.png",
+   "season": "S18",
+   "width": 500,
+   "height": 500,
+   "sha256": "cf42bc0a506ca84857eb97c732f6260764c9fafbd6c5da46ed9dfcf3924f9444"
+  },
+  "Kayn": {
+   "file": null,
+   "status": "kept-192",
+   "reason": "Liquipedia only has a different S17 photo; kept the current portrait",
+   "width": 192,
+   "height": 192,
+   "sha256": "1f092dfe3f8005ae03913f8a2114c81035ff7b2ca9a92bb835eb8c9797090b3a"
+  },
+  "Kelra": {
+   "file": "ONIC_Kelra_S18.png",
+   "url": "https://liquipedia.net/commons/images/2/20/ONIC_Kelra_S18.png",
+   "season": "S18",
+   "width": 500,
+   "height": 500,
+   "sha256": "38f6c423d93d0327dbd5228b526eda05eb40d2c659d278ac99579a191375d594"
+  },
+  "KennzySkie": {
+   "file": "GEEK_KennzyySkie_S18.png",
+   "url": "https://liquipedia.net/commons/images/6/6f/GEEK_KennzyySkie_S18.png",
+   "season": "S18",
+   "width": 500,
+   "height": 500,
+   "sha256": "783ac15407a824104f3b257df0e89f6a4bbc19adbcbc8d76b99db1a696dbadd3"
+  },
+  "Keven": {
+   "file": "TLID_Keven_S18.png",
+   "url": "https://liquipedia.net/commons/images/7/79/TLID_Keven_S18.png",
+   "season": "S18",
+   "width": 500,
+   "height": 500,
+   "sha256": "7433529d658de78b4d9d7e3227fa077149b13503d47c0b3180350e24556679a7"
+  },
+  "Kevinn": {
+   "file": "TLID_Kevin_S18.png",
+   "url": "https://liquipedia.net/commons/images/0/00/TLID_Kevin_S18.png",
+   "season": "S18",
+   "width": 500,
+   "height": 500,
+   "sha256": "adee78d8c30ccd7becf668dca0174a1dd4ccfabedf918e5e3a183b218c8bbe8d"
+  },
+  "Kiboy": {
+   "file": "ONIC_Kiboy_S18.png",
+   "url": "https://liquipedia.net/commons/images/6/6c/ONIC_Kiboy_S18.png",
+   "season": "S18",
+   "width": 500,
+   "height": 500,
+   "sha256": "91a9238ef277a0e95580091d82e12dd4f294979e80cb62bd5555fde7e21b7886"
+  },
+  "Killuaa": {
+   "file": "ONIC_Killuaa_S18.png",
+   "url": "https://liquipedia.net/commons/images/f/fd/ONIC_Killuaa_S18.png",
+   "season": "S18",
+   "width": 500,
+   "height": 500,
+   "sha256": "6d66d3e42ed5bfcf0a5fa306af4fef1b3a63ea75316782ec1d5d1d4f45714dbb"
+  },
+  "Lutpi": {
+   "file": "ONIC_Lutpii_S18.png",
+   "url": "https://liquipedia.net/commons/images/7/7b/ONIC_Lutpii_S18.png",
+   "season": "S18",
+   "width": 500,
+   "height": 500,
+   "sha256": "672623feb966e1fb5872514ca65a4b609b5439a4e9be7e5b5c66d5cc501b4d7d"
+  },
+  "Lyoni": {
+   "file": "TLID_Lyoni_S18.png",
+   "url": "https://liquipedia.net/commons/images/e/ea/TLID_Lyoni_S18.png",
+   "season": "S18",
+   "width": 500,
+   "height": 500,
+   "sha256": "a54e1eacae13478038e288a654448fe363accb47ea8b0247d2e22462ebe8cc66"
+  },
+  "MarceL": {
+   "file": null,
+   "status": "kept-192",
+   "reason": "Liquipedia only has a different S17 photo; kept the current portrait",
+   "width": 192,
+   "height": 192,
+   "sha256": "d033eb696e5fc6691f6ee6fbcc3aa8bf67a1ef7f7dcabfea9db341fbd2d6271b"
+  },
+  "Maybeee": {
+   "file": "DEWA_Maybeee_S18.png",
+   "url": "https://liquipedia.net/commons/images/0/0f/DEWA_Maybeee_S18.png",
+   "season": "S18",
+   "width": 500,
+   "height": 500,
+   "sha256": "6cac42eef0ce33a72df5dea76a4db2eea351573cf3fed787a64f9c3eae17339b"
+  },
+  "Maykidss": {
+   "file": "GEEK_Maykids_S17.png",
+   "url": "https://liquipedia.net/commons/images/e/ed/GEEK_Maykids_S17.png",
+   "season": "S17",
+   "width": 500,
+   "height": 500,
+   "sha256": "29ca20ab575b36b2e9b78b2c7c9be22ff3443634c59887e383195525e4e1a551",
+   "note": "same photo as the previous 192px portrait; crop differs slightly"
+  },
+  "Morenooo": {
+   "file": "BTR_Moreno_S18.png",
+   "url": "https://liquipedia.net/commons/images/5/55/BTR_Moreno_S18.png",
+   "season": "S18",
+   "width": 500,
+   "height": 500,
+   "sha256": "5bce11c7fc9e012cd6cf9f0d0fb9b1afe66cf718b9b1152bec3bd031b447191a"
+  },
+  "Muezza": {
+   "file": "EVOS_Muezza_S18.png",
+   "url": "https://liquipedia.net/commons/images/2/25/EVOS_Muezza_S18.png",
+   "season": "S18",
+   "width": 500,
+   "height": 500,
+   "sha256": "d3916749d131dd12e0e89aac16cc961bafe1aea6aeb21df56f93319a98b0fa54"
+  },
+  "Nazara": {
+   "file": null,
+   "status": "kept-192",
+   "reason": "no higher-resolution portrait on Liquipedia Commons",
+   "width": 192,
+   "height": 192,
+   "sha256": "6f91f02c260b0f841c84b97bfe32e9e0b796ad9194a8b0ac03f2e0e065ddd13c"
+  },
+  "Nino": {
+   "file": "AE_Nino_S18.png",
+   "url": "https://liquipedia.net/commons/images/2/2c/AE_Nino_S18.png",
+   "season": "S18",
+   "width": 500,
+   "height": 500,
+   "sha256": "0c1ec741ac7a0e57e5f843d3a28d1b5b8a98ae9bbfa7854b96df0d2bca7f0eb6"
+  },
+  "Nnael": {
+   "file": "BTR_Nnael_S18.png",
+   "url": "https://liquipedia.net/commons/images/d/d6/BTR_Nnael_S18.png",
+   "season": "S18",
+   "width": 500,
+   "height": 500,
+   "sha256": "9e4894c4ae129e19d00e50aa97390294979183ffb53daf42addcbc62f8cf970e"
+  },
+  "Octa": {
+   "file": "DEWA_Octa_S18.png",
+   "url": "https://liquipedia.net/commons/images/c/c7/DEWA_Octa_S18.png",
+   "season": "S18",
+   "width": 500,
+   "height": 500,
+   "sha256": "427e613885bff71ad91c5da9373271897166d4801f7a3fb1144cc8a84bb94e79"
+  },
+  "QINN": {
+   "file": "DEWA_QINN_S18.png",
+   "url": "https://liquipedia.net/commons/images/c/c8/DEWA_QINN_S18.png",
+   "season": "S18",
+   "width": 500,
+   "height": 500,
+   "sha256": "34875426e05826c785a94622504e769ff332f8c45df2bef2fd33b965b797e688"
+  },
+  "Rendyyy": {
+   "file": "EVOS_Rendyy_S18.png",
+   "url": "https://liquipedia.net/commons/images/d/d3/EVOS_Rendyy_S18.png",
+   "season": "S18",
+   "width": 500,
+   "height": 500,
+   "sha256": "c17b7218f0d867610698590d456c6d4d7b7ea2026446271289a69dbb045f2fcb"
+  },
+  "Ryzaa": {
+   "file": "EVOS_Ryzaa_S18.png",
+   "url": "https://liquipedia.net/commons/images/2/29/EVOS_Ryzaa_S18.png",
+   "season": "S18",
+   "width": 500,
+   "height": 500,
+   "sha256": "a9d58dc98e5aa2395516bf46a1639a655348597d6a23db369a8614fd737025af"
+  },
+  "S A N Z": {
+   "file": "ONIC_Sanz_S18.png",
+   "url": "https://liquipedia.net/commons/images/4/4b/ONIC_Sanz_S18.png",
+   "season": "S18",
+   "width": 500,
+   "height": 500,
+   "sha256": "7d1bf35262a36b73b8d3153836d8222abbe096e581d862837fba6ea72733d867"
+  },
+  "SSAMUEL": {
+   "file": "ONIC_SamueL_S18.png",
+   "url": "https://liquipedia.net/commons/images/d/d9/ONIC_SamueL_S18.png",
+   "season": "S18",
+   "width": 500,
+   "height": 500,
+   "sha256": "dbb753f9218455b0147eb3ee5dd849dbada4226f03289d5503d793355dbf3ecb"
+  },
+  "Said": {
+   "file": "RRQ_Idok_S18.png",
+   "url": "https://liquipedia.net/commons/images/7/79/RRQ_Idok_S18.png",
+   "season": "S18",
+   "width": 500,
+   "height": 500,
+   "sha256": "ed4099c59b56cef45101dcc7b5cf6619ffdae5db15ff81a4207002119a113b16"
+  },
+  "Shanee": {
+   "file": "DEWA_Shane_MDL_S14.png",
+   "url": "https://liquipedia.net/commons/images/2/24/DEWA_Shane_MDL_S14.png",
+   "season": "MDL S14",
+   "width": 500,
+   "height": 500,
+   "sha256": "0a4b4d832947f54ff073e92e6f30c2fe276824db351540f567826d7d3501c971",
+   "note": "same photo as the previous 192px portrait; exact downscale match"
+  },
+  "Shogun": {
+   "file": "BTR_Shogun_S18.png",
+   "url": "https://liquipedia.net/commons/images/b/bd/BTR_Shogun_S18.png",
+   "season": "S18",
+   "width": 500,
+   "height": 500,
+   "sha256": "e12b2938603d8a48061e5b138daea436f970e458d4dd14104455f18a0c8f4a06"
+  },
+  "Vell": {
+   "file": "EVOS_Vell_S18.png",
+   "url": "https://liquipedia.net/commons/images/4/48/EVOS_Vell_S18.png",
+   "season": "S18",
+   "width": 500,
+   "height": 500,
+   "sha256": "09527b0e1051143f6a598cf202eab20fe6d95a5ce80934252116f3e968f76c35"
+  },
+  "Yazukee": {
+   "file": "AE_Yazukee_S18.png",
+   "url": "https://liquipedia.net/commons/images/a/ad/AE_Yazukee_S18.png",
+   "season": "S18",
+   "width": 500,
+   "height": 500,
+   "sha256": "5b3d11dbb2f793d47a2182c926fcaef4ac37b67624980b28e12329e49008c1ed"
+  },
+  "Zeonn": {
+   "file": "NAVI_Zeonn_S18.png",
+   "url": "https://liquipedia.net/commons/images/8/8c/NAVI_Zeonn_S18.png",
+   "season": "S18",
+   "width": 500,
+   "height": 500,
+   "sha256": "49ad4ccc9da9f21d6f7f028c6333aedd2d397ce26433bae797a6d20324863022"
+  },
+  "alekk": {
+   "file": "AE_Alekk_S18.png",
+   "url": "https://liquipedia.net/commons/images/c/c1/AE_Alekk_S18.png",
+   "season": "S18",
+   "width": 500,
+   "height": 500,
+   "sha256": "7749ecee1b9466dabca8044e218cf0f8c9b984d4aebb0f4e25e73cfaea3bd99a"
+  }
+ }
+}
