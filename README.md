@@ -260,6 +260,8 @@ python -m http.server 8931
 - Matches, games, per-player stats, drafts: `https://mpl.mlbbhub.com/api/v1/id`
 - Series MVPs, schedule cross-check: Liquipedia (`MPL/Indonesia/Season 18`)
 - Hero artwork: scoregg CDN, Liquipedia infoboxes (see `tools/fetch_assets.py`)
+- Player portraits: Liquipedia Commons originals (CC-BY-SA 3.0), 500×500 where
+  available; per-file sources in `assets/players/provenance.json`
 
 Data-access notes: the ETL and the in-app Refresh button call public JSON
 endpoints and the MediaWiki `api.php` interface with identifying user agents
