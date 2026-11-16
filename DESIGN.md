@@ -201,6 +201,10 @@ recent games and items. Cards follow their column down, so a short card never le
 hole under its neighbour. Only the ragged end of the shorter column is allowed, and the closing
 definitions run full width under both.
 
+The season page reads the same way: standings on the left and the MVP race plus playoffs on the
+right, then recent results spanning both columns underneath. Nothing sits beside a shorter
+neighbour, so the page has no card-shaped hole at its foot.
+
 Teams opens with a nine-row league board, then nine club dossiers. The top three in competition order
 open; the other six collapse to their identity strip. The dossier uses 1.06fr / 1fr — roster and
 tendencies in the left stack, draft, map record and head-to-head in the right.
@@ -218,6 +222,17 @@ the portrait's `drop-shadow(0 26px 48px rgba(0,0,0,.62))` and the bracket's win 
 
 **The Lit-From-Above Rule.** The ground carries one gradient from the top of the page and a faint crown
 radial. Nothing is lit from below, from the side, or from a colour.
+
+## Motion
+
+Motion belongs to navigation and feedback, never to arrivals. One authored moment carries the
+product: the player's portrait leaves its card and becomes the profile hero — a shared-element
+morph at 420ms on `cubic-bezier(.16, 1, .3, 1)` while the frame crossfades 160/240ms underneath.
+It runs only when a player is opened from a visible card, reverses on **All players**, and the grid
+returns to the scroll position it left. Every other animation is short and answers a state: a
+dialog lands in 240ms, a scoreboard game swaps in 180ms, a disclosure unfolds in 260ms, and the
+refresh control carries a determinate 2px rail. Radars draw only for cards a filter has just
+produced. Reduced motion keeps the state changes and removes the travel.
 
 ## Shapes
 
@@ -237,6 +252,26 @@ each chip is a 44px target.
 
 ### Cards / Containers
 Plate gradient, 1px seam, 10px radius, 16px padding, corner tick, crest edge on player cards only.
+
+### Championship Plate (signature)
+The Overview hero from the moment a grand final is decided: the club's **whole roster is the
+image**, not a crest with a score beside it. One player stands forward as the focal point — the
+series MVP when he is on the winning club, otherwise the first player in lane order — and the rest
+stand in two rows behind him, centred and staggered, bottom-anchored with a 30% overlap so bodies
+stack but faces never collide. Portraits run 0.60 / 0.76 / 0.94 of a 292px base (173 / 219 / 271 at
+1440), six times a card portrait; a player with no cut-out gets a ghost monogram and his IGN in
+mono rather than a broken image or an invented face.
+
+Above the lineup a 52px crest lockup, the club name at display scale and one line —
+`4–2 over [crest] NAVI`. Below it one machined band carries the grand-final trace (one cell per
+game, W marked by a 3px chalk bar under the letter, L by a dashed cell), the series MVP, the
+action, and the roster line in mono. The club code sits behind the lineup at 4.5% of the crest
+tint; ONIC, which derives no accent, takes a chalk hairline and a chalk ghost.
+
+No trophy, no laurel, no gold, no gradient text, no glow, and no second focal image: grandeur comes
+from scale, symmetry and air. Below 620 the band stacks, the name steps down, and a roster wider
+than six tightens its figures so the formation reflows instead of clipping. Print drops the ghost,
+the shadows and the action, and reads as a black-on-white certificate.
 
 ### Inputs / Fields
 Plate fill, 1px seam, 6px radius. Form controls inherit the UI face — a UA default is a defect. Focus
