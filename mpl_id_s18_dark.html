@@ -31,8 +31,6 @@ header{position:sticky;top:0;z-index:20;background:rgba(19,19,17,.72);backdrop-f
 .chips{display:flex;gap:6px;flex-wrap:wrap}.chips button{border:1px solid var(--line);background:transparent;color:var(--muted);border-radius:9999px;padding:3px 10px;cursor:pointer;font-size:11px;letter-spacing:.05em;text-transform:uppercase}.chips button[aria-pressed=true]{background:var(--ink);color:var(--bg);border-color:var(--ink)}
 select{background:var(--bg2);color:var(--ink);border:1px solid var(--line);border-radius:6px;padding:5px 8px}
 main{padding:20px 20px 80px}.masonry{display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:var(--gap)}
-.masonry.wide .pin{grid-column:span 2}
-@media(max-width:640px){.masonry.wide .pin{grid-column:span 1}}
 .masonry.list{display:block}
 .masonry.list>.pin+.pin{margin-top:var(--gap)}
 .masonry>.pin{min-width:0}
@@ -143,6 +141,41 @@ input,select,textarea{caret-color:var(--ink)}
 .bar{display:block;height:6px;background:rgba(255,255,255,.08);border-radius:9999px;overflow:hidden}.bar>span{display:block;height:100%;background:var(--ink);border-radius:9999px}
 .an-pct{font-family:var(--font-mono);font-size:10px;color:var(--muted);margin-left:4px}
 .an-small{opacity:.55}
+.an-bar{display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap;margin:0 0 12px}
+.an-bar h3{margin:0}
+.an-cap{font-family:var(--font-mono);font-size:10px;letter-spacing:.06em;text-transform:uppercase;color:var(--muted)}
+.an-table th.n,.an-table td.n{text-align:right}
+.an-impact{min-width:860px}
+.an-hero-table{min-width:640px}
+.an-tight{width:100%;max-width:760px}
+.an-ci{font-family:var(--font-mono);font-size:10px;color:var(--muted)}
+.an-cih{font-family:var(--font-mono);font-size:10px;font-weight:400;letter-spacing:.02em;color:var(--muted)}
+.an-fig{font-family:var(--font-display);font-size:15px;font-weight:700;letter-spacing:-.015em}
+.an-note{margin:11px 0 0;max-width:94ch;font-size:11px;line-height:1.55;color:var(--muted)}
+.an-more{padding:0}
+.an-drawer+.an-drawer{border-top:1px solid var(--line)}
+.an-drawer>summary{display:flex;align-items:center;gap:10px;padding:13px 18px;cursor:pointer;list-style:none}
+.an-drawer>summary::-webkit-details-marker{display:none}
+.an-drawer>summary:hover{background:rgba(255,255,255,.025)}
+.an-dr-name{font-family:var(--font-display);font-size:13px;font-weight:600;letter-spacing:-.01em;color:var(--ink)}
+.an-dr-meta{margin-left:auto;font-family:var(--font-mono);font-size:10px;letter-spacing:.06em;text-transform:uppercase;color:var(--muted);text-align:right}
+.an-drawer>summary svg{width:14px;height:14px;flex:none;fill:none;stroke:var(--muted);stroke-width:1.6;stroke-linecap:round;stroke-linejoin:round;transition:transform .18s ease}
+.an-drawer[open]>summary svg{transform:rotate(180deg)}
+.an-drawer-body{padding:2px 18px 16px}
+@media(prefers-reduced-motion:reduce){.an-drawer>summary svg{transition:none}}
+@media(max-width:640px){
+  .an-bar{flex-direction:column;align-items:stretch;gap:10px}
+  .an-lanes{display:flex;flex-wrap:wrap;gap:6px;overflow:visible;border:0}
+  .an-lanes button{flex:1 1 30%;justify-content:center;border:1px solid var(--line);border-radius:8px;min-height:40px;padding:6px 4px;white-space:nowrap}
+  .an-lanes button[aria-pressed=true],.an-lanes button[aria-selected=true]{border-color:transparent}
+  .an-impact{min-width:0}
+  .an-impact .c-lane,.an-impact .c-gp,.an-impact .c-kda,.an-impact .c-gpm,.an-impact .c-dmgp,.an-impact .c-kp{display:none}
+  .an-ci{display:block;margin:2px 0 0;letter-spacing:0}
+  .an-cih{display:none}
+  .an-hero-table{min-width:0}
+  .an-hero-table .c-role,.an-hero-table .c-dmg,.an-hero-table .c-flex{display:none}
+  .an-dr-meta{font-size:9px}
+}
 .palrow{display:flex;justify-content:space-between;gap:12px;width:100%;background:transparent;border:0;border-bottom:1px solid var(--line);color:var(--ink);padding:10px 4px;text-align:left;cursor:pointer;font:inherit}
 .palrow:hover,.palrow:focus-visible{background:rgba(255,255,255,.05)}
 .palrow span{color:var(--muted);font-family:var(--font-mono);font-size:10px;text-align:right}
@@ -152,6 +185,34 @@ input,select,textarea{caret-color:var(--ink)}
 .prep-actions select{background:var(--bg2);color:var(--ink);border:1px solid var(--line);border-radius:6px;padding:7px 9px;min-height:34px;max-width:220px}
 .prep-two{display:grid;grid-template-columns:1fr 1fr;gap:18px}
 @media(max-width:700px){.prep-two{grid-template-columns:1fr}}
+@media(max-width:700px){
+  .prep-bar .prep-actions{margin-left:0;width:100%}
+  .prep-actions label{flex:1 1 100%}
+  .prep-actions select{max-width:none;width:100%}
+  .prep-map th:last-child,.prep-map td:last-child{display:none}
+}
+.prep-head .body{padding:16px 18px}
+.prep-bar{display:flex;align-items:center;gap:18px;flex-wrap:wrap}
+.prep-who{display:flex;align-items:center;gap:11px;min-width:0}
+.prep-who img{width:28px;height:28px;object-fit:contain;flex:none}
+.prep-who h2{margin:0;font-family:var(--font-display);font-size:19px;font-weight:600;letter-spacing:-.015em;line-height:1.15;color:var(--ink)}
+.prep-who p{margin:3px 0 0;font-size:11.5px;color:var(--muted)}
+.prep-rating{display:flex;align-items:baseline;gap:7px;flex:none;margin-left:2px;padding-left:16px;border-left:1px solid var(--line)}
+.prep-rating>b{font-family:var(--font-display);font-size:24px;font-weight:700;line-height:1;letter-spacing:-.01em;font-variant-numeric:tabular-nums}
+.prep-rating>span{font-family:var(--font-mono);font-size:9.5px;line-height:1.4;letter-spacing:.06em;text-transform:uppercase;color:var(--muted)}
+.prep-rating em{display:block;font-style:normal;letter-spacing:.02em}
+.prep-bar .prep-actions{margin-left:auto}
+.prep-facts{display:flex;flex-wrap:wrap;gap:6px 18px;margin:14px 0 0;padding:12px 0 0;border-top:1px solid var(--line);font-family:var(--font-mono);font-size:10.5px;letter-spacing:.06em;text-transform:uppercase;color:var(--muted)}
+.prep-facts.before{margin:0 0 12px;padding:0 0 12px;border-top:0;border-bottom:1px solid var(--line)}
+.prep-facts span{display:inline-flex;align-items:baseline;gap:6px}
+.prep-facts b{font-weight:400;color:var(--ink);font-variant-numeric:tabular-nums}
+.prep-facts em{font-style:normal;color:var(--muted)}
+.prep-h2{display:flex;align-items:baseline;gap:10px;flex-wrap:wrap;margin:0 0 10px;font-family:var(--font-display);font-size:17px;font-weight:600;letter-spacing:-.01em;color:var(--ink)}
+.prep-h2 span{font-family:var(--font-mono);font-size:10px;font-weight:400;letter-spacing:.07em;text-transform:uppercase;color:var(--muted)}
+.prep-mono{margin:8px 0 0;font-family:var(--font-mono);font-size:10.5px;line-height:1.55;color:var(--muted)}
+.prep-wrbar{display:block;height:6px;border-radius:9999px;background:var(--line);overflow:hidden;min-width:70px}
+.prep-wrbar i{display:block;height:100%;background:var(--ink)}
+@media print{.prep-wrbar{background:#ddd!important}.prep-wrbar i{background:#000!important}}
 @media(max-width:640px){.lscroll th:first-child,.lscroll td:first-child{position:sticky;left:0;background:var(--bg2);z-index:1}.seg button{min-height:34px}}
 @media print{:root{--bg:#fff;--bg2:#fff;--ink:#000;--muted:#444;--line:#ccc}header,.tabs,.filters,.prep-actions,.no-print{display:none!important}.masonry{display:block}.pin{break-inside:avoid;margin:0 0 10px}body{background:#fff!important;color:#000!important}main{padding:0}}
 .brk{display:grid;grid-auto-flow:column;grid-auto-columns:minmax(170px,1fr);gap:28px;overflow-x:auto;padding:6px 2px 10px 0;position:relative}
@@ -657,8 +718,10 @@ button,select,input,textarea{font-family:inherit}
   .pl .ppic{transition:none}
   .pl.new .rd-plot{animation:none}
   .tm-method summary svg{transition:none}
+  .an-method summary svg,.an-drawer>summary svg{transition:none}
 }.palrow.active{background:rgba(255,255,255,.07)}
 .vh{grid-column:1/-1;display:flex;align-items:baseline;gap:14px;flex-wrap:wrap;padding:2px 2px 4px}
+.vh-x{margin-left:auto;align-self:center;display:flex;align-items:center;gap:10px}
 .vh h1{font-family:var(--font-display);font-size:22px;font-weight:700;letter-spacing:-.02em;margin:0;color:var(--ink)}
 .vh p{margin:0;font-family:var(--font-ui);font-size:12px;color:var(--muted)}/* ---- print: the same markup, on paper ---- */
 @media print{
@@ -693,7 +756,7 @@ button,select,input,textarea{font-family:inherit}
   .an-pct{color:#555!important}
 }@media print{
   .masonry{display:grid!important;grid-template-columns:repeat(3,1fr)!important;gap:10px!important}
-  .pin[style*="grid-column"],.masonry.wide .pin,.ov2{grid-column:1/-1!important}
+  .pin[style*="grid-column"],.ov2{grid-column:1/-1!important}
   .pl-radar{max-width:200px!important;margin:8px auto 0!important}
   .pl,.pin{break-inside:avoid;page-break-inside:avoid}
 }@media print{
@@ -794,12 +857,13 @@ a.pl,a.lrow{color:inherit;text-decoration:none}
 .tm-foot{margin-top:12px}
 .tm-foot .tm-note{margin:0;font-size:11.5px;line-height:1.5}
 .tm-method{display:block;margin-top:7px}
-.tm-method summary{display:inline-flex;align-items:center;gap:6px;font-family:var(--font-mono);font-size:10px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);cursor:pointer;list-style:none}
-.tm-method summary::-webkit-details-marker{display:none}
-.tm-method summary:hover{color:var(--ink)}
-.tm-method summary svg{width:12px;height:12px;flex:none;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round;transition:transform .18s ease}
-.tm-method[open] summary svg{transform:rotate(180deg)}
-.tm-method p{margin:9px 0 0;max-width:96ch;font-size:10.5px;line-height:1.6;color:var(--muted)}
+.an-method{display:block;margin-top:14px;padding-top:11px;border-top:1px solid var(--line)}
+.an-method summary,.tm-method summary{display:inline-flex;align-items:center;gap:6px;font-family:var(--font-mono);font-size:10px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);cursor:pointer;list-style:none}
+.an-method summary::-webkit-details-marker,.tm-method summary::-webkit-details-marker{display:none}
+.an-method summary:hover,.tm-method summary:hover{color:var(--ink)}
+.an-method summary svg,.tm-method summary svg{width:12px;height:12px;flex:none;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round;transition:transform .18s ease}
+.an-method[open] summary svg,.tm-method[open] summary svg{transform:rotate(180deg)}
+.an-method p,.tm-method p{margin:9px 0 0;max-width:96ch;font-size:10.5px;line-height:1.6;color:var(--muted)}
 .tm-note{max-width:96ch;margin:11px 0 0;font-size:10.5px;line-height:1.55;color:var(--muted)}
 .tm-index{display:none}
 .tm-idx{display:grid;grid-template-columns:22px 26px minmax(0,1fr) auto auto 14px;align-items:center;gap:8px;width:100%;padding:11px 2px;border:0;border-bottom:1px solid var(--line);background:transparent;color:var(--ink);text-align:left;cursor:pointer}
@@ -910,13 +974,13 @@ a.pl,a.lrow{color:inherit;text-decoration:none}
 @supports selector(::details-content){
   @media(prefers-reduced-motion:no-preference){
     :root{interpolate-size:allow-keywords}
-    .mweek::details-content,.mweek-list::details-content,.tm-dossier::details-content,.tm-method::details-content{block-size:0;overflow:clip;transition:block-size .26s cubic-bezier(.16,1,.3,1),content-visibility .26s allow-discrete}
-    .mweek[open]::details-content,.mweek-list[open]::details-content,.tm-dossier[open]::details-content,.tm-method[open]::details-content{block-size:auto}
+    .mweek::details-content,.mweek-list::details-content,.tm-dossier::details-content,.tm-method::details-content,.an-method::details-content,.an-drawer::details-content{block-size:0;overflow:clip;transition:block-size .26s cubic-bezier(.16,1,.3,1),content-visibility .26s allow-discrete}
+    .mweek[open]::details-content,.mweek-list[open]::details-content,.tm-dossier[open]::details-content,.tm-method[open]::details-content,.an-method[open]::details-content,.an-drawer[open]::details-content{block-size:auto}
   }
 }
 
 @media print{
-  .mweek::details-content,.mweek-list::details-content,.tm-dossier::details-content,.tm-method::details-content{block-size:auto!important;overflow:visible!important;content-visibility:visible!important}
+  .mweek::details-content,.mweek-list::details-content,.tm-dossier::details-content,.tm-method::details-content,.an-method::details-content,.an-drawer::details-content{block-size:auto!important;overflow:visible!important;content-visibility:visible!important}
   .tm-board .body{padding:0}
   .tm-table{display:table!important;min-width:0!important}
   .tm-index{display:none!important}
@@ -925,6 +989,13 @@ a.pl,a.lrow{color:inherit;text-decoration:none}
   .tm-method::details-content{content-visibility:visible!important;display:block!important}
   .tm-method summary{display:none!important}
   .tm-method p{color:#555!important}
+  .an-method::details-content,.an-drawer::details-content{content-visibility:visible!important;display:block!important}
+  .an-method summary,.an-drawer>summary svg{display:none!important}
+  .an-method p,.an-note{color:#555!important}
+  .an-drawer>summary{padding:12px 0 6px;border-bottom:1px solid #bbb}
+  .an-drawer-body{padding:0 0 12px}
+  .an-drawer+.an-drawer{border-top:0}
+  .an-more{border-color:#bbb!important;background:#fff!important}
   .tm-dossier{break-inside:auto;background:#fff!important;border-color:#bbb!important;box-shadow:none!important}
   .tm-dossier:not([open])>.tm-body{display:block!important}
   .tm-hero{background:#fff!important;border-top-width:2px!important;padding:12px 14px 10px!important}
@@ -995,6 +1066,31 @@ a.pl,a.lrow{color:inherit;text-decoration:none}
 
 .phasebar h2{margin:.25em 0;font-family:var(--font-display);font-size:17px;font-weight:600;letter-spacing:-.01em}
 @media(max-width:640px){#dx,#dx2,#dback{min-height:44px}}
+
+/* ---- Stats: one head carries the record switch, one plate holds the record.
+   Numbers are right-aligned so a column can be read as a column; the alias
+   note replaces a per-row parenthetical repeated 44 times. ---- */
+.st-answer{margin:7px 0 14px;font-size:12.5px;color:var(--muted)}
+.st-answer b{color:var(--ink);font-weight:600}
+.st-answer span{font-family:var(--font-mono);font-size:10.5px;white-space:nowrap}
+.st-tbl th.n,.st-tbl td.n{text-align:right}
+.st-tbl th.rk,.st-tbl td.rk{width:42px}
+.st-tbl td.rk{font-family:var(--font-mono);font-size:10.5px;color:var(--muted)}
+.st-tbl td.n{font-family:var(--font-mono);font-size:12px}
+.st-tbl td.lane{font-family:var(--font-mono);font-size:10.5px;letter-spacing:.05em;color:var(--muted)}
+.st-tbl tbody tr:last-child td{border-bottom:0}
+.st-heroes{table-layout:fixed}
+.st-heroes th:nth-child(1){width:34%}
+.st-heroes th:nth-child(2){width:14%}
+.st-heroes th:nth-child(n+3){width:13%}
+.st-note{margin:12px 0 0;font-family:var(--font-mono);font-size:10px;line-height:1.75;color:var(--muted)}
+.st-note b{font-weight:400;letter-spacing:.07em;text-transform:uppercase;color:var(--ink)}
+.st-hist{margin-top:14px;padding-top:12px;border-top:1px solid var(--line)}
+.st-hist table{margin-top:10px}
+.st-hist-tbl{table-layout:fixed}
+.st-hist-tbl th:nth-child(1){width:120px}
+.st-hist-tbl th:nth-child(2){width:38%}
+.st-hist td.mono{font-family:var(--font-mono);font-size:10.5px;color:var(--muted);white-space:nowrap}
 
 /* Player card -> profile: the face itself carries identity across the view change.
    Only the named portrait participates; the rest of the frame crossfades in place. */
@@ -1085,9 +1181,9 @@ const IMG_HIDE = 'onerror="this.style.visibility=\'hidden\'"';
 function eqId(u){const m=/(?:equipment|equip)\/(\d+)\.png/.exec(u||'');return m?m[1]:'';}
 function itemRef(u){const id=eqId(u);if(id)return id;if(u&&u.indexOf('scoregg.com')>-1)return String(u).split('?')[0];return null;}
 function srt(arr,fn,str){const d=(S.tsort&&S.tsort.d)||1;return [...arr].sort((a,b)=>str?String(fn(a)).localeCompare(String(fn(b)))*d:(fn(a)-fn(b))*d);}
-function th(t,k,label){const a=S.tsort.t===t&&S.tsort.k===k;return `<th data-ts="${t}:${k}">${label}${a?` <span class="sarr">${S.tsort.d===1?'▲':'▼'}</span>`:''}</th>`;}
+function th(t,k,label,cls){const a=S.tsort.t===t&&S.tsort.k===k;return `<th${cls?` class="${cls}"`:''} data-ts="${t}:${k}">${label}${a?` <span class="sarr">${S.tsort.d===1?'▲':'▼'}</span>`:''}</th>`;}
 function imgSlot(el){const s=document.createElement('span');s.className='slot-miss';s.title=el.alt||'item';s.textContent=el.dataset.eq||'?';el.replaceWith(s);}
-const S = {view:'overview',q:'',team:'',sort:'wr',lane:'',compact:false,layout:'grid',ov:null,player:'',mlimit:24,plimit:24,phase:'reg',stat:'mvp',tsort:{t:'heroes',k:'pick',d:-1},anLane:'',anTab:'players',prepOpp:'',prepTeam:'',tmode:'rating',teamFocus:'',_tmScrolled:false};
+const S = {view:'overview',q:'',team:'',sort:'wr',lane:'',compact:false,layout:'grid',ov:null,player:'',mlimit:24,plimit:24,phase:'reg',stat:'mvp',tsort:{t:'heroes',k:'pick',d:-1},histOpen:false,anLane:'',anTab:'players',prepOpp:'',prepTeam:'',tmode:'rating',teamFocus:'',_tmScrolled:false};
 const ANA={};
 let PREP=null;
 function anPart(k){
@@ -1141,7 +1237,7 @@ sortEl=document.getElementById('sort'),laneEl=document.getElementById('lane'),co
 chips=document.getElementById('chips'),dlg=document.getElementById('dlg');
 let lastFocus=null;
 const esc=s=>String(s??'').replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
-function viewHead(title,lead){return `<div class="vh"><h1>${esc(title)}</h1><p>${esc(lead)}</p></div>`;}
+function viewHead(title,lead,right){return `<div class="vh"><h1>${esc(title)}</h1><p>${esc(lead)}</p>${right?`<div class="vh-x">${right}</div>`:''}</div>`;}
 TEAMS.forEach(t=>{const b=document.createElement('button');b.textContent=t;b.setAttribute('aria-pressed','false');
 b.onclick=()=>{S.team=S.team===t?'':t;[...chips.children].forEach(x=>x.setAttribute('aria-pressed',x.textContent===S.team?'true':'false'));render();};chips.appendChild(b);});
 function setFilters(open){const f=document.getElementById('filters');if(!f)return;f.classList.toggle('open',open);document.body.classList.toggle('fopen',open);const b=document.getElementById('filterBtn');if(b)b.setAttribute('aria-expanded',open?'true':'false');}
@@ -1222,8 +1318,8 @@ const y=window.scrollY,hdr=document.querySelector('header');
 if(window.innerWidth>640||!hdr){if(hdr)hdr.classList.remove('navhide');}
 else if(y>lastY&&y>160){hdr.classList.add('navhide');}else if(y<lastY){hdr.classList.remove('navhide');}
 lastY=y;});},{passive:true});
-window.addEventListener('beforeprint',()=>{document.querySelectorAll('details.tm-method:not([open])').forEach(d=>{d.open=true;d.dataset.printed='1';});});
-window.addEventListener('afterprint',()=>{document.querySelectorAll('details.tm-method[data-printed]').forEach(d=>{d.open=false;delete d.dataset.printed;});});
+window.addEventListener('beforeprint',()=>{document.querySelectorAll('details.tm-method:not([open]),details.an-method:not([open]),details.an-drawer:not([open])').forEach(d=>{d.open=true;d.dataset.printed='1';});});
+window.addEventListener('afterprint',()=>{document.querySelectorAll('details.tm-method[data-printed],details.an-method[data-printed],details.an-drawer[data-printed]').forEach(d=>{d.open=false;delete d.dataset.printed;});});
 dlg.addEventListener('close',()=>{dnav=[];document.body.style.overflow='';if(lastFocus)lastFocus.focus();});
 dlg.addEventListener('click',e=>{if(e.target===dlg)dlg.close();});
 const dlg2El=document.getElementById('dlg2');if(dlg2El){dlg2El.addEventListener('click',e=>{if(e.target===dlg2El)dlg2El.close();});dlg2El.addEventListener('close',()=>{document.body.style.overflow='';});}
@@ -1322,7 +1418,6 @@ syncControls();
 board.classList.toggle('list',S.layout==='list');
 board.classList.toggle('pmode',S.view==='player');
 document.body.classList.toggle('pview',S.view==='player');
-board.classList.toggle('wide',S.view==='stats');
 document.querySelector('main.wrap').classList.toggle('full',S.view==='matches'&&S.layout==='list');
 if(S.view==='player'){out.push(playerHTML(S.player));}
 else{setTeamAccent(S.view==='prep'?S.prepOpp:'');}
@@ -1421,42 +1516,38 @@ if(S.layout==='list'){
 }
 }
 if(S.view==='stats'){
-out.push(viewHead('Stats','Series MVPs and hero meta'));
 const sbtn=(k,label)=>`<button data-stat="${k}" aria-pressed="${S.stat===k?'true':'false'}">${label}</button>`;
-out.push(`<div class="pin" style="grid-column:1/-1"><div class="body phasebar"><div><div class="kicker">Statistics</div><h3 style="margin:.25em 0">${S.stat==='heroes'?'Heroes':'Series MVP'}</h3></div><div class="seg" role="group" aria-label="Stats">${sbtn('mvp','Series MVP')}${sbtn('heroes','Heroes')}</div></div></div>`);
+out.push(viewHead('Stats','Series MVP awards and the hero record',`<div class="seg" role="group" aria-label="Stats">${sbtn('mvp','Series MVP')}${sbtn('heroes','Heroes')}</div>`));
 const statsStart=out.length;
 if(S.stat==='heroes'){
 const HC=window.HERO_CLASSES||{};
-const hs=(DATA.heroes||[]).map(h=>{const c=HC[h.hero]||{};return {hero:h.hero,img:h.hero_image,pick:+h.pick||0,ban:+h.ban||0,win:+h.win||0,wr:h.win_rate||'–',role:c.primary_role||'–',lane:c.primary_lane||'–',dmg:c.damage_type||'–'};});
-const pb=h=>(+h.pick||0)+(+h.ban||0);
+const hs=(DATA.heroes||[]).map(h=>{const c=HC[h.hero]||{};return {hero:h.hero,img:h.hero_image,pick:+h.pick||0,ban:+h.ban||0,win:+h.win||0,wr:h.win_rate||'–',lane:c.primary_lane||'–'};});
+const pb=h=>h.pick+h.ban;
 const played=hs.filter(h=>pb(h)>0).sort((a,b)=>b.pick-a.pick||pb(b)-pb(a));
-const maxPB=Math.max(1,...played.map(pb));
-const hval=(h,k)=>k==='hero'?h.hero:k==='ban'?h.ban:k==='win'?h.win:k==='wr'?(parseFloat(h.wr)||-1):k==='pb'||k==='share'?pb(h):h.pick;
+const hval=(h,k)=>k==='hero'?h.hero:k==='ban'?h.ban:k==='wr'?(parseFloat(h.wr)||-1):k==='pb'?pb(h):h.pick;
 const hrows=S.tsort.t==='heroes'?srt(played,h=>hval(h,S.tsort.k),S.tsort.k==='hero'):played;
 if(!played.length)out.push(`<div class="pin" style="grid-column:1/-1"><div class="body"><div class="empty">No hero data yet — hit Refresh.</div></div></div>`);
 else{
-const mostP=played[0],mostB=[...played].sort((a,b)=>b.ban-a.ban)[0],mostC=[...played].sort((a,b)=>pb(b)-pb(a))[0];
-const elig=played.filter(h=>h.pick>=5).sort((a,b)=>(b.win/Math.max(1,b.pick))-(a.win/Math.max(1,a.pick)));
-const bestWR=elig[0];
-out.push(`<div class="pin" style="grid-column:1/-1"><div class="body"><div class="kicker">Highlights · ${played.length} heroes contested</div><div class="tiles">`
-+`<div class="tile"><b data-ovhero="${esc(mostP.hero)}" data-scope="global" tabindex="0" title="Open ${esc(mostP.hero)} stats">${esc(mostP.hero)}</b><span>Most picked · ${mostP.pick}</span></div>`
-+`<div class="tile"><b data-ovhero="${esc(mostB.hero)}" data-scope="global" tabindex="0" title="Open ${esc(mostB.hero)} stats">${esc(mostB.hero)}</b><span>Most banned · ${mostB.ban}</span></div>`
-+(bestWR?`<div class="tile"><b data-ovhero="${esc(bestWR.hero)}" data-scope="global" tabindex="0" title="Open ${esc(bestWR.hero)} stats">${esc(bestWR.hero)}</b><span>Best win rate (5+ picks) · ${esc(bestWR.wr)}</span></div>`:'')
-+`<div class="tile"><b data-ovhero="${esc(mostC.hero)}" data-scope="global" tabindex="0" title="Open ${esc(mostC.hero)} stats">${esc(mostC.hero)}</b><span>Most contested · ${pb(mostC)} pick+ban</span></div>`
-+`</div></div></div>`);
-out.push(`<div class="pin" style="grid-column:1/-1"><div class="body"><div class="kicker">Every contested hero · pick / ban / win</div><div class="lscroll"><table style="min-width:980px"><tr>${th('heroes','hero','Hero')}<th>Role</th><th>Lane</th><th>DMG</th>${th('heroes','pick','Pick')}${th('heroes','ban','Ban')}${th('heroes','pb','P+B')}${th('heroes','win','Win')}${th('heroes','wr','WR')}${th('heroes','share','Share')}</tr>${hrows.map(h=>`<tr><td data-ovhero="${esc(h.hero)}" data-scope="global" tabindex="0" title="Open ${esc(h.hero)} stats"><span class="hcell">${h.img?`<img src="${esc(h.img)}" alt="" loading="lazy" onerror="this.remove()">`:''}${esc(h.hero)}</span></td><td>${esc(h.role)}</td><td>${esc(h.lane)}</td><td title="Damage type is derived from ability text, not an official field">${esc(h.dmg)}</td><td>${esc(h.pick)}</td><td>${esc(h.ban)}</td><td>${pb(h)}</td><td>${esc(h.win)}</td><td>${esc(h.wr)}</td><td style="min-width:110px"><span class="bar"><span style="width:${Math.round(pb(h)/maxPB*100)}%"></span></span></td></tr>`).join('')}</table></div></div></div>`);}
+const mostP=played[0],mostB=[...played].sort((a,b)=>b.ban-a.ban)[0];
+const bestWR=played.filter(h=>h.pick>=5).sort((a,b)=>(b.win/b.pick)-(a.win/a.pick))[0];
+out.push(`<div class="pin" style="grid-column:1/-1"><div class="body"><div class="kicker">Hero record · ${played.length} contested</div>`
++`<p class="st-answer">Most picked <b>${esc(mostP.hero)}</b> ${mostP.pick} · Most banned <b>${esc(mostB.hero)}</b> ${mostB.ban}${bestWR?` · Best win rate, 5+ picks <b>${esc(bestWR.hero)}</b> ${esc(bestWR.wr)} <span>(${bestWR.pick} picks)</span>`:''}</p>`
++`<div class="lscroll"><table class="st-tbl st-heroes" style="min-width:480px"><thead><tr><th scope="col">Hero</th><th scope="col">Lane</th>${th('heroes','pick','Pick','n')}${th('heroes','ban','Ban','n')}${th('heroes','pb','P+B','n')}${th('heroes','wr','WR','n')}</tr></thead><tbody>${hrows.map(h=>`<tr><td data-ovhero="${esc(h.hero)}" data-scope="global" tabindex="0" title="Open ${esc(h.hero)} stats"><span class="hcell">${h.img?`<img src="${esc(h.img)}" alt="" loading="lazy" onerror="this.remove()">`:''}${esc(h.hero)}</span></td><td class="lane">${esc(h.lane)}</td><td class="n">${esc(h.pick)}</td><td class="n">${esc(h.ban)}</td><td class="n">${esc(pb(h))}</td><td class="n">${h.pick?esc(h.wr):'–'}</td></tr>`).join('')}</tbody></table></div>`
++`</div></div>`);}
 }else{
 const mvps=(DATA.matches||[]).filter(m=>m.liq_mvp);
 const srcByCanon=mvpSources();
 const cnt={};mvps.forEach(m=>{const c=canonicalPlayer(m.liq_mvp);cnt[c]=(cnt[c]||0)+1;});
-const race=Object.entries(cnt).sort((a,b)=>b[1]-a[1]);
-const mx=race.length?race[0][1]:1;
-const rrows=S.tsort.t==='race'?srt(race,r=>S.tsort.k==='player'?r[0]:r[1],S.tsort.k==='player'):race;
-const srcNote=p=>[...(srcByCanon[p]||[])].filter(s=>s!==p);
-out.push(`<div class="pin"><div class="body"><div class="kicker">MVP race · ${mvps.length} series decided</div><h3 style="margin:.25em 0">Leaderboard</h3><table><tr>${th('race','rank','#')}${th('race','player','Player')}${th('race','mvps','MVPs')}<th></th></tr>${rrows.map(([p,n],i)=>{const alts=srcNote(p);return `<tr><td>#${i+1}</td><td><span data-p="${esc(p)}" tabindex="0" style="cursor:pointer;font-weight:600"${alts.length?` title="Source name${alts.length>1?'s':''}: ${esc(alts.join(', '))}"`:''}>${esc(p)}</span>${alts.length?` <span style="font-family:var(--font-mono);font-size:10.5px;color:var(--muted)">(as ${esc(alts.join(', '))})</span>`:''}</td><td>${n}</td><td style="min-width:90px"><span class="bar"><span style="width:${Math.round(n/mx*100)}%"></span></span></td></tr>`;}).join('')||'<tr><td colspan="4">No MVPs yet.</td></tr>'}</table></div></div>`);
+const race=Object.entries(cnt).sort((a,b)=>b[1]-a[1]||a[0].localeCompare(b[0]));
+const spell=[...new Set(race.flatMap(([p])=>[...(srcByCanon[p]||[])].filter(s=>s!==p).map(s=>s+' → '+p)))];
 const histBase=[...mvps].sort((a,b)=>String(a.iso_datetime||'').localeCompare(String(b.iso_datetime||'')));
 const hist=S.tsort.t==='hist'?srt(histBase,m=>S.tsort.k==='match'?(m.team_a+' '+m.team_b):S.tsort.k==='mvp'?canonicalPlayer(m.liq_mvp):(m.iso_datetime||''),true):histBase;
-out.push(`<div class="pin"><div class="body"><div class="kicker">History</div><h3 style="margin:.25em 0">Series MVPs</h3><div class="lscroll"><table style="min-width:520px"><tr>${th('hist','date','Date')}${th('hist','match','Match')}${th('hist','mvp','MVP')}</tr>${hist.map(m=>{const c=canonicalPlayer(m.liq_mvp);return `<tr><td>${esc(m.iso_date||m.date||'')}</td><td>${esc(m.team_a)} ${esc(m.score_a??'')}:${esc(m.score_b??'')} ${esc(m.team_b)}</td><td>${esc(c)}${c!==m.liq_mvp?` <span style="font-family:var(--font-mono);font-size:10.5px;color:var(--muted)">(as ${esc(m.liq_mvp)})</span>`:''}</td></tr>`;}).join('')}</table></div></div></div>`);}
+out.push(`<div class="pin" style="grid-column:1/-1"><div class="body"><div class="kicker">MVP race · ${mvps.length} awards · ${race.length} players</div>`
++`<table class="st-tbl"><thead><tr><th scope="col" class="rk">#</th><th scope="col">Player</th><th scope="col" class="n">MVPs</th></tr></thead><tbody>${race.map(([p,n],i)=>`<tr><td class="rk">${i+1}</td><td><a class="tlink" href="#view=player&player=${encodeURIComponent(p)}">${esc(p)}</a></td><td class="n">${n}</td></tr>`).join('')||'<tr><td colspan="3">No MVPs yet.</td></tr>'}</tbody></table>`
++(spell.length?`<p class="st-note"><b>Liquipedia spellings</b> ${spell.map(esc).join(' · ')}</p>`:'')
++`<details class="tm-method st-hist"${S.histOpen?' open':''}><summary>All ${mvps.length} award decisions<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg></summary>`
++`<div class="lscroll"><table class="st-tbl st-hist-tbl" style="min-width:520px"><thead><tr>${th('hist','date','Date')}${th('hist','match','Match')}${th('hist','mvp','MVP')}</tr></thead><tbody>${hist.map(m=>`<tr><td class="mono">${esc(shortDate(m.iso_date,true)||m.date||'')}</td><td>${esc(m.team_a)} ${esc(m.score_a??'')}:${esc(m.score_b??'')} ${esc(m.team_b)}</td><td>${esc(canonicalPlayer(m.liq_mvp))}</td></tr>`).join('')}</tbody></table></div>`
++`</details></div></div>`);}
 out.push('<section class="subpanel" role="tabpanel" id="stats-panel" aria-labelledby="subtab-'+S.stat+'">'+out.splice(statsStart).join('')+'</section>');}
 if(S.view==='prep'){
 out.push(viewHead('Prep','One opponent, one page'));
@@ -1469,64 +1560,56 @@ const myCode=(S.prepTeam&&S.prepTeam!==oppCode&&codes.includes(S.prepTeam))?S.pr
 const my=myCode?TM.teams.find(t=>t.team===myCode):null;
 if(opp){
 const pc=v=>Math.round(v*100);
-const mins=v=>v?Math.round(v/6)/10+'m':'—';
-const signed=v=>`${v>0?'+':''}${Math.round(v)}`;
 const noMap=(DATA.games||[]).filter(g=>!g.map_mode).length;
 const oppD=DM.teams.find(t=>t.team===opp.team)||{topPicks:[],topBans:[],firstBanBlue:[],firstBanRed:[],heroStats:{},picks:0};
 const oppPlayers=AN.players.filter(p=>p.team===opp.team).sort((a,b)=>b.impact-a.impact);
 const myPlayers=my?AN.players.filter(p=>p.team===my.team):[];
 const oppBans=buildBanRanking(opp.team,DM,3).slice(0,10);
-const heroWr=h=>{const s=(oppD.heroStats||{})[h];return s&&s.n?pc(s.w/s.n)+'%':'—';};
 const opt=(v,l,sel)=>`<option value="${esc(v)}"${sel?' selected':''}>${esc(l)}</option>`;
 const teamOpts=codes.map(c=>{const t=TM.teams.find(x=>x.team===c);return opt(c,t.team_name+' ('+c+')',c===oppCode);}).join('');
-const myOpts=`<option value="">Neutral</option>`+codes.filter(c=>c!==oppCode).map(c=>{const t=TM.teams.find(x=>x.team===c);return opt(c,t.team_name+' ('+c+')',c===myCode);}).join('');
+const myOpts=`<option value="">Pick a team</option>`+codes.filter(c=>c!==oppCode).map(c=>{const t=TM.teams.find(x=>x.team===c);return opt(c,t.team_name+' ('+c+')',c===myCode);}).join('');
 PREP={opp:opp,my:my,oppBans:oppBans,oppPlayers:oppPlayers};
-out.push(`<div class="pin" style="grid-column:1/-1"><div class="body phasebar prep-controls"><div><div class="kicker">Coach prep · opponent</div><h3 style="margin:.2em 0"><a class="tlink" href="#view=teams&team=${encodeURIComponent(opp.team)}">${esc(opp.team_name)}</a></h3><div class="an-pct">${opp.games} games · ${opp.wins}–${opp.losses} · ${esc(opp.team)}</div></div><div class="prep-actions"><label>Opponent<select id="prepOpp" aria-label="Opponent">${teamOpts}</select></label><label>Our team<select id="prepTeam" aria-label="Our team">${myOpts}</select></label><button id="prepPrint" class="ghost" type="button">Print / PDF</button><button id="prepCsv" class="ghost" type="button">CSV</button><button id="prepLink" class="primary" type="button">Copy link</button></div></div></div>`);
-const tiles=[['Rating',`${Math.round(opp.rating)} <span class="an-pct">(${Math.round(opp.ratingCI[0])}–${Math.round(opp.ratingCI[1])})</span>`],['Record',`${opp.wins}–${opp.losses}`],['Win%',`${pc(opp.winRate)}% <span class="an-pct">(${pc(opp.winCI.lo)}–${pc(opp.winCI.hi)})</span>`],['Form5',`${pc(opp.form5)}%<span class="tile-sub">series ${pc(opp.form5Series)}%</span>`],['SOS',`${Math.round(opp.sos)||'—'}`],['Blue / Red',`${opp.side.blue.w}–${opp.side.blue.n-opp.side.blue.w} / ${opp.side.red.w}–${opp.side.red.n-opp.side.red.w}`],['Win / loss dur',`${mins(opp.tempo.winSec)} / ${mins(opp.tempo.lossSec)}`],['Gold diff',`${signed(opp.dominance.goldDiff)}`],['Blowout',`${pc(opp.dominance.blowout)}%`]];
-out.push(`<div class="pin" style="grid-column:1/-1"><div class="body"><div class="tiles">${tiles.map(([k,v])=>`<div class="tile"><b>${v}</b><span>${k}</span></div>`).join('')}</div><p class="an-pct" style="margin:.8em 0 0">Every rate is from completed games and carries n. No objective, timeline or pick-order data exists. Map mode is missing for ${noMap} games. Ban score is a proxy and ignores our draft.</p></div></div>`);
-out.push(`<div class="pin" style="grid-column:1/-1"><div class="body"><div class="kicker">Draft tendencies</div><div class="prep-two"><div><div class="kicker">Likely picks</div><table style="min-width:280px"><tr><th>Hero</th><th>Picks</th><th>Pick rate</th><th>WR</th></tr>${(oppD.topPicks||[]).map(p=>`<tr><td><b>${esc(p.hero)}</b></td><td>${p.n}</td><td>${pc(p.share)}%</td><td>${heroWr(p.hero)}</td></tr>`).join('')||'<tr><td colspan="4">—</td></tr>'}</table></div><div><div class="kicker">Ban targets</div><table style="min-width:280px"><tr><th>Hero</th><th>Bans</th></tr>${(oppD.topBans||[]).map(p=>`<tr><td><b>${esc(p.hero)}</b></td><td>${p.n}</td></tr>`).join('')||'<tr><td colspan="2">—</td></tr>'}</table><div class="an-pct" style="margin-top:6px">First ban — blue: ${(oppD.firstBanBlue||[]).map(x=>esc(x.hero)+'×'+x.n).join(', ')||'—'}<br>First ban — red: ${(oppD.firstBanRed||[]).map(x=>esc(x.hero)+'×'+x.n).join(', ')||'—'}</div></div></div><div class="an-pct" style="margin-top:6px">Pick rate = picks ÷ ${opp.games} games.</div></div></div>`);
-out.push(`<div class="pin" style="grid-column:1/-1"><div class="body"><div class="kicker">Ban threat ranking · proxy</div><div class="lscroll"><table style="min-width:820px"><tr><th>Hero</th><th>Pick presence</th><th>Contest rate</th><th>Opp WR</th><th>Score</th><th>Picks / bans</th><th>Pick n</th></tr>${oppBans.map(b=>`<tr><td><b>${esc(b.hero)}</b></td><td>${pc(b.presence)}%</td><td>${pc(b.contestRate)}%</td><td>${pc(b.wr)}%</td><td>${b.score.toFixed(2)}</td><td>${b.picks} / ${b.bans}</td><td>${b.n}</td></tr>`).join('')||'<tr><td colspan="7">No picked hero with n≥3.</td></tr>'}</table></div><p class="an-pct" style="margin:.6em 0 0">Score = opponent pick presence × opponent win rate on that hero. Pick presence = picks ÷ games; contest rate = (picks + bans) ÷ games and is shown only for context. The score does not use their bans, ignores our draft and pick order, and is not evidence of their draft intent.</p></div></div>`);
+const method=[
+`Rating ${Math.round(opp.rating)} (${Math.round(opp.ratingCI[0])}–${Math.round(opp.ratingCI[1])}) is 1500 + 400·log10(Bradley-Terry strength), a 1–1 prior and 100 bootstrap resamples.`,
+`Win% carries a 95% Wilson interval; form reads the last five series; SOS is the mean fitted opponent rating; a decider is a series that reached game 3.`,
+`Priority bans rank the heroes they pick by pick rate × their win rate on that hero; pick rate is picks ÷ ${opp.games} games. The rank ignores their bans, our draft and pick order, and is not evidence of draft intent.`,
+`Player percentiles are within lane with a ${AN.priorWeight}-game prior; n&lt;${AN.minGames} is muted and indicative, never a claim.`,
+`Maps need n≥5; map mode is missing for ${noMap} of ${(DATA.games||[]).length} games. No objective, timeline or pick-order data exists in the source.`
+].join(' ');
+out.push(`<div class="pin prep-head" style="grid-column:1/-1"><div class="body"><div class="prep-bar"><div class="prep-who"><img src="${esc(TICON(opp.team))}" alt="" loading="lazy"><div><h2><a class="tlink" href="#view=teams&team=${encodeURIComponent(opp.team)}">${esc(opp.team_name)}</a></h2><p>${opp.games} games · ${opp.wins}–${opp.losses} series</p></div></div><div class="prep-rating"><b>${Math.round(opp.rating)}</b><span>Rating<em>95% ${Math.round(opp.ratingCI[0])}–${Math.round(opp.ratingCI[1])}</em></span></div><div class="prep-actions"><label>Opponent<select id="prepOpp" aria-label="Opponent">${teamOpts}</select></label><label>Our team<select id="prepTeam" aria-label="Our team">${myOpts}</select></label><button id="prepPrint" class="primary" type="button">Print / PDF</button><button id="prepLink" class="ghost" type="button">Copy link</button><button id="prepCsv" class="ghost" type="button">CSV</button></div></div><div class="prep-facts"><span>Win% <b>${pc(opp.winRate)}%</b> <em>${pc(opp.winCI.lo)}–${pc(opp.winCI.hi)}</em></span><span>Form5 <b>${pc(opp.form5)}%</b> <em>series ${pc(opp.form5Series)}%</em></span><span>SOS <b>${Math.round(opp.sos)||'—'}</b></span><span>Deciders <b>${opp.clutch.decider.w}–${opp.clutch.decider.n-opp.clutch.decider.w}</b></span><span>Game 3 <b>${opp.clutch.game3.w}–${opp.clutch.game3.n-opp.clutch.game3.w}</b></span></div><details class="tm-method"><summary>How this sheet is built<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg></summary><p>${method}</p></details></div></div>`);
+out.push(`<div class="pin" style="grid-column:1/-1"><div class="body"><h2 class="prep-h2">Draft <span>${opp.games} games</span></h2><div class="prep-two"><div><div class="kicker">Priority bans</div><table style="min-width:280px"><tr><th>#</th><th>Hero</th><th>Picks</th><th>Pick rate</th><th>Their WR</th></tr>${oppBans.slice(0,6).map((b,i)=>`<tr><td>${i+1}</td><td><b>${esc(b.hero)}</b></td><td>${b.picks}</td><td>${pc(b.presence)}%</td><td>${pc(b.wr)}%</td></tr>`).join('')||'<tr><td colspan="5">No picked hero with n≥3.</td></tr>'}</table></div><div><div class="kicker">Their bans</div><table style="min-width:280px;max-width:360px"><tr><th>Hero</th><th>Bans</th></tr>${(oppD.topBans||[]).slice(0,6).map(p=>`<tr><td><b>${esc(p.hero)}</b></td><td>${p.n}</td></tr>`).join('')||'<tr><td colspan="2">—</td></tr>'}</table><div class="prep-mono">First ban — blue: ${(oppD.firstBanBlue||[]).map(x=>esc(x.hero)+'×'+x.n).join(', ')||'—'}<br>First ban — red: ${(oppD.firstBanRed||[]).map(x=>esc(x.hero)+'×'+x.n).join(', ')||'—'}<br>Blue side ${opp.side.blue.w}–${opp.side.blue.n-opp.side.blue.w} · red side ${opp.side.red.w}–${opp.side.red.n-opp.side.red.w}</div></div></div></div></div>`);
 const ML={kda:'KDA',gpm:'GPM',damageShare:'Damage',kp:'KP',towerShare:'Tower'};
 const keys=Object.keys(ML);
-out.push(`<div class="pin" style="grid-column:1/-1"><div class="body"><div class="kicker">Player form · weaknesses and strengths</div><div class="lscroll"><table style="min-width:1080px"><tr><th>Player</th><th>Lane</th><th>GP</th><th>Impact</th><th>KDA</th><th>Dmg%</th><th>KP</th><th>Weakest</th><th>Strongest</th><th>Close WR</th><th>Pool</th><th>Top hero</th></tr>${oppPlayers.map(p=>{const best=keys.reduce((a,k)=>p.pct[k]>p.pct[a]?k:a,keys[0]);const worst=keys.reduce((a,k)=>p.pct[k]<p.pct[a]?k:a,keys[0]);const top=p.pool[0];return `<tr${p.small?' class="an-small"':''}><td><b>${esc(p.player)}</b></td><td>${esc(p.lane||'—')}</td><td>${p.games}</td><td>${p.impact.toFixed(0)}</td><td>${p.kda.toFixed(2)} <span class="an-pct">P${pc(p.pct.kda)}</span></td><td>${pc(p.damageShare)}% <span class="an-pct">P${pc(p.pct.damageShare)}</span></td><td>${pc(p.kp)}% <span class="an-pct">P${pc(p.pct.kp)}</span></td><td>${ML[worst]} P${pc(p.pct[worst])}</td><td>${ML[best]} P${pc(p.pct[best])}</td><td>${p.close.n?pc(p.close.winRate)+'% ('+p.close.wins+'/'+p.close.n+')':'—'}</td><td>${p.effectivePool}/${p.heroes}</td><td>${top?esc(top.hero)+' ('+top.games+' GP, '+pc(top.wr)+'%)':'—'}</td></tr>`;}).join('')||'<tr><td colspan="12">—</td></tr>'}</table></div><p class="an-pct" style="margin:.6em 0 0">Percentiles are within lane with a ${AN.priorWeight}-game prior; n&lt;${AN.minGames} is muted and indicative. Close = final kill diff ≤5 (proxy; no timeline exists).</p></div></div>`);
-const weakMaps=(opp.maps||[]).filter(m=>m.n>=5&&anKnownMap(m.map)).slice().sort((a,b)=>a.wr-b.wr).slice(0,3);
-const strongMaps=(opp.maps||[]).filter(m=>m.n>=5&&anKnownMap(m.map)).slice().sort((a,b)=>b.wr-a.wr).slice(0,3);
-out.push(`<div class="pin" style="grid-column:1/-1"><div class="body"><div class="kicker">Team tendencies</div><div class="prep-two"><div><div class="kicker">Weak maps</div><table style="min-width:240px"><tr><th>Map</th><th>n</th><th>WR</th></tr>${weakMaps.map(m=>`<tr><td>${esc(m.map)}</td><td>${m.n}</td><td>${pc(m.wr)}%</td></tr>`).join('')||'<tr><td colspan="3">No map at n≥5.</td></tr>'}</table></div><div><div class="kicker">Strong maps</div><table style="min-width:240px"><tr><th>Map</th><th>n</th><th>WR</th></tr>${strongMaps.map(m=>`<tr><td>${esc(m.map)}</td><td>${m.n}</td><td>${pc(m.wr)}%</td></tr>`).join('')||'<tr><td colspan="3">No map at n≥5.</td></tr>'}</table></div></div><p class="an-pct" style="margin:.6em 0 0">Series close: ${opp.clutch.decider.w}–${opp.clutch.decider.n-opp.clutch.decider.w}; game 3: ${opp.clutch.game3.w}–${opp.clutch.game3.n-opp.clutch.game3.w}. Maps require n≥5.</p></div></div>`);
+const maps=(opp.maps||[]).filter(m=>m.n>=5&&anKnownMap(m.map)).slice().sort((a,b)=>a.wr-b.wr);
+out.push(`<div class="pin" style="grid-column:1/-1"><div class="body"><h2 class="prep-h2">Map record <span>n≥5 · weakest first</span></h2><div class="lscroll"><table class="prep-map" style="min-width:320px"><tr><th>Map</th><th>n</th><th>WR</th><th></th></tr>${maps.map(m=>`<tr><td>${esc(m.map)}</td><td>${m.n}</td><td>${pc(m.wr)}%</td><td style="width:52%"><span class="prep-wrbar"><i style="width:${pc(m.wr)}%"></i></span></td></tr>`).join('')||'<tr><td colspan="4">No map at n≥5.</td></tr>'}</table></div></div></div>`);
+out.push(`<div class="pin" style="grid-column:1/-1"><div class="body"><h2 class="prep-h2">Players <span>${oppPlayers.length} in ${opp.games} games</span></h2><div class="lscroll"><table style="min-width:880px"><tr><th>Player</th><th>Lane</th><th>GP</th><th>Impact</th><th>KDA</th><th>Dmg%</th><th>KP</th><th>Weakest</th><th>Strongest</th><th>Top hero</th></tr>${oppPlayers.map(p=>{const best=keys.reduce((a,k)=>p.pct[k]>p.pct[a]?k:a,keys[0]);const worst=keys.reduce((a,k)=>p.pct[k]<p.pct[a]?k:a,keys[0]);const top=p.pool[0];return `<tr${p.small?' class="an-small"':''}><td><b>${esc(p.player)}</b></td><td>${esc(p.lane||'—')}</td><td>${p.games}</td><td>${p.impact.toFixed(0)}</td><td>${p.kda.toFixed(2)} <span class="an-pct">P${pc(p.pct.kda)}</span></td><td>${pc(p.damageShare)}% <span class="an-pct">P${pc(p.pct.damageShare)}</span></td><td>${pc(p.kp)}% <span class="an-pct">P${pc(p.pct.kp)}</span></td><td>${ML[worst]} P${pc(p.pct[worst])}</td><td>${ML[best]} P${pc(p.pct[best])}</td><td>${top?esc(top.hero)+' <span class="an-pct">'+top.games+' GP · '+pc(top.wr)+'%</span>':'—'}</td></tr>`;}).join('')||'<tr><td colspan="10">—</td></tr>'}</table></div></div></div>`);
 if(my){
 const lanes=['EXP','JUNGLE','MID','GOLD','ROAM'];
 const pickLane=(list,lane)=>list.filter(p=>p.lane===lane).slice().sort((a,b)=>b.games-a.games)[0];
 const hrec=my.h2h[opp.team]||{n:0,w:0};
-const mtiles=[['H2H (games)',`${hrec.w}–${hrec.n-hrec.w}`],['Rating',`${Math.round(my.rating)} vs ${Math.round(opp.rating)}`],['Form5',`${pc(my.form5)}% vs ${pc(opp.form5)}%`],['SOS',`${Math.round(my.sos)} vs ${Math.round(opp.sos)}`]];
-out.push(`<div class="pin" style="grid-column:1/-1"><div class="body"><div class="kicker">Matchup explorer · ${esc(my.team_name)} vs ${esc(opp.team_name)}</div><div class="tiles">${mtiles.map(([k,v])=>`<div class="tile"><b>${v}</b><span>${k}</span></div>`).join('')}</div><div class="lscroll"><table style="min-width:940px"><tr><th>Lane</th><th>Us</th><th>Opp</th><th>KDA</th><th>Dmg%</th><th>Impact</th><th>Close WR</th></tr>${lanes.map(lane=>{const a=pickLane(myPlayers,lane),b=pickLane(oppPlayers,lane);return `<tr><td>${lane}</td><td>${a?esc(a.player):'—'}</td><td>${b?esc(b.player):'—'}</td><td>${a?a.kda.toFixed(2):'—'} / ${b?b.kda.toFixed(2):'—'}</td><td>${a?pc(a.damageShare)+'%':'—'} / ${b?pc(b.damageShare)+'%':'—'}</td><td>${a?a.impact.toFixed(0):'—'} / ${b?b.impact.toFixed(0):'—'}</td><td>${a&&a.close.n?pc(a.close.winRate)+'%':'—'} / ${b&&b.close.n?pc(b.close.winRate)+'%':'—'}</td></tr>`;}).join('')}</table></div><p class="an-pct" style="margin:.6em 0 0">Modal lane per player; no player-vs-player head-to-head exists in the source. H2H is game results, not series.</p></div></div>`);
-}else{
-out.push(`<div class="pin" style="grid-column:1/-1"><div class="body"><div class="kicker">Matchup explorer</div><p style="margin:.4em 0 0">Pick “Our team” above to unlock the head-to-head and lane-by-lane comparison.</p></div></div>`);
+out.push(`<div class="pin" style="grid-column:1/-1"><div class="body"><h2 class="prep-h2">Matchup <span>${esc(my.team)} vs ${esc(opp.team)}</span></h2><div class="prep-facts before"><span>Our rating <b>${Math.round(my.rating)}</b></span><span>Form5 <b>${pc(my.form5)}%</b></span><span>SOS <b>${Math.round(my.sos)||'—'}</b></span><span>H2H <b>${hrec.w}–${hrec.n-hrec.w}</b> <em>games</em></span></div><div class="lscroll"><table style="min-width:820px"><tr><th>Lane</th><th>Us</th><th>Opp</th><th>KDA</th><th>Dmg%</th><th>Impact</th></tr>${lanes.map(lane=>{const a=pickLane(myPlayers,lane),b=pickLane(oppPlayers,lane);return `<tr><td>${lane}</td><td>${a?esc(a.player):'—'}</td><td>${b?esc(b.player):'—'}</td><td>${a?a.kda.toFixed(2):'—'} / ${b?b.kda.toFixed(2):'—'}</td><td>${a?pc(a.damageShare)+'%':'—'} / ${b?pc(b.damageShare)+'%':'—'}</td><td>${a?a.impact.toFixed(0):'—'} / ${b?b.impact.toFixed(0):'—'}</td></tr>`;}).join('')}</table></div></div></div>`);
 }
 }else{
 out.push(`<div class="pin" style="grid-column:1/-1"><div class="body"><div class="kicker">Coach prep</div><p>No completed games.</p></div></div>`);
 }
 }
 if(S.view==='analytics'){
-out.push(viewHead('Analytics','Player impact and draft, with uncertainty'));
+out.push(viewHead('Analytics','Player impact and draft, with uncertainty',`<div class="seg" role="group" aria-label="Analytics view">${[['players','Impact'],['draft','Draft']].map(([k,l])=>`<button data-antab="${k}" aria-pressed="${S.anTab===k?'true':'false'}">${l}</button>`).join('')}</div>`));
 const dateByMid={};(DATA.schedule||[]).forEach(m=>{dateByMid[String(m.match_detail_id)]=m.iso_date||m.date||'';});
 const dateOf=m=>dateByMid[String(m)]||'';
 const part=k=>{if(ANA[k])return ANA[k];if(k==='AN'){const twr={};(DATA.team_games||[]).forEach(r=>{const x=twr[r.team]=twr[r.team]||{n:0,w:0};x.n++;if(r.win===1)x.w++;});Object.keys(twr).forEach(t=>{twr[t]=twr[t].n?twr[t].w/twr[t].n:0;});ANA[k]=buildPlayerMetrics(DATA.players,DATA.games,DATA.team_games,window.HERO_CLASSES||{},{canon:canonicalPlayer,dateOf,teamWinRate:twr});}if(k==='TM')ANA[k]=buildTeamMetrics(DATA.team_games||[],DATA.team_season||[],DATA.games||[],{dateOf,bootstraps:100,seed:7});if(k==='DM')ANA[k]=buildDraftMetrics(DATA.picks||[],DATA.bans||[],DATA.games||[],window.HERO_CLASSES||{},{minPair:3,dateOf});return ANA[k];};
 const mins=v=>v?Math.round(v/6)/10+'m':'—';
-const signed=v=>`${v>0?'+':''}${Math.round(v)}`;
 const pp=v=>`${v>0?'+':''}${Math.round(v*100)}pp`;
 const pc=v=>Math.round(v*100);
-const tabs=[['players','Impact'],['draft','Draft']].map(([k,l])=>`<button data-antab="${k}" aria-pressed="${S.anTab===k?'true':'false'}">${l}</button>`).join('');
-out.push(`<div class="pin" style="grid-column:1/-1"><div class="body phasebar"><div><div class="kicker">Analytics</div><h3 style="margin:.25em 0">${S.anTab==='draft'?'Draft intelligence':'Player impact'}</h3></div><div class="seg" role="group" aria-label="Analytics view">${tabs}</div></div></div>`);
 const anStart=out.length;
 if(S.anTab==='players'){
 const AN=part('AN');
 const lanes=['',...AN.lanes];
 const rows=AN.players.filter(p=>!S.anLane||p.lane===S.anLane);
-const maxImpact=Math.max(1,...rows.map(p=>Math.abs(p.impact)));
 const laneBtn=l=>`<button data-anlane="${esc(l)}" aria-pressed="${S.anLane===l?'true':'false'}">${l||'All lanes'}</button>`;
 const w=AN.weights;
-out.push(`<div class="pin" style="grid-column:1/-1"><div class="body"><div class="phasebar"><div class="kicker">Lane filter</div><div class="seg" role="group" aria-label="Lane filter">${lanes.map(laneBtn).join('')}</div></div></div></div>`);
-out.push(`<div class="pin" style="grid-column:1/-1"><div class="body"><div class="kicker">Method · every number shows its sample</div><p style="max-width:900px;margin:.4em 0 0">Impact = ${Math.round(w.damageShare*100)}% damage share + ${Math.round(w.kp*100)}% kill participation + ${Math.round(w.goldShare*100)}% gold share + ${Math.round(w.towerShare*100)}% tower share + ${Math.round(w.kda*100)}% KDA − ${Math.round(-w.deathShare*100)}% death share, normalised onto 0–100 so 100 is the achievable ceiling. Each component is a percentile within lane, shrunk toward the lane mean with a ${AN.priorWeight}-game prior. Win rates use a 95% Wilson interval. Rows with fewer than ${AN.minGames} games are muted and indicative only.</p></div></div>`);
-out.push(`<div class="pin" style="grid-column:1/-1"><div class="body"><div class="kicker">${rows.length} players · ${AN.lanes.length} lanes</div><div class="lscroll"><table style="min-width:1040px"><tr><th>#</th><th>Player</th><th>Team</th><th>Lane</th><th>GP</th><th>Impact</th><th>KDA</th><th>GPM</th><th>Dmg%</th><th>KP</th><th>Win% (95% CI)</th><th>Form</th></tr>${rows.map((p,i)=>`<tr${p.small?` class="an-small" title="Small sample (n<${AN.minGames}) — indicative only"`:''}><td>${i+1}</td><td><span data-p="${esc(p.player)}" tabindex="0" style="cursor:pointer;font-weight:600">${esc(p.player)}</span></td><td>${esc(p.team)}</td><td>${esc(p.lane||'—')}</td><td>${p.games}</td><td style="min-width:120px"><div style="display:flex;gap:6px;align-items:center"><span class="bar"><span style="width:${Math.max(0,Math.round(p.impact/maxImpact*100))}%"></span></span><b>${p.impact.toFixed(0)}</b></div></td><td>${p.kda.toFixed(2)}<span class="an-pct">P${pc(p.pct.kda)}</span></td><td>${Math.round(p.gpm)}<span class="an-pct">P${pc(p.pct.gpm)}</span></td><td>${pc(p.damageShare)}%<span class="an-pct">P${pc(p.pct.damageShare)}</span></td><td>${pc(p.kp)}%<span class="an-pct">P${pc(p.pct.kp)}</span></td><td>${pc(p.winRate)}% <span class="an-pct">(${pc(p.winCI.lo)}–${pc(p.winCI.hi)})</span></td><td>${p.formDelta>=0?'+':''}${p.formDelta.toFixed(2)}</td></tr>`).join('')||'<tr><td colspan="12">No games.</td></tr>'}</table></div></div></div>`);
+const cap=S.anLane?`${S.anLane} · ${rows.length} of ${AN.players.length} players`:`${rows.length} players · ${AN.lanes.length} lanes`;
+out.push(`<div class="pin" style="grid-column:1/-1"><div class="body"><div class="an-bar"><div class="an-cap">${cap}</div><div class="seg an-lanes" role="group" aria-label="Lane filter">${lanes.map(laneBtn).join('')}</div></div><div class="lscroll"><table class="an-table an-impact"><tr><th class="n">#</th><th>Player</th><th>Team</th><th class="c-lane">Lane</th><th class="n c-gp">GP</th><th class="n">Impact<span class="an-pct">/100</span></th><th class="n c-kda">KDA</th><th class="n c-gpm">GPM</th><th class="n c-dmgp">Dmg%</th><th class="n c-kp">KP</th><th class="n">Win%<span class="an-cih"> (95% CI)</span></th></tr>${rows.map((p,i)=>`<tr${p.small?` class="an-small" title="Small sample (n<${AN.minGames}) — indicative only"`:''}><td class="n">${i+1}</td><td><span data-p="${esc(p.player)}" tabindex="0" style="cursor:pointer;font-weight:600">${esc(p.player)}</span></td><td>${esc(p.team)}</td><td class="c-lane">${esc(p.lane||'—')}</td><td class="n c-gp">${p.games}</td><td class="n"><b class="an-fig">${p.impact.toFixed(0)}</b></td><td class="n c-kda">${p.kda.toFixed(2)}</td><td class="n c-gpm">${Math.round(p.gpm)}</td><td class="n c-dmgp">${pc(p.damageShare)}%</td><td class="n c-kp">${pc(p.kp)}%</td><td class="n">${pc(p.winRate)}% <span class="an-ci">(${pc(p.winCI.lo)}–${pc(p.winCI.hi)})</span></td></tr>`).join('')||'<tr><td colspan="11">No games.</td></tr>'}</table></div><details class="an-method"><summary>How impact is built<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg></summary><p>Impact = ${Math.round(w.damageShare*100)}% damage share + ${Math.round(w.kp*100)}% kill participation + ${Math.round(w.goldShare*100)}% gold share + ${Math.round(w.towerShare*100)}% tower share + ${Math.round(w.kda*100)}% KDA − ${Math.round(-w.deathShare*100)}% death share, normalised onto 0–100 so 100 is the achievable ceiling. Each component is a percentile within lane, shrunk toward the lane mean with a ${AN.priorWeight}-game prior. Win rates use a 95% Wilson interval. Rows with fewer than ${AN.minGames} games are muted and indicative only.</p></details></div></div>`);
 }else{
 const DM=part('DM');
 const noMap=(DATA.games||[]).filter(g=>!g.map_mode).length;
@@ -1534,13 +1617,17 @@ const heroRows=[...DM.heroes].sort((a,b)=>(b.picks+b.bans)-(a.picks+a.bans)||a.h
 const topLane=h=>Object.keys(h.lanes).sort((a,b)=>h.lanes[b]-h.lanes[a]||a.localeCompare(b))[0]||'—';
 const pairRows=DM.pairs.slice(0,20),ctrRows=DM.counters.slice(0,20);
 const mvRows=[...DM.movement.slice(0,8),...DM.movement.slice(-8).reverse()].filter((x,i,a)=>a.findIndex(y=>y.hero===x.hero)===i);
-out.push(`<div class="pin" style="grid-column:1/-1"><div class="body"><div class="stats" style="display:flex;gap:30px;flex-wrap:wrap"><div><div class="kicker">Heroes seen</div><b style="font-family:var(--font-mono);font-size:22px">${DM.heroes.length}</b></div><div><div class="kicker">Pairs n≥3</div><b style="font-family:var(--font-mono);font-size:22px">${DM.pairs.length}</b></div><div><div class="kicker">Counters n≥3</div><b style="font-family:var(--font-mono);font-size:22px">${DM.counters.length}</b></div><div><div class="kicker">Maps</div><b style="font-family:var(--font-mono);font-size:22px">${DM.maps.length}</b></div><div><div class="kicker">Archetypes</div><b style="font-family:var(--font-mono);font-size:22px">${DM.compositions.length}</b></div></div><p style="max-width:1000px;margin:1em 0 0">Pairs and counters are descriptive, not causal: synergy compares a pair's win rate with the average of the two heroes' individual win rates; counters compare hero A against B with the average of A's win rate and B's loss rate. Compositions use hero classes (frontline = Tank/Fighter; damage = 3+ physical or 3+ magic; CC = specialties mentioning Crowd Control, Initiator or Engage). Map mode is missing for ${noMap} games, shown as Unknown.</p></div></div>`);
-out.push(`<div class="pin" style="grid-column:1/-1"><div class="body"><div class="kicker">Meta movement · last two non-empty 7-day date windows</div><div class="lscroll"><table style="min-width:680px"><tr><th>Hero</th><th>Recent presence/game</th><th>Previous</th><th>Delta</th><th>Games (recent)</th></tr>${mvRows.map(m=>`<tr><td>${esc(m.hero)}</td><td>${Math.round(m.recent*100)}%</td><td>${Math.round(m.previous*100)}%</td><td>${m.delta>0?'+':''}${Math.round(m.delta*100)}pp</td><td>${m.games}</td></tr>`).join('')||'<tr><td colspan="5">Not enough date windows.</td></tr>'}</table></div><p class="an-pct" style="margin:.6em 0 0">Presence = (picks + bans) ÷ games in that date window. Windows start at the first game date and are not official competition weeks; this comparison is ${DM.movementInfo&&DM.movementInfo.adjacent?'adjacent':'non-adjacent'}. The final window is a small sample; treat it as a signal, not proof.</p></div></div>`);
-out.push(`<div class="pin" style="grid-column:1/-1"><div class="body"><div class="kicker">Heroes · picks + bans · sorted by presence</div><div class="lscroll" style="max-height:520px"><table style="min-width:820px"><tr><th>Hero</th><th>Role</th><th>Damage</th><th>Picks</th><th>Bans</th><th>P+B</th><th>WR (95% CI)</th><th>Flex</th><th>Top lane</th></tr>${heroRows.map(h=>`<tr><td><b>${esc(h.hero)}</b></td><td>${esc(h.role||'—')}</td><td>${esc(h.damage||'—')}</td><td>${h.picks}</td><td>${h.bans}</td><td>${h.picks+h.bans}</td><td>${pc(h.winRate)}% <span class="an-pct">(${pc(h.winCI.lo)}–${pc(h.winCI.hi)})</span></td><td>${h.flex}</td><td>${esc(topLane(h))}</td></tr>`).join('')}</table></div></div></div>`);
-out.push(`<div class="pin" style="grid-column:1/-1"><div class="body"><div class="kicker">Same-team pairs · n≥3 · ${pairRows.length} most observed</div><div class="lscroll"><table style="min-width:560px"><tr><th>Pair</th><th>n</th><th>WR</th><th>vs baseline</th></tr>${pairRows.map(p=>`<tr><td>${esc(p.a)} + ${esc(p.b)}</td><td>${p.n}</td><td>${pc(p.wr)}%</td><td>${pp(p.delta)}</td></tr>`).join('')||'<tr><td colspan="4">No pairs at n≥3.</td></tr>'}</table></div></div></div>`);
-out.push(`<div class="pin" style="grid-column:1/-1"><div class="body"><div class="kicker">Opposing pairs · n≥3 · ${ctrRows.length} most observed</div><div class="lscroll"><table style="min-width:640px"><tr><th>Matchup</th><th>n</th><th>First hero WR</th><th>vs baseline</th></tr>${ctrRows.map(p=>`<tr><td>${esc(p.a)} vs ${esc(p.b)}</td><td>${p.n}</td><td>${pc(p.wr)}%</td><td>${pp(p.delta)}</td></tr>`).join('')||'<tr><td colspan="4">No counters at n≥3.</td></tr>'}</table></div></div></div>`);
-out.push(`<div class="pin" style="grid-column:1/-1"><div class="body"><div class="kicker">Composition archetypes · derived from hero classes</div><div class="lscroll"><table style="min-width:620px"><tr><th>Archetype</th><th>n</th><th>WR (95% CI)</th><th>Avg CC</th></tr>${DM.compositions.map(c=>`<tr><td>${esc(c.damage)} · ${c.frontline} front</td><td>${c.n}</td><td>${pc(c.wr)}% <span class="an-pct">(${pc(c.winCI.lo)}–${pc(c.winCI.hi)})</span></td><td>${c.avgCC.toFixed(1)}</td></tr>`).join('')||'<tr><td colspan="4">No complete drafts.</td></tr>'}</table></div></div></div>`);
-out.push(`<div class="pin" style="grid-column:1/-1"><div class="body"><div class="kicker">Map meta · completed games</div><div class="lscroll"><table style="min-width:720px"><tr><th>Map</th><th>Games</th><th>Blue WR</th><th>Avg duration</th><th>Top picks</th></tr>${DM.maps.map(m=>`<tr><td>${esc(m.map)}</td><td>${m.games}</td><td>${pc(m.blueWR)}%</td><td>${mins(m.avgSec)}</td><td>${m.topHeroes.map(h=>`${esc(h.hero)}×${h.n}`).join(', ')}</td></tr>`).join('')}</table></div></div></div>`);
+const drSvg='<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg>';
+const recentN=mvRows.length?mvRows[0].games:0;
+out.push(`<div class="pin" style="grid-column:1/-1"><div class="body"><div class="an-bar"><h3>Meta movement</h3><span class="an-cap">last two 7-day windows</span></div><div class="lscroll"><table class="an-table an-tight"><tr><th>Hero</th><th class="n">Recent</th><th class="n">Previous</th><th class="n">Delta</th></tr>${mvRows.map(m=>`<tr><td>${esc(m.hero)}</td><td class="n">${Math.round(m.recent*100)}%</td><td class="n">${Math.round(m.previous*100)}%</td><td class="n">${m.delta>0?'+':''}${Math.round(m.delta*100)}pp</td></tr>`).join('')||'<tr><td colspan="4">Not enough date windows.</td></tr>'}</table></div><p class="an-note">Presence = (picks + bans) ÷ games in that window${recentN?` (${recentN} games in the recent one)`:''}. Windows follow game dates, not official competition weeks, and the two are ${DM.movementInfo&&DM.movementInfo.adjacent?'adjacent':'non-adjacent'}. The recent window is a small sample — a signal, not proof.</p></div></div>`);
+out.push(`<div class="pin" style="grid-column:1/-1"><div class="body"><div class="an-bar"><h3>Hero pool</h3><span class="an-cap">top 20 of ${DM.heroes.length} · picks + bans</span></div><div class="lscroll"><table class="an-table an-hero-table"><tr><th>Hero</th><th class="c-role">Role</th><th class="c-dmg">Damage</th><th class="n">Picks</th><th class="n">Bans</th><th class="n">WR<span class="an-cih"> (95% CI)</span></th><th class="n c-flex">Flex</th><th class="c-top">Top lane</th></tr>${heroRows.slice(0,20).map(h=>`<tr><td><b>${esc(h.hero)}</b></td><td class="c-role">${esc(h.role||'—')}</td><td class="c-dmg">${esc(h.damage||'—')}</td><td class="n">${h.picks}</td><td class="n">${h.bans}</td><td class="n">${pc(h.winRate)}% <span class="an-ci">(${pc(h.winCI.lo)}–${pc(h.winCI.hi)})</span></td><td class="n c-flex">${h.flex}</td><td class="c-top">${esc(topLane(h))}</td></tr>`).join('')}</table></div></div></div>`);
+out.push(`<div class="pin an-more" style="grid-column:1/-1">
+<details class="an-drawer"><summary><span class="an-dr-name">Synergy</span><span class="an-dr-meta">same-team pairs · n≥3 · ${DM.pairs.length}</span>${drSvg}</summary><div class="an-drawer-body"><div class="lscroll"><table class="an-table an-tight"><tr><th>Pair</th><th class="n">n</th><th class="n">WR</th><th class="n">vs baseline</th></tr>${pairRows.map(p=>`<tr><td>${esc(p.a)} + ${esc(p.b)}</td><td class="n">${p.n}</td><td class="n">${pc(p.wr)}%</td><td class="n">${pp(p.delta)}</td></tr>`).join('')||'<tr><td colspan="4">No pairs at n≥3.</td></tr>'}</table></div><p class="an-note">Synergy compares a pair's win rate with the average of the two heroes' individual win rates. Descriptive, not causal; the ${pairRows.length} most observed are shown.</p></div></details>
+<details class="an-drawer"><summary><span class="an-dr-name">Counters</span><span class="an-dr-meta">opposing pairs · n≥3 · ${DM.counters.length}</span>${drSvg}</summary><div class="an-drawer-body"><div class="lscroll"><table class="an-table an-tight"><tr><th>Matchup</th><th class="n">n</th><th class="n">First hero WR</th><th class="n">vs baseline</th></tr>${ctrRows.map(p=>`<tr><td>${esc(p.a)} vs ${esc(p.b)}</td><td class="n">${p.n}</td><td class="n">${pc(p.wr)}%</td><td class="n">${pp(p.delta)}</td></tr>`).join('')||'<tr><td colspan="4">No counters at n≥3.</td></tr>'}</table></div><p class="an-note">A counter compares hero A against B with the average of A's win rate and B's loss rate. Descriptive, not causal; the ${ctrRows.length} most observed are shown.</p></div></details>
+<details class="an-drawer"><summary><span class="an-dr-name">Compositions</span><span class="an-dr-meta">${DM.compositions.length} archetypes</span>${drSvg}</summary><div class="an-drawer-body"><div class="lscroll"><table class="an-table an-tight"><tr><th>Archetype</th><th class="n">n</th><th class="n">WR (95% CI)</th><th class="n">Avg CC</th></tr>${DM.compositions.map(c=>`<tr><td>${esc(c.damage)} · ${c.frontline} front</td><td class="n">${c.n}</td><td class="n">${pc(c.wr)}% <span class="an-pct">(${pc(c.winCI.lo)}–${pc(c.winCI.hi)})</span></td><td class="n">${c.avgCC.toFixed(1)}</td></tr>`).join('')||'<tr><td colspan="4">No complete drafts.</td></tr>'}</table></div><p class="an-note">Frontline = Tank or Fighter; damage = 3+ physical or 3+ magic; CC = specialties mentioning Crowd Control, Initiator or Engage. Archetypes come from hero classes, not from draft intent.</p></div></details>
+<details class="an-drawer"><summary><span class="an-dr-name">Maps</span><span class="an-dr-meta">${DM.maps.length} maps · blue side record</span>${drSvg}</summary><div class="an-drawer-body"><div class="lscroll"><table class="an-table" style="min-width:720px"><tr><th>Map</th><th class="n">Games</th><th class="n">Blue WR</th><th class="n">Avg duration</th><th>Top picks</th></tr>${DM.maps.map(m=>`<tr><td>${esc(m.map)}</td><td class="n">${m.games}</td><td class="n">${pc(m.blueWR)}%</td><td class="n">${mins(m.avgSec)}</td><td>${m.topHeroes.map(h=>`${esc(h.hero)}×${h.n}`).join(', ')}</td></tr>`).join('')}</table></div><p class="an-note">Completed games only${noMap?`; map mode is missing for ${noMap} games`:''}. Top picks carry their pick count on that map.</p></div></details>
+<details class="an-drawer"><summary><span class="an-dr-name">All heroes</span><span class="an-dr-meta">${heroRows.length} rows · picks + bans</span>${drSvg}</summary><div class="an-drawer-body"><div class="lscroll"><table class="an-table an-hero-table"><tr><th>Hero</th><th class="c-role">Role</th><th class="c-dmg">Damage</th><th class="n">Picks</th><th class="n">Bans</th><th class="n">WR<span class="an-cih"> (95% CI)</span></th><th class="n c-flex">Flex</th><th class="c-top">Top lane</th></tr>${heroRows.map(h=>`<tr><td><b>${esc(h.hero)}</b></td><td class="c-role">${esc(h.role||'—')}</td><td class="c-dmg">${esc(h.damage||'—')}</td><td class="n">${h.picks}</td><td class="n">${h.bans}</td><td class="n">${pc(h.winRate)}% <span class="an-ci">(${pc(h.winCI.lo)}–${pc(h.winCI.hi)})</span></td><td class="n c-flex">${h.flex}</td><td class="c-top">${esc(topLane(h))}</td></tr>`).join('')}</table></div><p class="an-note">Every hero picked or banned at least once, sorted by picks + bans. Win rates carry a 95% Wilson interval; where it is wide, the rate is descriptive only.</p></div></details>
+</div>`);
 }
 out.push('<section class="subpanel" role="tabpanel" id="an-panel" aria-labelledby="subtab-'+S.anTab+'">'+out.splice(anStart).join('')+'</section>');
 }
@@ -1579,6 +1666,7 @@ board.querySelectorAll('[data-ovopp]').forEach(b=>b.onclick=()=>ovOppDrill(b.dat
 board.querySelectorAll('[data-more]').forEach(b=>b.onclick=()=>{const n=+b.dataset.more||24;if(b.dataset.sec==='po')S.plimit+=n;else S.mlimit+=n;render();});
 board.querySelectorAll('[data-phase]').forEach(b=>b.onclick=()=>{S.phase=b.dataset.phase;render();});
 board.querySelectorAll('[data-stat]').forEach(b=>b.onclick=()=>{S.stat=b.dataset.stat;render();});
+board.querySelectorAll('.st-hist').forEach(d=>d.addEventListener('toggle',()=>{S.histOpen=d.open;}));
 board.querySelectorAll('[data-anlane]').forEach(b=>b.onclick=()=>{S.anLane=b.dataset.anlane;render();});
 board.querySelectorAll('[data-antab]').forEach(b=>b.onclick=()=>{S.anTab=b.dataset.antab;render();});
 const prepOppEl=document.getElementById('prepOpp');if(prepOppEl)prepOppEl.onchange=()=>{S.prepOpp=prepOppEl.value;render();};
@@ -1598,7 +1686,7 @@ if(S.view==='matches'){
  if(S.q)ms=ms.filter(m=>(m.team_a+' '+m.team_b+' '+m.date).toLowerCase().includes(S.q));
  return ms.length+(ms.length===1?' match':' matches');}
 if(S.view==='stats')return S.stat==='heroes'?(DATA.heroes||[]).filter(h=>(+h.pick||0)+(+h.ban||0)>0).length+' heroes':(DATA.matches||[]).filter(m=>m.liq_mvp).length+' MVP awards';
-if(S.view==='analytics')return anPart('AN').players.length+' players';
+if(S.view==='analytics')return S.anTab==='draft'?anPart('DM').heroes.length+' heroes':anPart('AN').players.length+' players';
 if(S.view==='prep')return PREP?'1 report':'';
 return '';}
 function upgradeSegs(){

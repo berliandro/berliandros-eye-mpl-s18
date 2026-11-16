@@ -212,6 +212,21 @@ tendencies in the left stack, draft, map record and head-to-head in the right.
 Matches opens on the latest week; earlier weeks are one-line summaries. The scoreboard is two tables,
 not two stacks of rows; the playoffs are the bracket first and the scheduled series second.
 
+Prep is one sheet, not a dashboard. An opponent plate carries the club, its rating as the single
+headline figure with its interval, the record, then one mono line of win rate, form, SOS and
+deciders beside the two selects and **Print / PDF**, **Copy link** and **CSV**. Beneath it the
+draft (priority bans and their bans with first-ban and side lines), the map ladder sorted weakest
+first, the player table, and — only once an opponent is chosen — the lane matchup with our own
+line. Every method note lives in one **How this sheet is built** disclosure in the plate's foot,
+which prints open. There are no stat tiles on Prep: a figure sits in the line or table that uses it.
+
+Stats is two records behind one switch in the head, never two pages: the Series MVP race and the hero
+record. Each is one full-width plate with one mono label carrying its count. The race is a ranked
+leaderboard with the awards on the right rail and the Liquipedia spellings stated once beneath it
+instead of beside every name; the 72 award decisions fold into a foot disclosure that prints open.
+The hero record is one table — hero, lane, pick, ban, presence, win rate — with its four answers in a
+single line above it, so no tile repeats what the table below already says.
+
 Spacing runs 8 / 14 / 18 / 24. Inside a panel 18–20px; between panels 18px.
 
 ## Elevation & Depth
@@ -322,6 +337,30 @@ tendencies (tempo, gold diff, blowout, G3, series close, five-dot form). Right: 
 first bans, pockets, HHI), map record at n≥5, and a 4×2 head-to-head. Actions: Prep vs, Matches, Copy
 link. The player profile keeps the one true glass band; nine 22px blurs would be a performance and
 world violation.
+
+### Analytics Plate (signature)
+Two modes, one plate each, and the mode switch sits at the right of the shared head rather
+than in a plate of its own. **Players** is the season ranking: the plate carries one caption
+(`60 players · 5 lanes`) with the lane filter beside it, then a single table — rank, player,
+team, lane, games, impact as the row's one figure, KDA, GPM, damage share, kill participation,
+and win% with its Wilson interval. No bar behind impact and no within-lane percentile badge on
+the four context columns: the lane filter and the lane column already carry the adjustment, and
+impact is the lane-adjusted read. **How impact is built** is one disclosure in the plate's foot
+and prints open.
+**Draft** puts the argument first: meta movement across the last two 7-day windows, then the
+twenty most contested heroes, then drawers — synergy, counters, compositions, maps, and all 93
+heroes — each summary carrying its own count and each table its own caveat, so a caveat is never
+read away from the number it qualifies. Nothing on the view is a header plate that repeats the
+view head.
+
+### Prep Sheet (signature)
+Four plates, one question each: the opponent, the draft, the maps, the players. The opponent plate is
+the cover — crest, club, rating at 24px with its 95% interval, record, one mono line of win rate,
+form, SOS, deciders and game 3, the two team selects, and Print / PDF as the primary action.
+Priority bans are ranked rather than scored on screen; their bans, first bans and side record sit
+beside them. The map ladder reads weakest first with a bar, so a club with no losing map says so at
+a glance. A matchup plate appears only once our team is chosen, carrying our own line above the five
+lane rows. One method disclosure prints open.
 
 ### Match Card + Week Group (signature)
 The latest week opens; earlier weeks are one-line summary bars. The card is the control: no separate
