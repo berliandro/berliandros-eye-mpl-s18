@@ -21,6 +21,9 @@ analysis/evidence/segments.jsonl
 analysis/evidence/segments/
 .playwright-mcp/
 
+# working capture output; curated evidence lives under docs/evidence/
+shots/
+
 # OS / editor
 .DS_Store
 Thumbs.db
