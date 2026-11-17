@@ -96,8 +96,9 @@ Open decisions recorded 2026-11-15:
 
 - The single-file self-contained artifact and the current presentation of evidence are the
   present implementation, not binding constraints. Either may be reconsidered.
-- No public deployment is performed from this repository yet; publishing needs credentials the
-  repo does not hold.
+- GitHub Pages publishes `mpl_id_s18_dark.html` plus `assets/` from `main` through
+  `.github/workflows/pages.yml`; the deployed site is the same embedded snapshot, with artwork on
+  relative paths, and the manual Refresh still calls the public API.
 - Visual proof for the coaching layer is unresolved (0 same-frame `00:00` boundaries), so
   gameplay observations remain text-only for now.
 
