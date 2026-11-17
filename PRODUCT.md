@@ -67,7 +67,7 @@ sample behind each one.
 
 ## Capabilities and Constraints
 
-Views: Overview (season front page: latest result, standings, MVP race, pending playoffs),
+Views: Overview (championship plate, final standings, MVP race, latest results),
 Teams (nine-club league board plus a season dossier per club), Players (grid and list), Player
 profile (full page), Matches (fixtures and scoreboard, list and grid, regular and playoffs, bracket
 preview), Stats (series-MVP race, hero dashboard), Analytics (player impact and draft) and Prep

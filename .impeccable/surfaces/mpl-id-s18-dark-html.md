@@ -3,7 +3,7 @@
 Mode: Operate. Target: `mpl_id_s18_dark.html` (`#view=player&player=<name>`).
 Audience: fan arriving from the Players grid, coach arriving from Prep. Job: know who this
 player is and how he performed, in one viewport, then drill into heroes and games. Constraints:
-58 portraits at 192×192, single generated artifact, offline-first, never invent a number.
+58 portraits at 500×500, single generated artifact, offline-first, never invent a number.
 
 ## Direction contract
 
@@ -18,16 +18,17 @@ the only photographic material.
 
 STORY: In the first viewport the visitor knows the IGN, team, lane, and the season's line —
 games, record, KDA, K/D/A, GPM, kill participation, damage share — with the season row set
-against the last five games. Scrolling reveals hero pool, derived stats and the game log.
-The band shows no playoff split: no player has playoff game rows in the committed snapshot,
-so a "Playoffs" row would be permanently empty.
+against the last five games. The season row includes playoff games because the source's season
+stats do; there is no separate playoff split row. Scrolling reveals hero pool, derived stats and
+the game log.
 
 FIRST VIEWPORT: Hero card at ~540px tall. Name left, uppercase, clamp(50–110px), tracking
 −0.038em, capped at 58% width so long IGNs wrap instead of reaching the portrait; meta line
-under it (games · series record · KDA). Portrait anchored bottom-right at ~500px tall,
-standing behind a 7-column glass band pinned to the bottom edge and overlapping it by the
-band's height. Ghost wordmark at 2.8% white behind; players without a cut-out get a 6% white
-monogram in the portrait's position.
+under it (games · series record · KDA). Portrait anchored bottom-right at ~500px tall, behind an
+8-column glass band pinned to the bottom edge and overlapping it by the band's height. Ghost
+wordmark at 2.8% white behind; players without a cut-out get a 6% white monogram in the portrait's
+position. Below 980 the name steps down and may cross the cut-out's body behind a scrim, never its
+face; on phones the band scrolls with a thin visible scrollbar.
 
 FORM: User-pinned composition from the NBA player-profile reference, quoted: "I love this
 player profile look so much. The glass UI at the bottom, the big bold player image, the minimal

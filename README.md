@@ -11,6 +11,8 @@ Season 18 is complete: the snapshot carries all **80 series and 215 games**, wit
 NAVI 4–3 in the Grand Final**.
 
 **Live:** <https://berliandro.github.io/berliandros-eye-mpl-s18/mpl_id_s18_dark.html>
+The root URL <https://berliandro.github.io/berliandros-eye-mpl-s18/> redirects to the app; Pages
+serves `main` directly (`.nojekyll`), and `404.html` catches unknown paths.
 
 ## Semantic coaching pilot
 
@@ -18,7 +20,7 @@ A separate, auditable transcript/database layer lives in [`analysis/`](analysis/
 
 ## Screenshots
 
-### Overview — season front page: latest result, final standings, MVP race, playoffs
+### Overview — championship plate, final standings, MVP race, latest results
 ![Overview](github/assets/01-overview.png)
 
 ### Teams — the league board and nine club dossiers, rating first
@@ -42,18 +44,18 @@ A separate, auditable transcript/database layer lives in [`analysis/`](analysis/
 ### Player profile — identity plate, glass season band, hero pool, derived stats
 ![Player profile](github/assets/06-player.png)
 
-### Stats — Series MVP race and history
+### Stats — Series MVP race with club crests and award bars
 ![Stats MVP](github/assets/07-stats-mvp.png)
 
-### Stats — Heroes dashboard (highlights + sortable pick/ban/win table)
+### Stats — Heroes dashboard: one-line leaders and a sortable pick/ban/win table
 ![Stats heroes](github/assets/08-stats-heroes.png)
 
 ## Features
 
-- **Overview** — season front page: the latest completed series as a plate (both teams, score,
-  series MVP, one click to the scoreboard), a one-line season count, final standings that keep
-  official Match W-L and Game W-L separate and link to the club dossiers, the series-MVP race,
-  and the last six results. Every block routes somewhere; nothing on it is a dead end.
+- **Overview** — the championship plate (whole roster, 4–3, game winners, series MVP, one click to
+  the scoreboard), a one-line season count, final standings that keep official Match W-L and Game
+  W-L separate and link to the club dossiers, the series-MVP race, and the last six results. Every
+  block routes somewhere; nothing on it is a dead end.
 - **Teams** — a nine-club league board and nine season dossiers. The board opens on the model's
   **Rating** order with a **Standings** toggle and a **Δ** rank column when the two disagree; the
   dossier opens with a crest identity plate and a frosted seven-cell band (series, games,
@@ -69,8 +71,9 @@ A separate, auditable transcript/database layer lives in [`analysis/`](analysis/
 - **Matches** — the latest week opens first; fixtures are grouped by week, earlier weeks one
   click away. The card is the target: no separate button, the winner is marked by weight, and
   each series carries one date, one short score and one series-MVP label. A Regular/Playoffs
-  sub-tab switches phases; the playoffs phase is the **bracket** plus the scheduled series, and
-  a team filter dims the league bracket instead of contradicting the count.
+  sub-tab switches phases; the playoffs phase is the **bracket** plus the playoff series, and
+  a team filter dims the league bracket instead of contradicting the count. Below 768px the bracket
+  stacks by round, so the Grand Final is never clipped off-screen.
 - **Scoreboard dialog** — the series score in the title, **Series MVP (Liquipedia)** in the
   subtitle and **Game MVP (KDA heuristic)** in the game header; one table per team
   (Player / K/D/A / KDA / Gold / GPM / DMG / TAKEN) with a build row, tabular figures and player
@@ -88,9 +91,9 @@ A separate, auditable transcript/database layer lives in [`analysis/`](analysis/
   (Stats, Analytics, Prep) at 1180px and wider, with inline SVG icons, live counts for clubs,
   players and series, and one 2px accent bar. Below that width the seven tabs return, in a 4×2
   grid on phones with Prep spanning the last two cells. The player profile hides the header.
-- **Stats** — sub-tabbed dashboard: **Series MVP** (race leaderboard + history) and
-  **Heroes** (highlight tiles + sortable pick/ban/win table with **role, lane and
-  damage-type columns** and share bars).
+- **Stats** — sub-tabbed dashboard: **Series MVP** (race leaderboard with club crests and a
+  proportional award bar, plus the full history) and **Heroes** (one-line leaders + a sortable
+  pick/ban/win table with **role, lane and damage-type columns** and share bars).
 - **Analytics — Impact** — lane-normalised player impact (35% damage share, 25% kill
   participation, 20% gold share, 10% tower share, −10% death share), shrunk toward
   the lane mean with a 5-game prior. Shows KDA/GPM/damage/KP percentiles, a 95%
@@ -126,7 +129,8 @@ A separate, auditable transcript/database layer lives in [`analysis/`](analysis/
   A refresh is labelled final only when all 72 completed regular fixtures have
   detail, the standings totals agree, and every game retains ten picks, two
   team rows, recorded sides and its ordered bans; missing results or draft
-  gaps are called out explicitly. Source conflicts and data-quality exceptions
+  gaps are called out explicitly. The committed snapshot additionally carries
+  the 8 playoff series (215 games in total). Source conflicts and data-quality exceptions
   live in `data/seasons/s18/quality.json` and `meta.json`.
   A failed ETL build keeps the last known-good database/CSVs (rerun to
   retry); a failed refresh keeps showing the last snapshot. To reset cached
@@ -190,6 +194,9 @@ A separate, auditable transcript/database layer lives in [`analysis/`](analysis/
 | `tools/check_parity.py` | Regen parity gate |
 | `tools/shots.py` | README screenshots per the shooting spec below (Playwright + system Chrome) |
 | `assets/` | Downloaded artwork + `manifest.json` |
+| `assets/og-card.png` | 1200×630 share card for Open Graph / Twitter |
+| `index.html` | Root redirect to the app (hash-preserving) |
+| `404.html` | Branded not-found page for GitHub Pages |
 | `data/` | SQLite DB, CSV exports, `lanes.json` |
 | `github/assets/` | README screenshots |
 

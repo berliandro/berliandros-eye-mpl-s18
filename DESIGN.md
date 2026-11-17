@@ -210,7 +210,8 @@ open; the other six collapse to their identity strip. The dossier uses 1.06fr / 
 tendencies in the left stack, draft, map record and head-to-head in the right.
 
 Matches opens on the latest week; earlier weeks are one-line summaries. The scoreboard is two tables,
-not two stacks of rows; the playoffs are the bracket first and the scheduled series second.
+not two stacks of rows; the playoffs are the bracket first and the playoff series second. Below 768
+the bracket stacks by round and drops its connector lines, so the Grand Final is never off-screen.
 
 Prep is one sheet, not a dashboard. An opponent plate carries the club, its rating as the single
 headline figure with its interval, the record, then one mono line of win rate, form, SOS and
@@ -222,10 +223,11 @@ which prints open. There are no stat tiles on Prep: a figure sits in the line or
 
 Stats is two records behind one switch in the head, never two pages: the Series MVP race and the hero
 record. Each is one full-width plate with one mono label carrying its count. The race is a ranked
-leaderboard with the awards on the right rail and the Liquipedia spellings stated once beneath it
-instead of beside every name; the 80 award decisions fold into a foot disclosure that prints open.
-The hero record is one table — hero, lane, pick, ban, presence, win rate — with its four answers in a
-single line above it, so no tile repeats what the table below already says.
+leaderboard with the player, club crest, a proportional award bar and the count, with the Liquipedia
+spellings stated once beneath it instead of beside every name; the 80 award decisions fold into a
+foot disclosure that prints open. The hero record is one table — hero, lane, pick, ban, presence, win
+rate — with its four answers in a single line above it, so no tile repeats what the table below
+already says.
 
 Spacing runs 8 / 14 / 18 / 24. Inside a panel 18–20px; between panels 18px.
 
@@ -388,8 +390,9 @@ chip; the VOD is a chalk pill at 44px on touch. The dialog title is `h2`, each g
 
 ### Playoff Bracket (signature)
 The bracket is the playoffs page. Undecided slots name their feed (“Winner QF1”, “Loser UF”), never a
-bare TBD; the scheduled series sit below it. A team filter dims the other routes and says the bracket
-is league-wide, rather than leaving a count that contradicts the drawing.
+bare TBD; the playoff series sit below it. A team filter dims the other routes and says the bracket
+is league-wide, rather than leaving a count that contradicts the drawing. On phones the four rounds
+stack in order, without connector lines, so the final stays reachable.
 
 ### Print
 The same markup on paper: white plates, black ink, seams at `#bbb`, chrome removed, ghosts hidden,
