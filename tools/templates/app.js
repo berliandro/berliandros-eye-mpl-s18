@@ -740,7 +740,7 @@ function seasonFinal(){
         const won=!!w&&w===code(champ);
         if(won)run++;
         if(won&&run===target&&clinch===null)clinch=g.game_no;
-        return {no:g.game_no,won:won};
+        return {no:g.game_no,won:won,team:w};
       });
     }
   }
@@ -809,7 +809,7 @@ function champPlate(sf){
       +`<span class="cp-opp">${esc(opp.code)}</span>`
     : '<span class="cp-noscore">Series score not recorded</span>';
   const cells=sf.trace.length
-    ? `<ol class="cp-games">${sf.trace.map(t=>`<li class="cp-g ${t.won?'w':'l'}" aria-label="Game ${esc(t.no)}: ${t.won?'win':'loss'}"><span class="cp-gn">G${esc(t.no)}</span><span class="cp-gr">${t.won?'W':'L'}</span></li>`).join('')}</ol>`
+    ? `<ol class="cp-games">${sf.trace.map(t=>`<li class="cp-g ${t.won?'w':'l'}" aria-label="Game ${esc(t.no)}: ${esc(t.team||(t.won?meta.code:opp.code))} win"><span class="cp-gn">G${esc(t.no)}</span><span class="cp-gr cp-gr--code">${esc(t.team||(t.won?meta.code:opp.code))}</span></li>`).join('')}</ol>`
     : '<p class="cp-note">Game-by-game detail not recorded.</p>';
   const clinch=sf.clinch?'Clinched in game '+esc(sf.clinch):'';
   const go=sf.detailId
@@ -829,7 +829,7 @@ ${lineup}
 </div>
 <div class="cp-band">
 <div class="cp-trace">
-<div class="cp-trace-h"><span>Grand Final · game by game</span><span>${clinch}</span></div>
+<div class="cp-trace-h"><span>Grand Final · game winners</span><span>${clinch}</span></div>
 ${cells}
 </div>
 <div class="cp-side">${mvp}${go}</div>

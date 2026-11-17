@@ -559,6 +559,7 @@ body.pview main{padding-top:22px}
 .cp-g{width:47px;height:46px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:1px;border:1px solid rgba(255,255,255,.11);border-radius:7px;background:rgba(255,255,255,.022)}
 .cp-gn{font-family:var(--font-mono);font-size:8.5px;letter-spacing:.07em;color:var(--muted);line-height:1}
 .cp-gr{font-family:var(--font-display);font-size:14px;font-weight:700;color:var(--ink);line-height:1.1}
+.cp-gr--code{font-size:11.5px;font-weight:600;letter-spacing:.02em}
 .cp-g.l{border-style:dashed;border-color:rgba(255,255,255,.15);background:transparent}
 .cp-g.l .cp-gr{color:var(--muted);font-weight:500}
 .cp-g.w{box-shadow:inset 0 -3px 0 var(--ink)}

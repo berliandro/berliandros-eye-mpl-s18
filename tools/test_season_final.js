@@ -199,6 +199,8 @@ function dataFor(over, extra) {
   eq(sf.champScore, 4, 'champion score is mapped onto the bracket order');
   eq(sf.oppScore, 3, 'opponent score is mapped onto the bracket order');
   eq(sf.trace.length, 7, 'every game appears in the trace');
+  eq(sf.trace[0].team, 'BTR', 'game 1 names the champion');
+  eq(sf.trace[1].team, 'NAVI', 'game 2 names the opponent');
   eq(sf.trace.filter(t => t.won).length, 4, 'game winners follow each game team order');
   eq(sf.clinch, 7, 'the clinching game is the seventh');
 }
