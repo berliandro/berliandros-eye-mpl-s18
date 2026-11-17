@@ -286,11 +286,11 @@ image keeps the portrait's depth shadow plus a 1px top rim — never an outline.
 
 Above the lineup a 52px crest lockup, the club name at display scale and one line —
 `4–2 over [crest] NAVI`. Below it one machined band carries the grand-final trace — one cell per
-game **naming the game's winner**: the champion's cells carry a 3px chalk bar, the opponent's stay
+game **naming the game's winner**. The champion's cells carry a 3px chalk bar, the opponent's stay
 dashed, so a 4–3 final reads as four BTR games and three NAVI games, never as a list of the
-champion's failures — the series MVP, the action, and the roster line in mono. The club code sits
-behind the lineup at 4.5% of the crest tint; ONIC, which derives no accent, takes a chalk hairline
-and a chalk ghost.
+champion's failures. The band also carries the series MVP, the action, and the roster line in mono.
+The club code sits behind the lineup at 4.5% of the crest tint; ONIC, which derives no accent, takes
+a chalk hairline and a chalk ghost.
 
 No trophy, no laurel, no gold, no gradient text, and no second focal image: the celebration is
 stage light and paper, never props. Below 760 the band stacks, the name steps down, and the lineup
