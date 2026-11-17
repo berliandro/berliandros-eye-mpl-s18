@@ -527,17 +527,18 @@ body.pview main{padding-top:22px}
   .ov2 .sc:focus-visible{outline:2px solid var(--ink);outline-offset:2px}
 }/* ============ championship plate ============ */
 .cp{position:relative;border:1px solid var(--line);border-radius:16px;overflow:hidden;
-  background:radial-gradient(120% 86% at 50% -6%,rgba(255,255,255,.075),transparent 62%),linear-gradient(180deg,#1c211d 0%,#141715 56%,#0d0f0e 100%)}
+  background:radial-gradient(78% 54% at 50% -8%,rgba(255,250,242,.10),transparent 62%),linear-gradient(180deg,#1c211d 0%,#141715 56%,#0d0f0e 100%)}
 .cp-top{display:flex;justify-content:space-between;align-items:center;gap:12px;padding:13px 26px;border-bottom:1px solid rgba(255,255,255,.075);font-family:var(--font-mono);font-size:9.5px;letter-spacing:.13em;text-transform:uppercase;color:var(--muted)}
 .cp-tag{display:inline-flex;align-items:center;gap:10px}
 .cp-tag i{width:3px;height:12px;border-radius:1px;background:var(--cp-edge);display:block}
 .cp-stage{position:relative;padding:24px 26px 0;display:flex;flex-direction:column;align-items:center;overflow:hidden}
+.cp-stage::before{content:"";position:absolute;left:-12%;right:-12%;top:-34%;height:130%;background:radial-gradient(58% 58% at 50% 0%,rgba(255,250,242,.20),rgba(255,250,242,.06) 44%,transparent 72%);filter:blur(28px);pointer-events:none;z-index:0}
 .cp-word{position:absolute;left:50%;bottom:-.12em;transform:translateX(-50%);font-family:var(--font-display);font-weight:700;font-size:clamp(150px,25vw,340px);line-height:.72;letter-spacing:-.055em;color:var(--cp-ghost);pointer-events:none;user-select:none;white-space:nowrap;z-index:0}
 .cp-id{position:relative;z-index:2;display:flex;flex-direction:column;align-items:center;gap:10px;text-align:center;min-width:0}
 .cp-lockup{display:flex;align-items:center;justify-content:center;gap:15px;min-width:0;max-width:100%}
 .cp-crest{width:52px;height:52px;display:grid;place-items:center;border:1px solid rgba(255,255,255,.14);border-radius:12px;background:rgba(255,255,255,.028);flex:none}
 .cp-crest img{width:36px;height:36px;object-fit:contain}
-.cp-name{margin:0;font-family:var(--font-display);font-weight:700;font-size:clamp(30px,3.9vw,54px);line-height:.94;letter-spacing:-.035em;color:var(--ink);min-width:0}
+.cp-name{margin:0;font-family:var(--font-display);font-weight:700;font-size:clamp(30px,3.9vw,54px);line-height:.94;letter-spacing:-.035em;color:var(--ink);min-width:0;text-shadow:0 0 58px rgba(255,246,236,.10)}
 .cp-name a{color:inherit;text-decoration:none}
 .cp-name a:hover{text-decoration:underline;text-underline-offset:7px;text-decoration-thickness:2px}
 .cp-line{display:flex;align-items:center;justify-content:center;flex-wrap:wrap;gap:9px;margin:0;font-family:var(--font-display);font-size:clamp(15px,1.5vw,20px);font-weight:500;color:#c9cec8;letter-spacing:-.005em}
@@ -547,17 +548,25 @@ body.pview main{padding-top:22px}
 .cp-opplogo{width:19px;height:19px;object-fit:contain;margin-left:2px}
 .cp-opp{font-weight:700;color:var(--ink);letter-spacing:.02em}
 .cp-noscore{font-family:var(--font-mono);font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted)}
-.cp-lineup{position:relative;z-index:1;width:100%;margin-top:18px;display:flex;flex-direction:column;align-items:center;--ph:clamp(150px,20vw,292px)}
-.cp-row{display:flex;align-items:flex-end;justify-content:center;justify-content:safe center;gap:calc(var(--ph)*.2);width:100%;max-width:100%}
-.cp-row--back{margin-bottom:calc(var(--ph)*-.30);z-index:1}
-.cp-row--mid{margin-bottom:calc(var(--ph)*-.30);z-index:2}
-.cp-row--front{z-index:3}
+.cp-lineup{position:relative;z-index:1;width:100%;margin-top:20px;display:flex;align-items:flex-end;justify-content:center;--ph:clamp(150px,19vw,286px)}
+.cp-atmos{position:absolute;inset:0;z-index:0;pointer-events:none;overflow:hidden}
+.cp-atmos::before{content:"";position:absolute;left:4%;right:4%;top:18%;height:58%;background:radial-gradient(ellipse at 50% 50%,rgba(255,246,236,.10),transparent 68%);filter:blur(24px)}
+.cp-atmos::after{content:"";position:absolute;left:4%;right:4%;top:24%;height:52%;background:radial-gradient(ellipse at 50% 50%,rgba(255,246,236,.10),transparent 68%);filter:blur(24px)}
+.cp-pool{position:absolute;left:4%;right:4%;bottom:0;height:42%;border-radius:50%;filter:blur(30px);background:radial-gradient(ellipse at 50% 40%,rgba(255,246,236,.16),transparent 58%),radial-gradient(ellipse at 50% 62%,var(--cp-glow),transparent 74%)}
+.cp-confetti{position:absolute;inset:0}
+.cp-confetti i{position:absolute;left:var(--x);top:var(--y);width:4px;height:9px;border-radius:1px;background:rgba(238,241,238,.68);opacity:var(--o);transform:rotate(var(--r));animation:cp-fall var(--t) linear infinite;animation-delay:var(--d)}
+.cp-confetti i:nth-child(3n){width:5px;height:7px;background:var(--cp-spark)}
+.cp-confetti i:nth-child(4n){width:2px;height:11px;background:rgba(255,255,255,.36)}
+.cp-confetti i:nth-child(9n){width:2px;height:18px;background:var(--cp-spark)}
+@media(min-width:1400px){.cp-confetti i{width:5px;height:11px}.cp-confetti i:nth-child(3n){width:6px;height:9px}.cp-confetti i:nth-child(4n){width:3px;height:13px}}
+@keyframes cp-fall{from{transform:translateY(-12px) rotate(var(--r))}to{transform:translateY(30px) rotate(calc(var(--r) + 60deg))}}
+.cp-row{display:flex;align-items:flex-end;justify-content:center;justify-content:safe center;width:100%;max-width:100%}
+.cp-row--line{position:relative;z-index:1;gap:0}
+.cp-row--line::after{content:"";position:absolute;left:4%;right:4%;bottom:-1px;height:1px;background:linear-gradient(90deg,transparent,rgba(255,244,230,.30),transparent);filter:blur(1px)}
 .cp-fig{position:relative;margin:0;flex:none;display:grid;place-items:end center}
-.cp-fig img{display:block;width:100%;height:100%;object-fit:contain;filter:drop-shadow(0 20px 34px rgba(0,0,0,.5))}
-.cp-fig--front img{filter:drop-shadow(0 26px 44px rgba(0,0,0,.6))}
-.cp-fig--back{height:calc(var(--ph)*.6);width:calc(var(--ph)*.6)}
-.cp-fig--mid{height:calc(var(--ph)*.76);width:calc(var(--ph)*.76)}
-.cp-fig--front{height:calc(var(--ph)*.94);width:calc(var(--ph)*.94)}
+.cp-fig img{display:block;width:100%;height:100%;object-fit:contain;filter:brightness(1.05) saturate(1.03) drop-shadow(0 -1px 0 rgba(255,248,240,.34)) drop-shadow(0 22px 34px rgba(0,0,0,.55)) drop-shadow(0 0 16px rgba(255,244,230,.10))}
+.cp-fig--line{height:var(--ph);width:var(--ph);z-index:calc(var(--i) + 1)}
+.cp-fig--line + .cp-fig--line{margin-left:calc(var(--ph)*-.30)}
 .cp-mono{position:relative;display:flex;align-items:flex-start;justify-content:center;width:100%;height:100%;padding-top:calc(var(--ph)*.12)}
 .cp-mono b{font-family:var(--font-display);font-weight:700;font-size:calc(var(--ph)*.17);letter-spacing:-.01em;color:rgba(238,241,238,.24);line-height:1}
 .cp-mono em{position:absolute;left:0;right:0;bottom:calc(var(--ph)*.05);padding:0 6px;font-style:normal;font-family:var(--font-mono);font-size:8.5px;letter-spacing:.1em;text-transform:uppercase;color:rgba(154,162,156,.7);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
@@ -583,32 +592,38 @@ body.pview main{padding-top:22px}
 .ov2-fin .t i{font-style:normal;font-family:var(--font-mono);font-size:11px;color:var(--muted)}
 .ov2-fin .tag{margin-left:auto;font-family:var(--font-mono);font-size:8.5px;letter-spacing:.12em;text-transform:uppercase;color:var(--ink);border:1px solid rgba(255,255,255,.2);border-radius:9999px;padding:3px 8px;flex:none}
 .ov2-fin:hover .t{text-decoration:underline;text-underline-offset:3px}
-@media(max-width:1100px){.cp-name{font-size:clamp(30px,4.6vw,50px)}.cp-lineup{--ph:clamp(140px,23vw,262px)}}
+.cp-lineup--many{--ph:clamp(118px,14vw,214px)}
+@media(max-width:1100px){.cp-name{font-size:clamp(30px,4.6vw,50px)}.cp-lineup{--ph:clamp(140px,20vw,250px)}}
 @media(max-width:760px){
   .cp-top{padding:11px 16px}
   .cp-stage{padding:20px 16px 0}
-  .cp-lineup{--ph:clamp(120px,27vw,210px);margin-top:16px}
-  .cp-row{gap:calc(var(--ph)*.08);overflow-x:auto;scrollbar-width:none}
-  .cp-row::-webkit-scrollbar{display:none}
+  .cp-lineup{--ph:clamp(118px,26vw,200px);margin-top:16px}
+  .cp-row--line .cp-fig--line + .cp-fig--line{margin-left:calc(var(--ph)*-.34)}
+  .cp-lineup--many .cp-row--line{overflow-x:auto;scrollbar-width:none}
+  .cp-lineup--many .cp-row--line::-webkit-scrollbar{display:none}
   .cp-band{grid-template-columns:1fr;gap:14px;padding:16px}
   .cp-side{align-items:flex-start;gap:8px}
   .cp-roster{white-space:normal}
 }
 @media(max-width:620px){
   .cp-name{font-size:clamp(24px,7vw,32px)}
-  .cp-lineup.cp-lineup--many{--ph:clamp(92px,24vw,118px)}
+  .cp-lineup.cp-lineup--many{--ph:clamp(88px,20vw,128px)}
 }
 @media(max-width:520px){
+  .cp-confetti i:nth-child(n+37){display:none}
   .cp-word{font-size:clamp(120px,44vw,200px)}
-  .cp-lineup{--ph:clamp(126px,36vw,176px)}
+  .cp-lineup{--ph:clamp(90px,23vw,130px)}
+  .cp-row--line .cp-fig--line + .cp-fig--line{margin-left:calc(var(--ph)*-.40)}
   .cp-crest{width:44px;height:44px;border-radius:10px}
   .cp-crest img{width:30px;height:30px}
   .cp-g{width:42px;height:42px}
   .cp-line{font-size:14px;gap:7px}
 }
+@media(prefers-reduced-motion:reduce){.cp-confetti i{animation:none}}
 @media print{
   .cp{background:#fff!important;border-color:#bbb!important;color:#000!important;break-inside:avoid;page-break-inside:avoid}
   .cp-word{display:none!important}
+  .cp-atmos{display:none!important}
   .cp-top{border-color:#bbb!important;color:#333!important}
   .cp-tag i{background:#000!important}
   .cp-name,.cp-name a,.cp-line b,.cp-opp,.cp-gr{color:#000!important}
@@ -1930,9 +1945,11 @@ function teamRoster(code){
 }
 /* SEASON-FINAL-END */
 function cpInitials(n){return esc(String(n||'?').split(/[\s_]+/).map(w=>w[0]).join('').slice(0,2).toUpperCase());}
-/* The championship plate: the club's whole roster is the image, one player
-   stands forward as the focal point, and the season's receipt sits in the
-   band underneath. Chrome stays at hero scale so the lineup leads. */
+function cpRGBA(hex,a){const n=parseInt(String(hex||'').replace('#',''),16);
+  return isFinite(n)?`rgba(${(n>>16)&255},${(n>>8)&255},${n&255},${a})`:`rgba(238,241,238,${a})`;}
+/* The championship plate: the club's whole roster is the image, standing in
+   one line at one scale, lane order left to right, like the team sheet shot
+   under the lights. The season's receipt sits in the band underneath. */
 function champPlate(sf){
   const meta=cpTeamMeta(sf.champion), opp=cpTeamMeta(sf.runnerUp);
   const accent=TCOL(meta.code);
@@ -1940,18 +1957,23 @@ function champPlate(sf){
      chalk ghost rather than falling through to a team-red or the red signal. */
   const edge=accent?accent.soft:'rgba(238,241,238,.42)';
   const ghost=accent?(accent.ghost||accent.tint||accent.soft):'rgba(238,241,238,.05)';
+  const glow=cpRGBA(accent&&accent.hex,.28), spark=cpRGBA(accent&&accent.hex,.70);
   const roster=teamRoster(meta.code);
-  const focal=(sf.mvp&&roster.find(p=>samePlayer(p.player,sf.mvp)))||roster[0]||null;
-  const rest=focal?roster.filter(p=>p!==focal):roster.slice();
-  const midCount=Math.floor(rest.length/2);
-  const midRow=rest.slice(0,midCount), backRow=rest.slice(midCount);
-  const fig=(p,row)=>`<figure class="cp-fig cp-fig--${row}" role="img" aria-label="${esc(p.player)}${p.lane?', '+esc(p.lane):''}">`
+  const fig=(p,i)=>`<figure class="cp-fig cp-fig--line" style="--i:${i}" role="img" aria-label="${esc(p.player)}${p.lane?', '+esc(p.lane):''}">`
     +(PICON(p.player)?`<img src="${esc(PICON(p.player))}" alt="" loading="lazy" decoding="async" ${IMG_HIDE}>`
       :`<span class="cp-mono" aria-hidden="true"><b>${cpInitials(p.player)}</b><em>${esc(p.player)}</em></span>`)+`</figure>`;
-  const rows=[];
-  if(backRow.length)rows.push(`<div class="cp-row cp-row--back">${backRow.map(p=>fig(p,'back')).join('')}</div>`);
-  if(midRow.length)rows.push(`<div class="cp-row cp-row--mid">${midRow.map(p=>fig(p,'mid')).join('')}</div>`);
-  if(focal)rows.push(`<div class="cp-row cp-row--front">${fig(focal,'front')}</div>`);
+  /* Deterministic paper flecks: same picture on every load, behind the squad. */
+  const confetti=Array.from({length:48},(_,i)=>{
+    const x=4+((i*29)%93), y=-4+((i*23)%84), r=(i*47)%180;
+    const o=(.34+((i*13)%38)/100).toFixed(2), t=9+((i*7)%8), d=-((i*11)%14);
+    return `<i style="--x:${x}%;--y:${y}%;--r:${r}deg;--o:${o};--t:${t}s;--d:${d}s"></i>`;
+  }).join('');
+  const lineup=`<div class="cp-lineup${roster.length>6?' cp-lineup--many':''}">
+<div class="cp-atmos" aria-hidden="true">
+<span class="cp-pool"></span><span class="cp-confetti">${confetti}</span>
+</div>
+<div class="cp-row cp-row--line">${roster.map(fig).join('')}</div>
+</div>`;
   const scoreHTML=sf.scoreKnown
     ? `<b>${esc(sf.champScore)}</b><i>–</i><b>${esc(sf.oppScore)}</b><span class="cp-over">over</span>`
       +(TICON(opp.code)?`<img class="cp-opplogo" src="${esc(TICON(opp.code))}" alt="" loading="lazy" ${IMG_HIDE}>`:'')
@@ -1965,7 +1987,7 @@ function champPlate(sf){
     ? `<button class="cp-go" data-m="${esc(sf.detailId)}">Open Grand Final <span aria-hidden="true">→</span></button>`
     : `<button class="cp-go" data-gopo>Open bracket <span aria-hidden="true">→</span></button>`;
   const mvp=sf.mvp?MVPB(sf.mvp,'Series MVP',''):'<span class="cp-mvp">Series MVP not recorded</span>';
-  return `<section class="cp" style="--cp-edge:${esc(edge)};--cp-ghost:${esc(ghost)}" aria-labelledby="cpName">
+  return `<section class="cp" style="--cp-edge:${esc(edge)};--cp-ghost:${esc(ghost)};--cp-glow:${esc(glow)};--cp-spark:${esc(spark)}" aria-labelledby="cpName">
 <div class="cp-top"><span class="cp-tag"><i aria-hidden="true"></i>Season 18 · Champions</span><span>${esc(cpDayOf(sf.date)||'Season complete')}</span></div>
 <div class="cp-stage">
 <span class="cp-word" aria-hidden="true">${esc(meta.code)}</span>
@@ -1974,7 +1996,7 @@ function champPlate(sf){
 <h2 class="cp-name" id="cpName"><a href="#view=teams&team=${encodeURIComponent(meta.slug)}">${esc(meta.name)}</a></h2></div>
 <p class="cp-line">${scoreHTML}</p>
 </div>
-<div class="cp-lineup${roster.length>6?' cp-lineup--many':''}">${rows.join('')}</div>
+${lineup}
 </div>
 <div class="cp-band">
 <div class="cp-trace">

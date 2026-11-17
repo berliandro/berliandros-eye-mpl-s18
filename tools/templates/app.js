@@ -774,9 +774,11 @@ function teamRoster(code){
 }
 /* SEASON-FINAL-END */
 function cpInitials(n){return esc(String(n||'?').split(/[\s_]+/).map(w=>w[0]).join('').slice(0,2).toUpperCase());}
-/* The championship plate: the club's whole roster is the image, one player
-   stands forward as the focal point, and the season's receipt sits in the
-   band underneath. Chrome stays at hero scale so the lineup leads. */
+function cpRGBA(hex,a){const n=parseInt(String(hex||'').replace('#',''),16);
+  return isFinite(n)?`rgba(${(n>>16)&255},${(n>>8)&255},${n&255},${a})`:`rgba(238,241,238,${a})`;}
+/* The championship plate: the club's whole roster is the image, standing in
+   one line at one scale, lane order left to right, like the team sheet shot
+   under the lights. The season's receipt sits in the band underneath. */
 function champPlate(sf){
   const meta=cpTeamMeta(sf.champion), opp=cpTeamMeta(sf.runnerUp);
   const accent=TCOL(meta.code);
@@ -784,18 +786,23 @@ function champPlate(sf){
      chalk ghost rather than falling through to a team-red or the red signal. */
   const edge=accent?accent.soft:'rgba(238,241,238,.42)';
   const ghost=accent?(accent.ghost||accent.tint||accent.soft):'rgba(238,241,238,.05)';
+  const glow=cpRGBA(accent&&accent.hex,.28), spark=cpRGBA(accent&&accent.hex,.70);
   const roster=teamRoster(meta.code);
-  const focal=(sf.mvp&&roster.find(p=>samePlayer(p.player,sf.mvp)))||roster[0]||null;
-  const rest=focal?roster.filter(p=>p!==focal):roster.slice();
-  const midCount=Math.floor(rest.length/2);
-  const midRow=rest.slice(0,midCount), backRow=rest.slice(midCount);
-  const fig=(p,row)=>`<figure class="cp-fig cp-fig--${row}" role="img" aria-label="${esc(p.player)}${p.lane?', '+esc(p.lane):''}">`
+  const fig=(p,i)=>`<figure class="cp-fig cp-fig--line" style="--i:${i}" role="img" aria-label="${esc(p.player)}${p.lane?', '+esc(p.lane):''}">`
     +(PICON(p.player)?`<img src="${esc(PICON(p.player))}" alt="" loading="lazy" decoding="async" ${IMG_HIDE}>`
       :`<span class="cp-mono" aria-hidden="true"><b>${cpInitials(p.player)}</b><em>${esc(p.player)}</em></span>`)+`</figure>`;
-  const rows=[];
-  if(backRow.length)rows.push(`<div class="cp-row cp-row--back">${backRow.map(p=>fig(p,'back')).join('')}</div>`);
-  if(midRow.length)rows.push(`<div class="cp-row cp-row--mid">${midRow.map(p=>fig(p,'mid')).join('')}</div>`);
-  if(focal)rows.push(`<div class="cp-row cp-row--front">${fig(focal,'front')}</div>`);
+  /* Deterministic paper flecks: same picture on every load, behind the squad. */
+  const confetti=Array.from({length:48},(_,i)=>{
+    const x=4+((i*29)%93), y=-4+((i*23)%84), r=(i*47)%180;
+    const o=(.34+((i*13)%38)/100).toFixed(2), t=9+((i*7)%8), d=-((i*11)%14);
+    return `<i style="--x:${x}%;--y:${y}%;--r:${r}deg;--o:${o};--t:${t}s;--d:${d}s"></i>`;
+  }).join('');
+  const lineup=`<div class="cp-lineup${roster.length>6?' cp-lineup--many':''}">
+<div class="cp-atmos" aria-hidden="true">
+<span class="cp-pool"></span><span class="cp-confetti">${confetti}</span>
+</div>
+<div class="cp-row cp-row--line">${roster.map(fig).join('')}</div>
+</div>`;
   const scoreHTML=sf.scoreKnown
     ? `<b>${esc(sf.champScore)}</b><i>–</i><b>${esc(sf.oppScore)}</b><span class="cp-over">over</span>`
       +(TICON(opp.code)?`<img class="cp-opplogo" src="${esc(TICON(opp.code))}" alt="" loading="lazy" ${IMG_HIDE}>`:'')
@@ -809,7 +816,7 @@ function champPlate(sf){
     ? `<button class="cp-go" data-m="${esc(sf.detailId)}">Open Grand Final <span aria-hidden="true">→</span></button>`
     : `<button class="cp-go" data-gopo>Open bracket <span aria-hidden="true">→</span></button>`;
   const mvp=sf.mvp?MVPB(sf.mvp,'Series MVP',''):'<span class="cp-mvp">Series MVP not recorded</span>';
-  return `<section class="cp" style="--cp-edge:${esc(edge)};--cp-ghost:${esc(ghost)}" aria-labelledby="cpName">
+  return `<section class="cp" style="--cp-edge:${esc(edge)};--cp-ghost:${esc(ghost)};--cp-glow:${esc(glow)};--cp-spark:${esc(spark)}" aria-labelledby="cpName">
 <div class="cp-top"><span class="cp-tag"><i aria-hidden="true"></i>Season 18 · Champions</span><span>${esc(cpDayOf(sf.date)||'Season complete')}</span></div>
 <div class="cp-stage">
 <span class="cp-word" aria-hidden="true">${esc(meta.code)}</span>
@@ -818,7 +825,7 @@ function champPlate(sf){
 <h2 class="cp-name" id="cpName"><a href="#view=teams&team=${encodeURIComponent(meta.slug)}">${esc(meta.name)}</a></h2></div>
 <p class="cp-line">${scoreHTML}</p>
 </div>
-<div class="cp-lineup${roster.length>6?' cp-lineup--many':''}">${rows.join('')}</div>
+${lineup}
 </div>
 <div class="cp-band">
 <div class="cp-trace">

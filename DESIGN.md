@@ -236,7 +236,8 @@ an inset top highlight; hover lifts the seam to Seam Lift. There are no drop sha
 the portrait's `drop-shadow(0 26px 48px rgba(0,0,0,.62))` and the bracket's win glow.
 
 **The Lit-From-Above Rule.** The ground carries one gradient from the top of the page and a faint crown
-radial. Nothing is lit from below, from the side, or from a colour.
+radial. Nothing is lit from below, from the side, or from a colour — except the championship plate's
+stage: its club-coloured floor pool is the one bounce light the system allows.
 
 ## Motion
 
@@ -247,7 +248,9 @@ It runs only when a player is opened from a visible card, reverses on **All play
 returns to the scroll position it left. Every other animation is short and answers a state: a
 dialog lands in 240ms, a scoreboard game swaps in 180ms, a disclosure unfolds in 260ms, and the
 refresh control carries a determinate 2px rail. Radars draw only for cards a filter has just
-produced. Reduced motion keeps the state changes and removes the travel.
+produced. The championship plate's paper fall is the one ambient exception: decorative, behind the
+squad, fixed to a 9–16s loop, and stopped under reduced motion. Reduced motion keeps the state
+changes and removes the travel.
 
 ## Shapes
 
@@ -270,12 +273,16 @@ Plate gradient, 1px seam, 10px radius, 16px padding, corner tick, crest edge on 
 
 ### Championship Plate (signature)
 The Overview hero from the moment a grand final is decided: the club's **whole roster is the
-image**, not a crest with a score beside it. One player stands forward as the focal point — the
-series MVP when he is on the winning club, otherwise the first player in lane order — and the rest
-stand in two rows behind him, centred and staggered, bottom-anchored with a 30% overlap so bodies
-stack but faces never collide. Portraits run 0.60 / 0.76 / 0.94 of a 292px base (173 / 219 / 271 at
-1440), six times a card portrait; a player with no cut-out gets a ghost monogram and his IGN in
-mono rather than a broken image or an invented face.
+image**, standing in **one line at one scale**, lane order left to right, like the team sheet shot
+under the lights. Every figure shares one baseline and one height (`--ph`, 150–286 at desktop,
+90–130 on phones) and overlaps its neighbour by 30% of the frame, so shoulders sit together without
+hiding a face. A player with no cut-out gets a ghost monogram and his IGN in mono rather than a
+broken image or an invented face.
+
+The stage is **lit, not decorated**: a warm key from above, a soft back halo at shoulder height, a
+club-coloured floor pool, and a thin light line where the cut-offs meet the band. Fine paper flecks
+in chalk and the club colour fall behind the squad on a 9–16s loop; reduced motion stops them. The
+image keeps the portrait's depth shadow plus a 1px top rim — never an outline.
 
 Above the lineup a 52px crest lockup, the club name at display scale and one line —
 `4–2 over [crest] NAVI`. Below it one machined band carries the grand-final trace (one cell per
@@ -283,10 +290,11 @@ game, W marked by a 3px chalk bar under the letter, L by a dashed cell), the ser
 action, and the roster line in mono. The club code sits behind the lineup at 4.5% of the crest
 tint; ONIC, which derives no accent, takes a chalk hairline and a chalk ghost.
 
-No trophy, no laurel, no gold, no gradient text, no glow, and no second focal image: grandeur comes
-from scale, symmetry and air. Below 620 the band stacks, the name steps down, and a roster wider
-than six tightens its figures so the formation reflows instead of clipping. Print drops the ghost,
-the shadows and the action, and reads as a black-on-white certificate.
+No trophy, no laurel, no gold, no gradient text, and no second focal image: the celebration is
+stage light and paper, never props. Below 760 the band stacks, the name steps down, and the lineup
+keeps all five on one baseline by tightening its overlap and stepping `--ph` down; a roster wider
+than six may scroll rather than clip. Print drops the ghost, the atmosphere, the shadows and the
+action, and reads as a black-on-white certificate.
 
 ### Inputs / Fields
 Plate fill, 1px seam, 6px radius. Form controls inherit the UI face — a UA default is a defect. Focus
