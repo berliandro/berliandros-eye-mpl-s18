@@ -7,7 +7,7 @@ Ships as **one HTML file plus the committed `assets/` folder** beside it (`mpl_i
 the data is embedded and artwork is referenced by relative path, so the pair works offline from the
 snapshot and refreshes live from the mlbbhub API when online.
 
-**Live:** <https://berliandro.github.io/berliandros-eye-mpl-s18/>
+**Live:** <https://berliandro.github.io/berliandros-eye-mpl-s18/mpl_id_s18_dark.html>
 
 ## Semantic coaching pilot
 
