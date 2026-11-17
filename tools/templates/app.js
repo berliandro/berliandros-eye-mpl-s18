@@ -522,6 +522,7 @@ const prepPrintEl=document.getElementById('prepPrint');if(prepPrintEl)prepPrintE
 const prepCsvEl=document.getElementById('prepCsv');if(prepCsvEl)prepCsvEl.onclick=()=>{if(!PREP)return;const rows=[['section','name','games','value1','value2','value3']],o=PREP.opp;rows.push(['team',o.team,o.games,(o.winRate*100).toFixed(1),Math.round(o.rating),Math.round(o.sos)]);PREP.oppBans.forEach(b=>rows.push(['ban',b.hero,b.n,(b.presence*100).toFixed(1),(b.wr*100).toFixed(1),b.score.toFixed(3)]));PREP.oppPlayers.forEach(p=>rows.push(['player',p.player,p.games,p.kda.toFixed(2),p.impact.toFixed(1),p.close.n?(p.close.winRate*100).toFixed(1):'']));const csv='\ufeff'+rows.map(r=>r.map(x=>'"'+String(x).replace(/"/g,'""')+'"').join(',')).join('\n');const blob=new Blob([csv],{type:'text/csv;charset=utf-8'}),a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download='prep_'+o.team+'.csv';a.click();setTimeout(()=>URL.revokeObjectURL(a.href),1000);};
 const prepLinkEl=document.getElementById('prepLink');if(prepLinkEl)prepLinkEl.onclick=()=>{if(!PREP)return;const url=location.href.split('#')[0]+'#view=prep&opp='+encodeURIComponent(PREP.opp.team)+(PREP.my?'&team='+encodeURIComponent(PREP.my.team):'');if(navigator.clipboard&&navigator.clipboard.writeText)navigator.clipboard.writeText(url).then(()=>{prepLinkEl.textContent='Copied';setTimeout(()=>{prepLinkEl.textContent='Copy link';},1200);}).catch(()=>prompt('Copy this link',url));else prompt('Copy this link',url);};
 syncUrl();
+wireCpHero();
 board.querySelectorAll('[data-ts]').forEach(b=>b.onclick=()=>{const [t,k]=b.dataset.ts.split(':');const str=k==='hero'||k==='player'||k==='team'||k==='match'||k==='mvp'||k==='date';if(S.tsort.t===t&&S.tsort.k===k)S.tsort.d*=-1;else S.tsort={t,k,d:str?1:-1};render();});
 function viewCount(){
 if(S.view==='overview')return '';
@@ -790,6 +791,7 @@ function champPlate(sf){
   const ghost=accent?(accent.ghost||accent.tint||accent.soft):'rgba(238,241,238,.05)';
   const glow=cpRGBA(accent&&accent.hex,.28), spark=cpRGBA(accent&&accent.hex,.70);
   const roster=teamRoster(meta.code);
+  const crest=TICON(meta.code);
   const fig=(p,i)=>`<figure class="cp-fig cp-fig--line" style="--i:${i}" role="img" aria-label="${esc(p.player)}${p.lane?', '+esc(p.lane):''}">`
     +(PICON(p.player)?`<img src="${esc(PICON(p.player))}" alt="" loading="lazy" decoding="async" ${IMG_HIDE}>`
       :`<span class="cp-mono" aria-hidden="true"><b>${cpInitials(p.player)}</b><em>${esc(p.player)}</em></span>`)+`</figure>`;
@@ -799,10 +801,16 @@ function champPlate(sf){
     const o=(.34+((i*13)%38)/100).toFixed(2), t=9+((i*7)%8), d=-((i*11)%14);
     return `<i style="--x:${x}%;--y:${y}%;--r:${r}deg;--o:${o};--t:${t}s;--d:${d}s"></i>`;
   }).join('');
-  const lineup=`<div class="cp-lineup${roster.length>6?' cp-lineup--many':''}">
-<div class="cp-atmos" aria-hidden="true">
+  /* The arena around the squad: a crest watermark, one bowl line, drifting
+     haze, a slow light pass and the club-coloured floor. All of it is quiet
+     enough to sit behind the five men and the receipt. */
+  const atmosphere=`<div class="cp-atmos" aria-hidden="true">
+${crest?`<span class="cp-watermark"><img src="${esc(crest)}" alt="" loading="lazy" ${IMG_HIDE}></span>`:''}
+<span class="cp-haze"></span>
 <span class="cp-pool"></span><span class="cp-confetti">${confetti}</span>
-</div>
+<span class="cp-vignette"></span>
+</div>`;
+  const lineup=`<div class="cp-lineup${roster.length>6?' cp-lineup--many':''}">
 <div class="cp-row cp-row--line">${roster.map(fig).join('')}</div>
 </div>`;
   const scoreHTML=sf.scoreKnown
@@ -818,12 +826,13 @@ function champPlate(sf){
     ? `<button class="cp-go" data-m="${esc(sf.detailId)}">Open Grand Final <span aria-hidden="true">→</span></button>`
     : `<button class="cp-go" data-gopo>Open bracket <span aria-hidden="true">→</span></button>`;
   const mvp=sf.mvp?MVPB(sf.mvp,'Series MVP',''):'<span class="cp-mvp">Series MVP not recorded</span>';
-  return `<section class="cp" style="--cp-edge:${esc(edge)};--cp-ghost:${esc(ghost)};--cp-glow:${esc(glow)};--cp-spark:${esc(spark)}" aria-labelledby="cpName">
+  return `<section class="cp cp-visible" style="--cp-edge:${esc(edge)};--cp-ghost:${esc(ghost)};--cp-glow:${esc(glow)};--cp-spark:${esc(spark)}" aria-labelledby="cpName">
 <div class="cp-top"><span class="cp-tag"><i aria-hidden="true"></i>Season 18 · Champions</span><span>${esc(cpDayOf(sf.date)||'Season complete')}</span></div>
 <div class="cp-stage">
 <span class="cp-word" aria-hidden="true">${esc(meta.code)}</span>
+${atmosphere}
 <div class="cp-id">
-<div class="cp-lockup"><span class="cp-crest" aria-hidden="true">${TICON(meta.code)?`<img src="${esc(TICON(meta.code))}" alt="" loading="lazy" ${IMG_HIDE}>`:''}</span>
+<div class="cp-lockup"><span class="cp-crest" aria-hidden="true">${crest?`<img src="${esc(crest)}" alt="" loading="lazy" ${IMG_HIDE}>`:''}</span>
 <h2 class="cp-name" id="cpName"><a href="#view=teams&team=${encodeURIComponent(meta.slug)}">${esc(meta.name)}</a></h2></div>
 <p class="cp-line">${scoreHTML}</p>
 </div>
@@ -2261,6 +2270,19 @@ const board=document.getElementById('board');
 if(board&&window.ResizeObserver&&!wireBracket._ro){wireBracket._ro=new ResizeObserver(()=>{wireBracket();});wireBracket._ro.observe(board);}
 if(!brkResizeWired){brkResizeWired=true;let t=null;
 window.addEventListener('resize',()=>{clearTimeout(t);t=setTimeout(()=>wireBracket(),150);});}}
+var cpIO=null;
+/* The championship plate is the one ambient surface. It breathes only while
+   it is on screen; the entrance and the loops pause when it leaves the viewport. */
+function wireCpHero(){
+  const els=[...document.querySelectorAll('.cp')];
+  if(!els.length)return;
+  if(!('IntersectionObserver' in window)){els.forEach(el=>el.classList.add('cp-visible'));return;}
+  if(!cpIO)cpIO=new IntersectionObserver(entries=>{
+    entries.forEach(e=>e.target.classList.toggle('cp-visible',e.isIntersecting));
+  },{threshold:.08});
+  cpIO.disconnect();
+  els.forEach(el=>cpIO.observe(el));
+}
 function gameMvp(pa,pb,wcode){const pl=[...(pa||[]),...(pb||[])];const pool=wcode?pl.filter(r=>r.team===wcode):pl;const cands=pool.length?pool:pl;let best=null,bk=null;
 cands.forEach(r=>{const k=r.kda??(((r.kills??r.kill??0)+(r.assists??r.assist??0))/Math.max(1,(r.deaths??r.death??0)));const key=[k,(r.kills??r.kill??0),(r.gold??0)];
 if(!best||key[0]>bk[0]||(key[0]===bk[0]&&(key[1]>bk[1]||(key[1]===bk[1]&&key[2]>bk[2])))){best=r;bk=key;}});return best;}

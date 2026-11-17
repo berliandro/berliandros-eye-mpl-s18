@@ -4,7 +4,9 @@
   website zoom:  125%  (body CSS zoom; combined content scale 1.875x)
   result:        high-resolution but zoomed-in, matching the reference photo
   readiness:     every shot waits for webfonts + ALL <img> complete
-                 (no fixed sleeps before capture) so photos/icons are loaded
+                 (no fixed sleeps before capture) so photos/icons are loaded;
+                 stills emulate prefers-reduced-motion, stopping the plate's
+                 ambient motion so the capture is deterministic
   tool:          headless system Chrome via Playwright (in-tool screenshots
                  cannot run here — no visible desktop window)
 Usage: python tools/shots.py [--zoom]
@@ -61,6 +63,9 @@ with sync_playwright() as pw:
                            args=['--no-sandbox', '--force-device-scale-factor=1'])
     ctx = b.new_context(viewport=VP, device_scale_factor=DSF)
     pg = ctx.new_page()
+    # Stills are captured with the plate's ambient motion stopped, so the
+    # gallery and the parity artifact are deterministic.
+    pg.emulate_media(reduced_motion='reduce')
     pg.goto(URL, wait_until='networkidle')
     if ZOOM:
         pg.evaluate('document.body.style.zoom = "125%"')

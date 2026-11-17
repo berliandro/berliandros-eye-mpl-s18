@@ -548,7 +548,7 @@ body.pview main{padding-top:22px}
 .cp-stage{position:relative;padding:24px 26px 0;display:flex;flex-direction:column;align-items:center;overflow:hidden}
 .cp-stage::before{content:"";position:absolute;left:-12%;right:-12%;top:-34%;height:130%;background:radial-gradient(58% 58% at 50% 0%,rgba(255,250,242,.20),rgba(255,250,242,.06) 44%,transparent 72%);filter:blur(28px);pointer-events:none;z-index:0}
 .cp-word{position:absolute;left:50%;bottom:-.12em;transform:translateX(-50%);font-family:var(--font-display);font-weight:700;font-size:clamp(150px,25vw,340px);line-height:.72;letter-spacing:-.055em;color:var(--cp-ghost);pointer-events:none;user-select:none;white-space:nowrap;z-index:0}
-.cp-id{position:relative;z-index:2;display:flex;flex-direction:column;align-items:center;gap:10px;text-align:center;min-width:0}
+.cp-id{position:relative;z-index:2;display:flex;flex-direction:column;align-items:center;gap:10px;text-align:center;min-width:0;animation:cp-reveal .8s cubic-bezier(.16,1,.3,1) .12s both}
 .cp-lockup{display:flex;align-items:center;justify-content:center;gap:15px;min-width:0;max-width:100%}
 .cp-crest{width:52px;height:52px;display:grid;place-items:center;border:1px solid rgba(255,255,255,.14);border-radius:12px;background:rgba(255,255,255,.028);flex:none}
 .cp-crest img{width:36px;height:36px;object-fit:contain}
@@ -563,28 +563,41 @@ body.pview main{padding-top:22px}
 .cp-opp{font-weight:700;color:var(--ink);letter-spacing:.02em}
 .cp-noscore{font-family:var(--font-mono);font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted)}
 .cp-lineup{position:relative;z-index:1;width:100%;margin-top:20px;display:flex;align-items:flex-end;justify-content:center;--ph:clamp(150px,19vw,286px)}
-.cp-atmos{position:absolute;inset:0;z-index:0;pointer-events:none;overflow:hidden}
-.cp-atmos::before{content:"";position:absolute;left:4%;right:4%;top:18%;height:58%;background:radial-gradient(ellipse at 50% 50%,rgba(255,246,236,.10),transparent 68%);filter:blur(24px)}
-.cp-atmos::after{content:"";position:absolute;left:4%;right:4%;top:24%;height:52%;background:radial-gradient(ellipse at 50% 50%,rgba(255,246,236,.10),transparent 68%);filter:blur(24px)}
-.cp-pool{position:absolute;left:4%;right:4%;bottom:0;height:42%;border-radius:50%;filter:blur(30px);background:radial-gradient(ellipse at 50% 40%,rgba(255,246,236,.16),transparent 58%),radial-gradient(ellipse at 50% 62%,var(--cp-glow),transparent 74%)}
+.cp-atmos{position:absolute;inset:0;z-index:0;pointer-events:none;overflow:hidden;animation:cp-bloom 1.7s ease-out .05s both}
+.cp-atmos::before{content:"";position:absolute;left:2%;right:2%;top:6%;height:66%;background:radial-gradient(ellipse at 50% 48%,rgba(255,246,236,.09),transparent 68%);filter:blur(26px)}
+.cp-atmos::after{content:"";position:absolute;left:26%;right:26%;top:-12%;height:92%;background:linear-gradient(180deg,rgba(255,249,242,.10),rgba(255,249,242,.03) 48%,transparent 78%);filter:blur(30px);opacity:.8;animation:cp-beam 14s ease-in-out infinite}
+.cp-watermark{position:absolute;left:50%;top:52%;width:min(42%,480px);opacity:.075;transform:translate(-50%,-50%);filter:grayscale(1) brightness(1.8);animation:cp-crest 16s ease-in-out infinite;will-change:transform,opacity}
+.cp-watermark img{display:block;width:100%;height:auto;object-fit:contain}
+.cp-haze{position:absolute;inset:-12%;background:radial-gradient(40% 36% at 28% 40%,rgba(255,248,238,.06),transparent 70%),radial-gradient(40% 34% at 74% 58%,var(--cp-glow),transparent 72%);filter:blur(30px);opacity:.55;animation:cp-drift 24s ease-in-out infinite alternate;will-change:transform}
+.cp-pool{position:absolute;left:4%;right:4%;bottom:0;height:42%;border-radius:50%;opacity:.9;filter:blur(30px);background:radial-gradient(ellipse at 50% 40%,rgba(255,246,236,.16),transparent 58%),radial-gradient(ellipse at 50% 62%,var(--cp-glow),transparent 74%);animation:cp-pool 10s ease-in-out infinite;will-change:transform,opacity}
 .cp-confetti{position:absolute;inset:0}
 .cp-confetti i{position:absolute;left:var(--x);top:var(--y);width:4px;height:9px;border-radius:1px;background:rgba(238,241,238,.68);opacity:var(--o);transform:rotate(var(--r));animation:cp-fall var(--t) linear infinite;animation-delay:var(--d)}
 .cp-confetti i:nth-child(3n){width:5px;height:7px;background:var(--cp-spark)}
 .cp-confetti i:nth-child(4n){width:2px;height:11px;background:rgba(255,255,255,.36)}
+.cp-confetti i:nth-child(5n){filter:blur(1.3px);opacity:calc(var(--o)*.55);animation-duration:calc(var(--t)*1.45)}
 .cp-confetti i:nth-child(9n){width:2px;height:18px;background:var(--cp-spark)}
+.cp-vignette{position:absolute;inset:0;background:radial-gradient(120% 88% at 50% 42%,transparent 52%,rgba(4,6,5,.52) 100%)}
 @media(min-width:1400px){.cp-confetti i{width:5px;height:11px}.cp-confetti i:nth-child(3n){width:6px;height:9px}.cp-confetti i:nth-child(4n){width:3px;height:13px}}
 @keyframes cp-fall{from{transform:translateY(-12px) rotate(var(--r))}to{transform:translateY(30px) rotate(calc(var(--r) + 60deg))}}
+@keyframes cp-bloom{from{opacity:0}to{opacity:1}}
+@keyframes cp-beam{0%,100%{opacity:.65}50%{opacity:1}}
+@keyframes cp-crest{0%,100%{opacity:.07;transform:translate(-50%,-50%) scale(1)}50%{opacity:.10;transform:translate(-50%,-50%) scale(1.025)}}
+@keyframes cp-drift{0%{transform:translate3d(-1.6%,0,0) scale(1)}100%{transform:translate3d(1.6%,-1%,0) scale(1.04)}}
+@keyframes cp-pool{0%,100%{opacity:.82;transform:scale(1)}50%{opacity:1;transform:scale(1.035)}}
+@keyframes cp-breathe{0%,100%{transform:translate3d(0,0,0) scale(1)}50%{transform:translate3d(0,-4px,0) scale(1.01)}}
+@keyframes cp-rise{from{opacity:0;transform:translate3d(0,14px,0) scale(.99)}to{opacity:1;transform:none}}
+@keyframes cp-reveal{from{opacity:0;transform:translate3d(0,8px,0)}to{opacity:1;transform:none}}
 .cp-row{display:flex;align-items:flex-end;justify-content:center;justify-content:safe center;width:100%;max-width:100%}
-.cp-row--line{position:relative;z-index:1;gap:0}
+.cp-row--line{position:relative;z-index:1;gap:0;transform-origin:50% 100%;animation:cp-breathe 12s ease-in-out infinite}
 .cp-row--line::after{content:"";position:absolute;left:4%;right:4%;bottom:-1px;height:1px;background:linear-gradient(90deg,transparent,rgba(255,244,230,.30),transparent);filter:blur(1px)}
 .cp-fig{position:relative;margin:0;flex:none;display:grid;place-items:end center}
 .cp-fig img{display:block;width:100%;height:100%;object-fit:contain;filter:brightness(1.05) saturate(1.03) drop-shadow(0 -1px 0 rgba(255,248,240,.34)) drop-shadow(0 22px 34px rgba(0,0,0,.55)) drop-shadow(0 0 16px rgba(255,244,230,.10))}
-.cp-fig--line{height:var(--ph);width:var(--ph);z-index:calc(var(--i) + 1)}
+.cp-fig--line{height:var(--ph);width:var(--ph);z-index:calc(var(--i) + 1);transform-origin:50% 100%;animation:cp-rise .9s cubic-bezier(.16,1,.3,1) both;animation-delay:calc(var(--i)*70ms)}
 .cp-fig--line + .cp-fig--line{margin-left:calc(var(--ph)*-.30)}
 .cp-mono{position:relative;display:flex;align-items:flex-start;justify-content:center;width:100%;height:100%;padding-top:calc(var(--ph)*.12)}
 .cp-mono b{font-family:var(--font-display);font-weight:700;font-size:calc(var(--ph)*.17);letter-spacing:-.01em;color:rgba(238,241,238,.24);line-height:1}
 .cp-mono em{position:absolute;left:0;right:0;bottom:calc(var(--ph)*.05);padding:0 6px;font-style:normal;font-family:var(--font-mono);font-size:8.5px;letter-spacing:.1em;text-transform:uppercase;color:rgba(154,162,156,.7);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-.cp-band{position:relative;z-index:3;display:grid;grid-template-columns:1fr auto;align-items:end;gap:14px 30px;padding:16px 26px 13px;border-top:1px solid rgba(255,255,255,.09);background:linear-gradient(180deg,rgba(255,255,255,.03),rgba(255,255,255,.012))}
+.cp-band{position:relative;z-index:3;display:grid;grid-template-columns:1fr auto;align-items:end;gap:14px 30px;padding:16px 26px 13px;border-top:1px solid rgba(255,255,255,.09);background:linear-gradient(180deg,rgba(255,255,255,.03),rgba(255,255,255,.012));animation:cp-reveal .9s cubic-bezier(.16,1,.3,1) .32s both}
 .cp-trace-h{display:flex;justify-content:space-between;align-items:baseline;gap:16px;font-family:var(--font-mono);font-size:9px;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);margin-bottom:10px}
 .cp-games{display:flex;gap:6px;margin:0;padding:0;list-style:none;flex-wrap:wrap}
 .cp-g{width:47px;height:46px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:1px;border:1px solid rgba(255,255,255,.11);border-radius:7px;background:rgba(255,255,255,.022)}
@@ -613,6 +626,8 @@ body.pview main{padding-top:22px}
   .cp-top{padding:11px 16px}
   .cp-stage{padding:20px 16px 0}
   .cp-lineup{--ph:clamp(118px,26vw,200px);margin-top:16px}
+  .cp-watermark{width:58%;opacity:.06}
+  .cp-haze{filter:blur(20px)}
   .cp-row--line .cp-fig--line + .cp-fig--line{margin-left:calc(var(--ph)*-.34)}
   .cp-lineup--many .cp-row--line{overflow-x:auto;scrollbar-width:none}
   .cp-lineup--many .cp-row--line::-webkit-scrollbar{display:none}
@@ -634,11 +649,18 @@ body.pview main{padding-top:22px}
   .cp-g{width:42px;height:42px}
   .cp-line{font-size:14px;gap:7px}
 }
-@media(prefers-reduced-motion:reduce){.cp-confetti i{animation:none}}
+.cp:not(.cp-visible) *{animation-play-state:paused!important}
+.cp:not(.cp-visible) .cp-atmos::after{animation-play-state:paused}
+@media(prefers-reduced-motion:reduce){
+  .cp-atmos,.cp-row--line,.cp-fig--line,.cp-id,.cp-band,.cp-watermark,.cp-haze,.cp-pool,.cp-confetti i{animation:none!important}
+  .cp-atmos::after{animation:none!important;opacity:.8}
+}
 @media print{
   .cp{background:#fff!important;border-color:#bbb!important;color:#000!important;break-inside:avoid;page-break-inside:avoid}
   .cp-word{display:none!important}
   .cp-atmos{display:none!important}
+  .cp-stage::before{display:none!important}
+  .cp-row--line,.cp-fig--line,.cp-id,.cp-band{animation:none!important;opacity:1!important;transform:none!important}
   .cp-top{border-color:#bbb!important;color:#333!important}
   .cp-tag i{background:#000!important}
   .cp-name,.cp-name a,.cp-line b,.cp-opp,.cp-gr{color:#000!important}
@@ -1716,6 +1738,7 @@ const prepPrintEl=document.getElementById('prepPrint');if(prepPrintEl)prepPrintE
 const prepCsvEl=document.getElementById('prepCsv');if(prepCsvEl)prepCsvEl.onclick=()=>{if(!PREP)return;const rows=[['section','name','games','value1','value2','value3']],o=PREP.opp;rows.push(['team',o.team,o.games,(o.winRate*100).toFixed(1),Math.round(o.rating),Math.round(o.sos)]);PREP.oppBans.forEach(b=>rows.push(['ban',b.hero,b.n,(b.presence*100).toFixed(1),(b.wr*100).toFixed(1),b.score.toFixed(3)]));PREP.oppPlayers.forEach(p=>rows.push(['player',p.player,p.games,p.kda.toFixed(2),p.impact.toFixed(1),p.close.n?(p.close.winRate*100).toFixed(1):'']));const csv='\ufeff'+rows.map(r=>r.map(x=>'"'+String(x).replace(/"/g,'""')+'"').join(',')).join('\n');const blob=new Blob([csv],{type:'text/csv;charset=utf-8'}),a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download='prep_'+o.team+'.csv';a.click();setTimeout(()=>URL.revokeObjectURL(a.href),1000);};
 const prepLinkEl=document.getElementById('prepLink');if(prepLinkEl)prepLinkEl.onclick=()=>{if(!PREP)return;const url=location.href.split('#')[0]+'#view=prep&opp='+encodeURIComponent(PREP.opp.team)+(PREP.my?'&team='+encodeURIComponent(PREP.my.team):'');if(navigator.clipboard&&navigator.clipboard.writeText)navigator.clipboard.writeText(url).then(()=>{prepLinkEl.textContent='Copied';setTimeout(()=>{prepLinkEl.textContent='Copy link';},1200);}).catch(()=>prompt('Copy this link',url));else prompt('Copy this link',url);};
 syncUrl();
+wireCpHero();
 board.querySelectorAll('[data-ts]').forEach(b=>b.onclick=()=>{const [t,k]=b.dataset.ts.split(':');const str=k==='hero'||k==='player'||k==='team'||k==='match'||k==='mvp'||k==='date';if(S.tsort.t===t&&S.tsort.k===k)S.tsort.d*=-1;else S.tsort={t,k,d:str?1:-1};render();});
 function viewCount(){
 if(S.view==='overview')return '';
@@ -1984,6 +2007,7 @@ function champPlate(sf){
   const ghost=accent?(accent.ghost||accent.tint||accent.soft):'rgba(238,241,238,.05)';
   const glow=cpRGBA(accent&&accent.hex,.28), spark=cpRGBA(accent&&accent.hex,.70);
   const roster=teamRoster(meta.code);
+  const crest=TICON(meta.code);
   const fig=(p,i)=>`<figure class="cp-fig cp-fig--line" style="--i:${i}" role="img" aria-label="${esc(p.player)}${p.lane?', '+esc(p.lane):''}">`
     +(PICON(p.player)?`<img src="${esc(PICON(p.player))}" alt="" loading="lazy" decoding="async" ${IMG_HIDE}>`
       :`<span class="cp-mono" aria-hidden="true"><b>${cpInitials(p.player)}</b><em>${esc(p.player)}</em></span>`)+`</figure>`;
@@ -1993,10 +2017,16 @@ function champPlate(sf){
     const o=(.34+((i*13)%38)/100).toFixed(2), t=9+((i*7)%8), d=-((i*11)%14);
     return `<i style="--x:${x}%;--y:${y}%;--r:${r}deg;--o:${o};--t:${t}s;--d:${d}s"></i>`;
   }).join('');
-  const lineup=`<div class="cp-lineup${roster.length>6?' cp-lineup--many':''}">
-<div class="cp-atmos" aria-hidden="true">
+  /* The arena around the squad: a crest watermark, one bowl line, drifting
+     haze, a slow light pass and the club-coloured floor. All of it is quiet
+     enough to sit behind the five men and the receipt. */
+  const atmosphere=`<div class="cp-atmos" aria-hidden="true">
+${crest?`<span class="cp-watermark"><img src="${esc(crest)}" alt="" loading="lazy" ${IMG_HIDE}></span>`:''}
+<span class="cp-haze"></span>
 <span class="cp-pool"></span><span class="cp-confetti">${confetti}</span>
-</div>
+<span class="cp-vignette"></span>
+</div>`;
+  const lineup=`<div class="cp-lineup${roster.length>6?' cp-lineup--many':''}">
 <div class="cp-row cp-row--line">${roster.map(fig).join('')}</div>
 </div>`;
   const scoreHTML=sf.scoreKnown
@@ -2012,12 +2042,13 @@ function champPlate(sf){
     ? `<button class="cp-go" data-m="${esc(sf.detailId)}">Open Grand Final <span aria-hidden="true">→</span></button>`
     : `<button class="cp-go" data-gopo>Open bracket <span aria-hidden="true">→</span></button>`;
   const mvp=sf.mvp?MVPB(sf.mvp,'Series MVP',''):'<span class="cp-mvp">Series MVP not recorded</span>';
-  return `<section class="cp" style="--cp-edge:${esc(edge)};--cp-ghost:${esc(ghost)};--cp-glow:${esc(glow)};--cp-spark:${esc(spark)}" aria-labelledby="cpName">
+  return `<section class="cp cp-visible" style="--cp-edge:${esc(edge)};--cp-ghost:${esc(ghost)};--cp-glow:${esc(glow)};--cp-spark:${esc(spark)}" aria-labelledby="cpName">
 <div class="cp-top"><span class="cp-tag"><i aria-hidden="true"></i>Season 18 · Champions</span><span>${esc(cpDayOf(sf.date)||'Season complete')}</span></div>
 <div class="cp-stage">
 <span class="cp-word" aria-hidden="true">${esc(meta.code)}</span>
+${atmosphere}
 <div class="cp-id">
-<div class="cp-lockup"><span class="cp-crest" aria-hidden="true">${TICON(meta.code)?`<img src="${esc(TICON(meta.code))}" alt="" loading="lazy" ${IMG_HIDE}>`:''}</span>
+<div class="cp-lockup"><span class="cp-crest" aria-hidden="true">${crest?`<img src="${esc(crest)}" alt="" loading="lazy" ${IMG_HIDE}>`:''}</span>
 <h2 class="cp-name" id="cpName"><a href="#view=teams&team=${encodeURIComponent(meta.slug)}">${esc(meta.name)}</a></h2></div>
 <p class="cp-line">${scoreHTML}</p>
 </div>
@@ -3455,6 +3486,19 @@ const board=document.getElementById('board');
 if(board&&window.ResizeObserver&&!wireBracket._ro){wireBracket._ro=new ResizeObserver(()=>{wireBracket();});wireBracket._ro.observe(board);}
 if(!brkResizeWired){brkResizeWired=true;let t=null;
 window.addEventListener('resize',()=>{clearTimeout(t);t=setTimeout(()=>wireBracket(),150);});}}
+var cpIO=null;
+/* The championship plate is the one ambient surface. It breathes only while
+   it is on screen; the entrance and the loops pause when it leaves the viewport. */
+function wireCpHero(){
+  const els=[...document.querySelectorAll('.cp')];
+  if(!els.length)return;
+  if(!('IntersectionObserver' in window)){els.forEach(el=>el.classList.add('cp-visible'));return;}
+  if(!cpIO)cpIO=new IntersectionObserver(entries=>{
+    entries.forEach(e=>e.target.classList.toggle('cp-visible',e.isIntersecting));
+  },{threshold:.08});
+  cpIO.disconnect();
+  els.forEach(el=>cpIO.observe(el));
+}
 function gameMvp(pa,pb,wcode){const pl=[...(pa||[]),...(pb||[])];const pool=wcode?pl.filter(r=>r.team===wcode):pl;const cands=pool.length?pool:pl;let best=null,bk=null;
 cands.forEach(r=>{const k=r.kda??(((r.kills??r.kill??0)+(r.assists??r.assist??0))/Math.max(1,(r.deaths??r.death??0)));const key=[k,(r.kills??r.kill??0),(r.gold??0)];
 if(!best||key[0]>bk[0]||(key[0]===bk[0]&&(key[1]>bk[1]||(key[1]===bk[1]&&key[2]>bk[2])))){best=r;bk=key;}});return best;}

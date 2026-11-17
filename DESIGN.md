@@ -239,7 +239,8 @@ the portrait's `drop-shadow(0 26px 48px rgba(0,0,0,.62))` and the bracket's win 
 
 **The Lit-From-Above Rule.** The ground carries one gradient from the top of the page and a faint crown
 radial. Nothing is lit from below, from the side, or from a colour — except the championship plate's
-stage: its club-coloured floor pool is the one bounce light the system allows.
+stage: its club-coloured floor pool is the one bounce light, with a centre key and a breathing beam
+behind the squad.
 
 ## Motion
 
@@ -250,9 +251,11 @@ It runs only when a player is opened from a visible card, reverses on **All play
 returns to the scroll position it left. Every other animation is short and answers a state: a
 dialog lands in 240ms, a scoreboard game swaps in 180ms, a disclosure unfolds in 260ms, and the
 refresh control carries a determinate 2px rail. Radars draw only for cards a filter has just
-produced. The championship plate's paper fall is the one ambient exception: decorative, behind the
-squad, fixed to a 9–16s loop, and stopped under reduced motion. Reduced motion keeps the state
-changes and removes the travel.
+produced. The championship plate is the one ambient surface: the squad's 12s breath, a 14s centre
+beam, a 10s floor pool, a 16s crest watermark, a 24s haze drift and paper at 9–16s. Every loop sits
+behind the content, pauses when the plate leaves the viewport, and stops under reduced motion.
+Nothing flashes, no loop is faster than 9s, and none of it is required to read the result. Reduced
+motion keeps the state changes and removes the travel.
 
 ## Shapes
 
@@ -281,10 +284,13 @@ under the lights. Every figure shares one baseline and one height (`--ph`, 150�
 hiding a face. A player with no cut-out gets a ghost monogram and his IGN in mono rather than a
 broken image or an invented face.
 
-The stage is **lit, not decorated**: a warm key from above, a soft back halo at shoulder height, a
-club-coloured floor pool, and a thin light line where the cut-offs meet the band. Fine paper flecks
-in chalk and the club colour fall behind the squad on a 9–16s loop; reduced motion stops them. The
-image keeps the portrait's depth shadow plus a 1px top rim — never an outline.
+The stage is **lit, not decorated**: a warm key from above, a narrow centre beam, a soft back halo
+at shoulder height, drifting haze, a club-coloured floor pool, and a thin light line where the
+cut-offs meet the band. A crest watermark sits at 7–10% behind the five men; fine paper flecks in
+chalk and the club colour fall in two depths. The centre beam breathes on a 14s cycle, the floor
+pool on 10s, and the squad on 12s. Nothing flashes or moves faster than the 9s paper; the whole
+stage pauses when the plate leaves the viewport and stops under reduced motion. The image keeps the
+portrait's depth shadow plus a 1px top rim — never an outline.
 
 Above the lineup a 52px crest lockup, the club name at display scale and one line —
 `4–2 over [crest] NAVI`. Below it one machined band carries the grand-final trace — one cell per

@@ -52,10 +52,10 @@ A separate, auditable transcript/database layer lives in [`analysis/`](analysis/
 
 ## Features
 
-- **Overview** — the championship plate (whole roster, 4–3, game winners, series MVP, one click to
-  the scoreboard), a one-line season count, final standings that keep official Match W-L and Game
-  W-L separate and link to the club dossiers, the series-MVP race, and the last six results. Every
-  block routes somewhere; nothing on it is a dead end.
+- **Overview** — the championship plate on a lit, breathing stage (whole roster, 4–3, game
+  winners, series MVP, one click to the scoreboard), a one-line season count, final standings that
+  keep official Match W-L and Game W-L separate and link to the club dossiers, the series-MVP race,
+  and the last six results. Every block routes somewhere; nothing on it is a dead end.
 - **Teams** — a nine-club league board and nine season dossiers. The board opens on the model's
   **Rating** order with a **Standings** toggle and a **Δ** rank column when the two disagree; the
   dossier opens with a crest identity plate and a frosted seven-cell band (series, games,
