@@ -25,7 +25,7 @@ OBSERVATIONS = EVIDENCE / "transcript-observations"
 SEGMENTS = EVIDENCE / "transcript-segments"
 PILOT = EVIDENCE / "pilot-ledger.jsonl"
 VISUAL = EVIDENCE / "deepseek-visual-reviews.json"
-DB = REPO / "data" / "mpl_id_s18.db"
+DB = REPO / "analysis" / "snapshots" / "mpl_id_s18_regular.db"
 OUT_JSON = EVIDENCE / "canonical-store.json"
 OUT_MD = REPO / "analysis" / "reports" / "evidence-store.md"
 
@@ -81,7 +81,7 @@ def main() -> int:
         },
         "stores": {
             "canonical_database": {
-                "path": "data/mpl_id_s18.db",
+                "path": "analysis/snapshots/mpl_id_s18_regular.db",
                 "sha256": sha256(DB),
                 "status": "canonical",
                 "scope": "72 completed series, 174 games, source-reported scoreboard and schedule data",
@@ -158,7 +158,7 @@ def main() -> int:
         "",
         "| Store | Rows | Status | Scope |",
         "|---|---:|---|---|",
-        f"| `data/mpl_id_s18.db` | 174 games | canonical | source-reported schedule and scoreboard snapshot |",
+        f"| `analysis/snapshots/mpl_id_s18_regular.db` | 174 games | canonical | source-reported regular-season schedule and scoreboard snapshot |",
         f"| `analysis/evidence/transcript-observations/` | {s['transcript_rows']} | canonical | 27 sources; atomic quote-level observations ({s['transcript_statuses'].get('accepted', 0)} accepted) |",
         f"| `analysis/evidence/transcript-segments/` | {len(seg_rows)} | canonical | 27 bounded segment ledgers |",
         f"| `analysis/evidence/pilot-ledger.jsonl` | {s['pilot_rows']} | frozen legacy | 3 pilot series; claim-level observations, insights and audits |",

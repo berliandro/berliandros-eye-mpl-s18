@@ -49,12 +49,21 @@ class AggregateTest(unittest.TestCase):
         self.assertEqual(rows, [])
 
     def test_season_wins_match_standings(self):
+        # The published standings are the regular-season table. team_season_stats
+        # aggregates every completed game (regular + playoffs), so compare the
+        # standings with the regular-season slice of team_games.
+        reg = {}
+        for team, win in self.con.execute(
+                "SELECT t.team, t.win FROM team_games t JOIN matches m "
+                "ON m.match_detail_id = t.match_detail_id "
+                "WHERE m.schedule_id NOT LIKE '%playoff%'"):
+            w, l = reg.get(team.lower(), (0, 0))
+            reg[team.lower()] = (w + win, l + (1 - win))
         rows = self.con.execute(
-            "SELECT s.team_slug, s.game_win, t.wins, s.game_lose, t.losses "
-            "FROM standings s JOIN team_season_stats t ON t.team_slug = s.team_slug").fetchall()
+            "SELECT team_slug, game_win, game_lose FROM standings").fetchall()
         self.assertEqual(len(rows), 9)
-        for slug, gw, tw, gl, tl in rows:
-            self.assertEqual((gw, gl), (tw, tl), slug)
+        for slug, gw, gl in rows:
+            self.assertEqual((gw, gl), reg.get(slug, (0, 0)), slug)
 
     def test_season_totals_match_team_games(self):
         for col in ("games", "wins", "losses", "kills", "deaths", "assists",

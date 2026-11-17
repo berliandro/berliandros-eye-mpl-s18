@@ -10,6 +10,7 @@
       "layout": "legacy",
       "config": "data/season.json",
       "database": "data/mpl_id_s18.db",
+      "analysisSnapshot": "analysis/snapshots/mpl_id_s18_regular.db",
       "csvDir": "data/csv",
       "playoffs": "data/playoffs.json",
       "meta": "data/seasons/s18/meta.json",

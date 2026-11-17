@@ -687,14 +687,39 @@ function seasonFinal(){
   const B=String(cpFirst(gf.team_b,sc.team_b,'')).trim();
   const detailId=String(cpFirst(sc.match_detail_id,gf.match_detail_id,'')||'');
   const det=detailId?((DATA.matches||[]).find(m=>String(m.match_detail_id)===detailId)||{}):{};
-  const sa=cpNum(cpFirst(det.score_a,sc.score_a,gf.score_a));
-  const sb=cpNum(cpFirst(det.score_b,sc.score_b,gf.score_b));
-  const status=String(cpFirst(det.status,sc.status,gf.status,'')||'').toLowerCase();
-  const winner=String(cpFirst(det.winner,sc.winner,gf.winner,'')||'').trim().toUpperCase();
   const target=cpTarget(cpFirst(gf.series_format,det.series_format));
   const twoReal=cpRealTeam(A)&&cpRealTeam(B);
+  /* Rows are stored in different orientations: the bracket (and the schedule
+     row it owns) lists the Grand Final as A vs B, while the detail match and
+     each game may list the same teams in the opposite order. Never read a
+     score or a winner side token without mapping it onto A/B first. */
+  const code=x=>String(x||'').trim().toUpperCase();
+  const orient=row=>{
+    const ra=code(row&&row.team_a), rb=code(row&&row.team_b);
+    return ra===code(A)&&rb===code(B)?1:(ra===code(B)&&rb===code(A)?-1:0);
+  };
+  let sa=null,sb=null;
+  for(const row of [det,sc,gf]){
+    const x=cpNum(row&&row.score_a), y=cpNum(row&&row.score_b);
+    if(x===null||y===null)continue;
+    const o=orient(row);
+    if(!o)continue;
+    sa=o===1?x:y;sb=o===1?y:x;
+    break;
+  }
+  const status=String(cpFirst(det.status,sc.status,gf.status,'')||'').toLowerCase();
   let side=0;
-  if(twoReal&&winner){if(winner===A.toUpperCase())side=1;else if(winner===B.toUpperCase())side=2;}
+  for(const row of [det,sc,gf]){
+    const w=String((row&&row.winner)||'').toLowerCase();
+    if(w!=='team_a'&&w!=='team_b')continue;
+    const team=code(w==='team_a'?row.team_a:row.team_b);
+    if(team&&team===code(A))side=1;else if(team&&team===code(B))side=2;
+    if(side)break;
+  }
+  if(!side){
+    const w=code(cpFirst(det.winner,sc.winner,gf.winner,''));
+    if(w&&w===code(A))side=1;else if(w&&w===code(B))side=2;
+  }
   if(!side&&twoReal&&status==='completed'&&sa!==null&&sb!==null){
     const aWon=sa===target&&sb<target, bWon=sb===target&&sa<target;
     if(aWon!==bWon)side=aWon?1:2;
@@ -704,12 +729,19 @@ function seasonFinal(){
   const scoreKnown=done&&champScore===target&&oppScore!==null&&oppScore<target;
   let trace=[], clinch=null;
   if(done&&scoreKnown&&detailId){
+    const champ=side===1?A:B;
     const games=(DATA.games||[]).filter(g=>String(g.match_detail_id)===detailId)
       .sort((a,b)=>(+a.game_no||0)-(+b.game_no||0));
     const allWon=games.length>0&&games.every(g=>g.winner==='team_a'||g.winner==='team_b');
     if(allWon&&games.length===champScore+oppScore){
       let run=0;
-      trace=games.map(g=>{const won=(g.winner==='team_a'?1:2)===side;if(won)run++;if(won&&run===target&&clinch===null)clinch=g.game_no;return {no:g.game_no,won:won};});
+      trace=games.map(g=>{
+        const w=code(g.winner==='team_a'?g.team_a:g.team_b);
+        const won=!!w&&w===code(champ);
+        if(won)run++;
+        if(won&&run===target&&clinch===null)clinch=g.game_no;
+        return {no:g.game_no,won:won};
+      });
     }
   }
   return {

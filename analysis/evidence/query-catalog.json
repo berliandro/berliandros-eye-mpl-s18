@@ -1,7 +1,7 @@
 {
   "schema_version": 1,
   "snapshot_id": "mpl-s18-db-20c5ea2c51f3",
-  "snapshot_path": "data/mpl_id_s18.db",
+  "snapshot_path": "analysis/snapshots/mpl_id_s18_regular.db",
   "snapshot_sha256": "20c5ea2c51f30d1a24cd2ce6927f0d182b47f951ebd8209f1aaef429941cf2ef",
   "generated_at": "2026-10-31T01:18:45+00:00",
   "notes": "Queries are read-only and parameterised. schedule_all.winner is expressed in schedule orientation; matches.winner is expressed relative to matches.team_a/team_b and is validated against the score in that same row. Do not compare winner side tokens across tables without mapping the named teams.",

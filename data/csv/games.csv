@@ -168,8 +168,49 @@ match_detail_id,game_no,team_a,team_b,team_a_kills,team_b_kills,winner,duration_
 1104,3,RRQ,GEEK,18,9,team_a,15:55,955,blue,red,https://www.youtube.com/watch?v=IhPtDaOsShg,Healing Turtle
 1105,1,AE,EVOS,16,8,team_a,14:35,875,blue,red,https://www.youtube.com/watch?v=ep-EjdUPQ7s,Revealing Wisps
 1105,2,EVOS,AE,14,6,team_a,15:47,947,blue,red,https://www.youtube.com/watch?v=dGNxqTm6MQg,Flying Cloud
-1105,3,AE,EVOS,9,22,team_b,13:18,798,blue,red,https://www.youtube.com/watch?v=7Y3lC7XSfVs,Flying Cloud
+1105,3,AE,EVOS,9,22,team_b,13:18,798,blue,red,,Flying Cloud
 1106,1,NAVI,BTR,5,18,team_b,11:26,686,blue,red,https://www.youtube.com/watch?v=g6zbw9yE254,Revealing Wisps
 1106,2,BTR,NAVI,16,11,team_a,23:00,1380,blue,red,https://www.youtube.com/watch?v=ZBONqmVxYkM,Flying Cloud
 1107,1,TLID,ONIC,14,3,team_a,14:47,887,blue,red,https://www.youtube.com/watch?v=paUEKUP6Fo8,Healing Turtle
 1107,2,TLID,ONIC,11,7,team_a,12:25,745,blue,red,,Healing Turtle
+1108,1,AE,ONIC,11,16,team_b,24:23,1463,blue,red,https://www.youtube.com/watch?v=0wKrqbSSuns,Revealing Wisps
+1108,2,AE,ONIC,15,10,team_a,14:45,885,blue,red,https://www.youtube.com/watch?v=Uq_-ddYuokQ,Healing Turtle
+1108,3,AE,ONIC,14,12,team_a,18:41,1121,blue,red,https://www.youtube.com/watch?v=Mn6P13wwOhM,Revealing Wisps
+1108,4,AE,ONIC,14,3,team_a,11:40,700,blue,red,https://www.youtube.com/watch?v=hhNDtg5HHt0,Revealing Wisps
+1109,1,BTR,EVOS,19,18,team_a,19:39,1179,blue,red,https://www.youtube.com/watch?v=vzZZ7w5JkIc,Healing Turtle
+1109,2,BTR,EVOS,12,21,team_b,26:01,1561,blue,red,https://www.youtube.com/watch?v=oprIR0xdJpE,Flying Cloud
+1109,3,EVOS,BTR,16,4,team_a,14:11,851,blue,red,https://www.youtube.com/watch?v=Ix5ogMNCjwo,Flying Cloud
+1109,4,BTR,EVOS,14,6,team_a,16:36,996,blue,red,https://www.youtube.com/watch?v=ldIfXcMsCqM,Revealing Wisps
+1109,5,EVOS,BTR,6,11,team_b,14:57,897,blue,red,https://www.youtube.com/watch?v=nbdNHZISXvw,Revealing Wisps
+1110,1,NAVI,AE,8,10,team_b,13:16,796,blue,red,https://www.youtube.com/watch?v=m2ArfPQQa9Q,Revealing Wisps
+1110,2,NAVI,AE,11,4,team_a,13:44,824,blue,red,https://www.youtube.com/watch?v=VRJFTEqxI38,Revealing Wisps
+1110,3,AE,NAVI,4,14,team_b,21:26,1286,blue,red,https://www.youtube.com/watch?v=dbGzoMCjZnc,Flying Cloud
+1110,4,AE,NAVI,3,11,team_b,14:01,841,blue,red,https://www.youtube.com/watch?v=4iiJwBSDXF0,gt
+1111,1,TLID,BTR,13,4,team_a,13:23,803,blue,red,https://www.youtube.com/watch?v=4ahAkF7nJi8,gt
+1111,2,BTR,TLID,5,8,team_b,14:20,860,blue,red,https://www.youtube.com/watch?v=c4cO1mRy8IM,gt
+1111,3,BTR,TLID,12,3,team_a,16:59,1019,blue,red,https://www.youtube.com/watch?v=tR3onebTYyU,Flying Cloud
+1111,4,TLID,BTR,13,8,team_a,22:51,1371,blue,red,https://www.youtube.com/watch?v=tjQM6Lnt65U,Revealing Wisps
+1112,1,AE,BTR,27,23,team_a,21:28,1288,blue,red,https://www.youtube.com/watch?v=byJ-SMIAPQU,gt
+1112,2,BTR,AE,24,7,team_a,9:04,544,blue,red,https://www.youtube.com/watch?v=zXyRyb7yq0o,Healing Turtle
+1112,3,AE,BTR,2,23,team_b,11:34,694,blue,red,,Healing Turtle
+1112,4,BTR,AE,2,19,team_b,13:30,810,blue,red,https://www.youtube.com/watch?v=l8Z3-CUdY7Q,Revealing Wisps
+1112,5,BTR,AE,19,7,team_a,17:39,1059,blue,red,https://www.youtube.com/watch?v=SfMDGEwHxsE,Healing Turtle
+1113,1,TLID,NAVI,16,6,team_a,19:06,1146,blue,red,https://www.youtube.com/watch?v=DBSsEQuMVro,Healing Turtle
+1113,2,TLID,NAVI,7,21,team_b,17:57,1077,blue,red,https://www.youtube.com/watch?v=BecZSISuEjw,Healing Turtle
+1113,3,TLID,NAVI,11,6,team_a,14:13,853,blue,red,https://www.youtube.com/watch?v=7yT6JHW7ouY,gt
+1113,4,NAVI,TLID,16,5,team_a,14:05,845,blue,red,https://www.youtube.com/watch?v=SVad0ErQeGI,Revealing Wisps
+1113,5,TLID,NAVI,9,9,team_b,27:08,1628,blue,red,https://www.youtube.com/watch?v=xQBHB6sZSGw,Revealing Wisps
+1114,1,TLID,BTR,17,5,team_a,14:57,897,blue,red,https://www.youtube.com/watch?v=exGcQ1kgjPw,gt
+1114,2,BTR,TLID,14,4,team_a,15:05,905,blue,red,,Healing Turtle
+1114,3,TLID,BTR,8,21,team_b,20:13,1213,blue,red,,gt
+1114,4,TLID,BTR,25,6,team_a,17:01,1021,blue,red,,Healing Turtle
+1114,5,BTR,TLID,19,3,team_a,14:35,875,blue,red,,Healing Turtle
+1114,6,TLID,BTR,13,1,team_a,11:38,698,blue,red,,Revealing Wisps
+1114,7,BTR,TLID,17,5,team_a,17:40,1060,blue,red,,Healing Turtle
+1115,1,BTR,NAVI,13,6,team_a,14:40,880,blue,red,https://www.youtube.com/watch?v=crq0r1vEtPg,Flying Cloud
+1115,2,NAVI,BTR,11,10,team_a,20:12,1212,blue,red,https://www.youtube.com/watch?v=_GFphMZpiWM,Flying Cloud
+1115,3,BTR,NAVI,19,13,team_a,20:11,1211,blue,red,https://www.youtube.com/watch?v=5JR4F-70TKE,gt
+1115,4,NAVI,BTR,18,9,team_a,29:28,1768,blue,red,https://www.youtube.com/watch?v=kgO4jSwXZMM,Healing Turtle
+1115,5,BTR,NAVI,5,12,team_b,14:43,883,blue,red,https://www.youtube.com/watch?v=uQi-R8FHwUQ,Healing Turtle
+1115,6,BTR,NAVI,11,2,team_a,13:58,838,blue,red,https://www.youtube.com/watch?v=OEmSJby8SEA,Healing Turtle
+1115,7,NAVI,BTR,3,11,team_b,22:59,1379,blue,red,https://www.youtube.com/watch?v=q08dpTaaAVs,Revealing Wisps

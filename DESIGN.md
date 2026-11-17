@@ -223,7 +223,7 @@ which prints open. There are no stat tiles on Prep: a figure sits in the line or
 Stats is two records behind one switch in the head, never two pages: the Series MVP race and the hero
 record. Each is one full-width plate with one mono label carrying its count. The race is a ranked
 leaderboard with the awards on the right rail and the Liquipedia spellings stated once beneath it
-instead of beside every name; the 72 award decisions fold into a foot disclosure that prints open.
+instead of beside every name; the 80 award decisions fold into a foot disclosure that prints open.
 The hero record is one table — hero, lane, pick, ban, presence, win rate — with its four answers in a
 single line above it, so no tile repeats what the table below already says.
 

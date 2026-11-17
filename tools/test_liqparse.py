@@ -80,6 +80,20 @@ class ParseTest(unittest.TestCase):
         out = parse_liq_matches(block(9, "A", "B", "Oct 9", "", []))
         self.assertEqual(out[0]["score"], "vs")
 
+    def test_bracket_prefixed_markers_parse(self):
+        # Playoff brackets number the same Match template |R1M1=, |R4M1=;
+        # both pages must feed the parser, including the final block.
+        text = block(1, "Alter Ego", "ONIC", "November 4, 2026", "Arfy",
+                     [2, 1, 1, 2, 1]).replace("|M1={{Match", "|R1M1={{Match")
+        text += "\n" + block(2, "NAVI", "Bigetron By Vitality",
+                             "November 8, 2026", "Yazukee",
+                             [1, 1, 2, 1, 2, 1, 2]).replace("|M2={{Match", "|R4M1={{Match")
+        out = parse_liq_matches(text)
+        self.assertEqual([x["t1"] for x in out], ["Alter Ego", "NAVI"])
+        self.assertEqual(out[0]["mvp"], "Arfy")
+        self.assertEqual(out[0]["score"], "3-2")
+        self.assertEqual(out[1]["mvp"], "Yazukee")
+
 
 TOY = {"totalRegularFixtures": 2, "regularSeasonStatus": "final",
        "playoffMatches": 1, "aliases": {}, "teams": ["A", "B"]}
@@ -195,6 +209,14 @@ class ValidateTest(unittest.TestCase):
         probs = validate_build(con, [], {}, TOY)
         self.assertTrue(any("final phase requires 2 completed regular fixtures, found 1" in p
                             for p in probs), probs)
+
+    def test_completed_playoff_requires_a_decided_bo5_plus_score(self):
+        con = memdb(True)
+        con.execute("UPDATE schedule_all SET schedule_id='playoff-1', status='completed', "
+                    "team_a='A', team_b='B', score_a=2, score_b=1, winner='team_a', "
+                    "match_detail_id='3' WHERE schedule_id='po-1'")
+        probs = validate_build(con, [], {}, TOY)
+        self.assertTrue(any("non-terminal playoff score 2-1" in p for p in probs), probs)
 
     def test_in_progress_phase_can_publish_partial(self):
         con = memdb(True)

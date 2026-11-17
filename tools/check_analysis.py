@@ -35,7 +35,9 @@ def main() -> int:
     fails = []
     manifest = json.loads(MANIFEST.read_text(encoding="utf-8"))
     sources = manifest.get("sources", [])
-    con = sqlite3.connect(f"file:{REPO / 'data' / 'mpl_id_s18.db'}?mode=ro", uri=True)
+    con = sqlite3.connect(
+        f"file:{REPO / 'analysis' / 'snapshots' / 'mpl_id_s18_regular.db'}?mode=ro",
+        uri=True)
     db_matches = {row[0] for row in con.execute("select match_detail_id from schedule_all")}
     con.close()
     if len(sources) != 27:

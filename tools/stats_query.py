@@ -27,7 +27,10 @@ from pathlib import Path
 from typing import Any
 
 REPO = Path(__file__).resolve().parent.parent
-DEFAULT_DB = REPO / "data" / "mpl_id_s18.db"
+# The semantic/coaching layer analyzes the frozen regular-season snapshot
+# (72 series, 174 games). The app database carries the completed season
+# (80 series, 215 games); cite the right snapshot when quoting a query.
+DEFAULT_DB = REPO / "analysis" / "snapshots" / "mpl_id_s18_regular.db"
 DEFAULT_CATALOG = REPO / "analysis" / "evidence" / "query-catalog.json"
 
 

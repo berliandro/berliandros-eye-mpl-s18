@@ -41,6 +41,24 @@ HERO_ALIASES = {
     "yz": "Yu Zhong",
     "xborg": "X.Borg",
     "popol": "Popol and Kupa",
+    # Playoff bracket maps abbreviate some heroes; each abbreviation below was
+    # matched to the only hero on the same team's API scoreboard row
+    # (2026-11-17, Lower Bracket Finals TLID 3-4 BTR).
+    "xb": "X.Borg",
+    "bene": "Benedetta",
+    "esme": "Esmeralda",
+    "mino": "Minotaur",
+    "nova": "Novaria",
+    "obsi": "Obsidia",
+    "paqu": "Paquito",
+    "phove": "Phoveus",
+    "pove": "Phoveus",
+    "rafa": "Rafaela",
+    "zx": "Zhuxin",
+    # 1112 game 3 side A lists "val" alongside Fanny/Esmeralda/Marcel/Alice;
+    # the opposing side banned Valir in the same draft, so the duplicate-free
+    # ban set pins "val" to Valentina.
+    "val": "Valentina",
 }
 
 # The API stores one hero under two spellings: hero_stats says "Zetian" while
@@ -76,6 +94,7 @@ def canonical_hero(h):
     return HERO_RENAMES.get(norm(h), h)
 UA = {"User-Agent": "MPL-S18-research/1.0 (local ETL enrichment)",
       "Accept-Encoding": "gzip"}
+_LAST_LIQ_REQUEST = [0.0]
 
 
 def norm(s):
@@ -83,6 +102,13 @@ def norm(s):
 
 
 def get_wikitext(api, page):
+    import time
+    # Liquipedia asks for at most one parse request every two seconds; this
+    # run reads the regular-season page and the playoff bracket.
+    gap = time.monotonic() - _LAST_LIQ_REQUEST[0]
+    if gap < 2.0:
+        time.sleep(2.0 - gap)
+    _LAST_LIQ_REQUEST[0] = time.monotonic()
     q = urllib.parse.urlencode({"action": "parse", "page": page, "prop": "wikitext",
                                 "format": "json", "origin": "*"})
     req = urllib.request.Request(f"{api}?{q}", headers=UA)
@@ -101,7 +127,11 @@ def field(body, name):
 
 def parse_series(wt):
     """Return [{t1,t2,maps:[{no,body,fields...}]}] in page order."""
-    blocks = re.findall(r"\|M\d+=\{\{Match([\s\S]*?)(?=\|M\d+=\{\{Match|\Z)", wt or "")
+    # The regular-season page numbers blocks |M1=, the playoff bracket
+    # numbers them |R1M1= / |R3M2=; both are the same Match template.
+    blocks = re.findall(
+        r"\|(?:(?:R|L)\d+)?M\d+=\{\{Match([\s\S]*?)"
+        r"(?=\|(?:(?:R|L)\d+)?M\d+=\{\{Match|\Z)", wt or "")
     out = []
     for b in blocks:
         t1 = (re.search(r"opponent1=\{\{TeamOpponent\|([^\}\|\n]+)", b) or [None, ""])[1].strip()
@@ -197,6 +227,8 @@ def main():
     cfg = json.loads(season["config"].read_text(encoding="utf-8"))
     api = cfg["endpoints"]["liquipediaApi"]
     page = cfg["endpoints"]["liquipediaSeasonPage"]
+    playoffs_page = cfg["endpoints"].get("liquipediaPlayoffsPage",
+        page.replace("/Regular_Season", "/Playoffs"))
     aliases = cfg["aliases"]
 
     con = sqlite3.connect(season["database"])
@@ -242,8 +274,15 @@ def main():
             return db_heroes[key]
         return db_heroes.get(norm(alias)) if alias else None
 
-    print(f"fetch liquipedia {page} ...")
-    series = parse_series(get_wikitext(api, page))
+    pages = [page]
+    if playoffs_page and playoffs_page != page:
+        pages.append(playoffs_page)
+    series = []
+    for p in pages:
+        print(f"fetch liquipedia {p} ...")
+        parsed = parse_series(get_wikitext(api, p))
+        print(f"  series parsed: {len(parsed)}")
+        series.extend(parsed)
     print(f"liquipedia series: {len(series)}  db matches: {len(db_matches)}")
 
     used = set()
@@ -457,6 +496,7 @@ def main():
             "sources": {
                 "api": "https://mpl.mlbbhub.com/api/v1/id",
                 "liquipedia": page,
+                "liquipedia_playoffs": playoffs_page,
             },
             "counts": {
                 "games": total_games,

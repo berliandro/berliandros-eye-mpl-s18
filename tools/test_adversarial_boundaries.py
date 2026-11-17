@@ -74,7 +74,7 @@ class AdversarialBoundaryTest(unittest.TestCase):
     def test_timeline_series_ids_match_db(self):
         """Every timeline's series_id must exist in the matches table."""
         import sqlite3
-        db = REPO / "data" / "mpl_id_s18.db"
+        db = REPO / "analysis" / "snapshots" / "mpl_id_s18_regular.db"
         if not db.exists():
             self.skipTest("DB not available")
         con = sqlite3.connect(str(db))

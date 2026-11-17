@@ -22,6 +22,8 @@ DB = ROOT / CFG["database"]
 CSVDIR = ROOT / CFG["csvDir"]
 PLAYOFFS_JSON = ROOT / CFG["playoffsJson"]
 LIQ_SEASON_PAGE = CFG["endpoints"]["liquipediaSeasonPage"]
+LIQ_PLAYOFFS_PAGE = CFG["endpoints"].get("liquipediaPlayoffsPage",
+    LIQ_SEASON_PAGE.replace("/Regular_Season", "/Playoffs"))
 # Alias keys are lowercase alphanumeric (no spaces/punctuation); the same
 # normalization must be used for every lookup (cf. normTeamCode in app.js).
 TEAM_ALIAS = CFG["aliases"]
@@ -34,6 +36,31 @@ def norm_team(t):
 def canon_team(t):
     # Alias values use display case; canonical codes are lowercase.
     return TEAM_ALIAS.get(norm_team(t), norm_team(t)).lower()
+
+
+# Liquipedia MVP values are player-page titles, so a page move can land on a
+# name that already belongs to another club's API IGN. Resolve those only when
+# the series teams disambiguate them; never merge two rosters globally.
+# Verified by continuity: the six affected NAVI series were credited to
+# "Coolfire" before that page moved to "Joshua"; Coolfire is NAVI's Joshuaa
+# (data/global/aliases.json). RRQ's Joshua is a different player (page Lynchh).
+MVP_ALIASES_BY_TEAM = {
+    canon_team(team): {norm_team(name): player for name, player in mapping.items()}
+    for team, mapping in (CFG.get("mvpAliasesByTeam") or {}).items()
+    if isinstance(mapping, dict) and not team.startswith("_")
+}
+
+
+def resolve_mvp(mvp, *teams):
+    """Return the API IGN for a Liquipedia MVP when the series teams pin it."""
+    key = norm_team(mvp)
+    if not key:
+        return mvp
+    for team in teams:
+        hit = MVP_ALIASES_BY_TEAM.get(canon_team(team), {}).get(key)
+        if hit:
+            return hit
+    return mvp
 
 
 # One hero appears under two spellings in the API: hero_stats says "Zetian"
@@ -88,6 +115,7 @@ STAGING = ROOT / "data" / ".staging-s18"
 LIQ_API = "https://liquipedia.net/mobilelegends/api.php"
 HUB = "https://mpl.mlbbhub.com/api/v1/id"
 UA = {"User-Agent": "MPL-S18-research/1.0 (local ETL)"}
+_LAST_LIQ_REQUEST = [0.0]
 
 def get_json(url):
     req = urllib.request.Request(url, headers=UA)
@@ -95,7 +123,13 @@ def get_json(url):
         return json.loads(r.read().decode("utf-8"))
 
 def get_liq_wikitext(page):
-    import gzip
+    import gzip, time
+    # Liquipedia asks for at most one parse request every two seconds; a
+    # rebuild now reads the regular-season page and the playoff bracket.
+    gap = time.monotonic() - _LAST_LIQ_REQUEST[0]
+    if gap < 2.0:
+        time.sleep(2.0 - gap)
+    _LAST_LIQ_REQUEST[0] = time.monotonic()
     q = urllib.parse.urlencode({"action":"parse","page":page,"prop":"wikitext","format":"json","origin":"*"})
     req = urllib.request.Request(f"{LIQ_API}?{q}", headers={"User-Agent": "MPL-S18-research/1.0 (local ETL)", "Accept-Encoding": "gzip"})
     with urllib.request.urlopen(req, timeout=60) as r:
@@ -119,8 +153,11 @@ def parse_liq_matches(wikitext):
     Returns [{t1, t2, date, mvp, score}]; never raises on malformed input.
     """
     try:
+        # The regular-season page numbers blocks |M1=, the playoff bracket
+        # numbers them |R1M1= / |R3M2=; both are the same Match template.
         blocks = [m.group(1) for m in re.finditer(
-            r"\|M\d+=\{\{Match([\s\S]*?)(?=\|M\d+=\{\{Match|\Z)", wikitext or "")]
+            r"\|(?:(?:R|L)\d+)?M\d+=\{\{Match([\s\S]*?)"
+            r"(?=\|(?:(?:R|L)\d+)?M\d+=\{\{Match|\Z)", wikitext or "")]
     except re.error:
         return []
     liq = []
@@ -209,6 +246,8 @@ def validate_build(con, fails, playoff_payload, season=None):
     regular = [r for r in sched if not _is_playoff_schedule(r)]
     playoffs = [r for r in sched if _is_playoff_schedule(r)]
     completed = [r for r in regular if str(r.get("status")) == "completed"]
+    completed_playoffs = [r for r in playoffs if str(r.get("status")) == "completed"]
+    completed_all = completed + completed_playoffs
     n_sched = len(sched)
     if n_sched != exp_regular + exp_playoffs:
         problems.append(f"schedule_all has {n_sched} rows, expected {exp_regular + exp_playoffs}")
@@ -231,11 +270,13 @@ def validate_build(con, fails, playoff_payload, season=None):
         problems.append(f"{len(fails)} match-detail fetches failed: "
                         + ",".join(str(d) for d, _ in fails[:5]))
 
-    # Every completed regular fixture must have a numeric detail id, a
-    # terminal score, and that detail must be present in matches.
+    # Every completed fixture (regular or playoff) must have a numeric detail
+    # id, a terminal score, and that detail must be present in matches. A
+    # regular series is Bo3; a playoff series is Bo5/Bo7 and only needs a
+    # decided, non-tied score at or above the Bo3 minimum.
     detail_ids = {}
     expected_games = 0
-    for r in completed:
+    for r in completed_all:
         sid = r.get("schedule_id")
         did = str(r.get("match_detail_id") or "")
         if not re.match(r"^\d+$", did):
@@ -251,8 +292,13 @@ def validate_build(con, fails, playoff_payload, season=None):
         except (TypeError, ValueError):
             problems.append(f"completed fixture {sid} has non-numeric score {sa!r}-{sb!r}")
             continue
-        if sa == sb or not ((sa == 2 and sb in (0, 1)) or (sb == 2 and sa in (0, 1))):
-            problems.append(f"completed fixture {sid} has non-terminal BO3 score {sa}-{sb}")
+        is_po = _is_playoff_schedule(r)
+        hi, lo = max(sa, sb), min(sa, sb)
+        terminal = (hi == 2 and lo in (0, 1)) if not is_po else (hi >= 3 and lo < hi)
+        if sa == sb or not terminal:
+            problems.append(
+                f"completed fixture {sid} has non-terminal "
+                f"{'playoff' if is_po else 'BO3'} score {sa}-{sb}")
             continue
         expected_games += sa + sb
 
@@ -371,11 +417,25 @@ def validate_build(con, fails, playoff_payload, season=None):
         winner = canon(r.get("team_a")) if _score_winner(r) == r.get("team_a") else canon(r.get("team_b"))
         rec(a)["match_win" if winner == a else "match_lose"] += 1
         rec(b)["match_win" if winner == b else "match_lose"] += 1
+    # The published standings are regular-season only: playoff series are
+    # validated above but never folded into the official W-L, so the derived
+    # record must be built from the regular detail ids alone.
+    regular_ids = {did for did, row in detail_ids.items()
+                   if not _is_playoff_schedule(row)}
+    n_regular_games = 0
+    if regular_ids:
+        marks = ",".join("?" for _ in regular_ids)
+        n_regular_games = con.execute(
+            f"SELECT COUNT(*) FROM games WHERE match_detail_id IN ({marks})",
+            tuple(regular_ids)).fetchone()[0]
     # Sides can swap between games in the same series, so use each game's own
     # team_a/team_b orientation rather than a per-match orientation cache.
-    for r in con.execute("SELECT team_a, team_b, winner FROM games"):
-        a, b = canon(r[0]), canon(r[1])
-        winner = r[2]
+    for r in con.execute(
+            "SELECT match_detail_id, team_a, team_b, winner FROM games"):
+        if r[0] not in regular_ids:
+            continue
+        a, b = canon(r[1]), canon(r[2])
+        winner = r[3]
         if winner not in ("team_a", "team_b"):
             continue
         win = a if winner == "team_a" else b
@@ -390,8 +450,9 @@ def validate_build(con, fails, playoff_payload, season=None):
     total_game_wins = sum(int(v.get("game_win") or 0) for v in official.values())
     if total_match_wins != len(completed):
         problems.append(f"standings match wins {total_match_wins} != completed matches {len(completed)}")
-    if total_game_wins != n_games:
-        problems.append(f"standings game wins {total_game_wins} != games {n_games}")
+    if total_game_wins != n_regular_games:
+        problems.append(
+            f"standings game wins {total_game_wins} != regular games {n_regular_games}")
     for team, o in official.items():
         d = derived.get(team)
         if not d:
@@ -569,10 +630,12 @@ def main():
         print("playoffs fetch failed", e); playoffs = {}
     print(f"matches entries={len(matches)} standings={len(standings)} players={len(player_stats)}")
 
-    print("fetch liquipedia regular season wikitext for MVP merge...")
-    wt = get_liq_wikitext(LIQ_SEASON_PAGE)
-    liq = parse_liq_matches(wt)
-    print(f"liq series parsed={len(liq)}")
+    print("fetch liquipedia regular season + playoffs wikitext for MVP merge...")
+    liq = parse_liq_matches(get_liq_wikitext(LIQ_SEASON_PAGE))
+    n_regular_liq = len(liq)
+    liq += parse_liq_matches(get_liq_wikitext(LIQ_PLAYOFFS_PAGE))
+    print(f"liq series parsed={len(liq)} (regular={n_regular_liq} "
+          f"playoffs={len(liq) - n_regular_liq})")
 
     # map detail_id -> liq MVP via pair-matched chronological attach (see attach_mvps).
     numeric = [m for m in matches if re.match(r"^\d+$", str(m.get("match_detail_id") or ""))]
@@ -627,7 +690,9 @@ def main():
             (str(did), sched.get("match_id"), d.get("team_a"), d.get("team_b"),
              d.get("score_a"), d.get("score_b"), sched.get("date"), sched.get("iso_date"),
              sched.get("iso_datetime"), sched.get("status"), winner_from_detail_score(d.get("score_a"), d.get("score_b")),
-             sched.get("vod_url"), sched.get("match_detail_url"), mvp_map.get(str(did),"")))
+             sched.get("vod_url"), sched.get("match_detail_url"),
+             resolve_mvp(mvp_map.get(str(did), ""),
+                         sched.get("team_a"), sched.get("team_b"))))
         for g in d.get("games", []):
             dur = g.get("duration"); sec = parse_duration(dur)
             cur.execute("INSERT OR REPLACE INTO games VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?)",

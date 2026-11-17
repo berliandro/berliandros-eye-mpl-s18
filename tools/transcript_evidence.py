@@ -38,7 +38,7 @@ DEFAULT_CACHE = REPO / "analysis" / "cache" / "timed"
 DEFAULT_LEDGER = REPO / "analysis" / "evidence" / "pilot-ledger.jsonl"
 DEFAULT_SCHEMA = REPO / "analysis" / "evidence" / "evidence-schema.json"
 DEFAULT_QUERIES = REPO / "analysis" / "evidence" / "query-catalog.json"
-DEFAULT_DB = REPO / "data" / "mpl_id_s18.db"
+DEFAULT_DB = REPO / "analysis" / "snapshots" / "mpl_id_s18_regular.db"
 
 EVIDENCE_TYPES = {
     "transcript_statement",

@@ -1,5 +1,6 @@
 """Regression tests for the committed cross-view reconciliation gate."""
 import json
+import sqlite3
 import sys
 import unittest
 from pathlib import Path
@@ -43,13 +44,26 @@ class ReconciliationTest(unittest.TestCase):
         self.assertIn("regular-season", self.report["scope"])
         self.assertEqual(self.report["integrity"]["included_matches"], 72)
 
-    def test_final_regular_snapshot_is_complete(self):
+    def test_final_snapshot_scopes_playoffs_out_of_the_regular_reconcile(self):
         paths = resolve("s18")
         cfg = json.loads(Path(paths["config"]).read_text(encoding="utf-8"))
         self.assertEqual(self.report["integrity"]["included_matches"],
                          cfg["totalRegularFixtures"])
         self.assertEqual(self.report["integrity"]["included_games"], 174)
-        self.assertFalse(self.report["excluded"], self.report["excluded"])
+        # The reconcile gate is regular-season by design. Once the playoffs are
+        # in the database, every excluded id must be a playoff series or one of
+        # its games — never an unaccounted regular fixture.
+        con = sqlite3.connect(paths["database"])
+        po_ids = {str(r[0]) for r in con.execute(
+            "SELECT match_detail_id FROM schedule_all WHERE schedule_id LIKE '%playoff%'")}
+        po_games = con.execute(
+            "SELECT COALESCE(SUM(score_a + score_b), 0) FROM schedule_all "
+            "WHERE schedule_id LIKE '%playoff%'").fetchone()[0]
+        con.close()
+        self.assertEqual(len(po_ids), cfg["playoffMatches"])
+        excluded = self.report["excluded"]
+        self.assertEqual({x for x in excluded if ":" not in x}, po_ids)
+        self.assertEqual(len([x for x in excluded if ":" in x]), po_games)
 
     def test_alias_variants_resolve_one_identity(self):
         paths = resolve("s18")

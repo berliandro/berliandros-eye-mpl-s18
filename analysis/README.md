@@ -90,7 +90,7 @@ On this machine, yt-dlp/FFmpeg section downloads from the long VODs stalled; the
 ## Evidence rules
 
 - **Transcript quotation** proves what the speaker said, not that the interpretation is correct.
-- **Database record** is tied to snapshot `mpl-s18-db-20c5ea2c51f3`, SQL, parameters and returned rows.
+- **Database record** is tied to snapshot `mpl-s18-db-20c5ea2c51f3`, SQL, parameters and returned rows. That snapshot is frozen at `analysis/snapshots/mpl_id_s18_regular.db` (72 series, 174 games); the app database now carries the completed season (80 series, 215 games), so cite the analysis snapshot when quoting these queries.
 - **Gameplay observation** is only used where frames were actually reviewed; frame paths and actual times are recorded.
 - **AI inference** is an insight, labelled with alternatives, counterexamples, scope and confidence rationale.
 - Verification states are separate from evidence types. A transcript-only claim is never upgraded to gameplay-verified.

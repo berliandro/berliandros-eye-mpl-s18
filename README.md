@@ -7,11 +7,14 @@ Ships as **one HTML file plus the committed `assets/` folder** beside it (`mpl_i
 the data is embedded and artwork is referenced by relative path, so the pair works offline from the
 snapshot and refreshes live from the mlbbhub API when online.
 
+Season 18 is complete: the snapshot carries all **80 series and 215 games**, with **BTR beating
+NAVI 4–3 in the Grand Final**.
+
 **Live:** <https://berliandro.github.io/berliandros-eye-mpl-s18/mpl_id_s18_dark.html>
 
 ## Semantic coaching pilot
 
-A separate, auditable transcript/database layer lives in [`analysis/`](analysis/README.md). It imports the local nine-week transcript corpus, verifies hashes, derives timestamps for verified videos, captures gameplay frames with sidecar provenance, and publishes a full-season database evidence pass plus transcript-backed coaching analysis. Current coverage: **27/27 sources validated, 72/72 match reports with database evidence, 27 transcript-covered series (24 complete, 3 partial), 45 DB-only series, and 313 accepted observations.** The coaching product is 9 team briefs plus one head-coach brief; visual proof remains unresolved (0 same-frame `00:00` boundaries). Raw transcripts and screenshots stay local and Git-ignored. Start at [`analysis/reports/coverage-matrix.md`](analysis/reports/coverage-matrix.md).
+A separate, auditable transcript/database layer lives in [`analysis/`](analysis/README.md). It imports the local nine-week transcript corpus, verifies hashes, derives timestamps for verified videos, captures gameplay frames with sidecar provenance, and publishes a full-season database evidence pass plus transcript-backed coaching analysis. Current coverage: **27/27 sources validated, 72/72 match reports with database evidence, 27 transcript-covered series (24 complete, 3 partial), 45 DB-only series, and 313 accepted observations.** The coaching product is 9 team briefs plus one head-coach brief; visual proof remains unresolved (0 same-frame `00:00` boundaries). The semantic layer is pinned to the frozen regular-season snapshot `analysis/snapshots/mpl_id_s18_regular.db` (72 series, 174 games); the app database is the completed season (80 series, 215 games). Raw transcripts and screenshots stay local and Git-ignored. Start at [`analysis/reports/coverage-matrix.md`](analysis/reports/coverage-matrix.md).
 
 ## Screenshots
 

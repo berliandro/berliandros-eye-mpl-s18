@@ -1,10 +1,10 @@
 {
   "schema_version": 1,
   "snapshot_id": "mpl-s18-db-20c5ea2c51f3",
-  "path": "data/mpl_id_s18.db",
+  "path": "analysis/snapshots/mpl_id_s18_regular.db",
   "sha256": "20c5ea2c51f30d1a24cd2ce6927f0d182b47f951ebd8209f1aaef429941cf2ef",
   "bytes": 5234688,
-  "inspected_at": "2026-11-15T15:33:24+00:00",
+  "inspected_at": "2026-11-17T16:00:03+00:00",
   "tables": {
     "game_bans": {
       "row_count": 1738,

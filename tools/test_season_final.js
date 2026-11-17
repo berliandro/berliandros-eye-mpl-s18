@@ -66,7 +66,7 @@ function dataFor(over, extra) {
 /* --- 2. a completed 4-2 with game rows: champion, score, trace, clinch --- */
 {
   const games = ['team_a','team_b','team_a','team_a','team_b','team_a'].map((w, i) => ({
-    match_detail_id: 'gf1', game_no: i + 1, winner: w
+    match_detail_id: 'gf1', game_no: i + 1, team_a: 'TLID', team_b: 'NAVI', winner: w
   }));
   const d = dataFor({ match_a: null, score_a: 4, score_b: 2, status: 'completed', match_detail_id: 'gf1' },
                     { games });
@@ -84,7 +84,7 @@ function dataFor(over, extra) {
 
 /* --- 3. a sweep: clinch in game 4 --- */
 {
-  const games = [1,2,3,4].map(i => ({ match_detail_id: 'gf2', game_no: i, winner: 'team_a' }));
+  const games = [1,2,3,4].map(i => ({ match_detail_id: 'gf2', game_no: i, team_a: 'TLID', team_b: 'NAVI', winner: 'team_a' }));
   const sf = build(dataFor({ score_a: 4, score_b: 0, status: 'completed', match_detail_id: 'gf2' }, { games })).seasonFinal();
   eq(sf.done, true, '4-0 declares a champion');
   eq(sf.clinch, 4, '4-0 clinches in game 4');
@@ -93,7 +93,7 @@ function dataFor(over, extra) {
 /* --- 4. a seven-game final: clinch in game 7 --- */
 {
   const games = ['team_b','team_a','team_a','team_b','team_a','team_b','team_a']
-    .map((w, i) => ({ match_detail_id: 'gf3', game_no: i + 1, winner: w }));
+    .map((w, i) => ({ match_detail_id: 'gf3', game_no: i + 1, team_a: 'TLID', team_b: 'NAVI', winner: w }));
   const sf = build(dataFor({ score_a: 4, score_b: 3, status: 'completed', match_detail_id: 'gf3' }, { games })).seasonFinal();
   eq(sf.done, true, '4-3 declares a champion');
   eq(sf.clinch, 7, '4-3 clinches in game 7');
@@ -163,14 +163,47 @@ function dataFor(over, extra) {
 /* --- 13. trace withheld when a game has no winner --- */
 {
   const games = [
-    { match_detail_id: 'gf5', game_no: 1, winner: 'team_a' },
-    { match_detail_id: 'gf5', game_no: 2, winner: '' }
+    { match_detail_id: 'gf5', game_no: 1, team_a: 'TLID', team_b: 'NAVI', winner: 'team_a' },
+    { match_detail_id: 'gf5', game_no: 2, team_a: 'TLID', team_b: 'NAVI', winner: '' }
   ];
   const sf = build(dataFor({ score_a: 4, score_b: 2, status: 'completed', match_detail_id: 'gf5' }, { games })).seasonFinal();
   eq(sf.trace.length, 0, 'an undecided game withholds the trace');
 }
 
-/* --- 14. roster: distinct players, most-played first, never invented --- */
+/* --- 15. orientation: a detail row stored in the opposite team order --- */
+{
+  /* Real Grand Final (detail 1115): the bracket lists NAVI 3-4 BTR, while
+     the detail match stores BTR 4-3 NAVI and every game swaps order. */
+  const gf = { match_id: 'id-playoffs-7', round: 'Grand Finals', team_a: 'NAVI',
+               team_b: 'BTR', score_a: 3, score_b: 4, status: 'completed',
+               winner: 'team_b', series_format: null, match_detail_id: '1115' };
+  const detail = { match_detail_id: '1115', team_a: 'BTR', team_b: 'NAVI',
+                   score_a: 4, score_b: 3, status: 'completed', winner: 'team_a' };
+  const games = [
+    { match_detail_id: '1115', game_no: 1, team_a: 'BTR', team_b: 'NAVI', winner: 'team_a' },
+    { match_detail_id: '1115', game_no: 2, team_a: 'NAVI', team_b: 'BTR', winner: 'team_a' },
+    { match_detail_id: '1115', game_no: 3, team_a: 'BTR', team_b: 'NAVI', winner: 'team_a' },
+    { match_detail_id: '1115', game_no: 4, team_a: 'NAVI', team_b: 'BTR', winner: 'team_a' },
+    { match_detail_id: '1115', game_no: 5, team_a: 'BTR', team_b: 'NAVI', winner: 'team_b' },
+    { match_detail_id: '1115', game_no: 6, team_a: 'BTR', team_b: 'NAVI', winner: 'team_a' },
+    { match_detail_id: '1115', game_no: 7, team_a: 'NAVI', team_b: 'BTR', winner: 'team_b' }
+  ];
+  const d = {
+    playoffs: { matches: [gf] }, schedule: [], matches: [detail], games,
+    players: [], standings: [], team_season: []
+  };
+  const sf = build(d).seasonFinal();
+  eq(sf.done, true, 'flipped detail still ends the season');
+  eq(sf.champion, 'BTR', 'champion follows the bracket side, not detail order');
+  eq(sf.runnerUp, 'NAVI', 'runner-up is the bracket team_a');
+  eq(sf.champScore, 4, 'champion score is mapped onto the bracket order');
+  eq(sf.oppScore, 3, 'opponent score is mapped onto the bracket order');
+  eq(sf.trace.length, 7, 'every game appears in the trace');
+  eq(sf.trace.filter(t => t.won).length, 4, 'game winners follow each game team order');
+  eq(sf.clinch, 7, 'the clinching game is the seventh');
+}
+
+/* --- 16. roster: distinct players, most-played first, never invented --- */
 {
   const players = [
     { team: 'TLID', player: 'Lyoni', lane: 'MID' }, { team: 'TLID', player: 'Lyoni', lane: 'MID' },

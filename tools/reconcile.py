@@ -158,7 +158,7 @@ def build_report(season_id="s18"):
             "season": season_id,
             "snapshot": source_fingerprint(db_path),
             "database": str(db_path),
-            "scope": "completed regular-season matches/games; playoffs excluded",
+            "scope": "completed regular-season matches/games; playoffs checked by the build gate",
             "rows": rows,
             "failures": failures,
             "integrity": integrity,

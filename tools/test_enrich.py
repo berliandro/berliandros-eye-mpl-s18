@@ -109,11 +109,11 @@ class DataGateTest(unittest.TestCase):
         counts = {t: self.con.execute(f"SELECT COUNT(*) FROM {t}").fetchone()[0]
                   for t in ("matches", "games", "game_players", "game_picks",
                             "team_games", "standings")}
-        self.assertEqual(counts["matches"], 72)
-        self.assertEqual(counts["games"], 174)
-        self.assertEqual(counts["game_players"], 1740)
-        self.assertEqual(counts["game_picks"], 1740)
-        self.assertEqual(counts["team_games"], 348)
+        self.assertEqual(counts["matches"], 80)
+        self.assertEqual(counts["games"], 215)
+        self.assertEqual(counts["game_players"], 2150)
+        self.assertEqual(counts["game_picks"], 2150)
+        self.assertEqual(counts["team_games"], 430)
         self.assertEqual(counts["standings"], 9)
 
     def test_no_blank_or_unassigned_picks(self):

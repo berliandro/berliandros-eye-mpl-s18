@@ -40,6 +40,7 @@ def resolve(season_id=None):
             "playoffs": f"data/seasons/{sid}/playoffs.json",
             "meta": f"data/seasons/{sid}/meta.json",
             "patches": f"data/seasons/{sid}/patches.json",
+            "analysisSnapshot": None,
         }
     else:
         defaults = {
@@ -49,6 +50,7 @@ def resolve(season_id=None):
             "playoffs": "data/playoffs.json",
             "meta": f"data/seasons/{sid}/meta.json",
             "patches": f"data/seasons/{sid}/patches.json",
+            "analysisSnapshot": None,
         }
 
     out = {"id": sid, "displayName": entry.get("displayName", sid), "layout": layout}

@@ -20,7 +20,7 @@ REPO = Path(__file__).resolve().parent.parent
 MANIFEST = REPO / "analysis" / "sources" / "source-manifest.json"
 COPY_VERIFY = REPO / "analysis" / "sources" / "copy-verification.json"
 TIMED = REPO / "analysis" / "evidence" / "timed-alignment.json"
-DB = REPO / "data" / "mpl_id_s18.db"
+DB = REPO / "analysis" / "snapshots" / "mpl_id_s18_regular.db"
 REPORTS = REPO / "analysis" / "reports"
 EVIDENCE = REPO / "analysis" / "evidence"
 

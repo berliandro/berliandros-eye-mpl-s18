@@ -78,19 +78,31 @@ except Exception as e:
 season_cfg_early = json.loads((ROOT / 'data' / 'season.json').read_text(encoding='utf-8'))
 reg_completed = [m for m in sched if m.get('status') == 'completed'
                  and 'playoffs' not in (m.get('schedule_id') or '')]
-expected_games = 0
-for m in reg_completed:
-    try:
-        expected_games += int(m['score_a']) + int(m['score_b'])
-    except (KeyError, TypeError, ValueError):
-        pass
+completed_all = [m for m in sched if m.get('status') == 'completed']
+
+
+def series_games(rows):
+    total = 0
+    for m in rows:
+        try:
+            total += int(m['score_a']) + int(m['score_b'])
+        except (KeyError, TypeError, ValueError):
+            pass
+    return total
+
+
+expected_games_all = series_games(completed_all)
 ok(len(reg_completed) == season_cfg_early['totalRegularFixtures'],
    f"completed regular fixtures = {season_cfg_early['totalRegularFixtures']} ({len(reg_completed)})")
-ok(len(matches) == len(reg_completed), f"detail matches cover every completed fixture ({len(matches)})")
-ok(len(games) == expected_games, f"games match series scores ({len(games)} vs {expected_games})")
-ok(len(praw) == expected_games * 10, f"player rows = 10/game ({len(praw)})")
-ok(len(picks) == expected_games * 10, f"pick rows = 10/game ({len(picks)})")
-ok(len(team_games) == expected_games * 2, f"team-game rows = 2/game ({len(team_games)})")
+exp_completed = season_cfg_early['totalRegularFixtures'] + season_cfg_early['playoffMatches']
+ok(len(completed_all) == exp_completed,
+   f"completed fixtures incl. playoffs = {exp_completed} ({len(completed_all)})")
+ok(len(matches) == len(completed_all), f"detail matches cover every completed fixture ({len(matches)})")
+ok(len(games) == expected_games_all,
+   f"games match series scores ({len(games)} vs {expected_games_all})")
+ok(len(praw) == expected_games_all * 10, f"player rows = 10/game ({len(praw)})")
+ok(len(picks) == expected_games_all * 10, f"pick rows = 10/game ({len(picks)})")
+ok(len(team_games) == expected_games_all * 2, f"team-game rows = 2/game ({len(team_games)})")
 ok(not any(not (b.get('hero') or '').strip() for b in bans), "no blank ban heroes")
 ok(not any(not (p.get('player') or '').strip() or not (p.get('hero') or '').strip() for p in picks),
    "no blank pick player/hero")

@@ -47,14 +47,15 @@ sample behind each one.
 
 ## Operating Context
 
-- A season is nine weeks of regular-season play plus playoffs. Season 18 covers 72 completed
-  series and 174 games across nine teams: 61 players with completed game rows, 93 heroes picked
-  or banned, 114 item identifiers.
+- A season is nine weeks of regular-season play plus playoffs. Season 18 is complete: **80 series and
+  215 games** (72 regular-season fixtures plus 8 playoff series) across nine teams, with **BTR
+  beating NAVI 4–3 in the Grand Final**. The snapshot carries 61 players with completed game rows,
+  96 heroes picked or banned and 115 item identifiers.
 - The app ships as one HTML file plus the committed `assets/` folder (double-click both, or serve the folder over HTTP), and
   refreshes from the mlbbhub API on demand; the committed snapshot renders instantly offline.
 - Builds run from committed SQLite/CSV through the Python tools in `tools/`. The artifact is
   generated from `tools/templates/{doc.html,style.css,app.js}` by `tools/gen_dark.py`, and
-  `python tools/verify.py` gates it (18 verification suites plus a regeneration parity check).
+  `python tools/verify.py` gates it (29 verification suites plus a regeneration parity check).
 - Collection is manual, never scheduled: one ETL run makes roughly 70 sequential requests with
   identifying user agents; one in-app refresh makes about 60 detail requests at 6-way
   concurrency.
@@ -117,15 +118,18 @@ Open decisions recorded 2026-11-15:
 
 Committed and verified:
 
-- Database: 72 matches, 174 games, 1,740 player rows, 1,740 picks, 1,738 ban rows with order,
-  348 team-game rows, 9 team season aggregates, 133 hero stat rows — reconciled against
+- Database: 80 matches, 215 games, 2,150 player rows, 2,150 picks, 2,149 ban rows with order,
+  430 team-game rows, 9 team season aggregates, 133 hero stat rows — reconciled against
   standings and Liquipedia, with exceptions listed in `data/seasons/s18/quality.json`.
 - Provenance: `data/seasons/s18/meta.json` records schema version, sources, row counts and build
   commit; the parity gate proves the committed artifact matches a fresh build.
 - Analysis: 27/27 sources validated, 72/72 match reports with database evidence, 27
   transcript-covered series (24 complete, 3 partial), 45 database-only series, 313 accepted
-  observations, nine team briefs and one head-coach brief under `analysis/`.
-- Screenshots: eight 2880×1800 captures in `github/assets/`, produced by `tools/shots.py` under a
+  observations, nine team briefs and one head-coach brief under `analysis/`. The semantic layer
+  is pinned to the frozen regular-season snapshot
+  `analysis/snapshots/mpl_id_s18_regular.db` (72 series, 174 games); the app database is the
+  completed season (80 series, 215 games).
+- Screenshots: ten 2880×1800 captures in `github/assets/`, produced by `tools/shots.py` under a
   fixed spec (system zoom 150%, site zoom 125%).
 - Raw broadcast transcripts, captured frames and provenance sidecars exist locally but are
   Git-ignored, so they are not reproducible from a clean clone.

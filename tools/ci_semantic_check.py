@@ -191,7 +191,7 @@ def check_timelines():
 
     # Check series IDs exist in DB
     try:
-        con = sqlite3.connect(str(REPO / "data" / "mpl_id_s18.db"))
+        con = sqlite3.connect(str(REPO / "analysis" / "snapshots" / "mpl_id_s18_regular.db"))
         db_ids = set(r[0] for r in con.execute("select match_detail_id from matches").fetchall())
         con.close()
     except Exception:
@@ -304,7 +304,7 @@ def check_visual_status():
 
 def check_db_integrity():
     """Check canonical DB integrity (read-only)."""
-    db = REPO / "data" / "mpl_id_s18.db"
+    db = REPO / "analysis" / "snapshots" / "mpl_id_s18_regular.db"
     if not db.exists():
         warning("canonical DB not found (CI may not have it)")
         return

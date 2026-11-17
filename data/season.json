@@ -25,6 +25,10 @@
     "rrq": "RRQ",
     "rrqhoshi": "RRQ"
   },
+  "mvpAliasesByTeam": {
+    "_comment": "Liquipedia MVP page titles that collide with another club's API IGN, scoped by the series teams. NAVI's player page moved Coolfire -> Joshua; the API IGN is Joshuaa. RRQ's Joshua is a different player (page Lynchh).",
+    "NAVI": {"joshua": "Joshuaa"}
+  },
   "totalTeams": 9,
   "roundRobinRounds": 2,
   "seriesPerTeam": 16,
@@ -39,7 +43,8 @@
   "endpoints": {
     "hub": "https://mpl.mlbbhub.com/api/v1/id",
     "liquipediaApi": "https://liquipedia.net/mobilelegends/api.php",
-    "liquipediaSeasonPage": "MPL/Indonesia/Season_18/Regular_Season"
+    "liquipediaSeasonPage": "MPL/Indonesia/Season_18/Regular_Season",
+    "liquipediaPlayoffsPage": "MPL/Indonesia/Season_18/Playoffs"
   },
   "database": "data/mpl_id_s18.db",
   "csvDir": "data/csv",

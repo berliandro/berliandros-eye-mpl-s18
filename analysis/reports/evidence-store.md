@@ -6,7 +6,7 @@
 
 | Store | Rows | Status | Scope |
 |---|---:|---|---|
-| `data/mpl_id_s18.db` | 174 games | canonical | source-reported schedule and scoreboard snapshot |
+| `analysis/snapshots/mpl_id_s18_regular.db` | 174 games | canonical | source-reported regular-season schedule and scoreboard snapshot |
 | `analysis/evidence/transcript-observations/` | 368 | canonical | 27 sources; atomic quote-level observations (313 accepted) |
 | `analysis/evidence/transcript-segments/` | 3010 | canonical | 27 bounded segment ledgers |
 | `analysis/evidence/pilot-ledger.jsonl` | 234 | frozen legacy | 3 pilot series; claim-level observations, insights and audits |

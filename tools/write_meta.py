@@ -27,21 +27,33 @@ def playoff(row):
     sid = str(row.get("schedule_id") or "").lower()
     return "playoff" in sid or (row.get("team_a") == "TBD" and row.get("team_b") == "TBD")
 regular = [r for r in schedule if not playoff(r)]
+playoff_rows = [r for r in schedule if playoff(r)]
 completed = [r for r in regular if str(r.get("status")) == "completed"]
-expected_games = 0
-for r in completed:
-    try:
-        expected_games += int(r.get("score_a")) + int(r.get("score_b"))
-    except (TypeError, ValueError):
-        pass
+completed_playoffs = [r for r in playoff_rows if str(r.get("status")) == "completed"]
+def played_games(rows):
+    total = 0
+    for r in rows:
+        try:
+            total += int(r.get("score_a")) + int(r.get("score_b"))
+        except (TypeError, ValueError):
+            pass
+    return total
+expected_games = played_games(completed)
+expected_playoff_games = played_games(completed_playoffs)
 official_match_wins = con.execute("SELECT COALESCE(SUM(match_win),0) FROM standings").fetchone()[0]
 official_game_wins = con.execute("SELECT COALESCE(SUM(game_win),0) FROM standings").fetchone()[0]
 expected_regular = int(cfg["totalRegularFixtures"])
+expected_playoffs = int(cfg["playoffMatches"])
+total_completed = len(completed) + len(completed_playoffs)
+total_games = expected_games + expected_playoff_games
 detail_matches = counts.get("matches", 0)
 games_count = counts.get("games", 0)
 final = (cfg.get("regularSeasonStatus") == "final" and
-         len(completed) == expected_regular == detail_matches and
-         games_count == expected_games == official_game_wins and
+         len(completed) == expected_regular and
+         len(completed_playoffs) == expected_playoffs and
+         detail_matches == total_completed and
+         games_count == total_games and
+         official_game_wins == expected_games and
          official_match_wins == len(completed))
 latest = con.execute(
     "SELECT MAX(iso_date) FROM matches WHERE status='completed'").fetchone()[0]
@@ -65,18 +77,23 @@ meta = {
     "generated_at": datetime.now(timezone.utc).isoformat(timespec="seconds"),
     "layout": season["layout"],
     "snapshot_status": "final" if final else "partial",
-    "snapshot_scope": "completed regular season; playoffs excluded",
+    "snapshot_scope": "completed regular season and playoffs",
     "verified_as_of": latest,
     "sources": {
         "hub": "https://mpl.mlbbhub.com/api/v1/id",
         "liquipedia": "https://liquipedia.net/mobilelegends/api.php",
         "liquipedia_page": "MPL/Indonesia/Season_18/Regular_Season",
+        "liquipedia_playoffs_page": "MPL/Indonesia/Season_18/Playoffs",
     },
     "expected": {
         "regular_fixtures": expected_regular,
-        "playoff_fixtures": int(cfg["playoffMatches"]),
-        "completed_fixtures": len(completed),
-        "games_from_scores": expected_games,
+        "playoff_fixtures": expected_playoffs,
+        "completed_fixtures": total_completed,
+        "games_from_scores": total_games,
+        "regular_completed": len(completed),
+        "playoff_completed": len(completed_playoffs),
+        "regular_games": expected_games,
+        "playoff_games": expected_playoff_games,
     },
     "reconciliation": {
         "official_match_wins": official_match_wins,
@@ -84,6 +101,8 @@ meta = {
         "detail_matches": detail_matches,
         "games_rows": games_count,
         "team_game_rows": counts.get("team_games", 0),
+        "regular_games": expected_games,
+        "playoff_games": expected_playoff_games,
         "reconciled": final,
     },
     "quality": {

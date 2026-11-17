@@ -2,28 +2,35 @@
   "schema_version": 1,
   "season_id": "s18",
   "display_name": "MPL Indonesia Season 18",
-  "generated_at": "2026-10-24T03:16:13+00:00",
+  "generated_at": "2026-11-17T15:48:43+00:00",
   "layout": "legacy",
   "snapshot_status": "final",
-  "snapshot_scope": "completed regular season; playoffs excluded",
-  "verified_as_of": "2026-10-18",
+  "snapshot_scope": "completed regular season and playoffs",
+  "verified_as_of": "2026-11-08",
   "sources": {
     "hub": "https://mpl.mlbbhub.com/api/v1/id",
     "liquipedia": "https://liquipedia.net/mobilelegends/api.php",
-    "liquipedia_page": "MPL/Indonesia/Season_18/Regular_Season"
+    "liquipedia_page": "MPL/Indonesia/Season_18/Regular_Season",
+    "liquipedia_playoffs_page": "MPL/Indonesia/Season_18/Playoffs"
   },
   "expected": {
     "regular_fixtures": 72,
     "playoff_fixtures": 8,
-    "completed_fixtures": 72,
-    "games_from_scores": 174
+    "completed_fixtures": 80,
+    "games_from_scores": 215,
+    "regular_completed": 72,
+    "playoff_completed": 8,
+    "regular_games": 174,
+    "playoff_games": 41
   },
   "reconciliation": {
     "official_match_wins": 72,
     "official_game_wins": 174,
-    "detail_matches": 72,
-    "games_rows": 174,
-    "team_game_rows": 348,
+    "detail_matches": 80,
+    "games_rows": 215,
+    "team_game_rows": 430,
+    "regular_games": 174,
+    "playoff_games": 41,
     "reconciled": true
   },
   "quality": {
@@ -43,20 +50,16 @@
     "unresolved_draft_conflicts": [],
     "ban_set_conflicts": [
       [
-        "1107",
-        2,
-        "B",
-        "api-bans-absent-liquipedia-filled"
-      ],
-      [
-        "1107",
-        2,
+        "1112",
+        3,
         "A",
-        "api-bans-absent-liquipedia-filled"
+        [
+          "valentina"
+        ]
       ]
     ],
     "blank_bans_removed_by_enrichment": 0,
-    "sides_filled_from_liquipedia": 1,
+    "sides_filled_from_liquipedia": 0,
     "missing_sides": 0,
     "missing_lanes": 0,
     "missing_map_modes": 21,
@@ -65,26 +68,21 @@
         "match_detail_id": "1088",
         "game_no": 1,
         "bans": 9
-      },
-      {
-        "match_detail_id": "1105",
-        "game_no": 3,
-        "bans": 9
       }
     ]
   },
   "row_counts": {
-    "game_bans": 1738,
-    "game_picks": 1740,
-    "game_players": 1740,
-    "games": 174,
+    "game_bans": 2149,
+    "game_picks": 2150,
+    "game_players": 2150,
+    "games": 215,
     "hero_stats": 133,
-    "matches": 72,
+    "matches": 80,
     "player_season_stats": 66,
     "schedule_all": 80,
     "standings": 9,
-    "team_games": 348,
+    "team_games": 430,
     "team_season_stats": 9
   },
-  "build_commit": "f6d249d"
+  "build_commit": "bbbf69f"
 }
