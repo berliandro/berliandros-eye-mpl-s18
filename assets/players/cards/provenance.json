@@ -1,0 +1,590 @@
+{
+ "schema": 1,
+ "kind": "player-card-thumbnail",
+ "source": "assets/players/*.png (Liquipedia Commons, CC-BY-SA 3.0)",
+ "note": "160px LANCZOS downscale of the committed 500px portrait, used only where the interface paints the portrait at 56px or less. The full file remains the profile hero and championship-plate source.",
+ "size": 160,
+ "generated": "2026-11-18",
+ "players": {
+  "Aboyy": {
+   "file": "Aboyy.png",
+   "source": "assets/players/Aboyy.png",
+   "source_sha256": "9c33bbb1760959ef01dc57cd43a07d7206dbbbedd4411b71bc6ed42b04d627d7",
+   "source_width": 500,
+   "source_height": 500,
+   "width": 160,
+   "height": 160,
+   "sha256": "e86b583fa3a3b7650a25d328a0d6f5d16256272dbc84ae17a242a799985451ef"
+  },
+  "Alberttt": {
+   "file": "Alberttt.png",
+   "source": "assets/players/Alberttt.png",
+   "source_sha256": "2e1cfbc1193b5afad3fdb5521160ad3796b6d5b7e25924c763906b8bb8fe9c33",
+   "source_width": 500,
+   "source_height": 500,
+   "width": 160,
+   "height": 160,
+   "sha256": "87f14fa2c650323b8753e216e2df144cf8faa8f5b6e1d18b26cf63b14cbeeae1"
+  },
+  "Andoryuuu": {
+   "file": "Andoryuuu.png",
+   "source": "assets/players/Andoryuuu.png",
+   "source_sha256": "a411fabf03213c3c0a600baea117d33fc7eb34ac0ecbff0188ed254743ba0d4f",
+   "source_width": 500,
+   "source_height": 500,
+   "width": 160,
+   "height": 160,
+   "sha256": "b61c64586259057663108d6e8c26ed95c236378ba7d8acd6a872acfe0c729e9d"
+  },
+  "Aprho": {
+   "file": "Aprho.png",
+   "source": "assets/players/Aprho.png",
+   "source_sha256": "8bb12b9a00b127f5453d7df1f8ed3fc3181c40c227820dbe203df989cae74df4",
+   "source_width": 500,
+   "source_height": 500,
+   "width": 160,
+   "height": 160,
+   "sha256": "d321794bd289f05223e2ccbc80b348a33e597184e11fe1e648d0d644b867512e"
+  },
+  "Aran": {
+   "file": "Aran.png",
+   "source": "assets/players/Aran.png",
+   "source_sha256": "6e8c1e244ddd05eb20eddbc9e6c0cf8ff677c0e41890c34d2e408205f039906d",
+   "source_width": 500,
+   "source_height": 500,
+   "width": 160,
+   "height": 160,
+   "sha256": "075055f8e0f5171fda05d66bb66710509c3090f6c85684491af0e2e78c377b27"
+  },
+  "Arfy": {
+   "file": "Arfy.png",
+   "source": "assets/players/Arfy.png",
+   "source_sha256": "c35d7ea0aac9a78f8b0df1c1b7646d0c2da0dc01284bf936cada3c62b386fa8e",
+   "source_width": 500,
+   "source_height": 500,
+   "width": 160,
+   "height": 160,
+   "sha256": "e723a5c997518b877263c9bf2ad2611dfc1086fd8cf269075774596a7b0b9a27"
+  },
+  "Arthur": {
+   "file": "Arthur.png",
+   "source": "assets/players/Arthur.png",
+   "source_sha256": "b51e2a4c897ef025a21e9f9b0353779e39e55d362e89da66c1c3bf0a74769f9e",
+   "source_width": 500,
+   "source_height": 500,
+   "width": 160,
+   "height": 160,
+   "sha256": "b9322f3bc3f1ee9543dddedbc5ad8303b28d4acc4c481a33882e773d4ce14db2"
+  },
+  "AudyTzy": {
+   "file": "AudyTzy.png",
+   "source": "assets/players/AudyTzy.png",
+   "source_sha256": "44a94de1f4a133fe70cff1bf872704fa1b4aedd0be6b87a13e36b5ad21452ef6",
+   "source_width": 500,
+   "source_height": 500,
+   "width": 160,
+   "height": 160,
+   "sha256": "129c47160bf6fcfbc25b9574c99b035f00aff5810ad829057b2d3ac6e5065af2"
+  },
+  "Clayyy": {
+   "file": "Clayyy.png",
+   "source": "assets/players/Clayyy.png",
+   "source_sha256": "c4503aa1e1c00e2bf5b6f6d64213586428aa63199876a0f974792698435e0596",
+   "source_width": 500,
+   "source_height": 500,
+   "width": 160,
+   "height": 160,
+   "sha256": "a7cf508a87cb463cb29f74d100b75ea2c90eb8fb93361a4e14721e9aea6e4a5c"
+  },
+  "Demonkite": {
+   "file": "Demonkite.png",
+   "source": "assets/players/Demonkite.png",
+   "source_sha256": "9050cddd1cb0042365ac7188a46b20c6d4169eb3bdf391ec6df453d77b671fb2",
+   "source_width": 500,
+   "source_height": 500,
+   "width": 160,
+   "height": 160,
+   "sha256": "2826cc3f80d61c32e8f44765381b519117bce33bf3335511e08299c8a52580c4"
+  },
+  "DrianW": {
+   "file": "DrianW.png",
+   "source": "assets/players/DrianW.png",
+   "source_sha256": "bbdd4b457b5c0aa9102ad00c4626404fa1f18241d0401c6eded767936e72f129",
+   "source_width": 192,
+   "source_height": 192,
+   "width": 160,
+   "height": 160,
+   "sha256": "3ba80cb89138b4c337c687921b341ccb5485fe87c4b754def414bd96c52d389d"
+  },
+  "Drichel": {
+   "file": "Drichel.png",
+   "source": "assets/players/Drichel.png",
+   "source_sha256": "dffd1ce2ee5d02085468e0ee3030aca31e746c0859f45896c855558d8f9d3edc",
+   "source_width": 500,
+   "source_height": 500,
+   "width": 160,
+   "height": 160,
+   "sha256": "77e3fec82b25243850c63df19b490711f47864182578ad993684c4e13438d608"
+  },
+  "EMANN": {
+   "file": "EMANN.png",
+   "source": "assets/players/EMANN.png",
+   "source_sha256": "caa9073b45f9d7e78775bddcaa3681d67389f3f162349c179c97cc2b8e3ae883",
+   "source_width": 500,
+   "source_height": 500,
+   "width": 160,
+   "height": 160,
+   "sha256": "9aa5328aec5fcdc7b3b15cb37bbf32a1108982887952308887ae8e64f754ddec"
+  },
+  "Erlan": {
+   "file": "Erlan.png",
+   "source": "assets/players/Erlan.png",
+   "source_sha256": "1b898235ec939bf5734c5732b66437f673286a2e5b6057df319f0aac9d99e23e",
+   "source_width": 500,
+   "source_height": 500,
+   "width": 160,
+   "height": 160,
+   "sha256": "7e99e2010aff464a6a85307c27610dbe317d52717b12da09026a9639b6578b14"
+  },
+  "Excellent99": {
+   "file": "Excellent99.png",
+   "source": "assets/players/Excellent99.png",
+   "source_sha256": "20c7412eaf4c5e5d111a5d52ec5c7a844037cfc2ddae078a226962284bcded5e",
+   "source_width": 192,
+   "source_height": 192,
+   "width": 160,
+   "height": 160,
+   "sha256": "01b60e667d45de7a8404b136847828f3ed5820f54c5d3c545c85ea5348dcf581"
+  },
+  "Febriii": {
+   "file": "Febriii.png",
+   "source": "assets/players/Febriii.png",
+   "source_sha256": "f6dc75487ffd1a513286199b9e572cb558fd55f336ec0716f864172422cc1ef6",
+   "source_width": 192,
+   "source_height": 192,
+   "width": 160,
+   "height": 160,
+   "sha256": "67e9db521a77e10483e2f9bd1599e926c852b6e9382c415d765af261d22be665"
+  },
+  "Finn": {
+   "file": "Finn.png",
+   "source": "assets/players/Finn.png",
+   "source_sha256": "2e55e84f5387dffab18d0c3b7eea79eadc9973b9b3587d649e502c82130228a6",
+   "source_width": 500,
+   "source_height": 500,
+   "width": 160,
+   "height": 160,
+   "sha256": "78179ab999de0cf4a7b1249c4105fbadf8e6671b20c6e5767f13e2024c5a1ae5"
+  },
+  "Frenzyy": {
+   "file": "Frenzyy.png",
+   "source": "assets/players/Frenzyy.png",
+   "source_sha256": "a8564a3adc4e4545a65b0e749ea887256f3f8718960a8b6af7f03a03ac664022",
+   "source_width": 192,
+   "source_height": 192,
+   "width": 160,
+   "height": 160,
+   "sha256": "ff3b1ba71e435e73391ee4a26e8662302cecec15eac93f9a4ae506079f9eb074"
+  },
+  "Habil": {
+   "file": "Habil.png",
+   "source": "assets/players/Habil.png",
+   "source_sha256": "af6333d5f5f1bdb5484787b51a543a00adb682a014a96c5e686aded549146270",
+   "source_width": 192,
+   "source_height": 192,
+   "width": 160,
+   "height": 160,
+   "sha256": "b40340edca34dc5eabbb8f48cf69bb5f409be277c85eb51bfdc9833e2c646375"
+  },
+  "Hajirin": {
+   "file": "Hajirin.png",
+   "source": "assets/players/Hajirin.png",
+   "source_sha256": "1e49c2da3fd45b6a1db9d44c5b3e0e3f935d6baa972eebd4b7d53df90b77755f",
+   "source_width": 500,
+   "source_height": 500,
+   "width": 160,
+   "height": 160,
+   "sha256": "2f1a5465c44038dd92241a0a4e22037af0cf794331e5692705e0782ee4a9fba9"
+  },
+  "Hazle": {
+   "file": "Hazle.png",
+   "source": "assets/players/Hazle.png",
+   "source_sha256": "dc5800c8d16250817d061a1f8263126d83ce254ce6ea4381089d1b88db387f80",
+   "source_width": 500,
+   "source_height": 500,
+   "width": 160,
+   "height": 160,
+   "sha256": "d66ecf36b5b1f2eec0cc4a65c7f8a4358c63046fb0c3ec86b20230cfa7117581"
+  },
+  "Hijumee": {
+   "file": "Hijumee.png",
+   "source": "assets/players/Hijumee.png",
+   "source_sha256": "1314aa0e48fc86efa685796146393ad109eab09867a1b3a4b50ef8464b50b0a2",
+   "source_width": 500,
+   "source_height": 500,
+   "width": 160,
+   "height": 160,
+   "sha256": "e92f0cae049df7fe647582edffebc8f96615b3a8c6c7515c8298775bac8dc98d"
+  },
+  "Itoshi Kesu": {
+   "file": "Itoshi_Kesu.png",
+   "source": "assets/players/Itoshi_Kesu.png",
+   "source_sha256": "4cbc3f98d16b1ae254cc296601f72b9582eff7256b45b359459f7475c5ad85ca",
+   "source_width": 500,
+   "source_height": 500,
+   "width": 160,
+   "height": 160,
+   "sha256": "3e97993720ec873cfbc1cbf922879bdf1ac6ea667079138a732ac76f52a9a78c"
+  },
+  "Jiizee": {
+   "file": "Jiizee.png",
+   "source": "assets/players/Jiizee.png",
+   "source_sha256": "9801da237d617ddebcafeb3df840290b07d72176e481fe3095d7f5f5fb902bd1",
+   "source_width": 500,
+   "source_height": 500,
+   "width": 160,
+   "height": 160,
+   "sha256": "4f53726e85b9bd9b2a125d6f04aac4ae1a28995e347acfc0bae768c95e7760d2"
+  },
+  "Joshua": {
+   "file": "Joshua.png",
+   "source": "assets/players/Joshua.png",
+   "source_sha256": "82fe18df4ed5df7db80e07b7e7515b3e21c63524242a929828d750513d14e981",
+   "source_width": 500,
+   "source_height": 500,
+   "width": 160,
+   "height": 160,
+   "sha256": "9bf2770724a0c03e5d7ffeb5ff22a52aea45dfb499814ae460d3625667ba2812"
+  },
+  "Joshuaa": {
+   "file": "Joshuaa.png",
+   "source": "assets/players/Joshuaa.png",
+   "source_sha256": "de0096aaa441d4948a71bf2a8e7fdb21446406e4c0bc5eacf61e90d5081de76d",
+   "source_width": 500,
+   "source_height": 500,
+   "width": 160,
+   "height": 160,
+   "sha256": "378cecea6b0077b01e91b2df5aa0fce306382d658e9400435332d89f8420790a"
+  },
+  "Kairi": {
+   "file": "Kairi.png",
+   "source": "assets/players/Kairi.png",
+   "source_sha256": "617dd26a60463c2bddad1c79cfebec04d8fb56685a9229a99718cfd947c6b15a",
+   "source_width": 500,
+   "source_height": 500,
+   "width": 160,
+   "height": 160,
+   "sha256": "e7ba35973b1dbd80cd5ed13fa8b31bd264fdbcd0fc302c25aac13a3e27cee3b3"
+  },
+  "Karss": {
+   "file": "Karss.png",
+   "source": "assets/players/Karss.png",
+   "source_sha256": "cf42bc0a506ca84857eb97c732f6260764c9fafbd6c5da46ed9dfcf3924f9444",
+   "source_width": 500,
+   "source_height": 500,
+   "width": 160,
+   "height": 160,
+   "sha256": "f25e818d08f28a89069b074a984ffc3d96ede3b22657be6eb142695108fccee7"
+  },
+  "Kayn": {
+   "file": "Kayn.png",
+   "source": "assets/players/Kayn.png",
+   "source_sha256": "1f092dfe3f8005ae03913f8a2114c81035ff7b2ca9a92bb835eb8c9797090b3a",
+   "source_width": 192,
+   "source_height": 192,
+   "width": 160,
+   "height": 160,
+   "sha256": "661b7a22fe7fa636bd8aa181db0e21134a48829d5ee954c7592abba1ab74ab23"
+  },
+  "Kelra": {
+   "file": "Kelra.png",
+   "source": "assets/players/Kelra.png",
+   "source_sha256": "38f6c423d93d0327dbd5228b526eda05eb40d2c659d278ac99579a191375d594",
+   "source_width": 500,
+   "source_height": 500,
+   "width": 160,
+   "height": 160,
+   "sha256": "d122263f2e7a320b606632fd3fefc9991573d8dbe8fb1acdd9c106d871877274"
+  },
+  "KennzySkie": {
+   "file": "KennzySkie.png",
+   "source": "assets/players/KennzySkie.png",
+   "source_sha256": "783ac15407a824104f3b257df0e89f6a4bbc19adbcbc8d76b99db1a696dbadd3",
+   "source_width": 500,
+   "source_height": 500,
+   "width": 160,
+   "height": 160,
+   "sha256": "0ef520816db2ed841d40df84685fa81b6f01f6a8dfae9d9f0031f5f3fee2f947"
+  },
+  "Keven": {
+   "file": "Keven.png",
+   "source": "assets/players/Keven.png",
+   "source_sha256": "7433529d658de78b4d9d7e3227fa077149b13503d47c0b3180350e24556679a7",
+   "source_width": 500,
+   "source_height": 500,
+   "width": 160,
+   "height": 160,
+   "sha256": "8b2119deeaa5af6872b6c48045c90633bff3592b69c9fc5d256271f01c986193"
+  },
+  "Kevinn": {
+   "file": "Kevinn.png",
+   "source": "assets/players/Kevinn.png",
+   "source_sha256": "adee78d8c30ccd7becf668dca0174a1dd4ccfabedf918e5e3a183b218c8bbe8d",
+   "source_width": 500,
+   "source_height": 500,
+   "width": 160,
+   "height": 160,
+   "sha256": "eef92cd51110b1c7b4e1c3de63d95c22b96de1b9f06b53db0aad550d12512bcd"
+  },
+  "Kiboy": {
+   "file": "Kiboy.png",
+   "source": "assets/players/Kiboy.png",
+   "source_sha256": "91a9238ef277a0e95580091d82e12dd4f294979e80cb62bd5555fde7e21b7886",
+   "source_width": 500,
+   "source_height": 500,
+   "width": 160,
+   "height": 160,
+   "sha256": "de3eeff3366716700ec3c24173aa87945791e95b1bbac5bed5a5a38ce13e9ce2"
+  },
+  "Killuaa": {
+   "file": "Killuaa.png",
+   "source": "assets/players/Killuaa.png",
+   "source_sha256": "6d66d3e42ed5bfcf0a5fa306af4fef1b3a63ea75316782ec1d5d1d4f45714dbb",
+   "source_width": 500,
+   "source_height": 500,
+   "width": 160,
+   "height": 160,
+   "sha256": "0189e48d06685ca714edf0f242aa7a09992f0805fc05a40efc0f9bbdde2e08b8"
+  },
+  "Lutpi": {
+   "file": "Lutpi.png",
+   "source": "assets/players/Lutpi.png",
+   "source_sha256": "672623feb966e1fb5872514ca65a4b609b5439a4e9be7e5b5c66d5cc501b4d7d",
+   "source_width": 500,
+   "source_height": 500,
+   "width": 160,
+   "height": 160,
+   "sha256": "0983f886f62fa8d3ec019633e7f354aec8b8791551374bbddf0fa818474b58b3"
+  },
+  "Lyoni": {
+   "file": "Lyoni.png",
+   "source": "assets/players/Lyoni.png",
+   "source_sha256": "a54e1eacae13478038e288a654448fe363accb47ea8b0247d2e22462ebe8cc66",
+   "source_width": 500,
+   "source_height": 500,
+   "width": 160,
+   "height": 160,
+   "sha256": "25258ad0d35c8c390c937af927d84276a1aca3241a277a580848816980ade634"
+  },
+  "MarceL": {
+   "file": "MarceL.png",
+   "source": "assets/players/MarceL.png",
+   "source_sha256": "d033eb696e5fc6691f6ee6fbcc3aa8bf67a1ef7f7dcabfea9db341fbd2d6271b",
+   "source_width": 192,
+   "source_height": 192,
+   "width": 160,
+   "height": 160,
+   "sha256": "831d7d79a3299b4bd637a8dbd258f45ad885f201f7c5c3f730af9ab2f546a1d6"
+  },
+  "Maybeee": {
+   "file": "Maybeee.png",
+   "source": "assets/players/Maybeee.png",
+   "source_sha256": "6cac42eef0ce33a72df5dea76a4db2eea351573cf3fed787a64f9c3eae17339b",
+   "source_width": 500,
+   "source_height": 500,
+   "width": 160,
+   "height": 160,
+   "sha256": "77158cd275806a883ae5ad06308b74caa2e8e21f829c1286583e9bb97f3061d1"
+  },
+  "Maykidss": {
+   "file": "Maykidss.png",
+   "source": "assets/players/Maykidss.png",
+   "source_sha256": "29ca20ab575b36b2e9b78b2c7c9be22ff3443634c59887e383195525e4e1a551",
+   "source_width": 500,
+   "source_height": 500,
+   "width": 160,
+   "height": 160,
+   "sha256": "0a9689fe5e550d44453ba947c015c9915d140c410927132881cb3a8b623d481b"
+  },
+  "Morenooo": {
+   "file": "Morenooo.png",
+   "source": "assets/players/Morenooo.png",
+   "source_sha256": "5bce11c7fc9e012cd6cf9f0d0fb9b1afe66cf718b9b1152bec3bd031b447191a",
+   "source_width": 500,
+   "source_height": 500,
+   "width": 160,
+   "height": 160,
+   "sha256": "0bf64ffe461984e58e4b7586e391976eca51b475de680a7c5ae4f8403c8602f9"
+  },
+  "Muezza": {
+   "file": "Muezza.png",
+   "source": "assets/players/Muezza.png",
+   "source_sha256": "d3916749d131dd12e0e89aac16cc961bafe1aea6aeb21df56f93319a98b0fa54",
+   "source_width": 500,
+   "source_height": 500,
+   "width": 160,
+   "height": 160,
+   "sha256": "5e8bd9238fca512dffa98938d31ad2be0330c6945554c2a601275d40f4b15b42"
+  },
+  "Nazara": {
+   "file": "Nazara.png",
+   "source": "assets/players/Nazara.png",
+   "source_sha256": "6f91f02c260b0f841c84b97bfe32e9e0b796ad9194a8b0ac03f2e0e065ddd13c",
+   "source_width": 192,
+   "source_height": 192,
+   "width": 160,
+   "height": 160,
+   "sha256": "2c3f877a5e3cd2804c9d877a1b9d9b20409816730cbd5e89f2f0c14c185f2a58"
+  },
+  "Nino": {
+   "file": "Nino.png",
+   "source": "assets/players/Nino.png",
+   "source_sha256": "0c1ec741ac7a0e57e5f843d3a28d1b5b8a98ae9bbfa7854b96df0d2bca7f0eb6",
+   "source_width": 500,
+   "source_height": 500,
+   "width": 160,
+   "height": 160,
+   "sha256": "d44e7870262a77cf7c4ee7a2f5b8edd68b754b5e7b9a81548b6fb4dacb74ef47"
+  },
+  "Nnael": {
+   "file": "Nnael.png",
+   "source": "assets/players/Nnael.png",
+   "source_sha256": "9e4894c4ae129e19d00e50aa97390294979183ffb53daf42addcbc62f8cf970e",
+   "source_width": 500,
+   "source_height": 500,
+   "width": 160,
+   "height": 160,
+   "sha256": "79615685caa35b92c251d3504ede50343e15e70f79e81389cffa174d0e33d878"
+  },
+  "Octa": {
+   "file": "Octa.png",
+   "source": "assets/players/Octa.png",
+   "source_sha256": "427e613885bff71ad91c5da9373271897166d4801f7a3fb1144cc8a84bb94e79",
+   "source_width": 500,
+   "source_height": 500,
+   "width": 160,
+   "height": 160,
+   "sha256": "563383774a2f1e02026e2884b7c50e1abe2c8b2daf935dd940a69f3a0d2312f2"
+  },
+  "QINN": {
+   "file": "QINN.png",
+   "source": "assets/players/QINN.png",
+   "source_sha256": "34875426e05826c785a94622504e769ff332f8c45df2bef2fd33b965b797e688",
+   "source_width": 500,
+   "source_height": 500,
+   "width": 160,
+   "height": 160,
+   "sha256": "18fcf8d02be8dfe706ce1459ed81144068c5d19bea75e325354f180b7e9459ec"
+  },
+  "Rendyyy": {
+   "file": "Rendyyy.png",
+   "source": "assets/players/Rendyyy.png",
+   "source_sha256": "c17b7218f0d867610698590d456c6d4d7b7ea2026446271289a69dbb045f2fcb",
+   "source_width": 500,
+   "source_height": 500,
+   "width": 160,
+   "height": 160,
+   "sha256": "037e63d53861bad3901a11fa4dd9f9f3d3fe4ba90c15dde7b7ff2cab5e4ed59a"
+  },
+  "Ryzaa": {
+   "file": "Ryzaa.png",
+   "source": "assets/players/Ryzaa.png",
+   "source_sha256": "a9d58dc98e5aa2395516bf46a1639a655348597d6a23db369a8614fd737025af",
+   "source_width": 500,
+   "source_height": 500,
+   "width": 160,
+   "height": 160,
+   "sha256": "9081b4ac1c85ca50c4aa821df94ca72dd6d1e6e1a5e86e2d5a0a3aa2e0f9602c"
+  },
+  "S A N Z": {
+   "file": "S_A_N_Z.png",
+   "source": "assets/players/S_A_N_Z.png",
+   "source_sha256": "7d1bf35262a36b73b8d3153836d8222abbe096e581d862837fba6ea72733d867",
+   "source_width": 500,
+   "source_height": 500,
+   "width": 160,
+   "height": 160,
+   "sha256": "905f7398c815e5c8588fb24f22f073f74c47ffe11737d3144dbc6993a0b44fbb"
+  },
+  "SSAMUEL": {
+   "file": "SSAMUEL.png",
+   "source": "assets/players/SSAMUEL.png",
+   "source_sha256": "dbb753f9218455b0147eb3ee5dd849dbada4226f03289d5503d793355dbf3ecb",
+   "source_width": 500,
+   "source_height": 500,
+   "width": 160,
+   "height": 160,
+   "sha256": "4d632699b006a03cc394407d9363da6d0a181ae22b4240cc53228d0f888ea7a0"
+  },
+  "Said": {
+   "file": "Said.png",
+   "source": "assets/players/Said.png",
+   "source_sha256": "ed4099c59b56cef45101dcc7b5cf6619ffdae5db15ff81a4207002119a113b16",
+   "source_width": 500,
+   "source_height": 500,
+   "width": 160,
+   "height": 160,
+   "sha256": "09bbdaa38cdd59040102f6ac937c399388221762f50b6a6589f85396f5e8d351"
+  },
+  "Shanee": {
+   "file": "Shanee.png",
+   "source": "assets/players/Shanee.png",
+   "source_sha256": "0a4b4d832947f54ff073e92e6f30c2fe276824db351540f567826d7d3501c971",
+   "source_width": 500,
+   "source_height": 500,
+   "width": 160,
+   "height": 160,
+   "sha256": "bd15d8943e69fd9af1cee6e4bf7226175e7671a861a7b0d85ae56323d8b9c4dd"
+  },
+  "Shogun": {
+   "file": "Shogun.png",
+   "source": "assets/players/Shogun.png",
+   "source_sha256": "e12b2938603d8a48061e5b138daea436f970e458d4dd14104455f18a0c8f4a06",
+   "source_width": 500,
+   "source_height": 500,
+   "width": 160,
+   "height": 160,
+   "sha256": "10e854acadb246a7abfebc340e4976b7ddc92f189b6eed59a19efe22ace63431"
+  },
+  "Vell": {
+   "file": "Vell.png",
+   "source": "assets/players/Vell.png",
+   "source_sha256": "09527b0e1051143f6a598cf202eab20fe6d95a5ce80934252116f3e968f76c35",
+   "source_width": 500,
+   "source_height": 500,
+   "width": 160,
+   "height": 160,
+   "sha256": "04e966e8b7ef217ef0217b9deaabc8033af1f51bce62e42ccefb94f0f49b13bd"
+  },
+  "Yazukee": {
+   "file": "Yazukee.png",
+   "source": "assets/players/Yazukee.png",
+   "source_sha256": "5b3d11dbb2f793d47a2182c926fcaef4ac37b67624980b28e12329e49008c1ed",
+   "source_width": 500,
+   "source_height": 500,
+   "width": 160,
+   "height": 160,
+   "sha256": "595c2b0a4a7c5f19ba3e3d31d9aa22eb8d422f7551aa0ba5770cc75dcbbb3f61"
+  },
+  "Zeonn": {
+   "file": "Zeonn.png",
+   "source": "assets/players/Zeonn.png",
+   "source_sha256": "49ad4ccc9da9f21d6f7f028c6333aedd2d397ce26433bae797a6d20324863022",
+   "source_width": 500,
+   "source_height": 500,
+   "width": 160,
+   "height": 160,
+   "sha256": "754a92362d053c331660f97710ec5a1df0e22b68e90f7dbbbd92a8edb659274f"
+  },
+  "alekk": {
+   "file": "alekk.png",
+   "source": "assets/players/alekk.png",
+   "source_sha256": "7749ecee1b9466dabca8044e218cf0f8c9b984d4aebb0f4e25e73cfaea3bd99a",
+   "source_width": 500,
+   "source_height": 500,
+   "width": 160,
+   "height": 160,
+   "sha256": "5fba50bd22b6e0f1d03b639ea72754e6518cbe165281f7fc0087e76c54a5358b"
+  }
+ }
+}

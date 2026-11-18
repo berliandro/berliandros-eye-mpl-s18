@@ -65,11 +65,18 @@ const PICON_RAW = ((window.ASSETS||{}).players||{});
 const PICON_CI = Object.fromEntries(Object.entries(PICON_RAW).map(([k,v])=>[k.toLowerCase(),v]));
 const PICON_ALIAS = {arfy:'dingarai',yazukee:'affan',hijumee:'dalvin',alekk:'alexander',joshuaa:'joshuaa',kevinn:'kevin',maykidss:'maykids',shanee:'shanee',sanz:'s a n z'};
 const PICON = n => {const k=String(n||'');const l=k.toLowerCase();return PICON_RAW[k]||PICON_CI[l]||PICON_CI[PICON_ALIAS[l]||'']||'';};
-function ppic(n){const u=PICON(n);const init=esc(String(n||'?').split(/[\s_]+/).map(w=>w[0]).join('').slice(0,2).toUpperCase());
-return (u?`<img class="ppic" src="${esc(u)}" alt="" loading="lazy" onerror="this.nextElementSibling.style.display='inline-flex';this.remove()">`:'')+`<span class="ppic-fb"${u?' style="display:none"':''}>${esc(init)}</span>`;}
+/* Cards, badges, rosters and pickers paint a portrait at 22-56px. The 160px
+   derivative is a LANCZOS downscale of the committed 500px original with its
+   own provenance (assets/players/cards/provenance.json); shipping the 500px
+   file there cost ~1MB of decoded bitmap per card. The full original stays on
+   the profile hero and the championship plate. */
+const PICON_CARD = u => u ? String(u).replace('assets/players/','assets/players/cards/') : '';
+const IMG_FALLBACK = 'onerror="if(this.dataset.full&&!this.dataset.failed){this.dataset.failed=1;this.src=this.dataset.full}else{this.remove()}"';
+function ppic(n){const u=PICON(n),c=u?PICON_CARD(u):'';const init=esc(String(n||'?').split(/[\s_]+/).map(w=>w[0]).join('').slice(0,2).toUpperCase());
+return (u?`<img class="ppic" src="${esc(c)}" data-full="${esc(u)}" alt="" loading="lazy" decoding="async" onerror="if(this.dataset.full&&!this.dataset.failed){this.dataset.failed=1;this.src=this.dataset.full}else{this.nextElementSibling.style.display='inline-flex';this.remove()}">`:'')+`<span class="ppic-fb"${u?' style="display:none"':''}>${esc(init)}</span>`;}
 /* Season MVP marker, shared by the overview hero, the championship plate and
    the recent-results cards. */
-const MVPB=(name,label,team)=>name?`<span class="mvp">${label?`<span class="mvp-l">${label}</span>`:''}${PICON(name)?`<img class="mvp-a" src="${esc(PICON(name))}" alt="" loading="lazy" ${IMG_HIDE}>`:`<span class="mvp-a mvp-i">${esc(String(name).slice(0,2).toUpperCase())}</span>`}<b class="mvp-n">${esc(name)}</b>${team?`<span class="mvp-t">${esc(team)}</span>`:''}</span>`:'';
+const MVPB=(name,label,team)=>name?`<span class="mvp">${label?`<span class="mvp-l">${label}</span>`:''}${PICON(name)?`<img class="mvp-a" src="${esc(PICON_CARD(PICON(name)))}" data-full="${esc(PICON(name))}" alt="" loading="lazy" ${IMG_FALLBACK}>`:`<span class="mvp-a mvp-i">${esc(String(name).slice(0,2).toUpperCase())}</span>`}<b class="mvp-n">${esc(name)}</b>${team?`<span class="mvp-t">${esc(team)}</span>`:''}</span>`:'';
 const TICON = t => (((window.ASSETS||{}).teams||{})[String(t||'').toUpperCase()]) || logoOf(t);
 const TCOL = t => (window.TEAM_COLORS||{})[String(t||'').toUpperCase()] || null;
 function setTeamAccent(code){
@@ -207,6 +214,10 @@ function snapshotCards(){
   return m;}
 function animateCards(before,canMarkNew){
   if(!MOTION)return;
+  /* A fresh view has neither an old position to FLIP from nor a new-card
+     marker to add. Reading every card's rect then would force a full layout
+     inside the click handler for nothing (measured: 175 ms on Players). */
+  if(!before.size&&!canMarkNew)return;
   const vh=window.innerHeight;
   document.querySelectorAll('.pl').forEach(el=>{
     const r=el.getBoundingClientRect();
@@ -593,14 +604,34 @@ const l=String(n||'').toLowerCase();return m[l]||m[GALIAS[l]||'']||null;}
    identity can arise from a new spelling. */
 const PLAYER_ALIAS=(typeof window!=='undefined'&&window.ALIASES&&window.ALIASES.playerAlias)||{};
 const ROSTER_SPELLING=(typeof window!=='undefined'&&window.ALIASES&&window.ALIASES.rosterSpelling)||{};
-function rosterCanon(n){const u=normId(n);
-const gp=[...new Set((DATA.players||[]).map(r=>r.player))].filter(p=>normId(p)===u);
-if(gp.length===1)return gp[0];
-if(gp.length>1){const pref=ROSTER_SPELLING[u];if(pref&&gp.includes(pref))return pref;return gp[0];}
-const ss=[...new Set((DATA.season||[]).map(s=>s.player))].filter(p=>normId(p)===u);
-if(ss.length)return ss[0];
+/* rosterCanon used to rebuild a Set of every player and season spelling on
+   every call. It runs once per rendered row, so a profile paid for the same
+   2,150-row scan hundreds of times (measured: 544 ms of one 970 ms task).
+   Build the normalized index once per data generation and answer in O(1);
+   live refresh replaces DATA.players / DATA.season wholesale, so array
+   identity is the invalidation key. */
+let ROSTER_INDEX=null,ROSTER_SRC=null;
+function rosterIndex(){
+  if(ROSTER_INDEX&&ROSTER_SRC&&ROSTER_SRC.p===DATA.players&&ROSTER_SRC.s===DATA.season)return ROSTER_INDEX;
+  const gp=new Map(),ss=new Map();
+  const add=(m,name)=>{const u=normId(name);let a=m.get(u);if(!a)m.set(u,a=[]);if(!a.includes(name))a.push(name);};
+  (DATA.players||[]).forEach(r=>add(gp,r.player));
+  (DATA.season||[]).forEach(s=>add(ss,s.player));
+  ROSTER_INDEX={gp,ss};ROSTER_SRC={p:DATA.players,s:DATA.season};
+  return ROSTER_INDEX;}
+function rosterCanon(n){const idx=rosterIndex(),u=normId(n);
+const gp=idx.gp.get(u);
+if(gp){if(gp.length===1)return gp[0];const pref=ROSTER_SPELLING[u];if(pref&&gp.includes(pref))return pref;return gp[0];}
+const ss=idx.ss.get(u);
+if(ss&&ss.length)return ss[0];
 return null;}
-function canonicalPlayer(n){const hit=rosterCanon(n);if(hit)return hit;return PLAYER_ALIAS[normId(n)]||n;}
+const CANON_CACHE=new Map();let CANON_SRC=null;
+function canonicalPlayer(n){const idx=rosterIndex();
+if(CANON_SRC!==idx){CANON_CACHE.clear();CANON_SRC=idx;}
+const k=String(n||'');
+if(CANON_CACHE.has(k))return CANON_CACHE.get(k);
+const hit=rosterCanon(k)||PLAYER_ALIAS[normId(k)]||n;
+CANON_CACHE.set(k,hit);return hit;}
 function mvpSources(){const m={};(DATA.matches||[]).forEach(x=>{if(!x.liq_mvp)return;const c=canonicalPlayer(x.liq_mvp);(m[c]=m[c]||new Set()).add(x.liq_mvp);});return m;}
 function defaultOv(){const t=[...DATA.season].filter(s=>+s.total_games>0).sort((a,b)=>+b.avg_kda-+a.avg_kda)[0];
 if(!t)return 'Joshuaa';const l=String(t.player).toLowerCase();
@@ -913,8 +944,8 @@ const t2=document.getElementById('selT').value,l2=document.getElementById('selL'
 let r=agg();if(t2)r=r.filter(o=>o.team===t2);if(l2)r=r.filter(o=>o.lane===l2);
 if(q2)r=r.filter(o=>(o.player+' '+o.team).toLowerCase().includes(q2));
 r.sort((a,b)=>b.avgkda-a.avgkda);
-document.getElementById('selList').innerHTML=r.map(o=>{const u=PICON(o.player);
-return `<div class="selrow2">${u?`<img src="${esc(u)}" alt="" loading="lazy" onerror="this.remove()">`:`<span class="ppic-fb" style="width:34px;height:34px;font-size:13px">${esc(o.player.slice(0,2))}</span>`}<span style="flex:1"><b>${esc(o.player)}</b><br><span class="mono" style="font-family:var(--font-mono);font-size:11px;color:var(--muted)">${esc(o.team)} · ${esc(o.lane||'—')} · ${o.gp} GP</span></span><button class="primary" data-sel="${esc(o.player)}" style="border:0;border-radius:6px;padding:8px 14px;cursor:pointer;font-weight:700;background:#f2f1ec;color:#131311">Select</button></div>`;}).join('')||'<div class="empty">No players match.</div>';
+document.getElementById('selList').innerHTML=r.map(o=>{const u=PICON(o.player),c=u?PICON_CARD(u):'';
+return `<div class="selrow2">${u?`<img src="${esc(c)}" data-full="${esc(u)}" alt="" loading="lazy" decoding="async" ${IMG_FALLBACK}>`:`<span class="ppic-fb" style="width:34px;height:34px;font-size:13px">${esc(o.player.slice(0,2))}</span>`}<span style="flex:1"><b>${esc(o.player)}</b><br><span class="mono" style="font-family:var(--font-mono);font-size:11px;color:var(--muted)">${esc(o.team)} · ${esc(o.lane||'—')} · ${o.gp} GP</span></span><button class="primary" data-sel="${esc(o.player)}" style="border:0;border-radius:6px;padding:8px 14px;cursor:pointer;font-weight:700;background:#f2f1ec;color:#131311">Select</button></div>`;}).join('')||'<div class="empty">No players match.</div>';
 document.querySelectorAll('#selList [data-sel]').forEach(b=>b.onclick=()=>{S.ov=b.dataset.sel;document.getElementById('dlg2').close();render();});}
 function openOvSel(){const d=document.getElementById('dlg2');lastFocus=document.activeElement;
 const ts=[...new Set(agg().map(o=>o.team))].sort(),ls=[...new Set(agg().map(o=>o.lane).filter(Boolean))].sort();
@@ -1148,8 +1179,7 @@ const val=axes.map(([,v],i)=>pt(i,clamp(v)).map(n=>n.toFixed(1)).join(',')).join
 const grid=axes.map((_,i)=>`<line x1="${CX}" y1="${CY}" x2="${pt(i,1)[0].toFixed(1)}" y2="${pt(i,1)[1].toFixed(1)}" class="rd-axis"/>`).join('');
 const lab=axes.map(([k,v],i)=>{const [x,y]=pt(i,1.46);const label=(k==='DEATH'?'DEATHS':k)+' '+Math.round(clamp(v)*100);return `<text x="${x.toFixed(1)}" y="${(y+3).toFixed(1)}" text-anchor="middle" class="rd-t">${label}</text>`;}).join('');
 const dots=axes.map(([,v],i)=>{const [x,y]=pt(i,clamp(v));return `<circle cx="${x.toFixed(1)}" cy="${y.toFixed(1)}" r="1.7" class="rd-d"/>`;}).join('');
-const pct=v=>Math.round(clamp(v)*100);
-return `<div class="pl-radar"><svg viewBox="0 0 240 168" role="img" aria-label="Lane percentile shape — damage share ${pct(an.pct.damageShare)}, kill participation ${pct(an.pct.kp)}, gold share ${pct(an.pct.goldShare)}, tower share ${pct(an.pct.towerShare)}, KDA ${pct(an.pct.kda)}, deaths inverted ${pct(1-an.pct.deathShare)}"><g class="rd-plot"><polygon points="${poly(1)}" class="rd-grid"/><polygon points="${poly(0.5)}" class="rd-mid"/>${grid}<polygon points="${val}" class="rd-fill"/>${dots}</g>${lab}</svg></div>`;}
+return `<div class="pl-radar"><svg viewBox="0 0 240 168" aria-hidden="true"><g class="rd-plot"><polygon points="${poly(1)}" class="rd-grid"/><polygon points="${poly(0.5)}" class="rd-mid"/>${grid}<polygon points="${val}" class="rd-fill"/>${dots}</g>${lab}</svg></div>`;}
 
 /* ============ Teams ============ */
 const TM_LANES={EXP:0,JUNGLE:1,MID:2,GOLD:3,ROAM:4};
@@ -1170,8 +1200,8 @@ function tmStand(code){
   return (DATA.standings||[]).find(s=>String(s.team_slug||'').toLowerCase()===q)||null;
 }
 function tmPic(name){
-  const u=PICON(name);
-  return u?`<img src="${esc(u)}" alt="" loading="lazy" onerror="this.remove()">`:`<span class="tm-ini">${esc(String(name||'?').slice(0,2).toUpperCase())}</span>`;
+  const u=PICON(name),c=u?PICON_CARD(u):'';
+  return u?`<img src="${esc(c)}" data-full="${esc(u)}" alt="" loading="lazy" decoding="async" ${IMG_FALLBACK}>`:`<span class="tm-ini">${esc(String(name||'?').slice(0,2).toUpperCase())}</span>`;
 }
 function teamCompetition(){
   const TM=anPart('TM');

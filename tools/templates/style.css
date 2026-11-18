@@ -546,14 +546,19 @@ body.pview main{padding-top:22px}
 .cp-haze{position:absolute;inset:-12%;background:radial-gradient(40% 36% at 28% 40%,rgba(255,248,238,.06),transparent 70%),radial-gradient(40% 34% at 74% 58%,var(--cp-glow),transparent 72%);filter:blur(30px);opacity:.55;animation:cp-drift 24s ease-in-out infinite alternate;will-change:transform}
 .cp-pool{position:absolute;left:4%;right:4%;bottom:0;height:42%;border-radius:50%;opacity:.9;filter:blur(30px);background:radial-gradient(ellipse at 50% 40%,rgba(255,246,236,.16),transparent 58%),radial-gradient(ellipse at 50% 62%,var(--cp-glow),transparent 74%);animation:cp-pool 10s ease-in-out infinite;will-change:transform,opacity}
 .cp-confetti{position:absolute;inset:0}
-.cp-confetti i{position:absolute;left:var(--x);top:var(--y);width:4px;height:9px;border-radius:1px;background:rgba(238,241,238,.68);opacity:var(--o);transform:rotate(var(--r));animation:cp-fall var(--t) linear infinite;animation-delay:var(--d)}
+/* The paper's keyframes must not reference custom properties: an animated
+   transform that depends on var() stays on the main thread and rebuilds style
+   every frame. translate + spin are composited; rotate:var(--r) carries the
+   static angle, so the fall distance and the 60deg turn are unchanged. */
+.cp-confetti i{position:absolute;left:var(--x);top:var(--y);width:4px;height:9px;border-radius:1px;background:rgba(238,241,238,.68);opacity:var(--o);rotate:var(--r);animation:cp-fall var(--t) linear infinite,cp-spin var(--t) linear infinite;animation-delay:var(--d)}
 .cp-confetti i:nth-child(3n){width:5px;height:7px;background:var(--cp-spark)}
 .cp-confetti i:nth-child(4n){width:2px;height:11px;background:rgba(255,255,255,.36)}
 .cp-confetti i:nth-child(5n){filter:blur(1.3px);opacity:calc(var(--o)*.55);animation-duration:calc(var(--t)*1.45)}
 .cp-confetti i:nth-child(9n){width:2px;height:18px;background:var(--cp-spark)}
 .cp-vignette{position:absolute;inset:0;background:radial-gradient(120% 88% at 50% 42%,transparent 52%,rgba(4,6,5,.52) 100%)}
 @media(min-width:1400px){.cp-confetti i{width:5px;height:11px}.cp-confetti i:nth-child(3n){width:6px;height:9px}.cp-confetti i:nth-child(4n){width:3px;height:13px}}
-@keyframes cp-fall{from{transform:translateY(-12px) rotate(var(--r))}to{transform:translateY(30px) rotate(calc(var(--r) + 60deg))}}
+@keyframes cp-fall{from{translate:0 -12px}to{translate:0 30px}}
+@keyframes cp-spin{from{transform:rotate(0deg)}to{transform:rotate(60deg)}}
 @keyframes cp-bloom{from{opacity:0}to{opacity:1}}
 @keyframes cp-beam{0%,100%{opacity:.65}50%{opacity:1}}
 @keyframes cp-crest{0%,100%{opacity:.07;transform:translate(-50%,-50%) scale(1)}50%{opacity:.10;transform:translate(-50%,-50%) scale(1.025)}}

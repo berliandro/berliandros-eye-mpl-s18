@@ -3,6 +3,7 @@ Usage: python tools/check.py [--live]  (--live tries HEAD requests, else format-
 Exit 0 = PASS, 1 = FAIL.
 """
 import csv
+import hashlib
 import json
 import os
 import re
@@ -276,6 +277,40 @@ if gap:
     warn(f"player images missing ({len(gap)}): {', '.join(gap[:6])} — initials fallback used")
 else:
     print("PASS player images cover all players")
+
+# Card derivatives: the grid paints portraits at 44-56px, so it must not ship
+# the 500px original. Every manifest player needs a 160px card whose provenance
+# matches both the card bytes and the source bytes it was downscaled from.
+card_dir = ROOT / 'assets' / 'players' / 'cards'
+card_prov_path = card_dir / 'provenance.json'
+card_players = man.get('players') or {}
+card_prov = {}
+if card_prov_path.exists():
+    try:
+        card_prov = json.loads(card_prov_path.read_text(encoding='utf-8')).get('players') or {}
+    except Exception as e:
+        warn(f"player-card provenance unreadable: {str(e)[:80]}")
+else:
+    warn("player-card provenance missing (run tools/make_player_cards.py)")
+card_gap, card_drift = [], []
+for name, rel in card_players.items():
+    src = ROOT / rel
+    dest = card_dir / src.name
+    entry = card_prov.get(name)
+    if not dest.exists():
+        card_gap.append(name)
+        continue
+    if not entry:
+        card_drift.append(name + ': no provenance')
+        continue
+    if entry.get('sha256') != hashlib.sha256(dest.read_bytes()).hexdigest():
+        card_drift.append(name + ': card hash')
+    if src.exists() and entry.get('source_sha256') != hashlib.sha256(src.read_bytes()).hexdigest():
+        card_drift.append(name + ': source hash')
+ok(not card_gap, f"STRICT player card derivatives present ({len(card_players)})"
+   + ("" if not card_gap else f" missing {card_gap[:6]}"))
+ok(not card_drift, "player card provenance matches committed bytes"
+   + ("" if not card_drift else f" drift {card_drift[:6]}"))
 
 # MVP identity: Liquipedia MVP spellings must resolve to ONE canonical roster
 # identity (mirror of PLAYER_ALIAS in tools/templates/app.js — keep in sync).

@@ -166,6 +166,7 @@ A separate, auditable transcript/database layer lives in [`analysis/`](analysis/
 | `tools/gen_dark.py` | Build: CSV + assets → `mpl_id_s18_dark.html` |
 | `tools/derive_team_colors.py` | Derive each team's accent from its logo (lightness-clamped) → `data/global/team_colors.json` |
 | `tools/fetch_assets.py` | Download every referenced hero/item asset (`--check-only`, `--live`) |
+| `tools/make_player_cards.py` | Build 160px portrait derivatives + provenance for the 44px Players grid (`--check` verifies hashes) |
 | `tools/check.py` | Regression suite (incl. STRICT asset coverage + JS syntax gate) |
 | `tools/verify.py` | Standard verification: all unit suites + `check.py` + parity gate |
 | `tools/import_transcripts.py` | Safe copy + SHA-256 manifest for the local transcript corpus |
