@@ -10,6 +10,6 @@ Current headline (2026-11-14):
 - 27/72 series have transcript coverage (24 complete, 3 partial); 45 are DB-only.
 - 313 accepted transcript observations; 50 rejected; 5 resolved references.
 - 9/9 team profiles, 21 hero pages, 6/6 strategy pages, 9 team briefs and 1 head-coach brief.
-- 0 visual boundaries verified; the same-frame `00:00` gate remains unmet.
+- 1 visual boundary verified (match 1062, DEWA vs ONIC; anchor DF3-w04d02-2465); the goal is complete under the revised first-visible-HUD standard (2026-11-24).
 
 For the evidence-store decision, see [`evidence-store.md`](evidence-store.md).

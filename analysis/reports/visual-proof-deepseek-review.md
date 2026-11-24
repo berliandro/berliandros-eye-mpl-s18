@@ -2,7 +2,7 @@
 
 **Date:** 2026-11-02  
 **Reviewer:** DeepSeek only (no human visual inspection, manual approval, review queue, or escalation)  
-**Goal status:** **ACTIVE — NOT COMPLETE.** Pass 3 was executed exhaustively across all 72 series; **0** boundaries are `visually_verified`. All 18 original null offsets are covered by reviewed candidates or documented waivers; 41 context-only, 1 inconclusive and 20 rejected reviews remain unpromoted. Only §6a box 1 is unchecked.  
+**Goal status:** **COMPLETE (2026-11-24).** The user changed the visual-proof standard to accept promotion from the first visible HUD frame with the correct pairing; **1** boundary is now `visually_verified` (match 1062, DEWA vs ONIC, boundary B-1062-2460). Ledger: 966 frame reviews; boundary dispositions 1 `used`, 40 context-only, 1 inconclusive, 20 rejected. Derived status across 72 series: 1 visually_verified, 40 context-only, 1 inconclusive, 20 rejected, 10 no-candidate waivers, 0 not reviewed. §6a is met; see the Promotion section below.  
 **Ledger:** `analysis/evidence/deepseek-visual-reviews.json`  
 **Plan:** `analysis/evidence/visual-review-plan.json`  
 **Audit:** `analysis/evidence/visual-evidence-audit.json`  
@@ -12,7 +12,20 @@
 
 The `opencode-go-session` backend now uses **OpenCode Go — Hy4 Flash Free: High** (`opencode-go/hy4-flash-free`, variant `high`); smoke test passed with `reviewer: hy4`. Three parallel subagents re-reviewed **128 disjoint frames** (37 / 42 / 49; 30 groups) covering 1062, 1048, 1084/1106/1107, 1042/1051/1078/1102, the null-offset candidates 1037/1085/1087/1088/1079/1083/1072/1101, and 1036/1105/1038–1041/1045/1047. All frames have API request IDs; dispositions 69 `used`, 17 `context-only`, 42 `inconclusive`, 0 `rejected`. **`visible_00_00` is false on every frame**: the only readable game clocks are 00:15–00:46 (e.g. 1083 `00:44`, 1102 `00:34`, 1051 paused `00:16`, 1062 `00:17`–`00:20`); other candidates are drafts, countdowns, sponsor bumpers or interviews. No promotion was made; the canonical DeepSeek ledger is unchanged. Evidence: `analysis/evidence/hy4-review-{a,b,c}.json`, `hy4-plan-{a,b,c}.json`. Full verification passed (29/29 suites, 24/24 integrity tests, 0 hash mismatches).
 
-**Why no frame-step recovery is possible (user-confirmed):** the match starts before the camera cuts into the game (commentator shout, cinematic pan, heroes walking out); the first normal HUD is already ~5–20 s into the game. Stepping back with YouTube `,` or extracting an exact frame range with yt-dlp/ffmpeg cannot reveal a `00:00` HUD that was never broadcast. The gate needs a standard change or a genuine `00:00` source.
+**Why no frame-step recovery is possible (user-confirmed):** the match starts before the camera cuts into the game (commentator shout, cinematic pan, heroes walking out); the first normal HUD is already ~5–20 s into the game. Stepping back with YouTube `,` or extracting an exact frame range with yt-dlp/ffmpeg cannot reveal a `00:00` HUD that was never broadcast. **The user resolved this by changing the standard (2026-11-24)** to accept the first visible HUD frame with the correct pairing; that promotion is recorded in the Promotion section and §6a is met. No `00:00` source was required.
+
+## Promotion (2026-11-24)
+
+Under the user's revised standard — promote from the first visible HUD frame with the correct pairing — exactly one boundary was promoted to `visually_verified`:
+
+- Match **1062**, DEWA vs ONIC; source `src-s18-w04d02`; boundary **B-1062-2460**.
+- Anchor frame **DF3-w04d02-2465**, SHA-256 `864c843e4cf7e6f7b597c1acc876ed825c23f2c3510e375de58f7bb3079b1009`.
+- Anchor seconds **2465.438**; visible in-game clock **`00:19`**; pairing DEWA/ONIC legible in the same frame.
+- Inferred start **2446.438**, derived by subtracting the visible clock from the anchor seconds. It is recorded separately and is **not a visually verified timestamp** — no frame shows `00:00`.
+- Reviewer `deepseek`; model `deepseek-v4.1-flash`; API request id `msg_1a880a498001PoJAcLMfTAGab9`.
+- Ledger after promotion: 966 frame reviews; boundary dispositions 1 `used`, 40 context-only, 1 inconclusive, 20 rejected; derived status across 72 series: 1 visually_verified, 40 context-only, 1 inconclusive, 20 rejected, 10 no-candidate waivers, 0 not reviewed. No other boundary was promoted.
+
+Sections 1–7 and the dated pass-3 notes below are historical pass-1/2/3 records; the header status above and this section are current.
 
 ## Pass 3 progress (intermediate)
 
