@@ -14,6 +14,8 @@ At the user's direction the `opencode-go-session` reviewer backend now uses **Op
 
 This is a cross-check only: the canonical DeepSeek ledger is unchanged and **no boundary was promoted**. §6a box 1 remains unchecked; the goal is still blocked because the available broadcasts cut in after the clock advanced and no same-frame `00:00` exists in the reviewed sources.
 
+**Root cause (confirmed by the user, 2026-11-24):** the match starts before the broadcast camera enters the game — the commentator shouts, the camera pans cinematically, heroes walk into lane/jungle, and by the time the normal HUD is visible the clock is already ~5–20 seconds in. Frame-stepping backward (YouTube `,`) or frame-accurate `yt-dlp --download-sections ... --force-keyframes-at-cuts` + ffmpeg extraction cannot recover a `00:00` HUD frame that was never broadcast. Do not retry pixel-level frame-step searches for `00:00`. Resolving §6a requires either changing the evidence standard (accept the first visible HUD clock with correct pairing as the game-1 anchor, with the inferred start time recorded separately) or a source that actually shows `00:00`.
+
 Verification after integration: `python tools/verify.py` → **VERIFY PASS (29/29 suites)**; `ci_semantic_check.py` → 0 errors/warnings; `validate_visual_reviews.py` → 0 errors; `test_visual_review_integrity.py` → 24/24 OK; `validate_game_offsets.py` → ok (27 sources, 72 series); `audit_visual_evidence.py` → 0 hash mismatches.
 
 ---
