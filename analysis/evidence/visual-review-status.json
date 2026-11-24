@@ -1,11 +1,11 @@
 {
   "schema_version": 1,
-  "generated_at": "2026-11-04T23:21:12.319338+00:00",
+  "generated_at": "2026-11-24T03:17:46.382867+00:00",
   "description": "Derived reconciliation of game-offsets.json against the DeepSeek visual-review ledger. This file makes rejections and unpromoted reviews visible without silently changing canonical offset statuses.",
   "game_offsets_path": "analysis/evidence/game-offsets.json",
   "game_offsets_sha256": "78e8699bcae21d06d4e7768940acc68b15dcba71d3bc80b615b4d297524ac34c",
   "ledger_path": "analysis/evidence/deepseek-visual-reviews.json",
-  "ledger_sha256": "7240a7f35ec69fbccf864a937a8d09b2c0f10f3f0b9360de777736cdfa592f7b",
+  "ledger_sha256": "5724ac78ab195a22e47dcf42f1d6c7e9d4d459b4d1beb6dd32f5591d42d08955",
   "reviewer": "deepseek",
   "no_human_review": true,
   "summary": {
