@@ -10225,9 +10225,10 @@
    "source_id": "src-s18-w04d02",
    "team_a": "DEWA",
    "team_b": "ONIC",
-   "candidate_start_seconds": 2460,
+   "promotion_requires_first_visible_hud": true,
+   "candidate_start_seconds": 2465.438,
    "frame_group": "G-1062-2460",
-   "claim": "Series 1062 (DEWA vs ONIC) starts at 2460s; game 1 boundary.",
+   "claim": "Series 1062 (DEWA vs ONIC) game 1: the broadcast cuts in after the start; the first visible HUD with the correct DEWA/ONIC pairing is DF3-w04d02-2465 at 2465.438s showing clock 00:19, so the game-1 start at 2446.438s is inferred (anchor minus 19s), not visually verified.",
    "status_effect": "no_change",
    "related_groups": [
     "G-P3-1062-2446",

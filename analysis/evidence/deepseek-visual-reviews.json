@@ -15,7 +15,7 @@
   "human_review": false,
   "key_source": "opencode-session",
   "plan_path": "analysis\\evidence\\visual-review-plan.json",
-  "plan_sha256": "6654ebd6818db99412af363e94df16c10efa22a3a412faa0ea8fba801a359188",
+  "plan_sha256": "76a7c1d5f666c25c4de2c329aad6a555b5e9f6823eabb05ca16f50c4db11025c",
   "smoke_test": {
     "schema_version": 1,
     "generated_at": "2026-11-02T23:04:46.227524+00:00",
@@ -90291,7 +90291,7 @@
       },
       "disposition": "context-only",
       "observation": "Three analysts sit behind a branded desk; the rear screen shows abstract and animal-head artwork. The desk monitor is black with a single horizontal dash. No legible EVOS/RRQ names or logos, match label, clock, or draft panel are visible. Same three-person analyst desk and rear screen. The desk monitor now shows three short horizontal dashes. No legible team names/logos, match label, clock, or draft panel are visible. Same analyst desk; the desk monitor now shows a video-game gameplay feed, and a lower-third banner carries a welcome message for MPL Indonesia Season 18. No legible EVOS/RRQ names or logos, match label, clock, or draft panel are visible.",
-      "limitations": "Still images cannot prove a continuous transition. The game-1 start is only supported when a draft/zero-clock state is visibly present; a pre-match countdown is not a start. The team pairing is confirmed by related frames at a nearby timestamp, not by the candidate frame itself.",
+      "limitations": "Still images cannot prove a continuous transition. The game-1 start is only supported when a draft/zero-clock state is visibly present; a pre-match countdown is not a start. Under the first-visible-HUD standard, a boundary may instead be promoted from the first frame showing gameplay, a supported same-frame team pairing, a running non-00:00 clock and game1_started=true; because the broadcast cuts in after the start, the inferred start seconds are derived from the clock reading and are not visually verified. The team pairing is confirmed by related frames at a nearby timestamp, not by the candidate frame itself.",
       "related_observation": "related frames: pairing=supported; scene=gameplay; teams=['EVOS', 'RRQ']; Pre-match analyst desk/countdown. Top scoreboard shows EVOS and RRQ logos at 0-0, BEST OF 3, and a DROPPING IN 02:08 countdown. No literal 00:00 game clock. Close-up player cam during draft/hero picks. FANDOM WAR banner shows EVOS NOW!!! 608 and RRQ NOW!!! 1190 (fan poll), with hero portraits/bans b",
       "status_effect": "partial_context_only"
     },
@@ -90329,7 +90329,7 @@
       },
       "disposition": "rejected",
       "observation": "Pre-show broadcast screen: 'REGULAR SEASON MINGGU 9 | HARI 3' header, caster panel, a right-side schedule of three BO3 matches at 14:15/17:15/20:15 WIB, a large countdown 27:49, and a Magic Chess Go Go promo in the main video area. No in-game clock or match-start overlay; match-70 team names are logos only. Pre-show screen with the same Week 9 Day 3 header, caster panel, and three-match schedule; the countdown reads 27:45. The main panel is an 'MCGG Skin Go Go Pass Baru' promo, not gameplay. Match 70 is labeled BO3 at 14:15 WIB with logos, not legible team names. Pre-show screen again: same header, casters, and three-match schedule, with countdown 27:41. The main panel is a 'Skin Go Go Pass Peningkatan Efek Penuh' promo; no gameplay or in-game clock. Match 70 remains a BO3 at 14:15 WIB with logo-only teams.",
-      "limitations": "Still images cannot prove a continuous transition. The game-1 start is only supported when a draft/zero-clock state is visibly present; a pre-match countdown is not a start.",
+      "limitations": "Still images cannot prove a continuous transition. The game-1 start is only supported when a draft/zero-clock state is visibly present; a pre-match countdown is not a start. Under the first-visible-HUD standard, a boundary may instead be promoted from the first frame showing gameplay, a supported same-frame team pairing, a running non-00:00 clock and game1_started=true; because the broadcast cuts in after the start, the inferred start seconds are derived from the clock reading and are not visually verified.",
       "related_observation": null,
       "status_effect": "candidate_rejected"
     },
@@ -90501,7 +90501,7 @@
       },
       "disposition": "context-only",
       "observation": "Upper-left broadcast overlay reads M71 - GAME 1, with NAVI 0 vs 0 VITALITY and BEST OF 3; the countdown box reads DRAFT PICK IN 14:58. Two players in NAVI and TEAM VITALITY jerseys stand with a host holding a microphone. No gameplay is shown. Same broadcast overlay: M71 - GAME 1, NAVI 0 vs 0 VITALITY, BEST OF 3; the countdown now reads DRAFT PICK IN 14:54. The two players and host remain on stage; no gameplay is shown. Heavily blurred, cropped stage shot of two players and a host; the left player wears a black/yellow jersey and the center player a white jersey. The broadcast overlay is absent or illegible, so the match label, team names, and countdown cannot be read. No gameplay is visible.",
-      "limitations": "Still images cannot prove a continuous transition. The game-1 start is only supported when a draft/zero-clock state is visibly present; a pre-match countdown is not a start.",
+      "limitations": "Still images cannot prove a continuous transition. The game-1 start is only supported when a draft/zero-clock state is visibly present; a pre-match countdown is not a start. Under the first-visible-HUD standard, a boundary may instead be promoted from the first frame showing gameplay, a supported same-frame team pairing, a running non-00:00 clock and game1_started=true; because the broadcast cuts in after the start, the inferred start seconds are derived from the clock reading and are not visually verified.",
       "related_observation": "related frames: pairing=supported; scene=gameplay; teams=['BTR', 'NAVI']; Close-up of a NAVI player in a black/yellow jersey at a desk; top broadcast bar shows a yellow NAVI logo, 0, GAME 1, VS, BEST OF 3, 0 and a red VITALITY logo. No BTR, no game clock, and no 00:00 anywhere in the frame. Full-screen red and yellow 'DRAFTING PHASE' transition graphic with warped repeate",
       "status_effect": "partial_context_only"
     },
@@ -90637,7 +90637,7 @@
       },
       "disposition": "context-only",
       "observation": "Crowd shot with broadcast overlay in the upper-left corner. The overlay shows an unlabeled white logo on black at left, a score of 0, 'VS', a score of 0, 'BEST OF 3', 'M72 GAME 1', and a green 'DRAFT PICK IN 16:06' countdown panel. A 'ROAD TO SURABAYA' logo appears top-right. No team names are legible; scene is audience footage, not gameplay. Stage shot with scoreboard overlay and large LED screen reading 'PARA PAHLAWAN' with player photos and a mascot. Overlay reads 'M72 GAME 1', 0 VS 0, 'BEST OF 3', and 'DRAFT PICK IN 16:02'. Two female hosts stand on stage. Team logos remain unlabeled; this is a pre-match stage segment. Near-identical stage shot: same 'PARA PAHLAWAN' LED backdrop, two hosts, and overlay reading 'M72 GAME 1', 0 VS 0, 'BEST OF 3', 'DRAFT PICK IN 15:58'. No team names legible; still a pre-match/draft-wait segment.",
-      "limitations": "Still images cannot prove a continuous transition. The game-1 start is only supported when a draft/zero-clock state is visibly present; a pre-match countdown is not a start. The team pairing is confirmed by related frames at a nearby timestamp, not by the candidate frame itself.",
+      "limitations": "Still images cannot prove a continuous transition. The game-1 start is only supported when a draft/zero-clock state is visibly present; a pre-match countdown is not a start. Under the first-visible-HUD standard, a boundary may instead be promoted from the first frame showing gameplay, a supported same-frame team pairing, a running non-00:00 clock and game1_started=true; because the broadcast cuts in after the start, the inferred start seconds are derived from the clock reading and are not visually verified. The team pairing is confirmed by related frames at a nearby timestamp, not by the candidate frame itself.",
       "related_observation": "related frames: pairing=supported; scene=gameplay; teams=['ONIC', 'TLID']; Players in white jerseys are huddled together on stage. The scoreboard reads M72 GAME 1, VS, BEST OF 3 with 0–0 and ONIC/TLID logos; the lower ticker reads ONIC VS TLID: MISI THE CAVALRY AMANKAN TAKHTA JUARA REGULAR SEASON MPL ID. No clock or countdown is visible. NAVI appears only in the footer as ",
       "status_effect": "partial_context_only"
     },
@@ -90647,8 +90647,8 @@
       "source_id": "src-s18-w04d02",
       "team_a": "DEWA",
       "team_b": "ONIC",
-      "candidate_start_seconds": 2460,
-      "claim": "Series 1062 (DEWA vs ONIC) starts at 2460s; game 1 boundary.",
+      "candidate_start_seconds": 2465.438,
+      "claim": "Series 1062 (DEWA vs ONIC) game 1: the broadcast cuts in after the start; the first visible HUD with the correct DEWA/ONIC pairing is DF3-w04d02-2465 at 2465.438s showing clock 00:19, so the game-1 start at 2446.438s is inferred (anchor minus 19s), not visually verified.",
       "frame_group": "G-1062-2460",
       "frame_ids": [
         "DF-1062-2456",
@@ -90721,15 +90721,24 @@
         "source": "primary"
       },
       "game1_start": {
-        "disposition": "context-only",
-        "evidence": "countdown/clock present but no game start: 00:19",
+        "disposition": "used",
+        "evidence": "first-visible-HUD anchor DF3-w04d02-2465 (sha256 864c843e4cf7e6f7b597c1acc876ed825c23f2c3510e375de58f7bb3079b1009) shows gameplay with the DEWA/ONIC pairing in the same frame and running clock 00:19 (not 00:00); the broadcast cuts in after the start, so the game-1 start at 2446.438s is inferred from the clock reading, not visually verified.",
         "confidence": "low"
       },
-      "disposition": "context-only",
+      "disposition": "used",
       "observation": "Circular MPL ID Season 18 East logo animation on a pale background; no map, team names, match label, clock, scoreboard, or draft panel. Isometric overhead map view with repeated Infinix sponsor banners; no HUD, team names, match label, clock, scoreboard, or draft panel. In-game top-down HUD near game start: ONIC draft panel on the left, with ONIC Kiboy and DEWA Shanne/DEWA Octa labels over heroes; clock 00:19 and gold 1521 are visible.",
-      "limitations": "Still images cannot prove a continuous transition. The game-1 start is only supported when a draft/zero-clock state is visibly present; a pre-match countdown is not a start.",
+      "limitations": "Still images cannot prove a continuous transition. The game-1 start is only supported when a draft/zero-clock state is visibly present; a pre-match countdown is not a start. Under the first-visible-HUD standard, a boundary may instead be promoted from the first frame showing gameplay, a supported same-frame team pairing, a running non-00:00 clock and game1_started=true; because the broadcast cuts in after the start, the inferred start seconds are derived from the clock reading and are not visually verified.",
       "related_observation": "related frames: pairing=supported; scene=gameplay; teams=['DEWA', 'ONIC']; Pre-match draft/lineup comparison overlay. Five player-hero portraits are shown per side; the center has a DEWA shield logo on the left and an unlabeled black bird emblem on the right, with stat-comparison bars. No scoreboard, series label, countdown, or game clock is visible. Essentially the same p",
-      "status_effect": "partial_context_only"
+      "status_effect": "visual_confirmation",
+      "anchor": {
+        "type": "first_visible_hud",
+        "frame_id": "DF3-w04d02-2465",
+        "frame_sha256": "864c843e4cf7e6f7b597c1acc876ed825c23f2c3510e375de58f7bb3079b1009",
+        "anchor_seconds": 2465.438,
+        "visible_clock": "00:19",
+        "inferred_start_seconds": 2446.438,
+        "note": "First visible HUD frame with gameplay, the DEWA/ONIC pairing in the same frame, running clock 00:19 and game1_started=true. The broadcast cuts in after the start, so the game-1 start at 2446.438s is inferred (anchor 2465.438s minus 19s of on-screen clock), not visually verified."
+      }
     },
     {
       "boundary_id": "B-1084-2043",
@@ -90871,7 +90880,7 @@
       },
       "disposition": "context-only",
       "observation": "Broadcast overlay shows a match scoreboard labeled M49 GAME 1, BEST OF 3, with 0 vs 0 and team logos on either side of 'VS'; the clock reads 15:56 in a blue box labeled 'DRAFT PICK IN'. The visible team logos are a toothed/animal-like emblem (left) and a red dragon-like emblem (right); the left name is rendered in a stylized logo font and is not legible as plain text. The scene is a stage with a host addressing the audience in front of a large screen reading 'SELAMAT HARI BATIK NASIONAL 2 OKTOBER'. This is a pre-match on-stage segment, not in-game play. Same scoreboard layout as the prior frame: M49 GAME 1, BEST OF 3, 0 vs 0, with 'DRAFT PICK IN 15:53'. An additional upper-right identified box reads 'MOONTON' beneath a circular logo. The stage scene and 'SELAMAT HARI BATIK NASIONAL 2 OKTOBER' screen are unchanged, host standing at center. Still a pre-match presentation. Same overlay again: M49 GAME 1, BEST OF 3, 0 vs 0, 'DRAFT PICK IN 15:51'; MOONTON provider box remains upper right. Host continues on stage before the 'SELAMAT HARI BATIK NASIONAL 2 OKTOBER' backdrop. No draft picks or in-game action shown.",
-      "limitations": "Still images cannot prove a continuous transition. The game-1 start is only supported when a draft/zero-clock state is visibly present; a pre-match countdown is not a start. The team pairing is confirmed by related frames at a nearby timestamp, not by the candidate frame itself.",
+      "limitations": "Still images cannot prove a continuous transition. The game-1 start is only supported when a draft/zero-clock state is visibly present; a pre-match countdown is not a start. Under the first-visible-HUD standard, a boundary may instead be promoted from the first frame showing gameplay, a supported same-frame team pairing, a running non-00:00 clock and game1_started=true; because the broadcast cuts in after the start, the inferred start seconds are derived from the clock reading and are not visually verified. The team pairing is confirmed by related frames at a nearby timestamp, not by the candidate frame itself.",
       "related_observation": "related frames: pairing=supported; scene=gameplay; teams=['BTR', 'GEEK']; Crop shows an M49 - GAME 1 scoreboard with GEEK 0 vs 0 VITALITY, BEST OF 3, and a blue panel reading DRAFT PICK IN: 15:51. No \"(BTR)\" text is visible beside VITALITY. Wide stage shot of five GEEK players seated at desks with staff standing behind; bottom third carries the Infinix GT 50 Pro 'KEYS TO ",
       "status_effect": "partial_context_only"
     },
@@ -90917,7 +90926,7 @@
       },
       "disposition": "context-only",
       "observation": "One-man interview shot in front of a sponsor wall. The top scoreboard shows M59 - GAME 1, 0 VS 0, BEST OF 3, with two unlabeled team logos. No draft countdown or readable team names are visible. Two-person interview at the same sponsor wall. The scoreboard shows M59 - GAME 1, 0 VS 0, BEST OF 3, and a DRAFT PICK IN 17:00 countdown. Only team logos appear; no team-name text is readable. Same two-person interview. The scoreboard shows M59 - GAME 1, 0 VS 0, BEST OF 3, and a DRAFT PICK IN 16:56 countdown. Team names remain absent; only logos are shown.",
-      "limitations": "Still images cannot prove a continuous transition. The game-1 start is only supported when a draft/zero-clock state is visibly present; a pre-match countdown is not a start. The team pairing is confirmed by related frames at a nearby timestamp, not by the candidate frame itself.",
+      "limitations": "Still images cannot prove a continuous transition. The game-1 start is only supported when a draft/zero-clock state is visibly present; a pre-match countdown is not a start. Under the first-visible-HUD standard, a boundary may instead be promoted from the first frame showing gameplay, a supported same-frame team pairing, a running non-00:00 clock and game1_started=true; because the broadcast cuts in after the start, the inferred start seconds are derived from the clock reading and are not visually verified. The team pairing is confirmed by related frames at a nearby timestamp, not by the candidate frame itself.",
       "related_observation": "related frames: pairing=supported; scene=interview; teams=['EVOS', 'ONIC']; Pre-match studio shot of a man speaking into a microphone against a sponsor backdrop; no in-game HUD or map is visible. The top-left overlay shows M5, GAME 1, 0 VS 0 and BEST OF 3, with a white animal-head logo at left and a dark animal-head logo at right. The scrolling ticker lists Match 1: EVOS (0",
       "status_effect": "partial_context_only"
     },
@@ -90955,7 +90964,7 @@
       },
       "disposition": "rejected",
       "observation": "Full-screen KLASEMEN standings graphic with REGULAR SEASON MINGGU 6 - HARI 1. It shows nine ranked teams and standings columns; no team-vs-team matchup, match clock, or match-start indicator is visible. Same full-screen KLASEMEN standings table, labeled REGULAR SEASON MINGGU 6 - HARI 1, listing nine teams and their match standings. No match-start screen, matchup label, or clock is shown. Full-screen KLASEMEN standings table with REGULAR SEASON MINGGU 6 - HARI 1 and nine ranked teams. There is no match-start presentation, team matchup, or clock visible.",
-      "limitations": "Still images cannot prove a continuous transition. The game-1 start is only supported when a draft/zero-clock state is visibly present; a pre-match countdown is not a start.",
+      "limitations": "Still images cannot prove a continuous transition. The game-1 start is only supported when a draft/zero-clock state is visibly present; a pre-match countdown is not a start. Under the first-visible-HUD standard, a boundary may instead be promoted from the first frame showing gameplay, a supported same-frame team pairing, a running non-00:00 clock and game1_started=true; because the broadcast cuts in after the start, the inferred start seconds are derived from the clock reading and are not visually verified.",
       "related_observation": null,
       "status_effect": "candidate_rejected"
     },
@@ -91001,7 +91010,7 @@
       },
       "disposition": "rejected",
       "observation": "Full-screen KLASEMEN standings graphic with REGULAR SEASON MINGGU 6 - HARI 1. It shows nine ranked teams and standings columns; no team-vs-team matchup, match clock, or match-start indicator is visible. Same full-screen KLASEMEN standings table, labeled REGULAR SEASON MINGGU 6 - HARI 1, listing nine teams and their match standings. No match-start screen, matchup label, or clock is shown. Full-screen KLASEMEN standings table with REGULAR SEASON MINGGU 6 - HARI 1 and nine ranked teams. There is no match-start presentation, team matchup, or clock visible.",
-      "limitations": "Still images cannot prove a continuous transition. The game-1 start is only supported when a draft/zero-clock state is visibly present; a pre-match countdown is not a start.",
+      "limitations": "Still images cannot prove a continuous transition. The game-1 start is only supported when a draft/zero-clock state is visibly present; a pre-match countdown is not a start. Under the first-visible-HUD standard, a boundary may instead be promoted from the first frame showing gameplay, a supported same-frame team pairing, a running non-00:00 clock and game1_started=true; because the broadcast cuts in after the start, the inferred start seconds are derived from the clock reading and are not visually verified.",
       "related_observation": "related frames: pairing=partial; scene=analyst; teams=['GEEK']; Broadcast desk with three commentators; the persistent top-left scoreboard shows 0-0, M41 - GAME 1, BEST OF 3, a white crest on the left and a red GEEK wordmark on the right. The lower desk monitor displays a hero-skin promotional graphic. No clock or countdown is visible. Same desk shot and persist",
       "status_effect": "candidate_rejected"
     },
@@ -91039,7 +91048,7 @@
       },
       "disposition": "rejected",
       "observation": "Full-screen KLASEMEN standings graphic with REGULAR SEASON MINGGU 6 - HARI 1. It shows nine ranked teams and standings columns; no team-vs-team matchup, match clock, or match-start indicator is visible. Same full-screen KLASEMEN standings table, labeled REGULAR SEASON MINGGU 6 - HARI 1, listing nine teams and their match standings. No match-start screen, matchup label, or clock is shown. Full-screen KLASEMEN standings table with REGULAR SEASON MINGGU 6 - HARI 1 and nine ranked teams. There is no match-start presentation, team matchup, or clock visible.",
-      "limitations": "Still images cannot prove a continuous transition. The game-1 start is only supported when a draft/zero-clock state is visibly present; a pre-match countdown is not a start.",
+      "limitations": "Still images cannot prove a continuous transition. The game-1 start is only supported when a draft/zero-clock state is visibly present; a pre-match countdown is not a start. Under the first-visible-HUD standard, a boundary may instead be promoted from the first frame showing gameplay, a supported same-frame team pairing, a running non-00:00 clock and game1_started=true; because the broadcast cuts in after the start, the inferred start seconds are derived from the clock reading and are not visually verified.",
       "related_observation": null,
       "status_effect": "candidate_rejected"
     },
@@ -91077,7 +91086,7 @@
       },
       "disposition": "rejected",
       "observation": "Studio desk segment with three presenters. The top-left scoreboard visibly shows GEEK 2, DEWA 1, with M53 / GAME 3 and BEST OF 3. The lower third reads QUALIFIED TO PLAYOFFS. Player controls are visible. No AE or NAVI branding is visible. Same studio desk segment with three presenters. The top-left scoreboard visibly shows GEEK 2, DEWA 1, with M53 / GAME 3 and BEST OF 3. The desk monitor shows hero portraits; the lower third reads QUALIFIED TO PLAYOFFS. No AE or NAVI branding is visible. Same studio desk segment with three presenters. The top-left scoreboard visibly shows GEEK 2, DEWA 1, with M53 / GAME 3 and BEST OF 3. Hero portraits remain visible on the desk monitor, and the lower third reads QUALIFIED TO PLAYOFFS. No AE or NAVI branding is visible.",
-      "limitations": "Still images cannot prove a continuous transition. The game-1 start is only supported when a draft/zero-clock state is visibly present; a pre-match countdown is not a start.",
+      "limitations": "Still images cannot prove a continuous transition. The game-1 start is only supported when a draft/zero-clock state is visibly present; a pre-match countdown is not a start. Under the first-visible-HUD standard, a boundary may instead be promoted from the first frame showing gameplay, a supported same-frame team pairing, a running non-00:00 clock and game1_started=true; because the broadcast cuts in after the start, the inferred start seconds are derived from the clock reading and are not visually verified.",
       "related_observation": null,
       "status_effect": "candidate_rejected"
     },
@@ -91127,7 +91136,7 @@
       },
       "disposition": "context-only",
       "observation": "Broadcast overlay above a venue interview: host with microphone standing beside two players in red VITALITY jerseys, seated staff behind. Top-left scoreboard shows VITALITY vs GEEK at 0-0, with a draft-pick countdown of 10:31. Backdrop shows MPL S18 branding, VITALITY logo, and AQUA sponsor mark. Lower third carries a news/question headline and a 0 VS 0 score strip. No series number (1042) and no BTR name appear. Backstage/hallway b-roll of players walking, one in a red GEEK jacket, two others in red-and-black jackets; a door and a large printed backdrop are behind them. The same broadcast overlay persists: VITALITY vs GEEK 0-0 with draft-pick countdown 10:26, and the same 0 VS 0 lower third. No gameplay, no game clock, no series number, no BTR. Return to the venue interview with the same host and two VITALITY players, same S18/VITALITY backdrop. Overlay continues the VITALITY vs GEEK 0-0 series with draft-pick countdown 10:21. No series 1042 label and no BTR branding anywhere in the frame.",
-      "limitations": "Still images cannot prove a continuous transition. The game-1 start is only supported when a draft/zero-clock state is visibly present; a pre-match countdown is not a start.",
+      "limitations": "Still images cannot prove a continuous transition. The game-1 start is only supported when a draft/zero-clock state is visibly present; a pre-match countdown is not a start. Under the first-visible-HUD standard, a boundary may instead be promoted from the first frame showing gameplay, a supported same-frame team pairing, a running non-00:00 clock and game1_started=true; because the broadcast cuts in after the start, the inferred start seconds are derived from the clock reading and are not visually verified.",
       "related_observation": "related frames: pairing=supported; scene=draft; teams=['BTR', 'GEEK']; Draft Identity/Draft DNA overlay over a player cam; top-corner labels read K Dot and Erpang; no BTR/GEEK pairing, scoreboard, match label, or game clock; 00:00 is not visible. Arena crowd shot with the same Draft Identity overlay; K Dot and Erpang labels at top corners; no BTR/GEEK pairing, scoreboa",
       "status_effect": "partial_context_only"
     },
@@ -91165,7 +91174,7 @@
       },
       "disposition": "rejected",
       "observation": "Broadcast rundown overlay: 'REGULAR SEASON / MINGGU 2 | HARI 1' with MPL ID S18 branding and a three-person caster panel. A small video window plays a promo clip of a retro television set with a person on screen and burned-in subtitles. A two-panel scoreboard sits at right: 'MATCH 9 | BO3' with two crest logos at 0 VS 0, 15:15 WIB; 'MATCH 10 | BO3' with VITALITY 0 VS 0 DEWA UNITED, 18:15 WIB. A large countdown reads 09:27. Bottom strip shows ticket information and MATCH 11/12/13 schedule slots. No TLID, no NAVI, no '1044', no draft and no game clock. Same rundown overlay layout (now with a 'WE OWN THIS' logo top-left): 'REGULAR SEASON / MINGGU 2 | HARI 1', caster panel, small video window showing hands operating a handheld screen device with subtitles, and the same two scoreboard panels (MATCH 9 crests 0 VS 0 15:15 WIB; VITALITY vs DEWA UNITED 0 VS 0 18:15 WIB). Countdown has ticked to 09:22. Audience comment bar appears at bottom. No TLID/NAVI pairing, no series 1044, no draft or game clock. Same rundown overlay (top-left logo [illegible] 'S18'): 'REGULAR SEASON / MINGGU 2 | HARI 1', caster panel, and a video window showing a young man in a dark jersey with subtitles. Scoreboard p",
-      "limitations": "Still images cannot prove a continuous transition. The game-1 start is only supported when a draft/zero-clock state is visibly present; a pre-match countdown is not a start.",
+      "limitations": "Still images cannot prove a continuous transition. The game-1 start is only supported when a draft/zero-clock state is visibly present; a pre-match countdown is not a start. Under the first-visible-HUD standard, a boundary may instead be promoted from the first frame showing gameplay, a supported same-frame team pairing, a running non-00:00 clock and game1_started=true; because the broadcast cuts in after the start, the inferred start seconds are derived from the clock reading and are not visually verified.",
       "related_observation": null,
       "status_effect": "candidate_rejected"
     },
@@ -91203,7 +91212,7 @@
       },
       "disposition": "rejected",
       "observation": "Pre-match countdown over a sponsor-branded feature clip. A person is shown on a retro television with a subtitle. The highlighted side-rail fixture is MATCH 11 | BO3 at 14:15 WIB with a 0 VS 0 score; the large countdown reads 09:27. No series number, draft screen, or in-game HUD is visible. Same pre-match countdown layout, now with by.U branding. The television shows a racing-game clip, and the highlighted MATCH 11 | BO3 fixture remains 0 VS 0 at 14:15 WIB; the large countdown reads 09:22. No series number, draft, or game clock is shown. Same pre-match countdown layout with IndiHome branding. The feature clip shows a hand holding three french fries; an audience-comment lower third is also present. The highlighted MATCH 11 | BO3 fixture remains 0 VS 0 at 14:15 WIB, and the large countdown reads 09:17. No draft or in-game clock is visible.",
-      "limitations": "Still images cannot prove a continuous transition. The game-1 start is only supported when a draft/zero-clock state is visibly present; a pre-match countdown is not a start.",
+      "limitations": "Still images cannot prove a continuous transition. The game-1 start is only supported when a draft/zero-clock state is visibly present; a pre-match countdown is not a start. Under the first-visible-HUD standard, a boundary may instead be promoted from the first frame showing gameplay, a supported same-frame team pairing, a running non-00:00 clock and game1_started=true; because the broadcast cuts in after the start, the inferred start seconds are derived from the clock reading and are not visually verified.",
       "related_observation": null,
       "status_effect": "candidate_rejected"
     },
@@ -91251,7 +91260,7 @@
       },
       "disposition": "inconclusive",
       "observation": "Wide shot of a three-person analyst desk; the center analyst wears sunglasses and touches his face. The top-left HUD shows 0–0, 'M3 - GAME 1', 'VS', 'BEST OF 3', and 'DRAFT PICK IN 03:52'. Only two small crest logos appear; no team names are legible. The desk monitor shows a hand holding a phone. No draft board or gameplay is visible. Same three-person analyst desk; the center analyst speaks into a handheld microphone. The HUD remains 0–0 with 'M3 - GAME 1' and 'DRAFT PICK IN 03:47'. The front monitor shows a 'Free up space' / 'Weekly Diamond Pass' promo. No draft board, team names, or game clock is visible. Same analyst desk; the center analyst gestures with one hand. The HUD remains 0–0 with 'M3 - GAME 1' and 'DRAFT PICK IN 03:42'. The front monitor shows a game-character splash image. No draft board, team names, or game clock is visible.",
-      "limitations": "Still images cannot prove a continuous transition. The game-1 start is only supported when a draft/zero-clock state is visibly present; a pre-match countdown is not a start.",
+      "limitations": "Still images cannot prove a continuous transition. The game-1 start is only supported when a draft/zero-clock state is visibly present; a pre-match countdown is not a start. Under the first-visible-HUD standard, a boundary may instead be promoted from the first frame showing gameplay, a supported same-frame team pairing, a running non-00:00 clock and game1_started=true; because the broadcast cuts in after the start, the inferred start seconds are derived from the clock reading and are not visually verified.",
       "related_observation": "related frames: pairing=unknown; scene=pre-match; teams=none; Wide on-stage shot of four people walking in from the left: two in green realme jerseys, one in yellow, one in black. A large M3 backdrop with a cropped slogan fills the stage; audience heads are in the foreground. No scoreboard, match/team label, or clock is visible. On-stage lineup: four people st",
       "status_effect": "no_change"
     },
@@ -91289,7 +91298,7 @@
       },
       "disposition": "rejected",
       "observation": "Pre-match broadcast with a player-feature video; the match-14 card shows DEWA vs Alter Ego at 0-0 with a 14:15 WIB start, while a large 09:32 countdown is displayed. No series number, draft, or gameplay is shown. The same pre-match show continues with a close-up player feature and an audience-comment ticker; the match-14 card still shows DEWA vs Alter Ego at 0-0, and the countdown reads 09:26. The same pre-match show continues with another close-up player feature and an audience message; the match-14 card still shows DEWA vs Alter Ego at 0-0, and the countdown reads 09:22.",
-      "limitations": "Still images cannot prove a continuous transition. The game-1 start is only supported when a draft/zero-clock state is visibly present; a pre-match countdown is not a start.",
+      "limitations": "Still images cannot prove a continuous transition. The game-1 start is only supported when a draft/zero-clock state is visibly present; a pre-match countdown is not a start. Under the first-visible-HUD standard, a boundary may instead be promoted from the first frame showing gameplay, a supported same-frame team pairing, a running non-00:00 clock and game1_started=true; because the broadcast cuts in after the start, the inferred start seconds are derived from the clock reading and are not visually verified.",
       "related_observation": null,
       "status_effect": "candidate_rejected"
     },
@@ -91383,7 +91392,7 @@
       },
       "disposition": "context-only",
       "observation": "On-stage female host with a handheld mic in front of a large 'THIS' backdrop; the top-left overlay reads GEEK 0 vs 0 EVOS, BEST OF 3, with DRAFT PICK IN 13:16, and the lower ticker headlines GEEK VS EVOS. Wide stage shot of the same host holding a mic; the overlay still shows GEEK 0 vs 0 EVOS, BEST OF 3, now DRAFT PICK IN 13:11; no gameplay or draft board. Full-frame MPL ID Season 18 league logo animation with a colored ring; no team, match, score, or clock information.",
-      "limitations": "Still images cannot prove a continuous transition. The game-1 start is only supported when a draft/zero-clock state is visibly present; a pre-match countdown is not a start.",
+      "limitations": "Still images cannot prove a continuous transition. The game-1 start is only supported when a draft/zero-clock state is visibly present; a pre-match countdown is not a start. Under the first-visible-HUD standard, a boundary may instead be promoted from the first frame showing gameplay, a supported same-frame team pairing, a running non-00:00 clock and game1_started=true; because the broadcast cuts in after the start, the inferred start seconds are derived from the clock reading and are not visually verified.",
       "related_observation": "related frames: pairing=supported; scene=gameplay; teams=['EVOS', 'GEEK']; In-game GEEK vs EVOS HUD; game clock reads 00:51; kills 0-0; gold 2.5K each. No 00:00 visible. GEEK vs EVOS in-game; game clock reads 01:01; kills 0-0; gold 2.8K vs 2.9K; talent-prediction strip along bottom. No 00:00 visible. GEEK vs EVOS in-game; game clock reads 01:11; kills 0-0; gold 3.5K vs 3.4",
       "status_effect": "partial_context_only"
     },
@@ -91421,7 +91430,7 @@
       },
       "disposition": "rejected",
       "observation": "Pre-match broadcast layout: the left inset is a dark orange gameplay/highlight scene under an AQUA smart home logo; the right panel shows three casters, a three-match schedule with 0-0 scores, a large countdown 10:19, and an audience comment reading 'ayo onic'. No draft screen, no 00:00 game clock, and no 'series 1054' text. Pre-match broadcast: the left inset is a blurred red/blue transition with no readable game UI, under an AQUA smart home logo; the right caster/schedule panel shows all three matches at 0-0 and a large countdown 10:14. No draft screen, 00:00 game clock, or 'series 1054' label is visible. Pre-match/commercial break: the left inset is an AQUA refrigerator advert with 'JAPAN No.1' and 'JAPAN QUALITY'; the bottom strip gives ticket information for MATCH 22 and MATCH 23; the right panel still shows MATCH 19-21 at 0-0 and a large countdown 10:09. No draft screen, 00:00 game clock, or 'series 1054' label is visible.",
-      "limitations": "Still images cannot prove a continuous transition. The game-1 start is only supported when a draft/zero-clock state is visibly present; a pre-match countdown is not a start.",
+      "limitations": "Still images cannot prove a continuous transition. The game-1 start is only supported when a draft/zero-clock state is visibly present; a pre-match countdown is not a start. Under the first-visible-HUD standard, a boundary may instead be promoted from the first frame showing gameplay, a supported same-frame team pairing, a running non-00:00 clock and game1_started=true; because the broadcast cuts in after the start, the inferred start seconds are derived from the clock reading and are not visually verified.",
       "related_observation": null,
       "status_effect": "candidate_rejected"
     },
@@ -91459,7 +91468,7 @@
       },
       "disposition": "context-only",
       "observation": "Wide shot of a three-person analyst desk in front of an MPL ID Season 18 stage backdrop. The top-left scorebug shows 1 vs 0 with team crests, 'GAME 1', and 'VS BEST OF 3'. The scrolling lower third names Match 3 and RRQ (0) vs (0) BTR. There is no draft screen, gameplay HUD, game clock, or countdown. The same analyst desk is shown while the inset monitor displays a player/highlight. The top-left scorebug remains 1 vs 0 with 'GAME 1' and 'VS BEST OF 3'. The lower ticker again shows RRQ (0) vs (0) BTR. No draft, gameplay HUD, game clock, or countdown is visible. The same analyst desk appears with an inset close-up of two seated players in orange-and-black jerseys. The top-left scorebug still shows 1 vs 0, 'GAME 1', and 'VS BEST OF 3'. The bottom ticker has scrolled to social handles, so no RRQ/BTR names are legible; only the recurring team crests remain. No draft or game clock is visible.",
-      "limitations": "Still images cannot prove a continuous transition. The game-1 start is only supported when a draft/zero-clock state is visibly present; a pre-match countdown is not a start.",
+      "limitations": "Still images cannot prove a continuous transition. The game-1 start is only supported when a draft/zero-clock state is visibly present; a pre-match countdown is not a start. Under the first-visible-HUD standard, a boundary may instead be promoted from the first frame showing gameplay, a supported same-frame team pairing, a running non-00:00 clock and game1_started=true; because the broadcast cuts in after the start, the inferred start seconds are derived from the clock reading and are not visually verified.",
       "related_observation": null,
       "status_effect": "partial_context_only"
     },
@@ -91497,7 +91506,7 @@
       },
       "disposition": "context-only",
       "observation": "Player-camera interview-style shot of a man speaking at a microphone. The lower third labels BTR vs AE, and the right-side score bug shows 0 VS 0. YouTube controls show a VOD timer of 6:16:22 / 8:05:25. No draft, gameplay, game clock, or series number is visible. Full-screen promo graphic headed TWO CARRY and DIFFERENT WAYS TO VICTORY, with EMANN #1. A small score bug at right shows 0 VS 0, and the lower ticker identifies BTR vs AE as Match 3. No draft or game clock is shown. The TWO CARRY promo remains on screen with EMANN #1 TOTAL ASSIST 92, plus a lower-right studio inset showing three people. The lower third labels BTR vs AE, the score bug shows 0 VS 0, and the ticker highlights MATCH 3: BTR [0] VS [0] AE. No draft or game clock is visible.",
-      "limitations": "Still images cannot prove a continuous transition. The game-1 start is only supported when a draft/zero-clock state is visibly present; a pre-match countdown is not a start.",
+      "limitations": "Still images cannot prove a continuous transition. The game-1 start is only supported when a draft/zero-clock state is visibly present; a pre-match countdown is not a start. Under the first-visible-HUD standard, a boundary may instead be promoted from the first frame showing gameplay, a supported same-frame team pairing, a running non-00:00 clock and game1_started=true; because the broadcast cuts in after the start, the inferred start seconds are derived from the clock reading and are not visually verified.",
       "related_observation": null,
       "status_effect": "partial_context_only"
     },
@@ -91535,7 +91544,7 @@
       },
       "disposition": "rejected",
       "observation": "Pre-match broadcast screen with a large 12:34 timer, three casters, and a schedule listing Match 35/36/37 at 0-0. The center is a gameplay-effects clip labeled 'TAMPILAN EFEK VISUAL'. No TLID, BTR, '1070', draft, or in-game clock is visible. Same pre-match broadcast screen with a 12:29 timer and the Match 35/36/37 schedule at 0-0. Center shows an 'EFEK SKILL COMMANDER' gameplay-effects clip. 'BTR' appears only in a viewer comment; TLID and any TLID-vs-BTR pairing are absent. Same pre-match broadcast screen with a 12:24 timer and the Match 35/36/37 schedule at 0-0. Center shows an 'EFEK SKILL COMMANDER' gameplay-effects clip. 'TLID' appears only in a viewer comment; BTR and any pairing are absent.",
-      "limitations": "Still images cannot prove a continuous transition. The game-1 start is only supported when a draft/zero-clock state is visibly present; a pre-match countdown is not a start.",
+      "limitations": "Still images cannot prove a continuous transition. The game-1 start is only supported when a draft/zero-clock state is visibly present; a pre-match countdown is not a start. Under the first-visible-HUD standard, a boundary may instead be promoted from the first frame showing gameplay, a supported same-frame team pairing, a running non-00:00 clock and game1_started=true; because the broadcast cuts in after the start, the inferred start seconds are derived from the clock reading and are not visually verified.",
       "related_observation": null,
       "status_effect": "candidate_rejected"
     },
@@ -91573,7 +91582,7 @@
       },
       "disposition": "rejected",
       "observation": "Pre-match broadcast overlay with a 10:06 countdown; the video pane shows a visual-effects preview labeled TAMPILAN EFEK VISUAL, while the schedule panel lists Match 38, GEEK vs TLID, 0-0 at 14:15 WIB. Pre-match countdown overlay at 10:00 over an effects clip labeled EFEK SKILL COMMANDER; the Match 38 panel still shows GEEK vs TLID at 0-0 and 14:15 WIB, with no draft interface. Pre-match countdown 09:55 over an EFEK SKILL COMMANDER preview; the same Match 38 GEEK vs TLID 0-0 panel appears, with ticket cards for Matches 41 and 42 below.",
-      "limitations": "Still images cannot prove a continuous transition. The game-1 start is only supported when a draft/zero-clock state is visibly present; a pre-match countdown is not a start.",
+      "limitations": "Still images cannot prove a continuous transition. The game-1 start is only supported when a draft/zero-clock state is visibly present; a pre-match countdown is not a start. Under the first-visible-HUD standard, a boundary may instead be promoted from the first frame showing gameplay, a supported same-frame team pairing, a running non-00:00 clock and game1_started=true; because the broadcast cuts in after the start, the inferred start seconds are derived from the clock reading and are not visually verified.",
       "related_observation": null,
       "status_effect": "candidate_rejected"
     },
@@ -91623,7 +91632,7 @@
       },
       "disposition": "context-only",
       "observation": "Pre-match interview set: seated NAVI-jersey players, a standing player holding a mic, and a female host with a mic. The white scoreboard reads MATCH 3 - GAME 1, 0 VS 0, BEST OF 3, 14:58; no draft or game clock is shown. Same pre-match interview segment; the host gestures with papers while the standing player holds a mic. The scoreboard remains MATCH 3 - GAME 1, 0 VS 0, BEST OF 3 with 14:53; no draft or game clock is shown. Wider pre-match interview shot: the player speaks into a mic as the host listens, with NAVI teammates seated around. The scoreboard remains MATCH 3 - GAME 1, 0 VS 0, BEST OF 3 with 14:49; no draft or game clock is shown.",
-      "limitations": "Still images cannot prove a continuous transition. The game-1 start is only supported when a draft/zero-clock state is visibly present; a pre-match countdown is not a start.",
+      "limitations": "Still images cannot prove a continuous transition. The game-1 start is only supported when a draft/zero-clock state is visibly present; a pre-match countdown is not a start. Under the first-visible-HUD standard, a boundary may instead be promoted from the first frame showing gameplay, a supported same-frame team pairing, a running non-00:00 clock and game1_started=true; because the broadcast cuts in after the start, the inferred start seconds are derived from the clock reading and are not visually verified.",
       "related_observation": "related frames: pairing=supported; scene=analyst; teams=['GEEK', 'NAVI']; Player-cam shot of a seated player in a headset; the lower-third overlay pairs GEEK and NAVI under MATCH 43 - GAME 1 and shows no game clock. Player-cam shot of a seated player in a headset; the GEEK vs NAVI overlay remains and no game clock is visible. Audience shot with NAVI signs and a NATUS VINC",
       "status_effect": "partial_context_only"
     },
@@ -91661,7 +91670,7 @@
       },
       "disposition": "rejected",
       "observation": "Live gameplay from a third-person MOBA spectator view mid-fight near the river; the HUD is fully populated with hero levels, health bars and item/KDA side panels. Top overlay shows ONIC on the left and BTR on the right with gold totals 35.4K vs 26.1K and a running game clock of 10:39 with a '2' game indicator beside it; the league block reads MPL ID SEASON 18 with MATCH 47 - GAME 2. No draft lobby, no analyst desk, no 00:00 clock. Live gameplay, camera shifted to a different lane/river area with a skirmish developing; ONIC left, BTR right, gold 35.4K vs 26.4K, running clock 10:35 with the game indicator '2'. Top-right league block again reads MPL ID SEASON 18 / MATCH 47 - GAME 2; an IndiHome sponsor plate is visible. No draft screen, no countdown, no 00:00 clock. Clock is slightly lower than image 0, so supplied order is not strictly time-ascending. Live gameplay, team fight in a jungle/river choke with multiple ultimates and level 12-15 heroes clustered; ONIC left, BTR right, gold 35.6K vs 26.6K, running clock 10:40 with game indicator '2'. League block reads MPL ID SEASON 18 / MATCH 47 - GAME 2. No draft, no pre-match desk, no 00:00 clock.",
-      "limitations": "Still images cannot prove a continuous transition. The game-1 start is only supported when a draft/zero-clock state is visibly present; a pre-match countdown is not a start.",
+      "limitations": "Still images cannot prove a continuous transition. The game-1 start is only supported when a draft/zero-clock state is visibly present; a pre-match countdown is not a start. Under the first-visible-HUD standard, a boundary may instead be promoted from the first frame showing gameplay, a supported same-frame team pairing, a running non-00:00 clock and game1_started=true; because the broadcast cuts in after the start, the inferred start seconds are derived from the clock reading and are not visually verified.",
       "related_observation": null,
       "status_effect": "candidate_rejected"
     },
@@ -91699,7 +91708,7 @@
       },
       "disposition": "rejected",
       "observation": "Pre-match broadcast countdown screen. A dark fantasy anime promo fills the video panel; three casters are shown above the right-side match list. The highlighted top card is AE vs TLID at 0 VS 0, while the timer reads 19:08 and no draft or gameplay HUD is visible. Same pre-match countdown overlay. The video panel now shows a close-up of a pink-haired anime character; the highlighted AE vs TLID card remains 0 VS 0 and the timer has advanced to 19:03. No draft or gameplay interface is present. Same pre-match countdown overlay. The video panel is a green-and-yellow motion blur; an 'AUDIENCE COMMENT' lower third appears at bottom left. The highlighted AE vs TLID card remains 0 VS 0 with 18:58 on the timer; no draft or gameplay is shown.",
-      "limitations": "Still images cannot prove a continuous transition. The game-1 start is only supported when a draft/zero-clock state is visibly present; a pre-match countdown is not a start.",
+      "limitations": "Still images cannot prove a continuous transition. The game-1 start is only supported when a draft/zero-clock state is visibly present; a pre-match countdown is not a start. Under the first-visible-HUD standard, a boundary may instead be promoted from the first frame showing gameplay, a supported same-frame team pairing, a running non-00:00 clock and game1_started=true; because the broadcast cuts in after the start, the inferred start seconds are derived from the clock reading and are not visually verified.",
       "related_observation": null,
       "status_effect": "candidate_rejected"
     },
@@ -91737,7 +91746,7 @@
       },
       "disposition": "rejected",
       "observation": "Crowd scene with fans in red and black/white jerseys cheering in front of dark curtains; a centered white advertising overlay with a red header and blue footer banner covers the middle of the frame. No team names, scoreboard, match label, or game clock are visible. Crowd scene filmed from a low angle with fans in orange/red and dark shirts; a person in orange foreground left appears to hold a large foam hand or cutout. A centered white sponsor overlay with red header and blue footer covers the middle. No scoreboard, match label, or clock. Fans in black and yellow stand behind a large brown banner reading 'PENCARIAN HARTA KARUN KEMENANGAN RRQ HOSHI'. A large white overlay box with a red corner graphic covers the center, with the MPL banner at its lower edge. No scoreboard, pairing label, or game clock.",
-      "limitations": "Still images cannot prove a continuous transition. The game-1 start is only supported when a draft/zero-clock state is visibly present; a pre-match countdown is not a start.",
+      "limitations": "Still images cannot prove a continuous transition. The game-1 start is only supported when a draft/zero-clock state is visibly present; a pre-match countdown is not a start. Under the first-visible-HUD standard, a boundary may instead be promoted from the first frame showing gameplay, a supported same-frame team pairing, a running non-00:00 clock and game1_started=true; because the broadcast cuts in after the start, the inferred start seconds are derived from the clock reading and are not visually verified.",
       "related_observation": null,
       "status_effect": "candidate_rejected"
     },
@@ -91775,7 +91784,7 @@
       },
       "disposition": "rejected",
       "observation": "League standings screen headed KLASEMEN, showing nine ranked teams and league-table columns MATCH POINT, MATCH W-L, NET GAME WIN, and GAME W-L. TEAM LIQUID ID appears at rank 2 and RRQ HOSHI at rank 8, but there is no match pairing, series number, game score, draft, or in-game clock. A YouTube player overlay covers the bottom edge with a video timestamp and Infinix sponsor banner. Same MPL ID league standings table headed KLASEMEN, now without the YouTube player overlay. TEAM LIQUID ID and RRQ HOSHI are separate ranked rows, not a visible matchup. No match label, series number, series score, draft, game-1 indicator, or countdown is shown. League standings screen effectively identical to image 1, headed KLASEMEN with the same nine-team table and sponsor strip. No match pairing, match label, series number, game score, draft, game clock, or countdown appears.",
-      "limitations": "Still images cannot prove a continuous transition. The game-1 start is only supported when a draft/zero-clock state is visibly present; a pre-match countdown is not a start.",
+      "limitations": "Still images cannot prove a continuous transition. The game-1 start is only supported when a draft/zero-clock state is visibly present; a pre-match countdown is not a start. Under the first-visible-HUD standard, a boundary may instead be promoted from the first frame showing gameplay, a supported same-frame team pairing, a running non-00:00 clock and game1_started=true; because the broadcast cuts in after the start, the inferred start seconds are derived from the clock reading and are not visually verified.",
       "related_observation": null,
       "status_effect": "candidate_rejected"
     },
@@ -91813,7 +91822,7 @@
       },
       "disposition": "rejected",
       "observation": "Full-screen league standings table ('KLASEMEN') for a regular-season week, with nine teams ranked in a table. No match-up header, no series number, no scoreboard, no clock/countdown, no draft screen. NAVI is row 1 and DEWA UNITED is row 7; they appear only as separate ranked entries. Near-identical league standings table frame, same nine rows and values as the previous frame, with a slight on-screen transition/wipe artifact at the right. No match header, pairing, scoreboard, clock or draft is shown. Same league standings table again, unchanged rankings and win-loss figures, with a faint wipe artifact near the left columns. No match label, team pairing, scoreboard, countdown or game clock is present.",
-      "limitations": "Still images cannot prove a continuous transition. The game-1 start is only supported when a draft/zero-clock state is visibly present; a pre-match countdown is not a start.",
+      "limitations": "Still images cannot prove a continuous transition. The game-1 start is only supported when a draft/zero-clock state is visibly present; a pre-match countdown is not a start. Under the first-visible-HUD standard, a boundary may instead be promoted from the first frame showing gameplay, a supported same-frame team pairing, a running non-00:00 clock and game1_started=true; because the broadcast cuts in after the start, the inferred start seconds are derived from the clock reading and are not visually verified.",
       "related_observation": null,
       "status_effect": "candidate_rejected"
     },
@@ -91851,7 +91860,7 @@
       },
       "disposition": "rejected",
       "observation": "Frame 1 shows a full-screen league standings table headed 'KLASEMEN' with 'REGULAR SEASON' and 'MINGGU 8 - HARI 3' on the right; MPL ID and 'NEVER GIVE UP THIS GAME' logos sit in the top corners. Nine teams are ranked with columns POS / TEAM / MATCH POINT / MATCH W-L / NET GAME WIN / GAME W-L; EVOS is 4th and GEEK FAM is 9th, listed as separate rows in a rankings list, not as opponents in a match. Only video-player timestamps (34:08 / 8:29:20) appear at the bottom; there is no scoreboard, draft interface, or match clock. No 'EVOS vs GEEK' pairing, series number, or game indicator is present anywhere in the pixels. A full-screen tournament standings graphic titled KLASEMEN, not a match/game view. The header reads 'REGULAR SEASON MINGGU 8 - HARI 3' with an 'ONLY THIS' logo at top right; columns are POS, TEAM, MATCH POINT, MATCH W-L, NET GAME WIN, GAME W-L. The table lists nine teams; EVOS appears alone in row 4 and GEEK FAM alone in row 9, as separate standings entries rather than as a facing pairing. No match label for a specific series, no scoreboard, no game clock or countdown, and no draft interface is present; the only footer text is the Infinix GT50Pro sponsorship line. Frame 3",
-      "limitations": "Still images cannot prove a continuous transition. The game-1 start is only supported when a draft/zero-clock state is visibly present; a pre-match countdown is not a start.",
+      "limitations": "Still images cannot prove a continuous transition. The game-1 start is only supported when a draft/zero-clock state is visibly present; a pre-match countdown is not a start. Under the first-visible-HUD standard, a boundary may instead be promoted from the first frame showing gameplay, a supported same-frame team pairing, a running non-00:00 clock and game1_started=true; because the broadcast cuts in after the start, the inferred start seconds are derived from the clock reading and are not visually verified.",
       "related_observation": null,
       "status_effect": "candidate_rejected"
     },
@@ -91977,7 +91986,7 @@
       },
       "disposition": "context-only",
       "observation": "Wide stage shot of three commentators seated behind a white desk labeled GT50 Pro; the overhead scoreboard shows 0-0, VS, BEST OF 3 and a green draft countdown, while the desk monitor shows a Pesta Rank graphic. No players, draft screen, or in-game HUD is visible. Same desk setup and 0-0 BEST OF 3 overlay; the draft countdown has dropped to 14:57 and the desk monitor now shows a map overview graphic. Commentators still seated, no draft picks or gameplay on the main screens. Same desk scene; countdown continues at 14:52 and the desk monitor shows a blue abstract/transition graphic rather than a draft or game HUD. Commentators remain seated; no game-1 start is depicted.",
-      "limitations": "Still images cannot prove a continuous transition. The game-1 start is only supported when a draft/zero-clock state is visibly present; a pre-match countdown is not a start.",
+      "limitations": "Still images cannot prove a continuous transition. The game-1 start is only supported when a draft/zero-clock state is visibly present; a pre-match countdown is not a start. Under the first-visible-HUD standard, a boundary may instead be promoted from the first frame showing gameplay, a supported same-frame team pairing, a running non-00:00 clock and game1_started=true; because the broadcast cuts in after the start, the inferred start seconds are derived from the clock reading and are not visually verified.",
       "related_observation": "related frames: pairing=supported; scene=gameplay; teams=['DEWA', 'ONIC']; Two rows of five player-camera tiles with IGN lower-thirds; no broadcast scoreboard, match label, or clock anywhere in the frame. Full-screen hero splash/animation of a chibi character on a white patterned background with a rocky foreground; no HUD, teams, or text. In-game arena view of the map with",
       "status_effect": "partial_context_only"
     },
@@ -92015,7 +92024,7 @@
       },
       "disposition": "rejected",
       "observation": "Full-screen MPL ID league standings table on a light gray/green background with red and blue ribbon banner. Left column shows POS 1-9 with green (top) and red (bottom) markers. No match series header, no team-vs-team pairing, no scoreboard, no draft, no game clock. Identical standings table to the previous frame, same values and order. Only difference is a faint vertical artifact near the lower-right below the Infinix branding. Still no series pairing, scoreboard, draft, or clock. Again the same standings table with unchanged point/W-L values. EVOS and BIGETRON BY VIT appear only as separate ranked rows, not as an opposing pair in a series. No draft screen, no map overview, no game clock.",
-      "limitations": "Still images cannot prove a continuous transition. The game-1 start is only supported when a draft/zero-clock state is visibly present; a pre-match countdown is not a start.",
+      "limitations": "Still images cannot prove a continuous transition. The game-1 start is only supported when a draft/zero-clock state is visibly present; a pre-match countdown is not a start. Under the first-visible-HUD standard, a boundary may instead be promoted from the first frame showing gameplay, a supported same-frame team pairing, a running non-00:00 clock and game1_started=true; because the broadcast cuts in after the start, the inferred start seconds are derived from the clock reading and are not visually verified.",
       "related_observation": null,
       "status_effect": "candidate_rejected"
     },
@@ -92057,7 +92066,7 @@
       },
       "disposition": "context-only",
       "observation": "Backstage/player-room wide shot: a host in a white top holds a mic at left; seated players in batik shirts behind. Wall art shows the MPL ID S18 logo and a large horse-head crest. No scoreboard overlay, no clock, no DEWA marking. Same room, host centered holding mic. Top-left scoreboard overlay shows DEWA 0 vs 0 with horse-head crest, labeled M50 - GAME 1, BEST OF 3. No clock/countdown field is present in this overlay. Host speaking to seated players; scoreboard inset shows DEWA 0 vs 0 TLID with a blue DRAFT PICK IN 14:48 countdown. Background MPL ID S18 wall art and horse crest. Host and a standing player with mics facing each other; scoreboard inset identical layout with DEWA 0 vs 0 TLID and DRAFT PICK IN 14:24. Sponsor mark by.U at upper right. Close-up of a seated player with glasses and batik shirt. Scoreboard inset shows DEWA 0 vs 0 TLID with DRAFT PICK IN 13:53; lower-third banner repeats DEWA 0 vs 0 TLID with a question caption.",
-      "limitations": "Still images cannot prove a continuous transition. The game-1 start is only supported when a draft/zero-clock state is visibly present; a pre-match countdown is not a start.",
+      "limitations": "Still images cannot prove a continuous transition. The game-1 start is only supported when a draft/zero-clock state is visibly present; a pre-match countdown is not a start. Under the first-visible-HUD standard, a boundary may instead be promoted from the first frame showing gameplay, a supported same-frame team pairing, a running non-00:00 clock and game1_started=true; because the broadcast cuts in after the start, the inferred start seconds are derived from the clock reading and are not visually verified.",
       "related_observation": null,
       "status_effect": "partial_context_only"
     },
@@ -92097,7 +92106,7 @@
       },
       "disposition": "context-only",
       "observation": "Broadcast desk/analyst stage with three commentators seated; no team-vs-team scoreboard or game clock; large screen behind them shows MPL ID S18 branding and a hero artwork. Abstract red/blue/yellow gradient transition or wipe background with three small blue squares on the left; no legible text, logos, or teams. Player profile card for a Bigetron player in black/teal jersey, with repeated vertical name banners on the right and a large diagonal logo watermark. On-stage team introduction: five players standing in Bigetron black/teal jerseys with 'realme' sponsorship, under large green banners of the same team's players labeled HABIL; a nameplate reads RRQ HOSHI.",
-      "limitations": "Still images cannot prove a continuous transition. The game-1 start is only supported when a draft/zero-clock state is visibly present; a pre-match countdown is not a start.",
+      "limitations": "Still images cannot prove a continuous transition. The game-1 start is only supported when a draft/zero-clock state is visibly present; a pre-match countdown is not a start. Under the first-visible-HUD standard, a boundary may instead be promoted from the first frame showing gameplay, a supported same-frame team pairing, a running non-00:00 clock and game1_started=true; because the broadcast cuts in after the start, the inferred start seconds are derived from the clock reading and are not visually verified.",
       "related_observation": null,
       "status_effect": "partial_context_only"
     },
@@ -92137,7 +92146,7 @@
       },
       "disposition": "context-only",
       "observation": "Studio analyst desk with three commentators. The top scoreboard shows GEEK 0-0 DEWA United. No match label or game clock/countdown is visible; the two zeros are scores, not 00:00. GEEK vs DEWA is visible, but not with a 00:00 clock. Analyst desk with GEEK 0-0 DEWA United. Overlay reads MSS - GAME 1, VS, BEST OF 3, and DRAFT PICK IN 14:51. Caster lower thirds are present. No 00:00 game clock is visible. Analyst desk with GEEK 0-0 DEWA United. Overlay reads MSS - GAME 1, VS, BEST OF 3, and DRAFT PICK IN 14:46. The center monitor shows splash art. No 00:00 game clock is visible. Analyst desk with GEEK 0-0 DEWA United. Overlay reads MSS - GAME 1, VS, BEST OF 3, and DRAFT PICK IN 14:22. An audience-voting lower third asks whether GEEK needs options to beat DEWA and shows three 00% results. No 00:00 game clock is visible.",
-      "limitations": "Still images cannot prove a continuous transition. The game-1 start is only supported when a draft/zero-clock state is visibly present; a pre-match countdown is not a start.",
+      "limitations": "Still images cannot prove a continuous transition. The game-1 start is only supported when a draft/zero-clock state is visibly present; a pre-match countdown is not a start. Under the first-visible-HUD standard, a boundary may instead be promoted from the first frame showing gameplay, a supported same-frame team pairing, a running non-00:00 clock and game1_started=true; because the broadcast cuts in after the start, the inferred start seconds are derived from the clock reading and are not visually verified.",
       "related_observation": null,
       "status_effect": "partial_context_only"
     },
@@ -92177,7 +92186,7 @@
       },
       "disposition": "context-only",
       "observation": "Wide studio shot of a three-person analyst desk; scoreboard shows NAVI 0–AE 0, GAME 1, BEST OF 3, and a DRAFT PICK IN 08:39 countdown. The inset TV shows hands holding a phone. No 00:00 game clock is visible. Same analyst desk and NAVI 0–AE 0 / GAME 1 scoreboard; the DRAFT PICK IN timer reads 08:34. The inset TV shows a seated player holding a phone. No 00:00 game clock is visible. Same desk and NAVI 0–AE 0 / GAME 1 scoreboard; the DRAFT PICK IN timer reads 08:29. The inset TV shows a character/game lobby, and a SO GOOD sponsor bug is at top right. No 00:00 game clock is visible. Same desk and NAVI 0–AE 0 / GAME 1 scoreboard; the DRAFT PICK IN timer reads 08:04. The inset TV is black, and an Infinix GT 50 Pro sponsor bug is at top right. No 00:00 game clock is visible.",
-      "limitations": "Still images cannot prove a continuous transition. The game-1 start is only supported when a draft/zero-clock state is visibly present; a pre-match countdown is not a start.",
+      "limitations": "Still images cannot prove a continuous transition. The game-1 start is only supported when a draft/zero-clock state is visibly present; a pre-match countdown is not a start. Under the first-visible-HUD standard, a boundary may instead be promoted from the first frame showing gameplay, a supported same-frame team pairing, a running non-00:00 clock and game1_started=true; because the broadcast cuts in after the start, the inferred start seconds are derived from the clock reading and are not visually verified.",
       "related_observation": null,
       "status_effect": "partial_context_only"
     },
@@ -92219,7 +92228,7 @@
       },
       "disposition": "rejected",
       "observation": "Full-frame rundown graphic 'JADWAL HARI INI' listing three BO3 series for the day; middle row shows the RRQ vs AE pairing (Match 44) with 0 - 0 series scores and a 17:15 WIB time slot. No in-game scoreboard or game clock anywhere on screen. Same recurring rundown graphic, identical layout and content to the prior frame; RRQ vs AE listed as Match 44 at 17:15 WIB with 0 - 0 series scores. No game clock or in-game HUD present. Repeated rundown graphic again, same three-match listing; RRQ vs AE remains Match 44 at 17:15 WIB. No countdown, game clock, or in-game HUD present. Wide shot of an analyst/host desk with three seated commentators in formal dark attire; large MPL ID / Season 18 branding on the desk facade, GT50Pro signage centered, backdrop with MPL ID S18 art and a curved LED panel. Center monitor shows a blue channel/graphic. No team pairing, scoreboard, or clock is displayed. Same desk shot with a live graphics overlay: top-left shows GEEK vs NAVI with 0 - 0, 'M43 - GAME 1', 'BEST OF 3', and a draft countdown of 10:35 under 'DRAFT PICK IN'. In-image overlay is GEEK vs NAVI, not RRQ/AE. YouTube progress bar shows 28:41 / 8:12:10.",
-      "limitations": "Still images cannot prove a continuous transition. The game-1 start is only supported when a draft/zero-clock state is visibly present; a pre-match countdown is not a start.",
+      "limitations": "Still images cannot prove a continuous transition. The game-1 start is only supported when a draft/zero-clock state is visibly present; a pre-match countdown is not a start. Under the first-visible-HUD standard, a boundary may instead be promoted from the first frame showing gameplay, a supported same-frame team pairing, a running non-00:00 clock and game1_started=true; because the broadcast cuts in after the start, the inferred start seconds are derived from the clock reading and are not visually verified.",
       "related_observation": null,
       "status_effect": "candidate_rejected"
     },
@@ -92299,7 +92308,7 @@
       },
       "disposition": "context-only",
       "observation": "Circular MPL ID Season 18 league/transition graphic with mirrored background text; no teams, match number, scoreboard, or game clock. In-game MLBB frame with a 00:15 timer; EVOS player labels appear on the blue side, while the opposing names are visible without a legible TLID label. In-game MLBB frame with a 00:20 timer; EVOS labels are on the left and TLID Keven/Lyon labels appear in the game world, establishing the pairing but not a 00:00 clock. In-game MLBB frame with explicit top scoreboard labels EVOS and TLID, 0-0 kills, 2.3K gold each, and a 00:44 timer; no 00:00 is visible.",
-      "limitations": "Still images cannot prove a continuous transition. The game-1 start is only supported when a draft/zero-clock state is visibly present; a pre-match countdown is not a start.",
+      "limitations": "Still images cannot prove a continuous transition. The game-1 start is only supported when a draft/zero-clock state is visibly present; a pre-match countdown is not a start. Under the first-visible-HUD standard, a boundary may instead be promoted from the first frame showing gameplay, a supported same-frame team pairing, a running non-00:00 clock and game1_started=true; because the broadcast cuts in after the start, the inferred start seconds are derived from the clock reading and are not visually verified.",
       "related_observation": "related frames: pairing=partial; scene=unknown; teams=['EVOS']; Close-up through clear glass or plastic of a player in a white jersey and headset, with crowd and partial sponsor signage behind; no match HUD, scoreboard, or clock. Player seated in a white jersey and headset looking down; staff member in a black jacket at left; no match HUD, scoreboard, or clock. ",
       "status_effect": "partial_context_only"
     },
@@ -92339,7 +92348,7 @@
       },
       "disposition": "rejected",
       "observation": "Wide studio shot of a three-person analyst desk; top-left overlay shows a 2-0 score with NAVI/EVOS logos, 'GAME 2' and 'BEST OF 3'; the monitor is dark with a subtitle; no game clock or 00:00. Same analyst desk; the monitor shows a landscape image; the top-left overlay remains 2-0 with NAVI/EVOS logos, 'GAME 2' and 'BEST OF 3'; no game clock or 00:00. Same analyst desk; the monitor shows a video clip; the top-left overlay remains 2-0 with NAVI/EVOS logos, 'GAME 2' and 'BEST OF 3'; no game clock or 00:00. Close-up of a player wearing a headset; no scoreboard, match label, team pairing, or game clock is visible.",
-      "limitations": "Still images cannot prove a continuous transition. The game-1 start is only supported when a draft/zero-clock state is visibly present; a pre-match countdown is not a start.",
+      "limitations": "Still images cannot prove a continuous transition. The game-1 start is only supported when a draft/zero-clock state is visibly present; a pre-match countdown is not a start. Under the first-visible-HUD standard, a boundary may instead be promoted from the first frame showing gameplay, a supported same-frame team pairing, a running non-00:00 clock and game1_started=true; because the broadcast cuts in after the start, the inferred start seconds are derived from the clock reading and are not visually verified.",
       "related_observation": null,
       "status_effect": "candidate_rejected"
     },
@@ -92381,7 +92390,7 @@
       },
       "disposition": "context-only",
       "observation": "Webcam interview in a room; MPL lower-third shows GEEK and AE at 0 VS 0 with a small studio-panel inset. No game clock or 00:00 is visible. Same webcam interview and MPL overlay; GEEK and AE remain at 0 VS 0, with a studio-panel inset. No game clock or 00:00 is visible. Webcam interview continues; MPL overlay still shows GEEK and AE at 0 VS 0 with a studio-panel inset. No game clock or 00:00 is visible. Webcam interview with GEEK and AE at 0 VS 0; the inset changes to a group of players. Ticker mentions MATCH 1/NAVI, but no game clock or 00:00 is visible. Webcam interview with GEEK and AE at 0 VS 0; inset shows players embracing. Video-player controls show a playback timestamp, not a game clock; no 00:00 is visible.",
-      "limitations": "Still images cannot prove a continuous transition. The game-1 start is only supported when a draft/zero-clock state is visibly present; a pre-match countdown is not a start.",
+      "limitations": "Still images cannot prove a continuous transition. The game-1 start is only supported when a draft/zero-clock state is visibly present; a pre-match countdown is not a start. Under the first-visible-HUD standard, a boundary may instead be promoted from the first frame showing gameplay, a supported same-frame team pairing, a running non-00:00 clock and game1_started=true; because the broadcast cuts in after the start, the inferred start seconds are derived from the clock reading and are not visually verified.",
       "related_observation": null,
       "status_effect": "partial_context_only"
     },
@@ -92627,7 +92636,7 @@
       },
       "disposition": "context-only",
       "observation": "Draft/analysis graphic over a player cam; headers read Erpang on the left and Honjaw on the right, with ten player cards; no scoreboard, match label, game clock, 00:00, or 1655s marker. Analysis comparison screen with five top and five bottom player cams; TL and GEEK logos flank zeroed stat bars; video progress text at bottom; no game clock, 00:00, or 1655s marker. In-game spectator feed; top scoreboard shows GEEK vs TLID at 01:36 with 0-0 kills/towers and 5.0K vs 4.5K gold; match label SEASON 18 MATCH 3 | GAME 1; no 00:00 or 1655s marker. In-game spectator feed; top scoreboard shows GEEK vs TLID at 01:53 with 0-0 kills/towers and 5.6K vs 5.3K gold (GEEK +309); same match label; no 00:00 or 1655s marker.",
-      "limitations": "Still images cannot prove a continuous transition. The game-1 start is only supported when a draft/zero-clock state is visibly present; a pre-match countdown is not a start.",
+      "limitations": "Still images cannot prove a continuous transition. The game-1 start is only supported when a draft/zero-clock state is visibly present; a pre-match countdown is not a start. Under the first-visible-HUD standard, a boundary may instead be promoted from the first frame showing gameplay, a supported same-frame team pairing, a running non-00:00 clock and game1_started=true; because the broadcast cuts in after the start, the inferred start seconds are derived from the clock reading and are not visually verified.",
       "related_observation": "related frames: pairing=supported; scene=gameplay; teams=['GEEK', 'TLID']; Pre-game player-cam stat comparison; TLID horse crest and GEEK logo are visible; all stat bars read 0.00; no clock. Pre-game hero lineup and stat comparison; TLID crest and GEEK logo; no clock. Pre-game hero lineup and stat comparison; TLID crest and GEEK logo; no clock. Pre-game hero lineup and sta",
       "status_effect": "partial_context_only"
     },
@@ -92667,7 +92676,7 @@
       },
       "disposition": "context-only",
       "observation": "In-game observer feed for DEWA vs RRQ. Top-center game clock reads 04:38, not 00:00; scoreboard 2-0; kill feed banner 'HAS SLAIN'; team side panels show DEWA (left) and RRQ (right). No 00:00 appears anywhere in the frame, so DEWA/RRQ are not paired with a 00:00 game clock. Wide venue/stage shot with a lit walkway, large screen and banners, audience silhouettes. No game feed, no team overlay, no game clock or countdown of any kind; only the video player's own elapsed/total time is shown. Player camera with on-screen versus overlay: DEWA 0 vs RRQ 0, game tag and 'BEST OF 5'. A DEWA-jerseyed player sits at a station. No game clock or countdown is displayed; no 00:00 anywhere in the frame. Second player camera with the same DEWA 0 vs RRQ 0 versus overlay and game tag, 'ROAD TO SURABAYA' logo, and an Indonesian audience poll banner ('APA YANG RRQ BUTUHKAN UNTUK MENANG ATAS DEWA?') with three options at 26/47/27%. No game clock or countdown; no 00:00 anywhere in the frame.",
-      "limitations": "Still images cannot prove a continuous transition. The game-1 start is only supported when a draft/zero-clock state is visibly present; a pre-match countdown is not a start.",
+      "limitations": "Still images cannot prove a continuous transition. The game-1 start is only supported when a draft/zero-clock state is visibly present; a pre-match countdown is not a start. Under the first-visible-HUD standard, a boundary may instead be promoted from the first frame showing gameplay, a supported same-frame team pairing, a running non-00:00 clock and game1_started=true; because the broadcast cuts in after the start, the inferred start seconds are derived from the clock reading and are not visually verified.",
       "related_observation": null,
       "status_effect": "partial_context_only"
     },
@@ -92843,7 +92852,7 @@
       },
       "disposition": "context-only",
       "observation": "In-game top-down gameplay feed with no broadcast HUD or clock; EVOS and NAVI player nameplates are visible. No team scoreboard, match label, or 00:00 is visible. Broadcast HUD at 01:01 with EVOS on the left and NAVI on the right; score counters read 0-0 and gold reads 2.9K vs 2.8K. A SEASON 10 header and EMBLEM overlay are present, but no 00:00. Broadcast HUD at 02:21 with EVOS left and NAVI right; score counters read 0-0 and gold reads 6.4K vs 6.2K. Player-cam lower thirds and LEVEL 4 graphics are visible, but no 00:00. Broadcast HUD at 02:35 with EVOS left and NAVI right; score counters read 0-1 and gold reads 6.8K vs 7.2K. A FIRST BLOOD lower third names KARSS with 1/0/0; no 00:00 is visible.",
-      "limitations": "Still images cannot prove a continuous transition. The game-1 start is only supported when a draft/zero-clock state is visibly present; a pre-match countdown is not a start.",
+      "limitations": "Still images cannot prove a continuous transition. The game-1 start is only supported when a draft/zero-clock state is visibly present; a pre-match countdown is not a start. Under the first-visible-HUD standard, a boundary may instead be promoted from the first frame showing gameplay, a supported same-frame team pairing, a running non-00:00 clock and game1_started=true; because the broadcast cuts in after the start, the inferred start seconds are derived from the clock reading and are not visually verified.",
       "related_observation": "related frames: pairing=supported; scene=gameplay; teams=['EVOS', 'NAVI']; Ten-player camera grid with five upper and five lower POV feeds; no HUD, scoreboard, match label, team wordmarks, or clock; no literal 00:00 and no EVOS vs NAVI pairing. Draft/stat comparison screen with ten hero portraits, player names, a left tiger crest, and a right NAVI wordmark; no clock, score",
       "status_effect": "partial_context_only"
     },
@@ -92989,7 +92998,7 @@
       },
       "disposition": "context-only",
       "observation": "Draft/analysis frame with caster labels Honjaw and Coach Right, DRAFT IDENTITY and DRAFT DNA graphics, and player-cam panels; no game HUD, scoreboard, or clock is visible. In-game feed at 00:46 with TLID left and DEWA right; the top-right label reads Season 18 Match 5 - Game 1. An EMBLEM lower-third and video controls are visible, but the game clock is not 00:00. In-game feed at 01:36 with TLID left and DEWA right; the top-right label shows Season 18 Match 5 - Game 1. No 00:00 game clock is visible. In-game feed at 02:04 with TLID left and DEWA right; the top-right label shows Season 18 Match 5 - Game 1. A TODAK overlay is visible, but no 00:00 game clock appears.",
-      "limitations": "Still images cannot prove a continuous transition. The game-1 start is only supported when a draft/zero-clock state is visibly present; a pre-match countdown is not a start.",
+      "limitations": "Still images cannot prove a continuous transition. The game-1 start is only supported when a draft/zero-clock state is visibly present; a pre-match countdown is not a start. Under the first-visible-HUD standard, a boundary may instead be promoted from the first frame showing gameplay, a supported same-frame team pairing, a running non-00:00 clock and game1_started=true; because the broadcast cuts in after the start, the inferred start seconds are derived from the clock reading and are not visually verified.",
       "related_observation": "related frames: pairing=supported; scene=gameplay; teams=['DEWA', 'TLID']; Pre-match five-vs-five hero and stat comparison; player names, six stat bars, DEWA United logo on the right; no game HUD, clock, or TLID label. Pre-match hero/stat comparison with updated values and lit player icons; DEWA United logo right; no HUD clock or TLID label. Pre-match hero/stat comparison ",
       "status_effect": "partial_context_only"
     },
@@ -93029,7 +93038,7 @@
       },
       "disposition": "context-only",
       "observation": "Broadcast close-up with a 0-0 Vitality vs Dewa scoreboard labelled MD1 - Game 1, Best of 3, plus a Top 5 Jungler GPM graphic; no game clock or countdown in frame. Stage/player-cam shot with draft board; the center lower third shows Dewa against BTR under Match 10 - Game 1, no numeric score or timer. Over-the-shoulder shot of hands on a phone showing Mobile Legends gameplay; Fandom War bar reads Dewa 42 and BTR 169, with Match 10 - Game 1 in the lower third. Player close-up with headset; Fandom War bar reads Dewa 190 and BTR 279, and the lower third keeps Match 10 - Game 1 with hero lineups; no clock.",
-      "limitations": "Still images cannot prove a continuous transition. The game-1 start is only supported when a draft/zero-clock state is visibly present; a pre-match countdown is not a start.",
+      "limitations": "Still images cannot prove a continuous transition. The game-1 start is only supported when a draft/zero-clock state is visibly present; a pre-match countdown is not a start. Under the first-visible-HUD standard, a boundary may instead be promoted from the first frame showing gameplay, a supported same-frame team pairing, a running non-00:00 clock and game1_started=true; because the broadcast cuts in after the start, the inferred start seconds are derived from the clock reading and are not visually verified.",
       "related_observation": null,
       "status_effect": "partial_context_only"
     },
@@ -93069,7 +93078,7 @@
       },
       "disposition": "context-only",
       "observation": "Player portrait against a pale logo backdrop; the player wears a NAVI jersey and a red vertical name banner is visible. No match HUD, scoreboard, or clock. Stage introduction showing five NAVI players beneath a hanging NAVI banner and a large screen. No match HUD, scoreboard, or clock is visible. Player cam with a broadcast HUD showing NAVI 0 versus GEEK 0, GAME 1, BEST OF 3, and a drafting countdown of 02:20. No 00:00 game clock is present. Player cam with the same NAVI 0 versus GEEK 0 HUD, GAME 1, BEST OF 3, and a drafting countdown of 01:30. A Top 5 Roamer graphic occupies the lower third. No 00:00 game clock is present.",
-      "limitations": "Still images cannot prove a continuous transition. The game-1 start is only supported when a draft/zero-clock state is visibly present; a pre-match countdown is not a start.",
+      "limitations": "Still images cannot prove a continuous transition. The game-1 start is only supported when a draft/zero-clock state is visibly present; a pre-match countdown is not a start. Under the first-visible-HUD standard, a boundary may instead be promoted from the first frame showing gameplay, a supported same-frame team pairing, a running non-00:00 clock and game1_started=true; because the broadcast cuts in after the start, the inferred start seconds are derived from the clock reading and are not visually verified.",
       "related_observation": null,
       "status_effect": "partial_context_only"
     },
@@ -93145,7 +93154,7 @@
       },
       "disposition": "context-only",
       "observation": "Split-screen live lane view rather than the main broadcast scoreboard. Left panel labels NAVI Andoryuu at level 1; right panel labels BTR Nnael at level 1. Infinix boards and a central MPL crest are visible. No game clock, scoreboard, series score, or 00:00 appears. Main broadcast spectator scoreboard view. NAVI shows 0 kills, 0 towers, 3.1K gold; BTR shows 0 kills, 0 towers, 3.3K gold. The center game clock reads 01:09, not 00:00. The top-right banner includes MPL Season 14 Grand Finals Best of 5 text. In-game labels include NAVI Zoro and BTR EMANN, with full item and player panels visible. Full broadcast spectator view with YouTube controls. NAVI shows 0 kills, 0 towers, 4.8K gold; BTR shows 0 kills, 0 towers, 4.5K gold. The center game clock reads 01:49; no 00:00 appears. In-game labels include BTR Finn and NAVI Apolo. The player overlay shows 46:01 / 5:07:15 and 'Pada video ini'. Broadcast spectator teamfight view with two player cameras. NAVI shows 1 kill, 0 towers, 6.4K gold; BTR shows 0 kills, 0 towers, 6.3K gold. The center game clock reads 02:29; no 00:00 appears. Player cams are labeled JiJiEZ and MORENOOO with HEART RATE values visible. Broadcast spectator view with play",
-      "limitations": "Still images cannot prove a continuous transition. The game-1 start is only supported when a draft/zero-clock state is visibly present; a pre-match countdown is not a start.",
+      "limitations": "Still images cannot prove a continuous transition. The game-1 start is only supported when a draft/zero-clock state is visibly present; a pre-match countdown is not a start. Under the first-visible-HUD standard, a boundary may instead be promoted from the first frame showing gameplay, a supported same-frame team pairing, a running non-00:00 clock and game1_started=true; because the broadcast cuts in after the start, the inferred start seconds are derived from the clock reading and are not visually verified.",
       "related_observation": "related frames: pairing=supported; scene=gameplay; teams=['BTR', 'NAVI', 'ONIC']; Draft analysis screen for VITALITY vs ONIC with ten hero portraits, player handles, and a stat-comparison panel; no clock or score. Draft/lineup screen with ten hero portraits and player handles; no team logos, match label, scoreboard, or clock. Two rows of player webcam feeds labeled with the ten p",
       "status_effect": "partial_context_only"
     },
@@ -93187,7 +93196,7 @@
       },
       "disposition": "context-only",
       "observation": "Close-up of a seated player with headset; top-left pre-game scoreboard shows a 0-0 series score, GAME 1, and BEST OF 3. No game clock or countdown is visible; team names are not rendered, only logos. Crowd shot with two handwritten fan signs; the same top-left 0-0 pre-game scoreboard is present. DEWA appears on the signs, but GEEK is not named. No game clock or countdown is visible. Draft/player-cam frame. The bottom HUD names DEWA and GEEK together with MATCH 1 - GAME 1 and BROKEN WALLS. No game clock or 00:00 is visible. Player-cam with a DRAFT IDENTITY / DRAFT DNA analysis HUD. Team logos are present, but team names are not legible; there is no game clock or countdown. Crowd/player-cam with the same DRAFT IDENTITY / DRAFT DNA analysis HUD. Team logos are present, but no legible DEWA/GEEK pairing and no game clock or countdown is visible.",
-      "limitations": "Still images cannot prove a continuous transition. The game-1 start is only supported when a draft/zero-clock state is visibly present; a pre-match countdown is not a start.",
+      "limitations": "Still images cannot prove a continuous transition. The game-1 start is only supported when a draft/zero-clock state is visibly present; a pre-match countdown is not a start. Under the first-visible-HUD standard, a boundary may instead be promoted from the first frame showing gameplay, a supported same-frame team pairing, a running non-00:00 clock and game1_started=true; because the broadcast cuts in after the start, the inferred start seconds are derived from the clock reading and are not visually verified.",
       "related_observation": null,
       "status_effect": "partial_context_only"
     },
@@ -93279,7 +93288,7 @@
       },
       "disposition": "context-only",
       "observation": "In-game Mobile Legends game feed at 02:05 with NAVI and ONIC top bars; early river/jungle skirmish; no 00:00 clock. In-game game feed at 03:45 with NAVI/ONIC; mid-jungle stun fight and player cams; no 00:00 clock. In-game game feed at 05:25 with an item-build overlay and mid-lane fight; NAVI/ONIC; no 00:00 clock. In-game game feed at 07:05 near the jungle/base with stunned heroes; NAVI/ONIC; no 00:00 clock. In-game game feed at 08:45 at the Lord pit with a 'Lord Spawned' banner; NAVI/ONIC; no 00:00 clock.",
-      "limitations": "Still images cannot prove a continuous transition. The game-1 start is only supported when a draft/zero-clock state is visibly present; a pre-match countdown is not a start.",
+      "limitations": "Still images cannot prove a continuous transition. The game-1 start is only supported when a draft/zero-clock state is visibly present; a pre-match countdown is not a start. Under the first-visible-HUD standard, a boundary may instead be promoted from the first frame showing gameplay, a supported same-frame team pairing, a running non-00:00 clock and game1_started=true; because the broadcast cuts in after the start, the inferred start seconds are derived from the clock reading and are not visually verified.",
       "related_observation": "related frames: pairing=supported; scene=pre-match; teams=['NAVI', 'ONIC']; Pregame lineup/stat comparison screen with five player handles per side; left NAVI wordmark and unlabeled eagle crest. No match label, scoreboard, game clock, countdown, or literal 00:00. Same pregame lineup/stat comparison screen; player handles and hero portraits only. No match label, scoreboard, ",
       "status_effect": "partial_context_only"
     },
@@ -93321,7 +93330,7 @@
       },
       "disposition": "context-only",
       "observation": "Stage scene with several people in dark jerseys before a large LED screen. The top-left overlay shows 0-0, a left shield logo, VS, BEST OF 1, and an AE logo on the right. No game HUD or clock is visible. Close-up of a seated player wearing a headset in a gaming chair. The same top-left 0-0 overlay with VS, BEST OF 1, and AE is visible, plus an IndiHome banner at upper right. No game HUD or clock. Draft-analysis overlay across the bottom: rosters headed Honjaw and Xepher flank a central DRAFT IDENTITY / DRAFT DNA panel. A player with a headset is seated before a red graphic background. No match scoreboard or clock. Draft overlay continues with a hand holding a phone that displays a grid of portraits in the lower-left inset. Banners read COMBO WOMBO, DRAFT IDENTITY, DRAFT DNA, and SUSTAIN & TEAMFIGHT; side headers Honjaw and Xepher. No clock. Wide shot of an audience clapping while the draft overlay remains: COMBO WOMBO, DRAFT IDENTITY, DRAFT DNA, and PROTECT THE VIP, with side headers Honjaw and Xepher and 5.9-5.9 in the center. No game clock.",
-      "limitations": "Still images cannot prove a continuous transition. The game-1 start is only supported when a draft/zero-clock state is visibly present; a pre-match countdown is not a start.",
+      "limitations": "Still images cannot prove a continuous transition. The game-1 start is only supported when a draft/zero-clock state is visibly present; a pre-match countdown is not a start. Under the first-visible-HUD standard, a boundary may instead be promoted from the first frame showing gameplay, a supported same-frame team pairing, a running non-00:00 clock and game1_started=true; because the broadcast cuts in after the start, the inferred start seconds are derived from the clock reading and are not visually verified.",
       "related_observation": null,
       "status_effect": "partial_context_only"
     },
@@ -93361,7 +93370,7 @@
       },
       "disposition": "context-only",
       "observation": "Stage/player-camera segment with an AE vs EVOS lower-third matchup graphic; no game HUD, game clock, or 00:00 is visible. Animated trophy-and-flags tournament bumper with VOD controls; no teams, match label, or game clock is visible. Full-screen AE vs EVOS gameplay with a 3–0 scoreboard and 03:28 game clock; no 00:00 is visible. Full-screen AE vs EVOS gameplay with a 4–2 scoreboard, 06:59 game clock, and VOD timestamp; no 00:00 is visible.",
-      "limitations": "Still images cannot prove a continuous transition. The game-1 start is only supported when a draft/zero-clock state is visibly present; a pre-match countdown is not a start.",
+      "limitations": "Still images cannot prove a continuous transition. The game-1 start is only supported when a draft/zero-clock state is visibly present; a pre-match countdown is not a start. Under the first-visible-HUD standard, a boundary may instead be promoted from the first frame showing gameplay, a supported same-frame team pairing, a running non-00:00 clock and game1_started=true; because the broadcast cuts in after the start, the inferred start seconds are derived from the clock reading and are not visually verified.",
       "related_observation": null,
       "status_effect": "partial_context_only"
     },
@@ -93451,7 +93460,7 @@
       },
       "disposition": "context-only",
       "observation": "Pre-game stage/player-cam frame. The top-left overlay shows a 0-0 series score, GAME 1 and BEST OF 3 between team logos; the two zeros are scores, and no game clock or countdown is visible. Draft-room screen headed DRAFT IDENTITY with DRAFT DNA comparison panels, two five-player lineups and coaches; no game clock, scoreboard, or legible NAVI/DEWA label. Split-screen in-game hero close-up. The left HUD reads NAVI Joshuaa and the right HUD reads DEWA Hazle; center MPL Invitational emblem and gopay/Infinix sponsor marks. No game clock or scoreboard is visible. Full in-game spectator HUD showing NAVI vs DEWA, 0-0 with 5.6K gold each, and game clock 02:10. Top-right reads MPL Invitational Season 11 / Best of 3; no 00:00.",
-      "limitations": "Still images cannot prove a continuous transition. The game-1 start is only supported when a draft/zero-clock state is visibly present; a pre-match countdown is not a start.",
+      "limitations": "Still images cannot prove a continuous transition. The game-1 start is only supported when a draft/zero-clock state is visibly present; a pre-match countdown is not a start. Under the first-visible-HUD standard, a boundary may instead be promoted from the first frame showing gameplay, a supported same-frame team pairing, a running non-00:00 clock and game1_started=true; because the broadcast cuts in after the start, the inferred start seconds are derived from the clock reading and are not visually verified.",
       "related_observation": "related frames: pairing=supported; scene=gameplay; teams=['DEWA', 'NAVI']; Pre-game lineup comparison showing NAVI and DEWA UNITED rosters with stat bars; no scoreboard, clock, countdown, or literal 00:00 is visible. Second ordered frame shows the same pre-game lineup comparison for NAVI and DEWA UNITED; no scoreboard, clock, countdown, or literal 00:00 is visible. Third o",
       "status_effect": "partial_context_only"
     },
@@ -93493,7 +93502,7 @@
       },
       "disposition": "context-only",
       "observation": "Player-cam shot with a team lower third; RRO and NAVI appear with logos, but no game clock or 00:00 is shown. Player cam with a FANDOM WAR poll showing 309-151 and a MATCH 3 - GAME 1 lower third; no game clock or 00:00 appears. Audience shot behind a DRAFT IDENTITY / DRAFT DNA overlay; team sides appear as logos, with no match number, clock, or 00:00. Wide stage shot showing the MPL ID S18 WE OWN THIS screen; no teams, match label, clock, or 00:00 is visible. In-game feed with an RRO/NAVI scoreboard, 0-0 kills, 6.0K/6.1K gold, and a 02:20 game clock; RRQ Joshua text is visible, but the clock is not 00:00.",
-      "limitations": "Still images cannot prove a continuous transition. The game-1 start is only supported when a draft/zero-clock state is visibly present; a pre-match countdown is not a start.",
+      "limitations": "Still images cannot prove a continuous transition. The game-1 start is only supported when a draft/zero-clock state is visibly present; a pre-match countdown is not a start. Under the first-visible-HUD standard, a boundary may instead be promoted from the first frame showing gameplay, a supported same-frame team pairing, a running non-00:00 clock and game1_started=true; because the broadcast cuts in after the start, the inferred start seconds are derived from the clock reading and are not visually verified.",
       "related_observation": null,
       "status_effect": "partial_context_only"
     },
@@ -93577,7 +93586,7 @@
       },
       "disposition": "context-only",
       "observation": "Close-up of a player holding a phone, with an Infinix/IndiHome sponsor card; no match label, team pairing, scoreboard, or clock is visible. Player close-up beneath a scoreboard showing GEEK 0-0 ONIC, labeled GAME 1 and BEST OF 3; no game clock or countdown is visible. Audience wide shot with a draft/loading overlay showing GEEK vs ONIC and MATCH 34 - GAME 1; no game clock or countdown is visible. In-game feed showing GEEK vs ONIC with a 01:20 game clock and 0-0 score; no 00:00 is visible.",
-      "limitations": "Still images cannot prove a continuous transition. The game-1 start is only supported when a draft/zero-clock state is visibly present; a pre-match countdown is not a start.",
+      "limitations": "Still images cannot prove a continuous transition. The game-1 start is only supported when a draft/zero-clock state is visibly present; a pre-match countdown is not a start. Under the first-visible-HUD standard, a boundary may instead be promoted from the first frame showing gameplay, a supported same-frame team pairing, a running non-00:00 clock and game1_started=true; because the broadcast cuts in after the start, the inferred start seconds are derived from the clock reading and are not visually verified.",
       "related_observation": "related frames: pairing=supported; scene=gameplay; teams=['GEEK', 'ONIC']; Pre-match lineup comparison screen: GEEK roster portraits and player names, central stat bars, and GEEK vs a black eagle-logo opponent; no game clock or match pairing text. Same pre-match lineup comparison screen as image 0: GEEK roster portraits, central stat bars, and eagle-logo opponent; no game ",
       "status_effect": "partial_context_only"
     },
@@ -93617,7 +93626,7 @@
       },
       "disposition": "context-only",
       "observation": "Close-up of a seated player during the draft phase; the score bug shows 0-0 with a 15:29 draft-pick countdown and no game clock. Wide stage shot of three desk talents; the score bug remains 0-0 with a 10:29 draft-pick countdown and no game clock. Stage desk shot with a lower-third banner and player-cam screen; the score bug is 0-0 with a 07:09 draft-pick countdown, and no 00:00 game clock appears. Several players stand on stage near MPL ID and season banners; only YouTube playback controls and a video timestamp are visible, with no score bug or game clock.",
-      "limitations": "Still images cannot prove a continuous transition. The game-1 start is only supported when a draft/zero-clock state is visibly present; a pre-match countdown is not a start.",
+      "limitations": "Still images cannot prove a continuous transition. The game-1 start is only supported when a draft/zero-clock state is visibly present; a pre-match countdown is not a start. Under the first-visible-HUD standard, a boundary may instead be promoted from the first frame showing gameplay, a supported same-frame team pairing, a running non-00:00 clock and game1_started=true; because the broadcast cuts in after the start, the inferred start seconds are derived from the clock reading and are not visually verified.",
       "related_observation": null,
       "status_effect": "partial_context_only"
     },
@@ -93735,7 +93744,7 @@
       },
       "disposition": "context-only",
       "observation": "Stage/player-walkout shot with two seated players wearing headsets and one standing player in a red 'Poco Good Day' jersey. No match HUD, scoreboard, match label, or clock is visible. Draft-analysis video frame showing a Carmilla pick explanation and an ONIC-vs-AE draft board with player cams and YouTube controls. No in-game clock or 00:00 is visible. Draft-identity analysis segment with two player cams and lower-third comparison panels. The ONIC/AE draft context is visible, but there is no game clock or 00:00. Split-screen in-game duel showing ONIC Kairi on the left and AE AFFAN on the right with health bars, damage numbers, and a center MPL logo. No HUD clock or scoreboard is visible. Full ONIC-vs-AE broadcast HUD in Game 1. The game clock reads 02:04; no 00:00 is visible anywhere in the frame.",
-      "limitations": "Still images cannot prove a continuous transition. The game-1 start is only supported when a draft/zero-clock state is visibly present; a pre-match countdown is not a start.",
+      "limitations": "Still images cannot prove a continuous transition. The game-1 start is only supported when a draft/zero-clock state is visibly present; a pre-match countdown is not a start. Under the first-visible-HUD standard, a boundary may instead be promoted from the first frame showing gameplay, a supported same-frame team pairing, a running non-00:00 clock and game1_started=true; because the broadcast cuts in after the start, the inferred start seconds are derived from the clock reading and are not visually verified.",
       "related_observation": "related frames: pairing=supported; scene=gameplay; teams=['AE', 'ONIC']; YouTube playback collage of player cams: upper row has five labels, lower row is partly covered by the video controls; progress timestamps are visible. Full-screen Infinix sponsor bumper over a bright outdoor game-map backdrop. Full-screen Infinix sponsor bumper over game-map rooftops. Animated whit",
       "status_effect": "partial_context_only"
     },
@@ -93775,7 +93784,7 @@
       },
       "disposition": "context-only",
       "observation": "Studio scoreboard frame with casters and a stylized map/item-card graphic. Large countdown reads 19:23. Highlighted Match 16 is GEEK 0 vs 0 EVOS at 20:15 WIB. No ONIC, BTR, or 00:00 is visible. Studio scoreboard frame with casters over a dark in-game arena/map view. Large countdown reads 09:23. Highlighted Match 16 is GEEK 0 vs 0 EVOS at 20:15 WIB. No ONIC, BTR, or 00:00 is visible. Studio scoreboard frame with casters over an AQUA smart-home living-room advert scene. Large countdown reads 07:23. Highlighted Match 16 is GEEK 0 vs 0 EVOS at 20:15 WIB. No ONIC, BTR, or 00:00 is visible. Next-match preview with player portraits for GEEK and EVOS. Large countdown reads 02:23 beside a NEXT MATCH label. Match 16, GEEK vs EVOS, Best of 3, 20:15 WIB. No ONIC, BTR, or 00:00 is visible.",
-      "limitations": "Still images cannot prove a continuous transition. The game-1 start is only supported when a draft/zero-clock state is visibly present; a pre-match countdown is not a start.",
+      "limitations": "Still images cannot prove a continuous transition. The game-1 start is only supported when a draft/zero-clock state is visibly present; a pre-match countdown is not a start. Under the first-visible-HUD standard, a boundary may instead be promoted from the first frame showing gameplay, a supported same-frame team pairing, a running non-00:00 clock and game1_started=true; because the broadcast cuts in after the start, the inferred start seconds are derived from the clock reading and are not visually verified.",
       "related_observation": null,
       "status_effect": "partial_context_only"
     },
@@ -93815,7 +93824,7 @@
       },
       "disposition": "context-only",
       "observation": "Pre-game/draft segment with split player cams for NNAEL and KEVIN. Top HUD shows VITALITY against an illegible opponent, 0-0, M5 - GAME 1, VS BEST OF 3, and a draft-pick countdown of 03:19. No 00:00 game clock. Draft-phase frame with a player cam and pick panel. TLID and BTR are paired in the lower overlay under MATCH 45 - GAME 1. No score or game clock/00:00 is visible. Player cam with a FANDOM WAR banner and draft pick panel. Top vote tally reads TLID 202 and BTR 95. Lower overlay pairs TLID and BTR under MATCH 45 - GAME 1. No 00:00 game clock. Pre-game draft-analysis frame with a player cam and DRAFT IDENTITY / DRAFT DNA graphics. No BTR or TLID text, no match label, and no 00:00 game clock.",
-      "limitations": "Still images cannot prove a continuous transition. The game-1 start is only supported when a draft/zero-clock state is visibly present; a pre-match countdown is not a start.",
+      "limitations": "Still images cannot prove a continuous transition. The game-1 start is only supported when a draft/zero-clock state is visibly present; a pre-match countdown is not a start. Under the first-visible-HUD standard, a boundary may instead be promoted from the first frame showing gameplay, a supported same-frame team pairing, a running non-00:00 clock and game1_started=true; because the broadcast cuts in after the start, the inferred start seconds are derived from the clock reading and are not visually verified.",
       "related_observation": null,
       "status_effect": "partial_context_only"
     },
@@ -93893,7 +93902,7 @@
       },
       "disposition": "context-only",
       "observation": "Stage walk-in with players in front of a large screen and audience. The top overlay shows ALTER EGO vs DEWA UNITED at 0-0 for M46 GAME 1, BEST OF 3, with a 02:22 DRAFT PICK IN countdown; no game clock or 00:00 is visible. Draft-analysis screen with a player cam. The bottom draft strip shows DEWA and AE logos, with Coach Right and Kheper labels and hero picks. No scoreboard, match label, game clock, or 00:00 is visible. On-stage draft analysis with player cams. The DRAFT IDENTITY / DRAFT DNA panel shows TEAMFIGHT 5.6, MAP CONTROL 6.7, and WIN TIMING LATE/LATE. No game clock or 00:00 is visible; team names are not clearly legible. In-game match feed with DEWA on the left and AE on the right. The game clock reads 01:50; the scoreboard shows 0-0 kills and about 5.4K-5.5K gold. No 00:00 is visible.",
-      "limitations": "Still images cannot prove a continuous transition. The game-1 start is only supported when a draft/zero-clock state is visibly present; a pre-match countdown is not a start.",
+      "limitations": "Still images cannot prove a continuous transition. The game-1 start is only supported when a draft/zero-clock state is visibly present; a pre-match countdown is not a start. Under the first-visible-HUD standard, a boundary may instead be promoted from the first frame showing gameplay, a supported same-frame team pairing, a running non-00:00 clock and game1_started=true; because the broadcast cuts in after the start, the inferred start seconds are derived from the clock reading and are not visually verified.",
       "related_observation": "related frames: pairing=supported; scene=gameplay; teams=['AE', 'DEWA']; Two rows of five player-camera feeds with player names beneath; no scoreboard, match label, clock, countdown, or legible team names. No 00:00 and no AE/DEWA visible. Two rows of five player-camera feeds with the same player names; slight motion differs from the prior frame. No scoreboard, match labe",
       "status_effect": "partial_context_only"
     },
@@ -93935,7 +93944,7 @@
       },
       "disposition": "context-only",
       "observation": "Pre-match studio segment with two presenters; overlay shows 0-0, M56 - GAME 1, BEST OF 3, and a DRAFT PICK IN 12:26 countdown; ONIC and NAVI appear in the lower ticker; no 00:00 game clock. Three-person analyst desk on stage; overlay repeats 0-0, M56 - GAME 1, BEST OF 3, and DRAFT PICK IN 07:26; ONIC/NAVI logos only; no 00:00 game clock. Stage walkout/handshake with five players; overlay shows 0-0, M56 - GAME 1, BEST OF 3, and DRAFT PICK IN 02:25; team identities appear via logos/jerseys; no 00:00 game clock. Close-up of a seated player wearing a headset; top overlay shows 0-0, M56 - GAME 1, and BEST OF 3; no clock or countdown; team names are not legible. In-game feed with player cam; top bar shows ONIC 462 and NAVI 197; bottom HUD says MATCH 56 - GAME 1 and ONIC vs NAVI; no game clock or 00:00 visible.",
-      "limitations": "Still images cannot prove a continuous transition. The game-1 start is only supported when a draft/zero-clock state is visibly present; a pre-match countdown is not a start.",
+      "limitations": "Still images cannot prove a continuous transition. The game-1 start is only supported when a draft/zero-clock state is visibly present; a pre-match countdown is not a start. Under the first-visible-HUD standard, a boundary may instead be promoted from the first frame showing gameplay, a supported same-frame team pairing, a running non-00:00 clock and game1_started=true; because the broadcast cuts in after the start, the inferred start seconds are derived from the clock reading and are not visually verified.",
       "related_observation": null,
       "status_effect": "partial_context_only"
     },
@@ -94035,7 +94044,7 @@
       },
       "disposition": "context-only",
       "observation": "Top-down live game feed with EVOS on the left and DEWA on the right; the game clock reads 00:58. Heroes are active in the river/jungle area near the large pit. No 00:00 clock or draft/lobby view is present. Live game feed at 05:58; EVOS and DEWA are on the HUD, heroes are fighting in a river/jungle skirmish, and RENDYY/GINN player cams are visible along the bottom. No 00:00 clock is present. Live game feed at 09:58; EVOS and DEWA are on the HUD, clustered heroes fight in river brush with a large green ring effect, and RENDYY/GINN cams are visible. No 00:00 clock is present. Live game feed at 19:58; EVOS and DEWA are on the HUD, a DOUBLE KILL banner appears over a teamfight near base walls, and RENDYY/GINN cams are visible. No 00:00 clock is present.",
-      "limitations": "Still images cannot prove a continuous transition. The game-1 start is only supported when a draft/zero-clock state is visibly present; a pre-match countdown is not a start.",
+      "limitations": "Still images cannot prove a continuous transition. The game-1 start is only supported when a draft/zero-clock state is visibly present; a pre-match countdown is not a start. Under the first-visible-HUD standard, a boundary may instead be promoted from the first frame showing gameplay, a supported same-frame team pairing, a running non-00:00 clock and game1_started=true; because the broadcast cuts in after the start, the inferred start seconds are derived from the clock reading and are not visually verified.",
       "related_observation": "related frames: pairing=supported; scene=draft; teams=['DEWA', 'EVOS']; Split player-cam view over a draft HUD: EVOS and DEWA on opposite sides with 'MATCH 03 - GAME 1' and 'MPL ID SEASON 18'; player-cam labels 'Aldo' and 'Coach Right'. No game clock or literal 00:00 is visible. Close-up of a player in a black jacket reading 'CULTURED BY TODAK' with a 'CREW' patch; no b",
       "status_effect": "partial_context_only"
     },
@@ -94125,7 +94134,7 @@
       },
       "disposition": "context-only",
       "observation": "Stage host with a handheld mic; the broadcast scoreboard shows RRQ 1-1 ONIC, M6 Game 3, Best of 3, and a 04:28 draft-pick countdown. No in-game HUD, no game clock, and no 00:00. Close-up of a phone held over a player's lap showing the hero-selection/draft screen; lower-third DRAFT IDENTITY/DRAFT DNA graphics. No scoreboard or confirmed RRQ-ONIC pairing; the small phone timer reads 00:22, not a game clock 00:00. In-game Mobile Legends spectator HUD with ONIC on the blue side and RRQ on the red side; 01:42 game clock, 0-0 kills, 4.7K-4.6K gold. No 00:00. In-game Mobile Legends spectator HUD with ONIC on the blue side and RRQ on the red side; 05:02 game clock, 3-0 kills, 14.5K-12.3K gold, and an 'Outer Turret Energy Shield Dropped' notice. No 00:00.",
-      "limitations": "Still images cannot prove a continuous transition. The game-1 start is only supported when a draft/zero-clock state is visibly present; a pre-match countdown is not a start.",
+      "limitations": "Still images cannot prove a continuous transition. The game-1 start is only supported when a draft/zero-clock state is visibly present; a pre-match countdown is not a start. Under the first-visible-HUD standard, a boundary may instead be promoted from the first frame showing gameplay, a supported same-frame team pairing, a running non-00:00 clock and game1_started=true; because the broadcast cuts in after the start, the inferred start seconds are derived from the clock reading and are not visually verified.",
       "related_observation": "related frames: pairing=supported; scene=gameplay; teams=['ONIC', 'RRQ']; Full-screen Infinix sponsor splash over a stylized landscape; no match HUD, teams, scoreboard, or clock. Blurred transition of the Infinix sponsor splash; presenter line is fragmented and no HUD or teams are visible. Animated chibi character splash on a landscape background; no legible text, teams, ",
       "status_effect": "partial_context_only"
     },
@@ -94167,7 +94176,7 @@
       },
       "disposition": "context-only",
       "observation": "Patch-notes graphic with hero cards for Aulus, Hirara, Fudora, and Rafaela; no gameplay HUD or game clock. A bottom-right strip shows 0 VS 0 beside a gold league-style badge and an orange RRQ logo. NAVI appears only in the footer award text. Player close-up in a headset. Top-left scorebug shows 0 VS 0 with a gold badge and an orange RRQ logo; the small caption below VS is illegible. YouTube playback shows 50:01 / 5:35:45. No game clock or countdown. Player-cam with Infinix/FANDOM WAR top bar: RRQ NOW!!! 178 vs 68 NAVI NOW!!! and both team logos. Bottom draft-style overlay shows Coach Adi, RRQ vs NAVI, MATCH 65 - GAME 1, and hero/player panels. No game clock or 00:00. Player-cam with the same Infinix/FANDOM WAR top bar: RRQ NOW!!! 286 vs 109 NAVI NOW!!! and both team logos. Bottom overlay shows Coach Adi, RRQ vs NAVI, MATCH 65 - GAME 1, and hero/player panels. No game clock or 00:00. Player-cam/draft overlay without the top FANDOM WAR bar. Bottom overlay shows Coach Adi, RRQ vs NAVI logos, MATCH 65 - GAME 1, and hero/player panels. No game clock or 00:00.",
-      "limitations": "Still images cannot prove a continuous transition. The game-1 start is only supported when a draft/zero-clock state is visibly present; a pre-match countdown is not a start.",
+      "limitations": "Still images cannot prove a continuous transition. The game-1 start is only supported when a draft/zero-clock state is visibly present; a pre-match countdown is not a start. Under the first-visible-HUD standard, a boundary may instead be promoted from the first frame showing gameplay, a supported same-frame team pairing, a running non-00:00 clock and game1_started=true; because the broadcast cuts in after the start, the inferred start seconds are derived from the clock reading and are not visually verified.",
       "related_observation": null,
       "status_effect": "partial_context_only"
     }
@@ -94516,14 +94525,14 @@
     },
     "boundary_reviews": 62,
     "boundary_dispositions": {
-      "context-only": 41,
+      "context-only": 40,
       "inconclusive": 1,
       "rejected": 20,
-      "used": 0
+      "used": 1
     },
     "candidate_rejections": 20,
-    "visual_confirmations": 0
+    "visual_confirmations": 1
   },
-  "recomputed_at": "2026-11-04T23:21:12.319338+00:00",
-  "recompute_note": "Frame dispositions and boundary decisions recomputed from stored API observations after the negation/scene/related-frame/game-number/pre-show rules were corrected. No new API call and no new screenshot."
+  "recomputed_at": "2026-11-24T03:17:46.382867+00:00",
+  "recompute_note": "Frame dispositions and boundary decisions recomputed from stored API observations after the negation/scene/related-frame/game-number/pre-show and first-visible-HUD rules were corrected. No new API call and no new screenshot."
 }

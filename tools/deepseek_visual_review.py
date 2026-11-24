@@ -727,6 +727,75 @@ def mentions_multiple_matches(out: dict) -> bool:
     return len(labels) > 1
 
 
+def select_first_visible_hud(boundary: dict, team_a: str, team_b: str,
+                             primary_records: list[dict], related_records: list[dict]) -> dict | None:
+    """Pick the first visible-HUD anchor across the boundary's primary and related frames.
+
+    A qualifying frame shows gameplay, a supported team pairing in that same frame,
+    a running clock (matching \\d{1,2}:\\d{2}) that is not 00:00, and
+    answers.game1_started == True. The boundary's candidate_start_seconds is the
+    reviewed anchor time: a qualifying frame at that time is preferred, then the
+    earliest qualifying frame at/after it, so the anchor stays pinned to the frame
+    the reviewer actually inspected.
+    """
+    anchor_seconds = boundary.get("candidate_start_seconds")
+    candidates = []
+    for rec in list(primary_records) + list(related_records):
+        answers = rec.get("answers") or {}
+        output = {"answers": answers, "observation": rec.get("observation", ""),
+                  "visible_text": rec.get("visible_text", [])}
+        if scene_bucket(frame_scene_text(output)) != "gameplay":
+            continue
+        state, _ = classify_pairing(frame_team_text(output), team_a, team_b)
+        if state not in ("supported", "supported-with-extras"):
+            continue
+        clock = str(answers.get("clock_or_countdown") or answers.get("clock") or
+                    answers.get("clock_countdown") or "")
+        match = re.search(r"\d{1,2}:\d{2}", clock)
+        if not match or re.fullmatch(r"0{1,2}:0{2}", match.group(0)):
+            continue
+        if answers.get("game1_started") is not True:
+            continue
+        candidates.append({
+            "frame_id": rec.get("frame_id"),
+            "screenshot_sha256": rec.get("screenshot_sha256"),
+            "actual_seconds": rec.get("actual_seconds"),
+            "visible_clock": match.group(0),
+        })
+    if not candidates:
+        return None
+    if anchor_seconds is not None:
+        exact = [c for c in candidates if c["actual_seconds"] is not None and
+                 abs(c["actual_seconds"] - anchor_seconds) <= 0.001]
+        if exact:
+            chosen = exact[0]
+        else:
+            at_or_after = [c for c in candidates if c["actual_seconds"] is not None and
+                           c["actual_seconds"] >= anchor_seconds]
+            chosen = (at_or_after or candidates)[0]
+    else:
+        chosen = candidates[0]
+    minutes, seconds = chosen["visible_clock"].split(":")
+    clock_seconds = int(minutes) * 60 + int(seconds)
+    inferred = (round(chosen["actual_seconds"] - clock_seconds, 3)
+                if chosen["actual_seconds"] is not None else None)
+    note = (
+        f"First visible HUD frame with gameplay, the {team_a}/{team_b} pairing in the same frame, "
+        f"running clock {chosen['visible_clock']} and game1_started=true. The broadcast cuts in "
+        f"after the start, so the game-1 start at {inferred}s is inferred (anchor "
+        f"{chosen['actual_seconds']}s minus {clock_seconds}s of on-screen clock), not visually verified."
+    )
+    return {
+        "type": "first_visible_hud",
+        "frame_id": chosen["frame_id"],
+        "frame_sha256": chosen["screenshot_sha256"],
+        "anchor_seconds": chosen["actual_seconds"],
+        "visible_clock": chosen["visible_clock"],
+        "inferred_start_seconds": inferred,
+        "note": note,
+    }
+
+
 def decide_boundary(boundary: dict, group_outputs: list[dict], related_outputs: list[dict],
                     frame_records: list[dict], related_records: list[dict]) -> dict:
     team_a = boundary["team_a"].upper()
@@ -822,6 +891,9 @@ def decide_boundary(boundary: dict, group_outputs: list[dict], related_outputs: 
         series_disp = "inconclusive"
         series_evidence = "no legible team pairing"
 
+    first_hud = (select_first_visible_hud(boundary, team_a, team_b, frame_records, related_records)
+                 if boundary.get("promotion_requires_first_visible_hud") else None)
+
     scene_text_all = " | ".join(f["scene"] for f in per_frame if f["scene"])
     if related_best and related_best["scene"]:
         scene_text_all += " | " + related_best["scene"]
@@ -851,6 +923,15 @@ def decide_boundary(boundary: dict, group_outputs: list[dict], related_outputs: 
     elif re.search(r"\b0{1,2}:0{2}\b", clock_text):
         game1_disp = "used"
         game1_evidence = f"game clock at zero: {clock_text}"
+    elif first_hud:
+        game1_disp = "used"
+        game1_evidence = (
+            f"first-visible-HUD anchor {first_hud['frame_id']} (sha256 {first_hud['frame_sha256']}) "
+            f"shows gameplay with the {team_a}/{team_b} pairing in the same frame and running clock "
+            f"{first_hud['visible_clock']} (not 00:00); the broadcast cuts in after the start, so the "
+            f"game-1 start at {first_hud['inferred_start_seconds']}s is inferred from the clock "
+            f"reading, not visually verified."
+        )
     elif bucket == "draft":
         game1_disp = "context-only"
         game1_evidence = "draft phase visible; draft screens are confirmation only, not a 00:00 start"
@@ -907,7 +988,11 @@ def decide_boundary(boundary: dict, group_outputs: list[dict], related_outputs: 
 
     observation = " ".join(o for o in observations if o)[:1200]
     limitation = ("Still images cannot prove a continuous transition. The game-1 start is only supported "
-                  "when a draft/zero-clock state is visibly present; a pre-match countdown is not a start.")
+                  "when a draft/zero-clock state is visibly present; a pre-match countdown is not a start. "
+                  "Under the first-visible-HUD standard, a boundary may instead be promoted from the first "
+                  "frame showing gameplay, a supported same-frame team pairing, a running non-00:00 clock "
+                  "and game1_started=true; because the broadcast cuts in after the start, the inferred "
+                  "start seconds are derived from the clock reading and are not visually verified.")
     if pairing_source == "related":
         limitation += " The team pairing is confirmed by related frames at a nearby timestamp, not by the candidate frame itself."
     status_effect = "no_change"
@@ -918,7 +1003,7 @@ def decide_boundary(boundary: dict, group_outputs: list[dict], related_outputs: 
     elif overall == "context-only":
         status_effect = "partial_context_only"
 
-    return {
+    result = {
         "boundary_id": boundary["boundary_id"],
         "match_detail_id": boundary["match_detail_id"],
         "source_id": boundary["source_id"],
@@ -948,6 +1033,9 @@ def decide_boundary(boundary: dict, group_outputs: list[dict], related_outputs: 
         "related_observation": related_note,
         "status_effect": status_effect,
     }
+    if first_hud:
+        result["anchor"] = first_hud
+    return result
 
 
 # ---------------------------------------------------------------------------
