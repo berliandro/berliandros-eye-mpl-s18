@@ -16,8 +16,8 @@ MANIFEST = REPO / "analysis" / "sources" / "source-manifest.json"
 TIMED = REPO / "analysis" / "cache" / "timed"
 
 VALID_STATUSES = {"schedule_associated", "candidate_detected", "boundary_verified",
-                  "game_boundary_verified", "visually_reviewed", "quarantined", "unresolved",
-                  "detected_pending_review", "pending_validation", "boundary_verified"}
+                  "game_boundary_verified", "visually_reviewed", "visually_verified", "quarantined",
+                  "unresolved", "detected_pending_review", "pending_validation", "boundary_verified"}
 VALID_CONFIDENCES = {"high", "med", "low"}
 
 def main():
@@ -91,7 +91,7 @@ def main():
             status = s.get('status')
             if status not in VALID_STATUSES:
                 errors.append(f"{sid}/{s['match_detail_id']}: unknown status '{status}'")
-            if status in ('boundary_verified', 'game_boundary_verified', 'visually_reviewed'):
+            if status in ('boundary_verified', 'game_boundary_verified', 'visually_reviewed', 'visually_verified'):
                 if not s.get('provenance'):
                     errors.append(f"{sid}/{s['match_detail_id']}: verified status but missing provenance")
                 if not s.get('provenance', {}).get('method'):
