@@ -31,6 +31,7 @@ def main() -> int:
 
     plan = json.loads(Path(args.plan).read_text(encoding="utf-8"))
     ledger = json.loads(Path(args.ledger).read_text(encoding="utf-8"))
+    ledger["plan_sha256"] = dvr.sha256_text_lf(Path(args.plan))
     groups = {g["group_id"]: g for g in plan["groups"]}
     frames = ledger.get("frames", [])
 
@@ -83,7 +84,8 @@ def main() -> int:
     ledger["recomputed_at"] = dvr.now_iso()
     ledger["recompute_note"] = (
         "Frame dispositions and boundary decisions recomputed from stored API observations after the "
-        "negation/scene/related-frame/game-number/pre-show rules were corrected. No new API call and no new screenshot."
+        "negation/scene/related-frame/game-number/pre-show and first-visible-HUD rules were corrected. "
+        "No new API call and no new screenshot."
     )
     out = Path(args.out) if args.out else Path(args.ledger)
     dvr.atomic_write_json(out, ledger)
