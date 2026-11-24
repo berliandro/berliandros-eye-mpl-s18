@@ -10,6 +10,9 @@ backups/
 # local opencode state
 .opencode/
 
+# isolated feature worktrees
+.worktrees/
+
 # ETL staging output (removed after publish; never commit partial builds)
 data/.staging-s18/
 

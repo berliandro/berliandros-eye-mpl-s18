@@ -19,7 +19,7 @@ Usage:
 Backends:
     direct                 Direct https://api.deepseek.com chat completions (deepseek-flash).
     opencode-session       Local OpenCode session API, deepseek-v4.1-flash-free.
-    opencode-go-session    Local OpenCode session API, opencode-go/deepseek-v4.1-flash.
+    opencode-go-session    Local OpenCode session API, opencode-go/hy4-flash-free#high.
 
 API key resolution (direct backend):
     1. DEEPSEEK_API_KEY environment variable (preferred; used by CI).
@@ -74,8 +74,8 @@ BACKENDS = {
     "opencode-go-session": {
         "mode": "opencode-session",
         "provider": "opencode-go",
-        "model": "deepseek-v4.1-flash",
-        "variant": "max",
+        "model": "hy4-flash-free",
+        "variant": "high",
         "api_base": "http://127.0.0.1:28894",
         "transport": "local-opencode-session-api",
     },
@@ -1333,8 +1333,9 @@ def main(argv: list[str] | None = None) -> int:
     run.set_defaults(func=run_review)
 
     args = parser.parse_args(argv)
-    global ACTIVE_BACKEND
+    global ACTIVE_BACKEND, REVIEWER
     ACTIVE_BACKEND = dict(BACKENDS[args.backend])
+    REVIEWER = "hy4" if ACTIVE_BACKEND["model"] == "hy4-flash-free" else "deepseek"
     if args.opencode_base:
         if args.backend == "opencode-session":
             ACTIVE_BACKEND["api_base"] = args.opencode_base
