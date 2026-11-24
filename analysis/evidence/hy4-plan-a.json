@@ -1,0 +1,1430 @@
+{
+  "schema_version": 1,
+  "generated_at": "2026-11-02T11:55:00+00:00",
+  "reviewer": "hy4",
+  "model": "hy4-flash-free",
+  "provider": "opencode-go",
+  "api_base": "https://api.deepseek.com",
+  "prompt_version": "deepseek-visual-review-v1",
+  "scope_note": "Hy4 Flash Free High re-review stream a; 9 disjoint groups",
+  "groups": [
+    {
+      "group_id": "G-P3-1062-2446",
+      "kind": "group",
+      "claim_id": "PROBE-1062-2446",
+      "claim": "At the selected frames from src-s18-w04d02 near 2446s, series 1062 (DEWA vs ONIC) shows a visible 00:00 game clock with the correct pairing.",
+      "question": "These are 3 ordered frames from src-s18-w04d02 near 2446s. Candidate: series 1062 DEWA vs ONIC, game 1. For each image, transcribe the match label, team names/logos, scoreboard, game clock or countdown, and describe the scene. In answers include: scene_type (gameplay, draft, pre-match, analyst desk, schedule, standings, map overview, post-game, promo, interview), teams (exact visible pairing or 'none'), match_label, clock_or_countdown (exact text), game1_started. Is a visible 00:00 game clock present together with the claimed pairing? A countdown or draft screen is confirmation only, not a game start.",
+      "frames": [
+        {
+          "frame_id": "DF3-w04d02-2445",
+          "path": "analysis/cache/video-frames/pass3/1062-2443-2449/src-s18-w04d02/src-s18-w04d02_at_004043_000_p000.png",
+          "sidecar_path": "analysis/cache/video-frames/pass3/1062-2443-2449/src-s18-w04d02/src-s18-w04d02_at_004043_000_p000.json",
+          "capture_status": "succeeded"
+        },
+        {
+          "frame_id": "DF3-w04d02-2448",
+          "path": "analysis/cache/video-frames/pass3/1062-2443-2449/src-s18-w04d02/src-s18-w04d02_at_004046_000_p000.png",
+          "sidecar_path": "analysis/cache/video-frames/pass3/1062-2443-2449/src-s18-w04d02/src-s18-w04d02_at_004046_000_p000.json",
+          "capture_status": "succeeded"
+        },
+        {
+          "frame_id": "DF3-w04d02-2451",
+          "path": "analysis/cache/video-frames/pass3/1062-2443-2449/src-s18-w04d02/src-s18-w04d02_at_004049_000_p000.png",
+          "sidecar_path": "analysis/cache/video-frames/pass3/1062-2443-2449/src-s18-w04d02/src-s18-w04d02_at_004049_000_p000.json",
+          "capture_status": "succeeded"
+        }
+      ],
+      "rule": {
+        "type": "required_text",
+        "required": [
+          {
+            "name": "team_dewa",
+            "any": [
+              "DEWA",
+              "DEWA UNITED"
+            ]
+          },
+          {
+            "name": "team_onic",
+            "any": [
+              "ONIC"
+            ]
+          }
+        ],
+        "fallback": "context-only"
+      },
+      "max_disposition": null
+    },
+    {
+      "group_id": "G-P3-1048-23493",
+      "kind": "group",
+      "claim_id": "PROBE-1048-23493",
+      "claim": "At 23491-23497s the M3 draft/game screen visibly confirms ONIC vs RRQ; this is pairing cleanup only, no promotion.",
+      "question": "These are three ordered frames from src-s18-w02d02 near 23493s (the M3 draft-pick expiry). For each image, transcribe the match label, team names/logos, scoreboard, clock or countdown, and describe the scene. In answers include scene_type, teams (exact visible pairing or 'none'), match_label, clock_or_countdown, game1_started. Is ONIC vs RRQ visibly confirmed? Do not promote from a countdown or draft; report only what is visible.",
+      "frames": [
+        {
+          "frame_id": "DF3-w02d02-23491",
+          "path": "analysis/cache/video-frames/pass3/1048-23490-23496/src-s18-w02d02/src-s18-w02d02_at_063130_000_p000.png",
+          "sidecar_path": "analysis/cache/video-frames/pass3/1048-23490-23496/src-s18-w02d02/src-s18-w02d02_at_063130_000_p000.json",
+          "capture_status": "succeeded"
+        },
+        {
+          "frame_id": "DF3-w02d02-23494",
+          "path": "analysis/cache/video-frames/pass3/1048-23490-23496/src-s18-w02d02/src-s18-w02d02_at_063133_000_p000.png",
+          "sidecar_path": "analysis/cache/video-frames/pass3/1048-23490-23496/src-s18-w02d02/src-s18-w02d02_at_063133_000_p000.json",
+          "capture_status": "succeeded"
+        },
+        {
+          "frame_id": "DF3-w02d02-23497",
+          "path": "analysis/cache/video-frames/pass3/1048-23490-23496/src-s18-w02d02/src-s18-w02d02_at_063136_000_p000.png",
+          "sidecar_path": "analysis/cache/video-frames/pass3/1048-23490-23496/src-s18-w02d02/src-s18-w02d02_at_063136_000_p000.json",
+          "capture_status": "succeeded"
+        }
+      ],
+      "rule": {
+        "type": "required_text",
+        "required": [
+          {
+            "name": "team_onic",
+            "any": [
+              "ONIC"
+            ]
+          },
+          {
+            "name": "team_rrq",
+            "any": [
+              "RRQ",
+              "RRQ HOSHI"
+            ]
+          }
+        ],
+        "fallback": "context-only"
+      },
+      "max_disposition": null
+    },
+    {
+      "group_id": "G-P3-1048-CROP",
+      "kind": "group",
+      "claim_id": "PROBE-1048-CROP",
+      "claim": "This 4x crop of the M3 scoreboard should make the ONIC and RRQ crests/names legible; pairing cleanup only, no promotion.",
+      "question": "This is a 4x crop of the top-left M3 scoreboard from the frame at 23497.468s. Transcribe the match label, score, and any legible team names or crest text. Are ONIC and RRQ identifiable? Do not promote; report only what is visible in this crop.",
+      "frames": [
+        {
+          "frame_id": "DF3-w02d02-23497-crop",
+          "path": "analysis/cache/video-frames/pass3/1048-23497-crop/1048-scoreboard.png",
+          "sidecar_path": "analysis/cache/video-frames/pass3/1048-23497-crop/1048-scoreboard.json",
+          "capture_status": "derived"
+        }
+      ],
+      "rule": {
+        "type": "required_text",
+        "required": [
+          {
+            "name": "team_onic",
+            "any": [
+              "ONIC"
+            ]
+          },
+          {
+            "name": "team_rrq",
+            "any": [
+              "RRQ",
+              "RRQ HOSHI"
+            ]
+          }
+        ],
+        "fallback": "context-only"
+      },
+      "max_disposition": null
+    },
+    {
+      "group_id": "G-P3-1084-DRAFT",
+      "kind": "group",
+      "claim_id": "PROBE-1084-DRAFT",
+      "claim": "Draft-expiry probe for 1084 near 2995s; only a same-frame 00:00 game clock with GEEK/BTR pairing promotes.",
+      "question": "These are five ordered frames from src-s18-w07d01 from 2986s to 3026s, after the 15:51 draft countdown seen at 2043s. For each image, transcribe the match label, team names/logos, scoreboard, game clock or countdown, and scene. In answers include scene_type, teams (exact pairing or none), match_label, clock_or_countdown, visible_00_00 (true only if 00:00 is literally visible), game1_started. Is GEEK vs BTR visible in the same frame as a 00:00 game clock? A draft screen or countdown is confirmation only.",
+      "frames": [
+        {
+          "frame_id": "DF3-w07d01-2987",
+          "path": "analysis/cache/video-frames/pass3/1084-2985-3025/src-s18-w07d01/src-s18-w07d01_at_004945_000_p000.png",
+          "sidecar_path": "analysis/cache/video-frames/pass3/1084-2985-3025/src-s18-w07d01/src-s18-w07d01_at_004945_000_p000.json",
+          "capture_status": "succeeded"
+        },
+        {
+          "frame_id": "DF3-w07d01-2997",
+          "path": "analysis/cache/video-frames/pass3/1084-2985-3025/src-s18-w07d01/src-s18-w07d01_at_004955_000_p000.png",
+          "sidecar_path": "analysis/cache/video-frames/pass3/1084-2985-3025/src-s18-w07d01/src-s18-w07d01_at_004955_000_p000.json",
+          "capture_status": "succeeded"
+        },
+        {
+          "frame_id": "DF3-w07d01-3006",
+          "path": "analysis/cache/video-frames/pass3/1084-2985-3025/src-s18-w07d01/src-s18-w07d01_at_005005_000_p000.png",
+          "sidecar_path": "analysis/cache/video-frames/pass3/1084-2985-3025/src-s18-w07d01/src-s18-w07d01_at_005005_000_p000.json",
+          "capture_status": "succeeded"
+        },
+        {
+          "frame_id": "DF3-w07d01-3016",
+          "path": "analysis/cache/video-frames/pass3/1084-2985-3025/src-s18-w07d01/src-s18-w07d01_at_005015_000_p000.png",
+          "sidecar_path": "analysis/cache/video-frames/pass3/1084-2985-3025/src-s18-w07d01/src-s18-w07d01_at_005015_000_p000.json",
+          "capture_status": "succeeded"
+        },
+        {
+          "frame_id": "DF3-w07d01-3026",
+          "path": "analysis/cache/video-frames/pass3/1084-2985-3025/src-s18-w07d01/src-s18-w07d01_at_005025_000_p000.png",
+          "sidecar_path": "analysis/cache/video-frames/pass3/1084-2985-3025/src-s18-w07d01/src-s18-w07d01_at_005025_000_p000.json",
+          "capture_status": "succeeded"
+        }
+      ],
+      "rule": {
+        "type": "required_text",
+        "required": [
+          {
+            "name": "team_geek",
+            "any": [
+              "GEEK",
+              "GEEKFAM"
+            ]
+          },
+          {
+            "name": "team_btr",
+            "any": [
+              "BTR",
+              "BIGETRON",
+              "VITALITY"
+            ]
+          }
+        ],
+        "fallback": "context-only"
+      },
+      "max_disposition": null
+    },
+    {
+      "group_id": "G-P3-1106-DRAFT",
+      "kind": "group",
+      "claim_id": "PROBE-1106-DRAFT",
+      "claim": "Draft-expiry probe for 1106 near 13990s; only a same-frame 00:00 game clock with NAVI/BTR pairing promotes.",
+      "question": "These are five ordered frames from src-s18-w09d03 from 13981s to 14021s, after the 14:54 draft countdown seen at 13093s. For each image, transcribe the match label, team names/logos, scoreboard, game clock or countdown, and scene. In answers include scene_type, teams (exact pairing or none), match_label, clock_or_countdown, visible_00_00 (true only if 00:00 is literally visible), game1_started. Is NAVI vs BTR/VITALITY visible in the same frame as a 00:00 game clock? A draft screen or countdown is confirmation only.",
+      "frames": [
+        {
+          "frame_id": "DF3-w09d03-13981",
+          "path": "analysis/cache/video-frames/pass3/1106-13980-14020/src-s18-w09d03/src-s18-w09d03_at_035300_000_p000.png",
+          "sidecar_path": "analysis/cache/video-frames/pass3/1106-13980-14020/src-s18-w09d03/src-s18-w09d03_at_035300_000_p000.json",
+          "capture_status": "succeeded"
+        },
+        {
+          "frame_id": "DF3-w09d03-13992",
+          "path": "analysis/cache/video-frames/pass3/1106-13980-14020/src-s18-w09d03/src-s18-w09d03_at_035310_000_p000.png",
+          "sidecar_path": "analysis/cache/video-frames/pass3/1106-13980-14020/src-s18-w09d03/src-s18-w09d03_at_035310_000_p000.json",
+          "capture_status": "succeeded"
+        },
+        {
+          "frame_id": "DF3-w09d03-14002",
+          "path": "analysis/cache/video-frames/pass3/1106-13980-14020/src-s18-w09d03/src-s18-w09d03_at_035320_000_p000.png",
+          "sidecar_path": "analysis/cache/video-frames/pass3/1106-13980-14020/src-s18-w09d03/src-s18-w09d03_at_035320_000_p000.json",
+          "capture_status": "succeeded"
+        },
+        {
+          "frame_id": "DF3-w09d03-14011",
+          "path": "analysis/cache/video-frames/pass3/1106-13980-14020/src-s18-w09d03/src-s18-w09d03_at_035330_000_p000.png",
+          "sidecar_path": "analysis/cache/video-frames/pass3/1106-13980-14020/src-s18-w09d03/src-s18-w09d03_at_035330_000_p000.json",
+          "capture_status": "succeeded"
+        },
+        {
+          "frame_id": "DF3-w09d03-14021",
+          "path": "analysis/cache/video-frames/pass3/1106-13980-14020/src-s18-w09d03/src-s18-w09d03_at_035340_000_p000.png",
+          "sidecar_path": "analysis/cache/video-frames/pass3/1106-13980-14020/src-s18-w09d03/src-s18-w09d03_at_035340_000_p000.json",
+          "capture_status": "succeeded"
+        }
+      ],
+      "rule": {
+        "type": "required_text",
+        "required": [
+          {
+            "name": "team_navi",
+            "any": [
+              "NAVI"
+            ]
+          },
+          {
+            "name": "team_btr",
+            "any": [
+              "BTR",
+              "BIGETRON",
+              "VITALITY"
+            ]
+          }
+        ],
+        "fallback": "context-only"
+      },
+      "max_disposition": null
+    },
+    {
+      "group_id": "G-P3-1107-DRAFT",
+      "kind": "group",
+      "claim_id": "PROBE-1107-DRAFT",
+      "claim": "Draft-expiry probe for 1107 near 24860s; only a same-frame 00:00 game clock with ONIC/TLID pairing promotes.",
+      "question": "These are five ordered frames from src-s18-w09d03 from 24851s to 24891s, after the 16:02 draft countdown seen at 23893s. For each image, transcribe the match label, team names/logos, scoreboard, game clock or countdown, and scene. In answers include scene_type, teams (exact pairing or none), match_label, clock_or_countdown, visible_00_00 (true only if 00:00 is literally visible), game1_started. Is ONIC vs TLID visible in the same frame as a 00:00 game clock? A draft screen or countdown is confirmation only.",
+      "frames": [
+        {
+          "frame_id": "DF3-w09d03-24851",
+          "path": "analysis/cache/video-frames/pass3/1107-24850-24890/src-s18-w09d03/src-s18-w09d03_at_065410_000_p000.png",
+          "sidecar_path": "analysis/cache/video-frames/pass3/1107-24850-24890/src-s18-w09d03/src-s18-w09d03_at_065410_000_p000.json",
+          "capture_status": "succeeded"
+        },
+        {
+          "frame_id": "DF3-w09d03-24861",
+          "path": "analysis/cache/video-frames/pass3/1107-24850-24890/src-s18-w09d03/src-s18-w09d03_at_065420_000_p000.png",
+          "sidecar_path": "analysis/cache/video-frames/pass3/1107-24850-24890/src-s18-w09d03/src-s18-w09d03_at_065420_000_p000.json",
+          "capture_status": "succeeded"
+        },
+        {
+          "frame_id": "DF3-w09d03-24871",
+          "path": "analysis/cache/video-frames/pass3/1107-24850-24890/src-s18-w09d03/src-s18-w09d03_at_065430_000_p000.png",
+          "sidecar_path": "analysis/cache/video-frames/pass3/1107-24850-24890/src-s18-w09d03/src-s18-w09d03_at_065430_000_p000.json",
+          "capture_status": "succeeded"
+        },
+        {
+          "frame_id": "DF3-w09d03-24881",
+          "path": "analysis/cache/video-frames/pass3/1107-24850-24890/src-s18-w09d03/src-s18-w09d03_at_065440_000_p000.png",
+          "sidecar_path": "analysis/cache/video-frames/pass3/1107-24850-24890/src-s18-w09d03/src-s18-w09d03_at_065440_000_p000.json",
+          "capture_status": "succeeded"
+        },
+        {
+          "frame_id": "DF3-w09d03-24891",
+          "path": "analysis/cache/video-frames/pass3/1107-24850-24890/src-s18-w09d03/src-s18-w09d03_at_065450_000_p000.png",
+          "sidecar_path": "analysis/cache/video-frames/pass3/1107-24850-24890/src-s18-w09d03/src-s18-w09d03_at_065450_000_p000.json",
+          "capture_status": "succeeded"
+        }
+      ],
+      "rule": {
+        "type": "required_text",
+        "required": [
+          {
+            "name": "team_onic",
+            "any": [
+              "ONIC"
+            ]
+          },
+          {
+            "name": "team_tlid",
+            "any": [
+              "TLID",
+              "TEAM LIQUID ID",
+              "TEAM LIQUID"
+            ]
+          }
+        ],
+        "fallback": "context-only"
+      },
+      "max_disposition": null
+    },
+    {
+      "group_id": "G-P3-1084-0000",
+      "kind": "group",
+      "claim_id": "PROBE-1084-0000",
+      "claim": "Narrow HUD cut-in probe for 1084 at 3703-3707s; only a same-frame 00:00 game clock with GEEK/BTR pairing promotes.",
+      "question": "These are five ordered 1-second frames from src-s18-w07d01 from 3703s to 3707s, around the first in-game HUD. For each image, transcribe the match label, team names/logos, scoreboard, game clock or countdown, and scene. In answers include scene_type, teams (exact pairing or none), match_label, clock_or_countdown, visible_00_00 (true only if 00:00 is literally visible), game1_started. Is GEEK vs BTR visible in the same frame as a 00:00 game clock? A 00:01-00:20 clock is not 00:00.",
+      "frames": [
+        {
+          "frame_id": "DF3-w07d01-3704",
+          "path": "analysis/cache/video-frames/pass3/1084-3703-3707/src-s18-w07d01/src-s18-w07d01_at_010143_000_p000.png",
+          "sidecar_path": "analysis/cache/video-frames/pass3/1084-3703-3707/src-s18-w07d01/src-s18-w07d01_at_010143_000_p000.json",
+          "capture_status": "succeeded"
+        },
+        {
+          "frame_id": "DF3-w07d01-3705-crop",
+          "path": "analysis/cache/video-frames/pass3/1084-3703-3707/src-s18-w07d01/src-s18-w07d01_at_010144_000_p000.png",
+          "sidecar_path": "analysis/cache/video-frames/pass3/1084-3703-3707/src-s18-w07d01/src-s18-w07d01_at_010144_000_p000.json",
+          "capture_status": "succeeded"
+        },
+        {
+          "frame_id": "DF3-w07d01-3707",
+          "path": "analysis/cache/video-frames/pass3/1084-3703-3707/src-s18-w07d01/src-s18-w07d01_at_010145_000_p000.png",
+          "sidecar_path": "analysis/cache/video-frames/pass3/1084-3703-3707/src-s18-w07d01/src-s18-w07d01_at_010145_000_p000.json",
+          "capture_status": "succeeded"
+        },
+        {
+          "frame_id": "DF3-w07d01-3708",
+          "path": "analysis/cache/video-frames/pass3/1084-3703-3707/src-s18-w07d01/src-s18-w07d01_at_010146_000_p000.png",
+          "sidecar_path": "analysis/cache/video-frames/pass3/1084-3703-3707/src-s18-w07d01/src-s18-w07d01_at_010146_000_p000.json",
+          "capture_status": "succeeded"
+        },
+        {
+          "frame_id": "DF3-w07d01-3708-crop",
+          "path": "analysis/cache/video-frames/pass3/1084-3703-3707/src-s18-w07d01/src-s18-w07d01_at_010147_000_p000.png",
+          "sidecar_path": "analysis/cache/video-frames/pass3/1084-3703-3707/src-s18-w07d01/src-s18-w07d01_at_010147_000_p000.json",
+          "capture_status": "succeeded"
+        }
+      ],
+      "rule": {
+        "type": "required_text",
+        "required": [
+          {
+            "name": "team_geek",
+            "any": [
+              "GEEK",
+              "GEEKFAM"
+            ]
+          },
+          {
+            "name": "team_btr",
+            "any": [
+              "BTR",
+              "BIGETRON",
+              "VITALITY"
+            ]
+          }
+        ],
+        "fallback": "context-only"
+      },
+      "max_disposition": null
+    },
+    {
+      "group_id": "G-P3-1106-0000",
+      "kind": "group",
+      "claim_id": "PROBE-1106-0000",
+      "claim": "Narrow start probe for 1106 at 14495-14515s, before the first 01:37 HUD frame; only a same-frame 00:00 game clock with NAVI/BTR pairing promotes.",
+      "question": "These are five ordered frames from src-s18-w09d03 from 14495s to 14515s, before the first observed 01:37 in-game frame. For each image, transcribe the match label, team names/logos, scoreboard, game clock or countdown, and scene. In answers include scene_type, teams (exact pairing or none), match_label, clock_or_countdown, visible_00_00 (true only if 00:00 is literally visible), game1_started. Is NAVI vs BTR/VITALITY visible in the same frame as a 00:00 game clock? A 00:01 or later clock is not 00:00.",
+      "frames": [
+        {
+          "frame_id": "DF3-w09d03-14497",
+          "path": "analysis/cache/video-frames/pass3/1106-14495-14515/src-s18-w09d03/src-s18-w09d03_at_040135_000_p000.png",
+          "sidecar_path": "analysis/cache/video-frames/pass3/1106-14495-14515/src-s18-w09d03/src-s18-w09d03_at_040135_000_p000.json",
+          "capture_status": "succeeded"
+        },
+        {
+          "frame_id": "DF3-w09d03-14502",
+          "path": "analysis/cache/video-frames/pass3/1106-14495-14515/src-s18-w09d03/src-s18-w09d03_at_040140_000_p000.png",
+          "sidecar_path": "analysis/cache/video-frames/pass3/1106-14495-14515/src-s18-w09d03/src-s18-w09d03_at_040140_000_p000.json",
+          "capture_status": "succeeded"
+        },
+        {
+          "frame_id": "DF3-w09d03-14507",
+          "path": "analysis/cache/video-frames/pass3/1106-14495-14515/src-s18-w09d03/src-s18-w09d03_at_040145_000_p000.png",
+          "sidecar_path": "analysis/cache/video-frames/pass3/1106-14495-14515/src-s18-w09d03/src-s18-w09d03_at_040145_000_p000.json",
+          "capture_status": "succeeded"
+        },
+        {
+          "frame_id": "DF3-w09d03-14512",
+          "path": "analysis/cache/video-frames/pass3/1106-14495-14515/src-s18-w09d03/src-s18-w09d03_at_040150_000_p000.png",
+          "sidecar_path": "analysis/cache/video-frames/pass3/1106-14495-14515/src-s18-w09d03/src-s18-w09d03_at_040150_000_p000.json",
+          "capture_status": "succeeded"
+        },
+        {
+          "frame_id": "DF3-w09d03-14516",
+          "path": "analysis/cache/video-frames/pass3/1106-14495-14515/src-s18-w09d03/src-s18-w09d03_at_040155_000_p000.png",
+          "sidecar_path": "analysis/cache/video-frames/pass3/1106-14495-14515/src-s18-w09d03/src-s18-w09d03_at_040155_000_p000.json",
+          "capture_status": "succeeded"
+        }
+      ],
+      "rule": {
+        "type": "required_text",
+        "required": [
+          {
+            "name": "team_navi",
+            "any": [
+              "NAVI"
+            ]
+          },
+          {
+            "name": "team_btr",
+            "any": [
+              "BTR",
+              "BIGETRON",
+              "VITALITY"
+            ]
+          }
+        ],
+        "fallback": "context-only"
+      },
+      "max_disposition": null
+    },
+    {
+      "group_id": "G-P3-1107-0000",
+      "kind": "group",
+      "claim_id": "PROBE-1107-0000",
+      "claim": "Narrow start probe for 1107 at 24945-24970s; only a same-frame 00:00 game clock with ONIC/TLID pairing promotes.",
+      "question": "These are five ordered frames from src-s18-w09d03 from 24945s to 24970s. For each image, transcribe the match label, team names/logos, scoreboard, game clock or countdown, and scene. In answers include scene_type, teams (exact pairing or none), match_label, clock_or_countdown, visible_00_00 (true only if 00:00 is literally visible), game1_started. Is ONIC vs TLID visible in the same frame as a 00:00 game clock? A 00:01 or later clock is not 00:00.",
+      "frames": [
+        {
+          "frame_id": "DF3-w09d03-24946",
+          "path": "analysis/cache/video-frames/pass3/1107-24945-24970/src-s18-w09d03/src-s18-w09d03_at_065545_000_p000.png",
+          "sidecar_path": "analysis/cache/video-frames/pass3/1107-24945-24970/src-s18-w09d03/src-s18-w09d03_at_065545_000_p000.json",
+          "capture_status": "succeeded"
+        },
+        {
+          "frame_id": "DF3-w09d03-24951",
+          "path": "analysis/cache/video-frames/pass3/1107-24945-24970/src-s18-w09d03/src-s18-w09d03_at_065550_000_p000.png",
+          "sidecar_path": "analysis/cache/video-frames/pass3/1107-24945-24970/src-s18-w09d03/src-s18-w09d03_at_065550_000_p000.json",
+          "capture_status": "succeeded"
+        },
+        {
+          "frame_id": "DF3-w09d03-24956",
+          "path": "analysis/cache/video-frames/pass3/1107-24945-24970/src-s18-w09d03/src-s18-w09d03_at_065555_000_p000.png",
+          "sidecar_path": "analysis/cache/video-frames/pass3/1107-24945-24970/src-s18-w09d03/src-s18-w09d03_at_065555_000_p000.json",
+          "capture_status": "succeeded"
+        },
+        {
+          "frame_id": "DF3-w09d03-24966",
+          "path": "analysis/cache/video-frames/pass3/1107-24945-24970/src-s18-w09d03/src-s18-w09d03_at_065605_000_p000.png",
+          "sidecar_path": "analysis/cache/video-frames/pass3/1107-24945-24970/src-s18-w09d03/src-s18-w09d03_at_065605_000_p000.json",
+          "capture_status": "succeeded"
+        },
+        {
+          "frame_id": "DF3-w09d03-24971",
+          "path": "analysis/cache/video-frames/pass3/1107-24945-24970/src-s18-w09d03/src-s18-w09d03_at_065610_000_p000.png",
+          "sidecar_path": "analysis/cache/video-frames/pass3/1107-24945-24970/src-s18-w09d03/src-s18-w09d03_at_065610_000_p000.json",
+          "capture_status": "succeeded"
+        }
+      ],
+      "rule": {
+        "type": "required_text",
+        "required": [
+          {
+            "name": "team_onic",
+            "any": [
+              "ONIC"
+            ]
+          },
+          {
+            "name": "team_tlid",
+            "any": [
+              "TLID",
+              "TEAM LIQUID ID",
+              "TEAM LIQUID"
+            ]
+          }
+        ],
+        "fallback": "context-only"
+      },
+      "max_disposition": null
+    }
+  ],
+  "boundary_claims": [
+    {
+      "boundary_id": "B-1036-1303",
+      "match_detail_id": "1036",
+      "source_id": "src-s18-w01d01",
+      "team_a": "EVOS",
+      "team_b": "RRQ",
+      "candidate_start_seconds": 1303,
+      "frame_group": "G-1036-1303",
+      "claim": "Series 1036 (EVOS vs RRQ) starts at 1303s; game 1 boundary.",
+      "status_effect": "no_change",
+      "related_groups": [
+        "G-P3-1036-WIDE"
+      ]
+    },
+    {
+      "boundary_id": "B-1105-300",
+      "match_detail_id": "1105",
+      "source_id": "src-s18-w09d03",
+      "team_a": "EVOS",
+      "team_b": "AE",
+      "candidate_start_seconds": 300,
+      "frame_group": "G-1105-300",
+      "claim": "Series 1105 (EVOS vs AE) starts at 300s.",
+      "status_effect": "candidate_rejected"
+    },
+    {
+      "boundary_id": "B-1106-13093",
+      "match_detail_id": "1106",
+      "source_id": "src-s18-w09d03",
+      "team_a": "NAVI",
+      "team_b": "BTR",
+      "candidate_start_seconds": 13093,
+      "frame_group": "G-1106-13093",
+      "claim": "Series 1106 (NAVI vs BTR) starts at 13093s; game 1 boundary.",
+      "status_effect": "candidate_rejected",
+      "related_groups": [
+        "G-P3-1106-DRAFT",
+        "G-P3-1106-GAMESTART",
+        "G-P3-1106-0000",
+        "G-P3-1106-SWEEP-A",
+        "G-P3-1106-SWEEP-B",
+        "G-P3-1106-SWEEP-C",
+        "G-P3-1106-SWEEP-D"
+      ]
+    },
+    {
+      "boundary_id": "B-1107-23893",
+      "match_detail_id": "1107",
+      "source_id": "src-s18-w09d03",
+      "team_a": "ONIC",
+      "team_b": "TLID",
+      "candidate_start_seconds": 23893,
+      "frame_group": "G-1107-23893",
+      "claim": "Series 1107 (ONIC vs TLID) starts at 23893s; game 1 boundary.",
+      "status_effect": "no_change",
+      "related_groups": [
+        "G-1106-24389",
+        "G-P3-1107-DRAFT",
+        "G-P3-1107-GAMESTART",
+        "G-P3-1107-0000",
+        "G-P3-1107-SWEEP-A",
+        "G-P3-1107-SWEEP-B"
+      ]
+    },
+    {
+      "boundary_id": "B-1062-2460",
+      "match_detail_id": "1062",
+      "source_id": "src-s18-w04d02",
+      "team_a": "DEWA",
+      "team_b": "ONIC",
+      "candidate_start_seconds": 2460,
+      "frame_group": "G-1062-2460",
+      "claim": "Series 1062 (DEWA vs ONIC) starts at 2460s; game 1 boundary.",
+      "status_effect": "no_change",
+      "related_groups": [
+        "G-P3-1062-2446",
+        "G-P3-1062-SWEEP"
+      ]
+    },
+    {
+      "boundary_id": "B-1084-2043",
+      "match_detail_id": "1084",
+      "source_id": "src-s18-w07d01",
+      "team_a": "GEEK",
+      "team_b": "BTR",
+      "candidate_start_seconds": 2043,
+      "frame_group": "G-W07D01-2040",
+      "claim": "Series 1084 (GEEK vs BTR) starts at 2043s; game 1 boundary.",
+      "status_effect": "no_change",
+      "related_groups": [
+        "G-1084-CROP",
+        "G-P3-1084-DRAFT",
+        "G-P3-1084-DRAFT2",
+        "G-P3-1084-DRAFT3",
+        "G-P3-1084-GAMESTART",
+        "G-P3-1084-GAMESTART2",
+        "G-P3-1084-0000",
+        "G-P3-1084-SWEEP"
+      ]
+    },
+    {
+      "boundary_id": "B-1094-1585",
+      "match_detail_id": "1094",
+      "source_id": "src-s18-w08d02",
+      "team_a": "EVOS",
+      "team_b": "ONIC",
+      "candidate_start_seconds": 1585,
+      "frame_group": "G-1094-1585",
+      "claim": "Series 1094 (EVOS vs ONIC) starts at 1585s; game 1 boundary.",
+      "status_effect": "no_change",
+      "related_groups": [
+        "G-W08D02-1560"
+      ]
+    },
+    {
+      "boundary_id": "B-1075-2425",
+      "match_detail_id": "1075",
+      "source_id": "src-s18-w06d01",
+      "team_a": "RRQ",
+      "team_b": "DEWA",
+      "candidate_start_seconds": 2425,
+      "frame_group": "G-W06-2425",
+      "claim": "Series 1075 (RRQ vs DEWA) starts at 2425s.",
+      "status_effect": "candidate_rejected"
+    },
+    {
+      "boundary_id": "B-1076-2425",
+      "match_detail_id": "1076",
+      "source_id": "src-s18-w06d01",
+      "team_a": "ONIC",
+      "team_b": "GEEK",
+      "candidate_start_seconds": 2425,
+      "frame_group": "G-W06-2425",
+      "related_groups": [
+        "G-W06-2400"
+      ],
+      "claim": "Series 1076 (ONIC vs GEEK) starts at 2425s.",
+      "status_effect": "candidate_rejected"
+    },
+    {
+      "boundary_id": "B-1077-2425",
+      "match_detail_id": "1077",
+      "source_id": "src-s18-w06d01",
+      "team_a": "DEWA",
+      "team_b": "EVOS",
+      "candidate_start_seconds": 2425,
+      "frame_group": "G-W06-2425",
+      "claim": "Series 1077 (DEWA vs EVOS) starts at 2425s.",
+      "status_effect": "candidate_rejected"
+    },
+    {
+      "boundary_id": "B-1086-31928",
+      "match_detail_id": "1086",
+      "source_id": "src-s18-w07d02",
+      "team_a": "AE",
+      "team_b": "NAVI",
+      "candidate_start_seconds": null,
+      "frame_group": "G-W07D02-31920",
+      "claim": "No valid series 1086 start; the 31928s candidate is M53 GAME 3 GEEK 2-1 DEWA (series 1088) and is rejected.",
+      "status_effect": "candidate_rejected",
+      "rejected_candidate_seconds": 31928
+    },
+    {
+      "boundary_id": "B-P2-1042-10608",
+      "match_detail_id": "1042",
+      "source_id": "src-s18-w01d03",
+      "team_a": "BTR",
+      "team_b": "GEEK",
+      "candidate_start_seconds": 10608,
+      "frame_group": "G-P2-1042-10608",
+      "claim": "Series 1042 (BTR vs GEEK) starts at 10608s; game 1 boundary.",
+      "status_effect": "no_change",
+      "related_groups": [
+        "G-P3-1042-GAMESTART"
+      ]
+    },
+    {
+      "boundary_id": "B-P2-1044-300",
+      "match_detail_id": "1044",
+      "source_id": "src-s18-w02d01",
+      "team_a": "TLID",
+      "team_b": "NAVI",
+      "candidate_start_seconds": 300,
+      "frame_group": "G-P2-1044-300",
+      "claim": "Series 1044 (TLID vs NAVI) starts at 300s; game 1 boundary.",
+      "status_effect": "no_change"
+    },
+    {
+      "boundary_id": "B-P2-1046-300",
+      "match_detail_id": "1046",
+      "source_id": "src-s18-w02d02",
+      "team_a": "TLID",
+      "team_b": "EVOS",
+      "candidate_start_seconds": 300,
+      "frame_group": "G-P2-1046-300",
+      "claim": "Series 1046 (TLID vs EVOS) starts at 300s; game 1 boundary.",
+      "status_effect": "no_change"
+    },
+    {
+      "boundary_id": "B-P2-1048-23266",
+      "match_detail_id": "1048",
+      "source_id": "src-s18-w02d02",
+      "team_a": "ONIC",
+      "team_b": "RRQ",
+      "candidate_start_seconds": 23266,
+      "frame_group": "G-P2-1048-23266",
+      "claim": "Series 1048 (ONIC vs RRQ) starts at 23266s; game 1 boundary.",
+      "status_effect": "no_change",
+      "related_groups": [
+        "G-P3-1048-23493",
+        "G-P3-1048-CROP"
+      ]
+    },
+    {
+      "boundary_id": "B-P2-1049-300",
+      "match_detail_id": "1049",
+      "source_id": "src-s18-w02d03",
+      "team_a": "DEWA",
+      "team_b": "AE",
+      "candidate_start_seconds": 300,
+      "frame_group": "G-P2-1049-300",
+      "claim": "Series 1049 (DEWA vs AE) starts at 300s; game 1 boundary.",
+      "status_effect": "no_change"
+    },
+    {
+      "boundary_id": "B-P2-1051-22773",
+      "match_detail_id": "1051",
+      "source_id": "src-s18-w02d03",
+      "team_a": "GEEK",
+      "team_b": "EVOS",
+      "candidate_start_seconds": 22773,
+      "frame_group": "G-P2-1051-22773",
+      "claim": "Series 1051 (GEEK vs EVOS) starts at 22773s; game 1 boundary.",
+      "status_effect": "no_change",
+      "related_groups": [
+        "G-P3-1051-GAMESTART",
+        "G-P3-1051-0000",
+        "G-P3-1051-SWEEP"
+      ]
+    },
+    {
+      "boundary_id": "B-P2-1054-300",
+      "match_detail_id": "1054",
+      "source_id": "src-s18-w03d02",
+      "team_a": "TLID",
+      "team_b": "ONIC",
+      "candidate_start_seconds": 300,
+      "frame_group": "G-P2-1054-300",
+      "claim": "Series 1054 (TLID vs ONIC) starts at 300s; game 1 boundary.",
+      "status_effect": "no_change"
+    },
+    {
+      "boundary_id": "B-P2-1056-15232",
+      "match_detail_id": "1056",
+      "source_id": "src-s18-w03d02",
+      "team_a": "RRQ",
+      "team_b": "BTR",
+      "candidate_start_seconds": 15232,
+      "frame_group": "G-P2-1056-15232",
+      "claim": "Series 1056 (RRQ vs BTR) starts at 15232s; game 1 boundary.",
+      "status_effect": "no_change"
+    },
+    {
+      "boundary_id": "B-P2-1067-22586",
+      "match_detail_id": "1067",
+      "source_id": "src-s18-w04d03",
+      "team_a": "BTR",
+      "team_b": "AE",
+      "candidate_start_seconds": 22586,
+      "frame_group": "G-P2-1067-22586",
+      "claim": "Series 1067 (BTR vs AE) starts at 22586s; game 1 boundary.",
+      "status_effect": "no_change"
+    },
+    {
+      "boundary_id": "B-P2-1070-300",
+      "match_detail_id": "1070",
+      "source_id": "src-s18-w05d02",
+      "team_a": "TLID",
+      "team_b": "BTR",
+      "candidate_start_seconds": 300,
+      "frame_group": "G-P2-1070-300",
+      "claim": "Series 1070 (TLID vs BTR) starts at 300s; game 1 boundary.",
+      "status_effect": "no_change"
+    },
+    {
+      "boundary_id": "B-P2-1073-300",
+      "match_detail_id": "1073",
+      "source_id": "src-s18-w05d03",
+      "team_a": "GEEK",
+      "team_b": "TLID",
+      "candidate_start_seconds": 300,
+      "frame_group": "G-P2-1073-300",
+      "claim": "Series 1073 (GEEK vs TLID) starts at 300s; game 1 boundary.",
+      "status_effect": "no_change"
+    },
+    {
+      "boundary_id": "B-P2-1078-1461",
+      "match_detail_id": "1078",
+      "source_id": "src-s18-w06d02",
+      "team_a": "GEEK",
+      "team_b": "NAVI",
+      "candidate_start_seconds": 1461,
+      "frame_group": "G-P2-1078-1461",
+      "claim": "Series 1078 (GEEK vs NAVI) starts at 1461s; game 1 boundary.",
+      "status_effect": "no_change",
+      "related_groups": [
+        "G-P3-1078-GAMESTART"
+      ]
+    },
+    {
+      "boundary_id": "B-P2-1082-17077",
+      "match_detail_id": "1082",
+      "source_id": "src-s18-w06d03",
+      "team_a": "BTR",
+      "team_b": "ONIC",
+      "candidate_start_seconds": 17077,
+      "frame_group": "G-P2-1082-17077",
+      "claim": "Series 1082 (BTR vs ONIC) starts at 17077s; game 1 boundary.",
+      "status_effect": "no_change"
+    },
+    {
+      "boundary_id": "B-P2-1089-300",
+      "match_detail_id": "1089",
+      "source_id": "src-s18-w07d03",
+      "team_a": "AE",
+      "team_b": "TLID",
+      "candidate_start_seconds": 300,
+      "frame_group": "G-P2-1089-300",
+      "claim": "Series 1089 (AE vs TLID) starts at 300s; game 1 boundary.",
+      "status_effect": "no_change"
+    },
+    {
+      "boundary_id": "B-P2-1090-12178",
+      "match_detail_id": "1090",
+      "source_id": "src-s18-w07d03",
+      "team_a": "RRQ",
+      "team_b": "EVOS",
+      "candidate_start_seconds": 12178,
+      "frame_group": "G-P2-1090-12178",
+      "claim": "Series 1090 (RRQ vs EVOS) starts at 12178s; game 1 boundary.",
+      "status_effect": "no_change"
+    },
+    {
+      "boundary_id": "B-P2-1095-1882",
+      "match_detail_id": "1095",
+      "source_id": "src-s18-w08d02",
+      "team_a": "RRQ",
+      "team_b": "TLID",
+      "candidate_start_seconds": 1882,
+      "frame_group": "G-P2-1095-1882",
+      "claim": "Series 1095 (RRQ vs TLID) starts at 1882s; game 1 boundary.",
+      "status_effect": "no_change"
+    },
+    {
+      "boundary_id": "B-P2-1096-1884",
+      "match_detail_id": "1096",
+      "source_id": "src-s18-w08d02",
+      "team_a": "DEWA",
+      "team_b": "NAVI",
+      "candidate_start_seconds": 1884,
+      "frame_group": "G-P2-1096-1884",
+      "claim": "Series 1096 (DEWA vs NAVI) starts at 1884s; game 1 boundary.",
+      "status_effect": "no_change"
+    },
+    {
+      "boundary_id": "B-P2-1097-2052",
+      "match_detail_id": "1097",
+      "source_id": "src-s18-w08d03",
+      "team_a": "EVOS",
+      "team_b": "GEEK",
+      "candidate_start_seconds": 2052,
+      "frame_group": "G-P2-1097-2052",
+      "claim": "Series 1097 (EVOS vs GEEK) starts at 2052s; game 1 boundary.",
+      "status_effect": "no_change"
+    },
+    {
+      "boundary_id": "B-P2-1102-2354",
+      "match_detail_id": "1102",
+      "source_id": "src-s18-w09d02",
+      "team_a": "ONIC",
+      "team_b": "DEWA",
+      "candidate_start_seconds": 2354,
+      "frame_group": "G-P2-1102-2354",
+      "claim": "Series 1102 (ONIC vs DEWA) starts at 2354s; game 1 boundary.",
+      "status_effect": "no_change",
+      "related_groups": [
+        "G-P3-1102-GAMESTART",
+        "G-P3-1102-SWEEP-A",
+        "G-P3-1102-SWEEP-B"
+      ]
+    },
+    {
+      "boundary_id": "B-P2-1103-2429",
+      "match_detail_id": "1103",
+      "source_id": "src-s18-w09d02",
+      "team_a": "BTR",
+      "team_b": "EVOS",
+      "candidate_start_seconds": 2429,
+      "frame_group": "G-P2-1103-2429",
+      "claim": "Series 1103 (BTR vs EVOS) starts at 2429s; game 1 boundary.",
+      "status_effect": "no_change"
+    },
+    {
+      "boundary_id": "B-P3-1085-12883",
+      "match_detail_id": "1085",
+      "source_id": "src-s18-w07d01",
+      "team_a": "DEWA",
+      "team_b": "TLID",
+      "candidate_start_seconds": 12883.0,
+      "frame_group": "G-P3-1085-12883",
+      "claim": "Series 1085 (DEWA vs TLID) starts at 12883s; only a visible 00:00 game clock with the correct pairing promotes.",
+      "status_effect": "no_change",
+      "promotion_requires_same_frame": true
+    },
+    {
+      "boundary_id": "B-P3-1087-13276",
+      "match_detail_id": "1087",
+      "source_id": "src-s18-w07d02",
+      "team_a": "BTR",
+      "team_b": "RRQ",
+      "candidate_start_seconds": 13276.0,
+      "frame_group": "G-P3-1087-13276",
+      "claim": "Series 1087 (BTR vs RRQ) starts at 13276s; only a visible 00:00 game clock with the correct pairing promotes.",
+      "status_effect": "no_change",
+      "promotion_requires_same_frame": true
+    },
+    {
+      "boundary_id": "B-P3-1088-23569",
+      "match_detail_id": "1088",
+      "source_id": "src-s18-w07d02",
+      "team_a": "GEEK",
+      "team_b": "DEWA",
+      "candidate_start_seconds": 23569.0,
+      "frame_group": "G-P3-1088-23569",
+      "claim": "Series 1088 (GEEK vs DEWA) starts at 23569s; only a visible 00:00 game clock with the correct pairing promotes.",
+      "status_effect": "no_change",
+      "promotion_requires_same_frame": true
+    },
+    {
+      "boundary_id": "B-P3-1037-12675",
+      "match_detail_id": "1037",
+      "source_id": "src-s18-w01d01",
+      "team_a": "NAVI",
+      "team_b": "AE",
+      "candidate_start_seconds": 12675.0,
+      "frame_group": "G-P3-1037-12675",
+      "claim": "Series 1037 (NAVI vs AE) starts at 12675s; only a visible 00:00 game clock with the correct pairing promotes.",
+      "status_effect": "no_change",
+      "promotion_requires_same_frame": true
+    },
+    {
+      "boundary_id": "B-P3-1079-1660",
+      "match_detail_id": "1079",
+      "source_id": "src-s18-w06d02",
+      "team_a": "RRQ",
+      "team_b": "AE",
+      "candidate_start_seconds": 1660.8,
+      "frame_group": "G-P3-1079-1660",
+      "claim": "Series 1079 (RRQ vs AE) starts at 1660.8s; only a visible 00:00 game clock with the correct pairing promotes.",
+      "status_effect": "no_change",
+      "promotion_requires_same_frame": true
+    },
+    {
+      "boundary_id": "B-P3-1083-24416",
+      "match_detail_id": "1083",
+      "source_id": "src-s18-w06d03",
+      "team_a": "EVOS",
+      "team_b": "TLID",
+      "candidate_start_seconds": 24416.2,
+      "frame_group": "G-P3-1083-24416",
+      "claim": "Series 1083 (EVOS vs TLID) starts at 24416.2s; only a visible 00:00 game clock with the correct pairing promotes.",
+      "status_effect": "no_change",
+      "promotion_requires_same_frame": true,
+      "related_groups": [
+        "G-P3-1083-SWEEP"
+      ]
+    },
+    {
+      "boundary_id": "B-P3-1072-18108",
+      "match_detail_id": "1072",
+      "source_id": "src-s18-w05d02",
+      "team_a": "NAVI",
+      "team_b": "EVOS",
+      "candidate_start_seconds": 18108.4,
+      "frame_group": "G-P3-1072-18108",
+      "claim": "Series 1072 (NAVI vs EVOS) starts at 18108.4s; only a visible 00:00 game clock with the correct pairing promotes.",
+      "status_effect": "no_change",
+      "promotion_requires_same_frame": true
+    },
+    {
+      "boundary_id": "B-P3-1101-12798",
+      "match_detail_id": "1101",
+      "source_id": "src-s18-w09d01",
+      "team_a": "GEEK",
+      "team_b": "AE",
+      "candidate_start_seconds": 12798.0,
+      "frame_group": "G-P3-1101-12798",
+      "claim": "Series 1101 (GEEK vs AE) starts at 12798s; only a visible 00:00 game clock with the correct pairing promotes.",
+      "status_effect": "no_change",
+      "promotion_requires_same_frame": true
+    },
+    {
+      "boundary_id": "B-P3-1038-1655",
+      "match_detail_id": "1038",
+      "source_id": "src-s18-w01d02",
+      "team_a": "TLID",
+      "team_b": "GEEK",
+      "candidate_start_seconds": 1655.0,
+      "frame_group": "G-P3-1038-FEED",
+      "claim": "Series 1038 (TLID vs GEEK) starts at 1655s; only a visible 00:00 game clock with the correct pairing promotes.",
+      "status_effect": "no_change",
+      "promotion_requires_same_frame": true,
+      "related_groups": [
+        "G-P3-1038-SWEEP-A",
+        "G-P3-1038-SWEEP-B",
+        "G-P3-1038-SWEEP-C",
+        "G-P3-1038-SWEEP-C1",
+        "G-P3-1038-SWEEP-C2"
+      ]
+    },
+    {
+      "boundary_id": "B-P3-1039-11946",
+      "match_detail_id": "1039",
+      "source_id": "src-s18-w01d02",
+      "team_a": "DEWA",
+      "team_b": "RRQ",
+      "candidate_start_seconds": 11946.0,
+      "frame_group": "G-P3-1039-FEED",
+      "claim": "Series 1039 (DEWA vs RRQ) starts at 11946s; only a visible 00:00 game clock with the correct pairing promotes.",
+      "status_effect": "no_change",
+      "promotion_requires_same_frame": true
+    },
+    {
+      "boundary_id": "B-P3-1040-24067",
+      "match_detail_id": "1040",
+      "source_id": "src-s18-w01d02",
+      "team_a": "EVOS",
+      "team_b": "NAVI",
+      "candidate_start_seconds": 24067.0,
+      "frame_group": "G-P3-1040-FEED",
+      "claim": "Series 1040 (EVOS vs NAVI) starts at 24067s; only a visible 00:00 game clock with the correct pairing promotes.",
+      "status_effect": "no_change",
+      "promotion_requires_same_frame": true,
+      "related_groups": [
+        "G-P3-1040-SWEEP-A",
+        "G-P3-1040-SWEEP-B",
+        "G-P3-1040-SWEEP-C"
+      ]
+    },
+    {
+      "boundary_id": "B-P3-1041-1198",
+      "match_detail_id": "1041",
+      "source_id": "src-s18-w01d03",
+      "team_a": "TLID",
+      "team_b": "DEWA",
+      "candidate_start_seconds": 1198.0,
+      "frame_group": "G-P3-1041-FEED",
+      "claim": "Series 1041 (TLID vs DEWA) starts at 1198s; only a visible 00:00 game clock with the correct pairing promotes.",
+      "status_effect": "no_change",
+      "promotion_requires_same_frame": true,
+      "related_groups": [
+        "G-P3-1041-SWEEP",
+        "G-P3-1041-SWEEP-A",
+        "G-P3-1041-SWEEP-B"
+      ]
+    },
+    {
+      "boundary_id": "B-P3-1045-12126",
+      "match_detail_id": "1045",
+      "source_id": "src-s18-w02d01",
+      "team_a": "BTR",
+      "team_b": "DEWA",
+      "candidate_start_seconds": 12126.0,
+      "frame_group": "G-P3-1045-FEED",
+      "claim": "Series 1045 (BTR vs DEWA) starts at 12126s; only a visible 00:00 game clock with the correct pairing promotes.",
+      "status_effect": "no_change",
+      "promotion_requires_same_frame": true
+    },
+    {
+      "boundary_id": "B-P3-1047-11886",
+      "match_detail_id": "1047",
+      "source_id": "src-s18-w02d02",
+      "team_a": "NAVI",
+      "team_b": "GEEK",
+      "candidate_start_seconds": 11886.0,
+      "frame_group": "G-P3-1047-FEED",
+      "claim": "Series 1047 (NAVI vs GEEK) starts at 11886s; only a visible 00:00 game clock with the correct pairing promotes.",
+      "status_effect": "no_change",
+      "promotion_requires_same_frame": true
+    },
+    {
+      "boundary_id": "B-P3-1052-2666",
+      "match_detail_id": "1052",
+      "source_id": "src-s18-w03d01",
+      "team_a": "BTR",
+      "team_b": "NAVI",
+      "candidate_start_seconds": 2666.0,
+      "frame_group": "G-P3-1052-FEED",
+      "claim": "Series 1052 (BTR vs NAVI) starts at 2666s; only a visible 00:00 game clock with the correct pairing promotes.",
+      "status_effect": "no_change",
+      "promotion_requires_same_frame": true,
+      "related_groups": [
+        "G-P3-1052-SWEEP-A",
+        "G-P3-1052-SWEEP-B",
+        "G-P3-1052-SWEEP-C",
+        "G-P3-1052-SWEEP-1",
+        "G-P3-1052-SWEEP-2",
+        "G-P3-1052-SWEEP-3"
+      ]
+    },
+    {
+      "boundary_id": "B-P3-1053-12043",
+      "match_detail_id": "1053",
+      "source_id": "src-s18-w03d01",
+      "team_a": "DEWA",
+      "team_b": "GEEK",
+      "candidate_start_seconds": 12043.0,
+      "frame_group": "G-P3-1053-FEED",
+      "claim": "Series 1053 (DEWA vs GEEK) starts at 12043s; only a visible 00:00 game clock with the correct pairing promotes.",
+      "status_effect": "no_change",
+      "promotion_requires_same_frame": true
+    },
+    {
+      "boundary_id": "B-P3-1057-2340",
+      "match_detail_id": "1057",
+      "source_id": "src-s18-w03d03",
+      "team_a": "NAVI",
+      "team_b": "ONIC",
+      "candidate_start_seconds": 2340.0,
+      "frame_group": "G-P3-1057-FEED",
+      "claim": "Series 1057 (NAVI vs ONIC) starts at 2340s; only a visible 00:00 game clock with the correct pairing promotes.",
+      "status_effect": "no_change",
+      "promotion_requires_same_frame": true,
+      "related_groups": [
+        "G-P3-1057-SWEEP-1",
+        "G-P3-1057-SWEEP-2",
+        "G-P3-1057-SWEEP-3",
+        "G-P3-1057-SWEEP-4"
+      ]
+    },
+    {
+      "boundary_id": "B-P3-1059-22502",
+      "match_detail_id": "1059",
+      "source_id": "src-s18-w03d03",
+      "team_a": "TLID",
+      "team_b": "AE",
+      "candidate_start_seconds": 22502.0,
+      "frame_group": "G-P3-1059-FEED",
+      "claim": "Series 1059 (TLID vs AE) starts at 22502s; only a visible 00:00 game clock with the correct pairing promotes.",
+      "status_effect": "no_change",
+      "promotion_requires_same_frame": true
+    },
+    {
+      "boundary_id": "B-P3-1055-12108",
+      "match_detail_id": "1055",
+      "source_id": "src-s18-w03d02",
+      "team_a": "AE",
+      "team_b": "EVOS",
+      "candidate_start_seconds": 12108.0,
+      "frame_group": "G-P3-1055-FEED2",
+      "claim": "Series 1055 (AE vs EVOS) starts at 12108s; only a visible 00:00 game clock with the correct pairing promotes.",
+      "status_effect": "no_change",
+      "promotion_requires_same_frame": true
+    },
+    {
+      "boundary_id": "B-P3-1060-1638",
+      "match_detail_id": "1060",
+      "source_id": "src-s18-w04d01",
+      "team_a": "NAVI",
+      "team_b": "DEWA",
+      "candidate_start_seconds": 1638.0,
+      "frame_group": "G-P3-1060-FEED",
+      "claim": "Series 1060 (NAVI vs DEWA) starts at 1638s; only a visible 00:00 game clock with the correct pairing promotes.",
+      "status_effect": "no_change",
+      "promotion_requires_same_frame": true,
+      "related_groups": [
+        "G-P3-1060-SWEEP-1",
+        "G-P3-1060-SWEEP-2",
+        "G-P3-1060-SWEEP-3",
+        "G-P3-1060-SWEEP-4"
+      ]
+    },
+    {
+      "boundary_id": "B-P3-1065-1938",
+      "match_detail_id": "1065",
+      "source_id": "src-s18-w04d03",
+      "team_a": "RRQ",
+      "team_b": "NAVI",
+      "candidate_start_seconds": 1938.0,
+      "frame_group": "G-P3-1065-FEED",
+      "claim": "Series 1065 (RRQ vs NAVI) starts at 1938s; only a visible 00:00 game clock with the correct pairing promotes.",
+      "status_effect": "no_change",
+      "promotion_requires_same_frame": true
+    },
+    {
+      "boundary_id": "B-P3-1069-1745",
+      "match_detail_id": "1069",
+      "source_id": "src-s18-w05d01",
+      "team_a": "GEEK",
+      "team_b": "ONIC",
+      "candidate_start_seconds": 1745.0,
+      "frame_group": "G-P3-1069-FEED",
+      "claim": "Series 1069 (GEEK vs ONIC) starts at 1745s; only a visible 00:00 game clock with the correct pairing promotes.",
+      "status_effect": "no_change",
+      "promotion_requires_same_frame": true,
+      "related_groups": [
+        "G-P3-1069-SWEEP-A",
+        "G-P3-1069-SWEEP-B",
+        "G-P3-1069-SWEEP-C",
+        "G-P3-1069-SWEEP-D"
+      ]
+    },
+    {
+      "boundary_id": "B-P3-1071-11653",
+      "match_detail_id": "1071",
+      "source_id": "src-s18-w05d02",
+      "team_a": "AE",
+      "team_b": "RRQ",
+      "candidate_start_seconds": 11653.0,
+      "frame_group": "G-P3-1071-FEED",
+      "claim": "Series 1071 (AE vs RRQ) starts at 11653s; only a visible 00:00 game clock with the correct pairing promotes.",
+      "status_effect": "no_change",
+      "promotion_requires_same_frame": true
+    },
+    {
+      "boundary_id": "B-P3-1074-12328",
+      "match_detail_id": "1074",
+      "source_id": "src-s18-w05d03",
+      "team_a": "ONIC",
+      "team_b": "AE",
+      "candidate_start_seconds": 12328.0,
+      "frame_group": "G-P3-1074-FEED",
+      "claim": "Series 1074 (ONIC vs AE) starts at 12328s; only a visible 00:00 game clock with the correct pairing promotes.",
+      "status_effect": "no_change",
+      "promotion_requires_same_frame": true,
+      "related_groups": [
+        "G-P3-1074-SWEEP-A",
+        "G-P3-1074-SWEEP-B"
+      ]
+    },
+    {
+      "boundary_id": "B-P3-1050-20963",
+      "match_detail_id": "1050",
+      "source_id": "src-s18-w02d03",
+      "team_a": "ONIC",
+      "team_b": "BTR",
+      "candidate_start_seconds": 20963.0,
+      "frame_group": "G-P3-1050-FEED2",
+      "claim": "Series 1050 (ONIC vs BTR) starts at 20963s; only a visible 00:00 game clock with the correct pairing promotes.",
+      "status_effect": "no_change",
+      "promotion_requires_same_frame": true,
+      "probe_only": true,
+      "probe_note": "first game-feed probe landed on next-match preview or GAME 3; not a canonical rejection"
+    },
+    {
+      "boundary_id": "B-P3-1080-23717",
+      "match_detail_id": "1080",
+      "source_id": "src-s18-w06d02",
+      "team_a": "BTR",
+      "team_b": "TLID",
+      "candidate_start_seconds": 23717.0,
+      "frame_group": "G-P3-1080-FEED",
+      "claim": "Series 1080 (BTR vs TLID) starts at 23717s; only a visible 00:00 game clock with the correct pairing promotes.",
+      "status_effect": "no_change",
+      "promotion_requires_same_frame": true
+    },
+    {
+      "boundary_id": "B-P3-1081-1800",
+      "match_detail_id": "1081",
+      "source_id": "src-s18-w06d03",
+      "team_a": "AE",
+      "team_b": "DEWA",
+      "candidate_start_seconds": 1800.0,
+      "frame_group": "G-P3-1081-FEED",
+      "claim": "Series 1081 (AE vs DEWA) starts at 1800s; only a visible 00:00 game clock with the correct pairing promotes.",
+      "status_effect": "no_change",
+      "promotion_requires_same_frame": true,
+      "related_groups": [
+        "G-P3-1081-SWEEP-1",
+        "G-P3-1081-SWEEP-2",
+        "G-P3-1081-SWEEP-3"
+      ]
+    },
+    {
+      "boundary_id": "B-P3-1091-22942",
+      "match_detail_id": "1091",
+      "source_id": "src-s18-w07d03",
+      "team_a": "ONIC",
+      "team_b": "NAVI",
+      "candidate_start_seconds": 22942.0,
+      "frame_group": "G-P3-1091-FEED",
+      "claim": "Series 1091 (ONIC vs NAVI) starts at 22942s; only a visible 00:00 game clock with the correct pairing promotes.",
+      "status_effect": "no_change",
+      "promotion_requires_same_frame": true
+    },
+    {
+      "boundary_id": "B-P3-1068-2969",
+      "match_detail_id": "1068",
+      "source_id": "src-s18-w08d01",
+      "team_a": "EVOS",
+      "team_b": "DEWA",
+      "candidate_start_seconds": 2969.0,
+      "frame_group": "G-P3-1068-FEED",
+      "claim": "Series 1068 (EVOS vs DEWA) starts at 2969s; only a visible 00:00 game clock with the correct pairing promotes.",
+      "status_effect": "no_change",
+      "promotion_requires_same_frame": true,
+      "related_groups": [
+        "G-P3-1068-SWEEP"
+      ]
+    },
+    {
+      "boundary_id": "B-P3-1098-17865",
+      "match_detail_id": "1098",
+      "source_id": "src-s18-w08d03",
+      "team_a": "RRQ",
+      "team_b": "ONIC",
+      "candidate_start_seconds": 17865.0,
+      "frame_group": "G-P3-1098-FEED",
+      "claim": "Series 1098 (RRQ vs ONIC) starts at 17865s; only a visible 00:00 game clock with the correct pairing promotes.",
+      "status_effect": "no_change",
+      "promotion_requires_same_frame": true,
+      "probe_only": true,
+      "probe_note": "first game-feed probe landed on next-match preview or GAME 3; not a canonical rejection",
+      "related_groups": [
+        "G-P3-1098-SWEEP-1",
+        "G-P3-1098-SWEEP-2",
+        "G-P3-1098-SWEEP-3",
+        "G-P3-1098-SWEEP-4"
+      ]
+    },
+    {
+      "boundary_id": "B-P3-1100-2650",
+      "match_detail_id": "1100",
+      "source_id": "src-s18-w09d01",
+      "team_a": "NAVI",
+      "team_b": "RRQ",
+      "candidate_start_seconds": 2650.0,
+      "frame_group": "G-P3-1100-FEED",
+      "claim": "Series 1100 (NAVI vs RRQ) starts at 2650s; only a visible 00:00 game clock with the correct pairing promotes.",
+      "status_effect": "no_change",
+      "promotion_requires_same_frame": true
+    }
+  ],
+  "unresolved": [
+    {
+      "match_detail_id": "1043",
+      "source_id": "src-s18-w01d03",
+      "team_a": "AE",
+      "team_b": "ONIC",
+      "reason": "Null offset; no capture target.",
+      "required_next": "Find a start cue in the transcript or capture around the scheduled slot."
+    },
+    {
+      "match_detail_id": "1058",
+      "source_id": "src-s18-w03d03",
+      "team_a": "GEEK",
+      "team_b": "RRQ",
+      "reason": "Null offset; no capture target.",
+      "required_next": "Find a start cue in the transcript or capture around the scheduled slot."
+    },
+    {
+      "match_detail_id": "1061",
+      "source_id": "src-s18-w04d01",
+      "team_a": "TLID",
+      "team_b": "RRQ",
+      "reason": "Null offset; no capture target.",
+      "required_next": "Find a start cue in the transcript or capture around the scheduled slot."
+    },
+    {
+      "match_detail_id": "1063",
+      "source_id": "src-s18-w04d02",
+      "team_a": "EVOS",
+      "team_b": "BTR",
+      "reason": "Null offset; no capture target.",
+      "required_next": "Find a start cue or capture around the schedule slot."
+    },
+    {
+      "match_detail_id": "1064",
+      "source_id": "src-s18-w04d02",
+      "team_a": "AE",
+      "team_b": "GEEK",
+      "reason": "Null offset; no capture target.",
+      "required_next": "Find a start cue or capture around the schedule slot."
+    },
+    {
+      "match_detail_id": "1066",
+      "source_id": "src-s18-w04d03",
+      "team_a": "ONIC",
+      "team_b": "EVOS",
+      "reason": "Null offset; no capture target.",
+      "required_next": "Find a start cue in the transcript or capture around the scheduled slot."
+    },
+    {
+      "match_detail_id": "1092",
+      "source_id": "src-s18-w08d01",
+      "team_a": "AE",
+      "team_b": "BTR",
+      "reason": "Null offset; no capture target.",
+      "required_next": "Find a start cue in the transcript or capture around the scheduled slot."
+    },
+    {
+      "match_detail_id": "1093",
+      "source_id": "src-s18-w08d01",
+      "team_a": "NAVI",
+      "team_b": "TLID",
+      "reason": "Null offset; no capture target.",
+      "required_next": "Find a start cue in the transcript or capture around the scheduled slot."
+    },
+    {
+      "match_detail_id": "1099",
+      "source_id": "src-s18-w08d03",
+      "team_a": "DEWA",
+      "team_b": "BTR",
+      "reason": "Null offset; no capture target.",
+      "required_next": "Find a start cue in the transcript or capture around the scheduled slot."
+    },
+    {
+      "match_detail_id": "1104",
+      "source_id": "src-s18-w09d02",
+      "team_a": "RRQ",
+      "team_b": "GEEK",
+      "reason": "Null offset; no capture target.",
+      "required_next": "Find a start cue in the transcript or capture around the scheduled slot."
+    }
+  ],
+  "updated_at": "2026-11-04T23:11:36.555235+00:00"
+}
