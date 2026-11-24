@@ -8,6 +8,14 @@
 
 **Status:** Passes 1–2 complete; **pass 3 executed but goal not complete** (2026-11-03). Current ledger: **966 frames, 62 boundary reviews** — 20 rejected, 41 context-only, 1 inconclusive, **0 promoted to `visually_verified`**. All 18 original null offsets are covered by 8 reviewed candidates (context-only/rejected) and 10 documented no-candidate waivers. All 23 remaining boundary-verified/unreviewed series have now been sampled; the derived status shows **0 not-reviewed** series. No same-frame `00:00` was found anywhere. Only §6a box 1 remains unchecked.
 
+### Hy4 High re-review (2026-11-24)
+
+At the user's direction the `opencode-go-session` reviewer backend now uses **OpenCode Go — Hy4 Flash Free: High** (`opencode-go/hy4-flash-free`, variant `high`), confirmed by a passing smoke test. Three parallel subagents re-reviewed **128 disjoint frames** (37 / 42 / 49) from 30 previously captured groups covering the highest-value boundary and null-offset candidates. All 128 frames carry valid API request IDs; frame dispositions total **69 `used`, 17 `context-only`, 42 `inconclusive`, 0 `rejected`**. `visible_00_00` is false on every frame and no literal same-frame `00:00` with a legible correct pairing was found. Ledgers: `analysis/evidence/hy4-review-{a,b,c}.json`; plans: `analysis/evidence/hy4-plan-{a,b,c}.json`.
+
+This is a cross-check only: the canonical DeepSeek ledger is unchanged and **no boundary was promoted**. §6a box 1 remains unchecked; the goal is still blocked because the available broadcasts cut in after the clock advanced and no same-frame `00:00` exists in the reviewed sources.
+
+Verification after integration: `python tools/verify.py` → **VERIFY PASS (29/29 suites)**; `ci_semantic_check.py` → 0 errors/warnings; `validate_visual_reviews.py` → 0 errors; `test_visual_review_integrity.py` → 24/24 OK; `validate_game_offsets.py` → ok (27 sources, 72 series); `audit_visual_evidence.py` → 0 hash mismatches.
+
 ---
 
 ## 1. Purpose

@@ -2,11 +2,15 @@
 
 **Date:** 2026-11-02  
 **Reviewer:** DeepSeek only (no human visual inspection, manual approval, review queue, or escalation)  
-**Goal status:** **ACTIVE — NOT COMPLETE.** Passes 1–2 are finished, but **0** boundaries are `visually_verified`, **18** null offsets remain, and **11** context-only + **2** inconclusive reviews are unpromoted.  
+**Goal status:** **ACTIVE — NOT COMPLETE.** Pass 3 was executed exhaustively across all 72 series; **0** boundaries are `visually_verified`. All 18 original null offsets are covered by reviewed candidates or documented waivers; 41 context-only, 1 inconclusive and 20 rejected reviews remain unpromoted. Only §6a box 1 is unchecked.  
 **Ledger:** `analysis/evidence/deepseek-visual-reviews.json`  
 **Plan:** `analysis/evidence/visual-review-plan.json`  
 **Audit:** `analysis/evidence/visual-evidence-audit.json`  
 **Handoff:** `docs/goals/active/mpl-s18-visual-proof-deepseek-handoff.md` (completion gate: §6a)
+
+## Hy4 High re-review (2026-11-24)
+
+The `opencode-go-session` backend now uses **OpenCode Go — Hy4 Flash Free: High** (`opencode-go/hy4-flash-free`, variant `high`); smoke test passed with `reviewer: hy4`. Three parallel subagents re-reviewed **128 disjoint frames** (37 / 42 / 49; 30 groups) covering 1062, 1048, 1084/1106/1107, 1042/1051/1078/1102, the null-offset candidates 1037/1085/1087/1088/1079/1083/1072/1101, and 1036/1105/1038–1041/1045/1047. All frames have API request IDs; dispositions 69 `used`, 17 `context-only`, 42 `inconclusive`, 0 `rejected`. **`visible_00_00` is false on every frame**: the only readable game clocks are 00:15–00:46 (e.g. 1083 `00:44`, 1102 `00:34`, 1051 paused `00:16`, 1062 `00:17`–`00:20`); other candidates are drafts, countdowns, sponsor bumpers or interviews. No promotion was made; the canonical DeepSeek ledger is unchanged. Evidence: `analysis/evidence/hy4-review-{a,b,c}.json`, `hy4-plan-{a,b,c}.json`. Full verification passed (29/29 suites, 24/24 integrity tests, 0 hash mismatches).
 
 ## Pass 3 progress (intermediate)
 
