@@ -6,7 +6,7 @@
 **Ledger:** `analysis/evidence/deepseek-visual-reviews.json`  
 **Plan:** `analysis/evidence/visual-review-plan.json`  
 **Audit:** `analysis/evidence/visual-evidence-audit.json`  
-**Handoff:** `docs/goals/active/mpl-s18-visual-proof-deepseek-handoff.md` (completion gate: §6a)
+**Handoff:** `docs/goals/finished/mpl-s18-visual-proof-deepseek-handoff.md` (completion gate: §6a)
 
 ## Hy4 High re-review (2026-11-24)
 

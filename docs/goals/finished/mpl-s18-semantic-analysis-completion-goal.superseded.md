@@ -3,7 +3,7 @@
 > The transcript-analysis scope is replaced by
 > `docs/goals/active/revised_transcript_workflow.md` and
 > `docs/goals/active/mpl-s18-transcript-knowledge-goal.md`.
-> Visual proof remains in `docs/goals/active/mpl-s18-visual-proof-deepseek-handoff.md`.
+> Visual proof remains in `docs/goals/finished/mpl-s18-visual-proof-deepseek-handoff.md`.
 > Do not execute Phases 3–5 from this file as the active plan; keep it as a
 > historical baseline only.
 
@@ -113,7 +113,7 @@ Treat this section as a historical checkpoint, not unquestionable live truth. Fi
 
 All work requiring pixel-level interpretation must be consolidated in this single project file:
 
-- `docs/goals/active/mpl-s18-visual-proof-deepseek-handoff.md`
+- `docs/goals/finished/mpl-s18-visual-proof-deepseek-handoff.md`
 
 This is the sole dedicated visual-proof backlog and second-stage handoff. It contains the complete screenshot target scope, relevant sources/games/timestamps, capture instructions, DeepSeek review contract, uncertainty rules, evidence schema, unresolved claims, and visual acceptance criteria. Do not scatter separate visual-review TODO lists across other Markdown files; ordinary reports may link to this one canonical handoff/queue.
 
@@ -123,7 +123,7 @@ This is the sole dedicated visual-proof backlog and second-stage handoff. It con
 2. Do not newly set `review_status: reviewed`, `visually_reviewed`, or equivalent statuses. Do not approve/reject a visual claim from metadata or transcript text alone.
 3. Preserve historical visual annotations and provenance. Historical reviewer labels are not DeepSeek reviews and must not be relabelled as such. The DeepSeek stage must independently review the underlying screenshots and append fresh records.
 4. Continue building screenshot-capture tooling, boundary candidates, timestamp mappings, ordered frame sequences/contact sheets, validators, schemas, DeepSeek request scaffolding, and deterministic reports. A successful capture is `captured`, not `visually_verified`.
-5. For every visual dependency encountered, add/update the corresponding target in `docs/goals/active/mpl-s18-visual-proof-deepseek-handoff.md`, including source/game/timestamp/image information and the exact unresolved visual question.
+5. For every visual dependency encountered, add/update the corresponding target in `docs/goals/finished/mpl-s18-visual-proof-deepseek-handoff.md`, including source/game/timestamp/image information and the exact unresolved visual question.
 6. Keep visual-dependent claims pending, quarantined, or explicitly limited until a schema-valid DeepSeek vision review verifies the exact screenshot hash(es). Never use unreviewed images as proof of player position, objective state, score/UI values, game identity, rotations, teamfights, mechanics, intent, or causality.
 7. DeepSeek is the sole visual reviewer in the second stage. **No human screenshot inspection, manual visual approval, human-review queue, or human escalation is permitted.** If automated retries and additional screenshots do not resolve a question, mark it inconclusive/rejected/quarantined and continue with other targets.
 8. The visual proof method is screenshot-based. For temporal claims, use timestamped, chronologically ordered screenshot sequences with enough context; do not switch to a human watching a video or treating a sparse set of stills as continuous footage.
@@ -139,7 +139,7 @@ This is the sole dedicated visual-proof backlog and second-stage handoff. It con
 
 Second-stage assignment command:
 
-    /goal @docs/goals/active/mpl-s18-visual-proof-deepseek-handoff.md
+    /goal @docs/goals/finished/mpl-s18-visual-proof-deepseek-handoff.md
 
 See that file for the full inventory, DeepSeek-only review protocol, and definition of done.
 
@@ -189,7 +189,7 @@ The previous audit found `analysis/evidence/game-offsets.json` contained 72 sche
 - Keep separate statuses for `schedule_associated`, `candidate_detected`, `boundary_verified`, `game_boundary_verified`, `visually_reviewed`, `quarantined`, and `unresolved` (or a similarly precise enum). Avoid a generic status that conflates different evidence levels.
 - Identify candidate series boundaries using more than the first appearance of team-name strings. Use combinations of team names, ordered schedule, caster introductions, game loading/scoreboard transitions, timed captions, and DeepSeek-reviewed screenshot sequences. Preserve the candidate text and exact cue interval used.
 - Never mark a boundary verified merely because the two team names appear somewhere near a timestamp or because the schedule order predicts it.
-- Add a screenshot-review workflow that captures timestamped frames around candidate boundaries (including before and after), displays enough broadcast UI to identify series/game state, and records the DeepSeek disposition and concise evidence rationale. The first-stage non-vision executor may implement capture/review infrastructure and populate the handoff queue, but must not visually approve a boundary; route all pixel-level judgments to `docs/goals/active/mpl-s18-visual-proof-deepseek-handoff.md` for the second-stage DeepSeek reviewer.
+- Add a screenshot-review workflow that captures timestamped frames around candidate boundaries (including before and after), displays enough broadcast UI to identify series/game state, and records the DeepSeek disposition and concise evidence rationale. The first-stage non-vision executor may implement capture/review infrastructure and populate the handoff queue, but must not visually approve a boundary; route all pixel-level judgments to `docs/goals/finished/mpl-s18-visual-proof-deepseek-handoff.md` for the second-stage DeepSeek reviewer.
 - Establish series start/end intervals and then game start/end intervals wherever evidence permits. Do not infer game timestamps directly from match database duration alone unless the VOD clock and timing relationship are independently verified.
 - Correctly handle multi-series broadcast dates, pauses, desk segments, replays, promos/ads, delays, and nonstandard broadcast structure.
 - Quarantine unresolved/ambiguous boundaries. Ensure no downstream timestamp citation or visual event is attached to the wrong series/game.
@@ -258,7 +258,7 @@ The previous audit found `analysis/evidence/game-offsets.json` contained 72 sche
 
 - Every evidence event resolves to its exact underlying source span/query/frame and verified series/game association.
 - No timestamp-backed event can point to an unverified game boundary.
-- A visual capture is never automatically treated as a verified gameplay fact. DeepSeek visual review pass 1 is complete (53 frames, 11 boundaries; 0 promotions), but 20 non-null boundary candidates and 18 null offsets remain pending. Visual-dependent claims remain pending/quarantined and are listed in `docs/goals/active/mpl-s18-visual-proof-deepseek-handoff.md` §8.4. No human reviewer is part of this workflow.
+- A visual capture is never automatically treated as a verified gameplay fact. DeepSeek visual review pass 1 is complete (53 frames, 11 boundaries; 0 promotions), but 20 non-null boundary candidates and 18 null offsets remain pending. Visual-dependent claims remain pending/quarantined and are listed in `docs/goals/finished/mpl-s18-visual-proof-deepseek-handoff.md` §8.4. No human reviewer is part of this workflow.
 - Re-running ingestion/build does not duplicate evidence or alter raw sources.
 
 ---

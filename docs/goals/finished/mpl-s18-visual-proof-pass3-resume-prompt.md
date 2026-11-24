@@ -1,11 +1,11 @@
 # Resume prompt — MPL ID S18 visual proof (pass 3)
 
-You are resuming the **active MPL ID S18 semantic-analysis goal** in the implementer session. DeepSeek visual-review passes 1–2 are finished, but the visual-proof goal is **NOT complete**: 0 boundaries are `visually_verified`, 18 null offsets remain, and 11 context-only + 2 inconclusive reviews are unpromoted. Pass 3 is the next unit of work. This is an execution order, not a new backlog: the canonical backlog remains `docs/goals/active/mpl-s18-visual-proof-deepseek-handoff.md` (completion gate §6a).
+You are resuming the **active MPL ID S18 semantic-analysis goal** in the implementer session. DeepSeek visual-review passes 1–2 are finished, but the visual-proof goal is **NOT complete**: 0 boundaries are `visually_verified`, 18 null offsets remain, and 11 context-only + 2 inconclusive reviews are unpromoted. Pass 3 is the next unit of work. This is an execution order, not a new backlog: the canonical backlog remains `docs/goals/finished/mpl-s18-visual-proof-deepseek-handoff.md` (completion gate §6a).
 
 ## Read first, in order
 
 1. `docs/goals/active/mpl-s18-semantic-analysis-completion-goal.md`
-2. `docs/goals/active/mpl-s18-visual-proof-deepseek-handoff.md` — §3.3, §6, §8.3–§8.5
+2. `docs/goals/finished/mpl-s18-visual-proof-deepseek-handoff.md` — §3.3, §6, §8.3–§8.5
 3. `analysis/reports/visual-proof-deepseek-review.md`
 4. `analysis/evidence/deepseek-visual-reviews.json` — `summary`, `unresolved`, `backlog`
 5. `analysis/evidence/game-offsets.json`

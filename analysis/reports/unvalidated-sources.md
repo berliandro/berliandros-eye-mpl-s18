@@ -33,7 +33,7 @@ Automated transcript-level boundary review was attempted for all 4 sources using
 
 ### DeepSeek frame capture status
 
-Frame capture was attempted for all 4 remaining unvalidated sources (27 frames total: 21 in pass 1 plus 6 pass-2 frames for 1095/1096, with sidecars). DeepSeek reviewed the relevant frames in passes 1–2; the full results are in `analysis/evidence/deepseek-visual-reviews.json`. All captured frames remain `captured`/`reviewed`, not `visually_verified`. Frame sidecars are in `analysis/cache/video-frames/`. All targets are documented in `docs/goals/active/mpl-s18-visual-proof-deepseek-handoff.md`.
+Frame capture was attempted for all 4 remaining unvalidated sources (27 frames total: 21 in pass 1 plus 6 pass-2 frames for 1095/1096, with sidecars). DeepSeek reviewed the relevant frames in passes 1–2; the full results are in `analysis/evidence/deepseek-visual-reviews.json`. All captured frames remain `captured`/`reviewed`, not `visually_verified`. Frame sidecars are in `analysis/cache/video-frames/`. All targets are documented in `docs/goals/finished/mpl-s18-visual-proof-deepseek-handoff.md`.
 
 **Status: partially resolved.** The visual review confirmed 1084/1085/1087/1088 pairings and rejected 1086/1095/1096 as non-match frames. The 1085/1087/1088 candidates are context-only and unpromoted; no same-frame `00:00` was found. The remaining null series must not be cited with timestamps until a later DeepSeek pass finds a start cue. No human review is permitted.
 

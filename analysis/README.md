@@ -30,7 +30,7 @@ This directory contains the first **traceable, transcript-powered** coaching pil
 | `evidence/timed-alignment.json` | derived caption alignment coverage |
 | `pilot/selection.json` | curated pilot claims/quotes; input to the deterministic builder |
 | `cache/` | **local-only, Git-ignored** timed captions, screenshots, contact sheets |
-| `../docs/goals/active/mpl-s18-visual-proof-deepseek-handoff.md` | complete screenshot-proof backlog, automated DeepSeek vision-review protocol, and acceptance criteria |
+| `../docs/goals/finished/mpl-s18-visual-proof-deepseek-handoff.md` | complete screenshot-proof backlog, automated DeepSeek vision-review protocol, and acceptance criteria |
 
 ## Data safety
 
@@ -127,7 +127,7 @@ The apply command backs up the affected files, repairs `matches.winner` relative
 
 ## Next milestone
 
-Reconcile the series/game offset manifest, generate a screenshot target inventory, and expand the curated evidence sample beyond the three pilot series. The second-stage DeepSeek vision workflow in `../docs/goals/active/mpl-s18-visual-proof-deepseek-handoff.md` owns all screenshot interpretation. Separately resolve or explicitly quarantine the 37 unmapped short lines in `src-s18-w09d02`; screenshot review does not repair transcript alignment or authorize timestamp citations for those lines. Only after quotation fidelity, timestamp/link integrity and audit quality hold across a stratified sample should all nine weeks be processed semantically.
+Reconcile the series/game offset manifest, generate a screenshot target inventory, and expand the curated evidence sample beyond the three pilot series. The second-stage DeepSeek vision workflow in `../docs/goals/finished/mpl-s18-visual-proof-deepseek-handoff.md` owns all screenshot interpretation. Separately resolve or explicitly quarantine the 37 unmapped short lines in `src-s18-w09d02`; screenshot review does not repair transcript alignment or authorize timestamp citations for those lines. Only after quotation fidelity, timestamp/link integrity and audit quality hold across a stratified sample should all nine weeks be processed semantically.
 
 ## Final regular-season standings (source-reported, cross-checked)
 

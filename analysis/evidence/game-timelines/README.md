@@ -20,7 +20,7 @@ This directory contains canonical game-level evidence timelines following `analy
 
 ## Visual evidence
 
-Timeline frames remain `review_status: not-reviewed` unless their exact screenshot is recorded in the DeepSeek review ledger. DeepSeek visual review pass 1 (2026-11-02) reviewed 53 frames and 11 boundary candidates: 5 candidate offsets were rejected, 5 were context-only, 1 was inconclusive, and 0 boundaries were promoted to `visually_verified`. See `analysis/evidence/deepseek-visual-reviews.json`, `analysis/reports/visual-proof-deepseek-review.md`, and `docs/goals/active/mpl-s18-visual-proof-deepseek-handoff.md` §8.
+Timeline frames remain `review_status: not-reviewed` unless their exact screenshot is recorded in the DeepSeek review ledger. DeepSeek visual review pass 1 (2026-11-02) reviewed 53 frames and 11 boundary candidates: 5 candidate offsets were rejected, 5 were context-only, 1 was inconclusive, and 0 boundaries were promoted to `visually_verified`. See `analysis/evidence/deepseek-visual-reviews.json`, `analysis/reports/visual-proof-deepseek-review.md`, and `docs/goals/finished/mpl-s18-visual-proof-deepseek-handoff.md` §8.
 
 ## Validation
 
