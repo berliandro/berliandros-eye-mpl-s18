@@ -1,18 +1,18 @@
 {
   "schema_version": 1,
-  "generated_at": "2026-11-04T23:21:22.021344+00:00",
+  "generated_at": "2026-11-04T23:21:12.319338+00:00",
   "description": "Derived reconciliation of game-offsets.json against the DeepSeek visual-review ledger. This file makes rejections and unpromoted reviews visible without silently changing canonical offset statuses.",
   "game_offsets_path": "analysis/evidence/game-offsets.json",
-  "game_offsets_sha256": "d9e7bf398f533860d897deaadd544c337afc2ebd9b531afed95fecedd2ecba36",
+  "game_offsets_sha256": "78e8699bcae21d06d4e7768940acc68b15dcba71d3bc80b615b4d297524ac34c",
   "ledger_path": "analysis/evidence/deepseek-visual-reviews.json",
   "ledger_sha256": "7240a7f35ec69fbccf864a937a8d09b2c0f10f3f0b9360de777736cdfa592f7b",
   "reviewer": "deepseek",
   "no_human_review": true,
   "summary": {
     "series_total": 72,
-    "visually_verified": 0,
+    "visually_verified": 1,
     "rejected": 20,
-    "context_only": 41,
+    "context_only": 40,
     "inconclusive": 1,
     "no_candidate_waiver": 10,
     "not_reviewed": 0,
@@ -556,7 +556,7 @@
         "bd0c85dc2251a74686e3c4adcb0e2fd4ce7b4653119f749452b52f2155fb2c34"
       ],
       "status_effect": "partial_context_only",
-      "evidence": "Wide studio shot of a three-person analyst desk; scoreboard shows NAVI 0–AE 0, GAME 1, BEST OF 3, and a DRAFT PICK IN 08:39 countdown. The inset TV shows hands holding a phone. No 00:00 game clock is visible. Same analyst desk and NAVI 0–AE 0 / GAME 1 scoreboard; the DRAFT PICK IN timer reads 08:34."
+      "evidence": "Wide studio shot of a three-person analyst desk; scoreboard shows NAVI 0\u2013AE 0, GAME 1, BEST OF 3, and a DRAFT PICK IN 08:39 countdown. The inset TV shows hands holding a phone. No 00:00 game clock is visible. Same analyst desk and NAVI 0\u2013AE 0 / GAME 1 scoreboard; the DRAFT PICK IN timer reads 08:34."
     },
     {
       "match_detail_id": "1038",
@@ -868,7 +868,7 @@
         "26efd231a589d1b8c45b480a772aeea63d1078565155e393093db2b44036296d"
       ],
       "status_effect": "partial_context_only",
-      "evidence": "Stage/player-camera segment with an AE vs EVOS lower-third matchup graphic; no game HUD, game clock, or 00:00 is visible. Animated trophy-and-flags tournament bumper with VOD controls; no teams, match label, or game clock is visible. Full-screen AE vs EVOS gameplay with a 3–0 scoreboard and 03:28 ga"
+      "evidence": "Stage/player-camera segment with an AE vs EVOS lower-third matchup graphic; no game HUD, game clock, or 00:00 is visible. Animated trophy-and-flags tournament bumper with VOD controls; no teams, match label, or game clock is visible. Full-screen AE vs EVOS gameplay with a 3\u20130 scoreboard and 03:28 ga"
     },
     {
       "match_detail_id": "1056",
@@ -975,30 +975,6 @@
       ],
       "status_effect": "partial_context_only",
       "evidence": "Pre-game stage/player-cam frame. The top-left overlay shows a 0-0 series score, GAME 1 and BEST OF 3 between team logos; the two zeros are scores, and no game clock or countdown is visible. Draft-room screen headed DRAFT IDENTITY with DRAFT DNA comparison panels, two five-player lineups and coaches;"
-    },
-    {
-      "match_detail_id": "1062",
-      "source_id": "src-s18-w04d02",
-      "team_a": "DEWA",
-      "team_b": "ONIC",
-      "start_seconds": 2460,
-      "offset_status": "boundary_verified",
-      "visual_status": "context-only",
-      "deepseek_disposition": "context-only",
-      "candidate_start_seconds": 2460,
-      "frame_group": "G-1062-2460",
-      "frame_ids": [
-        "DF-1062-2456",
-        "DF-1062-2460",
-        "DF-1062-2464"
-      ],
-      "frame_sha256": [
-        "d2c306c5a6f1ac89df1b187d16796553b237cf45e58f91faf8b1d57a1e218117",
-        "184bc13e99df3b7ee506b0ebe9ede9533d3f0a34b4fb4cdadeef702b02dea645",
-        "ad4e328ba66733b2ffd54eff1893843794faf78c89103fc2b3e0411eb682f02a"
-      ],
-      "status_effect": "partial_context_only",
-      "evidence": "Circular MPL ID Season 18 East logo animation on a pale background; no map, team names, match label, clock, scoreboard, or draft panel. Isometric overhead map view with repeated Infinix sponsor banners; no HUD, team names, match label, clock, scoreboard, or draft panel. In-game top-down HUD near gam"
     },
     {
       "match_detail_id": "1065",
@@ -1594,7 +1570,7 @@
         "3064c2a0b4b4dda6b3c074f017fca9e27d6a4b28584ed561e739844e2bf93acb"
       ],
       "status_effect": "no_change",
-      "evidence": "Wide shot of a three-person analyst desk; the center analyst wears sunglasses and touches his face. The top-left HUD shows 0–0, 'M3 - GAME 1', 'VS', 'BEST OF 3', and 'DRAFT PICK IN 03:52'. Only two small crest logos appear; no team names are legible. The desk monitor shows a hand holding a phone. No"
+      "evidence": "Wide shot of a three-person analyst desk; the center analyst wears sunglasses and touches his face. The top-left HUD shows 0\u20130, 'M3 - GAME 1', 'VS', 'BEST OF 3', and 'DRAFT PICK IN 03:52'. Only two small crest logos appear; no team names are legible. The desk monitor shows a hand holding a phone. No"
     }
   ],
   "no_candidate_waivers": [
@@ -1809,7 +1785,7 @@
         "bd0c85dc2251a74686e3c4adcb0e2fd4ce7b4653119f749452b52f2155fb2c34"
       ],
       "status_effect": "partial_context_only",
-      "evidence": "Wide studio shot of a three-person analyst desk; scoreboard shows NAVI 0–AE 0, GAME 1, BEST OF 3, and a DRAFT PICK IN 08:39 countdown. The inset TV shows hands holding a phone. No 00:00 game clock is visible. Same analyst desk and NAVI 0–AE 0 / GAME 1 scoreboard; the DRAFT PICK IN timer reads 08:34."
+      "evidence": "Wide studio shot of a three-person analyst desk; scoreboard shows NAVI 0\u2013AE 0, GAME 1, BEST OF 3, and a DRAFT PICK IN 08:39 countdown. The inset TV shows hands holding a phone. No 00:00 game clock is visible. Same analyst desk and NAVI 0\u2013AE 0 / GAME 1 scoreboard; the DRAFT PICK IN timer reads 08:34."
     },
     {
       "match_detail_id": "1038",
@@ -2077,7 +2053,7 @@
         "3064c2a0b4b4dda6b3c074f017fca9e27d6a4b28584ed561e739844e2bf93acb"
       ],
       "status_effect": "no_change",
-      "evidence": "Wide shot of a three-person analyst desk; the center analyst wears sunglasses and touches his face. The top-left HUD shows 0–0, 'M3 - GAME 1', 'VS', 'BEST OF 3', and 'DRAFT PICK IN 03:52'. Only two small crest logos appear; no team names are legible. The desk monitor shows a hand holding a phone. No"
+      "evidence": "Wide shot of a three-person analyst desk; the center analyst wears sunglasses and touches his face. The top-left HUD shows 0\u20130, 'M3 - GAME 1', 'VS', 'BEST OF 3', and 'DRAFT PICK IN 03:52'. Only two small crest logos appear; no team names are legible. The desk monitor shows a hand holding a phone. No"
     },
     {
       "match_detail_id": "1049",
@@ -2257,7 +2233,7 @@
         "26efd231a589d1b8c45b480a772aeea63d1078565155e393093db2b44036296d"
       ],
       "status_effect": "partial_context_only",
-      "evidence": "Stage/player-camera segment with an AE vs EVOS lower-third matchup graphic; no game HUD, game clock, or 00:00 is visible. Animated trophy-and-flags tournament bumper with VOD controls; no teams, match label, or game clock is visible. Full-screen AE vs EVOS gameplay with a 3–0 scoreboard and 03:28 ga"
+      "evidence": "Stage/player-camera segment with an AE vs EVOS lower-third matchup graphic; no game HUD, game clock, or 00:00 is visible. Animated trophy-and-flags tournament bumper with VOD controls; no teams, match label, or game clock is visible. Full-screen AE vs EVOS gameplay with a 3\u20130 scoreboard and 03:28 ga"
     },
     {
       "match_detail_id": "1056",
@@ -2402,24 +2378,30 @@
       "source_id": "src-s18-w04d02",
       "team_a": "DEWA",
       "team_b": "ONIC",
-      "start_seconds": 2460,
-      "offset_status": "boundary_verified",
-      "visual_status": "context-only",
-      "deepseek_disposition": "context-only",
-      "candidate_start_seconds": 2460,
-      "frame_group": "G-1062-2460",
+      "start_seconds": 2465.438,
+      "offset_status": "visually_verified",
+      "visual_status": "visually_verified",
+      "deepseek_disposition": "used",
+      "candidate_start_seconds": 2465.438,
+      "frame_group": "G-P3-1062-SWEEP",
       "frame_ids": [
-        "DF-1062-2456",
-        "DF-1062-2460",
-        "DF-1062-2464"
+        "DF3-w04d02-2465"
       ],
       "frame_sha256": [
-        "d2c306c5a6f1ac89df1b187d16796553b237cf45e58f91faf8b1d57a1e218117",
-        "184bc13e99df3b7ee506b0ebe9ede9533d3f0a34b4fb4cdadeef702b02dea645",
-        "ad4e328ba66733b2ffd54eff1893843794faf78c89103fc2b3e0411eb682f02a"
+        "864c843e4cf7e6f7b597c1acc876ed825c23f2c3510e375de58f7bb3079b1009"
       ],
-      "status_effect": "partial_context_only",
-      "evidence": "Circular MPL ID Season 18 East logo animation on a pale background; no map, team names, match label, clock, scoreboard, or draft panel. Isometric overhead map view with repeated Infinix sponsor banners; no HUD, team names, match label, clock, scoreboard, or draft panel. In-game top-down HUD near gam"
+      "status_effect": "boundary_promoted",
+      "evidence": "In-game HUD: kill score 0-0, gold 1521-1523, clock 00:19. DEWA Shanee, DEWA Octa, ONIC SANZ, and ONIC Kiboy nameplates visible with the 'SORRY TWU' spray and Infinix banner. DEWA/ONIC pairing is present, but the clock is 00:19, not 00:00.",
+      "visual_anchor": "first_visible_hud",
+      "anchor_frame_id": "DF3-w04d02-2465",
+      "anchor_frame_sha256": "864c843e4cf7e6f7b597c1acc876ed825c23f2c3510e375de58f7bb3079b1009",
+      "anchor_seconds": 2465.438,
+      "visible_clock": "00:19",
+      "inferred_start_seconds": 2446.438,
+      "reviewer": "deepseek",
+      "model": "deepseek-v4.1-flash",
+      "api_request_id": "msg_1a880a498001PoJAcLMfTAGab9",
+      "promotion_note": "The visible clock reading (00:19) and the inferred start (2446.438s) are recorded separately; the inferred start is NOT a visually verified timestamp."
     },
     {
       "match_detail_id": "1063",
