@@ -1,286 +1,455 @@
-# Berliandro's Eye - MPL ID Season 18
+# Berliandro's Eye — MPL Indonesia Season 18
 
-A dark, plate-based instrument panel for exploring **MPL Indonesia Season 18**
-(regular season + playoffs): the season front page, nine club dossiers, player profiles,
-match scoreboards, the hero meta and a one-page opponent prep.
-Ships as **one HTML file plus the committed `assets/` folder** beside it (`mpl_id_s18_dark.html`);
-the data is embedded and artwork is referenced by relative path, so the pair works offline from the
-snapshot and refreshes live from the mlbbhub API when online.
+[![Regression](https://github.com/berliandro/berliandros-eye-mpl-s18/actions/workflows/ci.yml/badge.svg)](https://github.com/berliandro/berliandros-eye-mpl-s18/actions/workflows/ci.yml)
+[![Semantic analysis](https://github.com/berliandro/berliandros-eye-mpl-s18/actions/workflows/semantic-check.yml/badge.svg)](https://github.com/berliandro/berliandros-eye-mpl-s18/actions/workflows/semantic-check.yml)
 
-Season 18 is complete: the snapshot carries all **80 series and 215 games**, with **BTR beating
-NAVI 4–3 in the Grand Final**.
+**Berliandro's Eye** is an unofficial, evidence-first record of **MPL Indonesia Season 18**:
+every series, game, recorded pick and ban, and per-player statistic from the completed season,
+presented as a fast single-file web app. It is built for two readers: a fan who wants an answer
+in seconds, and a coach who needs an opponent report they can defend.
 
-**Live:** <https://berliandro.github.io/berliandros-eye-mpl-s18/mpl_id_s18_dark.html>
-The root URL <https://berliandro.github.io/berliandros-eye-mpl-s18/> redirects to the app; Pages
-serves `main` directly (`.nojekyll`), and `404.html` catches unknown paths.
+Season 18 is complete: **80 series (matches) and 215 games**, with **BTR beating NAVI 4–3 in
+the Grand Final**. The app ships as `mpl_id_s18_dark.html` plus the committed `assets/` folder.
+The snapshot is embedded, so the whole season renders offline; **Refresh** pulls live data from
+the public mlbbhub and Liquipedia APIs when a network is available.
 
-## Semantic coaching pilot
+Rates carry their sample size and, where available, a 95% interval. Missing values render as
+`–` with a reason; heuristics are labelled; nothing is estimated silently.
 
-A separate, auditable transcript/database layer lives in [`analysis/`](analysis/README.md). It imports the local nine-week transcript corpus, verifies hashes, derives timestamps for verified videos, captures gameplay frames with sidecar provenance, and publishes a full-season database evidence pass plus transcript-backed coaching analysis. Current coverage: **27/27 sources validated, 72/72 match reports with database evidence, 27 transcript-covered series (24 complete, 3 partial), 45 DB-only series, and 313 accepted observations.** The coaching product is 9 team briefs plus one head-coach brief; visual proof remains unresolved (0 same-frame `00:00` boundaries). The semantic layer is pinned to the frozen regular-season snapshot `analysis/snapshots/mpl_id_s18_regular.db` (72 series, 174 games); the app database is the completed season (80 series, 215 games). Raw transcripts and screenshots stay local and Git-ignored. Start at [`analysis/reports/coverage-matrix.md`](analysis/reports/coverage-matrix.md).
+**Live app:** <https://berliandro.github.io/berliandros-eye-mpl-s18/> ·
+[Data dictionary](docs/DATA_DICTIONARY.md) ·
+[Roadmap](docs/ROADMAP.md) ·
+[Coaching layer](analysis/README.md)
 
-## Screenshots
+> **Unofficial project.** Not affiliated with Moonton, MPL or any team. Data is collected from
+> public endpoints and cross-checked against official standings, the schedule and Liquipedia
+> drafts; see [Data sources and attribution](#data-sources-and-attribution).
 
-### Overview — championship plate, final standings, MVP race, latest results
-![Overview](github/assets/01-overview.png)
-
-### Teams — the league board and nine club dossiers, rating first
-![Teams](github/assets/09-teams.png)
-
-### Teams — a club dossier: crest identity, frosted season band, roster, tendencies, draft, H2H
-![Teams dossier](github/assets/10-teams-dossier.png)
-
-### Players — lane impact, win rate and a six-axis percentile hexagon
-![Players](github/assets/02-players.png)
-
-### Matches — latest week first, grouped by week, the series MVP per row
-![Matches list](github/assets/03-matches-list.png)
-
-### Matches — week-grouped cards; the card is the target
-![Matches grid](github/assets/04-matches-grid.png)
-
-### Scoreboard — per-team stat tables, series score, both MVPs, bans in draft order
-![Scoreboard](github/assets/05-scoreboard.png)
-
-### Player profile — identity plate, glass season band, hero pool, derived stats
-![Player profile](github/assets/06-player.png)
-
-### Stats — Series MVP race with club crests and award bars
-![Stats MVP](github/assets/07-stats-mvp.png)
-
-### Stats — Heroes dashboard: one-line leaders and a sortable pick/ban/win table
-![Stats heroes](github/assets/08-stats-heroes.png)
+**Contents:** [Features](#features) · [Screenshots](#screenshots) · [Technology stack](#technology-stack) ·
+[How it works](#how-it-works) · [How the numbers are derived](#how-the-numbers-are-derived) ·
+[Getting started](#getting-started) · [Commands](#commands) · [Project structure](#project-structure) ·
+[Testing](#testing) · [Deployment](#deployment) · [Coaching and transcript layer](#coaching-and-transcript-layer) ·
+[Data sources and attribution](#data-sources-and-attribution) · [Troubleshooting](#troubleshooting) ·
+[Contributing](#contributing) · [Documentation](#documentation) · [License and disclaimer](#license-and-disclaimer)
 
 ## Features
 
-- **Overview** — the championship plate on a lit, breathing stage (whole roster, 4–3, game
-  winners, series MVP, one click to the scoreboard), a one-line season count, final standings that
-  keep official Match W-L and Game W-L separate and link to the club dossiers, the series-MVP race,
-  and the last six results. Every block routes somewhere; nothing on it is a dead end.
-- **Teams** — a nine-club league board and nine season dossiers. The board opens on the model's
-  **Rating** order with a **Standings** toggle and a **Δ** rank column when the two disagree; the
-  dossier opens with a crest identity plate and a frosted seven-cell band (series, games,
-  win%, rating with CIs, SOS, form, sides), then roster, tendencies, draft, map record at n≥5
-  and a 4×2 head-to-head. The top three in competition order are open, the other six one click
-  away. Dossiers follow the league: playoff seeds while the bracket is live; after the grand
-  final, bracket 1–4, then 5–6 alphabetical, then the non-qualified clubs.
-- **Players** — grid cards built on the profile's grammar: cut-out, IGN, team · lane, one
-  headline **lane impact**, a supporting row (win rate, KDA, GPM) and a **six-axis percentile
-  hexagon** with the 50th-percentile ring; sub-five-game samples render dimmed. The whole card
-  is the link; list view keeps the sortable table. Filter by team, lane, search text; sort by
-  win rate / lane impact / KDA / kills / gold / games.
-- **Matches** — the latest week opens first; fixtures are grouped by week, earlier weeks one
-  click away. The card is the target: no separate button, the winner is marked by weight, and
-  each series carries one date, one short score and one series-MVP label. A Regular/Playoffs
-  sub-tab switches phases; the playoffs phase is the **bracket** plus the playoff series, and
-  a team filter dims the league bracket instead of contradicting the count. Below 768px the bracket
-  stacks by round, so the Grand Final is never clipped off-screen.
-- **Scoreboard dialog** — the series score in the title, **Series MVP (Liquipedia)** in the
-  subtitle and **Game MVP (KDA heuristic)** in the game header; one table per team
-  (Player / K/D/A / KDA / Gold / GPM / DMG / TAKEN) with a build row, tabular figures and player
-  links; bans in draft order with hero art; a labelled side chip over the 3px edge; a chalk VOD
-  pill. The dialog title is `h2`, each game `h3`.
-- **Player profile** — a full page, not a dialog: cut-out portrait, oversized IGN, team and
-  lane lockup, and a glass stat band split **season / last five games** (games, game W-L, KDA,
-  K/D/A, GPM, kill participation, damage share). Below it: the hero pool table (GP, AVG KDA,
-  per-game K/D/A, GPM; MANIAC/SAVAGE are not in this snapshot and are omitted), a lane-normalised
-  profile (close-game WR, effective pool, comfort/flex, damage per gold, tower damage per game),
-  the last eight games with result
-  pills, the KDA-trend chart, side splits, record by opponent, and top items, emblems and
-  talents with drill-downs. Every number keeps its `n` or its reason.
-- **Shell** — a left rail groups **Board** (Overview, Teams, Players, Matches) and **Analysis**
-  (Stats, Analytics, Prep) at 1180px and wider, with inline SVG icons, live counts for clubs,
-  players and series, and one 2px accent bar. Below that width the seven tabs return, in a 4×2
-  grid on phones with Prep spanning the last two cells. The player profile hides the header.
-- **Stats** — sub-tabbed dashboard: **Series MVP** (race leaderboard with club crests and a
-  proportional award bar, plus the full history) and **Heroes** (one-line leaders + a sortable
-  pick/ban/win table with **role, lane and damage-type columns** and share bars).
-- **Analytics — Impact** — lane-normalised player impact (35% damage share, 25% kill
-  participation, 20% gold share, 10% tower share, −10% death share), shrunk toward
-  the lane mean with a 5-game prior. Shows KDA/GPM/damage/KP percentiles, a 95%
-  Wilson win-rate interval, form delta, and mutes rows under 5 games. The method
-  and weights are printed in-product.
-- **Analytics — Draft** — hero pick/ban/WR with CIs and flex, same-team synergy,
-  opposing-pair counters, composition archetypes, map meta, and date-window meta
-  movement. Pair/counter deltas are labelled as descriptive proxies, not causal. Team-level
-  draft fingerprints (top picks/bans, first-ban by side, HHI, pocket picks) live in the Teams
-  dossiers.
-- **Prep** — pick an opponent (and optionally our team) for a one-page scouting
-  report: rating/form/side/tempo, likely picks and bans, a transparent ban ranking,
-  player weaknesses/strengths, weak/strong maps, H2H and lane matchups; print/PDF,
-  CSV, and a copyable permalink.
-- **Search + links** — `Ctrl/⌘K` palette across players, teams, heroes and matches;
-  view/teams/analytics/prep state is written to the URL, so a club dossier, a filtered
-  match list and a prep report are all shareable.
-- **Tables and identity** — Every statistic column sorts ascending/descending with
-  a minimalist ▲▼ indicator.
-  MVP names from Liquipedia are normalized to one canonical player identity
-  (e.g. Coolfire → Joshuaa, JOOOOO → Kevinn, Sutsujin → Arthur,
-  Lynchh → Joshua — see `data/global/aliases.json`), so aliases aggregate instead of
-  splitting into phantom players; the source spelling is kept as an “as …” note.
-  Every hero opens a drill-down modal (picks/bans/WR tiles, most-used
-  items/emblems/talents, players with counts, and a game list with
-  `DATE | MATCH | GAME | TYPE | RESULT` columns that opens the exact game);
-  PICK rows show the hero's team result as Win/Loss while BAN rows stay neutral,
-  and assets drill further into global usage.
-- **Offline-first** — embedded snapshot renders instantly; Refresh re-fetches live
-  data with retry/timeout, merges per-match results (failed match IDs keep
-  their previous records, never partial-overwritten), caches to a versioned
-  `localStorage` key, and reports `updated` vs `partially updated` status.
-  A refresh is labelled final only when all 72 completed regular fixtures have
-  detail, the standings totals agree, and every game retains ten picks, two
-  team rows, recorded sides and its ordered bans; missing results or draft
-  gaps are called out explicitly. The committed snapshot additionally carries
-  the 8 playoff series (215 games in total). Source conflicts and data-quality exceptions
-  live in `data/seasons/s18/quality.json` and `meta.json`.
-  A failed ETL build keeps the last known-good database/CSVs (rerun to
-  retry); a failed refresh keeps showing the last snapshot. To reset cached
-  data, clear the site's `localStorage` and reload.
+Seven views, one job each.
 
-## Stat notes (how derived numbers work)
-
-- **Game MVP**: the mlbbhub API exposes no per-game MVP (game `summary` is empty), so
-  the app awards it to the **highest-KDA player on the winning team**
-  (tiebreaks: kills, then gold). Series MVP comes from Liquipedia.
-- **MANIAC / SAVAGE**: 🚧 **Under development** — no API endpoint (`/match`,
-  `/stats/players`, `/stats/heroes`) or official MPL ID page publishes kill-streak
-  data (the official leaderboard exists for MPL MY only), so these columns render
-  `–` until a source exists. They are never fabricated.
-- **Analytics / Prep**: lane percentiles shrink toward the lane mean with a
-  5-game prior; win rates use 95% Wilson intervals and show `n`; impact weights
-  are pinned by `tools/test_analytics.js`; team ratings are Bradley-Terry on one
-  paired observation per game with 100 game-level bootstrap resamples; the ban
-  threat score uses opponent pick presence × pick win rate (their own bans are
-  context, not input). Formulas and caveats are in-product and in
-  [`docs/DATA_DICTIONARY.md`](docs/DATA_DICTIONARY.md).
-
-## Project layout
-
-| Path | What it is |
+| View | What it gives you |
 |---|---|
-| `mpl_id_s18_dark.html` | Built app (generated — open this in a browser) |
-| `tools/templates/` | Single source: `doc.html`, `style.css`, `app.js` |
-| `tools/build_s18_db.py` | API ETL: mlbbhub + Liquipedia → SQLite + `data/csv/` |
-| `tools/enrich_drafts.py` | Liquipedia enrichment: picks, lane order, ban order, map mode (idempotent) |
-| `tools/fetch_hero_classes.py` | Build `hero_classes.json` from Liquipedia hero infoboxes (role, lane, specialties) |
-| `tools/aggregate_teams.py` | Rebuild `team_games` / `team_season_stats` from player rows (no network) |
-| `tools/gen_dark.py` | Build: CSV + assets → `mpl_id_s18_dark.html` |
-| `tools/derive_team_colors.py` | Derive each team's accent from its logo (lightness-clamped) → `data/global/team_colors.json` |
-| `tools/fetch_assets.py` | Download every referenced hero/item asset (`--check-only`, `--live`) |
-| `tools/make_player_cards.py` | Build 160px portrait derivatives + provenance for the 44px Players grid (`--check` verifies hashes) |
-| `tools/check.py` | Regression suite (incl. STRICT asset coverage + JS syntax gate) |
-| `tools/verify.py` | Standard verification: all unit suites + `check.py` + parity gate |
-| `tools/import_transcripts.py` | Safe copy + SHA-256 manifest for the local transcript corpus |
-| `tools/link_video_source.py` | Verify and record a YouTube video ID for a transcript source |
-| `tools/transcript_evidence.py` | Quote/timestamp alignment, evidence build and validation |
-| `tools/video_frames.py` | Full-frame screenshot capture + sidecar provenance + contact sheets |
-| `tools/verify_analysis.py` | Semantic-coaching pilot tests + ledger/boundary checks |
-| `tools/test_chances.js` | Probability-engine tests (node) |
-| `tools/test_refresh.js` | Live-refresh merge tests (node) |
-| `tools/test_analytics.js` | Analytics engine fixtures: Wilson, shrinkage, player/team/draft metrics, ban ranking (node) |
-| `docs/` | Roadmap, data dictionary and insight catalogue |
-| `tools/test_cache.js` | Cache versioning + snapshot-fingerprint tests (node) |
-| `tools/test_snapshot.js` | Refresh snapshot derivation + enrichment-preservation tests (node) |
-| `tools/reconcile.py` | Cross-view Match W-L / Game W-L reconciliation gate |
-| `tools/test_reconcile.py` | Committed-snapshot reconciliation regressions |
-| `tools/test_config.js` | Season-config tests (node) |
-| `tools/test_liqparse.py` | Liquipedia parser + ETL gate tests |
-| `tools/test_enrich.py` | Offline draft/lane parser + data-quality gates |
-| `tools/test_hero_classes.py` | Hero role/lane/damage coverage gates |
-| `tools/test_aggregates.py` | Team aggregate reconciliation gates |
-| `tools/test_config.py` | Season-config schema tests |
-| `data/season.json` | Validated season rules (teams, slots, priors, endpoints, cache schema 4) |
-| `data/registry.json` | Season registry — every season-aware tool resolves paths through it |
-| `data/global/` | Season-independent metadata: `aliases.json` (player/team/lane identity), `item_classes.json`, `hero_classes.json`, `team_colors.json` (derived logo accents) |
-| `tools/season.py` | Registry resolver (`legacy` and `season-dir` layouts) |
-| `tools/check_parity.py` | Regen parity gate |
-| `tools/shots.py` | README screenshots per the shooting spec below (Playwright + system Chrome) |
-| `assets/` | Downloaded artwork + `manifest.json` |
-| `assets/og-card.png` | 1200×630 share card for Open Graph / Twitter |
-| `index.html` | Root redirect to the app (hash-preserving) |
-| `404.html` | Branded not-found page for GitHub Pages |
-| `data/` | SQLite DB, CSV exports, `lanes.json` |
-| `github/assets/` | README screenshots |
+| **Overview** | Champion, final standings, Series MVP race and latest results |
+| **Teams** | Nine team dossiers: rating with intervals, form, roster, tendencies, draft fingerprint, map record and head-to-head |
+| **Players** | Lane-normalised impact, percentile profile and season stats for all 61 players |
+| **Matches** | Week-grouped fixtures, playoff bracket, per-game scoreboards, bans in draft order and VOD links |
+| **Stats** | Series MVP race and a sortable hero pick/ban/win dashboard |
+| **Analytics** | Lane-normalised player impact and draft/meta analysis, with intervals and method notes |
+| **Prep** | One-page opponent report: likely picks and bans, map strengths, player matchups and head-to-head |
 
-## Commands
+Across every view:
 
-```bash
-python tools/etl.py --season s18      # full pipeline: API ETL + Liquipedia enrichment (network)
-python tools/build.py --season s18    # season-aware build wrapper
-python tools/build_s18_db.py   # API-only ETL (no picks/lanes/map mode)
-python tools/enrich_drafts.py --season s18  # Liquipedia enrichment alone (network)
-python tools/aggregate_teams.py --season s18  # refresh team aggregates (no network)
-python tools/fetch_assets.py   # download missing hero/item assets
-python tools/fetch_assets.py --live        # also cover season progress
-python tools/fetch_assets.py --check-only  # audit only
-python tools/gen_dark.py       # rebuild the HTML
-python tools/verify.py         # standard regression: unit suites + check.py + parity
-python tools/check.py          # data-integrity + asset suite alone (0 failures expected)
-node tools/test_chances.js     # probability-engine tests alone
-node tools/test_analytics.js   # analytics engine tests alone
-python tools/shots.py --zoom # re-capture README screenshots (see spec)
+- **Search and shareable state.** `Ctrl/⌘K` opens a palette across players, teams, heroes and
+  matches. View, team, analytics and prep selections are written to the URL, so a dossier, a
+  filtered match list and a prep report are all shareable.
+- **Filters, sorting and drill-downs.** The Players view filters by team, lane and search, and
+  sorts by win rate, lane impact, KDA, kills, gold or games. The hero table and MVP history sort
+  from their column headers. Hero, item, emblem, talent, opponent and game names open detail
+  dialogs; a hero's game list opens the exact game.
+- **One player identity.** Liquipedia MVP spellings are normalised to a canonical player (for
+  example Coolfire → Joshuaa, JOOOOO → Kevinn, Sutsujin → Arthur, Lynchh → Joshua; see
+  `data/global/aliases.json`), so aliases aggregate instead of splitting into phantom players.
+  The source spelling is kept as an “as …” note.
+- **Offline-first refresh.** The embedded snapshot renders instantly. Refresh re-fetches live
+  data with retry and timeout, merges per match, keeps previous records for failed match IDs
+  instead of partially overwriting them, and caches under a versioned `localStorage` key. The
+  status line distinguishes `updated` from `partially updated`; a failed refresh leaves the
+  last snapshot in place.
+- **Exports.** Prep can print to PDF and export CSV; a print stylesheet covers every view.
+
+## Screenshots
+
+![Overview: championship plate, final standings, MVP race and latest results](github/assets/01-overview.png)
+
+<details>
+<summary>More screenshots (9)</summary>
+
+**Teams — the nine-team league board, rating first.**
+
+![Teams](github/assets/09-teams.png)
+
+**Team dossier — crest identity, season band, roster, tendencies, draft and head-to-head.**
+
+![Team dossier](github/assets/10-teams-dossier.png)
+
+**Players — lane impact, win rate and a six-axis percentile hexagon.**
+
+![Players](github/assets/02-players.png)
+
+**Matches — fixtures grouped by week, with the Series MVP per row.**
+
+![Matches list](github/assets/03-matches-list.png)
+
+**Matches — week-grouped cards.**
+
+![Matches grid](github/assets/04-matches-grid.png)
+
+**Scoreboard — per-team tables, series score, both MVPs and bans in draft order.**
+
+![Scoreboard](github/assets/05-scoreboard.png)
+
+**Player profile — identity plate, season band, hero pool and derived stats.**
+
+![Player profile](github/assets/06-player.png)
+
+**Stats — Series MVP race with team crests.**
+
+![Stats MVP](github/assets/07-stats-mvp.png)
+
+**Stats — hero pick/ban/win dashboard.**
+
+![Stats heroes](github/assets/08-stats-heroes.png)
+
+</details>
+
+## Technology stack
+
+| Layer | What is used |
+|---|---|
+| App | One generated HTML file; hand-written CSS and vanilla JavaScript; no runtime dependencies |
+| Data | SQLite snapshot, CSV exports and JSON season configuration |
+| Pipeline | Python 3.12 standard library for collection, build and verification |
+| Tests | Node.js 24 for the JavaScript engines; Python `unittest` for data and schema checks |
+| CI | GitHub Actions: build, 29-suite regression and semantic validation |
+| Hosting | GitHub Pages, branch deployment from `main` |
+
+The full verification suite also needs `ruff` and `jsonschema`. Pillow is needed for portrait
+derivatives and team colours; Playwright and Chrome for screenshots.
+
+## How it works
+
+The committed database is the source of truth for every number; the HTML and CSVs are generated
+from it.
+
+```text
+mlbbhub API ──┐
+Liquipedia ───┴──► tools/etl.py ──► data/ (SQLite, CSV, provenance)
+                                              │
+                                              ▼
+                                   tools/gen_dark.py ──► mpl_id_s18_dark.html
+                                              │
+                                              └──► assets/
 ```
 
-## Season onboarding
+1. **Collect.** `tools/etl.py` pulls schedule, results, standings, per-player stats and bans
+   from mlbbhub, then enriches picks, lane slots, ban order, map mode, VODs and Series MVPs
+   from Liquipedia. Network calls are manual and use identifying user agents.
+2. **Store.** `data/mpl_id_s18.db` is the durable snapshot. CSV exports,
+   `data/seasons/s18/meta.json` and `quality.json` record the build and its exceptions.
+3. **Build.** `tools/gen_dark.py` reads the committed data and inlines the templates from
+   `tools/templates/` into one HTML file. Artwork stays in `assets/` on relative paths.
+4. **Verify.** `tools/verify.py` runs the 29-suite gate, ending with a byte-for-byte
+   regeneration parity check against the committed artifact.
+5. **Publish.** GitHub Pages serves `main`; there is no server-side component.
 
-A new season is supported without application-code changes:
+The provenance record in `meta.json` carries the schema version, sources, row counts, build
+commit and reconciliation totals. `quality.json` lists source conflicts and known gaps, such
+as the one game with nine recorded bans. A refresh is labelled final only when all 72 completed
+regular fixtures have detail, the standings totals agree, and every game retains ten picks,
+two team rows, recorded sides and at least nine bans. The committed snapshot also carries the
+eight playoff series.
 
-1. Add `data/seasons/<id>/season.json` (teams, aliases, slots, priors, endpoints).
-2. Add roster / IGN / lane entries to `data/global/aliases.json`.
-3. Register the season in `data/registry.json` with `"layout": "season-dir"`.
-4. Run `python tools/etl.py --season <id>` (network). This builds the database
-   and enriches picks, lanes, ban order and map mode from Liquipedia.
-5. Run `python tools/build.py --season <id>` and `python tools/verify.py`.
-6. Review the diff, then commit the season data and generated build.
+## How the numbers are derived
 
-Enrichment fills `game_picks`, `game_players.lane`/`lane_source`,
-`game_bans.ban_order` and `games.map_mode`. It is idempotent: re-running
-replaces picks and re-checks every row; unmatched heroes or players are
-reported, never guessed. Team aggregates fill `team_games` and
-`team_season_stats`.
+- **Game MVP.** The mlbbhub API exposes no per-game MVP, so the app awards it to the
+  **highest-KDA player on the winning team** (tiebreaks: kills, then gold). Series MVP comes
+  from Liquipedia.
+- **MANIAC / SAVAGE.** Not available. No API endpoint or official MPL Indonesia page publishes
+  kill-streak data (the official leaderboard exists for MPL MY only), so these columns render
+  `–` rather than being estimated.
+- **Intervals and models.** Lane percentiles shrink toward the lane mean with a five-game
+  prior; win rates use 95% Wilson intervals and always show `n`; team ratings use
+  Bradley-Terry, a paired-comparison strength model, on one paired observation per game with 100
+  game-level bootstrap resamples. The Prep ban ranking is a pick-threat proxy (opponent pick
+  rate × pick win rate), not a claim about their ban intent.
+- **Weights and caveats.** The impact composite is pinned by `tools/test_analytics.js`; exact
+  weights, formulas and caveats are printed in the product's method disclosures. The
+  [data dictionary](docs/DATA_DICTIONARY.md) documents the tables, fields and derived metrics.
 
-Season 18 intentionally keeps the `legacy` layout; `data/registry.json` and the
-`--season` wrappers resolve it without a physical move. A new season follows the
-onboarding checklist above and does not fork application code.
+## Getting started
 
-GitHub Actions (`.github/workflows/ci.yml`) runs the build plus
-`tools/verify.py` on pushes to `main` and pull requests targeting `main`.
-CI uses only committed data and templates — the network ETL and the
-Playwright screenshots are manual steps, not CI jobs.
+There are two paths: read the season in the hosted app, or build and verify the project
+locally.
 
-## Screenshot spec (do not change without approval)
+### Use the hosted app
 
-- Canvas: **2880×1800 PNG** exact (asserted from the PNG header after capture)
-- System zoom **150%** (viewport 1920×1200 CSS @ device scale factor 1.5) +
-  website zoom **125%** (body CSS zoom) = zoomed-in, high-resolution look
-- Every shot waits for webfonts and all in-viewport images to finish loading —
-  no fixed sleeps — so photos and icons are never captured half-loaded
+Open <https://berliandro.github.io/berliandros-eye-mpl-s18/>. No account, installation or build
+step is required. The root URL redirects to `mpl_id_s18_dark.html` and preserves any hash.
 
-Serve locally (or just double-click the HTML):
+### Run it locally
+
+```bash
+git clone https://github.com/berliandro/berliandros-eye-mpl-s18.git
+cd berliandros-eye-mpl-s18
+```
+
+You can open `mpl_id_s18_dark.html` directly: the snapshot is embedded and artwork uses
+relative paths. To serve the folder over HTTP instead:
 
 ```bash
 python -m http.server 8931
-# → http://localhost:8931/mpl_id_s18_dark.html
+# http://localhost:8931/mpl_id_s18_dark.html
 ```
 
-## Docs
+If `python` is not on `PATH`, use your platform's launcher (for example `py` on Windows). Some
+browsers restrict network requests from `file://`; use the local server when testing **Refresh**.
+
+### Prerequisites
+
+| Tool | Version | Needed for |
+|---|---|---|
+| Python | 3.12 | ETL, build and verification |
+| Node.js | 24 | JavaScript test suites in `verify.py` |
+| Ruff | 0.17.0 | Lint step in `verify.py` |
+| jsonschema | current release | Transcript ledger tests in `verify.py` |
+
+Python and Node.js match the CI configuration; Ruff is pinned to 0.17.0 and jsonschema is
+installed from the current release.
+
+Optional tooling:
+
+| Tool | Needed for |
+|---|---|
+| Pillow | `tools/make_player_cards.py`, `tools/derive_team_colors.py` |
+| Playwright + Google Chrome | `tools/shots.py` screenshot capture |
+
+### Install tooling
+
+```bash
+python -m pip install "ruff==0.17.0" jsonschema
+```
+
+The repository has no package manifest: the app has no runtime dependencies and the Python
+pipeline uses the standard library. These packages, plus Node.js, satisfy the full verification
+suite. No `npm install` is needed.
+
+Environment variables are not required for the app, ETL, build or standard verification. The
+optional DeepSeek visual-review tooling reads `DEEPSEEK_API_KEY`; nothing documented here needs
+it.
+
+### Build from committed data
+
+```bash
+python tools/gen_dark.py
+python tools/verify.py
+```
+
+`gen_dark.py` rewrites the app from committed data and templates. `verify.py` rebuilds it again
+as its parity check, compares the result byte-for-byte, and runs the rest of the gate. A clean
+run ends with:
+
+```text
+VERIFY PASS (29/29 suites)
+```
+
+### Rebuild the data
+
+```bash
+python tools/etl.py --season s18
+python tools/gen_dark.py
+python tools/verify.py
+```
+
+The ETL needs network access and makes roughly 70 sequential requests. It publishes atomically:
+if it fails, the previous database is left intact. Because Season 18 is complete, a refresh is
+mainly useful for upstream corrections; the committed snapshot is the stable record.
+
+## Commands
+
+**Data pipeline**
+
+| Command | What it does | Network |
+|---|---|---|
+| `python tools/etl.py --season s18` | Rebuild the database: mlbbhub API, then Liquipedia enrichment | Yes |
+| `python tools/build_s18_db.py` | Run the API-only ETL (no picks, per-game lanes or map mode) | Yes |
+| `python tools/enrich_drafts.py --season s18` | Re-run the Liquipedia enrichment only | Yes |
+| `python tools/aggregate_teams.py --season s18` | Recompute team aggregates from player rows | No |
+| `python tools/fetch_hero_classes.py --season s18` | Rebuild hero role, lane and damage metadata | Yes |
+
+**Build and verification**
+
+| Command | What it does | Network |
+|---|---|---|
+| `python tools/gen_dark.py` | Rebuild the single-file app from committed data | No |
+| `python tools/build.py --season s18` | Season-aware wrapper around the build | No |
+| `python tools/verify.py` | Run the standard 29-suite gate | No |
+| `python tools/check.py [--live]` | Data integrity, asset coverage and link checks | Optional |
+| `python tools/check_parity.py` | Regenerate and compare the committed artifact | No |
+| `node tools/test_analytics.js` | Run one JavaScript suite directly | No |
+
+**Artifacts and maintenance**
+
+| Command | What it does | Network |
+|---|---|---|
+| `python tools/fetch_assets.py [--check-only] [--live]` | Download missing artwork or audit coverage | When fetching |
+| `python tools/make_player_cards.py [--check]` | Build or verify 160px portrait derivatives | No |
+| `python tools/derive_team_colors.py` | Re-derive team accents from committed logos | No |
+| `python tools/shots.py --zoom` | Recapture the README screenshots | No |
+| `python tools/verify_analysis.py` | Run the transcript layer suite; needs the local corpus | No |
+
+`verify.py` runs the required JavaScript and Python suites, Ruff, `check.py` and the parity
+check. Individual suites live in `tools/test_*.py` and `tools/test_*.js`.
+
+## Project structure
+
+```text
+.
+├── mpl_id_s18_dark.html      generated app (open this)
+├── index.html                hash-preserving redirect to the app
+├── 404.html                  GitHub Pages not-found page
+├── favicon.ico               project icon — the rail logo at 16/32/48/64
+├── icon.png, apple-icon.png  the same mark at 512 and 180 px
+├── .nojekyll                 stop Jekyll processing on the branch
+├── PRODUCT.md, DESIGN.md     product context and design system
+├── assets/                   committed artwork, manifest and og-card
+├── data/
+│   ├── mpl_id_s18.db         SQLite snapshot (source of truth)
+│   ├── csv/                  CSV exports generated from the database
+│   ├── season.json           Season 18 rules, slots, priors and endpoints
+│   ├── registry.json         season registry
+│   ├── global/               player aliases, hero/item classes, team colours
+│   └── seasons/s18/          provenance (meta.json) and exceptions (quality.json)
+├── tools/
+│   ├── templates/            doc.html, style.css, app.js — the single source
+│   ├── *.py                  collection, enrichment, build, verification and tests
+│   └── test_*.js             JavaScript engine suites
+├── analysis/                 transcripts, evidence, reports and coaching briefs
+├── docs/                     roadmap, data dictionary and insight catalogue
+├── github/assets/            README screenshots
+└── .github/workflows/        regression and semantic-validation CI
+```
+
+The generated HTML is committed. Do not edit it by hand: change the templates or the data,
+rebuild, and let `verify.py` prove the artifact matches.
+
+To work on the app, start with `tools/templates/app.js` for the interface, `tools/gen_dark.py`
+for the build, and `tools/etl.py` for collection. To inspect the data directly, open
+`data/mpl_id_s18.db` with any SQLite client or read the exports in `data/csv/`.
+
+## Testing
+
+`python tools/verify.py` is the standard gate. It runs 29 suites in order and fails loudly when
+a runtime or dependency is missing:
+
+- JavaScript syntax and engine suites: probability, analytics, refresh merge, cache, snapshot
+  derivation, season finalisation, transforms, XSS sinks and item classification.
+- Python suites: season config, aliases, draft and lane enrichment, hero classes, team
+  aggregates, cross-view reconciliation, transcript ledger, stats bridge and goal records.
+- Ruff lint over `tools/`.
+- `tools/check.py`: data integrity, asset coverage and generated markup.
+- Regeneration parity: a fresh build must be byte-identical to the committed artifact.
+
+The `regression` workflow runs the same gate on every push to `main` and every pull request
+targeting it. The separate `Semantic Analysis Validation` workflow checks the transcript
+evidence layer. To run that layer locally, use `python tools/ci_semantic_check.py` or
+`python tools/verify_analysis.py` (the latter needs the local corpus, which is not committed).
+
+## Deployment
+
+The site is static and deploys from `main` through GitHub Pages:
+
+1. `python tools/gen_dark.py`
+2. `python tools/verify.py`
+3. Commit the data, templates and regenerated `mpl_id_s18_dark.html`.
+4. Push to `main`.
+
+`index.html` redirects to the app while preserving the URL hash; `.nojekyll` stops GitHub Pages
+from running Jekyll on the branch; `404.html` handles unknown paths. `assets/` must ship beside
+the HTML. There is no server-side component, database service or build step at request time.
+
+## Coaching and transcript layer
+
+A separate, auditable transcript and database layer lives in
+[`analysis/`](analysis/README.md). It imports the local nine-week broadcast corpus, verifies
+SHA-256 manifests, aligns captions to series and games, and publishes database evidence plus
+coaching briefs.
+
+Current coverage: **27/27 source records verified, 72/72 match reports with database evidence,
+27 transcript-covered series (24 complete, 3 partial), 45 database-only series, and 313
+accepted observations.** The coaching product is nine team briefs and one head-coach brief.
+Gameplay observations remain text-only because no same-frame `00:00` boundary has been verified
+for visual proof.
+
+The semantic layer is pinned to the regular-season snapshot
+`analysis/snapshots/mpl_id_s18_regular.db` (72 series, 174 games); the app database is the
+completed season (80 series, 215 games). Raw transcripts, frames and caches stay local and are
+ignored by Git; the committed layer is the manifests, schemas, reports and briefs. Start at
+[`analysis/reports/coverage-matrix.md`](analysis/reports/coverage-matrix.md).
+
+## Data sources and attribution
+
+| Source | Used for |
+|---|---|
+| `mpl.mlbbhub.com/api/v1/id` | Schedule, results, standings, per-player stats and bans |
+| `liquipedia.net/mobilelegends/api.php` | Picks, lane slots, ban order, map mode, VODs, Series MVPs and schedule cross-checks |
+| Liquipedia Commons | Player portraits (CC-BY-SA 3.0) |
+| mlbbhub, Liquipedia infoboxes and scoregg CDN | Hero and item artwork |
+
+The ETL calls the public JSON endpoints and the MediaWiki `api.php` interface with identifying
+user agents (`MPL-S18-research/1.0`, `MPL-S18-assets/1.0`), only on manual invocation. The
+in-app Refresh runs in the browser on a button press and uses the browser's own user agent. One
+ETL run makes roughly 70 sequential requests; one Refresh makes about 60 detail requests at
+6-way concurrency plus 6 list requests with one retry each. The app has no accounts, cookies or
+analytics; the only persistent state is the versioned snapshot in `localStorage`.
+
+`robots.txt` disallows crawling `/mobilelegends/api.php` for generic agents, and the sites'
+terms of service were not independently reviewed. Usage here is minimal, manual and
+non-commercial, but compliance is not claimed.
+
+## Troubleshooting
+
+| Symptom | Likely cause | Fix |
+|---|---|---|
+| `verify.py` reports a missing runtime | Node.js is not installed or not on `PATH` | Install Node.js 24 and reopen the shell |
+| `verify.py` fails the Ruff step | Ruff is missing | `python -m pip install "ruff==0.17.0"` |
+| `jsonschema is required` | The schema validator is missing | `python -m pip install jsonschema` |
+| Parity gate fails | Templates or data changed without a matching rebuild | Inspect `git diff`; commit the regenerated HTML if the change was intended, otherwise revert the source change, then rerun `verify.py` |
+| `verify_analysis.py` fails on a clean clone | Raw transcripts are not committed and are absent | Run it only where the local corpus exists; CI uses `ci_semantic_check.py` |
+| Refresh says `partially updated` | Some match requests failed; previous records were kept | Retry; if it persists, check network and API availability |
+| Refresh fails after an upstream API change | The public endpoint's shape or availability changed | The snapshot stays usable; update the fetch/parse code and its tests, then rebuild |
+| GitHub Pages shows a 404 | The app lives at `mpl_id_s18_dark.html`, not at a directory route | Open the root URL or `/mpl_id_s18_dark.html` |
+| Refresh says `not cached: storage full` | The browser's `localStorage` quota is full | Clear the site's storage and reload |
+| ETL fails mid-run | Network or upstream source change | The last known-good database is kept; rerun `tools/etl.py` |
+| Screenshots fail | Playwright, Chrome or the hardcoded Chrome path is missing | Install Playwright and Chrome, or adjust `CHROME` in `tools/shots.py` |
+| Asset coverage reports gaps | Artwork is missing from the checkout | `python tools/fetch_assets.py`, then rebuild |
+
+## Contributing
+
+- Run `python tools/verify.py` before opening a pull request. Both CI workflows must pass.
+- Keep the generated `mpl_id_s18_dark.html` in sync with its templates and data; the parity
+  gate enforces this.
+- Do not commit raw transcripts, captured frames or caches. They are excluded from the
+  repository by design.
+- Record source disagreements and data-quality exceptions in
+  `data/seasons/s18/quality.json`; do not silently patch a conflict.
+- For substantial changes, open an issue first so the data and provenance consequences can be
+  reviewed.
+
+## Documentation
 
 - [Roadmap](docs/ROADMAP.md)
 - [Data dictionary](docs/DATA_DICTIONARY.md)
 - [Insight catalogue](docs/INSIGHT_CATALOGUE.md)
+- [Analysis layer](analysis/README.md)
+- [Coverage matrix](analysis/reports/coverage-matrix.md)
+- [Product context](PRODUCT.md)
+- [Design system](DESIGN.md)
 
-## Data sources
+## License and disclaimer
 
-- Matches, games, per-player stats, drafts: `https://mpl.mlbbhub.com/api/v1/id`
-- Series MVPs, schedule cross-check: Liquipedia (`MPL/Indonesia/Season 18`)
-- Hero artwork: scoregg CDN, Liquipedia infoboxes (see `tools/fetch_assets.py`)
-- Player portraits: Liquipedia Commons originals (CC-BY-SA 3.0), 500×500 where
-  available; per-file sources in `assets/players/provenance.json`
+No `LICENSE` file is currently included, so the repository grants no reuse rights beyond
+GitHub's terms. Third-party assets keep their own licenses: Liquipedia Commons portraits are
+CC-BY-SA 3.0, and hero and item artwork belong to their respective owners.
 
-Data-access notes: the ETL and the in-app Refresh button call public JSON
-endpoints and the MediaWiki `api.php` interface with identifying user agents
-(`MPL-S18-research/1.0`, `MPL-S18-assets/1.0`), only on manual invocation
-(one ETL run ≈ 70 sequential requests; one Refresh ≈ 60 detail requests at
-6-way concurrency plus 6 list requests with one retry each). Note that
-`robots.txt` disallows crawling `/mobilelegends/api.php` for generic agents,
-and the sites' terms of service were not independently reviewed — usage here
-is minimal, manual, and non-commercial, but compliance is not claimed.
+This is an unofficial, non-commercial project. It is not affiliated with, endorsed by or
+sponsored by Moonton, MPL or any team. For decisions that matter, verify every number against
+the official broadcast and the official MPL record.
