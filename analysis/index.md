@@ -14,7 +14,7 @@
 - Match evidence: **72/72** reports carry a database block; **27** have transcript coverage (24 complete, 3 partial), **45** are DB-only.
 - Synthesis: **9/9** team profiles, **94** hero pages, **6/6** strategy pages, plus the season hero and league meta reports.
 - Coaching: **9** team briefs and **1** head-coach brief in `coaching/`.
-- Visual review: **0 boundaries visually verified**; 966 frame reviews and 62 boundary reviews (41 context-only, 20 rejected, 1 inconclusive, 10 waived).
+- Visual review: **1 boundary visually verified** (match 1062, DEWA vs ONIC; anchor DF3-w04d02-2465); 966 frame reviews and 62 boundary reviews (1 used, 40 context-only, 20 rejected, 1 inconclusive, 10 waived). Goal complete 2026-11-24 under the revised first-visible-HUD standard.
 - Semantic coverage: **27/72 broadcast-source transcript-backed**; game transcripts are now available for **all 45 DB-only matches** (107/107 games, all Indonesian); the **1037 pilot** has 6 accepted game-VOD observations, bringing combined transcript evidence to **28/72**.
 - Game transcript availability: **107/107 games fetched** (45/45 matches full, all Indonesian); source availability, not accepted observations (except the 1037 pilot). Manifest: [`evidence/game-transcript-manifest.json`](evidence/game-transcript-manifest.json).
 

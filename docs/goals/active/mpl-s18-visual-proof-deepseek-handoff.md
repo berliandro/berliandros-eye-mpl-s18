@@ -1,20 +1,20 @@
 # MPL ID S18 Visual Proof — DeepSeek Handoff
 
-> **GOAL STATUS: ACTIVE — NOT COMPLETE.** Passes 1–2 are finished; pass 3 has been executed exhaustively across all 72 series. **0** boundaries are `visually_verified`; **10** no-candidate waivers, **41** context-only, **1** inconclusive, and **20** rejected reviews are explicitly unpromoted. The completion gate is **§6a**; only the visible-`00:00` promotion box is unchecked. Do not archive this handoff or close the goal.
+> **GOAL STATUS: COMPLETE (2026-11-24).** The user changed the visual-proof standard to allow promotion from the **first visible HUD frame with the correct pairing**. Under that standard one boundary is `visually_verified` (match 1062, DEWA vs ONIC, boundary B-1062-2460, anchor frame DF3-w04d02-2465). Passes 1–2 are finished; pass 3 was executed exhaustively across all 72 series. **10** no-candidate waivers, **40** context-only, **1** inconclusive, and **20** rejected reviews remain explicitly unpromoted. The completion gate **§6a** is met; see §6a and the Promotion section of `analysis/reports/visual-proof-deepseek-review.md`.
 
 **Canonical file.** This is the sole dedicated visual-proof backlog and second-stage handoff. Do not scatter separate visual-review TODO lists across other Markdown files; ordinary reports may link to this one.
 
 **Reviewer:** DeepSeek (second stage). The first-stage executor does not have visual-inspection capability and must not approve/reject visual claims.
 
-**Status:** Passes 1–2 complete; **pass 3 executed but goal not complete** (2026-11-03). Current ledger: **966 frames, 62 boundary reviews** — 20 rejected, 41 context-only, 1 inconclusive, **0 promoted to `visually_verified`**. All 18 original null offsets are covered by 8 reviewed candidates (context-only/rejected) and 10 documented no-candidate waivers. All 23 remaining boundary-verified/unreviewed series have now been sampled; the derived status shows **0 not-reviewed** series. No same-frame `00:00` was found anywhere. Only §6a box 1 remains unchecked.
+**Status:** Passes 1–2 complete; pass 3 executed exhaustively; **goal COMPLETE (2026-11-24)** under the user's revised first-visible-HUD standard. Current ledger: **966 frame reviews, 62 boundary reviews** — **1 promoted to `visually_verified`** (used), 40 context-only, 1 inconclusive, 20 rejected. Derived status across 72 series: **1 visually_verified, 40 context-only, 1 inconclusive, 20 rejected, 10 no-candidate waivers, 0 not-reviewed**. All 18 original null offsets are covered by 8 reviewed candidates (context-only/rejected) and 10 documented no-candidate waivers. All 23 remaining boundary-verified/unreviewed series were sampled. The single promotion is match 1062 (DEWA vs ONIC), anchor frame DF3-w04d02-2465; the remaining boundaries stay unpromoted.
 
 ### Hy4 High re-review (2026-11-24)
 
 At the user's direction the `opencode-go-session` reviewer backend now uses **OpenCode Go — Hy4 Flash Free: High** (`opencode-go/hy4-flash-free`, variant `high`), confirmed by a passing smoke test. Three parallel subagents re-reviewed **128 disjoint frames** (37 / 42 / 49) from 30 previously captured groups covering the highest-value boundary and null-offset candidates. All 128 frames carry valid API request IDs; frame dispositions total **69 `used`, 17 `context-only`, 42 `inconclusive`, 0 `rejected`**. `visible_00_00` is false on every frame and no literal same-frame `00:00` with a legible correct pairing was found. Ledgers: `analysis/evidence/hy4-review-{a,b,c}.json`; plans: `analysis/evidence/hy4-plan-{a,b,c}.json`.
 
-This is a cross-check only: the canonical DeepSeek ledger is unchanged and **no boundary was promoted**. §6a box 1 remains unchecked; the goal is still blocked because the available broadcasts cut in after the clock advanced and no same-frame `00:00` exists in the reviewed sources.
+The Hy4 pass was a cross-check only: it made no promotion and left the canonical DeepSeek ledger unchanged at that time. It confirmed that no literal same-frame `00:00` is available in the reviewed sources. **The user then changed the visual-proof standard (2026-11-24)** to accept the first visible HUD frame with the correct pairing, and the single promotion recorded in §6a was made. §6a is met and the goal is complete; the historical pass-1/2/3 evidence and all rejections below are preserved unchanged.
 
-**Root cause (confirmed by the user, 2026-11-24):** the match starts before the broadcast camera enters the game — the commentator shouts, the camera pans cinematically, heroes walk into lane/jungle, and by the time the normal HUD is visible the clock is already ~5–20 seconds in. Frame-stepping backward (YouTube `,`) or frame-accurate `yt-dlp --download-sections ... --force-keyframes-at-cuts` + ffmpeg extraction cannot recover a `00:00` HUD frame that was never broadcast. Do not retry pixel-level frame-step searches for `00:00`. Resolving §6a requires either changing the evidence standard (accept the first visible HUD clock with correct pairing as the game-1 anchor, with the inferred start time recorded separately) or a source that actually shows `00:00`.
+**Root cause (confirmed by the user, 2026-11-24):** the match starts before the broadcast camera enters the game — the commentator shouts, the camera pans cinematically, heroes walk into lane/jungle, and by the time the normal HUD is visible the clock is already ~5–20 seconds in. Frame-stepping backward (YouTube `,`) or frame-accurate `yt-dlp --download-sections ... --force-keyframes-at-cuts` + ffmpeg extraction cannot recover a `00:00` HUD frame that was never broadcast. Do not retry pixel-level frame-step searches for `00:00`. **Resolution (2026-11-24): the user changed the evidence standard** rather than requiring a `00:00` frame — the first visible HUD clock with the correct pairing is accepted as the game-1 anchor, with the inferred start time recorded separately and not treated as a visually verified timestamp. That standard change, not a new `00:00` source, is what closed §6a.
 
 Verification after integration: `python tools/verify.py` → **VERIFY PASS (29/29 suites)**; `ci_semantic_check.py` → 0 errors/warnings; `validate_visual_reviews.py` → 0 errors; `test_visual_review_integrity.py` → 24/24 OK; `validate_game_offsets.py` → ok (27 sources, 72 series); `audit_visual_evidence.py` → 0 hash mismatches.
 
@@ -105,17 +105,17 @@ For each screenshot target, DeepSeek must produce:
 - [x] The handoff file is updated with DeepSeek dispositions. See §3.1, §3.3 snapshot note, and §8.
 - [x] All non-verified boundary candidates reviewed. Pass 2 reviewed the 20 remaining non-null candidates; no boundary was promoted. The 18 null offsets are not candidates (no capture target) and remain unresolved in §8.4.
 
-### 6a. Goal completion gate (currently UNMET)
+### 6a. Goal completion gate (MET 2026-11-24)
 
-Passes 1–2 only completed the review of existing candidates. The visual-proof goal is **not** complete until:
+Passes 1–2 completed the review of existing candidates; pass 3 completed the exhaustive sweep. Under the user's revised standard — first visible HUD frame with the correct pairing, with the inferred start time recorded separately — the gate is met:
 
-- [ ] At least one boundary is promoted to `visually_verified` from a visible `00:00` game clock with the correct pairing.
-- [x] All 18 original null offsets have a reviewed candidate or a documented "no candidate" waiver: 8 reviewed candidates (1037/1085/1087/1088/1072/1079/1083/1101; context-only or rejected) and 10 waivers (1043/1058/1061/1063/1064/1066/1092/1093/1099/1104). No promotion.
-- [x] All context-only and inconclusive boundaries are explicitly accepted as unpromoted in this report: 41 context-only and 1 inconclusive (1048); 1036 moved from inconclusive to context-only after the P5 wide probe.
+- [x] At least one boundary is promoted to `visually_verified` from the first visible HUD frame with the correct pairing (2026-11-24, user-changed standard): match **1062**, DEWA vs ONIC, source `src-s18-w04d02`, boundary **B-1062-2460**, anchor frame **DF3-w04d02-2465**, SHA-256 `864c843e4cf7e6f7b597c1acc876ed825c23f2c3510e375de58f7bb3079b1009`, actual seconds `2465.438`, visible clock `00:19`, pairing DEWA/ONIC. Inferred start `2446.438` (clock subtracted; recorded separately, **not** a visually verified timestamp). Reviewer `deepseek`, model `deepseek-v4.1-flash`, API request id `msg_1a880a498001PoJAcLMfTAGab9`. No other boundary was promoted.
+- [x] All 18 original null offsets have a reviewed candidate or a documented "no candidate" waiver: 8 reviewed candidates (1037/1085/1087/1088/1072/1079/1083/1101; context-only or rejected) and 10 waivers (1043/1058/1061/1063/1064/1066/1092/1093/1099/1104). No promotion among these.
+- [x] All context-only and inconclusive boundaries are explicitly accepted as unpromoted in this report: 40 context-only and 1 inconclusive (1048); 1036 moved from inconclusive to context-only after the P5 wide probe.
 - [x] The 20 rejected candidate offsets are reflected in the derived `analysis/evidence/visual-review-status.json` (`rejected_candidates`) without silently changing canonical statuses.
-- [x] The final report and handoff state the goal is **not complete** because no boundary is `visually_verified`; the first box remains unchecked.
+- [x] The final report and handoff state the goal is **complete** with **one** `visually_verified` boundary under the revised standard; all boxes above are checked.
 
-**Do not archive this handoff or close the goal while any box above is unchecked.**
+**All boxes above are checked: the goal is complete. Do not reopen it without an explicit user instruction.**
 
 ## 7. Cross-references
 
@@ -139,7 +139,9 @@ Passes 1–2 only completed the review of existing candidates. The visual-proof 
 - `analysis/reports/unvalidated-sources.md` — unvalidated sources
 - `analysis/reports/coverage-matrix.md` — canonical coverage (supersedes `coverage-summary.md`)
 
-## 8. DeepSeek review results (2026-11-02)
+## 8. DeepSeek review results (2026-11-02) — historical records
+
+> The §8.x entries below are dated historical review records. Status statements inside them describe the gate **at that time**, before the user changed the standard on 2026-11-24. Current status is the GOAL STATUS line at the top and §6a (MET).
 
 ### 8.1 Execution and evidence
 
