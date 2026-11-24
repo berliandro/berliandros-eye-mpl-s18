@@ -628,7 +628,7 @@
           "team_a": "DEWA",
           "team_b": "ONIC",
           "game_no": 1,
-          "start_seconds": 2460,
+          "start_seconds": 2465.438,
           "end_seconds": null,
           "confidence": "med",
           "provenance": {
@@ -641,7 +641,17 @@
             "boundary_text": "match pertama ya. Dewa United versus"
           },
           "verified_by": null,
-          "status": "boundary_verified"
+          "status": "visually_verified",
+          "visual_anchor": "first_visible_hud",
+          "anchor_frame_id": "DF3-w04d02-2465",
+          "anchor_frame_sha256": "864c843e4cf7e6f7b597c1acc876ed825c23f2c3510e375de58f7bb3079b1009",
+          "anchor_seconds": 2465.438,
+          "visible_clock": "00:19",
+          "inferred_start_seconds": 2446.438,
+          "reviewer": "deepseek",
+          "model": "deepseek-v4.1-flash",
+          "api_request_id": "msg_1a880a498001PoJAcLMfTAGab9",
+          "promotion_note": "The visible clock reading (00:19) and the inferred start (2446.438s) are recorded separately; the inferred start is NOT a visually verified timestamp."
         },
         {
           "series_index": 1,

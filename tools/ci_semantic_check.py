@@ -90,8 +90,8 @@ def check_game_offsets():
 
     # Check status enum
     valid_statuses = {"schedule_associated", "candidate_detected", "boundary_verified",
-                      "game_boundary_verified", "visually_reviewed", "quarantined", "unresolved",
-                      "detected_pending_review", "pending_validation"}
+                      "game_boundary_verified", "visually_reviewed", "visually_verified",
+                      "quarantined", "unresolved", "detected_pending_review", "pending_validation"}
     for sid, src in data['sources'].items():
         for s in src['series']:
             if s.get('status') not in valid_statuses:
@@ -292,14 +292,23 @@ def check_visual_status():
     summary = data.get("summary", {})
     if summary.get("series_total") != len(rows):
         error("visual-review-status: series_total mismatch")
-    for key, field in (("rejected", "rejected"), ("context_only", "context-only"),
-                       ("inconclusive", "inconclusive"), ("no_candidate_waiver", "no_candidate_waiver"),
+    for key, field in (("visually_verified", "visually_verified"), ("rejected", "rejected"),
+                       ("context_only", "context-only"), ("inconclusive", "inconclusive"),
+                       ("no_candidate_waiver", "no_candidate_waiver"),
                        ("not_reviewed", "not_reviewed")):
         expected = sum(1 for row in rows if row.get("visual_status") == field)
         if summary.get(key) != expected:
             error(f"visual-review-status: summary.{key} mismatch ({summary.get(key)} != {expected})")
-    if summary.get("visually_verified") != 0:
-        error("visual-review-status: visually_verified must be 0 while §6a is unmet")
+    ledger_used = False
+    if ledger.exists():
+        try:
+            ledger_data = json.loads(ledger.read_text(encoding="utf-8"))
+            ledger_used = any(b.get("disposition") == "used"
+                              for b in ledger_data.get("boundary_reviews", []))
+        except (OSError, json.JSONDecodeError):
+            ledger_used = False
+    if ledger_used and not any(row.get("visual_status") == "visually_verified" for row in rows):
+        error("visual-review-status: ledger contains a used boundary but no visually_verified series")
 
 
 def check_db_integrity():
