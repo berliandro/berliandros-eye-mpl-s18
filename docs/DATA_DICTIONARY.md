@@ -174,9 +174,9 @@ reconciliation and ETL commit.
 | `data/global/hero_classes.json` | 133 heroes: role, primary lane, specialties, damage type, empirical lane shares |
 | `data/global/item_classes.json` | item identifiers → category/artwork grouping |
 | `data/season.json` | season rules, endpoints, priors (legacy layout) |
+| `data/playoffs.json` | final bracket, seeding and Grand Final payload |
 | `data/seasons/s18/meta.json` | snapshot status/scope, sources, row counts, reconciliation, ETL commit |
 | `data/seasons/s18/quality.json` | source conflicts, blank-ban disposition, missing map/lane counts |
-| `data/seasons/s18/playoffs.json` | bracket/seed snapshot |
 
 ## Derivations used in the app
 

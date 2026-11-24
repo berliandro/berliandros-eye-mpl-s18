@@ -315,6 +315,7 @@ check. Individual suites live in `tools/test_*.py` and `tools/test_*.js`.
 │   ├── mpl_id_s18.db         SQLite snapshot (source of truth)
 │   ├── csv/                  CSV exports generated from the database
 │   ├── season.json           Season 18 rules, slots, priors and endpoints
+│   ├── playoffs.json        final bracket, seeding and Grand Final payload
 │   ├── registry.json         season registry
 │   ├── global/               player aliases, hero/item classes, team colours
 │   └── seasons/s18/          provenance (meta.json) and exceptions (quality.json)
